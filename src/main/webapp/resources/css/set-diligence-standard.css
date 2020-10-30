@@ -1,0 +1,146 @@
+/* contents 기본틀 */
+.cursor {
+    cursor: pointer;
+}
+html{
+    overflow: hidden;
+}
+.contents{
+    position: relative;
+    margin-left: 260px;
+    height: 1000px;
+}
+.contents-wrap::-webkit-scrollbar {
+    width: 10px;
+
+}
+.contents-wrap::-webkit-scrollbar-thumb {
+    background-color: #e8ecee;
+    border-radius: 15px;
+}
+.contents-wrap::-webkit-scrollbar-track {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: white;
+}
+.contents-title{
+    padding-top: 10px;
+    height: 50px;
+    border-bottom: solid 0.1px #cacaca;
+}
+.ct1{
+    margin-left: 50px;
+    font-size: 25px;
+    font-weight: bolder ;
+}
+.contents-wrap{
+    height: 700px;
+    overflow: auto;
+}
+/* ic */
+.ic-navi{
+    margin-left: 40px;
+    margin-top: 30px;
+    width:80%;
+    height: 4%;
+}
+.cate{
+    float: left;
+    width: 150px;
+    margin-left: 20px;
+    border-bottom: solid 0.1px #477A8F;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 2px;
+    
+}
+#leave-status{
+    color: #477A8F;
+}
+#show-reward-leave{
+    display: none;
+}
+.c-ic{
+    padding: 60px;
+    width: 100%;
+    height: 100%;
+}
+.search-emp{
+    border-radius: 10px;
+    border: solid 0.5px #477A8F;
+}
+.search-btn{
+    border-radius: 3px;
+    background: white;
+    color: #477A8F;
+    border: none;
+}
+/* leave-status-tbl */
+.l-table{
+    margin-top: 50px;
+    width: 100%;
+    border-top: solid 0.1px  #477A8F;
+    border-bottom: solid 0.1px #477A8F;
+    text-align: center;
+    border-collapse: collapse;
+
+}
+.r-table{
+    width: 100%;
+    border-top: solid 0.1px  #477A8F;
+    border-bottom: solid 0.1px  #477A8F;
+    border-collapse: collapse;
+}
+.tl{
+    padding: 10px;
+}
+.tr{
+    padding: 10px;
+    text-align: left;
+}
+.ta{
+    padding: 10px;
+}
+/* set-diligence-tbl */
+.set-d-tbl{
+    width: 50%;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    border-top: solid 0.1px  #477A8F;
+    border-bottom: solid 0.1px #477A8F;
+    border-collapse: collapse;
+
+}
+.set-d{
+   padding: 20px; 
+}
+.set-d-1>label{
+    margin-right: 50px;
+}
+.set-d-2>div>input{
+    margin-left: 20px;
+}
+.set-d-3>input{
+    margin-left: 2px;
+}
+.sw-time{
+    width: 200px;
+    float: left;
+}
+.sepa-line{
+    border-left: solid 0.1px #477A8f ;
+}
+
+.save-btn{
+    width: 100px;
+    height: 40px;
+    background: white;
+    border: solid 0.1px #477A8f;
+    border-radius: 30px;
+    font-size: 15px;
+    color: #477A8f;
+    background: white;
+}
+.save-btn:hover{
+    background: #477A8f;
+    color: white;
+}

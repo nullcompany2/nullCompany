@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="memberMapper">
+
+   <resultMap id="memberResultSet" type="Member">
+      <result property="memNo" column="MEM_NO"/>
+      <result property="id" column="ID"/>
+      <result property="pwd" column="PWD"/>
+      <result property="name" column="NAME"/>
+      <result property="gender" column="GENDER"/>
+      <result property="birth" column="BIRTH"/>
+      <result property="phone" column="PHONE"/>
+      <result property="email" column="EMAIL"/>
+      <result property="address" column="ADDRESS"/>
+      <result property="photo" column="PHOTO"/>
+      <result property="enrollDate" column="ENROLL_DATE"/>
+      <result property="updateDate" column="UPDATE_DATE"/>
+      <result property="mStatus" column="M_STATUS"/>
+      <result property="annualLeave" column="ANNUAL_DATE"/>
+      <result property="rewardLeave" column="REWARD_DATE"/>
+      <result property="joinStatus" column="JOIN_STATUS"/>
+      <result property="myInfo" column="MY_INFO"/>
+      <result property="deptNo" column="DEPT_NO"/>
+      <result property="lankNo" column="RANK_NO"/>
+      <result property="deptName" column="DEPT_NAME"/>
+      <result property="rankName" column="RANK_NAME"/>
+      <result property="sAccess" column="S_ACCESS"/>
+     
+   </resultMap>
+
+   <select id="loginMember" parameterType="Member" resultMap="memberResultSet">
+      
+      SELECT M.*, R.RANK_NAME, D.DEPT_NAME
+      FROM MEMBER M INNER JOIN RANK R ON (M.RANK_NO = R.RANK_NO) 
+      INNER JOIN DEPARTMENT D ON (M.DEPT_NO = D.DEPT_NO)
+      WHERE ID= #{id}
+      AND M_STATUS='Y'
+   </select>
+   
+   <!-- 회원 가입  -->
+   <insert id="insertMember" parameterType="Member">
+      INSERT INTO MEMBER
+      VALUES(SEQ_MNO.NEXTVAL,#{name},#{id},#{pwd},#{gender},#{birth},#{phone},#{email},
+      #{address},DEFAULT,SYSDATE,DEFAULT,DEFAULT,0,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)
+   </insert>
+   
+   <!-- 회원 정보 수정 -->
+ 	<update id="updateMember" parameterType="Member">
+      UPDATE MEMBER
+      SET PHOTO=#{photo}, EMAIL=#{email},PHONE=#{phone},ADDRESS=#{address},MY_INFO=#{myInfo},UPDATE_DATE=SYSDATE
+      WHERE ID=#{id}
+   </update> 
+   
+   
+   <!--  아이디 중복 체크  -->
+   <select id="idCheck" parameterType="string" resultType="_int">
+   
+   SELECT COUNT(*)
+   FROM MEMBER 
+   WHERE ID=#{id}
+   
+   </select>
+  
+  <!--  메일 중복 체크  -->
+  <select id="emailCheck" parameterType="string" resultType="_int">
+   
+   SELECT COUNT(*)
+   FROM MEMBER 
+   WHERE EMAIL=#{email}
+   
+   </select>
+</mapper>

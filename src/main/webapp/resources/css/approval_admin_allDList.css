@@ -1,0 +1,133 @@
+/* 작성하기 버튼 */
+#appr_insert_btn{
+    border: none;
+    border-radius: 3px;
+    background: #477A8F;
+    color:white;
+    font-size: 20px;
+    width: 90%;
+    height: 50px;
+    margin-left: 12px;
+    cursor: pointer;
+}
+.contents{
+    float: left;
+}
+
+.contents-title{
+    padding-top: 10px;
+    padding-bottom: 50px;
+    height: 50px;
+    margin-top: 70px;
+}
+.ct1{
+    margin-left: 65px;
+    font-size: 25px;
+    font-weight: bolder;
+    
+}
+
+#search_bar{
+    margin-left: 35%;
+}
+#search_tool{
+    padding-left: 10px;
+    border-radius: 10px;
+    width: 100px;
+    height: 30px;
+    cursor: pointer;
+}
+#appr_search{
+    padding-left: 10px;
+    margin-left: 10px;
+    border-radius: 10px;
+    width: 230px;
+    height: 30px;
+    color: #999;
+    line-height: 21px;
+    outline: 0;
+}
+#search_btn{
+    border:none;
+    width: 30px;
+    height: 30px;
+    background: white;
+    background-image: url("../../resources/images/search_Btn2.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+}
+
+.appr_list{
+    margin-top: 0px;
+    width:1300px;
+    border-collapse: collapse;
+}
+.appr_list th{
+    border-top: solid 0.1px #999;
+    border-bottom: solid 0.1px #999;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    background: #cacaca;
+}
+.appr_list th:nth-child(1){
+    width:20%;
+    height: 100%;
+}
+.appr_list th:nth-child(3){
+    width:40%;
+    height: 100%;
+}
+.appr_list th:nth-child(5){
+    width:10%;
+    height: 100%;
+}
+.appr_list th:nth-child(7){
+    width:10%;
+    height: 100%;
+}
+.appr_list th:nth-child(9){
+    width:10%;
+    height: 100%;
+}
+.appr_list th:nth-child(11){
+    width:10%;
+    height: 100%;
+}
+.appr_date_desc{
+    cursor: pointer;
+}
+.appr_list td{
+    text-align: center;
+    color: #676767;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    cursor: pointer;
+}
+.appr_list tr:last-of-type {
+    border-bottom: solid 0.1px #cacaca;
+}
+
+
+/* 문서 갯수 */
+#doc_count{
+    float: left;
+    margin-left: 50px;
+    margin-top: 20px;
+}
+#doc_count_value{
+    color: #477A8F;
+}
+
+/* 페이징 버튼 */
+#numberList{
+    margin: auto;
+}
+
+#numberList button{
+    border: none;
+    width: 20px;
+    height: 20px;
+    background: white;
+    cursor: pointer;
+}

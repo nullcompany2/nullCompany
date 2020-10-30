@@ -1,0 +1,179 @@
+/* 세부네비 수정 */
+#drag-wrap{
+    position: absolute;
+    left: 250px;
+    top: 0;
+    bottom: 0;
+    width: 105px;
+    background: 0 0;
+}
+#drag{
+    position: absolute;
+    width: 15px;
+    top: 0;
+    bottom: 0;
+    display: block;
+    z-index: 10;
+    opacity: .3;
+    cursor: w-resize;
+    z-index: 120;
+}
+
+#sub-navigation{
+	border-radius: 10px;
+    position: absolute;
+    background: #e8ecee;
+    height: 100%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding-right: 12px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    width: 260px;
+}
+#sub-navi-deinfo{
+    position: absolute;
+    top: 110px;
+    height: auto;
+    bottom: 140px;
+    left: 0;
+    right: 0;
+    margin: 26px 0 0 25px;
+    padding-right: 12px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.contents{
+    position: absolute;
+    left: 260px;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: auto;
+    background: #fff;
+    z-index: 110;
+}
+.contents-wrap{
+    position: absolute;
+    top: 50px;
+    height: auto;
+	bottom: 0;
+    left: 0;
+    right: 0;
+    padding-right: 12px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    width: 100%;
+}
+.c-ic{
+    padding: 60px;
+	width: 100%;
+	height: auto;
+}
+.contents{
+    position: absolute;
+    left: 260px;
+    top: 0;
+    bottom: 150px;
+    right: 0;
+    width: auto;
+    background: #fff;
+	z-index: 120;
+	margin: 0 0 0 0;
+	height: auto;
+}
+/* --- 수정완료--- */
+	body {
+		font-family: "Noto Sans KR", sans-serif;
+		padding: 0px; margin: 0px;
+
+	}
+	.container{
+		
+		position: absolute;
+		top: 140px !important;
+		border-radius: 10px;
+		color: #676767;
+		width: 100%;
+		height: 100%;
+		font-size: 1.15em;
+		float: left;
+		border-bottom: none;
+		padding-top: 2px;
+		overflow: hidden;
+	
+	}
+	.drag-scrollbar{
+		height: auto;		
+	}
+	.drag-scrollbar::-webkit-scrollbar {
+		width: 10px;
+
+  	}
+	.drag-scrollbar::-webkit-scrollbar-thumb {
+		background-color: #676767;
+		border-radius: 15px;
+	}
+	.drag-scrollbar::-webkit-scrollbar-track {
+		background-color: #e8ecee;
+		border-radius: 15px;
+		box-shadow: #e8ecee;
+
+	}
+
+
+	.H-personnel-subNavi{
+		margin-left: 15px;
+		margin-right: 15px;
+	}
+
+	.H-personnel-subNavi>li{
+		margin-bottom: 10px;
+	}
+	.H-personnel-subNavi>ul{
+		display: block;
+		list-style-type: disc;
+		margin-block-start: 1em;
+		margin-block-end: 1em;
+		margin-inline-start: 0px;
+		margin-inline-end: 0px;
+		padding-inline-start: 40px;
+	}
+	li{
+		list-style: none;
+	}
+	
+	a{
+		text-decoration: none;
+		color: #676767;
+	}
+
+	.Depth02{
+		display: block;
+		
+	}
+	.title{
+		font-size: 16px;
+		font-weight: bold;
+		margin-right: 50px;
+	}
+	.num{
+
+		color: #3366CC;
+	}
+
+	.subTitle{
+		list-style: square;
+	}
+	
+	.underline{
+		border-bottom: solid 1px;
+		margin-bottom: 10px;
+	}
+	.cursor {
+		cursor: pointer;
+	}
+	html{
+		overflow: hidden;
+	}

@@ -1,0 +1,146 @@
+/* contents 기본틀 */
+.cursor {
+    cursor: pointer;
+}
+html{
+    overflow: hidden;
+}
+.contents{
+    position: relative;
+    margin-left: 260px;
+    height: 1000px;
+}
+.contents-wrap::-webkit-scrollbar {
+    width: 10px;
+
+}
+.contents-wrap::-webkit-scrollbar-thumb {
+    background-color: #e8ecee;
+    border-radius: 15px;
+}
+.contents-wrap::-webkit-scrollbar-track {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: white;
+}
+.contents-title{
+    padding-top: 10px;
+    height: 50px;
+    border-bottom: solid 0.1px #cacaca;
+}
+.ct1{
+    margin-left: 50px;
+    font-size: 25px;
+    font-weight: bolder ;
+}
+.contents-wrap{
+    height: 700px;
+    overflow: auto;
+}
+/* ic */
+.ic-navi{
+    margin-left: 40px;
+    margin-top: 30px;
+    width:80%;
+    height: 4%;
+}
+.cate{
+    float: left;
+    width: 100px;
+    margin-left: 20px;
+    border-bottom: solid 0.1px #477A8F;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 2px;
+    
+}
+.c-ic{
+    padding: 60px;
+    width: 100%;
+    height: 100%;
+}
+
+/* set-tbl */
+.tp-l-list{
+    width: 80%;
+    border-top: solid 0.1px #477A8F;
+    border-bottom: solid 0.1px #477A8F;
+    border-collapse:collapse;
+}
+.tp-l-list-il,
+.tp-l-list-th,
+.tp-l-list.td{
+    width: 100%;
+    border-top: solid 0.1px #477A8F;
+    border-bottom: solid 0.1px #477A8F;
+    border-collapse:collapse;
+}
+.tp-l-list-th{
+    width: 100px;
+    height: 50px;
+    background: #e8ecee;
+    text-align: left;
+    font-weight: normal;
+    padding: 10px;
+}
+.tp-l-list-td{
+    padding: 10px;
+    text-align: left;
+}
+
+.set-tbl{
+    margin-top: 50px;
+    margin-bottom: 50px;
+    border-top: solid 0.1px  #477A8F;
+    border-bottom: solid 0.1px #477A8F;
+    text-align: center;
+    border-collapse: collapse;
+
+}
+.set-en-tbl{
+    border-collapse:collapse;
+}
+.set-en-1, .set-en-2 >td{
+    padding: 5px;
+    width: 100px;
+}
+.set-en-2>input{
+    margin-left: 2px;
+}
+.set-en-2>td{
+    border-bottom: solid 0.1px #477A8f;
+}
+.set-en-3>td{
+    padding: 5px;
+    width: 100px;
+}
+.set-l-days{
+    text-align: center;
+    width: 30px;
+    
+}
+.set-checkbox-1{
+    margin: 5px;
+}
+.set-e-1{
+    float: left;
+    width: 200px;
+}
+.set-e-2{
+    float: left;
+    width: 150px;
+
+}
+.set-e-3{
+    width: 100px;
+    color: #477A8F;
+}
+.save-btn{
+    margin-top: 30px;
+    width: 70px;
+    background: white;
+    border: solid 0.1px #477A8f;
+    border-radius: 5px;
+    font-size: 15px;
+    color: white;
+    background: #477A8f;
+}

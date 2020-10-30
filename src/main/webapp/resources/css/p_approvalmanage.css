@@ -1,0 +1,105 @@
+#emp-name {
+	font-size: 18px;
+	font-weight: bold;
+	position: relative;
+	left: 2px;
+}
+
+#emp-dept {
+	font-size: 16px;
+}
+
+#emp-rank {
+	font-size: 16px;
+}
+
+#dept_list {
+	width: 230px;
+	border-right: #cacaca solid 1px;
+}
+
+.tg {
+	margin-left: 5%;
+	border-collapse: collapse;
+	border-spacing: 0;
+	width: 80%;
+	height: 100px;
+}
+
+.tg td {
+	border-style: solid;
+	border-width: 0px;
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	overflow: hidden;
+	padding: 10px 5px;
+	word-break: normal;
+}
+
+.tg th {
+	border-top: #676767 solid 1px;
+	border-style: solid;
+	border-width: 0px;
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	font-weight: normal;
+	overflow: hidden;
+	padding: 10px 5px;
+	word-break: normal;
+}
+
+.tg .tg-0pky {
+	border-color: inherit;
+	text-align: left;
+	vertical-align: top
+}
+
+.tg .tg-0lax {
+	text-align: left;
+	vertical-align: top
+}
+
+#mem_list_table {
+	margin-top: 40px;
+	margin-left: 50px;
+}
+
+#list_table_tr th {
+	text-align: center;
+	width: 200px;
+}
+
+#list_table_tr_input td {
+	text-align: center;
+}
+
+#tg thead tr:last-child {
+	border-bottom: red solid 1px;
+}
+
+#list_table_tr_input button {
+	background-color: #3E4247;
+	width: 80px;
+	border-radius: 8px;
+	border: none;
+	color: white;
+}
+
+#list_table_tr_input button:hover {
+	background-color: #3E4247;
+	width: 80px;
+	border-radius: 8px;
+	border: none;
+	color: white;
+	font-weight: bold;
+}
+
+#morebtn {
+	background-color: #3E4247;
+	cursor: pointer;
+	width: 80px;
+	border-radius: 8px;
+	border: none;
+	color: white;
+	
+}

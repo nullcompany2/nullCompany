@@ -1,0 +1,52 @@
+/* ic */
+.contents-title{
+    padding: 15px;
+    
+}
+/* contents 기본틀 */
+.cursor {
+    cursor: pointer;
+}
+html{
+    overflow: hidden;
+}
+/* ------- */
+.office-tbl{
+    margin: 20px;
+}
+.office-tbl-board-le{
+    box-shadow: 0 1px 15px 0 rgba(0, 0, 0, 0.10);
+    width: 500px; 
+    height: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px; 
+    margin-right: 200px;
+    
+}
+.office-tbl-board-ri{
+    box-shadow: 0 1px 15px 0 rgba(0, 0, 0, 0.10);
+    width: 500px; 
+    height: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px; 
+}
+.office-tbl-board-lo{
+    box-shadow: 0 1px 15px 0 rgba(0, 0, 0, 0.10);
+    width: 700px; 
+    height: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px; 
+}
+.top-vertical{
+    vertical-align: top;
+}
+.underline{
+    border-bottom: solid 0.1px black;
+}
+

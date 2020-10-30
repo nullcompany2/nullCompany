@@ -1,0 +1,264 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "Noto Sans KR", sans-serif;
+}
+
+ul, li {
+	list-style: none
+}
+
+a {
+	text-decoration: none;
+}
+
+header {
+	margin: 0 auto;
+	width: 100%;
+	height: 110px;
+	position: relative;
+	background-color: #3E4247;
+}
+
+#menuToggle {
+	width: 500px;
+	height: 300px;
+	position: absolute;
+	left: 10px;
+	top: 70px;
+}
+
+#menu {
+	font-size: 24px;
+	color: #e9e9e9;
+	width: 200px;
+	height: 110px;
+	float: left;
+	padding: 32px;
+}
+
+.menu_icon {
+	width: 100px;
+	height: 110px;
+	border: 0;
+	margin-top: 30px;
+	margin-left: 17px;
+	background-color: white;
+}
+
+.menu_icon:focus {
+	outline: none;
+}
+
+.hover1 img:last-child {
+	display: none
+}
+
+.hover1:hover img:first-child {
+	display: none
+}
+
+.hover1:hover img:last-child {
+	display: inline-block
+}
+
+#logo {
+	width: 250px;
+	height: 110px;
+	background-color: #3E4247;
+	float: left;
+}
+
+#username {
+	font-size: 18px;
+	color: #e9e9e9;
+}
+
+#userdept {
+	font-size: 14px;
+	color: #a7a7a7
+}
+
+#user_image {
+	float: right;
+	width: 90px;
+	height: 90px;
+	margin-right: 10px;
+	margin-top: 10px;
+}
+
+#info {
+	width: 80px;
+	height: 100%;
+	float: right;
+	margin-top: 15px;
+	margin-right: 100px;
+}
+
+#infobtn {
+	float: right;
+}
+
+#infoToggle {
+	width: 320px;
+	height: 130px;
+	background-color: darkcyan;
+	position: absolute;
+	right: 0px;
+	top: 110px;
+	display: inline-block;
+}
+
+#name_email {
+	position: absolute;
+	right: 80px;
+	top: 20px;
+}
+
+#name_email p {
+	color: #444444;
+	font-size: 17px;
+}
+
+#info1 {
+	position: absolute;
+	right: 90px;
+	top: 85px;
+}
+
+#info1 a {
+	color: #444444;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+#infoToggle div a:hover {
+	color: #477A8F;
+}
+
+#workbtn button {
+	font-size: 15px;
+	color: #ffffff;
+	border: none;
+	background-color: #477A8F;
+	width: 60px;
+	height: 25px;
+	border-radius: 3px;
+	margin-left: 10px;
+}
+
+#workbtn {
+	position: absolute;
+	right: 113px;
+	top: 70px;
+}
+
+#emp-name {
+	font-size: 18px;
+	font-weight: bold;
+	position: relative;
+	left: 2px;
+}
+
+#emp-dept {
+	font-size: 16px;
+}
+
+#emp-rank {
+	font-size: 16px;
+}
+
+#dept_list {
+	width: 230px;
+	border-right: #cacaca solid 1px;
+}
+
+#manager_add {
+	border: none;
+	font-size: 17px;
+	color: #477A8F;
+	background: none;
+	left: 5%;
+	position: relative;
+	font-weight: bold;
+	outline: none;
+	cursor:pointer;
+}
+
+.tg {
+	margin-left: 5%;
+	border-collapse: collapse;
+	border-spacing: 0;
+	width: 80%;
+	height: 100px;
+}
+
+.tg td {
+	text-align: center;
+	border-style: solid;
+	border-width: 0px;
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	overflow: hidden;
+	padding: 10px 5px;
+	word-break: normal;
+}
+
+.tg th {
+	border-top: #676767 solid 1px;
+	border-style: solid;
+	border-width: 0px;
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	font-weight: normal;
+	overflow: hidden;
+	padding: 10px 5px;
+	word-break: normal;
+}
+
+.tg .tg-0pky {
+	border-color: inherit;
+	text-align: left;
+	vertical-align: top
+}
+
+.tg .tg-0lax {
+	text-align: left;
+	vertical-align: top
+}
+
+#mem_list_table {
+	margin-top: 40px;
+	margin-left: 50px;
+}
+
+#list_table_tr th {
+	text-align: center;
+	width: 200px;
+}
+
+#list_table_tr_input td {
+	text-align: center;
+}
+
+#tg thead tr:last-child {
+	border-bottom: red solid 1px;
+}
+
+#list_table_tr_input button {
+	background-color: #3E4247;
+	width: 80px;
+	border-radius: 8px;
+	border: none;
+	color: white;
+}
+
+#list_table_tr_input button:hover {
+	background-color: #3E4247;
+	width: 80px;
+	border-radius: 8px;
+	border: none;
+	color: white;
+	font-weight: bold;
+}

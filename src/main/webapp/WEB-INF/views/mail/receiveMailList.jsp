@@ -1,0 +1,214 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<c:import url="../common/header.jsp"/>
+
+<title>받은 편지함 </title>
+
+	</head>
+	
+	<style>
+	body {
+		padding: 0px; margin: 0px;
+	}
+
+	/* contents */
+	.contents{
+		position: relative;
+		margin-left: 250px;
+	}
+	.contents-title{
+		padding-top: 10px;
+		height: 50px;
+		border-bottom: solid 0.1px #cacaca;
+	}
+	
+	
+	.ct1{
+
+		margin-left: 50px;
+		font-size: 20px;
+		font-weight: bolder ;
+	}
+
+	
+	a:active {
+		font-weight: bolder;
+	}
+
+	#search {
+		position:relatived;
+		margin-left:37%;
+		border : none;
+		border-bottom : 2px solid #477A8F;
+		padding : 3px;
+		font-size : 15px;
+		margin-bottom : 5px;
+		
+	}
+	
+	
+	#tb {
+	margin-bottom : 50px;
+	padding-bottom : 30px;
+	border-bottom:  1px solid #ECECEC;
+	
+	}
+	
+	#select, #hide, select, #hide a, #countAll{
+		border:none;
+		font-size:16px;
+		color:#477A8F;
+		
+	}
+	
+	#hide {
+	display:none; 
+	}
+	
+	
+	
+</style>
+
+<body>
+		<c:import url="../common/mailSubNav.jsp"/>
+        <div class="contents">
+            <div class="contents-title">
+                <span class="ct1">받은 편지함</span>
+			</div>
+			
+			<div style="margin-left:40px;">
+			<!--여기다가 만들기 -->
+			<br> 
+				&nbsp;&nbsp;<input type="checkbox" id="checkall"> 
+				&nbsp;&nbsp; <span style="color:#477A8F;" id="select"> 보기 : 
+				<select> 
+					<option> 모두  </option>
+					<option> 읽은 메일  </option>
+					<option> 안읽은 메일  </option>
+				</select> &nbsp;
+				</span> 
+				&nbsp;&nbsp;
+				<span id="hide" style="margin-right:40px;">  <span id="count"> </span> <a id="delMail">삭제 </a>  &nbsp; <a id="realdelMail"> 완전삭제 </a> </span>
+				<span style="margin-left:65%;" id="countAll"> </span> <br><br>
+				
+				 <table align="left" cellspacing="0" width="90%" id="tb">
+					
+					<c:forEach var="ma" items="${list}">
+						<tr class="trMail" onClick="location.href='maildetailView.do'"> 
+							<td>&nbsp;&nbsp;<input type="checkbox" onClick="event.cancelBubble=true" name="mail"></td>
+							<td align="left">  <a onClick="event.stopPropagation(); location.href='mailReply.do'"> ${ma.name} </a></td>
+							<td> ${ ma.mTitle } </td>
+							<td align="right"> ${ma.sendDate } </td>
+						</tr>
+					</c:forEach>
+				 </table>
+			</div>
+			<table
+			style="margin: 10px 0px 0px 0px; width: 80%; border-collapse: collapse">
+			<!-- 페이징처리 -->
+			<tr align="center" height="20">
+				<td colspan="6" align="center">
+					<!-- [이전] --> <c:if test="${ pi.currentPage eq 1 }">
+						이전 &nbsp;
+					</c:if> <c:if test="${ pi.currentPage ne 1 }">
+						<c:url var="before" value="recieveMail.do">
+							<c:param name="currentPage" value="${ pi.currentPage - 1 }" />
+						</c:url>
+						<a href="${ before }">이전</a> &nbsp;
+					</c:if> <!-- 페이지 --> <c:forEach var="p" begin="${ pi.startPage }"
+						end="${ pi.endPage }">
+						<c:if test="${ p eq pi.currentPage }">
+							<font color="#477A8F" size="3"><b>${ p }</b> </font>
+						</c:if>
+
+						<c:if test="${ p ne pi.currentPage }">
+							<c:url var="pagination" value="recieveMail.do">
+								<c:param name="currentPage" value="${ p }" />
+							</c:url>
+							<a href="${ pagination }">${ p }</a> &nbsp;
+						</c:if>
+					</c:forEach> <!-- [다음] --> <c:if test="${ pi.currentPage eq pi.maxPage }">
+						다음
+					</c:if> <c:if test="${ pi.currentPage ne pi.maxPage }">
+						<c:url var="after" value="recieveMail.do">
+							<c:param name="currentPage" value="${ pi.currentPage + 1 }" />
+						</c:url>
+						<a href="${ after }">다음</a>
+					</c:if>
+				</td>
+			</tr>
+		</table>
+		<br>
+			
+			<input id="search" type="text" placeholder="메일 검색"> 
+			<a> 돋보기 </a> <br>
+			
+			
+			 
+        </div>
+        
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.js"></script>
+        <script>
+        $(document).ready(function(){
+        	
+        	var countAll = $("#tb tr").length;
+        	$("#countAll").text("편지수 : " + countAll);
+        	 //선택된 갯수
+        	
+        	
+            //최상단 체크박스 클릭
+            
+            $("#checkall").click(function(){
+                //클릭되었으면
+                if($("#checkall").prop("checked")){
+                    //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
+                    $("input[name=mail]").prop("checked",true);
+                    $(".trMail").css("background","#ECECEC");
+                    $("#hide").show();
+                    $("#select").hide(); 
+                    
+                    var count = $("input:checkbox[name=mail]:checked").length;
+                   	$("#count").text(count);
+                 
+                    //클릭이 안되있으면
+                }else{
+                    //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
+                    $("input[name=mail]").prop("checked",false);
+                    $(".trMail").css("background","white");
+                    $("#hide").hide();
+                    $("#select").show(); 
+                }
+            })
+        })
+	
+	
+        $(document).ready(function(){
+		   $('table tr').mouseover(function(){
+		      $(this).css("cursor","pointer");
+		   });
+		   $('table tr').mouseout(function(){
+		      $(this).css("font-weight","normal");
+		   });
+		});
+
+        $("#delMail").click(function(){
+			confirm("정말로 삭제하시겠습니까? 휴지통으로 이동합니다.");
+		});
+        
+        $("#realdelMail").click(function(){
+        	confirm("완전 삭제하시면 복구 할 수 없습니다. 정말로 삭제하시겠습니까?");
+		});
+
+
+        $('.trMail')
+        </script>
+		
+
+</body>
+</html>

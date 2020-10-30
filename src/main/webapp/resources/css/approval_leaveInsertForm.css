@@ -1,0 +1,272 @@
+/* 작성하기 버튼 */
+#appr_insert_btn{
+    border: none;
+    border-radius: 3px;
+    background: #477A8F;
+    color:white;
+    font-size: 20px;
+    width: 90%;
+    height: 50px;
+    margin-left: 12px;
+    cursor: pointer;
+}
+.contents{
+    float: left;
+}
+
+.top-btns{
+    padding-top: 10px;
+    padding-bottom: 50px;
+    height: 50px;
+    margin-top: 80px;
+}
+.cb{
+    margin-left: 65px;
+    font-size: 18px;
+    font-weight: bolder;
+    color: #477A8F;
+    cursor: pointer;
+}
+
+#appr_set{
+    font-size: 16px;
+    font-weight: bolder;
+}
+
+#doc_type{
+    padding-left: 15px;
+    border-radius: 10px;
+    width: 100px;
+    height: 30px;
+    cursor: pointer;
+}
+
+#appr_line{
+    margin-top: 50px;
+}
+
+
+.appr_insert_table1{
+    margin-top: 20px;
+    width:1000px;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.appr_insert_table1 td{
+    color: #676767;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    border: 0.1px solid #999;
+    font-size: 13pt;
+}
+
+.appr_insert_table1 #tr1 td:nth-child(1){
+    color: #477A8F;
+    background: #cacaca;
+    width: 10%;
+}
+.appr_insert_table1 #tr1 td:nth-child(2){
+    width: 30%;
+}
+.appr_insert_table1 #tr1 td:nth-child(3){
+    color: #477A8F;
+    background: #cacaca;
+    width: 10%;
+}
+.appr_insert_table1 #tr1 td:nth-child(4){
+    width: 40%;
+}
+
+
+
+.appr_insert_table2{
+    margin-top: 20px;
+    width:1300px;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.appr_insert_table2 td{
+    
+    color: #676767;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    border: 0.1px solid #999;
+    font-size: 13pt;
+}
+
+
+
+.appr_insert_table2 #tr2 td:nth-child(1){
+    color: #477A8F;
+    background: #cacaca;
+}
+
+.appr_insert_table2 #tr2 td{
+    width: 130px;
+}
+.appr_insert_table2 #tr6 td:nth-child(1){
+    color: #477A8F;
+    background: #cacaca;
+}
+.appr_insert_table2 #tr9 td:nth-child(1){
+    color: #477A8F;
+    background: #cacaca;
+}
+
+
+/* 결재 */
+#tr2 td:nth-child(n+2){
+    height: 15px;
+    font-size: 10pt;
+    padding:5px;
+}
+
+#tr3 td{
+    height: 150px;
+}
+
+#tr4 td{
+    height: 15px;
+    font-size: 10pt;
+    padding:5px;
+}
+
+#tr5 td{
+    height: 15px;
+    font-size: 10pt;
+    padding:5px;
+}
+
+/* 참조 */
+#tr6 td:nth-child(n+2){
+    height: 15px;
+    font-size: 10pt;
+    padding:5px;
+}
+
+#tr7 td{
+    height: 100px;
+}
+
+#tr8 td{
+    height: 15px;
+    font-size: 10pt;
+    padding:5px;
+}
+
+/* 수신 */
+#tr9 td:nth-child(n+2){
+    height: 15px;
+    font-size: 10pt;
+    padding:5px;
+}
+#tr10 td{
+    height: 15px;
+    font-size: 10pt;
+    padding:5px;
+}
+
+
+#tr11 td:nth-child(2){
+    font-size: 10pt;
+    text-align: left;
+}
+
+#tr12 td:nth-child(2){
+    font-size: 10pt;
+    text-align: left;
+}
+
+
+
+
+.appr_insert_table3{
+    margin-top: 20px;
+    width:1300px;
+    border-collapse: collapse;
+}
+.appr_insert_table3 td:nth-child(1){
+    text-align: center;
+}
+
+.appr_insert_table3 td{
+    color: #676767;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    border: 0.1px solid #999;
+    font-size: 13pt;
+}
+
+.appr_insert_table3 #tr11 td:nth-child(1){
+    color: #477A8F;
+    background: #cacaca;
+    width: 10%;
+}
+.appr_insert_table3 #tr11 td:nth-child(2){
+    width: 90%;
+}
+
+.appr_insert_table3 #tr12 td:nth-child(1){
+    color: #477A8F;
+    background: #cacaca;
+    width: 10%;
+}
+.appr_insert_table3 #tr12 td:nth-child(2){
+    width: 90%;
+}
+.appr_insert_table3 #tr13 td:nth-child(1){
+    color: #477A8F;
+    background: #cacaca;
+    width: 10%;
+}
+.appr_insert_table3 #tr13 td:nth-child(2){
+    width: 90%;
+    padding-left: 50px;
+}
+
+
+
+#leave_type{
+    padding-left: 15px;
+    border-radius: 10px;
+    width: 100px;
+    height: 30px;
+    cursor: pointer;
+    margin-right: 20px;
+    margin-left: 10px;
+}
+
+#leave_end_date{
+    margin-right: 20px;
+}
+
+#calc{
+    margin-right: 20px;
+    width: 100px;
+    height: 30px;
+    border: none;
+    border-radius: 3px;
+    background: #477A8F;
+    color:white;
+    cursor: pointer;
+}
+#calc:hover{
+    color:#cacaca;
+}
+
+#period{
+    color: #477A8F;
+    font-weight: bolder;
+}
+
+#w1,#w2{
+    color: red;
+}
+
+#reason{
+    width: 800px;
+    height: 30px;
+    padding-left: 20px;
+}

@@ -1,0 +1,44 @@
+#searchList,
+#selectList{
+    height: 290px;
+    vertical-align: top;
+}
+.listbox{
+    border: 0.1px solid;
+    width: 350px;
+}
+.m-tbl{
+    float: left;
+}
+.btn-div{
+    float: left;
+    display: grid;
+    margin-top: 140px;
+}
+.m-btn{
+    width: 50px;
+    margin-bottom: 20px;
+}
+.m-btn{
+    width: 50px;
+    margin-bottom: 20px;
+    background: white;
+    border: solid 0.1px #477A8f;
+    border-radius: 5px;
+    font-size: 15px;
+    color: #477A8f;
+    background: white;
+}
+.m-save-btn{
+    margin-top: 15px;
+    width: 80px;
+    height:28px;
+    background: white;
+    border: solid 0.1px #477A8f;
+    border-radius: 30px;
+    font-size: 15px;
+    color: #477A8f;
+    background: white;
+    float: right;
+    margin-right: 25px;
+}

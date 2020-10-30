@@ -1,0 +1,132 @@
+/* contents 기본틀 */
+.cursor {
+    cursor: pointer;
+}
+html{
+    overflow: hidden;
+}
+.contents{
+    position: relative;
+    margin-left: 260px;
+    height: 1800px;
+}
+.contents-wrap::-webkit-scrollbar {
+    width: 10px;
+
+}
+.contents-wrap::-webkit-scrollbar-thumb {
+    background-color: #e8ecee;
+    border-radius: 15px;
+}
+.contents-wrap::-webkit-scrollbar-track {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: white;
+}
+.contents-title{
+    padding-top: 10px;
+    height: 50px;
+    border-bottom: solid 0.1px #cacaca;
+}
+.ct1{
+    margin-left: 50px;
+    font-size: 25px;
+    font-weight: bolder ;
+}
+.contents-wrap{
+    height: 700px;
+    overflow: auto;
+}
+/* ic */
+.ic-navi{
+    margin-left: 40px;
+    margin-top: 30px;
+    width:80%;
+    height: 4%;
+}
+.cate{
+    float: left;
+    width: 100px;
+    margin-left: 20px;
+    border-bottom: solid 0.1px #477A8F;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 2px;
+    
+}
+#myleave{
+    color: #477A8F;
+}
+.c-ic{
+    padding: 60px;
+    width: 100%;
+    height: 100%;
+}
+#show-calendar{
+    display: none;
+}
+
+/* absence-tbl */
+
+.r-table{
+    width: 100%;
+    border-top: solid 0.1px  #477A8F;
+    border-bottom: solid 0.1px  #477A8F;
+    border-collapse: collapse;
+}
+.absence-in-t{
+    width: 100px;
+}
+.tl{
+    padding: 10px;
+}
+.tr{
+    padding: 10px;
+    text-align: left;
+}
+.ta{
+    padding: 10px;
+}
+
+.save-btn{
+    margin-top: 30px;
+    width: 80px;
+    height:28px;
+    background: white;
+    border: solid 0.1px #477A8f;
+    border-radius: 3px;
+    font-size: 15px;
+    color: #477A8f;
+    background: white;
+}
+.save-btn:hover{
+    background: #477A8f;
+    color: white;
+}
+.secret-info{
+    margin-left: 20px;
+}
+.s-t{
+    color: #477A8F;
+}
+.filebox label {
+    display: inline-block; 
+    color: #999;
+    font-size: inherit; 
+    line-height: normal; 
+    vertical-align: middle; 
+    background-color: #fdfdfd;
+    cursor: pointer;
+} 
+.filebox input[type="file"] { /* 파일 필드 숨기기 */ 
+    position: absolute; 
+    width: 1px; 
+    height: 1px; 
+    padding: 0; 
+    margin: -1px;
+    overflow: hidden;
+    clip:rect(0,0,0,0);
+    border: 0; 
+}
+.ts>input{
+    margin-bottom: 5px;
+}

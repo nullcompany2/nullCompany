@@ -1,0 +1,860 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "Noto Sans KR", sans-serif;
+}
+
+ul, li {
+	list-style: none
+}
+
+a {
+	text-decoration: none;
+}
+
+header {
+	margin: 0 auto;
+	width: 100%;
+	height: 110px;
+	position: relative;
+	background-color: #3E4247;
+	box-shadow: 0px 0px 20px #5C6369;
+}
+
+#menuToggle {
+	width: 500px;
+	height: 300px;
+	position: absolute;
+	left: 10px;
+	top: 70px;
+	z-index: 5;
+}
+
+#menu {
+	font-size: 24px;
+	color: #e9e9e9;
+	width: 200px;
+	height: 110px;
+	float: left;
+	padding: 32px;
+}
+
+.menu_icon {
+	width: 100px;
+	height: 110px;
+	border: 0;
+	margin-top: 30px;
+	margin-left: 17px;
+	background-color: white;
+}
+
+.menu_icon:focus {
+	outline: none;
+}
+
+.hover1 img:last-child {
+	display: none
+}
+
+.hover1:hover img:first-child {
+	display: none
+}
+
+.hover1:hover img:last-child {
+	display: inline-block
+}
+
+#logo {
+	width: 250px;
+	height: 110px;
+	background-color: #3E4247;
+	float: left;
+}
+
+#username {
+	font-size: 18px;
+	color: #e9e9e9;
+}
+
+#userdept {
+	font-size: 14px;
+	color: #a7a7a7
+}
+
+#user_image {
+	float: right;
+	width: 90px;
+	height: 90px;
+	margin-right: 10px;
+	margin-top: 10px;
+}
+
+#info {
+	width: 80px;
+	height: 100%;
+	float: right;
+	margin-top: 15px;
+	margin-right: 100px;
+}
+
+#infobtn {
+	float: right;
+}
+
+#infoToggle {
+	width: 320px;
+	height: 130px;
+	background-color: darkcyan;
+	position: absolute;
+	right: 0px;
+	top: 110px;
+	display: inline-block;
+	z-index: 5;
+}
+
+#name_email {
+	position: absolute;
+	right: 80px;
+	top: 20px;
+}
+
+#name_email p {
+	color: #444444;
+	font-size: 17px;
+}
+
+#info1 {
+	position: absolute;
+	right: 90px;
+	top: 85px;
+}
+
+#info1 a {
+	color: #444444;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+#infoToggle div a:hover {
+	color: #477A8F;
+}
+
+#workbtn button {
+	font-size: 15px;
+	color: #ffffff;
+	border: none;
+	background-color: #477A8F;
+	width: 60px;
+	height: 25px;
+	border-radius: 3px;
+	margin-left: 10px;
+}
+
+#workbtn {
+	position: absolute;
+	right: 113px;
+	top: 70px;
+}
+
+<!--
+서브 네비 -->body {
+	font-family: "Noto Sans KR", sans-serif;
+	padding: 0px;
+	margin: 0px;
+}
+
+.container {
+	position: absolute;
+	top: 140px !important;
+	border-radius: 10px;
+	color: #676767;
+	width: 100%;
+	height: 1000px;
+	font-size: 1.15em;
+	float: left;
+	border-bottom: none;
+	padding-top: 2px;
+	overflow: hidden;
+}
+
+.drag-scrollbar {
+	overflow: auto;
+	height: 1000px;
+}
+
+.drag-scrollbar::-webkit-scrollbar {
+	width: 10px;
+}
+
+.drag-scrollbar::-webkit-scrollbar-thumb {
+	background-color: #676767;
+	border-radius: 15px;
+}
+
+.drag-scrollbar::-webkit-scrollbar-track {
+	background-color: #e8ecee;
+	border-radius: 15px;
+	box-shadow: #e8ecee;
+}
+
+.H-personnel-subNavi {
+	margin-left: 15px;
+	margin-right: 15px;
+}
+
+a {
+	text-decoration: none;
+	color: #676767;
+}
+
+.title {
+	font-size: 16px;
+	font-weight: bold;
+	margin-right: 50px;
+}
+
+.subTitle {
+	list-style: none;
+}
+
+/* contents */
+.contents {
+	position: relative;
+	margin-left: 250px;
+}
+
+.contents-title {
+	padding-top: 10px;
+	height: 50px;
+	border-bottom: solid 0.1px #cacaca;
+	position: relative;
+	top: -15px;
+	color: #1b1b1b;
+}
+
+.ct1 {
+	margin-left: 50px;
+	font-size: 20px;
+	font-weight: bolder;
+}
+
+.del {
+	opacity: 0%;
+}
+
+.del:hover {
+	opacity: 100%;
+}
+
+a:active {
+	font-weight: bolder;
+}
+
+.input-group {
+	font-size: 15px;
+	width: 180px;
+	margin-left: 10px;
+	line-height: 30px;
+}
+
+.input-group a {
+	font-size: 14px;
+	float: right;
+	color: #477A8F;
+}
+
+.input-group input {
+	padding-bottom: 5px;
+}
+
+.subTitle label {
+	font-weight: bold;
+	color: #414141;
+	font-size: 18px;
+}
+
+.calbtn {
+	border: none;
+	background-color: none;
+	font-size: 15px;
+	float: right;
+	color: #1b1b1b;
+	margin-top: 7px;
+}
+
+#sche_add {
+	border: none;
+	border-radius: 3px;
+	background: #477A8F;
+	color: white;
+	font-size: 20px;
+	width: 90%;
+	height: 50px;
+	margin-left: 12px;
+}
+
+#addsche_modal {
+	display: none;
+	width: 550px;
+	height: 481px;
+	padding: 10px 60px;
+	background-color: #fefefe;
+	border: 1px solid #888;
+	border-radius: 3px;
+}
+
+#addsche_modal .modal-close-btn {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+
+#my_modal {
+	display: none;
+	width: 300px;
+	height: 200px;
+	padding: 10px 60px;
+	background-color: #fefefe;
+	border: 1px solid #888;
+	border-radius: 3px;
+}
+
+#my_modal .modal-close-btn {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+
+.n-emp-i {
+	width: 100%;
+	height: 30%;
+}
+
+.modal-dragscroll>div>dl>dd {
+	margin-bottom: 15px;
+}
+
+.modal-dragscroll {
+	overflow: auto;
+}
+
+.modal-dragscroll::-webkit-scrollbar {
+	width: 10px;
+}
+
+.modal-dragscroll::-webkit-scrollbar-thumb {
+	background-color: #e8ecee;
+	border-radius: 15px;
+}
+
+.modal-dragscroll::-webkit-scrollbar-track {
+	background-color: white;
+	border-radius: 15px;
+	box-shadow: white;
+}
+
+.container2 {
+	position: relative;
+	border-radius: 10px;
+	background: #e8ecee;
+	color: #676767;
+	width: 250px;
+	height: 100%;
+	font-size: 1.15em;
+	float: left;
+	border-bottom: none;
+	padding-top: 2px;
+}
+
+.drag-scrollbar2 {
+	overflow: auto;
+	height: 1000px;
+}
+
+.H-personnel-subNavi2 {
+	margin-left: 15px;
+	margin-right: 15px;
+}
+
+.H-personnel-subNavi2 Depth01-1 li {
+	list-style: none;
+	margin-bottom: 10px;
+	font-size: 18px;
+}
+
+.container2 a, .container2 a:hover {
+	text-decoration: none;
+	color: #676767;
+}
+
+.del {
+	opacity: 0%;
+}
+
+.del:hover {
+	opacity: 100%;
+}
+
+a {
+	text-decoration: none;
+	color: #676767;
+}
+
+.subTitle {
+	list-style: none;
+	margin-top: 10px;
+}
+
+.input-group {
+	font-size: 15px;
+	width: 180px;
+	margin-left: 10px;
+	line-height: 30px;
+}
+
+.calbtn {
+	border: none;
+	background-color: none;
+	float: right;
+	color: #676767;
+	outline: none;
+}
+
+.calbtn:hover {
+	font-weight: bold;
+}
+
+.input-group a {
+	font-size: 14px;
+	position: relative;
+	float: right;
+	color: #477A8F;
+	left: -30px;
+}
+
+.input-group input {
+	padding-bottom: 5px;
+}
+
+.input-group a:hover {
+	color: #477A8F;
+	font-weight: bold;
+}
+
+.input-group {
+	cursor: pointer;
+}
+
+#logo {
+	width: 250px;
+	height: 110px;
+	background-color: #3E4247;
+	float: left;
+}
+
+header #logo button {
+	border: none;
+	background: none;
+	color: #477A8F;
+	padding: 23px 0px 0px 50px;
+	font-size: 23px;
+	text-align: left;
+	font-family: 'Lato', sans-serif;
+	cursor: pointer;
+}
+
+header #logo span {
+	color: white;
+	font-size: 15px;
+	font-family: 'Lato', sans-serif;
+}
+
+.fc-toolbar h2 {
+	margin: 0;
+	font-size: 25px;
+}
+
+.fc-ltr .fc-dayGrid-view .fc-day-top .fc-day-number {
+	float: right;
+	font-size: 16px;
+}
+
+.fc-toolbar
+>
+*
+>
+:not
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+(
+:first-child
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+)
+{
+margin-left
+
+
+
+
+
+
+
+
+
+
+
+
+:
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+0
+.75em
+
+
+
+
+
+
+
+
+
+
+
+
+;
+background-color
+
+
+
+
+
+
+
+
+
+
+
+
+:
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+#477A8F
+
+
+
+
+
+
+
+
+
+
+
+
+;
+}
+.fc-view-container *, .fc-view-container *:before, .fc-view-container *:after
+	{
+	box-sizing: content-box;
+	font-size: 16px;
+}
+
+::-webkit-scrollbar {
+	display: none;
+}
+
+#communitymodal {
+	display: none;
+	width: 621px;
+	height: 510px;
+	padding: 10px 60px;
+	background-color: #fefefe;
+	border: 1px solid #888;
+	border-radius: 3px;
+}
+
+#communitymodal .modal-close-btn {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+
+#my_modal {
+	display: none;
+	width: 300px;
+	height: 200px;
+	padding: 10px 60px;
+	background-color: #fefefe;
+	border: 1px solid #888;
+	border-radius: 3px;
+}
+
+#my_modal .modal-close-btn {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+
+.n-emp-i {
+	width: 100%;
+	height: 30%;
+}
+
+.modal-dragscroll>div>dl>dd {
+	margin-bottom: 15px;
+}
+
+.modal-dragscroll {
+	overflow: auto;
+}
+
+.modal-dragscroll::-webkit-scrollbar {
+	width: 10px;
+}
+
+.modal-dragscroll::-webkit-scrollbar-thumb {
+	background-color: #e8ecee;
+	border-radius: 15px;
+}
+
+.modal-dragscroll::-webkit-scrollbar-track {
+	background-color: white;
+	border-radius: 15px;
+	box-shadow: white;
+}
+
+.box {
+	width: 295px;
+	height: 30px;
+}
+
+.pallet {
+	width: 300px;
+	height: 30px;
+	position: absolute;
+	left: 144px;
+	top: 100px;
+}
+
+.active {
+	outline: 1px solid black;
+}
+
+.colorBox {
+	width: 20px;
+	height: 20px;
+	float: left;
+	margin: 1px 1px 0px 0px;
+	cursor: pointer;
+}
+
+#colorselect {
+	width: 20px;
+	height: 20px;
+	position: absolute;
+	top: 101px;
+	left: 100px;
+}
+
+#dept_list {
+	width: 175px;
+	height: 250px;
+	border: #888 solid 1px;
+	overflow-y: auto;
+	position: absolute;
+	top: 165px;
+}
+
+#name_list {
+	width: 125px;
+	height: 250px;
+	border: #888 solid 1px;
+	float: left;
+	position: absolute;
+	top: 165px;
+	left: 255px;
+	overflow-y: auto;
+}
+
+#enrollauthority {
+	height: 105px;
+	width: 120px;
+	border: #888 solid 1px;
+	position: absolute;
+	top: 165px;
+	right: 55px;
+	overflow-y: auto;
+}
+
+#lookauthority {
+	height: 105px;
+	width: 120px;
+	border: #888 solid 1px;
+	position: absolute;
+	top: 310px;
+	right: 55px;
+	overflow-y: auto;
+}
+
+.tree {
+	display: block;
+	list-style-type: disc;
+	margin-block-start: 1em;
+	margin-block-end: 1em;
+	margin-inline-start: 0px;
+	margin-inline-end: 0px;
+	padding-inline-start: 20px;
+}
+
+.tree button {
+	margin-left: -30px;
+	background: transparent;
+	border: 0;
+	font-size: 14px;
+	cursor: pointer;
+}
+
+.tree ul {
+	display: none;
+	padding-left: 17px;
+	list-style: none;
+}
+
+.tree li.unfold>ul {
+	display: block;
+}
+
+.tree li {
+	position: relative;
+	padding-left: 10px;
+	border-left: 1px solid #ccc;
+	min-height: 23px;
+	line-height: 23px;
+	list-style: none;
+}
+
+.tree li::before, .tree li::after {
+	content: '';
+	position: absolute;
+}
+
+.tree li::before {
+	top: 10px;
+	left: 0;
+	width: 17px;
+	height: 0;
+	border-bottom: 1px solid #ccc;
+}
+
+.tree>li:first-child::after {
+	top: 0;
+	left: -1px;
+	width: 1px;
+	height: 10px;
+	background: #fff;
+}
+
+.tree li.last::after {
+	top: 11px;
+	left: -1px;
+	width: 1px;
+	height: 100%;
+	background: #fff;
+}
+
+.tree li span {
+	position: absolute;
+	top: 4px;
+	left: 17px;
+	width: 17px;
+	height: 17px;
+	font-size: 14px;
+}
+
+.tree li.final span {
+	cursor: default;
+}
+
+.tree li span::before {
+	content: '+';
+	font-size: 20px;
+	font-weight: bold;
+	position: absolute;
+	top: -3px;
+}
+
+.tree li.unfold>span::before {
+	content: '-';
+	font-size: 20px;
+	font-weight: bold;
+	position: absolute;
+	top: -3px;
+}
+
+.tree li.final span::before {
+	content: ' ';
+	font-size: 20px;
+	font-weight: bold;
+	position: absolute;
+	top: -3px;
+}
+
+.tree li ul li {
+	font-size: 12px;
+	text-align: left;
+	padding-left: 23px;
+}
+
+
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="personnelMapper">
+	<!-- MEMBER -->
+	<resultMap id="memberResultSet" type="Member">
+    	<result property="memNo" column="MEM_NO"/>
+      	<result property="id" column="ID"/>
+		<result property="pwd" column="PWD"/>
+		<result property="name" column="NAME"/>
+		<result property="gender" column="GENDER"/>
+		<result property="birth" column="BIRTH"/>
+		<result property="phone" column="PHONE"/>
+		<result property="email" column="EMAIL"/>
+		<result property="address" column="ADDRESS"/>
+		<result property="photo" column="PHOTO"/>
+		<result property="enrollDate" column="ENROLL_DATE"/>
+		<result property="updateDate" column="UPDATE_DATE"/>
+		<result property="mStatus" column="M_STATUS"/>
+		<result property="annualLeave" column="ANNUAL_DATE"/>
+		<result property="rewardLeave" column="REWARD_DATE"/>
+		<result property="joinStatus" column="JOIN_STATUS"/>
+		<result property="myInfo" column="MY_INFO"/>
+		<result property="deptNo" column="DEPT_NO"/>
+		<result property="lankNo" column="RANK_NO"/>
+		<result property="deptName" column="DEPT_NAME"/>
+		<result property="rankName" column="RANK_NAME"/>
+		<result property="sAccess" column="S_ACCESS"/>
+           
+   	</resultMap>
+	<!-- DEPARTMENT  -->
+   	<resultMap type="Department" id="deptResultSet">
+      	<result property="deptNo" column="DEPT_NO"/>
+		<result property="deptName" column="DEPT_NAME"/>
+   	</resultMap>
+   	
+   	<!-- REWARD_LEAVE -->
+   	<resultMap type="RewardLeave" id="rewardResultSet">
+
+   		<result property="noReward" column="NO_R_LAEVE"/>
+   		<result property="memNo" column="MEM_NO"/>
+   		<result property="rewardDays" column="DAYS_R_LEAVE"/>
+   		<result property="createDate" column="CREATEDATE_R_LEAVE"/>
+   	</resultMap>
+   	<!-- RECODE_LEAVE -->
+   	<resultMap type="RecodeLeave" id="recodeLeaveResultSet">
+   		<result property="noRecode" column="NO_RECODE_LEAVE"/>
+   		<result property="memNo" column="MEM_NO"/>
+   		<result property="typeLeave" column="TYPE_USE_LEAVE"/>
+   		<result property="applyDate" column="APPLYDATE_USE_LEAVE"/>
+   		<result property="useDays" column="DAYS_USE_LEAVE"/>
+   		<result property="attach" column="ATTACHMENT_USE_LEAVE"/>
+   		<result property="status" column="L_STATUS"/>
+   		<result property="requestedDate" column="REQUESTED_DATE"/>
+   		<result property="reason" column="REASON"/>
+   	</resultMap>
+   	
+   	<resultMap type="TypeLeave" id="typeLeaveResultSet">
+   		<result property="noType" column="NO_TYPE_LEAVE"/>
+   		<result property="nameType" column="NAME_TYPE_LEAVE"/>
+   		<result property="annualUse" column="ANNUAL_USE"/>
+   		<result property="status" column="L_STATUS"/>
+   	</resultMap>
+   	
+   	<resultMap type="MixForLeave" id="mixLeaveResultSet">
+   		<result property="noRecode" column="NO_RECODE_LEAVE"/>
+   		<result property="memNo" column="MEM_NO"/>
+   		<result property="typeLeave" column="TYPE_USE_LEAVE"/>
+   		<result property="applyDate" column="APPLYDATE_USE_LEAVE"/>
+   		<result property="useDays" column="DAYS_USE_LEAVE"/>
+   		<result property="attach" column="ATTACHMENT_USE_LEAVE"/>
+   		<result property="status" column="L_STATUS"/>
+   		<result property="noType" column="NO_TYPE_LEAVE"/>
+   		<result property="nameType" column="NAME_TYPE_LEAVE"/>
+   		<result property="annualUse" column="ANNUAL_USE"/>
+   		<result property="requestedDate" column="REQUESTED_DATE"/>
+   		<result property="reason" column="REASON"/>
+   	</resultMap>
+   	
+   	<resultMap type="TypeUsedLeave" id="TypeUsedLeaveResultSet">
+   		<result property="tName" column="T_NAME"/>
+   		<result property="num"  column="NUMBER_OF_USED"/>
+   	</resultMap>
+   	<!-- **************************************************************************************** -->
+   
+	<!-- 휴가일수 계산 -->
+	<select id="leaveCalculdate" parameterType="string" resultType="_int" >
+		SELECT ANNUAL_LEAVE
+		FROM SET_LEAVE_STANDARD
+		WHERE WORKING_YEARS = #{workyear}
+	</select>
+	<!-- 포상휴가 조회 (사번) -->
+	<select id="rewardLeave" resultType="_int" parameterType="int">
+		SELECT SUM(DAYS_R_LEAVE)
+		FROM REWARD_LEAVE
+		WHERE MEM_NO = #{memNo}
+	</select>
+
+	<!-- 사용된 포상휴가 -->
+	<select id="usedRewardLeave" resultType="_int" parameterType="int">
+		SELECT SUM(DAYS_USE_LEAVE)
+		FROM RECODE_LEAVE
+		WHERE MEM_NO = #{memNo}
+		AND L_STATUS = '결재완료'
+		AND type_use_leave IN (SELECT NO_TYPE_LEAVE
+		                        FROM TYPE_LEAVE
+		                        WHERE no_type_leave= '2')
+	</select>
+	
+	<update id="updateLeave" parameterType="map">
+		UPDATE MEMBER
+		SET ANNUAL_LEAVE=#{annual}, REWARD_LEAVE=#{reward}
+		WHERE MEM_NO = #{memNo}
+	</update>
+	<!-- 사용된 연차 -->
+	<select id="usedAnnualLeave" resultType="_int" parameterType="int">
+		SELECT SUM(DAYS_USE_LEAVE)
+		FROM RECODE_LEAVE
+		WHERE MEM_NO = #{memNo}
+		AND L_STATUS = '결재완료'
+		AND type_use_leave IN (SELECT NO_TYPE_LEAVE
+		                        FROM TYPE_LEAVE
+		                        WHERE ANNUAL_USE = 'Y')
+	</select>
+	<!-- 지각수 (월) -->
+	<select id="lateCountM" parameterType="int" resultType="_int">
+		SELECT COUNT(*)
+		FROM (SELECT *
+		    FROM RECODE_DILIGENCE
+		    WHERE EXTRACT(YEAR FROM DATE_DILIGENCE) = EXTRACT(YEAR FROM SYSDATE)
+		    AND EXTRACT (MONTH FROM DATE_DILIGENCE) = EXTRACT(MONTH FROM SYSDATE))
+		WHERE STATUS_DILIGENCE = '지각'
+		AND MEM_NO = #{memNo}
+	</select>
+
+	<!-- 지각수 (년) -->
+	<select id="lateCountY" parameterType="int" resultType="_int">
+		SELECT COUNT(*)
+		FROM (SELECT *
+		    FROM RECODE_DILIGENCE
+		    WHERE EXTRACT(YEAR FROM DATE_DILIGENCE) = EXTRACT(YEAR FROM SYSDATE))
+		WHERE STATUS_DILIGENCE = '지각'
+		AND MEM_NO = #{memNo}
+	</select>
+	<!-- 부서리스트 조회 -->
+	<select id="deptList" resultMap="deptResultSet">
+		SELECT *
+		FROM DEPARTMENT
+	</select>
+	<!-- 사원전체조회 (부서별) -->
+	<select id="deptAllMemberList" resultMap="memberResultSet" parameterType="Member">
+		SELECT *
+		FROM MEMBER
+		JOIN DEPARTMENT USING(DEPT_NO)
+		JOIN RANK USING(RANK_NO)
+		ORDER BY DEPT_NO
+	</select>
+	<!-- 회원상세정보 모달/ 사번으로조회 -->
+	<select id="detailMemberInfo" resultMap="memberResultSet" parameterType="Member">
+		SELECT *
+		FROM MEMBER
+		JOIN DEPARTMENT USING(DEPT_NO)
+		JOIN RANK USING(RANK_NO)
+		WHERE MEM_NO = #{memNo}
+	</select>
+	
+	<!-- 검색 사번/이름 -->
+	<select id="searchMemberById" resultMap="memberResultSet" parameterType="Member">
+		SELECT *
+		FROM MEMBER
+		WHERE NAME LIKE '%'|| #{searchText} ||'%'
+		OR ID LIKE '%'|| #{searchText} ||'%'
+	</select>
+	
+	<select id="createdReward" resultMap="rewardResultSet" parameterType="_int">
+		SELECT *
+		FROM REWARD_LEAVE
+		WHERE MEM_NO = #{memNo}
+	</select>
+	
+	<select id="applyLeave" resultMap="recodeLeaveResultSet" parameterType="_int">
+		SELECT *
+		FROM RECODE_LEAVE
+		WHERE MEM_NO = #{memNo}
+	</select>
+	
+	<select id="typeLeave" resultMap="typeLeaveResultSet">
+		SELECT *
+		FROM TYPE_LEAVE
+	</select>
+	
+	<select id="mixLeave" resultMap="mixLeaveResultSet" parameterType="_int">
+		SELECT *
+	  	FROM RECODE_LEAVE R
+	  	LEFT JOIN TYPE_LEAVE T ON (R.TYPE_USE_LEAVE = T.NO_TYPE_LEAVE)
+		WHERE MEM_NO = #{memNo}
+		ORDER BY R.APPLYDATE_USE_LEAVE	
+	</select>
+	
+	<select id="tul" resultMap="TypeUsedLeaveResultSet" parameterType="_int">
+		SELECT NAME_TYPE_LEAVE as T_NAME,COUNT(*) as NUMBER_OF_USED
+		FROM RECODE_LEAVE R
+		LEFT JOIN TYPE_LEAVE T ON (R.TYPE_USE_LEAVE = T.NO_TYPE_LEAVE)
+		WHERE MEM_NO = #{memNo}
+		GROUP BY t.name_type_leave
+	</select>
+	
+	<select id="detailRecodeLeave" resultMap="mixLeaveResultSet" parameterType="_int">
+		SELECT *
+		FROM RECODE_LEAVE R
+		LEFT JOIN TYPE_LEAVE T ON (R.TYPE_USE_LEAVE = T.NO_TYPE_LEAVE)
+		WHERE R.NO_RECODE_LEAVE = #{noRecode}	
+	</select>
+	
+</mapper>

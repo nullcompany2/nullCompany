@@ -1,0 +1,147 @@
+#info_modal {
+	display: none;
+	width: 450px;
+	height: 500px;
+	padding: 20px 60px;
+	background-color: #fefefe;
+	border-radius: 3px;
+}
+
+#info_modal .modal-close-btn {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+
+#edituser_modal {
+	width: 630px;
+	height: 730px;
+	padding: 15px 20px;
+	background-color: #fefefe;
+	border-radius: 3px;
+}
+
+#edituser_modal .modal-close-btn {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+
+.n-emp-i {
+	width: 100%;
+	height: 30%;
+}
+
+.modal-dragscroll>div>dl>dd {
+	margin-bottom: 13px;
+	font-size: 14px;
+	margin-left: 130px;
+	color: #676767;
+}
+
+.modal-dragscroll {
+	overflow: auto;
+}
+
+.modal-dragscroll::-webkit-scrollbar {
+	width: 10px;
+}
+
+.modal-dragscroll::-webkit-scrollbar-thumb {
+	background-color: #e8ecee;
+	border-radius: 15px;
+}
+
+.modal-dragscroll::-webkit-scrollbar-track {
+	background-color: white;
+	border-radius: 15px;
+	box-shadow: white;
+}
+
+#emp-name {
+	font-size: 18px;
+	font-weight: bold;
+	position: relative;
+	left: 2px;
+}
+
+#emp-dept {
+	font-size: 16px;
+}
+
+#emp-rank {
+	font-size: 16px;
+}
+
+#dept_list {
+	width: 230px;
+	border-right: #cacaca solid 1px;
+}
+
+.tg {
+	border-collapse: collapse;
+	border-spacing: 0;
+	width: 90%;
+	height: 100px;
+}
+
+.tg td {
+	border-style: solid;
+	border-width: 0px;
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	overflow: hidden;
+	padding: 10px 5px;
+	word-break: normal;
+}
+
+.tg th {
+	border-top: #676767 solid 1px;
+	border-style: solid;
+	border-width: 0px;
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	font-weight: normal;
+	overflow: hidden;
+	padding: 10px 5px;
+	word-break: normal;
+}
+
+.tg .tg-0pky {
+	border-color: inherit;
+	text-align: left;
+	vertical-align: top
+}
+
+.tg .tg-0lax {
+	text-align: left;
+	vertical-align: top
+}
+
+#mem_list_table {
+	margin-top: 40px;
+	margin-left: 50px;
+}
+
+#list_table_tr th {
+	text-align: center;
+}
+
+#list_table_tr_input td {
+	text-align: center;
+}
+
+#tg thead tr:last-child {
+	border-bottom: red solid 1px;
+}
+
+.ts input {
+	border: #676767 solid 0.1px;
+	border-radius: 6px;
+	height: 20px
+}
+
+.tl {
+	float: left;
+	margin-top: 7px;
+}

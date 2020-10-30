@@ -1,0 +1,81 @@
+.AllM{
+	text-align:center;
+	background:#e8ecee;
+}
+
+
+.contents-title{
+    padding-top: 10px;
+    height: 50px;
+    border-bottom: solid 0.1px #cacaca;
+}
+.ct1{
+    margin-left: 50px;
+    font-size: 25px;
+    font-weight: bolder ;
+}
+.contents-wrap{
+    display: flex;
+
+}
+
+.H-personnel-organization{
+    border-bottom: solid 0.1px #cacaca;
+    border-bottom-right-radius: 10px;
+    width: 100%;
+}
+
+.listbox{
+    border-right: solid 0.1px #cacaca;
+    font-size: 16px;
+    text-align: left;
+    background-color: white;
+    width: 200px;
+    height: 100%;
+    
+}
+.dept-title{
+    margin-top: 5px;
+    margin-left: 40px;
+}
+
+.ic{
+    width: 100%;
+}
+.ic-title{
+	text-align:left;
+	margin-left : 20px;
+    font-size: 30px;
+    font-weight: bold;
+    padding-top: 50px;
+}
+.ic-emp-info{
+
+    margin-top: 20px;
+    margin-left: 30px;
+
+}
+.emp-img{
+    float: left;
+    width: 70px;
+    height: 70px;
+}
+.ic-emp-info>li{
+    float: right;
+
+}
+.emp-info{
+    margin-left: 10px;
+}
+.search-emp{
+    border-radius: 10px;
+    border: solid 0.5px #477A8F;
+}
+.search-btn{
+    border-radius: 3px;
+    background: white;
+    color: #477A8F;
+    border: none;
+}
+
+

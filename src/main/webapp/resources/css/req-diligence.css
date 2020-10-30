@@ -1,0 +1,111 @@
+/* contents 기본틀 */
+.cursor {
+    cursor: pointer;
+}
+html{
+    overflow: hidden;
+}
+.contents{
+    position: relative;
+    margin-left: 260px;
+    height: 1000px;
+}
+.contents-wrap::-webkit-scrollbar {
+    width: 10px;
+
+}
+.contents-wrap::-webkit-scrollbar-thumb {
+    background-color: #e8ecee;
+    border-radius: 15px;
+}
+.contents-wrap::-webkit-scrollbar-track {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: white;
+}
+.contents-title{
+    padding-top: 10px;
+    height: 50px;
+    border-bottom: solid 0.1px #cacaca;
+}
+.ct1{
+    margin-left: 50px;
+    font-size: 25px;
+    font-weight: bolder ;
+}
+.contents-wrap{
+    height: 700px;
+    overflow: auto;
+}
+/* ic */
+.ic-navi{
+    margin-left: 40px;
+    margin-top: 30px;
+    width:80%;
+    height: 4%;
+}
+.cate{
+    float: left;
+    width: 100px;
+    margin-left: 20px;
+    border-bottom: solid 0.1px #477A8F;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 2px;
+    
+}
+#status-diligence{
+    color: #477A8F;
+}
+.c-ic{
+    padding: 60px;
+    width: 100%;
+    height: 100%;
+}
+#show-modi-diligence{
+    display: none;
+}
+
+/* leave-tbl */
+.req-table{
+    margin-top: 50px;
+    width: 60%;
+    border-top: solid 0.1px  #477A8F;
+    border-bottom: solid 0.1px #477A8F;
+    text-align: center;
+    border-collapse: collapse;
+
+}
+.req-tbl-il,
+.req-tbl-th,
+.req-tbl.td{
+    width: 100%;
+    border-top: solid 0.1px #477A8F;
+    border-bottom: solid 0.1px #477A8F;
+    border-collapse:collapse;
+}
+.req-tbl-th{
+
+    width: 30px;
+    height: 50px;
+    background: #e8ecee;
+    text-align: center;
+}
+.req-tbl-td{
+    padding: 20px;
+    width: 200px;
+    text-align: left;
+}
+.req-sel{
+    width: 100px;
+}
+.req-btn{
+    color: #477A8F;
+    margin-left: 20px;
+    margin-right: 20px;
+    font-size: 17px;
+    border: none;
+    background-color: white;
+    border-bottom: solid 0.1px #477A8F;
+    border-bottom-right-radius: 2px;
+    border-bottom-left-radius: 2px;
+}

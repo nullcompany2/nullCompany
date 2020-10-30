@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="Y_personnelMapper">
+	<resultMap id="memberResultSet" type="Member">
+		<result property="memNo" column="MEM_NO" />
+		<result property="id" column="ID" />
+		<result property="pwd" column="PWD" />
+		<result property="name" column="NAME" />
+		<result property="gender" column="GENDER" />
+		<result property="birth" column="BIRTH" />
+		<result property="phone" column="PHONE" />
+		<result property="email" column="EMAIL" />
+		<result property="address" column="ADDRESS" />
+		<result property="photo" column="PHOTO" />
+		<result property="enrollDate" column="ENROLL_DATE" />
+		<result property="updateDate" column="UPDATE_DATE" />
+		<result property="mStatus" column="M_STATUS" />
+		<result property="annualLeave" column="ANNUAL_DATE" />
+		<result property="rewardLeave" column="REWARD_DATE" />
+		<result property="joinStatus" column="JOIN_STATUS" />
+		<result property="myInfo" column="MY_INFO" />
+		<result property="deptNo" column="DEPT_NO" />
+		<result property="lankNo" column="RANK_NO" />
+		<result property="deptName" column="DEPT_NAME" />
+		<result property="rankName" column="RANK_NAME" />
+		<result property="sAccess" column="S_ACCESS" />
+	</resultMap>
+	
+	
+	<resultMap id="deptResultSet" type="Department">
+		<result property="deptNo" column="DEPT_NO" />
+		<result property="deptName" column="DEPT_NAME" />
+	</resultMap>
+	
+  	<resultMap id="rankResultSet" type="Rank">
+		<result property="rankNo" column="RANK_NO" />
+		<result property="rankName" column="RANK_NAME" />
+	</resultMap>  
+	
+  	<resultMap id="EmailResultSet" type="Email">
+		<result property="memNo" column="MEM_NO" />
+		<result property="email_address" column="EMAIL_ADDRESS" />
+	</resultMap>  
+
+
+	<!-- 승인 리스트 -->
+	<select id="selectApprovalList" resultMap="memberResultSet" parameterType="Member">
+		SELECT *
+		FROM MEMBER
+		WHERE JOIN_STATUS = 'N'
+		ORDER BY ENROLL_DATE
+	</select>
+	
+	<!-- 부서 셀렉트 박스 리스트 -->
+	<select id="selectDeptList" resultMap="deptResultSet" parameterType="Department">
+		SELECT *
+		FROM DEPARTMENT
+		ORDER BY DEPT_NO
+	</select>
+	
+	<!-- 직급 셀렉트 박스 리스트 -->
+ 	<select id="selectRankList" resultMap="rankResultSet" parameterType="Rank">
+		SELECT *
+		FROM RANK
+		ORDER BY RANK_NO
+	</select> 
+	
+	<!-- 승인시 업데이트 -->
+	<update id="updateApprovalUser" parameterType="_int">
+		UPDATE MEMBER
+		SET RANK_NO = #{lankNo},
+        DEPT_NO = #{deptNo},
+        JOIN_STATUS ='Y',
+        ENROLL_DATE = SYSDATE
+		WHERE MEM_NO = #{memNo}
+	</update>
+	
+	<!-- 이메일 추가 -->
+	 <insert id="aprrovalEmail" parameterType="Email">
+ 		INSERT INTO EMAIL VALUES(#{memNo},#{email_address})
+ 	</insert>
+</mapper>
