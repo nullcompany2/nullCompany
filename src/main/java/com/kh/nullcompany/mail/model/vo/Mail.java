@@ -12,11 +12,13 @@ public class Mail {
 	private String sendDate;
 	private String saveStatus;
 	private String mDeleteStatus;
+	private int mailNo;
+	private int senderNo;
 	
 	public Mail() {}
 
 	public Mail(int memNo, String name, String sender, String recipient, String mTitle, String mFileName,
-			String mContent, String sendDate, String saveStatus, String mDeleteStatus) {
+			String mContent, String sendDate, String saveStatus, String mDeleteStatus, int mailNo, int senderNo) {
 		super();
 		this.memNo = memNo;
 		this.name = name;
@@ -28,6 +30,8 @@ public class Mail {
 		this.sendDate = sendDate;
 		this.saveStatus = saveStatus;
 		this.mDeleteStatus = mDeleteStatus;
+		this.mailNo = mailNo;
+		this.senderNo = senderNo;
 	}
 
 	public int getMemNo() {
@@ -110,14 +114,29 @@ public class Mail {
 		this.mDeleteStatus = mDeleteStatus;
 	}
 
+	public int getMailNo() {
+		return mailNo;
+	}
+
+	public void setMailNo(int mailNo) {
+		this.mailNo = mailNo;
+	}
+
+	public int getSenderNo() {
+		return senderNo;
+	}
+
+	public void setSenderNo(int senderNo) {
+		this.senderNo = senderNo;
+	}
+
 	@Override
 	public String toString() {
 		return "Mail [memNo=" + memNo + ", name=" + name + ", sender=" + sender + ", recipient=" + recipient
 				+ ", mTitle=" + mTitle + ", mFileName=" + mFileName + ", mContent=" + mContent + ", sendDate="
-				+ sendDate + ", saveStatus=" + saveStatus + ", mDeleteStatus=" + mDeleteStatus + "]";
+				+ sendDate + ", saveStatus=" + saveStatus + ", mDeleteStatus=" + mDeleteStatus + ", mailNo=" + mailNo
+				+ ", senderNo=" + senderNo + "]";
 	}
 
 	
-	
-
 }

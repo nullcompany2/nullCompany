@@ -14,7 +14,7 @@
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
-<title>메일 쓰기</title>
+<title>메일 id 로 </title>
 
 <style>
 
@@ -116,9 +116,8 @@ a:active {
 						 <a href="javascript:history.go(-1);"> 
 						 <input type="button" value="이전으로" /></a> <br>
 						&nbsp;받는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-						<input type="text" name="writer" style="width: 60%;"
-							placeholder="메일 주소 사이에 ,(콤마)으로 구분하여 입력해주세요." /> <span onclick=""
-							style="font-size: 17px; background: #477A8F; color: white; padding: 0px 8px 0px 8px;">+</span>
+						<input type="text" name="writer" style="width: 60%;" value= "${m.name}"/>
+							  <span style="font-size: 17px; background: #477A8F; color: white; padding: 0px 8px 0px 8px;">+</span>
 						<br> &nbsp;&nbsp;제목
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						&nbsp;<input type="text" name="title" style="width: 60%;"
@@ -138,7 +137,7 @@ a:active {
 		<hr>
 			<p>메일 제목 : <span id="modalTitle"> 제목없음 </span></p>
 			<p>
-				보낸사람 : ${ loginUser.name }< ${ loginUser.id } >
+				보낸 사람 : ${ loginUser.name }< ${ loginUser.id } >
 				
 			</p>
 			<p>받는 사람 : <span id="modalRecipient"> </span></p>

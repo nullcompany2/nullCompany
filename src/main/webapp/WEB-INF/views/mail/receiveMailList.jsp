@@ -54,8 +54,8 @@
 	
 	
 	#tb {
-	margin-bottom : 50px;
-	padding-bottom : 30px;
+	margin-bottom : 10px;
+	padding-bottom : 10px;
 	border-bottom:  1px solid #ECECEC;
 	
 	}
@@ -77,6 +77,9 @@
 
 <body>
 		<c:import url="../common/mailSubNav.jsp"/>
+		
+		
+		
         <div class="contents">
             <div class="contents-title">
                 <span class="ct1">받은 편지함</span>
@@ -85,32 +88,43 @@
 			<div style="margin-left:40px;">
 			<!--여기다가 만들기 -->
 			<br> 
-				&nbsp;&nbsp;<input type="checkbox" id="checkall"> 
-				&nbsp;&nbsp; <span style="color:#477A8F;" id="select"> 보기 : 
-				<select> 
-					<option> 모두  </option>
-					<option> 읽은 메일  </option>
-					<option> 안읽은 메일  </option>
-				</select> &nbsp;
-				</span> 
-				&nbsp;&nbsp;
-				<span id="hide" style="margin-right:40px;">  <span id="count"> </span> <a id="delMail">삭제 </a>  &nbsp; <a id="realdelMail"> 완전삭제 </a> </span>
-				<span style="margin-left:65%;" id="countAll"> </span> <br><br>
-				
-				 <table align="left" cellspacing="0" width="90%" id="tb">
-					
-					<c:forEach var="ma" items="${list}">
+						&nbsp;&nbsp;<input type="checkbox" id="checkall"> 
+						&nbsp;&nbsp; <span style="color:#477A8F;" id="select"> 보기 : 
+						<select> 
+							<option> 모두  </option>
+							<option> 읽은 메일  </option>
+							<option> 안읽은 메일  </option>
+						</select> &nbsp;
+						</span> 
+						&nbsp;&nbsp;
+						<span id="hide" style="margin-right:40px;">  <span id="count"> </span> <a id="delMail">삭제 </a>  &nbsp; <a id="realdelMail"> 완전삭제 </a> </span>
+						<span style="margin-left:65%;" id="countAll"> </span> <br><br>
+					<c:choose>
+				    <c:when test="${!empty list }">
+				        <c:forEach var="ma" items="${list}">
+						 <table align="left" cellspacing="0" width="90%" id="tb">
 						<tr class="trMail" onClick="location.href='maildetailView.do'"> 
+						
+						<c:url var="mailWriteId" value="mailWriteId.do">
+							<c:param name="senderNo" value="${ma.senderNo}"/>
+						</c:url>
 							<td>&nbsp;&nbsp;<input type="checkbox" onClick="event.cancelBubble=true" name="mail"></td>
-							<td align="left">  <a onClick="event.stopPropagation(); location.href='mailReply.do'"> ${ma.name} </a></td>
-							<td> ${ ma.mTitle } </td>
-							<td align="right"> ${ma.sendDate } </td>
+							<td align="left"><a onClick="event.stopPropagation(); location.href='mailWriteId.do'">${ma.name} [${ma.sender}] </a></td>
+							<td>${ ma.mTitle }</td>
+							<td align="right"> ${ma.sendDate }</td>
 						</tr>
+						</table>
 					</c:forEach>
-				 </table>
+				    </c:when>
+				    
+				    <c:otherwise>
+				       현재 편지함에 메일이 없습니다. 
+				    </c:otherwise>
+				</c:choose>
+
 			</div>
-			<table
-			style="margin: 10px 0px 0px 0px; width: 80%; border-collapse: collapse">
+			
+			<table style=" margin: 10px 0px 0px 80px; width: 80%; border-collapse: collapse">
 			<!-- 페이징처리 -->
 			<tr align="center" height="20">
 				<td colspan="6" align="center">
