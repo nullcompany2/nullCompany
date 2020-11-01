@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.annotation.ModelAndViewResolver;
 
 import com.kh.nullcompany.common.Pagination;
 import com.kh.nullcompany.mail.model.service.MailService;
@@ -80,10 +81,17 @@ private MailService maService;
 		public String mailSaveList(HttpServletResponse response){
 			return "mail/saveMailList";
 		}
+		
 		// 메일 한개 보기 컨트롤러   
 		@RequestMapping("maildetailView.do")
-		public String maildetailView(HttpServletResponse response){
-			return "mail/mailDetailView";
+		public ModelAndView mailDetailView(ModelAndView mv,int mailNo){
+			
+			System.out.println(mailNo);
+			Mail ma = maService.mailDetailView(mailNo);
+			
+			mv.addObject("ma",ma);
+			mv.setViewName("mail/mailDetailView");
+			return mv;
 		}
 		
 		// 휴지통 이동 컨트롤러   
@@ -91,23 +99,32 @@ private MailService maService;
 		public String deleteMailList(HttpServletResponse response){
 			return "mail/deleteMailList";
 		}
-	
-		// 이름 누르고 그 사람에게 메일 보내기 
+		
+		// 메일 한개 보내기   
 		@RequestMapping("mailWriteId.do")
 		public ModelAndView mailWriteId(ModelAndView mv,
-										int senderNo, 
-		@RequestParam(value="currentPage",required=false,defaultValue="1") int currentPage ) {
-			
-			
-			System.out.println(senderNo);
-			System.out.println("오냐 ...?");
-			
+				int senderNo){
 			
 			Member m = maService.mailWriteId(senderNo);
-				mv.addObject("m",m);
-				mv.addObject(currentPage);
-				mv.setViewName("mail/mailWriteId");
-		      	
+			System.out.println(m);
+			System.out.println(senderNo);
+			
+			mv.addObject("m",m);
+			mv.setViewName("mail/mailWriteId");
+			
+			return mv;
+			
+		}
+		
+		// 답장하기 
+		@RequestMapping("mailReply.do")
+		public ModelAndView mailReply(ModelAndView mv, int mailNo){
+			
+			System.out.println(mailNo);
+			Mail ma = maService.mailReply(mailNo);
+			
+			mv.addObject("ma",ma);
+			mv.setViewName("mail/replyMail");
 			return mv;
 		}
 		

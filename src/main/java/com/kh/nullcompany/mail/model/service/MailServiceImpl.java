@@ -36,6 +36,16 @@ public class MailServiceImpl implements MailService {
 		return 	maDao.mailWriteId(senderNo);
 	}
 
+	@Override
+	public Mail mailDetailView(int mailNo) {
+		return maDao.mailDetailView(mailNo);
+	}
+
+	@Override
+	public Mail mailReply(int mailNo) {
+		return maDao.mailReply(mailNo);
+	}
+
 	
 
 }

@@ -71,7 +71,7 @@
    
    </select>
    
-   <select id="mailWriteId" parameterType="Member">
+   <select id="mailWriteId" parameterType="_int" resultMap="memberResultSet">
 		SELECT *
         FROM MEMBER
         WHERE MEM_NO = #{senderNo}

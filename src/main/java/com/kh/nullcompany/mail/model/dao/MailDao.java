@@ -33,6 +33,14 @@ public class MailDao {
 	public Member mailWriteId(int senderNo) {
 		return sqlSession.selectOne("memberMapper.mailWriteId",senderNo);
 	}
-	
+
+	public Mail mailDetailView(int mailNo) {
+		return sqlSession.selectOne("mailMapper.mailDetailView",mailNo);
 	}
+
+	public Mail mailReply(int mailNo) {
+		return sqlSession.selectOne("mailMapper.mailDetailView",mailNo);
+	}
+	
+}
 

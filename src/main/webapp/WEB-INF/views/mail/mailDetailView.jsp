@@ -44,17 +44,6 @@
 		cursor:pointer;
 	} 
 
-	/* input[type=button]{
-	font-size : 18px;
-	margin: 7px 5px 7px 5px;
-	background: none;
-	border :none;
-	color :#477A8F;
-	
-	} */
-	
-	
-	
 	input[type=button]:focus,
 	li:focus,
 	a:focus{
@@ -96,37 +85,30 @@
 <body>
         <div class="contents">
              <div class="contents-title">
-                <a href=""><input type="button" value="답장"/> </a>
+              
+              <c:url var="mailReply" value="mailReply.do">
+							<c:param name="mailNo" value="${ma.mailNo}" />
+			  </c:url> 
+              
+                <a href="${mailReply}"><input type="button" value="답장"/> </a>
 						<a href=""> <input type="button" value="전달"/></a> 
 						<input  id="delMail" type="button" value="삭제" /> 
 						<input id="realdelMail" type="button" value="완전삭제" />
 						<br> 
 			</div>
 			<div style="width: 90%; margin: auto; margin-top:20px;">
-				<span id="viewTitle"> 집이요 집! !  </span>	 
-				 <span id="viewdate"> 2020-11-18 13:02:21 </span> <br>
+				<span id="viewTitle"> ${ma.mTitle}   </span>	 
+				 <span id="viewdate"> ${ma.sendDate} </span> <br>
 				
-				보낸 사람 : 이용희 <yong> <br> 
+				보낸 사람 : ${ma.name}< ${ma.sender} >  <br> 
 				받는 사람 : ${ loginUser.name }< ${ loginUser.id } ><br> 
 				<br> 
 				
 				<div id="viewmailContent"> 
-				집인데 집가고 싶어요!!!!! 
-				<pre> 
-				ㅋㅋ
-				ㅋ
-				ㅋ
-				ㅋ
-				ㅋ
-				ㅋ
-				ㅋㅋ
-				ㅋ
-				ㅋ
-				ㅋ
-				ㅋ
-				ㅋ
+				 
+				${ma.mContent}
 				
-				</pre>
+				
 				
 				</div>
 				

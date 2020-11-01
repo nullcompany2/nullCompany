@@ -115,15 +115,19 @@ a:active {
 						<a href="gosaveMail.do"><input id="" type="button" value="저장하기" /> </a>
 						 <a href="javascript:history.go(-1);"> 
 						 <input type="button" value="이전으로" /></a> <br>
-						&nbsp;받는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+						 &nbsp;보내는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+						<input type="text" name="me" style="width: 60%;" value= "${loginUser.name} <${loginUser.id}>" readonly/> <br>
+						&nbsp;받는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<input type="text" name="writer" style="width: 60%;"
 							placeholder="메일 주소 사이에 ,(콤마)으로 구분하여 입력해주세요." /> <span onclick=""
 							style="font-size: 17px; background: #477A8F; color: white; padding: 0px 8px 0px 8px;">+</span>
 						<br> &nbsp;&nbsp;제목
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						&nbsp;<input type="text" name="title" style="width: 60%;"
 							placeholder="제목 없음" /> <br>
-						<br>
+							&nbsp;파일첨부&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="file" name="file" />
+						<br> <br> 
 						<textarea id="summernote" name="content"></textarea>
 					</form>
 				</div>

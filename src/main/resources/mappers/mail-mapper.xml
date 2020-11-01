@@ -34,6 +34,10 @@
 		ORDER BY SEND_DATE DESC
 	</select>
 	
-	
+	<select id="mailDetailView" parameterType="_int" resultMap="mailResultSet">
+		SELECT R.*, M.NAME 
+        FROM RECIEVED_MAIL R INNER JOIN MEMBER M ON (R.SENDER = M.ID)
+        WHERE RMA_NO = #{mailNo}
+	</select>
 	
 </mapper>

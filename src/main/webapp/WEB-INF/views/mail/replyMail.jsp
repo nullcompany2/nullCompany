@@ -115,19 +115,28 @@ a:active {
 						<a href="gosaveMail.do"><input id="" type="button" value="저장하기" /> </a>
 						 <a href="javascript:history.go(-1);"> 
 						 <input type="button" value="이전으로" /></a> <br>
-						 &nbsp;보내는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-						<input type="text" name="me" style="width: 60%;" value= "${loginUser.name} <${loginUser.id}>" readonly/> <br>
+						&nbsp;보내는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+						<input type="text" name="me" style="width: 60%;" value= "${loginUser.name} <${loginUser.id}> readonly"/> <br>
 						&nbsp;받는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="text" name="writer" style="width: 60%;" value= "${m.name} <${m.id}>" readonly/>
+						<input type="text" name="writer" style="width: 60%;" value= "${ma.name} <${ma.sender}>" readonly/>
 							  <span style="font-size: 17px; background: #477A8F; color: white; padding: 0px 8px 0px 8px;">+</span>
 						<br> &nbsp;&nbsp;제목
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						&nbsp;<input type="text" name="title" style="width: 60%;"
-							placeholder="제목 없음" /> <br>
+							placeholder="제목 없음" value="RE: ${ma.mTitle}"/> <br>
 						&nbsp;파일첨부&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<input type="file" name="file" />
 						<br> <br> 
-						<textarea id="summernote" name="content"></textarea>
+						<textarea id="summernote" name="content">
+						----------- 원본 메일 ----------- <br>
+						<b> 보낸 사람 : </b> ${ma.name}<${ma.sender}>  <br>
+						<b> 받는 사람 : </b> ${loginUser.name} <${loginUser.id}>  <br>
+						<b> 날짜 : </b> ${ma.sendDate}  <br>
+						<b> 제목 : </b> ${ma.mTitle}  <br>
+						${ma.mContent}
+						
+						
+						 </textarea>
 					</form>
 				</div>
 			</div>
@@ -162,9 +171,11 @@ a:active {
 	  $('#summernote').summernote({
  	    	placeholder: '내용을 작성해주세요.',
 	        minHeight: 370,
-	        maxHeight: null,
+	        maxHeight: 370,
 	        focus: true, 
 	        lang : 'ko-KR'
+	       
+	        
 	  });
 	});
 

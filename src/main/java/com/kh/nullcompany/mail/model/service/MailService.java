@@ -29,6 +29,20 @@ public interface MailService {
 	 */
 	ArrayList<Mail> selectMailReceiveList(PageInfo pi, int memNo);
 
+	/**
+	 * 4. 메일 디테일뷰 보기 
+	 * @param mailNo
+	 * @return
+	 */
+	Mail mailDetailView(int mailNo);
+
+	/**
+	 * 5. 메일 답장하기 
+	 * @param mailNo
+	 * @return
+	 */
+	Mail mailReply(int mailNo);
+
 	
 
 
