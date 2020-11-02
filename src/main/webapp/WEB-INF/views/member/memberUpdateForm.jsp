@@ -237,7 +237,7 @@
 
                        	<tr>
                        		<td> 자기 소개 </td>
-                       		<td> <textarea rows="3" cols="23" name="myInfo" placeholder="자유롭게 입력해주세요."></textarea> </td>
+                       		<td> <textarea rows="3" cols="23" name="myInfo" placeholder="자유롭게 입력해주세요.">${ loginUser.myInfo }</textarea> </td>
                        	 </tr>
                          
                           <!-- jQuery와 Postcodify를 로딩한다. -->

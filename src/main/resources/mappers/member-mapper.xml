@@ -25,6 +25,7 @@
       <result property="deptName" column="DEPT_NAME"/>
       <result property="rankName" column="RANK_NAME"/>
       <result property="sAccess" column="S_ACCESS"/>
+      
      
    </resultMap>
 
@@ -69,4 +70,12 @@
    WHERE EMAIL=#{email}
    
    </select>
+   
+   <select id="mailWriteId" parameterType="_int" resultMap="memberResultSet">
+		SELECT *
+        FROM MEMBER
+        WHERE MEM_NO = #{senderNo}
+        AND M_STATUS = 'Y'
+	</select>
+	
 </mapper>

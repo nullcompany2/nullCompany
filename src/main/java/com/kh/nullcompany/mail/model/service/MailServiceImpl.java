@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.mail.model.dao.MailDao;
 import com.kh.nullcompany.mail.model.vo.Mail;
+import com.kh.nullcompany.member.model.vo.Member;
 
 @Service("maService")
 public class MailServiceImpl implements MailService {
@@ -16,19 +17,33 @@ public class MailServiceImpl implements MailService {
 @Autowired
 	private MailDao maDao;
 
+	
+	// 받은 메일함 리스트 
 	@Override
-	public Mail replyMail(String recipient) {
-		return null;
+	public ArrayList<Mail> selectMailReceiveList(PageInfo pi, int memNo) {
+		return maDao.selectMailReceiveList(pi,memNo);
+	}
+
+	// 받은 편지함 리스트 카운트 
+	@Override
+	public int getListCount(int memNo) {
+		return maDao.getListCount(memNo);
+	}
+
+	// 이름 누르고 그 사람에게 메일 보내기 
+	@Override
+	public Member mailWriteId(int senderNo) {
+		return 	maDao.mailWriteId(senderNo);
 	}
 
 	@Override
-	public int getListCount() {
-		return maDao.getListCount();
+	public Mail mailDetailView(int mailNo) {
+		return maDao.mailDetailView(mailNo);
 	}
 
 	@Override
-	public ArrayList<Mail> selectMailReceiveList(PageInfo pi) {
-		return maDao.selectMailReceiveList(pi);
+	public Mail mailReply(int mailNo) {
+		return maDao.mailReply(mailNo);
 	}
 
 	

@@ -41,42 +41,64 @@
 		font-weight: bolder;
 	}
 
-	#search {
+	#category {
 		position:relatived;
-		margin-left:37%;
+		margin-left:35%;
 		border : none;
-		border-bottom : 2px solid #477A8F;
 		padding : 3px;
 		font-size : 15px;
 		margin-bottom : 5px;
 		
 	}
 	
+	#search {
+		position:relatived;
+		border: 1px solid #3E4247;
+		border-radius : 3px;
+		padding : 3px;
+		font-size : 15px;
+		margin-bottom : 5px;
+		margin-left:5px;
+	
+	}
+	
+	#searchBtn {
+	
+	background:#477A8F;
+	padding:5px 10px;
+	border-radius:3px;
+	border:none;
+	color:white;
+	margin-bottom :5px;
+	cursor :pointer;
+		
+	}
 	
 	#tb {
-	margin-bottom : 50px;
-	padding-bottom : 30px;
+	margin-bottom : 10px;
+	padding-bottom : 10px;
 	border-bottom:  1px solid #ECECEC;
+	}
 	
+	#tb:last-child {
+	margin-bottom : 30px;
 	}
 	
 	#select, #hide, select, #hide a, #countAll{
 		border:none;
 		font-size:16px;
 		color:#477A8F;
-		
 	}
 	
 	#hide {
 	display:none; 
 	}
 	
-	
-	
 </style>
 
 <body>
 		<c:import url="../common/mailSubNav.jsp"/>
+		
         <div class="contents">
             <div class="contents-title">
                 <span class="ct1">받은 편지함</span>
@@ -85,32 +107,50 @@
 			<div style="margin-left:40px;">
 			<!--여기다가 만들기 -->
 			<br> 
-				&nbsp;&nbsp;<input type="checkbox" id="checkall"> 
-				&nbsp;&nbsp; <span style="color:#477A8F;" id="select"> 보기 : 
-				<select> 
-					<option> 모두  </option>
-					<option> 읽은 메일  </option>
-					<option> 안읽은 메일  </option>
-				</select> &nbsp;
-				</span> 
-				&nbsp;&nbsp;
-				<span id="hide" style="margin-right:40px;">  <span id="count"> </span> <a id="delMail">삭제 </a>  &nbsp; <a id="realdelMail"> 완전삭제 </a> </span>
-				<span style="margin-left:65%;" id="countAll"> </span> <br><br>
-				
-				 <table align="left" cellspacing="0" width="90%" id="tb">
-					
-					<c:forEach var="ma" items="${list}">
-						<tr class="trMail" onClick="location.href='maildetailView.do'"> 
+						&nbsp;&nbsp;<input type="checkbox" id="checkall"> 
+						&nbsp;&nbsp; <span style="color:#477A8F;" id="select"> 보기 : 
+						<select> 
+							<option> 모두  </option>
+							<option> 읽은 메일  </option>
+							<option> 안읽은 메일  </option>
+						</select> &nbsp;
+						</span> 
+						&nbsp;&nbsp;
+						<span id="hide" style="margin-right:40px;">  <span id="count"> </span> <a id="delMail">삭제 </a>  &nbsp; <a id="realdelMail"> 완전삭제 </a> </span>
+						<span style="margin-left:65%;" id="countAll"> </span> <br><br>
+					<c:choose>
+				    <c:when test="${!empty list }">
+				        <c:forEach var="ma" items="${list}">
+						 <table align="left" cellspacing="0" width="90%" id="tb">
+						 
+						 <c:url var="maildetailView" value="maildetailView.do">
+							<c:param name="mailNo" value="${ma.mailNo}" />
+						</c:url>
+						
+						
+						<tr class="trMail" onClick="location.href='${maildetailView}'"> 
+						
+						<c:url var="mailWriteId" value="mailWriteId.do">
+							<c:param name="senderNo" value="${ma.senderNo}" />
+						</c:url>
+						
 							<td>&nbsp;&nbsp;<input type="checkbox" onClick="event.cancelBubble=true" name="mail"></td>
-							<td align="left">  <a onClick="event.stopPropagation(); location.href='mailReply.do'"> ${ma.name} </a></td>
-							<td> ${ ma.mTitle } </td>
-							<td align="right"> ${ma.sendDate } </td>
+							<td align="left"><a onClick="event.stopPropagation(); location.href='${mailWriteId}'">${ma.name} <${ma.sender}> </a></td>
+							<td>${ ma.mTitle }</td>
+							<td align="right"> ${ma.sendDate }</td>
 						</tr>
+						</table>
 					</c:forEach>
-				 </table>
+				    </c:when>
+				    
+				    <c:otherwise>
+				       현재 편지함에 메일이 없습니다. 
+				    </c:otherwise>
+				</c:choose>
+
 			</div>
-			<table
-			style="margin: 10px 0px 0px 0px; width: 80%; border-collapse: collapse">
+			
+			<table style=" margin: 10px 0px 0px 80px; width: 80%; border-collapse: collapse">
 			<!-- 페이징처리 -->
 			<tr align="center" height="20">
 				<td colspan="6" align="center">
@@ -146,11 +186,15 @@
 		</table>
 		<br>
 			
-			<input id="search" type="text" placeholder="메일 검색"> 
-			<a> 돋보기 </a> <br>
+			<select id="category"> 
+				<option> ----- </option>
+				<option> 보낸사람 </option>
+				<option> 제목 </option>
+				<option> 내용 </option>
+			</select>
+			<input  id="search" type="text" placeholder="메일 검색"> 
+			<button id="searchBtn" > 검색 </button> <br>
 			
-			
-			 
         </div>
         
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.js"></script>
@@ -175,7 +219,7 @@
                     
                     var count = $("input:checkbox[name=mail]:checked").length;
                    	$("#count").text(count);
-                 
+                   	
                     //클릭이 안되있으면
                 }else{
                     //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
@@ -204,9 +248,7 @@
         $("#realdelMail").click(function(){
         	confirm("완전 삭제하시면 복구 할 수 없습니다. 정말로 삭제하시겠습니까?");
 		});
-
-
-        $('.trMail')
+        
         </script>
 		
 
