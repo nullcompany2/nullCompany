@@ -8,6 +8,8 @@ import com.kh.nullcompany.personnelManagement.model.vo.Department;
 import com.kh.nullcompany.personnelManagement.model.vo.MixForLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.RecodeLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.RewardLeave;
+import com.kh.nullcompany.personnelManagement.model.vo.SetAttendance;
+import com.kh.nullcompany.personnelManagement.model.vo.SetLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.TypeLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.TypeUsedLeave;
 
@@ -71,6 +73,12 @@ public interface PersonnelManagementService {
 	 * @return
 	 */
 	int usedAnnualLeave(int memNo);
+	
+	/**
+	 * 1년차 휴가설정
+	 * @return
+	 */
+	SetLeave firstyearLeave();
 
 	/**
 	 * 사원 휴가 업데이트
@@ -120,6 +128,14 @@ public interface PersonnelManagementService {
 	 * @return
 	 */
 	MixForLeave detailRecodeLeave(int rNo);
+
+	/**
+	 * 출퇴근 설정
+	 * @return
+	 */
+	ArrayList<SetAttendance> setAttendance();
+
+	
 	
 	
 

@@ -12,6 +12,8 @@ import com.kh.nullcompany.personnelManagement.model.vo.Department;
 import com.kh.nullcompany.personnelManagement.model.vo.MixForLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.RecodeLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.RewardLeave;
+import com.kh.nullcompany.personnelManagement.model.vo.SetAttendance;
+import com.kh.nullcompany.personnelManagement.model.vo.SetLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.TypeLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.TypeUsedLeave;
 
@@ -151,9 +153,28 @@ public class PersonnelManagementServiceImpl implements PersonnelManagementServic
 		return pDao.tul(memNo);
 	}
 
+	/**
+	 * 휴가현황을위한 vo
+	 */
 	@Override
 	public MixForLeave detailRecodeLeave(int rNo) {
 		return pDao.detailRecodeLeave(rNo);
+	}
+
+	/**
+	 * 1년차 미만 설정
+	 */
+	@Override
+	public SetLeave firstyearLeave() {
+		return pDao.firstyearLeave();
+	}
+
+	/**
+	 * 출퇴근 설정
+	 */
+	@Override
+	public ArrayList<SetAttendance>  setAttendance() {
+		return pDao.setAttendance();
 	}
 	
 	

@@ -81,24 +81,39 @@
    		<result property="tName" column="T_NAME"/>
    		<result property="num"  column="NUMBER_OF_USED"/>
    	</resultMap>
+   	
+   	<resultMap type="SetLeave" id="SetLeaveResultSet">
+   		<result property="workyear" column="WORKING_YEARS"/>
+   		<result property="annualLeave" column="ANNUAL_LEAVE"/>
+   		<result property="carryover" column="CARRYOVER_LEAVE"/>
+   		<result property="firstyear" column="FIRSTYEAR_LEAVE"/>
+   		<result property="setting" column="SETTING_DATE"/>
+   	</resultMap>
+   	
+   	<resultMap type="SetAttendance" id="SetAttendanceResultSet">
+   		<result property="dayWeek" column="DAY_WEEK"/>
+   		<result property="dayAvailable" column="DAY_AVAILABLE"/>
+   		<result property="timeAttendance" column="TIME_ATTENDANCE"/>
+   		<result property="timeOffWork" column="TIME_OFFWORK"/>
+   	</resultMap>
    	<!-- **************************************************************************************** -->
    
 	<!-- 휴가일수 계산 -->
 	<select id="leaveCalculdate" parameterType="string" resultType="_int" >
-		SELECT ANNUAL_LEAVE
+		SELECT NVL(ANNUAL_LEAVE,0)
 		FROM SET_LEAVE_STANDARD
 		WHERE WORKING_YEARS = #{workyear}
 	</select>
 	<!-- 포상휴가 조회 (사번) -->
 	<select id="rewardLeave" resultType="_int" parameterType="int">
-		SELECT SUM(DAYS_R_LEAVE)
+		SELECT NVL(SUM(DAYS_R_LEAVE),0)
 		FROM REWARD_LEAVE
 		WHERE MEM_NO = #{memNo}
 	</select>
 
 	<!-- 사용된 포상휴가 -->
 	<select id="usedRewardLeave" resultType="_int" parameterType="int">
-		SELECT SUM(DAYS_USE_LEAVE)
+		SELECT NVL(SUM(DAYS_USE_LEAVE),0)
 		FROM RECODE_LEAVE
 		WHERE MEM_NO = #{memNo}
 		AND L_STATUS = '결재완료'
@@ -107,6 +122,14 @@
 		                        WHERE no_type_leave= '2')
 	</select>
 	
+	<!-- 1년차미만 휴가설정 -->
+	<select id="firstyearLeave" resultMap="SetLeaveResultSet">
+		SELECT *
+		FROM SET_LEAVE_STANDARD
+		WHERE WORKING_YEARS = 'N0'
+	</select>
+	
+	<!-- 휴가 업데이트  -->
 	<update id="updateLeave" parameterType="map">
 		UPDATE MEMBER
 		SET ANNUAL_LEAVE=#{annual}, REWARD_LEAVE=#{reward}
@@ -114,7 +137,7 @@
 	</update>
 	<!-- 사용된 연차 -->
 	<select id="usedAnnualLeave" resultType="_int" parameterType="int">
-		SELECT SUM(DAYS_USE_LEAVE)
+		SELECT NVL(SUM(DAYS_USE_LEAVE),0)
 		FROM RECODE_LEAVE
 		WHERE MEM_NO = #{memNo}
 		AND L_STATUS = '결재완료'
@@ -198,7 +221,7 @@
 	</select>
 	
 	<select id="tul" resultMap="TypeUsedLeaveResultSet" parameterType="_int">
-		SELECT NAME_TYPE_LEAVE as T_NAME,COUNT(*) as NUMBER_OF_USED
+		SELECT NAME_TYPE_LEAVE as T_NAME, NVL(SUM(DAYS_USE_LEAVE),0) as NUMBER_OF_USED
 		FROM RECODE_LEAVE R
 		LEFT JOIN TYPE_LEAVE T ON (R.TYPE_USE_LEAVE = T.NO_TYPE_LEAVE)
 		WHERE MEM_NO = #{memNo}
@@ -212,4 +235,8 @@
 		WHERE R.NO_RECODE_LEAVE = #{noRecode}	
 	</select>
 	
+	<select id="setAttendance" resultMap="SetAttendanceResultSet">
+		SELECT *
+		FROM SET_ATTENDANCE_STANDARD
+	</select>
 </mapper>
