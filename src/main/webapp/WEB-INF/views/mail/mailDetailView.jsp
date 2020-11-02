@@ -9,13 +9,9 @@
 <c:import url="../common/header.jsp"/>
 <c:import url="../common/mailSubNav.jsp"/>
 
-
 <title>메일 디테일 뷰</title>
 
-
 	<style>
-	
-	
 	
 	/* contents */
 	.contents{
@@ -78,7 +74,6 @@
 		padding-left : 20px;
 	}
 	
-	
 </style>
 
 </head>
@@ -105,18 +100,19 @@
 				<br> 
 				
 				<div id="viewmailContent"> 
-				 
+
+				 <c:if test="${ !empty ma.mFileName }">
+				첨부파일 : <a href="${contextPath }/resources/mailuploadFiles/${ma.mFileName}"
+							download="${ ma.mFileName }">${ ma.mFileName }</a> <br> <br>
+				</c:if> 
 				${ma.mContent}
 				
-				
-				
 				</div>
-				
 			</div>
-			</div>
-
+		</div>
 
 	<script>
+	
 	 $("#delMail").click(function(){
 			confirm("정말로 삭제하시겠습니까? 휴지통으로 이동합니다.");
 		});

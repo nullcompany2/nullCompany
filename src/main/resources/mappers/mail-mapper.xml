@@ -17,6 +17,8 @@
 		<result property="mDeleteStatus" column="MDELETE_STATUS"/>
 		<result property="mailNo" column="RMA_NO"/>
 		<result property="senderNo" column="SENDER_NO"/>
+		<result property="readCount" column="READ_COUNT"/>
+		
 	</resultMap>
   
   <select id="getListCount" resultType="_int">
@@ -27,7 +29,7 @@
 	</select>
   
   	<select id="selectReceiveList" resultMap="mailResultSet">
-		 SELECT R.*, M.NAME, M.MEM_NO AS SENDER_NO
+		SELECT R.*, M.NAME, M.MEM_NO AS SENDER_NO
 		FROM RECIEVED_MAIL R INNER JOIN MEMBER M ON (R.SENDER = M.ID) 
 		WHERE MDELETE_STATUS='N'
 		AND R.MEM_NO = #{memNo}
@@ -39,5 +41,11 @@
         FROM RECIEVED_MAIL R INNER JOIN MEMBER M ON (R.SENDER = M.ID)
         WHERE RMA_NO = #{mailNo}
 	</select>
+	
+	<update id="updateCount" parameterType="_int">
+		UPDATE RECIEVED_MAIL
+		SET READ_COUNT = READ_COUNT +1
+		WHERE RMA_NO = #{mailNo}
+	 </update>
 	
 </mapper>
