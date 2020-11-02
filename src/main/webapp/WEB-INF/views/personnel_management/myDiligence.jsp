@@ -56,7 +56,7 @@
 							</tr>
 							<tr class="d-tbl-il">
 								<th class="d-tbl-th">지각</th>
-								<td class="d-tbl-td">td</td>
+								<td class="d-tbl-td">${lateCountY }</td>
 								<th class="d-tbl-th">월 평균 지각</th>
 								<td class="d-tbl-td">td</td>
 							</tr>
@@ -78,97 +78,22 @@
 							<h4 style="margin-top: 100px; margin-bottom: 50px;">근태 현황</h4>
 							<table class="i-table" id="application-recode" onload="build();">
 								<thead style="background: #e8ecee;">
-									<tr>
-										<th scope="col" rowspan="2" class="tr">이름</th>
-										<th scope="col" rowspan="2" class="tr">소속</th>
-										<th scope="col" rowspan="2" class="tr">지각(미체크)</th>
-										<th scope="col" rowspan="2" class="tr">상세</th>
-										<th scope="col" colspan="31" class="tr" style="text-align: center;">
-											<label class="cursor" for="" onclick="beforem()" id="before" style="margin-right: 20px;"> ◁ </label>
-											<label for="" id="yearmonth"></label>
-											<label class="cursor" for="" onclick="nextm()" id="next" style="margin-left: 20px;"> ▷</label>
-										</th>
-
+									<tr class="date_tbl_title">
 									</tr>                     
-									<tr>
-										<th class="tr one-fifteen" >1일</th>
-										<th class="tr one-fifteen" >2일	</th>
-										<th class="tr one-fifteen" >3일	</th>
-										<th class="tr one-fifteen" >4일	</th>
-										<th class="tr one-fifteen">	5일	</th>
-										<th class="tr one-fifteen">	6일	</th>
-										<th class="tr one-fifteen">	7일	</th>
-										<th class="tr one-fifteen">	8일	</th>
-										<th class="tr one-fifteen">	9일	</th>
-										<th class="tr one-fifteen">	10일	</th>
-										<th class="tr one-fifteen">	11일	</th>
-										<th class="tr one-fifteen">	12일	</th>
-										<th class="tr one-fifteen">	13일	</th>
-										<th class="tr one-fifteen">	14일	</th>
-										<th class="tr one-fifteen">	15일	</th>
-										<th class="tr one-fifteen" id="np">next</th>
-										<th class="tr sixteen-thirtyOne">	16일	</th>
-										<th class="tr sixteen-thirtyOne">	17일	</th>
-										<th class="tr sixteen-thirtyOne">	18일	</th>
-										<th class="tr sixteen-thirtyOne">	19일	</th>
-										<th class="tr sixteen-thirtyOne">	20일	</th>
-										<th class="tr sixteen-thirtyOne">	21일	</th>
-										<th class="tr sixteen-thirtyOne">	22일	</th>
-										<th class="tr sixteen-thirtyOne">	23일	</th>
-										<th class="tr sixteen-thirtyOne">	24일	</th>
-										<th class="tr sixteen-thirtyOne">	25일	</th>
-										<th class="tr sixteen-thirtyOne">	26일	</th>
-										<th class="tr sixteen-thirtyOne">	27일	</th>
-										<th class="tr sixteen-thirtyOne">	28일	</th>
-										<th class="tr sixteen-thirtyOne">	29일	</th>
-										<th class="tr sixteen-thirtyOne">	30일	</th>
-										<th class="tr sixteen-thirtyOne" id="HDay-th">	31일	</th>
-										<th class="tr sixteen-thirtyOne" id="pp">pre</th>
+									<tr class="date_tbl">										
 									</tr>
 					
 								</thead>
 									
 								<tbody>
-									<tr>
-										<td class="ta">Han</td>
-										<td class="ta">인사</td>
-										<td class="ta">0 / 3</td>
-										<td class="ta"><a href="#"id="detail-r-l" class="cursor" style="color: #477A8F;">상세</a></td>
-										<td class="ta one-fifteen"></td>
-										<td class="ta one-fifteen"></td>
-										<td class="ta one-fifteen"></td>
-										<td class="ta one-fifteen"></td>
-										<td class="ta one-fifteen"></td>
-										<td class="ta one-fifteen"></td>
-										<td class="ta one-fifteen"></td>
-										<td class="ta one-fifteen"></td>
-										<td class="ta one-fifteen"></td>
-										<td class="ta one-fifteen"></td>
-										<td class="ta one-fifteen"></td>
-										<td class="ta one-fifteen"></td>
-										<td class="ta one-fifteen"></td>
-										<td class="ta one-fifteen"></td>
-										<td class="ta one-fifteen"></td>
-										<td class="ta one-fifteen" id="emptyfornext" ></td>
-										<td class="ta sixteen-thirtyOne"></td>
-										<td class="ta sixteen-thirtyOne"></td>
-										<td class="ta sixteen-thirtyOne"></td>
-										<td class="ta sixteen-thirtyOne"></td>
-										<td class="ta sixteen-thirtyOne"></td>
-										<td class="ta sixteen-thirtyOne"></td>
-										<td class="ta sixteen-thirtyOne"></td>
-										<td class="ta sixteen-thirtyOne"></td>
-										<td class="ta sixteen-thirtyOne"></td>
-										<td class="ta sixteen-thirtyOne"></td>
-										<td class="ta sixteen-thirtyOne"></td>
-										<td class="ta sixteen-thirtyOne"></td>
-										<td class="ta sixteen-thirtyOne"></td>
-										<td class="ta sixteen-thirtyOne"></td>
-										<td class="ta sixteen-thirtyOne"></td>
-										<td class="ta sixteen-thirtyOne" id="HDay-td" ></td>
-										<td class="ta sixteen-thirtyOne" id="pp">pre</td>
-
-
+									<tr >
+										<td scope="col" rowspan="2" class="ta">Han</td>
+										<td scope="col" rowspan="2" class="ta">인사</td>
+										<td scope="col" rowspan="2" class="ta">0 / 3</td>
+										<td scope="col" rowspan="2" class="ta"><a href="#"id="detail-r-l" class="cursor" style="color: #477A8F;">상세</a></td>
+									</tr>
+									<tr class="date_tbl_output">
+										
 									</tr>
 									
 									
@@ -227,53 +152,189 @@
 			$("#show-status-diligence").css("display","block")
 			$("#status-diligence").css("color","#477A8F")
 			$("#modi-diligence").css("color","black")
-		})
+		});
 		$("#modi-diligence").click(function(){
 			$("#show-status-diligence").css("display","none")
 			$("#show-modi-diligence").css("display","block")
 			$("#status-diligence").css("color","black")
 			$("#modi-diligence").css("color","#477A8F")
-		})
+		});
 
 		var today = new Date(); // 오늘 날짜
 		var date = new Date();
 		var np = $('#np').click();
+		var lastDay;
 		
 		$(function(){
-			yearmonth.innerHTML = today.getFullYear() + "년 "+ (today.getMonth() + 1) + "월"; 
-		})
+		var forcalculDate = new Date(today.getFullYear(),today.getMonth()+1,0);	// 일자 테이블을 만들기위함.
+			lastDay = forcalculDate.getDate();
+			createDateTbl(lastDay);
+
+			yearmonth.innerHTML = today.getFullYear() + "년 "+ (today.getMonth() + 1) + "월";
+			build();
+		});
 		
 		function beforem(){
 			today = new Date(today.getFullYear(),today.getMonth() -1 ,today.getDate());
-			build();
+			var forcalculDate = new Date(today.getFullYear(),today.getMonth()+1,0);	// 일자 테이블을 만들기위함.
+			lastDay = forcalculDate.getDate();
+			createDateTbl(lastDay);
+			
 			$("#pp").trigger("click");
+			console.log(today.getMonth()+1);
+			build();
 		}
 
 		
 		function nextm()  //다음 달을 today에 저장
 		{
 			today = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
+			var forcalculDate = new Date(today.getFullYear(),today.getMonth()+1,0);	// 일자 테이블을 만들기위함.
+			lastDay = forcalculDate.getDate();
+			createDateTbl(lastDay);
+			
 			build();
 			$("#pp").trigger("click");
-
 		}
 		
 		function build()
 		{
-			var tbcal = document.getElementById("application-recode"); // 테이블 달력을 만들 테이블
 			var yearmonth = document.getElementById("yearmonth"); //  년도와 월 출력할곳
 			yearmonth.innerHTML = today.getFullYear() + "년 "+ (today.getMonth() + 1) + "월"; //년도와 월 출력
 	
 		}
 
-		$("#np").click(function(){
+		function nextdays(){
 			$(".sixteen-thirtyOne").css('display','table-cell');
 			$(".one-fifteen").css('display','none');
-		})
-		$("#pp").click(function(){
+		}
+		
+		function predays(){
 			$(".one-fifteen").css('display','table-cell');
-			$(".sixteen-thirtyOne").css('display','none');
-		})
+			$(".sixteen-thirtyOne").css('display','none');	
+		}
+		
+		// 일수 생성용 함수
+		function createDateTbl(lastDay){
+			console.log(lastDay);
+			$(".date_tbl th").remove();
+			$(".date_tbl_title th").remove();
+			$("#cellCalendar lable").remove();
+			$(".date_tbl_output td").remove();
+			
+			var $sTble = $(".date_tbl");
+			var $rTble = $(".date_tbl_output");
+			var $th_tr;
+			var $th_title = $(".date_tbl_title");
+			var $tr_td;
+			
+			var $th_tr = $('<th scope="col" rowspan="2" class="tr">').text("이름");
+			$th_title.append($th_tr);
+			var $th_tr =$('<th scope="col" rowspan="2" class="tr">').text("소속");
+			$th_title.append($th_tr);
+			var $th_tr =$('<th scope="col" rowspan="2" class="tr">').text("지각(미체크)");
+			$th_title.append($th_tr);
+			var $th_tr =$('<th scope="col" rowspan="2" class="tr">').text("상세");
+			$th_title.append($th_tr);
+			var $th_tr =$('<th scope="col" class="tr" style="text-align: center;" id="cellCalendar">').attr("colspan",lastDay-4);
+			$th_title.append($th_tr);
+			var $cellCalendar = $("#cellCalendar"); 
+			$th_tr = $('<label class="cursor" for="" onclick="beforem()" id="before" style="margin-right: 20px;">').text("◁");
+			$cellCalendar.append($th_tr);
+			
+			$th_tr = $('<label for="" id="yearmonth">');
+			$cellCalendar.append($th_tr);
+			
+			$th_tr = $('<label class="cursor" for="" onclick="nextm()" id="next" style="margin-left: 20px;">').text("▷");
+			$cellCalendar.append($th_tr);
+			
+			if(lastDay ==31){
+				for(var i=1; i<=lastDay+2; i++) {
+					if(i==16){
+						$th_tr = $("<th class='tr one-fifteen cursor' id='np' onclick='nextdays()'>").text("NEXT");
+						$tr_td = $("<td class='ta one-fifteen'>").text(">>");
+						
+					}
+					else if(i<16){
+						$th_tr = $("<th class='tr one-fifteen'>").text(i+"일");
+						$tr_td = $("<td class='ta one-fifteen'>").attr("id",i + "R");
+					}else if(i == lastDay+2){
+						$th_tr = $("<th class='tr sixteen-thirtyOne cursor' id='pp' onclick='predays()'>").text("PRE");
+						$tr_td = $("<td class='ta sixteen-thirtyOne'>").text("<<");
+					}else{
+						$th_tr = $("<th class='tr sixteen-thirtyOne' >").text(i-1+"일");
+						$tr_td = $("<td class='ta sixteen-thirtyOne'>").attr("id",i-1 + "R");
+					}
+					$sTble.append($th_tr);
+					$rTble.append($tr_td);
+					
+				}	
+			}else if(lastDay == 30){
+				for(var i=1; i<=lastDay+2; i++) {
+					if(i==16){
+						$th_tr = $("<th class='tr one-fifteen cursor' id='np' onclick='nextdays()'>").text("NEXT");
+						$tr_td = $("<td class='ta one-fifteen'>").text(">>");
+					}
+					else if(i<16){
+						$th_tr = $("<th class='tr one-fifteen'>").text(i+"일");		
+						$tr_td = $("<td class='ta one-fifteen'>").attr("id",i + "R");
+
+					}else if(i == lastDay+2){
+						$th_tr = $("<th class='tr sixteen-thirtyOne cursor' id='pp' onclick='predays()'>").text("PRE");
+						$tr_td = $("<td class='ta sixteen-thirtyOne'>").text("<<");
+
+					}else{
+						$th_tr = $("<th class='tr sixteen-thirtyOne'>").text(i-1+"일");
+						$tr_td = $("<td class='ta sixteen-thirtyOne'>").attr("id",i-1 + "R");
+
+					}
+					$sTble.append($th_tr);
+					$rTble.append($tr_td);
+					
+				}
+			}else if(lastDay == 29){
+				for(var i=1; i<=lastDay+2; i++) {
+					if(i==16){
+						$th_tr = $("<th class='tr one-fifteen cursor' id='np' onclick='nextdays()'>").text("NEXT");
+						$tr_td = $("<td class='ta one-fifteen'>").text(">>");
+					}
+					else if(i<16){
+						$th_tr = $("<th class='tr one-fifteen' >").text(i+"일");		
+						$tr_td = $("<td class='ta one-fifteen'>").attr("id",i+"R");
+					}else if(i == lastDay+2){
+						$th_tr = $("<th class='tr sixteen-thirtyOne cursor' id='pp' onclick='predays()'>").text("PRE");
+						$tr_td = $("<td class='ta sixteen-thirtyOne'>").text("<<");
+					}else{
+						$th_tr = $("<th class='tr sixteen-thirtyOne' >").text(i-1+"일");
+						$tr_td = $("<td class='ta sixteen-thirtyOne'>").attr("id",i-1 + "R");
+					}
+					$sTble.append($th_tr);
+					$rTble.append($tr_td);
+					
+				}
+			}else{
+				for(var i=1; i<=lastDay+2; i++) {
+					if(i==16){
+						$th_tr = $("<th class='tr one-fifteen cursor' id='np' onclick='nextdays()'>").text("NEXT");
+						$tr_td = $("<td class='ta one-fifteen'>").text(">>");
+					}
+					else if(i<16){
+						$th_tr = $("<th class='tr one-fifteen' >").text(i+"일");		
+						$tr_td = $("<td class='ta one-fifteen'>").attr("id",i+"R");
+					}else if(i == lastDay+2){
+						$th_tr = $("<th class='tr sixteen-thirtyOne cursor' id='pp' onclick='predays()'>").text("PRE");
+						$tr_td = $("<td class='ta sixteen-thirtyOne'>").text("<<");
+					}else{
+						$th_tr = $("<th class='tr sixteen-thirtyOne' >").text(i-1+"일");
+						$tr_td = $("<td class='ta sixteen-thirtyOne'>").attr("id",i-1+"R");
+					}
+					$sTble.append($th_tr);
+					$rTble.append($tr_td);
+					
+				}
+			}
+			
+		}
 
 	</script>	
 	<!-- Modal -->

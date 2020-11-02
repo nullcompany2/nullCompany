@@ -28,6 +28,8 @@ import com.kh.nullcompany.personnelManagement.model.vo.Department;
 import com.kh.nullcompany.personnelManagement.model.vo.MixForLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.RecodeLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.RewardLeave;
+import com.kh.nullcompany.personnelManagement.model.vo.SetAttendance;
+import com.kh.nullcompany.personnelManagement.model.vo.SetLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.TypeLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.TypeUsedLeave;
 import com.sun.org.slf4j.internal.Logger;
@@ -49,6 +51,8 @@ public class PersonnelManagementController {
 	@RequestMapping(value="leaveCalculate.do",produces="application/json;charset=utf-8")
 	@ResponseBody
 	public String leaveCalculate(String enDate, int memNo){
+		int rewardLeave = 0;
+		
 		
 		SimpleDateFormat formatD = new SimpleDateFormat("yyyy-MM-dd");
 		
@@ -63,14 +67,32 @@ public class PersonnelManagementController {
 		// 입사일로부터 오늘까지의 날짜 차이 계산
 		Period period = hiredDate.until(today);
 		
-		String workyear = "N"+period.getYears();
+		String workyear = "";
+		int annualLeave = 0;
+		if(period.getYears() > 38) {
+			workyear = "N" + 38;
+		}else if(period.getYears() == 0){
+			SetLeave firstyearLeave = pService.firstyearLeave();
+			if(firstyearLeave.getFirstyear() == 0) {
+				annualLeave = period.getMonths();
+			}else {
+				annualLeave = firstyearLeave.getAnnualLeave();
+			}
+			
+		}else {
+			workyear = "N"+period.getYears();			
+			// 생성된 연차
+			annualLeave = pService.leaveCalculate(workyear);
+		}
 		
-		// 생성된 연차
-		int annualLeave = pService.leaveCalculate(workyear);
+		
+		
+		
+		
 		
 		// 포상휴가 체크 (+)
-		int rewardLeave = pService.rewardLeave(memNo);
 		
+		rewardLeave = pService.rewardLeave(memNo);
 		
 		
 		// 사용한 포상휴가 계산
@@ -175,10 +197,25 @@ public class PersonnelManagementController {
 			endDate = w1+1+"-"+w2+"-"+w3;
 		}
 		
-		String workyear = "N"+period.getYears();
+		String workyear = "";
+		int annualLeave = 0;
+		if(period.getYears() > 38) {
+			workyear = "N" + 38;
+		}else if(period.getYears() == 0){
+			SetLeave firstyearLeave = pService.firstyearLeave();
+			if(firstyearLeave.getFirstyear() == 0) {
+				annualLeave = period.getMonths();
+			}else {
+				annualLeave = firstyearLeave.getAnnualLeave();
+			}
+			
+		}else {
+			workyear = "N"+period.getYears();			
+			// 생성된 연차
+			annualLeave = pService.leaveCalculate(workyear);
+		}
 		
-		// 생성된 연차
-		int annualLeave = pService.leaveCalculate(workyear);
+		
 		
 		// 포상휴가 수 체크 (+)
 		int rewardLeave = pService.rewardLeave(memNo);
@@ -248,9 +285,20 @@ public class PersonnelManagementController {
 	// 근태현황
 	@RequestMapping("myDiligence.do")
 	public ModelAndView myDiligence(ModelAndView mv, HttpServletResponse response) {
+		// 근무시간 설정값 가져오기
+		ArrayList<SetAttendance> setAttendance = pService.setAttendance();
+		
+		// 지각횟수/ 월평균 지각횟수 계산
+	
+		// 출퇴근 기록 미체크-(출근기록이없는날) , 퇴근체크(비정상)-(출근은했지만 퇴근기록이없는상황)
+		
+		// 전체 근태기록
+		
+		// 전체 휴가 사용날 / 사용일수 기록
 		
 		
 		
+		mv.addObject("setAttendance",setAttendance);
 		mv.setViewName("personnel_management/myDiligence");
 		return mv;
 	}

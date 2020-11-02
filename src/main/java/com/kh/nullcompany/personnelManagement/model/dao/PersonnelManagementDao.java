@@ -14,6 +14,8 @@ import com.kh.nullcompany.personnelManagement.model.vo.Department;
 import com.kh.nullcompany.personnelManagement.model.vo.MixForLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.RecodeLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.RewardLeave;
+import com.kh.nullcompany.personnelManagement.model.vo.SetAttendance;
+import com.kh.nullcompany.personnelManagement.model.vo.SetLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.TypeLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.TypeUsedLeave;
 
@@ -107,6 +109,16 @@ public class PersonnelManagementDao {
 
 	public MixForLeave detailRecodeLeave(int noRecode) {
 		return sqlSession.selectOne("personnelMapper.detailRecodeLeave",noRecode);
+	}
+
+
+	public SetLeave firstyearLeave() {
+		return sqlSession.selectOne("personnelMapper.firstyearLeave");
+	}
+
+
+	public ArrayList<SetAttendance> setAttendance() {
+		return ((ArrayList)sqlSession.selectList("personnelMapper.setAttendance"));
 	}
 
 }
