@@ -5,7 +5,7 @@
 <%@ page import="java.text.SimpleDateFormat"%>
 <%
 	Date nowTime = new Date();
-	SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
+SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -386,7 +386,7 @@
 							캘린더</h4>
 
 						<label for="" style="font-size: 14px;">캘린더 이름 </label>
-						&nbsp;&nbsp; <input type="text"> &nbsp;
+						&nbsp;&nbsp; <input type="text" id="cal_name"> &nbsp;
 
 
 						<div class="palletBox">
@@ -398,8 +398,8 @@
 							</div>
 						</div>
 						<div style="position: absolute; top: 130px; font-size: 14px;">
-							사원 이름 &nbsp; <input type="text"  id="testText" style="margin-left: 19px;">
-							&nbsp;
+							사원 이름 &nbsp; <input type="text" id="testText"
+								style="margin-left: 19px;"> &nbsp;
 							<btn style="font-size: 14px; color: #477A8F;">검색</btn>
 						</div>
 
@@ -445,9 +445,9 @@
 
 								<p id="enrollname"
 									style="width: 100px; font-size: 12px; position: absolute; text-align: left; top: 5px; margin-left: 5px;">
-									
-									
-									
+
+
+
 								</p>
 
 
@@ -469,8 +469,8 @@
 							</div>
 
 
-							<div style="position: absolute; bottom: 40px; left: 260px;">
-								<button
+							<div style="position: absolute; bottom: 40px; left: 220px;">
+								<button id="cal_sub"
 									style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">저장</button>
 								<button
 									style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">취소</button>
@@ -482,7 +482,52 @@
 
 				</div>
 
+				<script>
+	   
+    // 공유 캘린더 추가용 
+/*    $(document).on('click', "#cal_sub", function(){ */
+	   $("#cal_sub").off("click").on('click', function() {
+	   var calName = $('#cal_name').val();
+	  	  var color =  document.querySelector('#colorselect').style.background;
+	  	  var enroll = $('#enrollname').text();
+	  	  var enrollArray = enroll.split(',');
+	  	  
+	  	  for(var i = 0; i<enrollArray.length; i++){
+	  		enrollArray[i] = enrollArray[i].substring(enrollArray[i].length - 5, enrollArray[i].length- 1);
+	  	  }
 
+	  	  var look = $('#lookname').text();
+  		  var lookArray = look.split(',');
+	  	  
+	  	  for(var i = 0; i<lookArray.length; i++){
+	  		lookArray[i] = lookArray[i].substring(lookArray[i].length - 5, lookArray[i].length- 1);
+	  	  }
+	  	  
+
+
+	  	  
+	      $.ajax({
+	    		url:"insertCommunityCal.do",
+				type:"post",
+				dataType : "json",
+				traditional : true,
+				data: {
+					  "calName"  :  $('#cal_name').val(),
+		              "color" : document.querySelector('#colorselect').style.background,
+		      		  "enrollMember" : enrollArray,
+		      		  "lookMember" : lookArray },
+				success:function(data){
+					console.log("에작" + data);
+					history.go(-1); 
+				},error: function(request,status,error){
+					console.log("에러임" + request);
+			}
+	    	  
+	      })
+  	
+      
+   } )
+	</script>
 
 
 				<script>
@@ -565,7 +610,7 @@
              // input객체에 이벤트 발생시
              $('input').change(function () {
                  // input 중 checked인것들 다 모으기
-                 var inputArray = $('input:checked');
+                 var inputArray = $('input[id="name"]:checked');
                  var tmp = '';
                
                  $.each(inputArray, function (index, item) {
@@ -583,31 +628,51 @@
 
         // 조회 버튼
 
-        // 추가 show
+        // 등록 권한 추가 
         var arraybox = "";
-    	var enrollList = $('#enrollname').text();
+ 
     	
         $('#enrolladd').click(function(){
         	$("#enrollname:last-child").empty();
           $('[name="checkname"]:checked').each(function(i){ //i는 체크수를 알수있음
            arraybox = $(this).val();
           
-       	  $('#enrollname').append('<label class="lb"><input type="checkbox" name="finalname" id="' + arraybox + '" class="finallist" value="'+ arraybox + '">' + arraybox +'</input><br></label>');
+       	  $('#enrollname').append('<p><input type="checkbox" name="finalname" id="' + arraybox + '" class="finallist" value="'+ arraybox + '"/><label id="lb" for="'+ arraybox+'">' + arraybox +'</label><span style="color:white">,</span><br></p>');
            console.log("중복없을때" + arraybox); 
       });
        }); 
 
     
-       // 빼기 hide
+       // 등록 권한 빼기 
      $('#enrollsub').on('click', function() {
  
-       $('[name="finalname"]:checked').parent('label').remove(); 
+       $('[name="finalname"]:checked').parent('p').remove(); 
      });
-     
        
        
+     // 조회 권한 추가 
+     var arraybox = "";
+
+ 	
+     $('#lookadd').click(function(){
+     	$("#lookname:last-child").empty();
+       $('[name="checkname"]:checked').each(function(i){ //i는 체크수를 알수있음
+        arraybox = $(this).val();
        
-     
+    	  $('#lookname').append('<p><input type="checkbox" name="finallookname" id="' + arraybox + '3" class="finallist" value="'+ arraybox + '"/><label id="lb" for="'+ arraybox+'3">' + arraybox +'</label><span style="color:white">,</span><br></p>');
+        console.log("중복없을때" + arraybox); 
+   });
+    }); 
+
+ 
+    // 조회 권한 빼기 
+  $('#looksub').on('click', function() {
+
+    $('[name="finallookname"]:checked').parent('p').remove(); 
+  });
+  
+      
+      
      //색상 파레트
  var beforeColor; //이전에 선택된 컬러 저장 할 변수
 
