@@ -6,6 +6,7 @@ import java.util.Map;
 import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.personnelManagement.model.vo.Department;
 import com.kh.nullcompany.personnelManagement.model.vo.MixForLeave;
+import com.kh.nullcompany.personnelManagement.model.vo.RecodeDiligence;
 import com.kh.nullcompany.personnelManagement.model.vo.RecodeLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.RewardLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.SetAttendance;
@@ -124,7 +125,7 @@ public interface PersonnelManagementService {
 
 	/**
 	 * 해당 휴가 정보 가져오기(모달)
-	 * @param rNo
+	 * @param rNo (기록번호)
 	 * @return
 	 */
 	MixForLeave detailRecodeLeave(int rNo);
@@ -133,10 +134,18 @@ public interface PersonnelManagementService {
 	 * 출퇴근 설정
 	 * @return
 	 */
-	ArrayList<SetAttendance> setAttendance();
+	SetAttendance setAttendance();
+	
+	// 출근기록 가능여부
+	int recodeAB_A(int memNo);
+	// 출근 기록 삽입
+	int insertRA(Map forR);
+	// 퇴근 기록 가능여부
+	int recodeAB_O(int memNo);
+	// 퇴근기록 삽입
+	int insertRO(Map forR);
 
+	// 당일 출근기록(헤더용
+	RecodeDiligence recodeToday(int memNo);
 	
-	
-	
-
 }

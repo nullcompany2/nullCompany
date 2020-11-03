@@ -10,6 +10,7 @@ import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.personnelManagement.model.dao.PersonnelManagementDao;
 import com.kh.nullcompany.personnelManagement.model.vo.Department;
 import com.kh.nullcompany.personnelManagement.model.vo.MixForLeave;
+import com.kh.nullcompany.personnelManagement.model.vo.RecodeDiligence;
 import com.kh.nullcompany.personnelManagement.model.vo.RecodeLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.RewardLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.SetAttendance;
@@ -173,8 +174,33 @@ public class PersonnelManagementServiceImpl implements PersonnelManagementServic
 	 * 출퇴근 설정
 	 */
 	@Override
-	public ArrayList<SetAttendance>  setAttendance() {
+	public SetAttendance  setAttendance() {
 		return pDao.setAttendance();
+	}
+	// 출근기록가능여부
+	@Override
+	public int recodeAB_A(int memNo) {
+		return pDao.recodeAB_A(memNo);
+	}
+	// 출근기록 삽입
+	@Override
+	public int insertRA(Map forR) {
+		return pDao.recodeRA(forR);
+	}
+	// 퇴근기록가능여부
+	@Override
+	public int recodeAB_O(int memNo) {
+		return pDao.recodeAB_O(memNo);
+	}
+	// 퇴근기록 삽입
+	@Override
+	public int insertRO(Map forR) {
+		return pDao.recodeRO(forR);
+	}
+
+	@Override
+	public RecodeDiligence recodeToday(int memNo) {
+		return pDao.recodeToday(memNo);
 	}
 	
 	
