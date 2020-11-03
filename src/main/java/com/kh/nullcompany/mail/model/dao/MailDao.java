@@ -41,6 +41,10 @@ public class MailDao {
 	public Mail mailReply(int mailNo) {
 		return sqlSession.selectOne("mailMapper.mailDetailView",mailNo);
 	}
+
+	public int updateCount(int mailNo) {
+		return sqlSession.update("mailMapper.updateCount",mailNo);
+	}
 	
 }
 

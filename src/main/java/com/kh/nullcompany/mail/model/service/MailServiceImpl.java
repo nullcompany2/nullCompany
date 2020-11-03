@@ -38,7 +38,14 @@ public class MailServiceImpl implements MailService {
 
 	@Override
 	public Mail mailDetailView(int mailNo) {
-		return maDao.mailDetailView(mailNo);
+		int result = maDao.updateCount(mailNo);
+		
+		if(result > 0) {
+			return maDao.mailDetailView(mailNo);
+			
+		}else {
+			return null;
+		}
 	}
 
 	@Override
