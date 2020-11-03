@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.personnelManagement.model.vo.Department;
 import com.kh.nullcompany.personnelManagement.model.vo.MixForLeave;
+import com.kh.nullcompany.personnelManagement.model.vo.RecodeDiligence;
 import com.kh.nullcompany.personnelManagement.model.vo.RecodeLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.RewardLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.SetAttendance;
@@ -117,8 +118,33 @@ public class PersonnelManagementDao {
 	}
 
 
-	public ArrayList<SetAttendance> setAttendance() {
-		return ((ArrayList)sqlSession.selectList("personnelMapper.setAttendance"));
+	public SetAttendance setAttendance() {
+		return sqlSession.selectOne("personnelMapper.setAttendance");
+	}
+
+
+	public int recodeAB_A(int memNo) {
+		return sqlSession.selectOne("personnelMapper.recodeAB_A",memNo);
+	}
+
+
+	public int recodeRA(Map forR) {
+		return sqlSession.insert("personnelMapper.recodeRA",forR);
+	}
+
+
+	public int recodeAB_O(int memNo) {
+		return sqlSession.selectOne("personnelMapper.recodeAB_O",memNo);
+	}
+
+
+	public int recodeRO(Map forR) {
+		return sqlSession.update("personnelMapper.recodeRO",forR);
+	}
+
+
+	public RecodeDiligence recodeToday(int memNo) {
+		return sqlSession.selectOne("personnelMapper.recodeToday",memNo);
 	}
 
 }

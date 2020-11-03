@@ -25,8 +25,6 @@
       <result property="deptName" column="DEPT_NAME"/>
       <result property="rankName" column="RANK_NAME"/>
       <result property="sAccess" column="S_ACCESS"/>
-      
-     
    </resultMap>
 
    <select id="loginMember" parameterType="Member" resultMap="memberResultSet">
@@ -77,5 +75,7 @@
         WHERE MEM_NO = #{senderNo}
         AND M_STATUS = 'Y'
 	</select>
+	
+	
 	
 </mapper>
