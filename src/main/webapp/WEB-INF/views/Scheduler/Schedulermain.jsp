@@ -87,25 +87,15 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 	        {
 	          title: '정택환 다이아감!',
 	          start: '2020-10-23T13:00:00',
-	          constraint: '정택환 다이아감!'
-	        },
-	       
-
-	        // red areas where no events can be dropped
-	        {
-	          start: '2020-02-24',
-	          end: '2020-02-28',
-	          overlap: false,
-	          rendering: 'background',
-	          color: '#ff9f89'
+	          constraint: '정택환 다이아감!',
+	          color: 'rgb(255, 167, 167)'
 	        },
 	        {
-	          start: '2020-02-06',
-	          end: '2020-02-08',
-	          overlap: false,
-	          rendering: 'background',
-	          color: '#ff9f89'
-	        }
+		          title: '신아라 서울옴!!',
+		          start: '2020-11-04T13:00:00',
+		          constraint: '신아라 서울옴!',
+		          color: 'rgb(250, 237, 125)'
+		      },
 	      ]
 	    });
 
@@ -149,7 +139,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 
 									<li class="subTitle"><label for="calendar_view"
 										style="font-weight: bold;">내 캘린더</label>
-										<button class="calbtn">만들기</button> <br>
+										<button id="individual" class="calbtn">만들기</button> <br>
 										<div class="input-group">
 											<!-- <select class="filter" id="type_filter" multiple="multiple"> -->
 											<input type="checkbox" name="sche_cate" value="카테고리1">
@@ -166,18 +156,22 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 										style="font-weight: bold;">공유 캘린더</label>
 										<button id="community" class="calbtn">만들기</button> <br>
 										<div class="input-group">
-											<!-- <select class="filter" id="type_filter" multiple="multiple"> -->
-											<input type="checkbox" name="sche_cate" value="카테고리1">
-											ㅇㅇㅇ</input><a>수정</a><br> <input type="checkbox" name="sche_cate"
-												value="카테고리2"> ㅁㅁㅁ</input><a>수정</a><br>
-
-											<!-- </select> -->
+										
+											<c:forEach var="publicCalList" items="${ publicCalList }">
+												<input type="checkbox" name="sche_cate" value="${ publicCalList.calNo }">
+												${ publicCalList.calName }</input>
+											<a>수정</a><br> 
+											</c:forEach>
+											
+									
 										</div></li>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
+				
+				
 				<!-- 세부 네비 끝 -->
 
 				<!-- 컨텐츠 -->
@@ -479,55 +473,99 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 						</div>
 						<a class="modal-close-btn cursor">X</a>
 					</div>
+					
+					
+					<div id="individualmodal" class="modal-dragscroll">
+						<h4 style="color: #477A8F; margin-bottom: 15px;">내 캘린더</h4>
+						<label for="" style="font-size: 14px;">캘린더 이름 </label>
+						&nbsp;&nbsp; <input type="text"> &nbsp;
+
+						<div class="palletBox2">
+
+							<div id="box2" class="box2">
+								<label style="font-size: 14px; position: absolute; top: 100px;">색상</label>
+								<div id="colorselect2"></div>
+								<div id="palletBox2" class="pallet2"></div>
+							</div>
+						</div>
+
+
+						<div style="text-align: center;">
+							<button
+								style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">확인</button>
+							<button
+								style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">취소</button>
+						</div>
+						<a class="modal-close-btn cursor">X</a>
+					</div>
+
+
 
 				</div>
 
 				<script>
-	   
-    // 공유 캘린더 추가용 
-/*    $(document).on('click', "#cal_sub", function(){ */
-	   $("#cal_sub").off("click").on('click', function() {
-	   var calName = $('#cal_name').val();
-	  	  var color =  document.querySelector('#colorselect').style.background;
-	  	  var enroll = $('#enrollname').text();
-	  	  var enrollArray = enroll.split(',');
-	  	  
-	  	  for(var i = 0; i<enrollArray.length; i++){
-	  		enrollArray[i] = enrollArray[i].substring(enrollArray[i].length - 5, enrollArray[i].length- 1);
-	  	  }
+					// 공유 캘린더 추가용 
+					/*    $(document).on('click', "#cal_sub", function(){ */
+					$("#cal_sub")
+							.off("click")
+							.on(
+									'click',
+									function() {
+										var calName = $('#cal_name').val();
+										var color = document
+												.querySelector('#colorselect').style.background;
+										var enroll = $('#enrollname').text();
+										var enrollArray = enroll.split(',');
 
-	  	  var look = $('#lookname').text();
-  		  var lookArray = look.split(',');
-	  	  
-	  	  for(var i = 0; i<lookArray.length; i++){
-	  		lookArray[i] = lookArray[i].substring(lookArray[i].length - 5, lookArray[i].length- 1);
-	  	  }
-	  	  
+										for (var i = 0; i < enrollArray.length; i++) {
+											enrollArray[i] = enrollArray[i]
+													.substring(
+															enrollArray[i].length - 5,
+															enrollArray[i].length - 1);
+										}
 
+										var look = $('#lookname').text();
+										var lookArray = look.split(',');
 
-	  	  
-	      $.ajax({
-	    		url:"insertCommunityCal.do",
-				type:"post",
-				dataType : "json",
-				traditional : true,
-				data: {
-					  "calName"  :  $('#cal_name').val(),
-		              "color" : document.querySelector('#colorselect').style.background,
-		      		  "enrollMember" : enrollArray,
-		      		  "lookMember" : lookArray },
-				success:function(data){
-					console.log("에작" + data);
-					history.go(-1); 
-				},error: function(request,status,error){
-					console.log("에러임" + request);
-			}
-	    	  
-	      })
-  	
-      
-   } )
-	</script>
+										for (var i = 0; i < lookArray.length; i++) {
+											lookArray[i] = lookArray[i]
+													.substring(
+															lookArray[i].length - 5,
+															lookArray[i].length - 1);
+										}
+
+										$
+												.ajax({
+													url : "insertCommunityCal.do",
+													type : "post",
+													dataType : "json",
+													traditional : true,
+													data : {
+														"calName" : $(
+																'#cal_name')
+																.val(),
+														"color" : document
+																.querySelector('#colorselect').style.background,
+														"enrollMember" : enrollArray,
+														"lookMember" : lookArray
+													},
+													success : function(data) {
+														console
+																.log("에작"
+																		+ data);
+														location.reload();
+													},
+													error : function(request,
+															status, error) {
+														console.log("에러임"
+																+ request);
+														location.reload();
+													}
+
+												})
+
+									})
+				</script>
 
 
 				<script>
@@ -579,10 +617,17 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
        modal('addsche_modal');
     });
      
+     $('#individual').on('click', function() {
+         // 내 캘린더 모달창 띄우기
+         modal('individualmodal');
+      });
      $('#community').on('click', function() {
-         // 모달창 띄우기
+         // 공유 캘린더 모달창 띄우기
          modal('communitymodal');
       });
+     
+    
+     
      // 리스트 토글
      $('.tree').each(function(){
      var $this = $(this);
@@ -679,42 +724,87 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
  //HTML 로딩이 끝난 후
  window.onload = function(){
  init();
+ init2();
  
  }
 
- function init(){
- //2차원 배열 파레트 데이터
-       var pallet = [["#FFA7A7", "#FFC19E", "#FFE08C", "#FAED7D", "#CEF279", "#B7F0B1", "#B2EBF4", 
-       "#B2CCFF", "#B5B2FF", "#D1B2FF", "#FFB2F5", "#FFB2D9", "#D5D5D5", "#BDBDBD"]];
-       var tag = "";
-       for(i=0; i<pallet.length; i++){
-          for(j=0; j<pallet[i].length; j++){
-             tag += "<div id="+pallet[i][j]+" class='colorBox' onclick='colorSet(this)'></div>";
-          }
-       }
-       //파레트 파싱
-       document.getElementById("palletBox").innerHTML = tag;
+ 
+					function init() {
+						//2차원 배열 파레트 데이터
+						var pallet = [ [ "#FFA7A7", "#FFC19E", "#FFE08C",
+								"#FAED7D", "#CEF279", "#B7F0B1", "#B2EBF4",
+								"#B2CCFF", "#B5B2FF", "#D1B2FF", "#FFB2F5",
+								"#FFB2D9", "#D5D5D5", "#BDBDBD" ] ];
+						var tag = "";
+						for (i = 0; i < pallet.length; i++) {
+							for (j = 0; j < pallet[i].length; j++) {
+								tag += "<div id="
+										+ pallet[i][j]
+										+ " class='colorBox' onclick='colorSet(this)'></div>";
+							}
+						}
+						//파레트 파싱
+						document.getElementById("palletBox").innerHTML = tag;
 
-       //색상 입히기
-       var colorBox = document.getElementsByClassName("colorBox");
-       for(i=0; i<colorBox.length; i++){
-          colorBox[i].style.background = colorBox[i].id;
-       }
-       }
+						//색상 입히기
+						var colorBox = document
+								.getElementsByClassName("colorBox");
+						for (i = 0; i < colorBox.length; i++) {
+							colorBox[i].style.background = colorBox[i].id;
+						}
+					}
 
-       // onclick event
-       function colorSet(target){
-       document.querySelector("#colorselect").style.background = target.id;
+					// onclick event
+					function colorSet(target) {
+						document.querySelector("#colorselect").style.background = target.id;
 
-       if(beforeColor != undefined && beforeColor != null){
-          document.getElementById(beforeColor).className = document.getElementById(beforeColor).className.replace(" active", "");
-       }
-       document.getElementById(target.id).className += " active";
-       beforeColor = target.id;
-       }
+						if (beforeColor != undefined && beforeColor != null) {
+							document.getElementById(beforeColor).className = document
+									.getElementById(beforeColor).className
+									.replace(" active", "");
+						}
+						document.getElementById(target.id).className += " active";
+						beforeColor = target.id;
+					}
 
-   
-</script>
+					function init2() {
+						//2차원 배열 파레트 데이터
+						var pallet2 = [ [ "#F15F5F", "#F29661", "#F2CB61",
+								"#E5D85C", "#BCE55C", "#86E57F", "#5CD1E5",
+								"#6799FF", "#6B66FF", "#A566FF", "#F361DC",
+								"#F361A6", "#A6A6A6", "#8C8C8C" ] ];
+						var tag2 = "";
+						for (i = 0; i < pallet2.length; i++) {
+							for (j = 0; j < pallet2[i].length; j++) {
+								tag2 += "<div id="
+										+ pallet2[i][j]
+										+ " class='colorBox2' onclick='colorSet(this)2'></div>";
+							}
+						}
+						//파레트 파싱
+						document.getElementById("palletBox2").innerHTML = tag2;
+
+						//색상 입히기
+						var colorBox2 = document
+								.getElementsByClassName("colorBox2");
+						for (i = 0; i < colorBox2.length; i++) {
+							colorBox2[i].style.background = colorBox2[i].id;
+						}
+					}
+
+					// onclick event
+					function colorSet2(target2) {
+						document.querySelector("#colorselect2").style.background = target2.id;
+
+						if (beforeColor != undefined && beforeColor != null) {
+							document.getElementById(beforeColor).className = document
+									.getElementById(beforeColor).className
+									.replace(" active2", "");
+						}
+						document.getElementById(target2.id).className += " active2";
+						beforeColor = target2.id;
+					}
+				</script>
 
 
 

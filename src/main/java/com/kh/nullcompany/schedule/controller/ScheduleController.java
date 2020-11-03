@@ -32,9 +32,13 @@ public class ScheduleController {
 		ArrayList<Department> deptList = sService.deptList();
 		// 총 사원 리스트
 		ArrayList<Member> memList = sService.memList();
+		// 공유 캘린더 리스트
+	    ArrayList<Calendar> publicCalList = sService.publicCalList();
+		
 
 		mv.addObject("deptList", deptList);
 		mv.addObject("memList", memList);
+		mv.addObject("publicCalList", publicCalList);
 		mv.setViewName("Scheduler/Schedulermain");
 		return mv;
 	}
@@ -50,15 +54,20 @@ public class ScheduleController {
 	public void insertCommunity(@Param("Calendar") Calendar Calendar ) {
 		sService.insertCommunity(Calendar);
 		
-		System.out.println(Calendar.getCalNo()+"dddddddddselectket");
+		System.out.println(Calendar.getCalNo()+"컨트롤러");
 		System.out.println("공유캘린더" + Calendar);
-		System.out.println("컨트롤러" + Calendar.getEnrollMember());
+
 		// 등록조회 리스트
 		
 		String[] enrollarray = Calendar.getEnrollMember().split(",");
 		int [] enrollmemno = Arrays.stream(enrollarray).mapToInt(Integer::parseInt).toArray();
 		
 		sService.EnrollMember(enrollmemno, Calendar.getCalNo());
+		
+		String[] lookarray = Calendar.getLookMember().split(",");
+		int [] lookmemno = Arrays.stream(lookarray).mapToInt(Integer::parseInt).toArray();
+		
+		sService.LookMember(lookmemno, Calendar.getCalNo());
 	
 //		sService.insertEnrollMember();
 //		sService.insertgetLookMember(Calendar.getLookMember())	

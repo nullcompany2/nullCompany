@@ -43,10 +43,31 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 			calendarMember.setCalMem(enrollmemno[i]);
 
-			System.out.println(calendarMember+"rrdsfsdgr");
+			System.out.println(calendarMember+" : 등록권한");
 			sDao.EnrollMember(calendarMember);
 
 		}
+	}
+
+	@Override
+	public void LookMember(int[] lookmemno, int result) {
+		for (int i = 0; i < lookmemno.length; i++) {
+
+			CalendarMember calendarMember = new CalendarMember();
+			calendarMember.setCalNo(result);
+
+			calendarMember.setCalMem(lookmemno[i]);
+
+			System.out.println(calendarMember+" : 조회권한");
+			sDao.LookMember(calendarMember);
+
+		}
+		
+	}
+
+	@Override
+	public ArrayList<Calendar> publicCalList() {
+		return sDao.publicCalList();
 	}
 
 //	@Override

@@ -77,4 +77,14 @@
 		INSERT INTO CALENDAR_MEMBER
 		VALUES( #{calNo}, #{calMem}, 1)
 	</insert>
+	
+	<insert id="LookMember" parameterType="CalendarMember">
+		INSERT INTO CALENDAR_MEMBER
+		VALUES( #{calNo}, #{calMem}, 2)
+	</insert>
+	
+	<select id="publicCalList" resultMap="CalendarResultSet" parameterType="Calendar">
+		SELECT * FROM CALENDAR WHERE CAL_TYPE = 1
+	</select>
+	
 </mapper>
