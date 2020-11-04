@@ -40,6 +40,23 @@ public class ScheduleDao {
 	public ArrayList<Calendar> publicCalList() {
 		return (ArrayList)sqlSession.selectList("scheduleMapper.publicCalList");
 	}
+
+	public int insertIndividual(Calendar calendar) {
+		return sqlSession.insert("scheduleMapper.insertIndividual",calendar);
+	}
+
+	public int IndEnrollMember(CalendarMember calendarMember) {
+		return sqlSession.insert("scheduleMapper.IndEnrollMember",calendarMember);
+	}
+
+	public int IndLookMember(CalendarMember calendarMember) {
+		return sqlSession.insert("scheduleMapper.IndLookMember",calendarMember);
+	
+	}
+
+	public ArrayList<Calendar> IndividualCalList() {
+		return (ArrayList)sqlSession.selectList("scheduleMapper.IndividualCalList");
+	}
 	
 
 

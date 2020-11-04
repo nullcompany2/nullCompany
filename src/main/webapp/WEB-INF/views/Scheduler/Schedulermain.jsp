@@ -142,11 +142,11 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 										<button id="individual" class="calbtn">만들기</button> <br>
 										<div class="input-group">
 											<!-- <select class="filter" id="type_filter" multiple="multiple"> -->
-											<input type="checkbox" name="sche_cate" value="카테고리1">
-											집에가요</input><a>수정</a><br> <input type="checkbox"
-												name="sche_cate" value="카테고리2"> 집!</input> <a>수정</a><br>
-											<input type="checkbox" name="sche_cate" value="카테고리4">
-											집!!</input><a>수정</a><br>
+											<c:forEach var="IndividualCalList" items="${ IndividualCalList }">
+												<input type="checkbox" name="sche_cate" value="${ IndividualCalList.calNo }">
+												${ IndividualCalList.calName }</input>
+											<a>수정</a><br> 
+											</c:forEach>
 											<!-- </select> -->
 										</div></li>
 
@@ -219,9 +219,12 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 								</dt>
 								<dd style="margin-left: 150px;">
 									<select name="cal" style="width: 200px;">
-										<option value="">캘린더 선택</option>
-										<option value="ㅇㅇ">ㅇㅇ</option>
-										<option value="집에가용">집에가용</option>
+										<c:forEach var="publicCalList" items="${ publicCalList }">
+											<option class="selectpublicCal" value="${ publicCalList.calNo }">${ publicCalList.calName }</option>
+									    </c:forEach>
+									    <c:forEach var="IndividualCalList" items="${ IndividualCalList }">
+											<option class="selectindiCal" value="${ IndividualCalList.calNo }">${ IndividualCalList.calName }</option>
+									    </c:forEach>
 									</select>
 								</dd>
 							</dl>
@@ -365,11 +368,24 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 						<div
 							style="text-align: center; position: relative; top: 185px; left: -35px;">
 							<button
-								style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">확인</button>
-							<button
-								style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">취소</button>
+								style=" background: #fff;
+									    color: #2c86dc;
+									    padding: 5px 27px 6px;
+									    border: 1px solid #c8c8c8;
+									    position: absolute;
+									    left: 150px;">확인</button>
+								<button class="modal-close-btn cursor"
+								style="absolute;
+							    left: 245PX;
+							    top: 0px;
+							    padding: 5px 27px 6px;
+							    color: #444;
+							    letter-spacing: -1px;
+							    border: 1px solid #dadada;
+							    background: #dadada;
+								 letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">취소</button>
 						</div>
-						<a class="modal-close-btn cursor">X</a>
+					
 					</div>
 
 
@@ -466,107 +482,126 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 							<div style="position: absolute; bottom: 40px; left: 220px;">
 								<button id="cal_sub"
 									style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">저장</button>
-								<button
-									style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">취소</button>
+								<button class="modal-close-btn cursor"
+								style="position: absolute; left: 90px; top: 0px; padding: 5px 27px 6px; color: #444;
+								 letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">취소</button>
 							</div>
 
 						</div>
-						<a class="modal-close-btn cursor">X</a>
+		
 					</div>
 					
-					
+					<!-- 개인 모달 -->
 					<div id="individualmodal" class="modal-dragscroll">
-						<h4 style="color: #477A8F; margin-bottom: 15px;">내 캘린더</h4>
+						<h4 style="color: #477A8F; margin-bottom: 15px;margin-top: 10px;">내 캘린더</h4>
+						<div>
 						<label for="" style="font-size: 14px;">캘린더 이름 </label>
-						&nbsp;&nbsp; <input type="text"> &nbsp;
+						&nbsp;&nbsp; <input type="text"  id="cal_name2"/> &nbsp;
 
 						<div class="palletBox2">
 
 							<div id="box2" class="box2">
-								<label style="font-size: 14px; position: absolute; top: 100px;">색상</label>
+								<label style="font-size: 14px; position: absolute;bottom: 83px;">색상</label>
 								<div id="colorselect2"></div>
 								<div id="palletBox2" class="pallet2"></div>
 							</div>
-						</div>
+						</div></div>
 
 
-						<div style="text-align: center;">
-							<button
+						<div style="text-align: center;position: relative;top: 20px;">
+							<button id="indi_sub"
 								style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">확인</button>
-							<button
+							<button class="modal-close-btn cursor"
 								style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">취소</button>
 						</div>
-						<a class="modal-close-btn cursor">X</a>
+						
 					</div>
 
 
 
 				</div>
 
-				<script>
-					// 공유 캘린더 추가용 
-					/*    $(document).on('click', "#cal_sub", function(){ */
-					$("#cal_sub")
-							.off("click")
-							.on(
-									'click',
-									function() {
-										var calName = $('#cal_name').val();
-										var color = document
-												.querySelector('#colorselect').style.background;
-										var enroll = $('#enrollname').text();
-										var enrollArray = enroll.split(',');
+	<script>
+    // 내 캘린더 추가 
+    $("#indi_sub").off("click").on('click',
+            function () {
+                var calName = $('#cal_name2').val();
+                var color = document.querySelector('#colorselect2').style.background;
+                var enrollMember = "${ loginUser.memNo }";
+				var lookMember  = "${ loginUser.memNo }";
+                $
+                    .ajax({
+                        url: "insertIndividual.do",
+                        type: "post",
+                        dataType: "json",
+                        traditional: true,
+                        data: {
+                            "calName": $('#cal_name2').val(),
+                            "color": document.querySelector('#colorselect2').style.background,
+                            "enrollMember": enrollMember,
+                            "lookMember": lookMember
+                        },
+                        success: function (data) {
+                            console.log("에작"+ data);
+                            location.reload();
+                        },
+                        error: function (request,
+                            status, error) {
+                            console.log("개인"+ request);
+                            location.reload();
+                        }
 
-										for (var i = 0; i < enrollArray.length; i++) {
-											enrollArray[i] = enrollArray[i]
-													.substring(
-															enrollArray[i].length - 5,
-															enrollArray[i].length - 1);
-										}
+                    })
 
-										var look = $('#lookname').text();
-										var lookArray = look.split(',');
+            })
+	</script>
+	<script>
+    // 공유 캘린더 추가용 
+    /*    $(document).on('click', "#cal_sub", function(){ */
+    $("#cal_sub").off("click").on('click',
+            function () {
+                var calName = $('#cal_name').val();
+                var color = document.querySelector('#colorselect').style.background;
+                var enroll = $('#enrollname').text();
+                var enrollArray = enroll.split(',');
 
-										for (var i = 0; i < lookArray.length; i++) {
-											lookArray[i] = lookArray[i]
-													.substring(
-															lookArray[i].length - 5,
-															lookArray[i].length - 1);
-										}
+                for (var i = 0; i < enrollArray.length; i++) {
+                    enrollArray[i] = enrollArray[i].substring(enrollArray[i].length - 5,enrollArray[i].length - 1);
+                }
 
-										$
-												.ajax({
-													url : "insertCommunityCal.do",
-													type : "post",
-													dataType : "json",
-													traditional : true,
-													data : {
-														"calName" : $(
-																'#cal_name')
-																.val(),
-														"color" : document
-																.querySelector('#colorselect').style.background,
-														"enrollMember" : enrollArray,
-														"lookMember" : lookArray
-													},
-													success : function(data) {
-														console
-																.log("에작"
-																		+ data);
-														location.reload();
-													},
-													error : function(request,
-															status, error) {
-														console.log("에러임"
-																+ request);
-														location.reload();
-													}
+                var look = $('#lookname').text();
+                var lookArray = look.split(',');
 
-												})
+                for (var i = 0; i < lookArray.length; i++) {
+                    lookArray[i] = lookArray[i].substring(lookArray[i].length - 5,lookArray[i].length - 1);
+                }
 
-									})
-				</script>
+                $
+                    .ajax({
+                        url: "insertCommunityCal.do",
+                        type: "post",
+                        dataType: "json",
+                        traditional: true,
+                        data: {
+                            "calName": $('#cal_name').val(),
+                            "color": document.querySelector('#colorselect').style.background,
+                            "enrollMember": enrollArray,
+                            "lookMember": lookArray
+                        },
+                        success: function (data) {
+                            console.log("에작"+ data);
+                            location.reload();
+                        },
+                        error: function (request,
+                            status, error) {
+                            console.log("공유"+ request);
+                            location.reload();
+                        }
 
+                    })
+
+            })
+</script>
 
 				<script>
   
@@ -778,7 +813,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 							for (j = 0; j < pallet2[i].length; j++) {
 								tag2 += "<div id="
 										+ pallet2[i][j]
-										+ " class='colorBox2' onclick='colorSet(this)2'></div>";
+										+ " class='colorBox2' onclick='colorSet2(this)'></div>";
 							}
 						}
 						//파레트 파싱

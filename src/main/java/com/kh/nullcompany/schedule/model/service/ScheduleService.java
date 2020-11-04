@@ -21,6 +21,14 @@ public interface ScheduleService {
 
 	ArrayList<Calendar> publicCalList();
 
+	int insertIndividual(Calendar calendar);
+
+	void IndEnrollMember(int indEnrollMember, int calNo);
+
+	void IndLookMember(int indLookMember, int calNo);
+
+	ArrayList<Calendar> IndividualCalList();
+
 //	ArrayList<Integer> EnrollMember(int[] enrollmemno, result);
 
 //	ArrayList<Integer> EnrollMember(String enrollMember);

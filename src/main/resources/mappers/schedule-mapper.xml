@@ -87,4 +87,26 @@
 		SELECT * FROM CALENDAR WHERE CAL_TYPE = 1
 	</select>
 	
+	<select id="IndividualCalList" resultMap="CalendarResultSet" parameterType="Calendar">
+		SELECT * FROM CALENDAR WHERE CAL_TYPE = 2
+	</select>
+	
+	<insert id="insertIndividual" parameterType="Calendar">
+		INSERT INTO CALENDAR VALUES(2, #{calNo}, #{calName}, #{color})
+		<selectKey keyProperty="calNo" resultType="int"
+			order="BEFORE">
+			select CAL_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+	</insert>
+	
+	<insert id="IndEnrollMember" parameterType="CalendarMember">
+		INSERT INTO CALENDAR_MEMBER
+		VALUES( #{calNo}, #{calMem}, 1)
+	</insert>
+	
+	<insert id="IndLookMember" parameterType="CalendarMember">
+		INSERT INTO CALENDAR_MEMBER
+		VALUES( #{calNo}, #{calMem}, 2)
+	</insert>
+	
 </mapper>

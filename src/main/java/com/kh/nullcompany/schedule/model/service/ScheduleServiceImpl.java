@@ -70,6 +70,41 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return sDao.publicCalList();
 	}
 
+	@Override
+	public int insertIndividual(Calendar calendar) {
+		return sDao.insertIndividual(calendar);
+	}
+
+	@Override
+	public void IndEnrollMember(int indEnrollMember, int calNo) {
+		CalendarMember calendarMember = new CalendarMember();
+		calendarMember.setCalNo(calNo);
+
+		calendarMember.setCalMem(indEnrollMember);
+
+		System.out.println(calendarMember+" : 개인 등록권한");
+		sDao.IndEnrollMember(calendarMember);
+		
+	}
+
+	@Override
+	public void IndLookMember(int indLookMember, int calNo) {
+		CalendarMember calendarMember = new CalendarMember();
+		calendarMember.setCalNo(calNo);
+
+		calendarMember.setCalMem(indLookMember);
+
+		System.out.println(calendarMember+" : 개인 조회 권한");
+		sDao.IndLookMember(calendarMember);
+		
+	}
+
+	@Override
+	public ArrayList<Calendar> IndividualCalList() {
+		return sDao.IndividualCalList();
+	}
+
+
 //	@Override
 //	public ArrayList<Integer> EnrollMember(String enrollMember) {
 //		return sDao.EnrollMember(enrollMember);
