@@ -12,8 +12,8 @@ import org.springframework.stereotype.Repository;
 import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.personnelManagement.model.vo.Department;
 import com.kh.nullcompany.personnelManagement.model.vo.MixForLeave;
-import com.kh.nullcompany.personnelManagement.model.vo.RecodeDiligence;
-import com.kh.nullcompany.personnelManagement.model.vo.RecodeLeave;
+import com.kh.nullcompany.personnelManagement.model.vo.RecordDiligence;
+import com.kh.nullcompany.personnelManagement.model.vo.RecordLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.RewardLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.SetAttendance;
 import com.kh.nullcompany.personnelManagement.model.vo.SetLeave;
@@ -88,7 +88,7 @@ public class PersonnelManagementDao {
 	}
 
 
-	public ArrayList<RecodeLeave> applyLeave(int memNo) {
+	public ArrayList<RecordLeave> applyLeave(int memNo) {
 		return ((ArrayList)sqlSession.selectList("personnelMapper.applyLeave",memNo));
 	}
 
@@ -108,8 +108,8 @@ public class PersonnelManagementDao {
 	}
 
 
-	public MixForLeave detailRecodeLeave(int noRecode) {
-		return sqlSession.selectOne("personnelMapper.detailRecodeLeave",noRecode);
+	public MixForLeave detailRecordLeave(int noRecord) {
+		return sqlSession.selectOne("personnelMapper.detailRecordLeave",noRecord);
 	}
 
 
@@ -123,28 +123,33 @@ public class PersonnelManagementDao {
 	}
 
 
-	public int recodeAB_A(int memNo) {
-		return sqlSession.selectOne("personnelMapper.recodeAB_A",memNo);
+	public int RecordAB_A(int memNo) {
+		return sqlSession.selectOne("personnelMapper.recordAB_A",memNo);
 	}
 
 
-	public int recodeRA(Map forR) {
-		return sqlSession.insert("personnelMapper.recodeRA",forR);
+	public int RecordRA(Map forR) {
+		return sqlSession.insert("personnelMapper.recordRA",forR);
 	}
 
 
-	public int recodeAB_O(int memNo) {
-		return sqlSession.selectOne("personnelMapper.recodeAB_O",memNo);
+	public int RecordAB_O(int memNo) {
+		return sqlSession.selectOne("personnelMapper.recordAB_O",memNo);
 	}
 
 
-	public int recodeRO(Map forR) {
-		return sqlSession.update("personnelMapper.recodeRO",forR);
+	public int RecordRO(Map forR) {
+		return sqlSession.update("personnelMapper.recordRO",forR);
 	}
 
 
-	public RecodeDiligence recodeToday(int memNo) {
-		return sqlSession.selectOne("personnelMapper.recodeToday",memNo);
+	public RecordDiligence RecordToday(int memNo) {
+		return sqlSession.selectOne("personnelMapper.recordToday",memNo);
+	}
+
+
+	public int noCheckOffwork(int memNo) {
+		return sqlSession.selectOne("personnelMapper.noCheckOffwork",memNo);
 	}
 
 }

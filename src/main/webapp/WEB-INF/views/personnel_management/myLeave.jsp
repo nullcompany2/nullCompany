@@ -98,7 +98,7 @@
 	
 						<!-- 1-2 -->
 						<h4 style="margin-top: 150px; font-weight: normal;">휴가 신청 내역</h4>
-						<table class="r-table" id="application-recode">
+						<table class="r-table" id="application-record">
 							<thead style="background: #e8ecee;">
 								<tr>
 									<th scope="col" rowspan="2" class="tr">문서 번호</th>
@@ -113,7 +113,7 @@
 							<tbody id="outputPoint">
 							<c:forEach var="mix" items="${mixLeave }">
 								<tr>
-									<td class="ta">${mix.noRecode}</td>
+									<td class="ta">${mix.noRecord}</td>
 									<td class="ta">${loginUser.name }</td>
 									<td class="ta" id="typeName">${mix.nameType}</td>
 									<td class="ta">${mix.useDays}</td>
@@ -127,7 +127,7 @@
 									
 									<td class="ta">${ad }~(${mix.useDays })일</td>
 									<td class="ta">${mix.status }</td>
-									<td class="ta"><a href="#" onclick="forModal(${mix.noRecode})" class="cursor" style="color: #477A8F;">상세</a></td>
+									<td class="ta"><a href="#" onclick="forModal(${mix.noRecord})" class="cursor" style="color: #477A8F;">상세</a></td>
 								</tr>
 							</c:forEach>
 							</tbody>
@@ -195,17 +195,17 @@
 				
 		}
 		
-		function forModal(noRecode){
+		function forModal(noRecord){
 			// 모달창 띄우기
 			modal('my_modal');
-			detailRecodeLeave(noRecode);
+			detailRecordLeave(noRecord);
 		};
 		
-		function detailRecodeLeave(noRecode){
-			console.log(noRecode)
+		function detailRecordLeave(noRecord){
+			console.log(noRecord)
 			$.ajax({
-				url : "detailRecodeLeave.do",
-				data : {noRecode : noRecode},
+				url : "detailRecordLeave.do",
+				data : {noRecord : noRecord},
 				datatype : "json",
 				success : function(data){
 					console.log(data)
