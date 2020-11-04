@@ -10,7 +10,7 @@
 
 
 <!-- include libraries(jQuery, bootstrap) -->
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
@@ -36,7 +36,8 @@
 	font-weight: bolder;
 }
 
-form input[type=button] {
+form input[type=submit],form input[type=button] 
+	{
 	font-size: 18px;
 	margin: 20px 5px 7px 5px;
 	background: none;
@@ -108,25 +109,25 @@ a:active {
 
 			<div>
 				<div style="width: 90%; margin: auto;">
-					<form method="post" action=""  enctype="multipart/form-data">
-
-						<input type="button" value="보내기" id="sendMail" onClick="location.href='sendMail.do'" />
+					<form method="post" enctype="multipart/form-data">
+						<input type="hidden" value="${loginUser.memNo}" name= memNo>
+						<input type="submit" value="보내기" id="sendMail" />
 						<input class="go2" type="button" value="미리보기"/> 
-						<input id="saveMail" type="button" value="저장하기" onClick="location.href='gosaveMail.do'"/>
+						<input type="submit" id="saveMail"  value="저장하기"/>
 						<input type="button" value="이전으로" onClick="location.href='javascript:history.go(-1);'" /> <br>
 						&nbsp;보내는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 						<input type="text" name="sender" style="width: 60%;" value= "${loginUser.name} <${loginUser.id}> "readonly/> <br>
 						&nbsp;받는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="text" name="writer" style="width: 60%;" value= "${ma.name} <${ma.sender}>" readonly/>
+						<input type="text" name="recipient" style="width: 60%;" value= "${ma.name} <${ma.sender}>" readonly/>
 							  <span style="font-size: 17px; background: #477A8F; color: white; padding: 0px 8px 0px 8px;">+</span>
 						<br> &nbsp;&nbsp;제목
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						&nbsp;<input type="text" name="title" style="width: 60%;"
+						&nbsp;<input type="text" name="mTitle" style="width: 60%;"
 							placeholder="제목 없음" value="RE: ${ma.mTitle}"/> <br>
 						&nbsp;파일첨부&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="file" name="file" />
+						<input type="file" name="uploadPhoto" />
 						<br> <br> 
-						<textarea id="summernote" name="content">
+						<textarea id="summernote" name="mContent">
 						----------- 원본 메일 ----------- <br>
 						<b> 보낸 사람 : </b> ${ma.name}<${ma.sender}>  <br>
 						<b> 받는 사람 : </b> ${loginUser.name} <${loginUser.id}>  <br>
@@ -239,11 +240,12 @@ a:active {
     
     $("#sendMail").click(function () {
         $("form").attr("action","sendMail.do");
+        
 	 });
   
- 	$("#saveMail").click(function () {
+ 	 $("#saveMail").click(function () {
         $("form").attr("action","gosaveMail.do");
- 	});
+ 	}); 
 
  </script>
  
