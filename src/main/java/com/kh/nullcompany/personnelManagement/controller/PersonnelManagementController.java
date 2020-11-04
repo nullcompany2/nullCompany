@@ -27,8 +27,8 @@ import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.personnelManagement.model.service.PersonnelManagementService;
 import com.kh.nullcompany.personnelManagement.model.vo.Department;
 import com.kh.nullcompany.personnelManagement.model.vo.MixForLeave;
-import com.kh.nullcompany.personnelManagement.model.vo.RecodeDiligence;
-import com.kh.nullcompany.personnelManagement.model.vo.RecodeLeave;
+import com.kh.nullcompany.personnelManagement.model.vo.RecordDiligence;
+import com.kh.nullcompany.personnelManagement.model.vo.RecordLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.RewardLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.SetAttendance;
 import com.kh.nullcompany.personnelManagement.model.vo.SetLeave;
@@ -237,7 +237,7 @@ public class PersonnelManagementController {
 		// 포상휴가 테이블 전체조회(사번)
 		ArrayList<RewardLeave> createdReward = pService.createdReward(memNo);
 		// 휴가 신청 기록테이블 전체조회(사번)
-		ArrayList<RecodeLeave> applyLeave = pService.applyLeave(memNo);
+		ArrayList<RecordLeave> applyLeave = pService.applyLeave(memNo);
 		// 휴가 종류 리스트
 		ArrayList<TypeLeave> typeLeave = pService.typeLeave();
 		
@@ -268,10 +268,10 @@ public class PersonnelManagementController {
 	}
 	
 	// 휴가현황 -내휴가 -모달
-	@RequestMapping("detailRecodeLeave.do")
-	public void detailRecodeLeave(HttpServletResponse response, int noRecode) throws JsonIOException, IOException {
+	@RequestMapping("detailRecordLeave.do")
+	public void detailRecordLeave(HttpServletResponse response, int noRecord) throws JsonIOException, IOException {
 		response.setContentType("application/json; charset=utf-8");
-		MixForLeave mixL = pService.detailRecodeLeave(noRecode);
+		MixForLeave mixL = pService.detailRecordLeave(noRecord);
 		
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(mixL,response.getWriter());
@@ -302,11 +302,12 @@ public class PersonnelManagementController {
 		System.out.println(avgLateCount);
 		// 출퇴근 기록 미체크-(출근기록이없는날-결근) , 퇴근체크(비정상)-(출근은했지만 퇴근기록이없는상황)
 		
+		int noCheckOffwork = pService.noCheckOffwork(memNo);
 		// 전체 근태기록
 		
 		// 전체 휴가 사용날 / 사용일수 기록
 		
-		
+		mv.addObject("noCheckOffwork",noCheckOffwork);
 		mv.addObject("lateCount",lateCount);
 		mv.addObject("avgLateCount",avgLateCount);
 		mv.addObject("setAttendance",setAttendance);
@@ -315,8 +316,8 @@ public class PersonnelManagementController {
 	}
 	
 	// 출퇴근 기록
-	@RequestMapping("recodeTA.do")
-	public void RecodeTimeAndAttendance(HttpSession session,int or, HttpServletResponse response) throws JsonIOException, IOException {
+	@RequestMapping("recordTA.do")
+	public void RecordTimeAndAttendance(HttpSession session,int or, HttpServletResponse response) throws JsonIOException, IOException {
 		response.setContentType("application/json; charset=utf-8");
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
 		SetAttendance setAttendance = pService.setAttendance(); // 근무시간 설정값
@@ -332,9 +333,9 @@ public class PersonnelManagementController {
 		Map	forR = new HashMap(); // 기록 상태값용
 		forR.put("memNo",memNo);
 		if(or ==1) {
-			int recodeAB_A = pService.recodeAB_A(memNo);
-			System.out.println(recodeAB_A);
-			if(recodeAB_A == 0) {
+			int RecordAB_A = pService.RecordAB_A(memNo);
+			System.out.println(RecordAB_A);
+			if(RecordAB_A == 0) {
 				if(setCTime > setATime) {
 					forR.put("statusD","지각");
 				}else {
@@ -342,20 +343,20 @@ public class PersonnelManagementController {
 				}
 				int insertRA= pService.insertRA(forR);
 				str = "출근시간 : "+currentTime+" "+((Member)session.getAttribute("loginUser")).getName()+"님 오늘도 열씸히 근무해주세요. ";
-			}else if(recodeAB_A==1) {
+			}else if(RecordAB_A==1) {
 				str = "이미 출근되어 있습니다.";
 			}
 		}else if(or==2) {
 			if(setCTime > setOTime) {
-				int recodeAB_O = pService.recodeAB_O(memNo);
-				if(recodeAB_O == 1) {
+				int RecordAB_O = pService.RecordAB_O(memNo);
+				if(RecordAB_O == 1) {
 					int insertRO = pService.insertRO(forR);
 					if(insertRO == 1) {
 						str=((Member)session.getAttribute("loginUser")).getName()+"님 오늘하루 고생하셨습니다. ";	
 					}else {
 						str="오류 발생 인사담당자에게 연락주세요";
 					}
-				}else if(recodeAB_O == 0) {
+				}else if(RecordAB_O == 0) {
 					str ="출근을 하지않으셨거나, 이미퇴근이 완료되었습니다.";
 				}
 			}else {
@@ -369,14 +370,14 @@ public class PersonnelManagementController {
 		
 	}
 	// 출퇴근 당일 기록(헤더용)
-	@RequestMapping("recodeToday.do")
-	public void recodeToday(HttpServletResponse response, HttpSession session) throws JsonIOException, IOException {
+	@RequestMapping("recordToday.do")
+	public void RecordToday(HttpServletResponse response, HttpSession session) throws JsonIOException, IOException {
 		response.setContentType("application/json; charset=utf-8");
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
-		RecodeDiligence recodeToday = pService.recodeToday(memNo);
+		RecordDiligence RecordToday = pService.RecordToday(memNo);
 		
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-		gson.toJson(recodeToday,response.getWriter());
+		gson.toJson(RecordToday,response.getWriter());
 	}
 
 	// 휴가 관리-기본설정

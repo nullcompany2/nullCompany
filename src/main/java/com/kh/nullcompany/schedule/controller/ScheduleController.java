@@ -32,9 +32,15 @@ public class ScheduleController {
 		ArrayList<Department> deptList = sService.deptList();
 		// 총 사원 리스트
 		ArrayList<Member> memList = sService.memList();
+		// 공유 캘린더 리스트
+	    ArrayList<Calendar> publicCalList = sService.publicCalList();
+		// 내 캘린더 리스트
+	    ArrayList<Calendar> IndividualCalList = sService.IndividualCalList();
 
 		mv.addObject("deptList", deptList);
 		mv.addObject("memList", memList);
+		mv.addObject("publicCalList", publicCalList);
+		mv.addObject("IndividualCalList", IndividualCalList);
 		mv.setViewName("Scheduler/Schedulermain");
 		return mv;
 	}
@@ -50,21 +56,37 @@ public class ScheduleController {
 	public void insertCommunity(@Param("Calendar") Calendar Calendar ) {
 		sService.insertCommunity(Calendar);
 		
-		System.out.println(Calendar.getCalNo()+"dddddddddselectket");
+		System.out.println(Calendar.getCalNo()+"컨트롤러");
 		System.out.println("공유캘린더" + Calendar);
-		System.out.println("컨트롤러" + Calendar.getEnrollMember());
-		// 등록조회 리스트
-		
+
+		// 등록권한 리스트
 		String[] enrollarray = Calendar.getEnrollMember().split(",");
 		int [] enrollmemno = Arrays.stream(enrollarray).mapToInt(Integer::parseInt).toArray();
 		
 		sService.EnrollMember(enrollmemno, Calendar.getCalNo());
-	
-//		sService.insertEnrollMember();
-//		sService.insertgetLookMember(Calendar.getLookMember())	
+		// 조회권한 리스트
+		String[] lookarray = Calendar.getLookMember().split(",");
+		int [] lookmemno = Arrays.stream(lookarray).mapToInt(Integer::parseInt).toArray();
 		
-		
+		sService.LookMember(lookmemno, Calendar.getCalNo());
 
 	}
+	
+	// 내 캘린더 인써트
+		@RequestMapping("insertIndividual.do")
 
+		public void insertIndividual(@Param("Calendar") Calendar Calendar ) {
+			int result = sService.insertIndividual(Calendar);
+			
+			System.out.println(Calendar.getCalNo()+"컨트롤러");
+			System.out.println("내 캘린더" + Calendar);
+	
+			int IndEnrollMember = Integer.parseInt(Calendar.getEnrollMember());
+			int IndLookMember = Integer.parseInt(Calendar.getLookMember());
+			sService.IndEnrollMember(IndEnrollMember, Calendar.getCalNo());
+			
+			sService.IndLookMember(IndLookMember, Calendar.getCalNo());
+
+			
+		}
 }

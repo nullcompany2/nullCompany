@@ -84,14 +84,14 @@
 							
 							function build()
 							{
-								var tbcal = document.getElementById("application-recode"); // 테이블 달력을 만들 테이블
+								var tbcal = document.getElementById("application-record"); // 테이블 달력을 만들 테이블
 								var yearmonth = document.getElementById("yearmonth"); //  년도와 월 출력할곳
 								yearmonth.innerHTML = today.getFullYear() + "년 "+ (today.getMonth() + 1) + "월"; //년도와 월 출력
 						
 							}
 						</script>
 						<div style="margin-top: 150px;">
-							<table class="i-table" id="application-recode">
+							<table class="i-table" id="application-record">
 								<thead style="background: #e8ecee;">
 									<tr>
 										<th scope="col" rowspan="2" class="tr">이름</th>

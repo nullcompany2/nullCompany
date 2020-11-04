@@ -11,14 +11,14 @@
 		<typeAlias type="com.kh.nullcompany.personnelManagement.model.vo.SetLeave" alias="SetLeave"/>
 		<typeAlias type="com.kh.nullcompany.personnelManagement.model.vo.Department" alias="Department"/>
 		<typeAlias type="com.kh.nullcompany.personnelManagement.model.vo.RewardLeave" alias="RewardLeave"/>
-		<typeAlias type="com.kh.nullcompany.personnelManagement.model.vo.RecodeLeave" alias="RecodeLeave"/>
+		<typeAlias type="com.kh.nullcompany.personnelManagement.model.vo.RecordLeave" alias="RecordLeave"/>
 		<typeAlias type="com.kh.nullcompany.personnelManagement.model.vo.TypeLeave" alias="TypeLeave"/>
 		<typeAlias type="com.kh.nullcompany.personnelManagement.model.vo.MixForLeave" alias="MixForLeave"/>
 		<typeAlias type="com.kh.nullcompany.personnelManagement.model.vo.TypeUsedLeave" alias="TypeUsedLeave"/>
 		<typeAlias type="com.kh.nullcompany.personnelManagement.model.vo.SetLeave" alias="SetLeave"/>
 		<typeAlias type="com.kh.nullcompany.personnelManagement.model.vo.Rank" alias="Rank"/>
 		<typeAlias type="com.kh.nullcompany.personnelManagement.model.vo.SetAttendance" alias="SetAttendance"/>
-		<typeAlias type="com.kh.nullcompany.personnelManagement.model.vo.RecodeDiligence" alias="RecodeDiligence"/>
+		<typeAlias type="com.kh.nullcompany.personnelManagement.model.vo.RecordDiligence" alias="RecordDiligence"/>
 		<typeAlias type="com.kh.nullcompany.board.model.vo.board" alias="board"/>
 		<typeAlias type="com.kh.nullcompany.mail.model.vo.Email" alias="Email"/>
 		<typeAlias type="com.kh.nullcompany.mail.model.vo.Mail" alias="Mail"/>

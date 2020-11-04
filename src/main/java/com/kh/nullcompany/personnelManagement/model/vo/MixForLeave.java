@@ -8,7 +8,7 @@ public class MixForLeave {
 	private String nameType;
 	private String annualUse;
 	private String status;
-	private int noRecode;
+	private int noRecord;
 	private int memNo;
 	private int typeLeave;
 	private Date applyDate;
@@ -20,14 +20,14 @@ public class MixForLeave {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public MixForLeave(int noType, String nameType, String annualUse, String status, int noRecode, int memNo,
+	public MixForLeave(int noType, String nameType, String annualUse, String status, int noRecord, int memNo,
 			int typeLeave, Date applyDate, int useDays, String attach, Date requestedDate, String reason) {
 		super();
 		this.noType = noType;
 		this.nameType = nameType;
 		this.annualUse = annualUse;
 		this.status = status;
-		this.noRecode = noRecode;
+		this.noRecord = noRecord;
 		this.memNo = memNo;
 		this.typeLeave = typeLeave;
 		this.applyDate = applyDate;
@@ -60,11 +60,11 @@ public class MixForLeave {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public int getNoRecode() {
-		return noRecode;
+	public int getNoRecord() {
+		return noRecord;
 	}
-	public void setNoRecode(int noRecode) {
-		this.noRecode = noRecode;
+	public void setNoRecord(int noRecord) {
+		this.noRecord = noRecord;
 	}
 	public int getMemNo() {
 		return memNo;
@@ -111,7 +111,7 @@ public class MixForLeave {
 	@Override
 	public String toString() {
 		return "MixForLeave [noType=" + noType + ", nameType=" + nameType + ", annualUse=" + annualUse + ", status="
-				+ status + ", noRecode=" + noRecode + ", memNo=" + memNo + ", typeLeave=" + typeLeave + ", applyDate="
+				+ status + ", noRecord=" + noRecord + ", memNo=" + memNo + ", typeLeave=" + typeLeave + ", applyDate="
 				+ applyDate + ", useDays=" + useDays + ", attach=" + attach + ", requestedDate=" + requestedDate
 				+ ", reason=" + reason + "]";
 	}

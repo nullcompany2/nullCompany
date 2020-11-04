@@ -43,11 +43,67 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 			calendarMember.setCalMem(enrollmemno[i]);
 
-			System.out.println(calendarMember+"rrdsfsdgr");
+			System.out.println(calendarMember+" : 등록권한");
 			sDao.EnrollMember(calendarMember);
 
 		}
 	}
+
+	@Override
+	public void LookMember(int[] lookmemno, int result) {
+		for (int i = 0; i < lookmemno.length; i++) {
+
+			CalendarMember calendarMember = new CalendarMember();
+			calendarMember.setCalNo(result);
+
+			calendarMember.setCalMem(lookmemno[i]);
+
+			System.out.println(calendarMember+" : 조회권한");
+			sDao.LookMember(calendarMember);
+
+		}
+		
+	}
+
+	@Override
+	public ArrayList<Calendar> publicCalList() {
+		return sDao.publicCalList();
+	}
+
+	@Override
+	public int insertIndividual(Calendar calendar) {
+		return sDao.insertIndividual(calendar);
+	}
+
+	@Override
+	public void IndEnrollMember(int indEnrollMember, int calNo) {
+		CalendarMember calendarMember = new CalendarMember();
+		calendarMember.setCalNo(calNo);
+
+		calendarMember.setCalMem(indEnrollMember);
+
+		System.out.println(calendarMember+" : 개인 등록권한");
+		sDao.IndEnrollMember(calendarMember);
+		
+	}
+
+	@Override
+	public void IndLookMember(int indLookMember, int calNo) {
+		CalendarMember calendarMember = new CalendarMember();
+		calendarMember.setCalNo(calNo);
+
+		calendarMember.setCalMem(indLookMember);
+
+		System.out.println(calendarMember+" : 개인 조회 권한");
+		sDao.IndLookMember(calendarMember);
+		
+	}
+
+	@Override
+	public ArrayList<Calendar> IndividualCalList() {
+		return sDao.IndividualCalList();
+	}
+
 
 //	@Override
 //	public ArrayList<Integer> EnrollMember(String enrollMember) {
