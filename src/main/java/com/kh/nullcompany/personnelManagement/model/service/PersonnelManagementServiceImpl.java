@@ -10,8 +10,8 @@ import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.personnelManagement.model.dao.PersonnelManagementDao;
 import com.kh.nullcompany.personnelManagement.model.vo.Department;
 import com.kh.nullcompany.personnelManagement.model.vo.MixForLeave;
-import com.kh.nullcompany.personnelManagement.model.vo.RecodeDiligence;
-import com.kh.nullcompany.personnelManagement.model.vo.RecodeLeave;
+import com.kh.nullcompany.personnelManagement.model.vo.RecordDiligence;
+import com.kh.nullcompany.personnelManagement.model.vo.RecordLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.RewardLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.SetAttendance;
 import com.kh.nullcompany.personnelManagement.model.vo.SetLeave;
@@ -126,7 +126,7 @@ public class PersonnelManagementServiceImpl implements PersonnelManagementServic
 	 * 신청한 휴가 리스트
 	 */
 	@Override
-	public ArrayList<RecodeLeave> applyLeave(int memNo) {
+	public ArrayList<RecordLeave> applyLeave(int memNo) {
 		return pDao.applyLeave(memNo);
 	}
 
@@ -158,8 +158,8 @@ public class PersonnelManagementServiceImpl implements PersonnelManagementServic
 	 * 휴가현황을위한 vo
 	 */
 	@Override
-	public MixForLeave detailRecodeLeave(int rNo) {
-		return pDao.detailRecodeLeave(rNo);
+	public MixForLeave detailRecordLeave(int rNo) {
+		return pDao.detailRecordLeave(rNo);
 	}
 
 	/**
@@ -179,28 +179,33 @@ public class PersonnelManagementServiceImpl implements PersonnelManagementServic
 	}
 	// 출근기록가능여부
 	@Override
-	public int recodeAB_A(int memNo) {
-		return pDao.recodeAB_A(memNo);
+	public int RecordAB_A(int memNo) {
+		return pDao.RecordAB_A(memNo);
 	}
 	// 출근기록 삽입
 	@Override
 	public int insertRA(Map forR) {
-		return pDao.recodeRA(forR);
+		return pDao.RecordRA(forR);
 	}
 	// 퇴근기록가능여부
 	@Override
-	public int recodeAB_O(int memNo) {
-		return pDao.recodeAB_O(memNo);
+	public int RecordAB_O(int memNo) {
+		return pDao.RecordAB_O(memNo);
 	}
 	// 퇴근기록 삽입
 	@Override
 	public int insertRO(Map forR) {
-		return pDao.recodeRO(forR);
+		return pDao.RecordRO(forR);
 	}
-
+	// 당일 출퇴근기록(헤더용)
 	@Override
-	public RecodeDiligence recodeToday(int memNo) {
-		return pDao.recodeToday(memNo);
+	public RecordDiligence RecordToday(int memNo) {
+		return pDao.RecordToday(memNo);
+	}
+	// 퇴근체크 비정상
+	@Override
+	public int noCheckOffwork(int memNo) {
+		return pDao.noCheckOffwork(memNo);
 	}
 	
 	

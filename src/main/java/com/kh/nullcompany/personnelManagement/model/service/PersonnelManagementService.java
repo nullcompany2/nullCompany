@@ -6,8 +6,8 @@ import java.util.Map;
 import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.personnelManagement.model.vo.Department;
 import com.kh.nullcompany.personnelManagement.model.vo.MixForLeave;
-import com.kh.nullcompany.personnelManagement.model.vo.RecodeDiligence;
-import com.kh.nullcompany.personnelManagement.model.vo.RecodeLeave;
+import com.kh.nullcompany.personnelManagement.model.vo.RecordDiligence;
+import com.kh.nullcompany.personnelManagement.model.vo.RecordLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.RewardLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.SetAttendance;
 import com.kh.nullcompany.personnelManagement.model.vo.SetLeave;
@@ -102,7 +102,7 @@ public interface PersonnelManagementService {
 	 * @param memNo
 	 * @return
 	 */
-	ArrayList<RecodeLeave> applyLeave(int memNo);
+	ArrayList<RecordLeave> applyLeave(int memNo);
 
 	/**
 	 * 휴가 종류 리스트
@@ -128,7 +128,7 @@ public interface PersonnelManagementService {
 	 * @param rNo (기록번호)
 	 * @return
 	 */
-	MixForLeave detailRecodeLeave(int rNo);
+	MixForLeave detailRecordLeave(int rNo);
 
 	/**
 	 * 출퇴근 설정
@@ -137,15 +137,17 @@ public interface PersonnelManagementService {
 	SetAttendance setAttendance();
 	
 	// 출근기록 가능여부
-	int recodeAB_A(int memNo);
+	int RecordAB_A(int memNo);
 	// 출근 기록 삽입
 	int insertRA(Map forR);
 	// 퇴근 기록 가능여부
-	int recodeAB_O(int memNo);
+	int RecordAB_O(int memNo);
 	// 퇴근기록 삽입
 	int insertRO(Map forR);
 
 	// 당일 출근기록(헤더용
-	RecodeDiligence recodeToday(int memNo);
+	RecordDiligence RecordToday(int memNo);
+	// 퇴근체크(비정상)
+	int noCheckOffwork(int memNo);
 	
 }

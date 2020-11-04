@@ -2,7 +2,7 @@ package com.kh.nullcompany.personnelManagement.model.vo;
 
 import java.util.Date;
 
-public class RecodeDiligence {
+public class RecordDiligence {
 //	NO_DILIGENCE
 //	TYPE_DILIGENCE
 //	DATE_DILIGENCE
@@ -17,11 +17,11 @@ public class RecodeDiligence {
 	private int memNo;
 	private String statusDiligence;
 	private String timeExit;
-	public RecodeDiligence() {
+	public RecordDiligence() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public RecodeDiligence(int noDiligence, String typeDiligence, Date dateDiligence, String timeEnter, int memNo,
+	public RecordDiligence(int noDiligence, String typeDiligence, Date dateDiligence, String timeEnter, int memNo,
 			String statusDiligence, String timeExit) {
 		super();
 		this.noDiligence = noDiligence;
@@ -76,7 +76,7 @@ public class RecodeDiligence {
 	}
 	@Override
 	public String toString() {
-		return "RecodeDiligence [noDiligence=" + noDiligence + ", typeDiligence=" + typeDiligence + ", dateDiligence="
+		return "RecordDiligence [noDiligence=" + noDiligence + ", typeDiligence=" + typeDiligence + ", dateDiligence="
 				+ dateDiligence + ", timeEnter=" + timeEnter + ", memNo=" + memNo + ", statusDiligence="
 				+ statusDiligence + ", timeExit=" + timeExit + "]";
 	}

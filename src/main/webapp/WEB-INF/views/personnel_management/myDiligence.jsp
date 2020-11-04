@@ -65,7 +65,7 @@
 								<th class="d-tbl-th">미체크</th>
 								<td class="d-tbl-td">7</td>
 								<th class="d-tbl-th">퇴근체크(비정상)</th>
-								<td class="d-tbl-td">3</td>
+								<td class="d-tbl-td">${ noCheckOffwork }</td>
 							</tr>                        
 						</table>
 						<style>
@@ -77,7 +77,7 @@
 						
 						<div>
 							<h4 style="margin-top: 100px; margin-bottom: 50px;">근태 현황</h4>
-							<table class="i-table" id="application-recode" onload="build();">
+							<table class="i-table" id="application-record" onload="build();">
 								<thead style="background: #e8ecee;">
 									<tr class="date_tbl_title">
 									</tr>                     
@@ -109,7 +109,7 @@
 						<h4>수정내역</h4>
 						<div style="margin-top: 10px; margin-bottom: 10px;">
 							보기 : 
-							<select name="modi-recode" id="" class="sel-status cursor">
+							<select name="modi-record" id="" class="sel-status cursor">
 								<option value="">전체</option>
 								<option value="">결재중</option>
 								<option value="">결재 완료</option>
