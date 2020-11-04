@@ -14,7 +14,7 @@
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
-<title>메일 id 로 </title>
+<title>답장하기  </title>
 
 <style>
 
@@ -103,20 +103,19 @@ a:active {
 
 		<div class="contents">
 			<div class="contents-title">
-				<span class="ct1">메일 쓰기 </span>
+				<span class="ct1">답장 하기 </span>
 			</div>
 
 			<div>
 				<div style="width: 90%; margin: auto;">
-					<form method="post" action="">
+					<form method="post" action=""  enctype="multipart/form-data">
 
-						<a href="sendMail.do"><input type="button" value="보내기" /> </a>
-						<input class="go2" type="button" value="미리보기" /> 
-						<a href="gosaveMail.do"><input id="" type="button" value="저장하기" /> </a>
-						 <a href="javascript:history.go(-1);"> 
-						 <input type="button" value="이전으로" /></a> <br>
+						<input type="button" value="보내기" id="sendMail" onClick="location.href='sendMail.do'" />
+						<input class="go2" type="button" value="미리보기"/> 
+						<input id="saveMail" type="button" value="저장하기" onClick="location.href='gosaveMail.do'"/>
+						<input type="button" value="이전으로" onClick="location.href='javascript:history.go(-1);'" /> <br>
 						&nbsp;보내는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-						<input type="text" name="me" style="width: 60%;" value= "${loginUser.name} <${loginUser.id}> "readonly/> <br>
+						<input type="text" name="sender" style="width: 60%;" value= "${loginUser.name} <${loginUser.id}> "readonly/> <br>
 						&nbsp;받는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<input type="text" name="writer" style="width: 60%;" value= "${ma.name} <${ma.sender}>" readonly/>
 							  <span style="font-size: 17px; background: #477A8F; color: white; padding: 0px 8px 0px 8px;">+</span>
@@ -134,7 +133,6 @@ a:active {
 						<b> 날짜 : </b> ${ma.sendDate}  <br>
 						<b> 제목 : </b> ${ma.mTitle}  <br>
 						${ma.mContent}
-						
 						
 						 </textarea>
 					</form>
@@ -159,14 +157,13 @@ a:active {
 			<div id="modalContent">  </div>
 		</div>
 
-
 		<input class="modal-close-btn cursor" value="닫기"
 			style="background: #477A8F; color: white; text-align: center; border: none; padding: 12px 4px 12px 4px; 
 			border-radius: 3px; margin-left: 180px; cursor: pointer; font-size:15px;" />
 	</div>
 	<!-- Modal div -->
 
-<script type="text/javaScript">
+	<script type="text/javaScript">
 	$(document).ready(function() {
 	  $('#summernote').summernote({
  	    	placeholder: '내용을 작성해주세요.',
@@ -174,14 +171,9 @@ a:active {
 	        maxHeight: 370,
 	        focus: true, 
 	        lang : 'ko-KR'
-	       
-	        
 	  });
 	});
 
-	</script>
-
-<script>
     function modal(id) {
        var zIndex = 9999;
        var modal = $('#' + id);
@@ -224,8 +216,6 @@ a:active {
              modal.hide();
           });
     }
-
-    
     	
     $('.go2').on('click', function() {
     	
@@ -246,8 +236,17 @@ a:active {
        modal('my_modal2');
        	
     });
+    
+    $("#sendMail").click(function () {
+        $("form").attr("action","sendMail.do");
+	 });
+  
+ 	$("#saveMail").click(function () {
+        $("form").attr("action","gosaveMail.do");
+ 	});
+
  </script>
+ 
 </body>
 
-	
 </html>

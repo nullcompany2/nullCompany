@@ -27,53 +27,49 @@
       <result property="sAccess" column="S_ACCESS"/>
    </resultMap>
 
+	<!--  로그인  -->
    <select id="loginMember" parameterType="Member" resultMap="memberResultSet">
-      
-      SELECT M.*, R.RANK_NAME, D.DEPT_NAME
-      FROM MEMBER M INNER JOIN RANK R ON (M.RANK_NO = R.RANK_NO) 
-      INNER JOIN DEPARTMENT D ON (M.DEPT_NO = D.DEPT_NO)
-      WHERE ID= #{id}
-      AND M_STATUS='Y'
+     SELECT M.*, R.RANK_NAME, D.DEPT_NAME
+     FROM MEMBER M INNER JOIN RANK R ON (M.RANK_NO = R.RANK_NO) 
+     INNER JOIN DEPARTMENT D ON (M.DEPT_NO = D.DEPT_NO)
+     WHERE ID= #{id}
+     AND M_STATUS='Y'
    </select>
    
    <!-- 회원 가입  -->
    <insert id="insertMember" parameterType="Member">
-      INSERT INTO MEMBER
-      VALUES(SEQ_MNO.NEXTVAL,#{name},#{id},#{pwd},#{gender},#{birth},#{phone},#{email},
-      #{address},DEFAULT,SYSDATE,DEFAULT,DEFAULT,0,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)
+     INSERT INTO MEMBER
+     VALUES(SEQ_MNO.NEXTVAL,#{name},#{id},#{pwd},#{gender},#{birth},#{phone},#{email},
+     #{address},DEFAULT,SYSDATE,DEFAULT,DEFAULT,0,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)
    </insert>
    
    <!-- 회원 정보 수정 -->
- 	<update id="updateMember" parameterType="Member">
-      UPDATE MEMBER
-      SET PHOTO=#{photo}, EMAIL=#{email},PHONE=#{phone},ADDRESS=#{address},MY_INFO=#{myInfo},UPDATE_DATE=SYSDATE
-      WHERE ID=#{id}
+   <update id="updateMember" parameterType="Member">
+     UPDATE MEMBER
+     SET PHOTO=#{photo}, EMAIL=#{email},PHONE=#{phone},ADDRESS=#{address},MY_INFO=#{myInfo},UPDATE_DATE=SYSDATE
+     WHERE ID=#{id}
    </update> 
-   
    
    <!--  아이디 중복 체크  -->
    <select id="idCheck" parameterType="string" resultType="_int">
-   
-   SELECT COUNT(*)
-   FROM MEMBER 
-   WHERE ID=#{id}
-   
+   	SELECT COUNT(*)
+   	FROM MEMBER 
+   	WHERE ID=#{id}
    </select>
   
   <!--  메일 중복 체크  -->
   <select id="emailCheck" parameterType="string" resultType="_int">
+   	SELECT COUNT(*)
+  	FROM MEMBER 
+   	WHERE EMAIL=#{email}
+  </select>
    
-   SELECT COUNT(*)
-   FROM MEMBER 
-   WHERE EMAIL=#{email}
-   
-   </select>
-   
+   <!--  메일 보낼시 멤버 정보 가져오 -->
    <select id="mailWriteId" parameterType="_int" resultMap="memberResultSet">
-		SELECT *
-        FROM MEMBER
-        WHERE MEM_NO = #{senderNo}
-        AND M_STATUS = 'Y'
+	 SELECT *
+     FROM MEMBER
+     WHERE MEM_NO = #{senderNo}
+     AND M_STATUS = 'Y'
 	</select>
 	
 	
