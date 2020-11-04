@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.mail.model.vo.Mail;
+import com.kh.nullcompany.mail.model.vo.SaveMail;
 import com.kh.nullcompany.member.model.vo.Member;
 
 @Repository("maDao")
@@ -44,6 +45,20 @@ public class MailDao {
 
 	public int updateCount(int mailNo) {
 		return sqlSession.update("mailMapper.updateCount",mailNo);
+	}
+
+	public int saveMail(Mail ma) {
+		return sqlSession.insert("mailMapper.saveMail",ma);
+	}
+
+	public ArrayList<SaveMail> mailSaveList(PageInfo pi, int memNo) {
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("mailMapper.saveMailList",memNo,rowBounds);
+	}
+
+	public SaveMail saveDetailView(int mailNo) {
+		return sqlSession.selectOne("mailMapper.saveDetailView",mailNo);
 	}
 	
 }

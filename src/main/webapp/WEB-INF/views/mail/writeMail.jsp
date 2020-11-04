@@ -36,7 +36,8 @@
 	font-weight: bolder;
 }
 
-form input[type=button] {
+form input[type=submit],form input[type=button] 
+	{
 	font-size: 18px;
 	margin: 20px 5px 7px 5px;
 	background: none;
@@ -108,27 +109,27 @@ a:active {
 
 			<div>
 				<div style="width: 90%; margin: auto;">
-					<form method="post" action="">
-
-						<a href="sendMail.do"><input type="button" value="보내기" /> </a>
-						<input class="go2" type="button" value="미리보기" /> 
-						<a href="gosaveMail.do"><input id="" type="button" value="저장하기" /> </a>
+					<form method="post" enctype="multipart/form-data">
+						<input type="hidden" value="${loginUser.memNo}" name= memNo>
+						<input type="submit" value="보내기" id="sendMail" />
+						<input class="go2" type="button" value="미리보기"/> 
+						<input type="submit" id="saveMail"  value="저장하기"/>
 						 <a href="javascript:history.go(-1);"> 
 						 <input type="button" value="이전으로" /></a> <br>
 						 &nbsp;보내는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-						<input type="text" name="me" style="width: 60%;" value= "${loginUser.name} <${loginUser.id}>" readonly/> <br>
+						<input type="text" name="sender" style="width: 60%;" value= "${loginUser.name} <${loginUser.id}>" readonly/> <br>
 						&nbsp;받는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="text" name="writer" style="width: 60%;"
-							placeholder="메일 주소 사이에 ,(콤마)으로 구분하여 입력해주세요." /> <span onclick=""
-							style="font-size: 17px; background: #477A8F; color: white; padding: 0px 8px 0px 8px;">+</span>
+						<input type="text" name="recipient" style="width: 60%;"
+							placeholder="메일 주소 사이에 ,(콤마)으로 구분하여 입력해주세요." />
+							 <span style="font-size: 17px; background: #477A8F; color: white; padding: 0px 8px 0px 8px;">+</span>
 						<br> &nbsp;&nbsp;제목
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						&nbsp;<input type="text" name="title" style="width: 60%;"
+						&nbsp;<input type="text" name="mTitle" style="width: 60%;"
 							placeholder="제목 없음" /> <br>
 							&nbsp;파일첨부&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="file" name="file" />
+						<input type="file" name="uploadPhoto" />
 						<br> <br> 
-						<textarea id="summernote" name="content"></textarea>
+						<textarea id="summernote" name="mContent"></textarea>
 					</form>
 				</div>
 			</div>
@@ -225,8 +226,6 @@ a:active {
        	$("#modalRecipient").text($("input:text[name='writer']").val());
     	
     	var modalContent2 = $("#summernote").val();
-    	/* .replace(/<\/?[^>]+(>|$)/g, ""); */
-    	/* modalContent = modalContent.substring(3); */
     	
     	// 메일 summernote textarea val 옮기기 
     	var modalContent = document.getElementById('modalContent');
@@ -236,6 +235,15 @@ a:active {
        modal('my_modal2');
        	
     });
+    
+    $("#sendMail").click(function () {
+        $("form").attr("action","sendMail.do");
+        
+	 });
+  
+ 	 $("#saveMail").click(function () {
+        $("form").attr("action","gosaveMail.do");
+ 	}); 
  </script>
 </body>
 

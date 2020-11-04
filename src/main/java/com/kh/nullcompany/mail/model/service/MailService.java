@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.mail.model.vo.Mail;
+import com.kh.nullcompany.mail.model.vo.SaveMail;
 import com.kh.nullcompany.member.model.vo.Member;
 
 public interface MailService {
@@ -42,6 +43,28 @@ public interface MailService {
 	 * @return
 	 */
 	Mail mailReply(int mailNo);
+
+	/** 
+	 * 6. 답장 - > 임시 저장 
+	 * @param ma
+	 * @return
+	 */
+	int saveMail(Mail ma);
+
+	/** 
+	 * 7. 임시 보관함 리스트 가져오기 
+	 * @param pi
+	 * @param memNo
+	 * @return
+	 */
+	ArrayList<SaveMail> mailSaveList(PageInfo pi, int memNo);
+
+	/**
+	 * 8. 임시 보관함 디테일뷰 보기
+	 * @param mailNo
+	 * @return
+	 */
+	SaveMail saveDetailView(int mailNo);
 
 	
 
