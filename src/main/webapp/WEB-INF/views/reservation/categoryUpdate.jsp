@@ -52,19 +52,19 @@ form p {
 		<div class="contents-title">
 			<span class="ct1">카테고리 수정하기</span>
 		</div>
-		<form action="" method="POST">
+		<form action="categoryUpdate.do" method="POST">
+		<input type="hidden" name="rcNo" value="${ c.rcNo }">
 			<ul>
 				<li>
-					<p>카테고리 이름</p> <input type="text" value="회의실"> <br>
+					<p>카테고리 이름</p> <input type="text"  name="rcTitle" value="${ c.rcTitle }"> <br>
 				</li>
 				<li>
-					<p>카테고리 설명</p> <textarea name="" id="" cols="50" rows="10"
-						style="resize: none;">회의실입니다</textarea>
+					<p>카테고리 설명</p> <textarea name="rcContent" id="" cols="50" rows="10"
+						style="resize: none;">${ c.rcContent }</textarea>
 				</li>
 			</ul>
 			<button
-				style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">저
-				장</button>
+				style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">저장</button>
 		</form>
 	</div>
 </body>

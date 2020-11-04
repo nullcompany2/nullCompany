@@ -127,7 +127,6 @@
 							<c:param name="mailNo" value="${ma.mailNo}" />
 						</c:url>
 						
-						
 						<tr class="trMail" onClick="location.href='${maildetailView}'"> 
 						
 						<c:url var="mailWriteId" value="mailWriteId.do">

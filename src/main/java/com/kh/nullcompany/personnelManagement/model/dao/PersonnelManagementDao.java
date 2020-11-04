@@ -12,7 +12,8 @@ import org.springframework.stereotype.Repository;
 import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.personnelManagement.model.vo.Department;
 import com.kh.nullcompany.personnelManagement.model.vo.MixForLeave;
-import com.kh.nullcompany.personnelManagement.model.vo.RecodeLeave;
+import com.kh.nullcompany.personnelManagement.model.vo.RecordDiligence;
+import com.kh.nullcompany.personnelManagement.model.vo.RecordLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.RewardLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.SetAttendance;
 import com.kh.nullcompany.personnelManagement.model.vo.SetLeave;
@@ -87,7 +88,7 @@ public class PersonnelManagementDao {
 	}
 
 
-	public ArrayList<RecodeLeave> applyLeave(int memNo) {
+	public ArrayList<RecordLeave> applyLeave(int memNo) {
 		return ((ArrayList)sqlSession.selectList("personnelMapper.applyLeave",memNo));
 	}
 
@@ -107,8 +108,8 @@ public class PersonnelManagementDao {
 	}
 
 
-	public MixForLeave detailRecodeLeave(int noRecode) {
-		return sqlSession.selectOne("personnelMapper.detailRecodeLeave",noRecode);
+	public MixForLeave detailRecordLeave(int noRecord) {
+		return sqlSession.selectOne("personnelMapper.detailRecordLeave",noRecord);
 	}
 
 
@@ -117,8 +118,38 @@ public class PersonnelManagementDao {
 	}
 
 
-	public ArrayList<SetAttendance> setAttendance() {
-		return ((ArrayList)sqlSession.selectList("personnelMapper.setAttendance"));
+	public SetAttendance setAttendance() {
+		return sqlSession.selectOne("personnelMapper.setAttendance");
+	}
+
+
+	public int RecordAB_A(int memNo) {
+		return sqlSession.selectOne("personnelMapper.recordAB_A",memNo);
+	}
+
+
+	public int RecordRA(Map forR) {
+		return sqlSession.insert("personnelMapper.recordRA",forR);
+	}
+
+
+	public int RecordAB_O(int memNo) {
+		return sqlSession.selectOne("personnelMapper.recordAB_O",memNo);
+	}
+
+
+	public int RecordRO(Map forR) {
+		return sqlSession.update("personnelMapper.recordRO",forR);
+	}
+
+
+	public RecordDiligence RecordToday(int memNo) {
+		return sqlSession.selectOne("personnelMapper.recordToday",memNo);
+	}
+
+
+	public int noCheckOffwork(int memNo) {
+		return sqlSession.selectOne("personnelMapper.noCheckOffwork",memNo);
 	}
 
 }

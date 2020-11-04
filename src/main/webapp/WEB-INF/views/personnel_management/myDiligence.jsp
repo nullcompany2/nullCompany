@@ -49,22 +49,23 @@
 	
 					<div id="show-status-diligence" class="c-ic">
 						<h4>올해 근태 통계</h4>
+						
 						<table class="d-table" id="statistics-tbl">
 							<tr class="d-tbl-il">
 								<th class="d-tbl-th">근무시간</th>
-								<td class="d-tbl-td" colspan="3">[기본근태] 기본근무시간 : 09:00~18:00</td>
+								<td class="d-tbl-td" colspan="3">[기본근태] 기본근무시간 : ${setAttendance.timeAttendance } ~ ${setAttendance.timeOffWork }</td>
 							</tr>
 							<tr class="d-tbl-il">
 								<th class="d-tbl-th">지각</th>
-								<td class="d-tbl-td">${lateCountY }</td>
+								<td class="d-tbl-td">${lateCount }회</td>
 								<th class="d-tbl-th">월 평균 지각</th>
-								<td class="d-tbl-td">td</td>
+								<td class="d-tbl-td">${avgLateCount }회</td>
 							</tr>
 							<tr class="d-tbl-il">
 								<th class="d-tbl-th">미체크</th>
 								<td class="d-tbl-td">7</td>
 								<th class="d-tbl-th">퇴근체크(비정상)</th>
-								<td class="d-tbl-td">3</td>
+								<td class="d-tbl-td">${ noCheckOffwork }</td>
 							</tr>                        
 						</table>
 						<style>
@@ -76,7 +77,7 @@
 						
 						<div>
 							<h4 style="margin-top: 100px; margin-bottom: 50px;">근태 현황</h4>
-							<table class="i-table" id="application-recode" onload="build();">
+							<table class="i-table" id="application-record" onload="build();">
 								<thead style="background: #e8ecee;">
 									<tr class="date_tbl_title">
 									</tr>                     
@@ -108,7 +109,7 @@
 						<h4>수정내역</h4>
 						<div style="margin-top: 10px; margin-bottom: 10px;">
 							보기 : 
-							<select name="modi-recode" id="" class="sel-status cursor">
+							<select name="modi-record" id="" class="sel-status cursor">
 								<option value="">전체</option>
 								<option value="">결재중</option>
 								<option value="">결재 완료</option>

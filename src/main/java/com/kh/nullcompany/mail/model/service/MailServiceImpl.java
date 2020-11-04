@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.mail.model.dao.MailDao;
 import com.kh.nullcompany.mail.model.vo.Mail;
+import com.kh.nullcompany.mail.model.vo.SaveMail;
 import com.kh.nullcompany.member.model.vo.Member;
 
 @Service("maService")
@@ -51,6 +52,21 @@ public class MailServiceImpl implements MailService {
 	@Override
 	public Mail mailReply(int mailNo) {
 		return maDao.mailReply(mailNo);
+	}
+
+	@Override
+	public int saveMail(Mail ma) {
+		return maDao.saveMail(ma);
+	}
+
+	@Override
+	public ArrayList<SaveMail> mailSaveList(PageInfo pi, int memNo) {
+		return maDao.mailSaveList(pi,memNo);
+	}
+
+	@Override
+	public SaveMail saveDetailView(int mailNo) {
+		return maDao.saveDetailView(mailNo);
 	}
 
 	

@@ -4,7 +4,6 @@
 
 	<resultMap id="mailResultSet" type="Mail">
 		<id property="memNo" column="MEM_NO"/>
-		
 		<result property="id" column="ID"/>
 		<result property="name" column="NAME"/>
 		<result property="sender" column="SENDER"/>
@@ -18,16 +17,30 @@
 		<result property="mailNo" column="RMA_NO"/>
 		<result property="senderNo" column="SENDER_NO"/>
 		<result property="readCount" column="READ_COUNT"/>
-		
+	</resultMap>
+	
+	<resultMap id="saveMailResultSet" type="saveMail">
+		<id property="memNo" column="MEM_NO"/>
+		<result property="name" column="NAME"/>
+		<result property="sender" column="SENDER"/>
+		<result property="recipient" column="RECIPIENT"/>
+		<result property="sTitle" column="S_TITLE"/>
+		<result property="sContent" column="S_CONTENT"/>
+		<result property="sFileName" column="S_FILENAME"/>
+		<result property="saveDate" column="SAVE_DATE"/>
+		<result property="sDeleteStatus" column="SDELETE_STATUS"/>
+		<result property="mailNo" column="SAVE_NO"/>
 	</resultMap>
   
+  <!-- 게시물 갯수 세기  -->
   <select id="getListCount" resultType="_int">
 		SELECT COUNT(*)
 		FROM RECIEVED_MAIL
 		WHERE MDELETE_STATUS='N'
 		AND MEM_NO = #{memNo}
 	</select>
-  
+	
+  	<!-- 받은 메일함  -->
   	<select id="selectReceiveList" resultMap="mailResultSet">
 		SELECT R.*, M.NAME, M.MEM_NO AS SENDER_NO
 		FROM RECIEVED_MAIL R INNER JOIN MEMBER M ON (R.SENDER = M.ID) 
@@ -36,16 +49,40 @@
 		ORDER BY SEND_DATE DESC
 	</select>
 	
+	<!--  메일 게시물 한개  -->
 	<select id="mailDetailView" parameterType="_int" resultMap="mailResultSet">
 		SELECT R.*, M.NAME 
         FROM RECIEVED_MAIL R INNER JOIN MEMBER M ON (R.SENDER = M.ID)
         WHERE RMA_NO = #{mailNo}
 	</select>
 	
+	<!-- 읽은 메일 카운트  -->
 	<update id="updateCount" parameterType="_int">
 		UPDATE RECIEVED_MAIL
 		SET READ_COUNT = READ_COUNT +1
 		WHERE RMA_NO = #{mailNo}
 	 </update>
-	
+	 
+	 <!--  답장하기 - 임시저장  -->
+	 <insert id="saveMail" parameterType="Mail"> 
+	 	INSERT INTO SAVE_MAIL
+        VALUES(#{sender},#{recipient},#{mTitle},
+        #{mContent},DEFAULT,'N',#{memNo},SAVE_SEQ.NEXTVAL,#{mFileName})
+	 </insert>
+	 
+	 <!--  임시보관함 리스트 -->
+	 <select id="saveMailList" resultMap="saveMailResultSet">
+	   SELECT *
+       FROM SAVE_MAIL
+       WHERE MEM_NO = #{memNo}
+       ORDER BY SAVE_DATE DESC
+	 </select>
+	 
+	 <!--  임시보관함 게시물 한개 보기 -->
+	 <select id="saveDetailView" parameterType="_int" resultMap="saveMailResultSet"> 
+		SELECT S.*, M.NAME 
+        FROM SAVE_MAIL S INNER JOIN MEMBER M ON (S.RECIPIENT = M.ID)
+        WHERE SAVE_NO =  #{mailNo}
+     </select> 
+	 
 </mapper>

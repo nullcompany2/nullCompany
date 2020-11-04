@@ -34,18 +34,79 @@
 		<result property="deptName" column="DEPT_NAME" />
 	</resultMap>
 
+	<resultMap id="CalendarResultSet" type="Calendar">
+		<result property="calName" column="CAL_NAME" />
+		<result property="color" column="COLOR" />
+		<result property="enrollMember" column="ENROLL_MEM" />
+		<result property="lookMember" column="LOOK_MEM" />
+		<result property="calNo" column="CAL_NO" />
+	</resultMap>
 
-<!-- 부서 셀렉트 리스트 -->
-	<select id="selectdeptList" resultMap="deptResultSet" parameterType="Department">
+	<resultMap id="CalendarMemberResultSet" type="CalendarMember">
+		<result property="calMemType" column="CAL_MEM_TYPE" />
+		<result property="calMem" column="CAL_MEM" />
+		<result property="calNo" column="CAL_NO" />
+	</resultMap>
+
+
+	<!-- 부서 셀렉트 리스트 -->
+	<select id="selectdeptList" resultMap="deptResultSet"
+		parameterType="Department">
 		SELECT *
 		FROM DEPARTMENT
 		ORDER BY DEPT_NO
 	</select>
 
 	<!-- 사원 리스트 -->
- 	<select id="selectmemList" resultMap="memberResultSet" parameterType="Member">
+	<select id="selectmemList" resultMap="memberResultSet"
+		parameterType="Member">
 		SELECT *
 		FROM MEMBER
-	</select> 
+	</select>
 
+	<!-- 공유 캘린더 인써트 -->
+	<insert id="insertCommunity" parameterType="Calendar">
+		INSERT INTO CALENDAR VALUES(1, #{calNo}, #{calName}, #{color})
+		<selectKey keyProperty="calNo" resultType="int"
+			order="BEFORE">
+			select CAL_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+	</insert>
+
+	<insert id="EnrollMember" parameterType="CalendarMember">
+		INSERT INTO CALENDAR_MEMBER
+		VALUES( #{calNo}, #{calMem}, 1)
+	</insert>
+	
+	<insert id="LookMember" parameterType="CalendarMember">
+		INSERT INTO CALENDAR_MEMBER
+		VALUES( #{calNo}, #{calMem}, 2)
+	</insert>
+	
+	<select id="publicCalList" resultMap="CalendarResultSet" parameterType="Calendar">
+		SELECT * FROM CALENDAR WHERE CAL_TYPE = 1
+	</select>
+	
+	<select id="IndividualCalList" resultMap="CalendarResultSet" parameterType="Calendar">
+		SELECT * FROM CALENDAR WHERE CAL_TYPE = 2
+	</select>
+	
+	<insert id="insertIndividual" parameterType="Calendar">
+		INSERT INTO CALENDAR VALUES(2, #{calNo}, #{calName}, #{color})
+		<selectKey keyProperty="calNo" resultType="int"
+			order="BEFORE">
+			select CAL_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+	</insert>
+	
+	<insert id="IndEnrollMember" parameterType="CalendarMember">
+		INSERT INTO CALENDAR_MEMBER
+		VALUES( #{calNo}, #{calMem}, 1)
+	</insert>
+	
+	<insert id="IndLookMember" parameterType="CalendarMember">
+		INSERT INTO CALENDAR_MEMBER
+		VALUES( #{calNo}, #{calMem}, 2)
+	</insert>
+	
 </mapper>

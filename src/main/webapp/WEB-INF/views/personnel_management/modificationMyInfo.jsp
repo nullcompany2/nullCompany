@@ -281,7 +281,7 @@
 	<!-- Modal div -->
 	<div id="my_modal" class="modal-dragscroll">
 		<h4 style="color: #477A8F; margin-bottom: 30px;">휴가 신청 상세</h4>
-		<table class="md-tbl" id="application-recode">
+		<table class="md-tbl" id="application-record">
             <thead style="background: #e8ecee;">
                 <tr>
                     <th scope="col" rowspan="1" class="md-tr">이름</th>

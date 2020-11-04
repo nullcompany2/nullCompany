@@ -123,15 +123,15 @@ tr>td {
 	<div class="contents">
 		<div class="contents-title">
 			<span class="ct1">자원 관리</span> <select name="category">
-				<option value="">회의실</option>
-				<option value="">차량</option>
-				<option value="">비품</option>
+				<c:forEach var ="c" items="${ c }">
+					<option value="${c.rcNo }">${ c.rcTitle }</option>
+				</c:forEach>
 			</select>
 		</div>
 
 		<div style="padding: 0px 30px 0px 30px;">
 			<div style="margin-top: 10px;">
-				자원 목록 : +<a href="resourceInsert.do" style="color: #779ec0">추가하기</a>
+				자원 목록 : +<a href="categoryInsertView.do" style="color: #779ec0">추가하기</a>
 			</div>
 			<table id="mrv_table">
 				<thead>
@@ -141,15 +141,22 @@ tr>td {
 					</tr>
 				</thead>
 				<tbody>
+				<c:forEach var ="r" items="${r}">
+				<input type="hidden" name="rcNo" value="${ r.rcNo }">
+				<input type="hidden" name="rsNo" value="${ r.rsNo }">
 					<tr>
-						<td>회의실</td>
+						<td>${ r.rsTitle }</td>
 						<td>
+				           <c:url var="resourceUpdateView" value="resourceUpdateView.do">
+			             	  <c:param name="rsNo" value="${r.rsNo }"/>
+			               </c:url>
 							<button class="rv_but" id="update_btn"
-								onclick="location.href='resourceUpdate.do'">수정</button> <span
-							style="color: #e4e4e4;">|</span>
-							<button class="rv_but" id="delete_btn">삭제</button>
+								onclick="location.href='${resourceUpdateView}'">수정</button> 
+								<span style="color: #e4e4e4;">|</span>
+							<button class="rv_but" id="delete_btn"  data-id="${ r.rsNo }">삭제</button>
 						</td>
 					</tr>
+				</c:forEach>
 				</tbody>
 			</table>
 		</div>
@@ -161,10 +168,13 @@ tr>td {
 		<h4 style="color: #477A8F; margin-bottom: 25px;">자원 삭제</h4>
 		<div class="n-emp-i">자원을 삭제 하시겠습니까?</div>
 		<div style="text-align: center; margin-top: 30px;">
+			<form action="resourceDelete.do">
+			<input type="hidden" name="rsNo" value="">
 			<button class="close_btn"
 				style="background: #fc8e8e; color: black; padding: 5px 27px 6px; border: 1px solid #fc8e8e">확인</button>
 			<button class="close_btn"
 				style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; border: 1px solid #dadada; background: white;">취소</button>
+			</form>
 		</div>
 	</div>
 
@@ -213,10 +223,41 @@ tr>td {
     }
 
     $('#delete_btn').on('click', function() {
+        var num = $(this).data('id');
+        $("#rsNo").val( num );
        // 모달창 띄우기
        modal('delete_modal');
     });
     
+/*    $(function() {
+	  getList();
+	});
+   function getList(){
+	   var rcNo = ${list.rcNo};
+		$.ajax({
+			url:"resourceList2.do",
+			type:"post",
+			data:"",
+			dataType : "gson",
+			success:function(){
+ 				console.log(data);
+	            $tableBody = $("tbody");
+	            $tableBody.html("");
+	            
+	            var $tr;
+	            var $rsTitle;
+	            
+				for(var i in data)
+				$tr = $("<tr>");
+				$rsTitle = $("<td>").text(data[i].rsTitle);
+				
+				$tr.append($rsTitle);
+				$tableBody.append($tr);
+			},error : function() {
+				console.log("전송실패");
+			} 
+		})
+   } */
  </script>
 </body>
 </html>

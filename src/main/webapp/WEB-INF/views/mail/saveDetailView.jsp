@@ -14,7 +14,7 @@
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
-<title>메일 id 로 </title>
+<title> 임시 보관함 디테일뷰 </title>
 
 <style>
 
@@ -104,32 +104,33 @@ a:active {
 
 		<div class="contents">
 			<div class="contents-title">
-				<span class="ct1">메일 쓰기 </span>
+				<span class="ct1">임시 보관함 </span>
 			</div>
 
 			<div>
 				<div style="width: 90%; margin: auto;">
 					<form method="post" enctype="multipart/form-data">
-
 						<input type="hidden" value="${loginUser.memNo}" name= memNo>
 						<input type="submit" value="보내기" id="sendMail" />
 						<input class="go2" type="button" value="미리보기"/> 
 						<input type="submit" id="saveMail"  value="저장하기"/>
-						 <a href="javascript:history.go(-1);"> 
-						 <input type="button" value="이전으로" /></a> <br>
-						 &nbsp;보내는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-						<input type="text" name="me" style="width: 60%;" value= "${loginUser.name} <${loginUser.id}>" readonly/> <br>
+						<input type="button" value="이전으로" onClick="location.href='javascript:history.go(-1);'" /> <br>
+						&nbsp;보내는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+						<input type="text" name="sender" style="width: 60%;" value= "${loginUser.name} <${loginUser.id}> "/> <br>
 						&nbsp;받는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="text" name="writer" style="width: 60%;" value= "${m.name} <${m.id}>" readonly/>
+						<input type="text" name="recipient" style="width: 60%;" value= "${ma.name} <${ma.recipient}>"/>
 							  <span style="font-size: 17px; background: #477A8F; color: white; padding: 0px 8px 0px 8px;">+</span>
 						<br> &nbsp;&nbsp;제목
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						&nbsp;<input type="text" name="title" style="width: 60%;"
-							placeholder="제목 없음" /> <br>
+						&nbsp;<input type="text" name="mTitle" style="width: 60%;"
+							placeholder="제목 없음" value="${ma.sTitle}"/> <br>
 						&nbsp;파일첨부&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="file" name="file" />
+						<input type="file" name="uploadPhoto" />
 						<br> <br> 
-						<textarea id="summernote" name="content"></textarea>
+						<textarea id="summernote" name="mContent">
+						${ma.sContent}
+						
+						 </textarea>
 					</form>
 				</div>
 			</div>
@@ -152,27 +153,23 @@ a:active {
 			<div id="modalContent">  </div>
 		</div>
 
-
 		<input class="modal-close-btn cursor" value="닫기"
 			style="background: #477A8F; color: white; text-align: center; border: none; padding: 12px 4px 12px 4px; 
 			border-radius: 3px; margin-left: 180px; cursor: pointer; font-size:15px;" />
 	</div>
 	<!-- Modal div -->
 
-<script type="text/javaScript">
+	<script type="text/javaScript">
 	$(document).ready(function() {
 	  $('#summernote').summernote({
  	    	placeholder: '내용을 작성해주세요.',
 	        minHeight: 370,
-	        maxHeight: null,
+	        maxHeight: 370,
 	        focus: true, 
 	        lang : 'ko-KR'
 	  });
 	});
 
-	</script>
-
-<script>
     function modal(id) {
        var zIndex = 9999;
        var modal = $('#' + id);
@@ -215,8 +212,6 @@ a:active {
              modal.hide();
           });
     }
-
-    
     	
     $('.go2').on('click', function() {
     	
@@ -237,8 +232,18 @@ a:active {
        modal('my_modal2');
        	
     });
+    
+    $("#sendMail").click(function () {
+        $("form").attr("action","sendMail.do");
+        
+	 });
+  
+ 	 $("#saveMail").click(function () {
+        $("form").attr("action","gosaveMail.do");
+ 	}); 
+
  </script>
+ 
 </body>
 
-	
 </html>

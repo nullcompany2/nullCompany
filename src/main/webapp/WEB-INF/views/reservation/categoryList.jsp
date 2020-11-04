@@ -125,7 +125,7 @@ tr>td {
 
 		<div style="padding: 0px 30px 0px 30px;">
 			<div style="margin-top: 10px;">
-				카테고리 목록 : +<a href="categoryInsert.do" style="color: #779ec0">추가하기</a>
+				카테고리 목록 : +<a href="categoryInsertView.do" style="color: #779ec0">추가하기</a>
 			</div>
 			<table id="mrv_table">
 				<thead>
@@ -136,31 +136,39 @@ tr>td {
 					</tr>
 				</thead>
 				<tbody>
+				<c:forEach var ="c" items="${list}">
+				<input type="hidden" name="rcNo" value="${ c.rcNo }">
 					<tr>
-						<td>회의실</td>
-						<td>1</td>
+						<td>${ c.rcTitle }</td>
+						<td>${c.rsNo }</td>
 						<td>
+				           <c:url var="categoryUpdateView" value="categoryUpdateView.do">
+			             	  <c:param name="rcNo" value="${c.rcNo }"/>
+			               </c:url>
 							<button class="rv_but" id="update_btn"
-								onclick="location.href='categoryUpdate.do'">수정</button> <span
+								onclick="location.href='${categoryUpdateView}'">수정</button> <span
 							style="color: #e4e4e4;">|</span>
-							<button class="rv_but" id="delete_btn">삭제</button>
+							
+							<button class="rv_but" id="delete_btn" data-id="${ c.rcNo }">삭제</button>
 						</td>
 					</tr>
+				</c:forEach>
 				</tbody>
 			</table>
 		</div>
-	</div>
-
 	</div>
 
 	<div id="delete_modal" class="modal-dragscroll">
 		<h4 style="color: #477A8F; margin-bottom: 25px;">카테고리 삭제</h4>
 		<div class="n-emp-i">카테고리를 삭제 하시겠습니까?</div>
 		<div style="text-align: center; margin-top: 30px;">
-			<button class="close_btn"
+			<form action="categoryDelete.do">
+			<input type="hidden" id="rcNo" name="rcNo" value="">
+			<button class="close_btn" id="delete"
 				style="background: #fc8e8e; color: black; padding: 5px 27px 6px; border: 1px solid #fc8e8e">확인</button>
 			<button class="close_btn"
 				style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; border: 1px solid #dadada; background: white;">취소</button>
+			</form>
 		</div>
 	</div>
 
@@ -209,10 +217,11 @@ tr>td {
     }
 
     $('#delete_btn').on('click', function() {
+        var num = $(this).data('id');
+        $("#rcNo").val( num );
        // 모달창 띄우기
-       modal('delete_modal');
+       modal('delete_modal');       
     });
-    
  </script>
 </body>
 </html>

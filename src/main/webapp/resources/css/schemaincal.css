@@ -491,7 +491,11 @@ header #logo span {
 
 
 
+
+
  
+
+
 
 
 
@@ -506,7 +510,11 @@ header #logo span {
 
 
 
+
+
  
+
+
 
 
 
@@ -528,7 +536,13 @@ margin-left
 
 
 
+
+
+
+
 :
+
+
 
 
 
@@ -542,8 +556,14 @@ margin-left
 
 
 
+
+
 0
 .75em
+
+
+
+
 
 
 
@@ -570,7 +590,13 @@ background-color
 
 
 
+
+
+
+
 :
+
+
 
 
 
@@ -584,7 +610,13 @@ background-color
 
 
 
+
+
 #477A8F
+
+
+
+
 
 
 
@@ -851,10 +883,132 @@ background-color
 	padding-left: 23px;
 }
 
+#enrollname input[type="checkbox"] {
+	display: none;
+}
 
- 
- 
- 
- 
- 
- 
+//
+웹의 경우 커서에 pointer 설정
+
+#enrollname input[type="checkbox"]+label {
+	display: inline-block;
+	position: relative;
+	cusor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	backgroung-color: red;
+}
+
+//
+#enrollname input[type="checkbox"] ~ #lb:before {
+	content: ' ';
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	line-height: 18px;
+	margin: -2px 8px 0 0;
+	text-align: center;
+	vertical-align: middle;
+	background: #fafafa;
+	border: 1px solid #cacece;
+	border-radius: 3px;
+}
+
+#enrollname input[type="checkbox"]:checked ~ #lb:before {
+	content: '\2713';
+	color: #314ca2;
+	border-color: #adb8c0;
+}
+
+#cc {
+	color: white
+}
+
+#lookname input[type="checkbox"] {
+	display: none;
+}
+
+//
+웹의 경우 커서에 pointer 설정
+
+#lookname input[type="checkbox"]+label {
+	display: inline-block;
+	position: relative;
+	cusor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	backgroung-color: red;
+}
+
+//
+새로운 디자인의 체크박스 만들기
+
+#lookname input[type="checkbox"] ~ #lb:before {
+	content: ' ';
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	line-height: 18px;
+	margin: -2px 8px 0 0;
+	text-align: center;
+	vertical-align: middle;
+	background: #fafafa;
+	border: 1px solid #cacece;
+	border-radius: 3px;
+}
+
+#lookname input[type="checkbox"]:checked ~ #lb:before {
+	content: '\2713';
+	color: #314ca2;
+	border-color: #adb8c0;
+}
+
+#individualmodal {
+	width: 415px;
+    height: 210px;
+    padding: 10px 35px;
+    background-color: #fefefe;
+    border: 1px solid #888;
+    border-radius: 3px;
+}
+
+#individualmodal .modal-close-btn {
+
+}
+
+.box2 {
+	width: 200px;
+	height: 45px;
+}
+
+.pallet2 {
+	width: 300px;
+    height: 30px;
+    position: relative;
+    left: 65px;
+    top: 15px;
+}
+
+.active2 {
+	outline: 1px solid black;
+}
+
+.colorBox2 {
+	width: 20px;
+	height: 20px;
+	float: left;
+	margin: 1px 1px 0px 0px;
+	cursor: pointer;
+}
+
+#colorselect2 {
+	width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 106px;
+    left: 69px;
+}

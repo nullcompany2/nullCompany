@@ -2,8 +2,8 @@ package com.kh.nullcompany.personnelManagement.model.vo;
 
 import java.util.Date;
 
-public class RecodeLeave {
-//	NO_RECODE_LEAVE
+public class RecordLeave {
+//	NO_Record_LEAVE
 //	NAME_USE_LEAVE
 //	ID_USE_LEAVE
 //	EN_USE_LEAVE
@@ -12,7 +12,7 @@ public class RecodeLeave {
 //	DAYS_USE_LEAVE
 //	ATTACHMENT_USE_LEAVE
 //	L_STATUS
-	private int noRecode;
+	private int noRecord;
 	private int memNo;
 	private int typeLeave;
 	private Date applyDate;
@@ -21,14 +21,14 @@ public class RecodeLeave {
 	private String status;
 	private Date requestedDate;
 	private String reason;
-	public RecodeLeave() {
+	public RecordLeave() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public RecodeLeave(int noRecode, int memNo, int typeLeave, Date applyDate, int useDays, String attach,
+	public RecordLeave(int noRecord, int memNo, int typeLeave, Date applyDate, int useDays, String attach,
 			String status, Date requestedDate, String reason) {
 		super();
-		this.noRecode = noRecode;
+		this.noRecord = noRecord;
 		this.memNo = memNo;
 		this.typeLeave = typeLeave;
 		this.applyDate = applyDate;
@@ -38,11 +38,11 @@ public class RecodeLeave {
 		this.requestedDate = requestedDate;
 		this.reason = reason;
 	}
-	public int getNoRecode() {
-		return noRecode;
+	public int getNoRecord() {
+		return noRecord;
 	}
-	public void setNoRecode(int noRecode) {
-		this.noRecode = noRecode;
+	public void setNoRecord(int noRecord) {
+		this.noRecord = noRecord;
 	}
 	public int getMemNo() {
 		return memNo;
@@ -94,7 +94,7 @@ public class RecodeLeave {
 	}
 	@Override
 	public String toString() {
-		return "RecodeLeave [noRecode=" + noRecode + ", memNo=" + memNo + ", typeLeave=" + typeLeave + ", applyDate="
+		return "RecordLeave [noRecord=" + noRecord + ", memNo=" + memNo + ", typeLeave=" + typeLeave + ", applyDate="
 				+ applyDate + ", useDays=" + useDays + ", attach=" + attach + ", status=" + status + ", requestedDate="
 				+ requestedDate + ", reason=" + reason + "]";
 	}

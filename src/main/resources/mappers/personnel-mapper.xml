@@ -42,9 +42,9 @@
    		<result property="rewardDays" column="DAYS_R_LEAVE"/>
    		<result property="createDate" column="CREATEDATE_R_LEAVE"/>
    	</resultMap>
-   	<!-- RECODE_LEAVE -->
-   	<resultMap type="RecodeLeave" id="recodeLeaveResultSet">
-   		<result property="noRecode" column="NO_RECODE_LEAVE"/>
+   	<!-- RECORD_LEAVE -->
+   	<resultMap type="RecordLeave" id="RecordLeaveResultSet">
+   		<result property="noRecord" column="NO_RECORD_LEAVE"/>
    		<result property="memNo" column="MEM_NO"/>
    		<result property="typeLeave" column="TYPE_USE_LEAVE"/>
    		<result property="applyDate" column="APPLYDATE_USE_LEAVE"/>
@@ -63,7 +63,7 @@
    	</resultMap>
    	
    	<resultMap type="MixForLeave" id="mixLeaveResultSet">
-   		<result property="noRecode" column="NO_RECODE_LEAVE"/>
+   		<result property="noRecord" column="NO_RECORD_LEAVE"/>
    		<result property="memNo" column="MEM_NO"/>
    		<result property="typeLeave" column="TYPE_USE_LEAVE"/>
    		<result property="applyDate" column="APPLYDATE_USE_LEAVE"/>
@@ -96,6 +96,16 @@
    		<result property="timeAttendance" column="TIME_ATTENDANCE"/>
    		<result property="timeOffWork" column="TIME_OFFWORK"/>
    	</resultMap>
+   	
+   	<resultMap type="RecordDiligence" id="RecordDiligenceResultSet">
+   		<result property="noDiligence" column="NO_DILIGENCE"/>
+   		<result property="typeDiligence" column="TYPE_DILIGENCE"/>
+   		<result property="dateDiligence" column="DATE_DILIGENCE"/>
+   		<result property="timeEnter" column="TIME_ENTER"/>
+   		<result property="memNo" column="MEM_NO"/>
+   		<result property="statusDiligence" column="STATUS_DILIGENCE"/>
+   		<result property="timeExit" column="TIME_EXIT"/>
+   	</resultMap>
    	<!-- **************************************************************************************** -->
    
 	<!-- 휴가일수 계산 -->
@@ -114,7 +124,7 @@
 	<!-- 사용된 포상휴가 -->
 	<select id="usedRewardLeave" resultType="_int" parameterType="int">
 		SELECT NVL(SUM(DAYS_USE_LEAVE),0)
-		FROM RECODE_LEAVE
+		FROM RECORD_LEAVE
 		WHERE MEM_NO = #{memNo}
 		AND L_STATUS = '결재완료'
 		AND type_use_leave IN (SELECT NO_TYPE_LEAVE
@@ -138,7 +148,7 @@
 	<!-- 사용된 연차 -->
 	<select id="usedAnnualLeave" resultType="_int" parameterType="int">
 		SELECT NVL(SUM(DAYS_USE_LEAVE),0)
-		FROM RECODE_LEAVE
+		FROM RECORD_LEAVE
 		WHERE MEM_NO = #{memNo}
 		AND L_STATUS = '결재완료'
 		AND type_use_leave IN (SELECT NO_TYPE_LEAVE
@@ -147,9 +157,9 @@
 	</select>
 	<!-- 지각수 (월) -->
 	<select id="lateCountM" parameterType="int" resultType="_int">
-		SELECT COUNT(*)
+		SELECT NVL(COUNT(*),0)
 		FROM (SELECT *
-		    FROM RECODE_DILIGENCE
+		    FROM RECORD_DILIGENCE
 		    WHERE EXTRACT(YEAR FROM DATE_DILIGENCE) = EXTRACT(YEAR FROM SYSDATE)
 		    AND EXTRACT (MONTH FROM DATE_DILIGENCE) = EXTRACT(MONTH FROM SYSDATE))
 		WHERE STATUS_DILIGENCE = '지각'
@@ -158,9 +168,9 @@
 
 	<!-- 지각수 (년) -->
 	<select id="lateCountY" parameterType="int" resultType="_int">
-		SELECT COUNT(*)
+		SELECT NVL(COUNT(*),0)
 		FROM (SELECT *
-		    FROM RECODE_DILIGENCE
+		    FROM RECORD_DILIGENCE
 		    WHERE EXTRACT(YEAR FROM DATE_DILIGENCE) = EXTRACT(YEAR FROM SYSDATE))
 		WHERE STATUS_DILIGENCE = '지각'
 		AND MEM_NO = #{memNo}
@@ -201,9 +211,9 @@
 		WHERE MEM_NO = #{memNo}
 	</select>
 	
-	<select id="applyLeave" resultMap="recodeLeaveResultSet" parameterType="_int">
+	<select id="applyLeave" resultMap="RecordLeaveResultSet" parameterType="_int">
 		SELECT *
-		FROM RECODE_LEAVE
+		FROM RECORD_LEAVE
 		WHERE MEM_NO = #{memNo}
 	</select>
 	
@@ -214,7 +224,7 @@
 	
 	<select id="mixLeave" resultMap="mixLeaveResultSet" parameterType="_int">
 		SELECT *
-	  	FROM RECODE_LEAVE R
+	  	FROM RECORD_LEAVE R
 	  	LEFT JOIN TYPE_LEAVE T ON (R.TYPE_USE_LEAVE = T.NO_TYPE_LEAVE)
 		WHERE MEM_NO = #{memNo}
 		ORDER BY R.APPLYDATE_USE_LEAVE	
@@ -222,21 +232,65 @@
 	
 	<select id="tul" resultMap="TypeUsedLeaveResultSet" parameterType="_int">
 		SELECT NAME_TYPE_LEAVE as T_NAME, NVL(SUM(DAYS_USE_LEAVE),0) as NUMBER_OF_USED
-		FROM RECODE_LEAVE R
+		FROM RECORD_LEAVE R
 		LEFT JOIN TYPE_LEAVE T ON (R.TYPE_USE_LEAVE = T.NO_TYPE_LEAVE)
 		WHERE MEM_NO = #{memNo}
 		GROUP BY t.name_type_leave
 	</select>
 	
-	<select id="detailRecodeLeave" resultMap="mixLeaveResultSet" parameterType="_int">
+	<select id="detailRecordLeave" resultMap="mixLeaveResultSet" parameterType="_int">
 		SELECT *
-		FROM RECODE_LEAVE R
+		FROM RECORD_LEAVE R
 		LEFT JOIN TYPE_LEAVE T ON (R.TYPE_USE_LEAVE = T.NO_TYPE_LEAVE)
-		WHERE R.NO_RECODE_LEAVE = #{noRecode}	
+		WHERE R.NO_RECORD_LEAVE = #{noRECORD}	
 	</select>
 	
 	<select id="setAttendance" resultMap="SetAttendanceResultSet">
 		SELECT *
 		FROM SET_ATTENDANCE_STANDARD
+		WHERE DAY_WEEK = 'MON'
+	</select>
+	
+	<!-- 출퇴근 기록용 -->
+	<select id="recordAB_A" resultType="_int" parameterType="_int">
+		SELECT NVL(COUNT(*),0)
+		FROM Record_DILIGENCE
+		WHERE MEM_NO = #{memNo}
+		AND TO_CHAR(DATE_DILIGENCE,'yyyy/mm/dd') = TO_CHAR(SYSDATE,'yyyy/mm/dd')
+	</select>
+	
+	<insert id="recordRA" parameterType="map">
+		INSERT INTO RECORD_DILIGENCE VALUES(DILIGENCE_SEQ.nextval,'출근',SYSDATE,
+		(SELECT TO_CHAR(SYSDATE,'HH24:MI')FROM DUAL),#{memNo},#{statusD},'')
+	</insert>
+	
+	<select id="recordAB_O" resultType="_int" parameterType="_int">
+		SELECT NVL(COUNT(*),0)
+		FROM RECORD_DILIGENCE
+		WHERE MEM_NO= #{memNo}
+		AND TO_CHAR(DATE_DILIGENCE,'yyyy/mm/dd') = TO_CHAR(SYSDATE,'yyyy/mm/dd')
+		AND TYPE_DILIGENCE != '퇴근'
+	</select>
+	
+	<update id="recordRO" parameterType="map">
+		UPDATE RECORD_DILIGENCE SET TIME_EXIT =(SELECT TO_CHAR(SYSDATE,'HH24:MI')FROM DUAL),
+		TYPE_DILIGENCE = '퇴근' WHERE MEM_NO=#{memNo} AND TO_CHAR(DATE_DILIGENCE,'yyyy/mm/dd') = TO_CHAR(SYSDATE,'yyyy/mm/dd')
+	</update>
+	
+	<!-- 당일 근태기록 (헤더용) -->
+	<select id="recordToday" resultMap="RecordDiligenceResultSet">
+		SELECT *
+		FROM RECORD_DILIGENCE
+		WHERE MEM_NO = #{memNo}
+		AND TO_CHAR(DATE_DILIGENCE,'yyyy/mm/dd') = TO_CHAR(SYSDATE,'yyyy/mm/dd')
+	</select>
+	
+	<select id="noCheckOffwork" resultType="_int" parameterType="_int">
+		SELECT NVL(COUNT(*),0)
+		FROM RECORD_DILIGENCE
+		WHERE MEM_NO = #{memNo}
+		AND TO_CHAR(DATE_DILIGENCE,'yyyy/mm/dd') != TO_CHAR(SYSDATE,'yyyy/mm/dd')
+        AND TYPE_DILIGENCE = '출근'
+        AND EXTRACT(YEAR FROM DATE_DILIGENCE) = EXTRACT(YEAR FROM SYSDATE)
 	</select>
 </mapper>
