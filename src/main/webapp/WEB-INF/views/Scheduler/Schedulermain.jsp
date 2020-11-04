@@ -70,7 +70,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 
   document.addEventListener('DOMContentLoaded', function() {
 	    var calendarEl = document.getElementById('calendar');
-
+		
 	    var calendar = new FullCalendar.Calendar(calendarEl, {
 	      plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
 	      header: {
@@ -84,13 +84,21 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 	      businessHours: true, // display business hours
 	      editable: true,
 	      events: [
-	      
+	    	
+	    	<c:forEach items="${ScheduleList}" var="ScheduleList">
+	    	 
+	    	  
 	        {
-		          title: '신아라 서울옴!!',
-		          start: '2020-11-04T13:00:00',
-		          constraint: '신아라 서울옴!',
+	        	
+		          title: '${ScheduleList.sche_name}',
+		          start: '${ScheduleList.startdate}T${ScheduleList.starttime}:00',
+		          end: '${ScheduleList.enddate}T${ScheduleList.endtime}:00',
+		          constraint: '${ScheduleList.sche_name}',
 		          color: 'rgb(250, 237, 125)'
 		      },
+	     	
+	       </c:forEach>
+	        
 	      ]
 	    });
 
@@ -225,10 +233,10 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 							</dl>
 							<dl>
 								<dt style="float: left;">
-									<label>일정 제목</label>
+									<label >일정 제목</label>
 								</dt>
 								<dd style="margin-left: 150px;">
-									<input type="text" style="width: 200px;">
+									<input type="text" id="sche_name" style="width: 200px;">
 								</dd>
 							</dl>
 							<dl>
@@ -236,7 +244,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 									<label>시작</label>
 								</dt>
 								<dd style="margin-left: 150px;">
-									<input type="date" name="" id=""> <select name="time">
+									<input type="date" name="" id="startdate"> <select name="time" id="starttime">
 
 										<option value="00:00">오전 12:00</option>
 										<option value="00:30">오전 12:30</option>
@@ -295,7 +303,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 									<label>종료</label>
 								</dt>
 								<dd style="margin-left: 150px;">
-									<input type="date" name="" id=""> <select name="time">
+									<input type="date" name="" id="enddate"> <select name="time" id="endtime">
 
 										<option value="00:00">오전 12:00</option>
 										<option value="00:30">오전 12:30</option>
@@ -355,14 +363,15 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 									<label>내용</label>
 								</dt>
 								<dd style="margin-left: 150px;">
-									<textarea name="" id="" cols="30" rows="5"
+									<textarea name="" id="sche_content" cols="30" rows="5"
 										style="resize: none;"></textarea>
 								</dd>
 							</dl>
 						</div>
+						
 						<div
 							style="text-align: center; position: relative; top: 185px; left: -35px;">
-							<button
+							<button id="ajaxsche_add"
 								style=" background: #fff;
 									    color: #2c86dc;
 									    padding: 5px 27px 6px;
@@ -515,7 +524,48 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 
 
 				</div>
+<script>
+	// 일정 추가 db
+	 $("#ajaxsche_add").on('click',function () {
+		 var Cal_name = $("#selectCal option:selected").text();
+		 var Sche_name = $("#sche_name").val();
+		 var startdate = $('#startdate').val();
+		 var starttime = $("#starttime option:selected").val();
+		 var enddate = $('#enddate').val();
+		 var endtime = $("#endtime option:selected").val();
+		 var sche_content = $('#sche_content').val();
+	     
+		 $.ajax({
+             url: "insertSchedule.do",
+             type: "post",
+             dataType: "json",
+             traditional: true,
+             data: {
+                 "Cal_name": Cal_name,
+                 "Sche_name": Sche_name,
+                 "startdate": startdate,
+                 "starttime": starttime,
+                 "Cal_name": Cal_name,
+                 "enddate": enddate,
+                 "endtime": endtime,
+                 "sche_content": sche_content
+             },
+             success: function (data) {
+                 console.log("에작"+ data);
+                 location.reload();
+             },
+             error: function (request,
+                 status, error) {
+                 console.log("일정추가임"+ request);
+                 location.reload();
+             }
 
+         })
+		 
+	 });
+	 
+	
+	</script>
 	<script>
     // 내 캘린더 추가 
     $("#indi_sub").off("click").on('click',
@@ -540,12 +590,9 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
                             console.log("에작"+ data);
                             location.reload();
                         },
-                        error: function (request,
-                            status, error) {
-                            console.log("개인"+ request);
-                            location.reload();
-                        }
-
+                        error: function (request,status, error) {
+                        	 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                        	 }
                     })
 
             })
@@ -597,6 +644,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 
             })
 </script>
+	
 
 				<script>
   

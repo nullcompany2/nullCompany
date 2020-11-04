@@ -10,6 +10,7 @@ import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.personnelManagement.model.vo.Department;
 import com.kh.nullcompany.schedule.model.vo.Calendar;
 import com.kh.nullcompany.schedule.model.vo.CalendarMember;
+import com.kh.nullcompany.schedule.model.vo.Schedule;
 
 @Repository("sDao")
 public class ScheduleDao {
@@ -56,6 +57,14 @@ public class ScheduleDao {
 
 	public ArrayList<Calendar> IndividualCalList() {
 		return (ArrayList)sqlSession.selectList("scheduleMapper.IndividualCalList");
+	}
+
+	public int insertSchedule(Schedule schedule) {
+		return sqlSession.insert("scheduleMapper.insertSchedule",schedule);
+	}
+
+	public ArrayList<Schedule> ScheduleList() {
+		return (ArrayList)sqlSession.selectList("scheduleMapper.ScheduleList");
 	}
 	
 

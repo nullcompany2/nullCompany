@@ -24,6 +24,7 @@
 		<typeAlias type="com.kh.nullcompany.mail.model.vo.Mail" alias="Mail"/>
 		<typeAlias type="com.kh.nullcompany.schedule.model.vo.Calendar" alias="Calendar"/>
 		<typeAlias type="com.kh.nullcompany.schedule.model.vo.CalendarMember" alias="CalendarMember"/>
+		<typeAlias type="com.kh.nullcompany.schedule.model.vo.Schedule" alias="Schedule"/>
 	</typeAliases>
 	
 	<mappers>
