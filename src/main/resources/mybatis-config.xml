@@ -20,6 +20,7 @@
       <typeAlias type="com.kh.nullcompany.personnelManagement.model.vo.SetAttendance" alias="SetAttendance"/>
       <typeAlias type="com.kh.nullcompany.personnelManagement.model.vo.RecordDiligence" alias="RecordDiligence"/>
       <typeAlias type="com.kh.nullcompany.board.model.vo.board" alias="board"/>
+      <typeAlias type="com.kh.nullcompany.board.model.vo.comment" alias="comment"/>
       <typeAlias type="com.kh.nullcompany.mail.model.vo.Email" alias="Email"/>
       <typeAlias type="com.kh.nullcompany.mail.model.vo.Mail" alias="Mail"/>
       <typeAlias type="com.kh.nullcompany.mail.model.vo.SaveMail" alias="SaveMail"/>
