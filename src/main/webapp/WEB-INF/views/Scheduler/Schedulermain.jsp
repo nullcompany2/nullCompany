@@ -84,12 +84,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 	      businessHours: true, // display business hours
 	      editable: true,
 	      events: [
-	        {
-	          title: '정택환 다이아감!',
-	          start: '2020-10-23T13:00:00',
-	          constraint: '정택환 다이아감!',
-	          color: 'rgb(255, 167, 167)'
-	        },
+	      
 	        {
 		          title: '신아라 서울옴!!',
 		          start: '2020-11-04T13:00:00',
@@ -218,7 +213,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 									<label>캘린더</label>
 								</dt>
 								<dd style="margin-left: 150px;">
-									<select name="cal" style="width: 200px;">
+									<select name="cal" id="selectCal" style="width: 200px;">
 										<c:forEach var="publicCalList" items="${ publicCalList }">
 											<option class="selectpublicCal" value="${ publicCalList.calNo }">${ publicCalList.calName }</option>
 									    </c:forEach>

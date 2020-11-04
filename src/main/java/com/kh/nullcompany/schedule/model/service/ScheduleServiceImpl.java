@@ -40,7 +40,6 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 			CalendarMember calendarMember = new CalendarMember();
 			calendarMember.setCalNo(result);
-
 			calendarMember.setCalMem(enrollmemno[i]);
 
 			System.out.println(calendarMember+" : 등록권한");
@@ -55,7 +54,6 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 			CalendarMember calendarMember = new CalendarMember();
 			calendarMember.setCalNo(result);
-
 			calendarMember.setCalMem(lookmemno[i]);
 
 			System.out.println(calendarMember+" : 조회권한");
