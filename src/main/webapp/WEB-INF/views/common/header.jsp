@@ -280,9 +280,9 @@
       });
     });
 	
-    function recodeTA(or){
+    function recordTA(or){
     	$.ajax({
-    		url:"recodeTA.do",
+    		url:"recordTA.do",
     		data : {or : or},
     		dataType : "JSON",
     		success: function(data){
@@ -299,7 +299,7 @@
     }
     $(document).ready(function(){
     	$.ajax({
-    		url:"recodeToday.do",
+    		url:"recordToday.do",
     		dataType : "JSON",
     		success: function(data){
     			if(data != null){
@@ -388,7 +388,7 @@
         <img src="${ loginUser.photo }" alt="" style="width: 90px; height: 90px;border-radius:50px;">
       </div>
       <div id="workbtn">
-        <button onclick="recodeTA(1)" id="Attendance"><label>출근</label></button>  
+        <button onclick="recordTA(1)" id="Attendance"><label>출근</label></button>  
         <button class="go" id="Offwork"><label>퇴근</label></button>
       </div>
       
@@ -399,7 +399,7 @@
         <span style="font-size:20px; color: black;"> ${ loginUser.name } </span>님 
            <div class="n-emp-i">
             <h4 style="color: #477A8F; margin-bottom: 5px; font-weight: bolder;">퇴근 하시겠습니까? </h4> <br>
-            <button onclick="recodeTA(2)" id="Offwork"> 퇴근</button> 
+            <button onclick="recordTA(2)" id="Offwork"> 퇴근</button> 
       
    		</div>
     

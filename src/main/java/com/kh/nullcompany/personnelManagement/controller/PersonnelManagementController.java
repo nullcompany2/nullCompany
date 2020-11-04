@@ -316,7 +316,7 @@ public class PersonnelManagementController {
 	}
 	
 	// 출퇴근 기록
-	@RequestMapping("RecordTA.do")
+	@RequestMapping("recordTA.do")
 	public void RecordTimeAndAttendance(HttpSession session,int or, HttpServletResponse response) throws JsonIOException, IOException {
 		response.setContentType("application/json; charset=utf-8");
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
@@ -370,7 +370,7 @@ public class PersonnelManagementController {
 		
 	}
 	// 출퇴근 당일 기록(헤더용)
-	@RequestMapping("RecordToday.do")
+	@RequestMapping("recordToday.do")
 	public void RecordToday(HttpServletResponse response, HttpSession session) throws JsonIOException, IOException {
 		response.setContentType("application/json; charset=utf-8");
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
