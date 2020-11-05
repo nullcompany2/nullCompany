@@ -174,6 +174,7 @@
 		</table>
 		<br>
 			
+			
 			<select id="category"> 
 				<option> ----- </option>
 				<option> 보낸사람 </option>
@@ -236,6 +237,8 @@
         	confirm("완전 삭제하시면 복구 할 수 없습니다. 정말로 삭제하시겠습니까?");
 		});
         
+        
+
         </script>
 		
 

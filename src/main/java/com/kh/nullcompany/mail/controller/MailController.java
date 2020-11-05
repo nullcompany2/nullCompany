@@ -1,14 +1,15 @@
 package com.kh.nullcompany.mail.controller;
 
-
-
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -219,4 +220,76 @@ private MailService maService;
 			return mv;
 		}
 		
+		@RequestMapping("readMail.do")
+		public void readMailList(HttpServletResponse response,
+				HttpSession session,
+				@RequestParam(value="currentPage",required=false,defaultValue="1") int currentPage) throws IOException {
+			
+			response.setContentType("application/json; charset=UTF-8");
+			
+			String memId = ((Member)session.getAttribute("loginUser")).getId();
+			
+			int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();		
+
+			int listCount = maService.getListCount(memNo);
+
+			PageInfo pi = Pagination.getPageInfo(currentPage,listCount);
+			
+			ArrayList<Mail> list = maService.readMailList(pi,memId);
+			
+			JSONObject read = null;
+		      JSONArray result = new JSONArray();
+		
+		      for(Mail ma : list) {
+			       read = new JSONObject();
+			         
+			       read.put("mailNo",ma.getMailNo());
+			       read.put("Sender",ma.getSender());
+			       read.put("Name",ma.getName());
+			       read.put("mTitle",ma.getmTitle());
+			       read.put("sendDate",ma.getSendDate());
+			        
+			       result.add(read);
+			      }
+			response.getWriter().print(result.toJSONString());
+			
+		}
+		
+		@RequestMapping("unReadMail.do")
+		public void unReadMailList(HttpServletResponse response,
+				HttpSession session,
+				@RequestParam(value="currentPage",required=false,defaultValue="1") int currentPage) throws IOException {
+			
+			response.setContentType("application/json; charset=UTF-8");
+			
+			String memId = ((Member)session.getAttribute("loginUser")).getId();
+			
+			int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();		
+
+			int listCount = maService.getListCount(memNo);
+
+			PageInfo pi = Pagination.getPageInfo(currentPage,listCount);
+			
+			ArrayList<Mail> list = maService.unReadMailList(pi,memId);
+			
+			JSONObject read = null;
+		      JSONArray result = new JSONArray();
+		
+		      for(Mail ma : list) {
+			       read = new JSONObject();
+			         
+			       read.put("mailNo",ma.getMailNo());
+			       read.put("Sender",ma.getSender());
+			       read.put("Name",ma.getName());
+			       read.put("mTitle",ma.getmTitle());
+			       read.put("sendDate",ma.getSendDate());
+			        
+			       result.add(read);
+			      }
+			response.getWriter().print(result.toJSONString());
+			
+		}
+		
+			
 }
+

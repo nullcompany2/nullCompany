@@ -69,6 +69,16 @@ public class MailServiceImpl implements MailService {
 		return maDao.saveDetailView(mailNo);
 	}
 
+	@Override
+	public ArrayList<Mail> readMailList(PageInfo pi, String memId) {
+		return maDao.readMailList(pi,memId);
+	}
+
+	@Override
+	public ArrayList<Mail> unReadMailList(PageInfo pi, String memId) {
+		return maDao.unReadMailList(pi,memId);
+	}
+
 	
 
 }
