@@ -336,15 +336,21 @@ public class PersonnelManagementController {
 			int RecordAB_A = pService.RecordAB_A(memNo);
 			System.out.println(RecordAB_A);
 			if(RecordAB_A == 0) {
-				if(setCTime > setATime) {
-					forR.put("statusD","지각");
+				if(setCTime < 1400) {
+					if(setCTime > setATime) {
+						forR.put("statusD","지각");
+					}else {
+						forR.put("statusD","정상");
+					}
+					int insertRA= pService.insertRA(forR);
+					str = "출근시간 : "+currentTime+" "+((Member)session.getAttribute("loginUser")).getName()+"님 오늘도 열씸히 근무해주세요. ";					
 				}else {
-					forR.put("statusD","정상");
+					str="결근입니다.";
 				}
-				int insertRA= pService.insertRA(forR);
-				str = "출근시간 : "+currentTime+" "+((Member)session.getAttribute("loginUser")).getName()+"님 오늘도 열씸히 근무해주세요. ";
 			}else if(RecordAB_A==1) {
 				str = "이미 출근되어 있습니다.";
+			}else {
+				str = "뭔가잘못된듯..";
 			}
 		}else if(or==2) {
 			if(setCTime > setOTime) {
@@ -357,7 +363,7 @@ public class PersonnelManagementController {
 						str="오류 발생 인사담당자에게 연락주세요";
 					}
 				}else if(RecordAB_O == 0) {
-					str ="출근을 하지않으셨거나, 이미퇴근이 완료되었습니다.";
+					str ="출근을 하지않으셨거나, 결근처리 또는 이미퇴근이 완료되었습니다.";
 				}
 			}else {
 				str="퇴근시간이 되지 않았습니다.";
@@ -375,7 +381,6 @@ public class PersonnelManagementController {
 		response.setContentType("application/json; charset=utf-8");
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
 		RecordDiligence RecordToday = pService.RecordToday(memNo);
-		
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(RecordToday,response.getWriter());
 	}
