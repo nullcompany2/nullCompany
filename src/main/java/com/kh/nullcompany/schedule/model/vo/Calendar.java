@@ -1,5 +1,7 @@
 package com.kh.nullcompany.schedule.model.vo;
 
+import java.util.ArrayList;
+
 public class Calendar {
 
 	private int calNo;
@@ -8,7 +10,8 @@ public class Calendar {
 	private String enrollMember;
 	private String lookMember;
 	private int enrollmemno;
-	
+
+
 	public Calendar() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -77,5 +80,7 @@ public class Calendar {
 		return "Calendar [calNo=" + calNo + ", calName=" + calName + ", color=" + color + ", enrollMember="
 				+ enrollMember + ", lookMember=" + lookMember + ", enrollmemno=" + enrollmemno + "]";
 	}
+
+
 
 }

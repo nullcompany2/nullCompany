@@ -11,6 +11,9 @@ public class Schedule {
 	private String enddate;
 	private String endtime;
 	private String Sche_content;
+	private String color;
+
+	private Calendar calendar;
 	
 	
 	public Schedule() {
@@ -30,6 +33,15 @@ public class Schedule {
 		this.enddate = enddate;
 		this.endtime = endtime;
 		Sche_content = sche_content;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+
+	public void setColor(String color) {
+		this.color = color;
 	}
 
 
@@ -118,6 +130,16 @@ public class Schedule {
 		return "Schedule [Sche_no=" + Sche_no + ", Cal_name=" + Cal_name + ", Sche_name=" + Sche_name + ", startdate="
 				+ startdate + ", starttime=" + starttime + ", enddate=" + enddate + ", endtime=" + endtime
 				+ ", Sche_content=" + Sche_content + "]";
+	}
+
+
+	public Calendar getCalendar() {
+		return calendar;
+	}
+
+
+	public void setCalendar(Calendar calendar) {
+		this.calendar = calendar;
 	}
 	
 	
