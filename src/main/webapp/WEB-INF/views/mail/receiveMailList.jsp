@@ -109,18 +109,24 @@
 			<br> 
 						&nbsp;&nbsp;<input type="checkbox" id="checkall"> 
 						&nbsp;&nbsp; <span style="color:#477A8F;" id="select"> 보기 : 
-						<select> 
+						
+						<select name="listOption" id="listOption"> 
 							<option> 모두  </option>
 							<option> 읽은 메일  </option>
 							<option> 안읽은 메일  </option>
 						</select> &nbsp;
 						</span> 
+						
 						&nbsp;&nbsp;
 						<span id="hide" style="margin-right:40px;">  <span id="count"> </span> <a id="delMail">삭제 </a>  &nbsp; <a id="realdelMail"> 완전삭제 </a> </span>
 						<span style="margin-left:65%;" id="countAll"> </span> <br><br>
+						
+						<div id="tableDiv"> 
 					<c:choose>
 				    <c:when test="${!empty list }">
 				        <c:forEach var="ma" items="${list}">
+				        
+						
 						 <table align="left" cellspacing="0" width="90%" id="tb">
 						 
 						 <c:url var="maildetailView" value="maildetailView.do">
@@ -146,7 +152,7 @@
 				       현재 편지함에 메일이 없습니다. 
 				    </c:otherwise>
 				</c:choose>
-
+				</div>
 			</div>
 			
 			<table style=" margin: 10px 0px 0px 80px; width: 80%; border-collapse: collapse">
@@ -247,6 +253,108 @@
         $("#realdelMail").click(function(){
         	confirm("완전 삭제하시면 복구 할 수 없습니다. 정말로 삭제하시겠습니까?");
 		});
+        
+		$("#listOption").change(function() {
+		/* alert($(this).val());
+		alert($(this).children("option:selected").text()); */
+		
+		var val = $(this).val();
+		console.log(val);
+		if( val.length == 5){
+			alert("이프문으로 들어옴! ");
+		$.ajax({
+            url: "readMail.do",
+            type: "get",
+            success: function(data) {
+                console.log(data);
+                var str = ''
+                var $tb = $('#tableDiv');
+                var $tb2 = $('#tb');
+	
+			
+                $('#tableDiv').children().remove();
+				var str =""
+                
+				if(data.length != 0){
+						
+					
+				$.each(data,function(ind,entry){
+				   str += '<table align="left" cellspacing="0" width="90%" id="tb">'
+					
+				   var url = "location.href='maildetailView.do?mailNo="+entry["mailNo"]+"'";
+	               	str += "<tr class='trMail' onclick="+url+">"
+					str += "<td> &nbsp;&nbsp; <input type='checkbox'onClick='event.cancelBubble=true' name='mail'></td>"
+					str += "<td align='left'>"
+					str += "<a>"+ entry['Name'] + entry['Sender']  + "</a></td>"	
+					str += "<td>"+ entry['mTitle'] + "</td>"
+					str += "<td align='right'>" + entry['sendDate'] + "</td>"
+					str += "</tr>"
+					
+				});
+                	str += "</table>"
+               		$('#tableDiv').append(str)
+				}else {
+					
+					str += " 현재 편지함에 메일이 없습니다. "
+				}
+				$('#tableDiv').append(str)
+				
+            },
+            error: function(data) {
+                console.log("ㅋㅋ 리스트 가져오기 실패 ");
+
+            	}
+       	 	}); 
+		}else if ( val.length == 6){
+			
+			// 에이작스 
+			alert("안읽은 메일 이프문! ")
+			
+			$.ajax({
+	            url: "unReadMail.do",
+	            type: "get",
+	            success: function(data) {
+	                console.log(data);
+	                var str = ''
+	                var $tb = $('#tableDiv');
+	                var $tb2 = $('#tb');
+		
+				
+	                $('#tableDiv').children().remove();
+					var str =""
+	                
+					if(data.length != 0){
+						
+					$.each(data,function(ind,entry){
+					   str += '<table align="left" cellspacing="0" width="90%" id="tb">'
+						
+						str += "<tr class='trMail'>"
+						str += "<td> &nbsp;&nbsp; <input type='checkbox'onClick='event.cancelBubble=true' name='mail'></td>"
+						str += "<td align='left'>"
+						str += "<a>"+ entry['Name'] + entry['Sender']  + "</a></td>"	
+						str += "<td>"+ entry['mTitle'] + "</td>"
+						str += "<td align='right'>" + entry['sendDate'] + "</td>"
+						str += "</tr>"
+						
+					});
+	                	str += "</table>"
+	               		$('#tableDiv').append(str)
+					}else {
+						
+						str += " 현재 편지함에 메일이 없습니다. "
+					}
+					$('#tableDiv').append(str)
+	            },
+	            error: function(data) {
+	                console.log("ㅋㅋ 리스트 가져오기 실패 ");
+
+	            	}
+	       	 	}); 
+		}else {
+			alert("모두!!");
+		}
+		});
+
         
         </script>
 		

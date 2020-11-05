@@ -85,4 +85,23 @@
         WHERE SAVE_NO =  #{mailNo}
      </select> 
 	 
+	 <select id="readMailList" resultMap="mailResultSet">  
+	 	select R.* , M.NAME
+        from RECIEVED_MAIL R 
+        INNER JOIN MEMBER M ON (R.SENDER = M.ID)
+        where READ_COUNT >0
+        and RECIPIENT = #{memId}
+        and MDELETE_STATUS = 'N'
+        ORDER BY SEND_DATE DESC
+	 </select>
+	 
+	 <select id="unReadMailList" resultMap="mailResultSet">
+	 select R.* , M.NAME
+        from RECIEVED_MAIL R 
+        INNER JOIN MEMBER M ON (R.SENDER = M.ID)
+        where READ_COUNT = 0
+        and RECIPIENT =  #{memId}
+        and MDELETE_STATUS = 'N'
+        ORDER BY SEND_DATE DESC
+	 </select>
 </mapper>
