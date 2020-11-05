@@ -275,10 +275,14 @@
                 $('#tableDiv').children().remove();
 				var str =""
                 
+				if(data.length != 0){
+						
+					
 				$.each(data,function(ind,entry){
 				   str += '<table align="left" cellspacing="0" width="90%" id="tb">'
 					
-					str += "<tr class='trMail'>"
+				   var url = "location.href='maildetailView.do?mailNo="+entry["mailNo"]+"'";
+	               	str += "<tr class='trMail' onclick="+url+">"
 					str += "<td> &nbsp;&nbsp; <input type='checkbox'onClick='event.cancelBubble=true' name='mail'></td>"
 					str += "<td align='left'>"
 					str += "<a>"+ entry['Name'] + entry['Sender']  + "</a></td>"	
@@ -289,7 +293,12 @@
 				});
                 	str += "</table>"
                		$('#tableDiv').append(str)
-
+				}else {
+					
+					str += " 현재 편지함에 메일이 없습니다. "
+				}
+				$('#tableDiv').append(str)
+				
             },
             error: function(data) {
                 console.log("ㅋㅋ 리스트 가져오기 실패 ");

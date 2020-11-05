@@ -283,7 +283,8 @@ private MailService maService;
 			       read.put("Name",ma.getName());
 			       read.put("mTitle",ma.getmTitle());
 			       read.put("sendDate",ma.getSendDate());
-			        
+			       read.put("memNo",ma.getMemNo());
+			       
 			       result.add(read);
 			      }
 			response.getWriter().print(result.toJSONString());
