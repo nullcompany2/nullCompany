@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="approvalMapper">
+
+	<resultMap id="progressList" type="Document">
+		<id property="docTempNo" column="DOC_TEMP_NO"/>
+		<result property="docNo" column="DOC_NO"/>
+		<result property="formCode" column="FORM_CODE"/>
+		<result property="dTitle" column="DTITLE"/>
+		<result property="drafterName" column="DRAFTER_NAME"/>
+		<result property="draftDate" column="DRAFT_DATE"/>
+		<result property="formName" column="FORM_NAME"/>
+	</resultMap>
+	
+	
+	<!-- 진행중인 문서(전체) 게시글 갯수 -->
+	<select id="getProgressAllListCount" resultType="_int">
+		SELECT
+		COUNT(*)
+		FROM
+		    (SELECT 
+		           DISTINCT AST.DOC_NO AS DOC_TEMP_NO,
+		           AD.DOC_NO,
+		           AF.FORM_CODE,
+		           AD.DTITLE,
+		           M.NAME AS DRAFTER_NAME,
+		           AD.DRAFT_DATE,
+		           AF.FORM_NAME
+		    FROM APPROVAL_DOCUMENT AD
+		    JOIN MEMBER M ON(AD.DRAFTER_NO = M.MEM_NO)
+		    JOIN APPROVAL_FORM AF ON(AD.FORM_NO = AF.FORM_NO)
+		    JOIN APPROVAL_STEP AST ON(AD.DOC_TEMP_NO = AST.DOC_NO)
+		    WHERE
+		         AD.D_STATUS = 'N'
+		    AND  AD.COMPLETE_DATE IS NULL
+		    AND (AD.DRAFTER_NO = #{memNo} OR AST.STAFF_NO = #{memNo})
+		    ORDER BY AD.DRAFT_DATE DESC)
+	</select>
+	
+</mapper>

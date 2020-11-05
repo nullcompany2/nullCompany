@@ -29,6 +29,12 @@
       <typeAlias type="com.kh.nullcompany.reservation.model.vo.Category" alias="Category"/>
 	  <typeAlias type="com.kh.nullcompany.reservation.model.vo.Reservation" alias="Reservation"/>
 	  <typeAlias type="com.kh.nullcompany.reservation.model.vo.Resource" alias="Resource"/>
+	  <typeAlias type="com.kh.nullcompany.approval.model.vo.Document" alias="Document"/>
+	  <typeAlias type="com.kh.nullcompany.approval.model.vo.Step" alias="Step"/>
+	  <typeAlias type="com.kh.nullcompany.approval.model.vo.Form" alias="Form"/>
+	  <typeAlias type="com.kh.nullcompany.approval.model.vo.Leave" alias="Leave"/>
+	  <typeAlias type="com.kh.nullcompany.approval.model.vo.Absence" alias="Absence"/>
+	  <typeAlias type="com.kh.nullcompany.approval.model.vo.Resign" alias="Resign"/>
    </typeAliases>
    
    <mappers>
@@ -39,5 +45,6 @@
       <mapper resource="mappers/Y_personnel-mapper.xml"/>
       <mapper resource="mappers/schedule-mapper.xml"/>
       <mapper resource="mappers/reservation-mapper.xml"/>
+      <mapper resource="mappers/approval-mapper.xml"/>
    </mappers>
 </configuration>
