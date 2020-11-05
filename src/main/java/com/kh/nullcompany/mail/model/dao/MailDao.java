@@ -60,6 +60,18 @@ public class MailDao {
 	public SaveMail saveDetailView(int mailNo) {
 		return sqlSession.selectOne("mailMapper.saveDetailView",mailNo);
 	}
+
+	public ArrayList<Mail> readMailList(PageInfo pi, String memId) {
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("mailMapper.readMailList",memId,rowBounds);
+	}
+
+	public ArrayList<Mail> unReadMailList(PageInfo pi, String memId) {
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("mailMapper.unReadMailList",memId,rowBounds);
+	}
 	
 }
 

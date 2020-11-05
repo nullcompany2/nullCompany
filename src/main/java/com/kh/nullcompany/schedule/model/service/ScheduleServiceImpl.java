@@ -11,6 +11,7 @@ import com.kh.nullcompany.personnelManagement.model.vo.Department;
 import com.kh.nullcompany.schedule.model.dao.ScheduleDao;
 import com.kh.nullcompany.schedule.model.vo.Calendar;
 import com.kh.nullcompany.schedule.model.vo.CalendarMember;
+import com.kh.nullcompany.schedule.model.vo.Schedule;
 
 @Service("sService")
 public class ScheduleServiceImpl implements ScheduleService {
@@ -40,7 +41,6 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 			CalendarMember calendarMember = new CalendarMember();
 			calendarMember.setCalNo(result);
-
 			calendarMember.setCalMem(enrollmemno[i]);
 
 			System.out.println(calendarMember+" : 등록권한");
@@ -55,7 +55,6 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 			CalendarMember calendarMember = new CalendarMember();
 			calendarMember.setCalNo(result);
-
 			calendarMember.setCalMem(lookmemno[i]);
 
 			System.out.println(calendarMember+" : 조회권한");
@@ -104,15 +103,16 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return sDao.IndividualCalList();
 	}
 
+	@Override
+	public int insertSchedule(Schedule schedule) {
+		return sDao.insertSchedule(schedule);
+	}
 
-//	@Override
-//	public ArrayList<Integer> EnrollMember(String enrollMember) {
-//		return sDao.EnrollMember(enrollMember);
-//	}
+	@Override
+	public ArrayList<Schedule> ScheduleList() {
+		return sDao.ScheduleList();
+	}
 
-//	@Override
-//	public ArrayList<Integer> EnrollMember(int[] enrollmemno) {
-//		return sDao.EnrollMember(enrollmemno);
-//	}
+
 
 }

@@ -48,10 +48,22 @@
 		<result property="calNo" column="CAL_NO" />
 	</resultMap>
 
+	<resultMap id="ScheduleResultSet" type="Schedule">
+		<result property="Sche_no" column="SCHE_NO" />
+		<result property="Cal_name" column="CAL_NAME" />
+		<result property="Sche_name" column="SCHE_NAME" />
+		<result property="startdate" column="STARTDATE" />
+		<result property="starttime" column="STARTTIME" />
+		<result property="enddate" column="ENDDATE" />
+		<result property="endtime" column="ENDTIME" />
+		<result property="Sche_content" column="SCHE_CONTENT" />
+		
+		<collection property="calendar" resultMap="Calendar"/>
+
+	</resultMap>
 
 	<!-- 부서 셀렉트 리스트 -->
-	<select id="selectdeptList" resultMap="deptResultSet"
-		parameterType="Department">
+	<select id="selectdeptList" resultMap="deptResultSet" parameterType="Department">
 		SELECT *
 		FROM DEPARTMENT
 		ORDER BY DEPT_NO
@@ -84,11 +96,15 @@
 	</insert>
 	
 	<select id="publicCalList" resultMap="CalendarResultSet" parameterType="Calendar">
-		SELECT * FROM CALENDAR WHERE CAL_TYPE = 1
+		SELECT *
+		FROM CALENDAR
+		WHERE CAL_TYPE = 1
 	</select>
 	
 	<select id="IndividualCalList" resultMap="CalendarResultSet" parameterType="Calendar">
-		SELECT * FROM CALENDAR WHERE CAL_TYPE = 2
+		SELECT *
+		FROM CALENDAR
+		WHERE CAL_TYPE = 2
 	</select>
 	
 	<insert id="insertIndividual" parameterType="Calendar">
@@ -108,5 +124,18 @@
 		INSERT INTO CALENDAR_MEMBER
 		VALUES( #{calNo}, #{calMem}, 2)
 	</insert>
+	
+   <insert id="insertSchedule" parameterType="Schedule">
+      INSERT INTO SCHEDULE
+      VALUES(SCHE_SEQ.NEXTVAL, #{cal_name}, #{sche_name}, #{startdate}, #{starttime}, #{enddate}, #{endtime}, #{sche_content})
+   </insert>
+   
+   <select id="ScheduleList" resultType="Schedule" parameterType="Schedule">
+    	SELECT *
+		FROM SCHEDULE S
+		JOIN CALENDAR C
+		ON S.CAL_NAME = C.CAL_NAME
+		WHERE C.CAL_TYPE = 1
+   </select>
 	
 </mapper>

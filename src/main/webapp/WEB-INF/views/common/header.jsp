@@ -303,9 +303,20 @@
     		dataType : "JSON",
     		success: function(data){
     			if(data != null){
-    				$("#Attendance label").replaceWith(data.timeEnter);
-    				if(data.timeExit != null){
-    					$("#Offwork label").replaceWith(data.timeExit);
+					if(data.statusDiligence == '결근'){
+						$("#Attendance ").attr("style","display:none");
+						$("#Offwork ").attr("style","display:none");
+						$("#status_diligence").attr("style","width: 135px; display:block").text("결근");
+					}else if(data.statusDiligence =='휴가'){
+						$("#Attendance ").attr("style","display:none");
+						$("#Offwork ").attr("style","display:none");
+						$("#status_diligence").attr("style","width: 135px; display:block").text("휴가");
+					}else{
+	    				$("#Attendance label").replaceWith(data.timeEnter);
+	    				if(data.timeExit != null){
+	    					$("#Offwork label").replaceWith(data.timeExit);
+						
+						}
     				}
     				
     			}
@@ -390,6 +401,7 @@
       <div id="workbtn">
         <button onclick="recordTA(1)" id="Attendance"><label>출근</label></button>  
         <button class="go" id="Offwork"><label>퇴근</label></button>
+        <button style="display:none;     width: 135px;" id="status_diligence"></button>     
       </div>
       
         <!-- Modal div -->
