@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="reservationMapper">
+	
+	<resultMap type="Category" id="categoryResultSet">
+		<id property="rcNo" column="RC_NUM" />
+		<result property="rcTitle" column="RC_TITLE"/>
+		<result property="rcContent" column="RC_CONTENT"/>
+		<result property="rcStatus" column="RC_STATUS"/>
+		<result property="rsNo" column="RS_NO"/>
+	</resultMap>
+	
+	<resultMap type="Resource" id="resourceResultSet">
+		<id property="rsNo" column="RS_NUM" />
+		<result property="rcNo" column="RC_NUM"/>
+		<result property="rsTitle" column="RS_TITLE"/>
+		<result property="rsContent" column="RS_CONTENT"/>
+		<result property="rsReturn" column="RS_RETURN"/>
+		<result property="rsImg" column="RS_IMG"/>
+		<result property="rsStatus" column="RS_STATUS"/>
+	</resultMap>
+	
+	<insert id="insertCategory" parameterType="Category">
+	INSERT INTO RCATEGORY
+	VALUES (SEQ_RCNO.NEXTVAL,#{rcTitle},#{rcContent},DEFAULT,DEFAULT)
+	</insert>
+	
+	<select id="selectCategory" parameterType="_int" resultMap="categoryResultSet">
+	SELECT *
+	FROM RCATEGORY
+	WHERE RC_STATUS = 'Y'
+	</select>
+	
+	<select id="selectUpdateCategory" resultMap="categoryResultSet">
+	SELECT *
+	FROM RCATEGORY
+	WHERE  RC_STATUS = 'Y'
+	AND RC_NUM = #{rcNo}
+	</select>
+	
+	<update id="UpdateCategory" parameterType="Category">
+	UPDATE RCATEGORY
+	SET
+		RC_TITLE = #{rcTitle},
+		RC_CONTENT = #{rcContent}
+	WHERE
+		RC_NUM = #{rcNo}
+	</update>
+	<update id="DeleteCategory" parameterType="Category">
+	UPDATE RCATEGORY
+	SET 
+		RC_STATUS='N'
+	WHERE
+		RC_NUM = #{rcNo}
+	</update>
+	
+	<select id="selectResourceList" parameterType="_int" resultMap="resourceResultSet">
+	SELECT * 
+	FROM "RESOURCE"
+	WHERE RS_STATUS='Y'
+	</select>
+	
+	<insert id="insertResource" parameterType="Resource">
+	INSERT INTO "RESOURCE"
+	VALUES (SEQ_RSNO.NEXTVAL,#{rsTitle},#{rsContent},DEFAULT,DEFAULT)
+	</insert>
+</mapper>

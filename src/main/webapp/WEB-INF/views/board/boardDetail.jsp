@@ -1,3 +1,4 @@
+<%@page import="com.kh.nullcompany.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -387,30 +388,103 @@ tr>td {
 			</div>
 
 
-			<div class="comment">
-
-				<form action="/myWeb/insertComment.bo" method="post">
-					<input type="hidden" name="writer" value="" /> <input
-						type="hidden" name="bno" " /> <input type="hidden" name="refcno"
-						value="0" /> <input type="hidden" name="clevel" value="1" />
-
-					<table align="center">
-						<tr>
-							<td>댓글 작성</td>
-							<td><textArea rows="3" cols="80" id="replyContent"
-									name="replyContent" style="resize: none;"></textArea></td>
-							<td><button type="submit" id="addReply">댓글 등록</button></td>
-						</tr>
-					</table>
-				</form>
-
-
-			</div>
-
-
-		</div>
-
-		<script>
+<!-- Ajax를 이용해서 댓글 등록 -->
+	<table align="center" width="800"  cellspacing="0">
+		<tr>
+			<td><textarea style="resize: none;" cols="80" rows="3" id="cContent"></textarea></td>
+			<td>
+				<button id="cSubmit">등록하기</button>
+			</td>
+		</tr>
+	</table>
+	<table align="center" width="800"  cellspacing="0" id="rtb">
+		<thead>
+			<tr>
+				<td colspan="3"><b id="cCount"></b></td>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+	
+	<script>
+		$(function(){
+			getCommentList();
+			
+			setInterval(function(){
+				getCommentList();
+			},3000);
+			
+			// 댓글 등록
+			$("#cSubmit").on("click",function(){
+				 var cContent = $("#cContent").val();
+				 var refBno = ${ b.bNo };
+				 var cWriter = "<%= ((Member)session.getAttribute("loginUser")).getId()%>";
+				 
+				 $.ajax({
+					url:"addComment.do",
+					data:{
+						cContent:cContent,
+						refBno:refBno,
+						cWriter:cWriter
+					},
+					type:"post",
+					success:function(data){ // 댓글등록 성공 시 : success , 댓글등록 실패 시 :fail 을 반환
+						if(data == "success"){
+							getCommentList(); // 등록 성공 시 다시 댓글 리스트 불러오기
+							$("#cContent").val(""); // 등록시에 사용한 댓글내용 초기화
+						}
+					},error:function(){
+						console.log("전송 실패");
+					}
+				 });
+			});
+			
+		});
+	
+		function getCommentList(){
+			var bNo = ${ b.bNo };
+			
+			$.ajax({
+				url:"cList.do",
+				data:{ bNo : bNo },
+				dataType:"json",
+				success:function(data){
+					//console.log(data);
+					$tableBody = $("#rtb tbody");
+					$tableBody.html("");
+					
+					var $tr;
+					var $cWriter;
+					var $cContent;
+					var $cCreateDate;
+					
+					$("#cCount").text("댓글 (" + data.length +")"); // 댓글(0)
+					if(data.length > 0){ // 해당 게시글 댓글이 존재할 경우
+						for(var i in data){
+							$tr = $("<tr>");
+							$cWriter = $("<td width='100'>").text(data[i].cWriter);
+							$cContent=$("<td>").text(data[i].cContent);
+							$cCreateDate=$("<td width='200'>").text(data[i].cCreateDate);
+							
+							$tr.append($cWriter);
+							$tr.append($cContent);
+							$tr.append($cCreateDate);
+							$tableBody.append($tr);
+						}
+					}else{
+						$tr = $("<tr>");
+						$cContent = $("<td colspan='3'>").text("등록된 댓글이 없습니다.");
+						
+						$tr.append($cContent);
+						$tableBody.append($tr);
+					}
+					
+				},error:function(){
+					console.log("전송실패");
+				}
+			});
+		}
 		function CopyUrlToClipboard()
 		{
 			var obShareUrl = document.getElementById("ShareUrl");

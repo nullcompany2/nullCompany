@@ -46,13 +46,13 @@ form p {
 		<div class="contents-title">
 			<span class="ct1">카테고리 추가하기</span>
 		</div>
-		<form action="" method="POST">
+		<form action="categoryInsert.do" method="POST">
 			<ul>
 				<li>
-					<p>카테고리 이름</p> <input type="text"> <br>
+					<p>카테고리 이름</p> <input type="text" name="rcTitle"> <br>
 				</li>
 				<li>
-					<p>카테고리 설명</p> <textarea name="" id="" cols="50" rows="10"
+					<p>카테고리 설명</p> <textarea name="rcContent" id="" cols="50" rows="10"
 						style="resize: none;"></textarea>
 				</li>
 			</ul>

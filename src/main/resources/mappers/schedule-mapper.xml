@@ -48,6 +48,16 @@
 		<result property="calNo" column="CAL_NO" />
 	</resultMap>
 
+	<resultMap id="ScheduleMemberResultSet" type="Schedule">
+		<result property="Sche_no" column="SCHE_NO" />
+		<result property="Cal_name" column="CAL_NAME" />
+		<result property="Sche_name" column="SCHE_NAME" />
+		<result property="startdate" column="STARTDATE" />
+		<result property="starttime" column="STARTTIME" />
+		<result property="enddate" column="ENDDATE" />
+		<result property="endtime" column="ENDTIME" />
+		<result property="Sche_content" column="SCHE_CONTENT" />
+	</resultMap>
 
 	<!-- 부서 셀렉트 리스트 -->
 	<select id="selectdeptList" resultMap="deptResultSet"
@@ -108,5 +118,14 @@
 		INSERT INTO CALENDAR_MEMBER
 		VALUES( #{calNo}, #{calMem}, 2)
 	</insert>
+	
+	<insert id="insertSchedule" parameterType="Schedule">
+		INSERT INTO SCHEDULE
+		VALUES(SCHE_SEQ.NEXTVAL, #{Cal_name}, #{Sche_name}, #{startdate}, #{starttime}, #{enddate}, #{endtime}, #{Sche_content})
+	</insert>
+	
+	<select id="ScheduleList" resultMap="ScheduleMemberResultSet" parameterType="Schedule">
+		SELECT * FROM SCHEDULE
+	</select>
 	
 </mapper>
