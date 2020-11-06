@@ -111,7 +111,7 @@
 						&nbsp;&nbsp; <span style="color:#477A8F;" id="select"> 보기 : 
 						
 						<select name="listOption" id="listOption"> 
-							<option> 모두  </option>
+							<option value="recieveMail.do"> 모두  </option>
 							<option> 읽은 메일  </option>
 							<option> 안읽은 메일  </option>
 						</select> &nbsp;
@@ -148,7 +148,7 @@
 				    </c:when>
 				    
 				    <c:otherwise>
-				       현재 편지함에 메일이 없습니다. 
+				      <span> 현재 편지함에 메일이 없습니다. </span>
 				    </c:otherwise>
 				</c:choose>
 				</div>
@@ -260,14 +260,12 @@
 		var val = $(this).val();
 		console.log(val);
 		if( val.length == 5){
-			alert("이프문으로 들어옴! ");
 		$.ajax({
             url: "readMail.do",
             type: "get",
             success: function(data) {
                 console.log(data);
-                var $tb = $('#tableDiv');
-	
+				
 				var str ="";
 			
                 $('#tableDiv').children().remove();
@@ -277,7 +275,7 @@
 					   str += '<table align="left" cellspacing="0" width="90%" id="tb">';
 						
 					   var url = "location.href='maildetailView.do?mailNo="+entry["mailNo"]+"'";
-					   var url2= "location.href='mailWriteId.do?senderNo="+ entry["senderNo"]+"'";
+					   var url2= "location.href='mailWriteId.do?senderNo="+entry["senderNo"]+"'";
 				
 					   
 		               	str += "<tr class='trMail' onclick="+url+">"
@@ -288,14 +286,12 @@
 						str += "<td align='right'>" + entry['sendDate'] + "</td>"
 						str += "</tr>"
 						
-	                	/* str += "</table>" */
 					});
-               		$('#tableDiv').append(str)
 				}else {
 					
-					/* str = " 현재 편지함에 메일이 없습니다. " */
-					$('#tableDiv').html(" 현재 편지함에 메일이 없습니다. ");
+					 str = "<td> 현재 편지함에 메일이 없습니다. </td> " 
 				}
+               		$('#tableDiv').append(str)
 				
             },
             error: function(data) {
@@ -306,17 +302,13 @@
 		}else if ( val.length == 6){
 			
 			// 에이작스 
-			alert("안읽은 메일 이프문! ")
 			
 			$.ajax({
 	            url: "unReadMail.do",
 	            type: "get",
 	            success: function(data) {
 	                console.log(data);
-	                var $tb = $('#tableDiv');
-	                var $tb2 = $('#tb');
 		
-				
 	                $('#tableDiv').children().remove();
 						var str =""
 	                
@@ -333,12 +325,11 @@
 						str += "</tr>"
 						
 					});
-	               		$('#tableDiv').append(str);
 						}else {
 						
-						//str = " 현재 편지함에 메일이 없습니다. "
-						$('#tableDiv').html(" 현재 편지함에 메일이 없습니다. ");
+						str = " <td> 현재 편지함에 메일이 없습니다. </td>"
 					}
+	               		$('#tableDiv').append(str);
 	            },
 	            error: function(data) {
 	                console.log("ㅋㅋ 리스트 가져오기 실패 ");
@@ -346,11 +337,9 @@
 	            	}
 	       	 	}); 
 		}else {
-			alert("모두!!");
+			document.location.href='recieveMail.do';
 		}
 		});
-
-        
         </script>
 		
 
