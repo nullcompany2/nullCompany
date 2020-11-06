@@ -328,7 +328,6 @@ public class PersonnelManagementController {
 		
 		
 		int dListCount = pService.dListCount(forsearchYM);
-		System.out.println(dListCount);
 		PageInfo pi = Pagination.getPageInfoForModal(currentPage, dListCount);
 		
 		ArrayList<RecordDiligence> dList = pService.searchDiligenceYM(forsearchYM,pi);
@@ -336,6 +335,7 @@ public class PersonnelManagementController {
 		Map list = new HashMap();
 		list.put("dList",dList);
 		list.put("pi",pi);
+		list.put("dListCount",dListCount);
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(list,response.getWriter());
 	}
