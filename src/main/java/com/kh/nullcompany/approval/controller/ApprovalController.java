@@ -50,18 +50,6 @@ public class ApprovalController {
 	}
 	
 	
-	@RequestMapping("approvalCompleteDList.do")
-	public String approvalCompleteDListtwo(HttpServletResponse response) {
-		return "approval/approvalCompleteDList";
-		
-	}
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

@@ -396,13 +396,43 @@
 		function md_searchBtn(){
 			var year = $("#md_searchYear").val();
 			var month = $("#md_searchMonth").val();
+			
+			
 			if(year !=0 && month !=0){
 				$.ajax({
 					url : "searchDiligenceYM.do",
 					data : {year : year , month : month},
 					datatype : "json",
 					success:function(data){
-						console.log(pi);
+						var $mdTbl = $(".md-tbl");
+		            	var $tr;
+		            	var $td_date;
+		            	var $td_enterTime;
+		            	var $td_exitTime;
+		            	var $td_status;
+		            	var $td_reqMod;
+						console.log(data.pi);
+						console.log(data.dList);
+						
+						for(var i in data.dList){
+							$tr = $("<tr>");
+							$td_date = $(' <td class="md-tbl-td">').text(data.dList[i].dateDiligence);
+							$td_enterTime = $(' <td class="md-tbl-td" colspan="2">').text(data.dList[i].timeEnter);
+							$td_exitTime = $(' <td class="md-tbl-td" colspan="2">').text(data.dList[i].timeExit);
+							$td_status = $(' <td class="md-tbl-td" colspan="2">').text(data.dList[i].statusDiligence);
+							$td_reqMod = $(' <td class="md-tbl-td">');
+							$td_reqMod.append($('<a href="reqDiligence.do"id="detail-r-l" class="cursor" style="color: #477A8F;">').text("요청"));
+						
+							$tr.append($td_date);
+							$tr.append($td_enterTime);
+							$tr.append($td_exitTime);
+							$tr.append($td_status);
+							$tr.append($td_reqMod);
+							$mdTbl.append($tr);
+						}
+						
+		            	
+						
 	
 					},
 					error: function(request,status,error){
@@ -552,7 +582,7 @@
             
 		</table>
 		<div style="text-align: center; margin-top: 50px;">
-			<tabel  style=" width: 80%; border-collapse: collapse">
+			<table  style=" width: 100%; border-collapse: collapse;" id="md_d_list">
 	            <tr align="center" height="20">
 		        	<td colspan="6">
 			            <!-- [이전] -->
@@ -592,7 +622,7 @@
 			            </c:if>
 		        	</td>
 				</tr>
-			</tabel>
+			</table>
 		</div>
 		<span class="md-btn cursor md-btn-close" style="float:right; color:#477A8F; margin-right:30px">닫기</span>
 

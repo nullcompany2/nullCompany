@@ -333,10 +333,11 @@ public class PersonnelManagementController {
 		
 		ArrayList<RecordDiligence> dList = pService.searchDiligenceYM(forsearchYM,pi);
 		
-		
+		Map list = new HashMap();
+		list.put("dList",dList);
+		list.put("pi",pi);
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-		gson.toJson(pi,response.getWriter());
-		gson.toJson(dList,response.getWriter());
+		gson.toJson(list,response.getWriter());
 	}
 	
 	// 출퇴근 기록-gson
