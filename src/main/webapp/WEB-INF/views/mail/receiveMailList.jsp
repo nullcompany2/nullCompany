@@ -126,7 +126,6 @@
 				    <c:when test="${!empty list }">
 				        <c:forEach var="ma" items="${list}">
 				        
-						
 						 <table align="left" cellspacing="0" width="90%" id="tb">
 						 
 						 <c:url var="maildetailView" value="maildetailView.do">
@@ -140,7 +139,7 @@
 						</c:url>
 						
 							<td>&nbsp;&nbsp;<input type="checkbox" onClick="event.cancelBubble=true" name="mail"></td>
-							<td align="left"><a onClick="event.stopPropagation(); location.href='${mailWriteId}'">${ma.name} <${ma.sender}> </a></td>
+							<td align="left"><a onClick="event.stopPropagation(); location.href='${mailWriteId}'">${ma.name} < ${ma.sender} > </a></td>
 							<td>${ ma.mTitle }</td>
 							<td align="right"> ${ma.sendDate }</td>
 						</tr>
@@ -267,37 +266,36 @@
             type: "get",
             success: function(data) {
                 console.log(data);
-                var str = ''
                 var $tb = $('#tableDiv');
-                var $tb2 = $('#tb');
 	
+				var str ="";
 			
                 $('#tableDiv').children().remove();
-				var str =""
                 
 				if(data.length != 0){
+					$.each(data,function(ind,entry){
+					   str += '<table align="left" cellspacing="0" width="90%" id="tb">';
 						
-					
-				$.each(data,function(ind,entry){
-				   str += '<table align="left" cellspacing="0" width="90%" id="tb">'
-					
-				   var url = "location.href='maildetailView.do?mailNo="+entry["mailNo"]+"'";
-	               	str += "<tr class='trMail' onclick="+url+">"
-					str += "<td> &nbsp;&nbsp; <input type='checkbox'onClick='event.cancelBubble=true' name='mail'></td>"
-					str += "<td align='left'>"
-					str += "<a>"+ entry['Name'] + entry['Sender']  + "</a></td>"	
-					str += "<td>"+ entry['mTitle'] + "</td>"
-					str += "<td align='right'>" + entry['sendDate'] + "</td>"
-					str += "</tr>"
-					
-				});
-                	str += "</table>"
+					   var url = "location.href='maildetailView.do?mailNo="+entry["mailNo"]+"'";
+					   var url2= "location.href='mailWriteId.do?senderNo="+ entry["senderNo"]+"'";
+				
+					   
+		               	str += "<tr class='trMail' onclick="+url+">"
+						str += "<td> &nbsp;&nbsp; <input type='checkbox'onClick='event.cancelBubble=true' name='mail'></td>"
+						str += "<td align='left'>"
+						str += "<a onClick='event.stopPropagation();"+ url2 + ">"+ entry['Name'] + "</a></td>"	
+						str += "<td>"+ entry['mTitle'] + "</td>"
+						str += "<td align='right'>" + entry['sendDate'] + "</td>"
+						str += "</tr>"
+						
+	                	/* str += "</table>" */
+					});
                		$('#tableDiv').append(str)
 				}else {
 					
-					str += " 현재 편지함에 메일이 없습니다. "
+					/* str = " 현재 편지함에 메일이 없습니다. " */
+					$('#tableDiv').html(" 현재 편지함에 메일이 없습니다. ");
 				}
-				$('#tableDiv').append(str)
 				
             },
             error: function(data) {
@@ -315,16 +313,14 @@
 	            type: "get",
 	            success: function(data) {
 	                console.log(data);
-	                var str = ''
 	                var $tb = $('#tableDiv');
 	                var $tb2 = $('#tb');
 		
 				
 	                $('#tableDiv').children().remove();
-					var str =""
+						var str =""
 	                
 					if(data.length != 0){
-						
 					$.each(data,function(ind,entry){
 					   str += '<table align="left" cellspacing="0" width="90%" id="tb">'
 						
@@ -337,13 +333,12 @@
 						str += "</tr>"
 						
 					});
-	                	str += "</table>"
-	               		$('#tableDiv').append(str)
-					}else {
+	               		$('#tableDiv').append(str);
+						}else {
 						
-						str += " 현재 편지함에 메일이 없습니다. "
+						//str = " 현재 편지함에 메일이 없습니다. "
+						$('#tableDiv').html(" 현재 편지함에 메일이 없습니다. ");
 					}
-					$('#tableDiv').append(str)
 	            },
 	            error: function(data) {
 	                console.log("ㅋㅋ 리스트 가져오기 실패 ");

@@ -85,19 +85,19 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 	      editable: true,
 	      events: [
 	    	
-	    	<c:forEach items="${ScheduleList}" var="ScheduleList">
-	    	 
-	    	  
-	        {
-	        	
-		          title: '${ScheduleList.sche_name}',
-		          start: '${ScheduleList.startdate}T${ScheduleList.starttime}:00',
-		          end: '${ScheduleList.enddate}T${ScheduleList.endtime}:00',
-		          constraint: '${ScheduleList.sche_name}',
-		          color: 'rgb(250, 237, 125)'
-		      },
-	     	
-	       </c:forEach>
+	    	  <c:forEach items="${ScheduleList}" var="ScheduleList">
+	             
+	    	       
+	             {
+	              
+	                title: '${ScheduleList.sche_name}',
+	                start: '${ScheduleList.startdate}T${ScheduleList.starttime}:00',
+	                end: '${ScheduleList.enddate}T${ScheduleList.endtime}:00',
+	                constraint: '${ScheduleList.sche_name}',
+	                color: '${ScheduleList.color}'
+	            },
+	         
+	          </c:forEach>
 	        
 	      ]
 	    });
@@ -591,7 +591,8 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
                             location.reload();
                         },
                         error: function (request,status, error) {
-                        	 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                        	 location.reload();
+                        	 console.log("에작"+ data);
                         	 }
                     })
 

@@ -5,10 +5,11 @@ import java.util.ArrayList;
 
 public class Document {
 	
-	private String docTmptNo;         // 임시문서번호
+	private String docTempNo;         // 임시문서번호
 	private String docNo;             // 결재문서번호
 	private int formNo;               // 서식번호
 	private String formName;          // 서식명 --> form 조인
+	private String formCode;          // 서식코드 --> form 조인 (결재문서번호와 합치기)
 	private int drafterNo;            // 기안자 사원번호
 	private String drafterName;       // 기안자 사원명--> member 조인
 	private int drafterDeptNo;        // 기안자 부서번호
@@ -35,15 +36,17 @@ public class Document {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Document(String docTmptNo, String docNo, int formNo, String formName, int drafterNo, String drafterName,
-			int drafterDeptNo, String drafterDeptName, int drafterRankNo, String drafterRankName, String dTitle,
-			String dContent, String fileName, Date draftDate, Date completeDate, int staffNo, String rStatus,
-			String dStatus, ArrayList<Step> stepList, Leave leaveInfo, Absence absenceInfo, Resign resignInfo) {
+	public Document(String docTempNo, String docNo, int formNo, String formName, String formCode, int drafterNo,
+			String drafterName, int drafterDeptNo, String drafterDeptName, int drafterRankNo, String drafterRankName,
+			String dTitle, String dContent, String fileName, Date draftDate, Date completeDate, int staffNo,
+			String rStatus, String dStatus, ArrayList<Step> stepList, Leave leaveInfo, Absence absenceInfo,
+			Resign resignInfo) {
 		super();
-		this.docTmptNo = docTmptNo;
+		this.docTempNo = docTempNo;
 		this.docNo = docNo;
 		this.formNo = formNo;
 		this.formName = formName;
+		this.formCode = formCode;
 		this.drafterNo = drafterNo;
 		this.drafterName = drafterName;
 		this.drafterDeptNo = drafterDeptNo;
@@ -64,12 +67,12 @@ public class Document {
 		this.resignInfo = resignInfo;
 	}
 
-	public String getDocTmptNo() {
-		return docTmptNo;
+	public String getDocTempNo() {
+		return docTempNo;
 	}
 
-	public void setDocTmptNo(String docTmptNo) {
-		this.docTmptNo = docTmptNo;
+	public void setDocTempNo(String docTempNo) {
+		this.docTempNo = docTempNo;
 	}
 
 	public String getDocNo() {
@@ -94,6 +97,14 @@ public class Document {
 
 	public void setFormName(String formName) {
 		this.formName = formName;
+	}
+
+	public String getFormCode() {
+		return formCode;
+	}
+
+	public void setFormCode(String formCode) {
+		this.formCode = formCode;
 	}
 
 	public int getDrafterNo() {
@@ -242,18 +253,14 @@ public class Document {
 
 	@Override
 	public String toString() {
-		return "Document [docTmptNo=" + docTmptNo + ", docNo=" + docNo + ", formNo=" + formNo + ", formName=" + formName
-				+ ", drafterNo=" + drafterNo + ", drafterName=" + drafterName + ", drafterDeptNo=" + drafterDeptNo
-				+ ", drafterDeptName=" + drafterDeptName + ", drafterRankNo=" + drafterRankNo + ", drafterRankName="
-				+ drafterRankName + ", dTitle=" + dTitle + ", dContent=" + dContent + ", fileName=" + fileName
-				+ ", draftDate=" + draftDate + ", completeDate=" + completeDate + ", staffNo=" + staffNo + ", rStatus="
-				+ rStatus + ", dStatus=" + dStatus + ", stepList=" + stepList + ", leaveInfo=" + leaveInfo
-				+ ", absenceInfo=" + absenceInfo + ", resignInfo=" + resignInfo + "]";
+		return "Document [docTempNo=" + docTempNo + ", docNo=" + docNo + ", formNo=" + formNo + ", formName=" + formName
+				+ ", formCode=" + formCode + ", drafterNo=" + drafterNo + ", drafterName=" + drafterName
+				+ ", drafterDeptNo=" + drafterDeptNo + ", drafterDeptName=" + drafterDeptName + ", drafterRankNo="
+				+ drafterRankNo + ", drafterRankName=" + drafterRankName + ", dTitle=" + dTitle + ", dContent="
+				+ dContent + ", fileName=" + fileName + ", draftDate=" + draftDate + ", completeDate=" + completeDate
+				+ ", staffNo=" + staffNo + ", rStatus=" + rStatus + ", dStatus=" + dStatus + ", stepList=" + stepList
+				+ ", leaveInfo=" + leaveInfo + ", absenceInfo=" + absenceInfo + ", resignInfo=" + resignInfo + "]";
 	}
-	
-	
-	
-	
-	
+
 	
 }

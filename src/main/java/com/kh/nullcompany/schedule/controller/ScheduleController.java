@@ -42,6 +42,7 @@ public class ScheduleController {
 		// 일정 리스트
 		ArrayList<Schedule> ScheduleList = sService.ScheduleList();
 
+
 		mv.addObject("deptList", deptList);
 		mv.addObject("memList", memList);
 		mv.addObject("publicCalList", publicCalList);
@@ -63,7 +64,6 @@ public class ScheduleController {
 	public void insertCommunity(@Param("Calendar") Calendar Calendar ) {
 		sService.insertCommunity(Calendar);
 
-		System.out.println(Calendar.getCalNo()+"컨트롤러");
 		System.out.println("공유캘린더" + Calendar);
 
 		// 등록권한 리스트
@@ -85,7 +85,6 @@ public class ScheduleController {
 	public void insertIndividual(@Param("Calendar") Calendar Calendar ) {
 		int result = sService.insertIndividual(Calendar);
 
-		System.out.println(Calendar.getCalNo()+"컨트롤러");
 		System.out.println("내 캘린더" + Calendar);
 
 		int IndEnrollMember = Integer.parseInt(Calendar.getEnrollMember());
@@ -101,7 +100,6 @@ public class ScheduleController {
 	public void insertSchedule(@Param("Schedule") Schedule Schedule ) {
 		int result = sService.insertSchedule(Schedule);
 
-		System.out.println(Schedule.getSche_name()+"컨트롤러");
 		System.out.println("내 캘린더" + Schedule);
 
 
