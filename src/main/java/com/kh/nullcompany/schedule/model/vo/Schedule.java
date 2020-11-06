@@ -12,7 +12,7 @@ public class Schedule {
 	private String endtime;
 	private String Sche_content;
 	private String color;
-
+	private int cal_no;
 	private Calendar calendar;
 	
 	
@@ -140,6 +140,16 @@ public class Schedule {
 
 	public void setCalendar(Calendar calendar) {
 		this.calendar = calendar;
+	}
+
+
+	public int getCal_no() {
+		return cal_no;
+	}
+
+
+	public void setCal_no(int cal_no) {
+		this.cal_no = cal_no;
 	}
 	
 	

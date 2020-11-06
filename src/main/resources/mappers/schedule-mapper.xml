@@ -57,6 +57,7 @@
 		<result property="enddate" column="ENDDATE" />
 		<result property="endtime" column="ENDTIME" />
 		<result property="Sche_content" column="SCHE_CONTENT" />
+		<result property="cal_no" column="CAL_NO" />
 		
 		<collection property="calendar" resultMap="Calendar"/>
 
@@ -135,7 +136,6 @@
 		FROM SCHEDULE S
 		JOIN CALENDAR C
 		ON S.CAL_NAME = C.CAL_NAME
-		WHERE C.CAL_TYPE = 1
    </select>
 	
 </mapper>

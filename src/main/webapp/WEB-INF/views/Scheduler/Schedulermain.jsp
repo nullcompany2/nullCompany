@@ -83,6 +83,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 	      navLinks: true, // can click day/week names to navigate views
 	      businessHours: true, // display business hours
 	      editable: true,
+	      eventOverlap : true,
 	      events: [
 	    	
 	    	  <c:forEach items="${ScheduleList}" var="ScheduleList">
