@@ -72,6 +72,16 @@ public class MailDao {
 		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
 		return (ArrayList)sqlSession.selectList("mailMapper.unReadMailList",memId,rowBounds);
 	}
+
+	public int allDelMail(int memNo) {
+		return sqlSession.update("mailMapper.allInsertMailBin",memNo);
+	}
+
+	public ArrayList<Mail> RecieveMailbinList(PageInfo pi, String memId) {
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("mailMapper.recieveMailBin",memId,rowBounds);
+	}
 	
 }
 
