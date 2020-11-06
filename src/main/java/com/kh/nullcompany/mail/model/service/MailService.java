@@ -66,6 +66,9 @@ public interface MailService {
 	 */
 	SaveMail saveDetailView(int mailNo);
 
+	
+
+	
 	/**
 	 * 9. 읽은 메일 선택시 리스트 가져오기 에이작스 
 	 * @param pi
@@ -73,7 +76,7 @@ public interface MailService {
 	 * @return
 	 */
 	ArrayList<Mail> readMailList(PageInfo pi, String memId);
-
+	
 	/**
 	 * 10. 안 읽은 메일 리스트 
 	 * @param pi
@@ -81,6 +84,17 @@ public interface MailService {
 	 * @return
 	 */
 	ArrayList<Mail> unReadMailList(PageInfo pi, String memId);
+
+	/**
+	 * 
+	 * 11. 받은 메일함 전체 메일 삭제 
+	 * @param memNo
+	 * @return
+	 */
+	int allDelMail(int memNo);
+
+
+	
 
 	
 

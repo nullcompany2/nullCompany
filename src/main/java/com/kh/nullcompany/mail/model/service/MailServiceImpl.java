@@ -70,15 +70,21 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
+	public ArrayList<Mail> unReadMailList(PageInfo pi, String memId) {
+		return maDao.unReadMailList(pi,memId);
+	}
+
+	@Override
 	public ArrayList<Mail> readMailList(PageInfo pi, String memId) {
 		return maDao.readMailList(pi,memId);
 	}
 
 	@Override
-	public ArrayList<Mail> unReadMailList(PageInfo pi, String memId) {
-		return maDao.unReadMailList(pi,memId);
+	public int allDelMail(int memNo) {
+		return maDao.allDelMail(memNo);
 	}
 
-	
 
+	
+	
 }

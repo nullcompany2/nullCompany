@@ -31,7 +31,8 @@
 		<result property="sDeleteStatus" column="SDELETE_STATUS"/>
 		<result property="mailNo" column="SAVE_NO"/>
 	</resultMap>
-  
+	
+	
   <!-- 게시물 갯수 세기  -->
   <select id="getListCount" resultType="_int">
 		SELECT COUNT(*)
@@ -104,4 +105,49 @@
         and MDELETE_STATUS = 'N'
         ORDER BY SEND_DATE DESC
 	 </select>
+	 
+	 <!--  받은 편지함에서 삭제  -->
+	 <update id="deleteFromList" parameterType="Mail">
+	  UPDATE RECIEVED_MAIL
+        SET MDELETE_STATUS = 'Y'
+        WHERE RMA_NO = #{mailNo}
+	 </update>
+	 
+	 <!--  디테일뷰에서 쓰레기통으로 인서트  -->
+	 <insert id="insertMailBin">
+	 	INSERT INTO MAIL_BIN VALUES (메일번호,'본인아이디',DEFAULT)
+	 </insert>
+	 
+	 <!--  쓰레기통 셀렉트 from 보낸 편지함 -->
+	 <select id="recieveMailBin" resultMap="mailResultSet"> 
+	 	SELECT R.*
+        FROM MAIL_BIN B
+        JOIN RECIEVED_MAIL R ON (B.MAIL_NO = R.RMA_NO)
+        WHERE MEM_ID = 멤버 아이디 
+        ORDER BY SEND_DATE DESC
+	 </select>
+	 
+	 <select id="sendMailBin" resultMap="mailResultSet" > 
+	 	SELECT S.*
+        FROM MAIL_BIN B
+        JOIN SEND_MAIL S ON (B.MAIL_NO = S.SMA_NO)
+        WHERE MEM_ID = 멤버 아이디 
+        ORDER BY SEND_DATE DESC
+	 </select>
+	 
+	 <select id="saveMailBin" resultMap="saveMailResultSet">
+	    SELECT S.*
+        FROM MAIL_BIN B
+        JOIN SAVE_MAIL S ON (B.MAIL_NO = S.SAVE_NO)
+        WHERE MEM_ID = 멤버아이디 
+        ORDER BY SAVE_DATE DESC
+	 </select>
+	 
+	 <update id="allInsertMailBin" parameterType="Mail">
+	   UPDATE RECIEVED_MAIL
+       SET MDELETE_STATUS = 'Y'
+       WHERE MEM_NO = #{memNo}
+       AND MDELETE_STATUS = 'N'
+       </update>
+	 
 </mapper>
