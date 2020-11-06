@@ -174,11 +174,6 @@ private MailService maService;
 			return mv;
 		}
 		
-		// 휴지통 이동 컨트롤러   
-		@RequestMapping("deleteMailList.do")
-		public String deleteMailList(HttpServletResponse response){
-			return "mail/deleteMailList";
-		}
 		
 		// 리스트 - 아이디 누르고 메일 쓰기 
 		@RequestMapping("mailWriteId.do")
@@ -266,14 +261,14 @@ private MailService maService;
 			
 		}
 		
-		// 받은 메일함 리스트에서 삭제 버튼 눌렀을 때 
+		// 받은 메일함 리스트에서 삭제 버튼 눌렀을 때 전체삭제 
 		@RequestMapping("allDelMail.do")
 		public String allDelMail( HttpSession session, Model model){
 		
 			int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();		
 
 			int result = maService.allDelMail(memNo);
-			
+//			int upResult = maService.insertAllDelMail() 
 			if(result > 0 ) {
 				return "redirect:recieveMail.do";			
 			}else {
@@ -281,10 +276,29 @@ private MailService maService;
 				return "common/errorPage";
 			}
 			
-		
 		}
 		
-		
+		@RequestMapping("RecieveMailbinList.do")
+		public ModelAndView RecieveMailbinList(ModelAndView mv, 
+				HttpSession session,
+				@RequestParam(value="currentPage",required=false,defaultValue="1") int currentPage) throws IOException {
 			
+			String memId = ((Member)session.getAttribute("loginUser")).getId();		
+			int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();		
+
+			int listCount = maService.getListCount(memNo);
+
+			PageInfo pi = Pagination.getPageInfo(currentPage,listCount);
+			
+			ArrayList<Mail> list = maService.RecieveMailbinList(pi,memId);
+			
+			mv.addObject("list",list);
+			mv.addObject("pi",pi);
+			mv.setViewName("mail/deleteMailList");
+			
+		return mv;
+			
+		}
+		
 }
 

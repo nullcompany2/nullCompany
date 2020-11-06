@@ -123,7 +123,7 @@
 	 	SELECT R.*
         FROM MAIL_BIN B
         JOIN RECIEVED_MAIL R ON (B.MAIL_NO = R.RMA_NO)
-        WHERE MEM_ID = 멤버 아이디 
+        WHERE MEM_ID = #{memId}
         ORDER BY SEND_DATE DESC
 	 </select>
 	 

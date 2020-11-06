@@ -92,6 +92,14 @@ public interface MailService {
 	 * @return
 	 */
 	int allDelMail(int memNo);
+	
+	/**
+	 * 12. 쓰레기통 from 받은 메일함 
+	 * @param pi
+	 * @param memId
+	 * @return
+	 */
+	ArrayList<Mail> RecieveMailbinList(PageInfo pi, String memId);
 
 
 	

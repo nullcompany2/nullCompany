@@ -84,6 +84,11 @@ public class MailServiceImpl implements MailService {
 		return maDao.allDelMail(memNo);
 	}
 
+	@Override
+	public ArrayList<Mail> RecieveMailbinList(PageInfo pi, String memId) {
+		return maDao.RecieveMailbinList(pi,memId);
+	}
+
 
 	
 	
