@@ -6,6 +6,7 @@ import java.util.List;
 import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.personnelManagement.model.vo.Department;
 import com.kh.nullcompany.schedule.model.vo.Calendar;
+import com.kh.nullcompany.schedule.model.vo.DetailSchedule;
 import com.kh.nullcompany.schedule.model.vo.Schedule;
 
 public interface ScheduleService {
@@ -34,7 +35,7 @@ public interface ScheduleService {
 
 	ArrayList<Schedule> ScheduleList();
 
-
+	Schedule detailSchedule(String sche_name);
 
 
 	

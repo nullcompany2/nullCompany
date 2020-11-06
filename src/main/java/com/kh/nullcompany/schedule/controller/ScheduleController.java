@@ -1,5 +1,6 @@
 package com.kh.nullcompany.schedule.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -14,11 +15,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
 import com.kh.nullcompany.mail.model.vo.Email;
 import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.personnelManagement.model.vo.Department;
 import com.kh.nullcompany.schedule.model.service.ScheduleService;
 import com.kh.nullcompany.schedule.model.vo.Calendar;
+import com.kh.nullcompany.schedule.model.vo.DetailSchedule;
 import com.kh.nullcompany.schedule.model.vo.Schedule;
 
 @Controller
@@ -41,6 +46,7 @@ public class ScheduleController {
 		ArrayList<Calendar> IndividualCalList = sService.IndividualCalList();
 		// 일정 리스트
 		ArrayList<Schedule> ScheduleList = sService.ScheduleList();
+
 
 
 		mv.addObject("deptList", deptList);
@@ -96,12 +102,28 @@ public class ScheduleController {
 
 	}
 
+	// 일정 인써트
 	@RequestMapping("insertSchedule.do")
 	public void insertSchedule(@Param("Schedule") Schedule Schedule ) {
 		int result = sService.insertSchedule(Schedule);
 
 		System.out.println("내 캘린더" + Schedule);
 
+
+
+	}
+	
+	// 일정 디테일
+	@RequestMapping("detailSchedule.do" )
+	public void detailSchedule(@Param("Sche_name") String Sche_name , HttpServletResponse response) throws JsonIOException, IOException {
+		Schedule sche = new Schedule();
+		
+		sche = sService.detailSchedule(Sche_name);
+
+		System.out.println("일정 찾아온 값 " + sche);
+		response.setContentType("application/json; charset=UTF-8");
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		gson.toJson(sche,response.getWriter());
 
 
 	}

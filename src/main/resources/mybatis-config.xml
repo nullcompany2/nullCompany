@@ -27,6 +27,7 @@
       <typeAlias type="com.kh.nullcompany.schedule.model.vo.Calendar" alias="Calendar"/>
       <typeAlias type="com.kh.nullcompany.schedule.model.vo.CalendarMember" alias="CalendarMember"/>
       <typeAlias type="com.kh.nullcompany.schedule.model.vo.Schedule" alias="Schedule"/>
+      <typeAlias type="com.kh.nullcompany.schedule.model.vo.Schedule" alias="DetailSchedule"/>
       <typeAlias type="com.kh.nullcompany.reservation.model.vo.Category" alias="Category"/>
 	  <typeAlias type="com.kh.nullcompany.reservation.model.vo.Reservation" alias="Reservation"/>
 	  <typeAlias type="com.kh.nullcompany.reservation.model.vo.Resource" alias="Resource"/>

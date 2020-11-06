@@ -62,7 +62,22 @@
 		<collection property="calendar" resultMap="Calendar"/>
 
 	</resultMap>
+	
+	
+	<resultMap id="DetailScheduleResultSet" type="DetailSchedule">
+		<result property="Sche_no" column="SCHE_NO" />
+		<result property="Cal_name" column="CAL_NAME" />
+		<result property="Sche_name" column="SCHE_NAME" />
+		<result property="startdate" column="STARTDATE" />
+		<result property="starttime" column="STARTTIME" />
+		<result property="enddate" column="ENDDATE" />
+		<result property="endtime" column="ENDTIME" />
+		<result property="Sche_content" column="SCHE_CONTENT" />
+		<result property="name" column="NAME" />
+		<result property="color" column="COLOR" />
 
+	</resultMap>
+	
 	<!-- 부서 셀렉트 리스트 -->
 	<select id="selectdeptList" resultMap="deptResultSet" parameterType="Department">
 		SELECT *
@@ -136,6 +151,13 @@
 		FROM SCHEDULE S
 		JOIN CALENDAR C
 		ON S.CAL_NAME = C.CAL_NAME
+   </select>
+   
+    <select id="detailSchedule" resultType="Schedule" parameterType="Schedule">
+    	SELECT S.*, C.*
+		FROM SCHEDULE S
+		JOIN CALENDAR C ON S.CAL_NAME = C.CAL_NAME
+        WHERE S.SCHE_NAME = #{sche_name}
    </select>
 	
 </mapper>

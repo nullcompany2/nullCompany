@@ -11,6 +11,7 @@ import com.kh.nullcompany.personnelManagement.model.vo.Department;
 import com.kh.nullcompany.schedule.model.dao.ScheduleDao;
 import com.kh.nullcompany.schedule.model.vo.Calendar;
 import com.kh.nullcompany.schedule.model.vo.CalendarMember;
+import com.kh.nullcompany.schedule.model.vo.DetailSchedule;
 import com.kh.nullcompany.schedule.model.vo.Schedule;
 
 @Service("sService")
@@ -113,6 +114,10 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return sDao.ScheduleList();
 	}
 
+	@Override
+	public Schedule detailSchedule(String sche_name) {
+		return sDao.detailSchedule(sche_name);
+	}
 
 
 }
