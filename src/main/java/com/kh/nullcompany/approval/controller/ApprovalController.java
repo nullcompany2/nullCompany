@@ -40,12 +40,20 @@ public class ApprovalController {
 		// 사용자가 기안자이거나 결재라인에 있는 문서리스트 조회(10개씩)
 		ArrayList<Document> dList = aService.selectList(memNo, pi);
 		
+		if(dList.isEmpty()) {
+			
+		}
+		  
 		
 		return mv;
 	}
 	
 	
-	
+	@RequestMapping("approvalCompleteDList.do")
+	public String approvalCompleteDListtwo(HttpServletResponse response) {
+		return "approval/approvalCompleteDList";
+		
+	}
 	
 	
 	
