@@ -4,11 +4,12 @@ package com.kh.nullcompany.personnelManagement.model.dao;
 import java.util.ArrayList;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.personnelManagement.model.vo.Department;
 import com.kh.nullcompany.personnelManagement.model.vo.MixForLeave;
@@ -155,6 +156,23 @@ public class PersonnelManagementDao {
 
 	public int noAttendanceCount(int memNo) {
 		return sqlSession.selectOne("personnelMapper.noAttendanceCount",memNo);
+	}
+
+
+	public ArrayList<RecordDiligence> searchDiligenceYM(Map forsearchYM, PageInfo pi) {
+		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();	
+		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
+		return ((ArrayList)sqlSession.selectList("personnelMapper.searchDiligenceYM",forsearchYM,rowBounds));
+	}
+
+
+	public int dListCount(Map forsearchYM) {
+		return sqlSession.selectOne("personnelMapper.dListCount",forsearchYM);
+	}
+
+
+	public ArrayList<SetLeave> setLeaveStandard() {
+		return (ArrayList)sqlSession.selectList("personnelMapper.setLeaveStandard");
 	}
 
 }

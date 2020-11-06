@@ -145,7 +145,7 @@
 		</div>
 		
 	</div>
-	<!-- 메인 -->
+
 	<script>
 		/* ic category */
 		$("#status-diligence").click(function(){
@@ -393,6 +393,41 @@
 				var result = confirm("휴가신청을 취소하시겠습니까?");
 			})
 		})
+		function md_searchBtn(){
+			var year = $("#md_searchYear").val();
+			var month = $("#md_searchMonth").val();
+			if(year !=0 && month !=0){
+				$.ajax({
+					url : "searchDiligenceYM.do",
+					data : {year : year , month : month},
+					datatype : "json",
+					success:function(data){
+						console.log(pi);
+	
+					},
+					error: function(request,status,error){
+						console.log(request);
+						console.log(status);
+						console.log(error);
+					}
+				});
+			}else{
+				alert("년도와 월수를 선택해주세요.");
+			}
+		}
+		
+		$(function(){
+			var today = new Date().getFullYear();
+			console.log(today);
+			var $md_select = $("#md_searchYear");
+			var $yearOption;
+			for(var i =0; i<3; i++){
+				$yearOption = $("<option>").text(today-i).attr("value",today-i);				
+				$md_select.append($yearOption);
+			}
+			
+		})
+		
 	</script>
 		<style>
 			#my_modal {
@@ -463,28 +498,39 @@
 	<!-- Modal div -->
 	<div id="my_modal" class="modal-dragscroll">
         <h4 style="color: #477A8F; margin-bottom: 30px;">근태 상세</h4>
-        <h5 style="font-weight: normal;"><span>NAME</span> - <span>ID</span></h5>
-        <h5 style="font-weight: normal; margin-bottom: 20px;">[기본 근무 시간] <span>09:00 ~ 18:00</span></h5>
+        <h5 style="font-weight: normal;"><span>${loginUser.name }</span> - <span>${loginUser.memNo }(${loginUser.id })</span></h5>
+        <h5 style="font-weight: normal; margin-bottom: 20px;">[기본 근무 시간] <span> ${setAttendance.timeAttendance } ~ ${setAttendance.timeOffWork }</span></h5>
         <div style="margin-bottom: 10px;">
-            <select name="year" id="">
-                <option value="">2020</option>
-                <option value="">2019</option>
-                <option value="">2018</option>
+            <select name="year" id="md_searchYear">
+            	<option value="0">----</option>
+                
             </select>
-            <select name="month" id="">
-                <option value="">1월</option>
-                <option value="">2월</option>
-                <option value="">3월</option>
-                <option value="">4월</option>
-                <option value="">5월</option>
-                <option value="">6월</option>
-                <option value="">7월</option>
-                <option value="">8월</option>
-                <option value="">9월</option>
-                <option value="">10월</option>
-                <option value="">11월</option>
-                <option value="">12월</option>
+            <select name="month" id="md_searchMonth">
+           		<option value="0">----</option>
+                <option value="1">1월</option>
+                <option value="2">2월</option>
+                <option value="3">3월</option>
+                <option value="4">4월</option>
+                <option value="5">5월</option>
+                <option value="6">6월</option>
+                <option value="7">7월</option>
+                <option value="8">8월</option>
+                <option value="9">9월</option>
+                <option value="10">10월</option>
+                <option value="11">11월</option>
+                <option value="12">12월</option>
             </select>
+            <button style=" font-size: 15px;
+						    color: #ffffff;
+						    border: none;
+						    background-color: #477A8F;
+						    width: 60px;
+						    height: 20px;
+						    border-radius: 3px;
+						    margin-left: 10px;
+						    cursor: pointer;" onclick="md_searchBtn()">
+		    	검색
+		    </button>
             <h4 style="float: right; font-weight: normal;">총<span>N</span>건</h4>
         </div>
 		<table class="md-tbl">
@@ -501,14 +547,54 @@
                 <td class="md-tbl-td" colspan="2">09:00:00 -/ 정상</td>
                 <td class="md-tbl-td" colspan="2">00:00:00 -/</td>
                 <td class="md-tbl-td" colspan="2"> </td>
-                <td class="ta"><a href="#"id="detail-r-l" class="cursor" style="color: #477A8F; text-align:center">요청</a></td>
+                <td class="md-tbl-td" ><a href="reqDiligence.do"id="detail-r-l" class="cursor" style="color: #477A8F;">요청</a></td>
             </tr>
             
-			
 		</table>
 		<div style="text-align: center; margin-top: 50px;">
-			<span class="md-btn cursor md-btn-close">닫기</span>
+			<tabel  style=" width: 80%; border-collapse: collapse">
+	            <tr align="center" height="20">
+		        	<td colspan="6">
+			            <!-- [이전] -->
+			            <c:if test="${ pi.currentPage eq 1 }">
+			               [이전] &nbsp;
+			            </c:if>
+			            <c:if test="${ pi.currentPage ne 1 }">
+			               <c:url var="before" value="searchDiligenceYM.do">
+			                  <c:param name="currentPage" value="${ pi.currentPage - 1 }"/>
+			               </c:url>
+			               <a href="${ before }">[이전]</a> &nbsp;
+			            </c:if>
+			            
+			            <!-- 페이지 -->
+			            <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+			               <c:if test="${ p eq pi.currentPage }">
+			                  <font color="red" size="4"><b>[${ p }]</b></font>
+			               </c:if>
+			               
+			               <c:if test="${ p ne pi.currentPage }">
+			                  <c:url var="pagination" value="searchDiligenceYM.do">
+			                     <c:param name="currentPage" value="${ p }"/>
+			                  </c:url>
+			                  <a href="${ pagination }">${ p }</a> &nbsp;
+			               </c:if>
+			            </c:forEach>
+			            
+			            <!-- [다음] -->
+			            <c:if test="${ pi.currentPage eq pi.maxPage }">
+			               [다음]
+			            </c:if>
+			            <c:if test="${ pi.currentPage ne pi.maxPage }">
+			               <c:url var="after" value="searchDiligenceYM.do">
+			                  <c:param name="currentPage" value="${ pi.currentPage + 1 }"/>
+			               </c:url> 
+			               <a href="${ after }">[다음]</a>
+			            </c:if>
+		        	</td>
+				</tr>
+			</tabel>
 		</div>
+		<span class="md-btn cursor md-btn-close" style="float:right; color:#477A8F; margin-right:30px">닫기</span>
 
 		<a class="modal-close-btn cursor md-btn-close">X</a>
 	</div>
