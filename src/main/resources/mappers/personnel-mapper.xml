@@ -302,4 +302,25 @@
         AND TYPE_DILIGENCE = '결근'
         AND EXTRACT(YEAR FROM DATE_DILIGENCE) = EXTRACT(YEAR FROM SYSDATE)
 	</select>
+	<!-- 근태 년/월 사번으로 조회 -->
+	<select id="searchDiligenceYM" resultMap="RecordDiligenceResultSet" parameterType="map">
+		SELECT *
+		FROM RECORD_DILIGENCE
+		WHERE EXTRACT(YEAR FROM DATE_DILIGENCE) = #{year}
+		AND EXTRACT (MONTH FROM DATE_DILIGENCE) = #{month}
+		AND MEM_NO = #{memNo}
+	</select>
+	<!-- 근태 년/월 사번조회 카운트 페이징처리용 -->
+	<select id="dListCount" parameterType="map" resultType="_int">
+		SELECT COUNT(*)
+		FROM RECORD_DILIGENCE
+		WHERE EXTRACT(YEAR FROM DATE_DILIGENCE) = #{year}
+		AND EXTRACT (MONTH FROM DATE_DILIGENCE) = #{month}
+		AND MEM_NO = #{memNo}
+	</select>
+	
+	<select id="setLeaveStandard" resultMap="SetLeaveResultSet">
+		SELECT *
+		FROM SET_LEAVE_STANDARD
+	</select>
 </mapper>

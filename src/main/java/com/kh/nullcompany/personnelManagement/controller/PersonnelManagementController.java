@@ -16,12 +16,15 @@ import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
+import com.kh.nullcompany.board.model.vo.PageInfo;
+import com.kh.nullcompany.common.Pagination;
 import com.kh.nullcompany.member.controller.MemberController;
 import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.personnelManagement.model.service.PersonnelManagementService;
@@ -40,14 +43,11 @@ import com.sun.org.slf4j.internal.LoggerFactory;
 @Controller
 public class PersonnelManagementController {
 	
-
-	
 	// logging	(import-slf4j)
 	private Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
 	@Autowired
 	private PersonnelManagementService pService;
-	
 	
 	// 서브네비 휴가 계산 및 휴가일수 업데이트(json)
 	@RequestMapping(value="leaveCalculate.do",produces="application/json;charset=utf-8")
@@ -315,7 +315,32 @@ public class PersonnelManagementController {
 		return mv;
 	}
 	
-	// 출퇴근 기록
+	//근태 현황 조회 년,월 (모달)-gson
+	@RequestMapping("searchDiligenceYM.do")
+	public void searchDiligenceYM(HttpSession session, HttpServletResponse response, int year,int month,
+			@RequestParam(value="currentPage", required=false,defaultValue="1") int currentPage) throws JsonIOException, IOException {
+		response.setContentType("application/json; charset=utf-8");
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+		Map forsearchYM = new HashMap();
+		forsearchYM.put("year",year);
+		forsearchYM.put("month",month);
+		forsearchYM.put("memNo",memNo);
+		
+		
+		int dListCount = pService.dListCount(forsearchYM);
+		System.out.println(dListCount);
+		PageInfo pi = Pagination.getPageInfoForModal(currentPage, dListCount);
+		
+		ArrayList<RecordDiligence> dList = pService.searchDiligenceYM(forsearchYM,pi);
+		
+		Map list = new HashMap();
+		list.put("dList",dList);
+		list.put("pi",pi);
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		gson.toJson(list,response.getWriter());
+	}
+	
+	// 출퇴근 기록-gson
 	@RequestMapping("recordTA.do")
 	public void RecordTimeAndAttendance(HttpSession session,int or, HttpServletResponse response) throws JsonIOException, IOException {
 		response.setContentType("application/json; charset=utf-8");
@@ -387,8 +412,13 @@ public class PersonnelManagementController {
 
 	// 휴가 관리-기본설정
 	@RequestMapping("setLeaveStandard.do")
-	public String setLeaveStandard(HttpServletResponse response) {
-		return "personnel_management/setLeaveStandard";
+	public ModelAndView setLeaveStandard(ModelAndView mv, HttpServletResponse response) {
+		
+		ArrayList<SetLeave> setLeave = pService.setLeaveStandard();
+		System.out.println(setLeave);
+		mv.addObject("setLeave",setLeave);
+		mv.setViewName("personnel_management/setLeaveStandard");
+		return mv;
 	}
 
 	// 휴가 관리 -직원 휴가 관리
@@ -421,7 +451,7 @@ public class PersonnelManagementController {
 	public String reqDiligence(HttpServletResponse response) {
 		return "personnel_management/reqDiligence";
 	}
-
+	
 
 	
 
