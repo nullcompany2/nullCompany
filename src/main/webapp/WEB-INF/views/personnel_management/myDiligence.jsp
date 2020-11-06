@@ -94,7 +94,7 @@
 										<td scope="col" rowspan="2" class="ta"><a href="#"id="detail-r-l" class="cursor" style="color: #477A8F;">상세</a></td>
 									</tr>
 									<tr class="date_tbl_output">
-										
+									
 									</tr>
 									
 									
@@ -145,7 +145,7 @@
 		</div>
 		
 	</div>
-	<!-- 메인 -->
+
 	<script>
 		/* ic category */
 		$("#status-diligence").click(function(){
@@ -393,6 +393,233 @@
 				var result = confirm("휴가신청을 취소하시겠습니까?");
 			})
 		})
+		
+		function mdListPaged(currentPage){
+			var year = $("#md_searchYear").val();
+			var month = $("#md_searchMonth").val();
+			
+			
+			if(year !=0 && month !=0){
+				$.ajax({
+					url : "searchDiligenceYM.do",
+					data : {year : year , month : month , currentPage:currentPage},
+					datatype : "json",
+					success:function(data){
+						$("#totalListCount").text(data.dListCount);
+						$("#dListPaging").remove();
+						$('.mdDListPot').remove();
+						var $mdTbl = $(".md-tbl");
+		            	var $tr;
+		            	var $td;
+		            	var $td_date;
+		            	var $td_enterTime;
+		            	var $td_exitTime;
+		            	var $td_status;
+		            	var $td_reqMod;
+						
+		            	var $pageTbl = $('#md_page_tbl');
+		            	var td0;
+		            	var td1;
+		            	var td2;
+		            	var td3;
+		            	var td1_1;
+		            	var td1_1_1;
+		            	var td2_1;
+		            	var td2_1_1;
+		            	var td2_2;
+		            	
+		            	
+		            	
+						for(var i in data.dList){					
+							$tr = $("<tr class='mdDListPot'>");
+							$td_date = $(' <td class="md-tbl-td">').text(data.dList[i].dateDiligence);
+							$td_enterTime = $(' <td class="md-tbl-td" colspan="2">').text(data.dList[i].timeEnter);
+							$td_exitTime = $(' <td class="md-tbl-td" colspan="2">').text(data.dList[i].timeExit);
+							$td_status = $(' <td class="md-tbl-td" colspan="2">').text(data.dList[i].statusDiligence);
+							$td_reqMod = $(' <td class="md-tbl-td">').attr("id",data.dList[i].noDiligence);
+							$td_reqMod.append($('<a href="reqDiligence.do?noDiligence='+ data.dList[i].noDiligence +'" id="detail-r-l" class="cursor" style="color: #477A8F;">').text("요청"));
+							
+							$tr.append($td_date);
+							$tr.append($td_enterTime);
+							$tr.append($td_exitTime);
+							$tr.append($td_status);
+							$tr.append($td_reqMod);
+							$mdTbl.append($tr);
+						}
+						
+						$tr = $('<tr align="center" height="20" id="dListPaging">'); 
+						$td = $('<td colspan="6">');
+						if(data.pi.currentPage == 1){
+							
+							$td0 = "[이전]";
+							$td.append($td0);
+						}
+			        	
+						if(data.pi.currentPage != 1){
+							$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage -1) +')">').text("[이전]");
+				        	
+				        	$td.append($td0);
+						}    	
+			        	
+				       	
+				       	
+				       	for(var p = data.pi.startPage-1; p <  data.pi.endPage; p++){
+				       		if(p = data.pi.currentPage){
+				       			$td0 = $("<b style='color:red; font-size:4'>").text(p);
+				       			$td.append($td0);
+				       		}
+				       		if(p != data.pi.currentPage ){
+				       			$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage) +')">').text(p);
+				       			$td.append($td0);
+				       		}
+				       	
+				       	}
+			        	
+				       	if(data.pi.currentPage == data.pi.maxPage ){
+				       		$td0 = "[다음]";
+				       		$td.append($td0);
+				       	}
+			        	
+			        	if(data.pi.currentPage != data.pi.maxPage){
+			        		$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage + 1) +')">').text("[다음]");
+			        		$td.append($td0);
+			        	}
+			        	
+		            	$tr.append($td);
+						
+		            	$pageTbl.append($tr);
+	 
+					},
+					error: function(request,status,error){
+						console.log(request);
+						console.log(status);
+						console.log(error);
+					}
+				});
+			}else{
+				alert("년도와 월수를 선택해주세요.");
+			}			
+		}
+		
+		function md_searchBtn(){
+			var year = $("#md_searchYear").val();
+			var month = $("#md_searchMonth").val();
+			
+			
+			if(year !=0 && month !=0){
+				$.ajax({
+					url : "searchDiligenceYM.do",
+					data : {year : year , month : month},
+					datatype : "json",
+					success:function(data){
+						$("#totalListCount").text(data.dListCount);
+						$("#dListPaging").remove();
+						$('.mdDListPot').remove();
+						var $mdTbl = $(".md-tbl");
+		            	var $tr;
+		            	var $td;
+		            	var $td_date;
+		            	var $td_enterTime;
+		            	var $td_exitTime;
+		            	var $td_status;
+		            	var $td_reqMod;
+						
+		            	var $pageTbl = $('#md_page_tbl');
+		            	var td0;
+		            	var td1;
+		            	var td2;
+		            	var td3;
+		            	var td1_1;
+		            	var td1_1_1;
+		            	var td2_1;
+		            	var td2_1_1;
+		            	var td2_2;
+		            	
+		            	
+		            	
+						for(var i in data.dList){					
+							$tr = $("<tr class='mdDListPot'>");
+							$td_date = $(' <td class="md-tbl-td">').text(data.dList[i].dateDiligence);
+							$td_enterTime = $(' <td class="md-tbl-td" colspan="2">').text(data.dList[i].timeEnter);
+							$td_exitTime = $(' <td class="md-tbl-td" colspan="2">').text(data.dList[i].timeExit);
+							$td_status = $(' <td class="md-tbl-td" colspan="2">').text(data.dList[i].statusDiligence);
+							$td_reqMod = $(' <td class="md-tbl-td">').attr("id",data.dList[i].noDiligence);
+							$td_reqMod.append($('<a href="reqDiligence.do?noDiligence='+ data.dList[i].noDiligence +'" id="detail-r-l" class="cursor" style="color: #477A8F;">').text("요청"));
+							
+							$tr.append($td_date);
+							$tr.append($td_enterTime);
+							$tr.append($td_exitTime);
+							$tr.append($td_status);
+							$tr.append($td_reqMod);
+							$mdTbl.append($tr);
+						}
+						
+						$tr = $('<tr align="center" height="20" id="dListPaging">'); 
+						$td = $('<td colspan="6">');
+						if(data.pi.currentPage == 1){
+							
+							$td0 = "[이전]";
+							$td.append($td0);
+						}
+			        	
+						if(data.pi.currentPage != 1){
+							$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage -1) +')">').text("[이전]");
+				        	
+				        	$td.append($td0);
+						}    	
+			        	
+				       	
+				       	
+				       	for(var p = data.pi.startPage-1; p <  data.pi.endPage; p++){
+				       		if(p = data.pi.currentPage){
+				       			$td0 = $("<b style='color:red; font-size:4'>").text(p);
+				       			$td.append($td0);
+				       		}
+				       		if(p != data.pi.currentPage ){
+				       			$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage) +')">').text(p);
+				       			$td.append($td0);
+				       		}
+				       	
+				       	}
+			        	
+				       	if(data.pi.currentPage == data.pi.maxPage ){
+				       		$td0 = "[다음]";
+				       		$td.append($td0);
+				       	}
+			        	
+			        	if(data.pi.currentPage != data.pi.maxPage){
+			        		$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage + 1) +')">').text("[다음]");
+			        		$td.append($td0);
+			        	}
+			        	
+		            	$tr.append($td);
+						
+		            	$pageTbl.append($tr);
+	 
+					},
+					error: function(request,status,error){
+						console.log(request);
+						console.log(status);
+						console.log(error);
+					}
+				});
+			}else{
+				alert("년도와 월수를 선택해주세요.");
+			}
+		}
+		
+		$(function(){
+			var today = new Date().getFullYear();
+			console.log(today);
+			var $md_select = $("#md_searchYear");
+			var $yearOption;
+			for(var i =0; i<3; i++){
+				$yearOption = $("<option>").text(today-i).attr("value",today-i);				
+				$md_select.append($yearOption);
+			}
+			
+		})
+		
 	</script>
 		<style>
 			#my_modal {
@@ -463,52 +690,59 @@
 	<!-- Modal div -->
 	<div id="my_modal" class="modal-dragscroll">
         <h4 style="color: #477A8F; margin-bottom: 30px;">근태 상세</h4>
-        <h5 style="font-weight: normal;"><span>NAME</span> - <span>ID</span></h5>
-        <h5 style="font-weight: normal; margin-bottom: 20px;">[기본 근무 시간] <span>09:00 ~ 18:00</span></h5>
+        <h5 style="font-weight: normal;"><span>${loginUser.name }</span> - <span>${loginUser.memNo }(${loginUser.id })</span></h5>
+        <h5 style="font-weight: normal; margin-bottom: 20px;">[기본 근무 시간] <span> ${setAttendance.timeAttendance } ~ ${setAttendance.timeOffWork }</span></h5>
         <div style="margin-bottom: 10px;">
-            <select name="year" id="">
-                <option value="">2020</option>
-                <option value="">2019</option>
-                <option value="">2018</option>
+            <select name="year" id="md_searchYear">
+            	<option value="0">----</option>
+                
             </select>
-            <select name="month" id="">
-                <option value="">1월</option>
-                <option value="">2월</option>
-                <option value="">3월</option>
-                <option value="">4월</option>
-                <option value="">5월</option>
-                <option value="">6월</option>
-                <option value="">7월</option>
-                <option value="">8월</option>
-                <option value="">9월</option>
-                <option value="">10월</option>
-                <option value="">11월</option>
-                <option value="">12월</option>
+            <select name="month" id="md_searchMonth">
+           		<option value="0">----</option>
+                <option value="1">1월</option>
+                <option value="2">2월</option>
+                <option value="3">3월</option>
+                <option value="4">4월</option>
+                <option value="5">5월</option>
+                <option value="6">6월</option>
+                <option value="7">7월</option>
+                <option value="8">8월</option>
+                <option value="9">9월</option>
+                <option value="10">10월</option>
+                <option value="11">11월</option>
+                <option value="12">12월</option>
             </select>
-            <h4 style="float: right; font-weight: normal;">총<span>N</span>건</h4>
+            <button style=" font-size: 15px;
+						    color: #ffffff;
+						    border: none;
+						    background-color: #477A8F;
+						    width: 60px;
+						    height: 20px;
+						    border-radius: 3px;
+						    margin-left: 10px;
+						    cursor: pointer;" onclick="md_searchBtn()">
+		    	검색
+		    </button>
+            <h4 style="float: right; font-weight: normal;">총<span id="totalListCount">N</span>건</h4>
         </div>
 		<table class="md-tbl">
 			<tr class="md-tbl-il">
 				<th class="md-tbl-th">날짜</th>
-                <th class="md-tbl-th" colspan="2">출근(시간/결과)</th>
-                <th class="md-tbl-th" colspan="2">퇴근(시간/결과)</th>
-                <th class="md-tbl-th" colspan="2">비고</th>
+                <th class="md-tbl-th" colspan="2">출근</th>
+                <th class="md-tbl-th" colspan="2">퇴근</th>
+                <th class="md-tbl-th" colspan="2">상태(결과)</th>
                 <th class="md-tbl-th">수정</th>
             </tr>
             <!-- 리스트 -->
-            <tr>
-                <td class="md-tbl-td">2020-10-01</td>
-                <td class="md-tbl-td" colspan="2">09:00:00 -/ 정상</td>
-                <td class="md-tbl-td" colspan="2">00:00:00 -/</td>
-                <td class="md-tbl-td" colspan="2"> </td>
-                <td class="ta"><a href="#"id="detail-r-l" class="cursor" style="color: #477A8F; text-align:center">요청</a></td>
-            </tr>
             
-			
+            
 		</table>
 		<div style="text-align: center; margin-top: 50px;">
-			<span class="md-btn cursor md-btn-close">닫기</span>
+			<table  style=" width: 100%; border-collapse: collapse;" id="md_page_tbl">
+	            
+			</table>
 		</div>
+		<span class="md-btn cursor md-btn-close" style="float:right; color:#477A8F; margin-right:30px">닫기</span>
 
 		<a class="modal-close-btn cursor md-btn-close">X</a>
 	</div>

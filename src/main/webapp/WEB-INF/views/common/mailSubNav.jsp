@@ -97,7 +97,7 @@ a {
 							<a href="saveMailList.do">임시 보관함</a>
 						</li>
 						<li class="subTitle">
-							<a class="bin" href="deleteMailList.do">휴지통 </a>
+							<a class="bin" href="RecieveMailbinList.do">휴지통 </a>
 							<a id="gobin" href="#"><span class="del" style="color: red; font-size: 13px; margin-left:65px;">비우기</span></a>
 						</li>
 					</div>

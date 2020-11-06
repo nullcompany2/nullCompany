@@ -3,6 +3,7 @@ package com.kh.nullcompany.personnelManagement.model.service;
 import java.util.ArrayList;
 import java.util.Map;
 
+import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.personnelManagement.model.vo.Department;
 import com.kh.nullcompany.personnelManagement.model.vo.MixForLeave;
@@ -151,5 +152,11 @@ public interface PersonnelManagementService {
 	int noCheckOffwork(int memNo);
 	//결근 카운트
 	int noAttendanceCount(int memNo);
+	// 출퇴근기록 년/월 조회
+	ArrayList<RecordDiligence> searchDiligenceYM(Map forsearchYM, PageInfo pi);
+	// 근태기록 년/월 조회 카운트용
+	int dListCount(Map forsearchYM);
+	// 휴가설정 기본
+	ArrayList<SetLeave> setLeaveStandard();
 	
 }

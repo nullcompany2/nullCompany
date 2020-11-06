@@ -70,18 +70,12 @@
 														<td>	N+12	</td>
 													</tr>
 													<tr class="set-en-2">
-														<td colspan="2"><input type="text" name="" id="" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" class="set-l-days">일</td>
+														<td colspan="2"><input type="text" name="" id="" value="${setLeave[0].annualLeave }"  class="set-l-days">일</td>
+														<td><input type="text" name="" id="" value="${setLeave[1].annualLeave }" class="set-l-days">일</td>
+														<c:forEach var="i" items="setLeave" begin="2" end="11">
+															<td><input type="text" name="" id="" value="${i.annualLeave}" class="set-l-days">일</td>
+														
+														</c:forEach>
 														
 													</tr>
 													<tr class="set-en-1">
@@ -100,19 +94,19 @@
 														<td>	N+25	</td>
 													</tr>
 													<tr class="set-en-2">
-														<td><input type="text" name="" id="" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" class="set-l-days">일</td>
+														<td><input type="text" name="" id="" value="${setLeave[12].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="" value="${setLeave[13].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="" value="${setLeave[14].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="" value="${setLeave[15].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="" value="${setLeave[16].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="" value="${setLeave[17].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="" value="${setLeave[18].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="" value="${setLeave[19].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="" value="${setLeave[20].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="" value="${setLeave[21].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="" value="${setLeave[22].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="" value="${setLeave[23].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="" value="${setLeave[24].annualLeave }" class="set-l-days">일</td>
 	
 													</tr>
 													<tr class="set-en-1">
@@ -131,19 +125,19 @@
 														<td>	N+38	</td>
 													</tr>
 													<tr class="set-en-3">
-														<td><input type="text" name="" id="" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" class="set-l-days">일</td>
+														<td><input type="text" name="" id="" value="${setLeave[0].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="" value="${setLeave[0].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="" value="${setLeave[0].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="" value="${setLeave[0].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="" value="${setLeave[0].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="" value="${setLeave[0].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="" value="${setLeave[0].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="" value="${setLeave[0].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="" value="${setLeave[0].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="" value="${setLeave[0].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="" value="${setLeave[0].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="" value="${setLeave[0].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="" value="${setLeave[0].annualLeave }" class="set-l-days">일</td>
 	
 													</tr>   
 												</table>

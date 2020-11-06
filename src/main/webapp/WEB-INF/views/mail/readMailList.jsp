@@ -111,8 +111,8 @@
 						&nbsp;&nbsp; <span style="color:#477A8F;" id="select"> 보기 : 
 						
 						<select name="listOption" id="listOption"> 
-							<option selected> 모두 </option>
-							<option> 읽은 메일  </option>
+							<option value="recieveMail.do"> 모두 </option>
+							<option selected > 읽은 메일  </option>
 							<option> 안읽은 메일  </option>
 						</select> &nbsp;
 						</span> 
@@ -246,17 +246,8 @@
 		});
 
         $("#delMail").click(function(){
-			 if (confirm("정말로 삭제하시겠습니까? 휴지통으로 이동합니다.") == true){    //확인
-
-				 document.location.href='allDelMail.do';
-
-		        }else{   //취소
-
-		            return;
-		        }
-
+			confirm("정말로 삭제하시겠습니까? 휴지통으로 이동합니다.");
 		});
-        
         
         $("#realdelMail").click(function(){
         	confirm("완전 삭제하시면 복구 할 수 없습니다. 정말로 삭제하시겠습니까?");
@@ -280,5 +271,7 @@
     		});
         
         </script>
+		
+
 </body>
 </html>

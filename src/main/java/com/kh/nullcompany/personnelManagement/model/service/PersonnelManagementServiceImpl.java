@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.personnelManagement.model.dao.PersonnelManagementDao;
 import com.kh.nullcompany.personnelManagement.model.vo.Department;
@@ -207,10 +208,25 @@ public class PersonnelManagementServiceImpl implements PersonnelManagementServic
 	public int noCheckOffwork(int memNo) {
 		return pDao.noCheckOffwork(memNo);
 	}
-
+	// 결근 수 확인용
 	@Override
 	public int noAttendanceCount(int memNo) {
 		return pDao.noAttendanceCount(memNo);
+	}
+	// 근태 년/월 사번으로 조회
+	@Override
+	public ArrayList<RecordDiligence> searchDiligenceYM(Map forsearchYM, PageInfo pi) {
+		return pDao.searchDiligenceYM(forsearchYM,pi);
+	}
+	// 근태 년/월 사번으로 조회 카운트
+	@Override
+	public int dListCount(Map forsearchYM) {
+		return pDao.dListCount(forsearchYM);
+	}
+
+	@Override
+	public ArrayList<SetLeave> setLeaveStandard() {
+		return pDao.setLeaveStandard();
 	}
 	
 	
