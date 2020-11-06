@@ -293,4 +293,13 @@
         AND TYPE_DILIGENCE = '출근'
         AND EXTRACT(YEAR FROM DATE_DILIGENCE) = EXTRACT(YEAR FROM SYSDATE)
 	</select>
+	
+	<select id="noAttendanceCount" resultType="_int" parameterType="_int">
+		SELECT NVL(COUNT(*),0)
+		FROM RECORD_DILIGENCE
+		WHERE MEM_NO = #{memNo}
+		AND TO_CHAR(DATE_DILIGENCE,'yyyy/mm/dd') != TO_CHAR(SYSDATE,'yyyy/mm/dd')
+        AND TYPE_DILIGENCE = '결근'
+        AND EXTRACT(YEAR FROM DATE_DILIGENCE) = EXTRACT(YEAR FROM SYSDATE)
+	</select>
 </mapper>

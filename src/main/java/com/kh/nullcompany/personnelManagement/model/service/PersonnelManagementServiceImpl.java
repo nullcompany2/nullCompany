@@ -207,6 +207,11 @@ public class PersonnelManagementServiceImpl implements PersonnelManagementServic
 	public int noCheckOffwork(int memNo) {
 		return pDao.noCheckOffwork(memNo);
 	}
+
+	@Override
+	public int noAttendanceCount(int memNo) {
+		return pDao.noAttendanceCount(memNo);
+	}
 	
 	
 
