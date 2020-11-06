@@ -301,12 +301,12 @@ public class PersonnelManagementController {
 		double avgLateCount = (Math.round(((double)lateCount / (double)TMonth)*100)/100.0);
 		System.out.println(avgLateCount);
 		// 출퇴근 기록 미체크-(출근기록이없는날-결근) , 퇴근체크(비정상)-(출근은했지만 퇴근기록이없는상황)
-		
+		int noAttendanceCount = pService.noAttendanceCount(memNo);
 		int noCheckOffwork = pService.noCheckOffwork(memNo);
 		// 전체 근태기록
 		
 		// 전체 휴가 사용날 / 사용일수 기록
-		
+		mv.addObject("noAttendanceCount",noAttendanceCount);
 		mv.addObject("noCheckOffwork",noCheckOffwork);
 		mv.addObject("lateCount",lateCount);
 		mv.addObject("avgLateCount",avgLateCount);

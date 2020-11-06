@@ -152,4 +152,9 @@ public class PersonnelManagementDao {
 		return sqlSession.selectOne("personnelMapper.noCheckOffwork",memNo);
 	}
 
+
+	public int noAttendanceCount(int memNo) {
+		return sqlSession.selectOne("personnelMapper.noAttendanceCount",memNo);
+	}
+
 }

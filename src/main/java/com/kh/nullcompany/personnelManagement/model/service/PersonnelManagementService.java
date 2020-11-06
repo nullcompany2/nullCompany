@@ -149,5 +149,7 @@ public interface PersonnelManagementService {
 	RecordDiligence RecordToday(int memNo);
 	// 퇴근체크(비정상)
 	int noCheckOffwork(int memNo);
+	//결근 카운트
+	int noAttendanceCount(int memNo);
 	
 }

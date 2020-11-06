@@ -87,16 +87,9 @@
 			<!--여기다가 만들기 -->
 			<br> 
 				&nbsp;&nbsp;<input type="checkbox" id="checkall"> 
-				&nbsp;&nbsp; <span style="color:#477A8F;" id="select"> 보기 : 
-				<select> 
-					<option> 모두  </option>
-					<option> 읽은 메일  </option>
-					<option> 안읽은 메일  </option>
-				</select> &nbsp;
-				</span> 
-				&nbsp;&nbsp;
-				<span id="hide" style="margin-right:40px;">  <span id="count"> </span> <a id="delMail">삭제 </a>  &nbsp; <a id="realdelMail"> 완전삭제 </a> </span>
-				 <span style="margin-left:65%;" id="countAll"> </span> <br><br>				
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						<span id="hide" style="margin-right:50px;"><span id="count"> </span> <a id="delMail">삭제 </a>  &nbsp; <a id="realdelMail"> 완전삭제 </a> </span>
+						<span id="countAll"> </span> <br><br>
 				 <table align="left" cellspacing="0" width="90%" id="tb">
 					
 					<tr> 
@@ -154,29 +147,28 @@
         	
             //최상단 체크박스 클릭
             
-            $("#checkall").click(function(){
-                //클릭되었으면
-                if($("#checkall").prop("checked")){
-                    //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
-                    $("input[name=mail]").prop("checked",true);
-                    $("tr").css("background","#ECECEC");
-                    $("#hide").show();
-                    $("#select").hide(); 
-                    
-                    var count = $("input:checkbox[name=mail]:checked").length;
-                   	$("#count").text(count);
-                 
-                    //클릭이 안되있으면
-                }else{
-                    //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
-                    $("input[name=mail]").prop("checked",false);
-                    $("tr").css("background","white");
-                    $("#hide").hide();
-                    $("#select").show(); 
-                }
-            })
-        })
-	
+        	  $("#checkall").click(function(){
+                  //클릭되었으면
+                  if($("#checkall").prop("checked")){
+                      //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
+                      $("input[name=mail]").prop("checked",true);
+                      $(".trMail").css("background","#ECECEC");
+                      $("#hide").show();
+                      $("#countAll").hide();
+                      
+                      var count = $("input:checkbox[name=mail]:checked").length;
+                     	$("#count").text(count);
+                     	
+                      //클릭이 안되있으면
+                  }else{
+                      //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
+                      $("input[name=mail]").prop("checked",false);
+                      $(".trMail").css("background","white");
+                      $("#hide").hide();
+                      $("#countAll").show();
+                  }
+              })
+          })
 	
         $(document).ready(function(){
 		   $('table tr').mouseover(function(){

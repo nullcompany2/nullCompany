@@ -62,8 +62,8 @@
 								<td class="d-tbl-td">${avgLateCount }회</td>
 							</tr>
 							<tr class="d-tbl-il">
-								<th class="d-tbl-th">미체크</th>
-								<td class="d-tbl-td">7</td>
+								<th class="d-tbl-th">미체크(결근)</th>
+								<td class="d-tbl-td">${noAttendanceCount }</td>
 								<th class="d-tbl-th">퇴근체크(비정상)</th>
 								<td class="d-tbl-td">${ noCheckOffwork }</td>
 							</tr>                        
@@ -501,15 +501,9 @@
                 <td class="md-tbl-td" colspan="2">09:00:00 -/ 정상</td>
                 <td class="md-tbl-td" colspan="2">00:00:00 -/</td>
                 <td class="md-tbl-td" colspan="2"> </td>
-                <td class="ta"><a href="#"id="detail-r-l" class="cursor" style="color: #477A8F;">요청</a></td>
+                <td class="ta"><a href="#"id="detail-r-l" class="cursor" style="color: #477A8F; text-align:center">요청</a></td>
             </tr>
-            <tr>
-                <td class="md-tbl-td">2020-10-01</td>
-                <td class="md-tbl-td" colspan="2">09:00:00 -/ 정상</td>
-                <td class="md-tbl-td" colspan="2">00:00:00 -/</td>
-                <td class="md-tbl-td" colspan="2"> </td>
-                <td class="ta"><a href="reqDiligence.do"id="detail-r-l" class="cursor" style="color: #477A8F;">요청</a></td>
-            </tr>
+            
 			
 		</table>
 		<div style="text-align: center; margin-top: 50px;">

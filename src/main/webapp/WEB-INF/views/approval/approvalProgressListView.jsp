@@ -100,19 +100,21 @@
 				<div class="c-ic">
 					<table class="appr_list" >
 						<thead>
-							<tr>
-								<th>문서 번호</th>
-								<th style="color: #999;">|</th>
-								<th>제목</th>
-								<th style="color: #999;">|</th>
-								<th>기안자</th>
-								<th style="color: #999;">|</th>
-								<th>기안일&nbsp;&nbsp;<label class="appr_date_desc" id="insert_date">▼</label></th>
-								<th style="color: #999;">|</th>
-								<th>문서 종류</th>
-								<th style="color: #999;">|</th>
-								<th>상태</th>
-							</tr>
+							<c:forEach var = "d" items="${docList}">
+									<tr>
+										<th>문서 번호</th>
+										<th style="color: #999;">|</th>
+										<th>제목</th>
+										<th style="color: #999;">|</th>
+										<th>기안자</th>
+										<th style="color: #999;">|</th>
+										<th>기안일&nbsp;&nbsp;<label class="appr_date_desc" id="insert_date">▼</label></th>
+										<th style="color: #999;">|</th>
+										<th>문서 종류</th>
+										<th style="color: #999;">|</th>
+										<th>상태</th>
+									</tr>
+							</c:forEach>
 						</thead>
 						<tbody>
 							<tr onclick="location.href='referDetail.do'">
