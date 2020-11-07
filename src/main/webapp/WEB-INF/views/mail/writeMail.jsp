@@ -117,7 +117,7 @@ a:active {
 						 <a href="javascript:history.go(-1);"> 
 						 <input type="button" value="이전으로" /></a> <br>
 						 &nbsp;보내는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-						<input type="text" name="sender" style="width: 60%;" value= "${loginUser.name} <${loginUser.id}>" readonly/> <br>
+						<input type="text" name="sender" style="width: 60%;" value= "${loginUser.name} <${loginUser.id}@nullcompany.com>" readonly/> <br>
 						&nbsp;받는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<input type="text" name="recipient" style="width: 60%;"
 							placeholder="메일 주소 사이에 ,(콤마)으로 구분하여 입력해주세요." />
@@ -221,9 +221,9 @@ a:active {
     $('.go2').on('click', function() {
     	
     	// 메일 제목 input val 옮기기 
-       	$("#modalTitle").text($("input:text[name='title']").val());
+       	$("#modalTitle").text($("input:text[name='mTitle']").val());
     	// 메일 받는 사람 input val 옮기기 
-       	$("#modalRecipient").text($("input:text[name='writer']").val());
+       	$("#modalRecipient").text($("input:text[name='recipient']").val());
     	
     	var modalContent2 = $("#summernote").val();
     	

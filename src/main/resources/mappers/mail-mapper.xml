@@ -3,151 +3,161 @@
 <mapper namespace="mailMapper">
 
 	<resultMap id="mailResultSet" type="Mail">
+	
 		<id property="memNo" column="MEM_NO"/>
-		<result property="id" column="ID"/>
-		<result property="name" column="NAME"/>
+		
+		<result property="mailNo" column="MAIL_NO"/>
 		<result property="sender" column="SENDER"/>
 		<result property="recipient" column="RECIPIENT"/>
 		<result property="mTitle" column="M_TITLE"/>
-		<result property="mContent" column="M_CONTENT"/>
 		<result property="mFileName" column="M_FILENAME"/>
+		<result property="mContent" column="M_CONTENT"/>
 		<result property="sendDate" column="SEND_DATE"/>
-		<result property="saveStatus" column="SAVE_STATUS"/>
 		<result property="mDeleteStatus" column="MDELETE_STATUS"/>
-		<result property="mailNo" column="RMA_NO"/>
-		<result property="senderNo" column="SENDER_NO"/>
+		<result property="mSaveStatus" column="MSAVE_STATUS"/>
+		<result property="mRealDelStatus" column="M_REALDEL_STATUS"/>
 		<result property="readCount" column="READ_COUNT"/>
-	</resultMap>
-	
-	<resultMap id="saveMailResultSet" type="saveMail">
-		<id property="memNo" column="MEM_NO"/>
+		<result property="email" column="EMAIL_ADDRESS"/>
 		<result property="name" column="NAME"/>
-		<result property="sender" column="SENDER"/>
-		<result property="recipient" column="RECIPIENT"/>
-		<result property="sTitle" column="S_TITLE"/>
-		<result property="sContent" column="S_CONTENT"/>
-		<result property="sFileName" column="S_FILENAME"/>
-		<result property="saveDate" column="SAVE_DATE"/>
-		<result property="sDeleteStatus" column="SDELETE_STATUS"/>
-		<result property="mailNo" column="SAVE_NO"/>
+		
 	</resultMap>
 	
+	<resultMap id="selectIdNoSet" type="MailSelectIdNo">
+		<result property="mailNo" column="MAIL_NO"/>
+		<result property="memId" column="MEM_ID"/>
+	</resultMap>
 	
-  <!-- 게시물 갯수 세기  -->
-  <select id="getListCount" resultType="_int">
-		SELECT COUNT(*)
-		FROM RECIEVED_MAIL
-		WHERE MDELETE_STATUS='N'
-		AND MEM_NO = #{memNo}
-	</select>
+	  <!-- 받은 편지함 갯수 세기  -->
+	  <select id="getListCount" resultType="_int">
+			SELECT COUNT(*)
+			FROM MAIL
+			WHERE MDELETE_STATUS='N'
+			AND MEM_NO = #{memNo}
+	 </select>
+	 
+	 <select id="getBinListCount" resultType="_int">
+		 SELECT COUNT(*)
+	     FROM MAIL 
+	     WHERE RECIPIENT = #{memId}
+	     or SENDER = #{memId}
+	     AND MDELETE_STATUS = 'Y'
+	     AND M_REALDEL_STATUS = 'N'
+	 </select>
 	
-  	<!-- 받은 메일함  -->
+  	<!-- 받은 메일함 리스트  -->
   	<select id="selectReceiveList" resultMap="mailResultSet">
-		SELECT R.*, M.NAME, M.MEM_NO AS SENDER_NO
-		FROM RECIEVED_MAIL R INNER JOIN MEMBER M ON (R.SENDER = M.ID) 
-		WHERE MDELETE_STATUS='N'
-		AND R.MEM_NO = #{memNo}
-		ORDER BY SEND_DATE DESC
+		SELECT MA.*, M.NAME
+        FROM MAIL MA
+        JOIN MEMBER M ON (MA.SENDER = M.ID)
+        WHERE RECIPIENT = #{memId}
+        AND MDELETE_STATUS = 'N'
+        AND MSAVE_STATUS = 'N'
+        ORDER BY SEND_DATE DESC
 	</select>
 	
-	<!--  메일 게시물 한개  -->
+	<!--  보낸 메일함 리스트  -->
+	<select id="selectSendList" resultMap="mailResultSet">
+		SELECT MA.*, M.NAME
+        FROM MAIL MA
+        JOIN MEMBER M ON (MA.RECIPIENT = M.ID)
+        WHERE SENDER = #{memId}
+        AND MDELETE_STATUS = 'N'
+        AND MSAVE_STATUS = 'N'
+        ORDER BY SEND_DATE DESC
+	</select>
+	
+	<!--  보낸 편지함 메일 게시물 한개  -->
 	<select id="mailDetailView" parameterType="_int" resultMap="mailResultSet">
-		SELECT R.*, M.NAME 
-        FROM RECIEVED_MAIL R INNER JOIN MEMBER M ON (R.SENDER = M.ID)
-        WHERE RMA_NO = #{mailNo}
+		SELECT R.*, M.NAME, E.EMAIL_ADDRESS
+        FROM MAIL R 
+        INNER JOIN MEMBER M ON (R.SENDER = M.ID)
+        JOIN EMAIL E ON (R.MEM_NO = E.MEM_NO)
+        WHERE MAIL_NO = #{mailNo}
 	</select>
 	
-	<!-- 읽은 메일 카운트  -->
+	<!--  받은 편지함 메일 게시물 한개  -->
+	<select id="sendMailDetailView " parameterType="_int" resultMap="mailResultSet">
+	
+	</select>
+	
+	<!-- 메일 조회수 +1  -->
 	<update id="updateCount" parameterType="_int">
-		UPDATE RECIEVED_MAIL
+		UPDATE MAIL
 		SET READ_COUNT = READ_COUNT +1
-		WHERE RMA_NO = #{mailNo}
+		WHERE MAIL_NO = #{mailNo}
 	 </update>
 	 
 	 <!--  답장하기 - 임시저장  -->
-	 <insert id="saveMail" parameterType="Mail"> 
-	 	INSERT INTO SAVE_MAIL
-        VALUES(#{sender},#{recipient},#{mTitle},
-        #{mContent},DEFAULT,'N',#{memNo},SAVE_SEQ.NEXTVAL,#{mFileName})
+	 <insert id="saveMail" parameterType="Mail">
+	 INSERT INTO MAIL VALUES 
+	 (MAIL_SEQ.nextval,#{memNo},#{sender},#{recipient},
+	 #{mTitle},#{mFileName},#{mContent},SYSDATE,'N','Y',0,DEFAULT)
 	 </insert>
 	 
-	 <!--  임시보관함 리스트 -->
-	 <select id="saveMailList" resultMap="saveMailResultSet">
-	   SELECT *
-       FROM SAVE_MAIL
-       WHERE MEM_NO = #{memNo}
-       ORDER BY SAVE_DATE DESC
-	 </select>
+	 <!--  답장하기 - 보내기  -->
+	 <insert id="sendMail" parameterType="Mail">
+	 INSERT INTO MAIL VALUES 
+	 (MAIL_SEQ.nextval,#{memNo},#{sender},#{recipient},
+	 #{mTitle},#{mFileName},#{mContent},SYSDATE,'N','N',0,DEFAULT)
+	 </insert>
 	 
-	 <!--  임시보관함 게시물 한개 보기 -->
-	 <select id="saveDetailView" parameterType="_int" resultMap="saveMailResultSet"> 
-		SELECT S.*, M.NAME 
-        FROM SAVE_MAIL S INNER JOIN MEMBER M ON (S.RECIPIENT = M.ID)
-        WHERE SAVE_NO =  #{mailNo}
-     </select> 
-	 
+	<!--  받은 편지함 - 읽은 메일 리스트 -->
 	 <select id="readMailList" resultMap="mailResultSet">  
-	 	select R.* , M.NAME
-        from RECIEVED_MAIL R 
+	 	SELECT R.* , M.NAME
+        FROM MAIL R 
         INNER JOIN MEMBER M ON (R.SENDER = M.ID)
-        where READ_COUNT >0
-        and RECIPIENT = #{memId}
-        and MDELETE_STATUS = 'N'
+        WHERE READ_COUNT >0
+        AND RECIPIENT = #{memId}
+        AND MDELETE_STATUS = 'N'
         ORDER BY SEND_DATE DESC
 	 </select>
 	 
+	 <!--  받은 편지함 - 안읽은 메일 리스트 -->
 	 <select id="unReadMailList" resultMap="mailResultSet">
-	 select R.* , M.NAME
-        from RECIEVED_MAIL R 
+	 	SELECT R.* , M.NAME
+        FROM MAIL R 
         INNER JOIN MEMBER M ON (R.SENDER = M.ID)
-        where READ_COUNT = 0
-        and RECIPIENT =  #{memId}
-        and MDELETE_STATUS = 'N'
-        ORDER BY SEND_DATE DESC
+        WHERE READ_COUNT = 0
+        AND RECIPIENT =  #{memId}
+        AND MDELETE_STATUS = 'N'
+        ORDER BY SEND_DATE ASC
 	 </select>
 	 
-	 <!--  받은 편지함에서 삭제  -->
+	 <!--  받은 편지함에서 전체 삭제 / 업데이트   -->
 	 <update id="deleteFromList" parameterType="Mail">
-	  UPDATE RECIEVED_MAIL
-        SET MDELETE_STATUS = 'Y'
-        WHERE RMA_NO = #{mailNo}
+		 UPDATE MAIL
+	     SET MDELETE_STATUS = 'Y'
+	     WHERE RECIPIENT = #{memId}
+	     AND MDELETE_STATUS= 'N'
 	 </update>
+	
 	 
-	 <!--  디테일뷰에서 쓰레기통으로 인서트  -->
-	 <insert id="insertMailBin">
-	 	INSERT INTO MAIL_BIN VALUES (메일번호,'본인아이디',DEFAULT)
-	 </insert>
-	 
-	 <!--  쓰레기통 셀렉트 from 보낸 편지함 -->
-	 <select id="recieveMailBin" resultMap="mailResultSet"> 
-	 	SELECT R.*
-        FROM MAIL_BIN B
-        JOIN RECIEVED_MAIL R ON (B.MAIL_NO = R.RMA_NO)
-        WHERE MEM_ID = #{memId}
-        ORDER BY SEND_DATE DESC
-	 </select>
-	 
-	 <select id="sendMailBin" resultMap="mailResultSet" > 
-	 	SELECT S.*
-        FROM MAIL_BIN B
-        JOIN SEND_MAIL S ON (B.MAIL_NO = S.SMA_NO)
-        WHERE MEM_ID = 멤버 아이디 
-        ORDER BY SEND_DATE DESC
-	 </select>
-	 
-	 <select id="saveMailBin" resultMap="saveMailResultSet">
-	    SELECT S.*
-        FROM MAIL_BIN B
-        JOIN SAVE_MAIL S ON (B.MAIL_NO = S.SAVE_NO)
-        WHERE MEM_ID = 멤버아이디 
-        ORDER BY SAVE_DATE DESC
-	 </select>
-	 
-	 <update id="allInsertMailBin" parameterType="Mail">
-	   UPDATE RECIEVED_MAIL
-       SET MDELETE_STATUS = 'Y'
-       WHERE MEM_NO = #{memNo}
-       AND MDELETE_STATUS = 'N'
-       </update>
+	 <!--  임시 보관함 리스트 -->
+	<select id="selectSaveList" resultMap="mailResultSet">
+		SELECT MA.*, M.NAME
+	    FROM MAIL MA
+	    JOIN MEMBER M ON (MA.RECIPIENT = M.ID)
+	    WHERE MA.SENDER = #{memId}
+	    AND MA.MSAVE_STATUS = 'Y'
+	    AND MA.MDELETE_STATUS = 'N'
+	</select>
+	
+	<select id="saveMailDetailView" parameterType="_int" resultMap="mailResultSet">
+        SELECT MA.*, M.NAME
+	    FROM MAIL MA
+	    JOIN MEMBER M ON (MA.RECIPIENT = M.ID)
+	    WHERE MA.MAIL_NO = #{mailNo}
+	    AND MA.MSAVE_STATUS = 'Y'
+	    AND MA.MDELETE_STATUS = 'N'
+	</select>
+	
+	<select id="binMailList" resultMap="mailResultSet">
+		 SELECT *
+	     FROM MAIL 
+	     WHERE RECIPIENT = #{memId}
+	     OR SENDER = #{memId}
+	     AND MDELETE_STATUS = 'Y'
+	     AND M_REALDEL_STATUS = 'N'
+	</select>
 	 
 </mapper>

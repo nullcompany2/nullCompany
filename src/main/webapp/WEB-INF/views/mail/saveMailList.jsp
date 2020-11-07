@@ -123,9 +123,9 @@
 						<tr class="trMail" onClick="location.href='${saveDetailView}'"> 
 						
 							<td>&nbsp;&nbsp;<input type="checkbox" onClick="event.cancelBubble=true" name="mail"></td>
-							<td align="left"><a> ${ma.recipient}</a></td>
-							<td>${ ma.sTitle }</td>
-							<td align="right"> ${ma.saveDate }</td>
+							<td align="left"><a> ${ma.name} < ${ma.recipient} ></a></td>
+							<td>${ ma.mTitle }</td>
+							<td align="right"> ${ma.sendDate }</td>
 						</tr>
 						</table>
 					</c:forEach>
