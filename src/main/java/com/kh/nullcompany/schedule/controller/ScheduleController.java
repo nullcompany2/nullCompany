@@ -1,8 +1,11 @@
 package com.kh.nullcompany.schedule.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -46,6 +51,7 @@ public class ScheduleController {
 		ArrayList<Calendar> IndividualCalList = sService.IndividualCalList();
 		// 일정 리스트
 		ArrayList<Schedule> ScheduleList = sService.ScheduleList();
+		System.out.println(ScheduleList);
 
 
 
@@ -115,16 +121,25 @@ public class ScheduleController {
 	
 	// 일정 디테일
 	@RequestMapping("detailSchedule.do" )
-	public void detailSchedule(@Param("Sche_name") String Sche_name , HttpServletResponse response) throws JsonIOException, IOException {
+	public void detailSchedule(@Param("Sche_name") String Sche_name, Model model , HttpServletResponse response) throws JsonIOException, IOException {
 		Schedule sche = new Schedule();
 		
+		String memcount =sService.getCalmemCount(Sche_name);
+		System.out.println(memcount);
+		Map map = new HashMap();
+		map.put("memcount", memcount);
+		map.put("Sche_name", Sche_name);
+		int result = (sService.updateCalCountMember(map));
+		
 		sche = sService.detailSchedule(Sche_name);
-
-		System.out.println("일정 찾아온 값 " + sche);
+		
+		System.out.println("왜안대냐" + sche);
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(sche,response.getWriter());
-
-
+	
 	}
+	
+	// 일정 디테일 총 인원 수
+
 }

@@ -57,26 +57,15 @@
 		<result property="enddate" column="ENDDATE" />
 		<result property="endtime" column="ENDTIME" />
 		<result property="Sche_content" column="SCHE_CONTENT" />
+		<result property="memcount" column="MEMCOUNT" />
 		<result property="cal_no" column="CAL_NO" />
+		
 		
 		<collection property="calendar" resultMap="Calendar"/>
 
 	</resultMap>
 	
 	
-	<resultMap id="DetailScheduleResultSet" type="DetailSchedule">
-		<result property="Sche_no" column="SCHE_NO" />
-		<result property="Cal_name" column="CAL_NAME" />
-		<result property="Sche_name" column="SCHE_NAME" />
-		<result property="startdate" column="STARTDATE" />
-		<result property="starttime" column="STARTTIME" />
-		<result property="enddate" column="ENDDATE" />
-		<result property="endtime" column="ENDTIME" />
-		<result property="Sche_content" column="SCHE_CONTENT" />
-		<result property="name" column="NAME" />
-		<result property="color" column="COLOR" />
-
-	</resultMap>
 	
 	<!-- 부서 셀렉트 리스트 -->
 	<select id="selectdeptList" resultMap="deptResultSet" parameterType="Department">
@@ -143,7 +132,7 @@
 	
    <insert id="insertSchedule" parameterType="Schedule">
       INSERT INTO SCHEDULE
-      VALUES(SCHE_SEQ.NEXTVAL, #{cal_name}, #{sche_name}, #{startdate}, #{starttime}, #{enddate}, #{endtime}, #{sche_content})
+      VALUES(SCHE_SEQ.NEXTVAL, #{cal_name}, #{sche_name}, #{startdate}, #{starttime}, #{enddate}, #{endtime}, #{sche_content}, '0')
    </insert>
    
    <select id="ScheduleList" resultType="Schedule" parameterType="Schedule">
@@ -154,10 +143,28 @@
    </select>
    
     <select id="detailSchedule" resultType="Schedule" parameterType="Schedule">
-    	SELECT S.*, C.*
+    	SELECT  S.SCHE_NO, S.SCHE_NAME, C.CAL_NAME, S.STARTDATE, S.STARTTIME, S.MEMCOUNT,
+        S.ENDDATE, S.ENDTIME, S.SCHE_CONTENT, C.CAL_NO, C.COLOR, C.CAL_TYPE
 		FROM SCHEDULE S
 		JOIN CALENDAR C ON S.CAL_NAME = C.CAL_NAME
+        JOIN CALENDAR_MEMBER CM ON CM.CAL_NO = C.CAL_NO
         WHERE S.SCHE_NAME = #{sche_name}
+        GROUP BY S.SCHE_NO, S.SCHE_NAME, C.CAL_NAME, S.STARTDATE, S.STARTTIME, S.MEMCOUNT,
+        S.ENDDATE, S.ENDTIME, S.SCHE_CONTENT, C.CAL_NO, C.COLOR, C.CAL_TYPE
+   </select>
+   
+      <select id="getCalmemCount" resultType="String">
+    	SELECT  COUNT(C.CAL_NAME) cnt
+		FROM SCHEDULE S
+		JOIN CALENDAR C ON S.CAL_NAME = C.CAL_NAME
+        JOIN CALENDAR_MEMBER CM ON CM.CAL_NO = C.CAL_NO
+        WHERE S.SCHE_NAME = #{sche_name}
+        GROUP BY C.CAL_TYPE
    </select>
 	
+	<update id="updateCalCountMember" parameterType="map">
+		UPDATE SCHEDULE
+		SET MEMCOUNT = #{memcount}
+		WHERE SCHE_NAME = #{Sche_name}
+	</update>
 </mapper>

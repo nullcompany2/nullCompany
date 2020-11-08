@@ -213,7 +213,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 
 				<div class="contents" style="width: 1000px;">
 					<div class="contents-title">
-						<span class="ct1">일정관리</span>
+						<span class="ct1">일정관리</span> 
 
 						<form action=""
 							style="float: right; position: absolute; right: -130px; top: 10px;">
@@ -564,7 +564,8 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 									<th class="tbcontent" style="width: 120px;">
 										<div id="perimg">
 											<img src="resources/images/detail_count.png"
-												style="width: 50px; height: 25px;"> <span>7</span>
+												style="width: 50px; height: 25px;position: absolute; top: 65px;">
+												<span id="DeMemCount"></span>
 										</div>
 									</th>
 								</tr>
@@ -614,6 +615,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 				data : { Sche_name : Sche_name },
 				dataType: "json",
+				async: false,
 				success : function(data){
 					
 					console.log("디테일 성공시"+ data);
@@ -623,6 +625,8 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
             		$("#de_sche_content").text(data.Sche_content);
             		Sche_color.style.backgroundColor = data.color;
             		console.log(data.color);
+            		$("#DeMemCount").text(data.memcount); 
+            		
             	
             
             		
@@ -633,7 +637,8 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 					console.log(error);
 				}
 			})
-  
+			
+
 		});
       
          

@@ -14,6 +14,8 @@ public class Schedule {
 	private String color;
 	private int cal_no;
 	private Calendar calendar;
+	private int cal_type;
+	private String memcount;
 	
 	
 	public Schedule() {
@@ -22,8 +24,10 @@ public class Schedule {
 	}
 
 
+	
+
 	public Schedule(int sche_no, String cal_name, String sche_name, String startdate, String starttime, String enddate,
-			String endtime, String sche_content) {
+			String endtime, String sche_content, String memcount) {
 		super();
 		Sche_no = sche_no;
 		Cal_name = cal_name;
@@ -33,7 +37,11 @@ public class Schedule {
 		this.enddate = enddate;
 		this.endtime = endtime;
 		Sche_content = sche_content;
+		this.memcount = memcount;
 	}
+
+
+
 
 	public String getColor() {
 		return color;
@@ -127,9 +135,9 @@ public class Schedule {
 
 	@Override
 	public String toString() {
-		return "Schedule [Sche_no=" + Sche_no + ", Cal_name=" + Cal_name + ", Sche_name=" + Sche_name + ", startdate="
+		return "Schedule [Sche_no=" + Sche_no +  ", Cal_name=" + Cal_name + ", Sche_name=" + Sche_name + ", startdate="
 				+ startdate + ", starttime=" + starttime + ", enddate=" + enddate + ", endtime=" + endtime
-				+ ", Sche_content=" + Sche_content + "]";
+				+ ", Sche_content=" + Sche_content + ", 인원" +  memcount + "]";
 	}
 
 
@@ -151,7 +159,33 @@ public class Schedule {
 	public void setCal_no(int cal_no) {
 		this.cal_no = cal_no;
 	}
-	
+
+
+	public int getCal_type() {
+		return cal_type;
+	}
+
+
+	public void setCal_type(int cal_type) {
+		this.cal_type = cal_type;
+	}
+
+
+
+
+	public String getMemcount() {
+		return memcount;
+	}
+
+
+
+
+	public void setMemcount(String memcount) {
+		this.memcount = memcount;
+	}
+
+
+
 	
 
 }

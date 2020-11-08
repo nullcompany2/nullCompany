@@ -9,7 +9,8 @@ public class Calendar {
 	private String color;
 	private String enrollMember;
 	private String lookMember;
-	private int enrollmemno;
+	private int cal_type;
+	
 
 
 	public Calendar() {
@@ -17,14 +18,14 @@ public class Calendar {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Calendar(int calNo, String calName, String color, String enrollMember, String lookMember, int enrollmemno) {
+	public Calendar(int calNo, String calName, String color, String enrollMember, String lookMember) {
 		super();
 		this.calNo = calNo;
 		this.calName = calName;
 		this.color = color;
 		this.enrollMember = enrollMember;
 		this.lookMember = lookMember;
-		this.enrollmemno = enrollmemno;
+		
 	}
 
 	public int getCalNo() {
@@ -67,18 +68,20 @@ public class Calendar {
 		this.lookMember = lookMember;
 	}
 
-	public int getEnrollmemno() {
-		return enrollmemno;
-	}
 
-	public void setEnrollmemno(int enrollmemno) {
-		this.enrollmemno = enrollmemno;
-	}
 
 	@Override
 	public String toString() {
 		return "Calendar [calNo=" + calNo + ", calName=" + calName + ", color=" + color + ", enrollMember="
-				+ enrollMember + ", lookMember=" + lookMember + ", enrollmemno=" + enrollmemno + "]";
+				+ enrollMember + ", lookMember=" + lookMember + "]";
+	}
+
+	public int getCal_type() {
+		return cal_type;
+	}
+
+	public void setCal_type(int cal_type) {
+		this.cal_type = cal_type;
 	}
 
 

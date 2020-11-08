@@ -2,6 +2,7 @@ package com.kh.nullcompany.schedule.model.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -118,6 +119,19 @@ public class ScheduleServiceImpl implements ScheduleService {
 	public Schedule detailSchedule(String sche_name) {
 		return sDao.detailSchedule(sche_name);
 	}
+
+	@Override
+	public String getCalmemCount(String sche_name) {
+		return sDao.getCalmemCount(sche_name);
+		
+	}
+
+	@Override
+	public int updateCalCountMember(Map map) {
+		return sDao.updateCalCountMember(map);
+		
+	}
+
 
 
 }

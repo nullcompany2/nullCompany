@@ -1,6 +1,7 @@
 package com.kh.nullcompany.schedule.model.dao;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +72,20 @@ public class ScheduleDao {
 	public Schedule detailSchedule(String sche_name) {
 		return sqlSession.selectOne("scheduleMapper.detailSchedule",sche_name);
 	}
+
+	public String getCalmemCount(String sche_name) {
+		System.out.println("DAO : " + sche_name);
+		return sqlSession.selectOne("scheduleMapper.getCalmemCount",sche_name);
+	}
+
+	public int updateCalCountMember(Map map) {
+		System.out.println(map.toString());
+		return sqlSession.update("scheduleMapper.updateCalCountMember",map);
+		
+		
+	}
+
+
 
 	
 

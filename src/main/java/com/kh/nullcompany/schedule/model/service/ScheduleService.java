@@ -2,6 +2,7 @@ package com.kh.nullcompany.schedule.model.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.personnelManagement.model.vo.Department;
@@ -36,6 +37,12 @@ public interface ScheduleService {
 	ArrayList<Schedule> ScheduleList();
 
 	Schedule detailSchedule(String sche_name);
+
+	String getCalmemCount(String sche_name);
+
+	int updateCalCountMember(Map map);
+
+
 
 
 	
