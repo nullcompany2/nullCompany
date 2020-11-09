@@ -136,7 +136,7 @@
 	<select id="firstyearLeave" resultMap="SetLeaveResultSet">
 		SELECT *
 		FROM SET_LEAVE_STANDARD
-		WHERE WORKING_YEARS = 'N0'
+		WHERE WORKING_YEARS = 'N1'
 	</select>
 	
 	<!-- 휴가 업데이트  -->
@@ -323,4 +323,6 @@
 		SELECT *
 		FROM SET_LEAVE_STANDARD
 	</select>
+	
+	
 </mapper>
