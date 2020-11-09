@@ -94,7 +94,7 @@
 										<td scope="col" rowspan="2" class="ta"><a href="#"id="detail-r-l" class="cursor" style="color: #477A8F;">상세</a></td>
 									</tr>
 									<tr class="date_tbl_output">
-										
+									
 									</tr>
 									
 									
@@ -393,6 +393,114 @@
 				var result = confirm("휴가신청을 취소하시겠습니까?");
 			})
 		})
+		
+		function mdListPaged(currentPage){
+			var year = $("#md_searchYear").val();
+			var month = $("#md_searchMonth").val();
+			
+			
+			if(year !=0 && month !=0){
+				$.ajax({
+					url : "searchDiligenceYM.do",
+					data : {year : year , month : month , currentPage:currentPage},
+					datatype : "json",
+					success:function(data){
+						$("#totalListCount").text(data.dListCount);
+						$("#dListPaging").remove();
+						$('.mdDListPot').remove();
+						var $mdTbl = $(".md-tbl");
+		            	var $tr;
+		            	var $td;
+		            	var $td_date;
+		            	var $td_enterTime;
+		            	var $td_exitTime;
+		            	var $td_status;
+		            	var $td_reqMod;
+						
+		            	var $pageTbl = $('#md_page_tbl');
+		            	var td0;
+		            	var td1;
+		            	var td2;
+		            	var td3;
+		            	var td1_1;
+		            	var td1_1_1;
+		            	var td2_1;
+		            	var td2_1_1;
+		            	var td2_2;
+		            	
+		            	
+		            	
+						for(var i in data.dList){					
+							$tr = $("<tr class='mdDListPot'>");
+							$td_date = $(' <td class="md-tbl-td">').text(data.dList[i].dateDiligence);
+							$td_enterTime = $(' <td class="md-tbl-td" colspan="2">').text(data.dList[i].timeEnter);
+							$td_exitTime = $(' <td class="md-tbl-td" colspan="2">').text(data.dList[i].timeExit);
+							$td_status = $(' <td class="md-tbl-td" colspan="2">').text(data.dList[i].statusDiligence);
+							$td_reqMod = $(' <td class="md-tbl-td">').attr("id",data.dList[i].noDiligence);
+							$td_reqMod.append($('<a href="reqDiligence.do?noDiligence='+ data.dList[i].noDiligence +'" id="detail-r-l" class="cursor" style="color: #477A8F;">').text("요청"));
+							
+							$tr.append($td_date);
+							$tr.append($td_enterTime);
+							$tr.append($td_exitTime);
+							$tr.append($td_status);
+							$tr.append($td_reqMod);
+							$mdTbl.append($tr);
+						}
+						
+						$tr = $('<tr align="center" height="20" id="dListPaging">'); 
+						$td = $('<td colspan="6">');
+						if(data.pi.currentPage == 1){
+							
+							$td0 = "[이전]";
+							$td.append($td0);
+						}
+			        	
+						if(data.pi.currentPage != 1){
+							$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage -1) +')">').text("[이전]");
+				        	
+				        	$td.append($td0);
+						}    	
+			        	
+				       	
+				       	
+				       	for(var p = data.pi.startPage-1; p <  data.pi.endPage; p++){
+				       		if(p = data.pi.currentPage){
+				       			$td0 = $("<b style='color:red; font-size:4'>").text(p);
+				       			$td.append($td0);
+				       		}
+				       		if(p != data.pi.currentPage ){
+				       			$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage) +')">').text(p);
+				       			$td.append($td0);
+				       		}
+				       	
+				       	}
+			        	
+				       	if(data.pi.currentPage == data.pi.maxPage ){
+				       		$td0 = "[다음]";
+				       		$td.append($td0);
+				       	}
+			        	
+			        	if(data.pi.currentPage != data.pi.maxPage){
+			        		$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage + 1) +')">').text("[다음]");
+			        		$td.append($td0);
+			        	}
+			        	
+		            	$tr.append($td);
+						
+		            	$pageTbl.append($tr);
+	 
+					},
+					error: function(request,status,error){
+						console.log(request);
+						console.log(status);
+						console.log(error);
+					}
+				});
+			}else{
+				alert("년도와 월수를 선택해주세요.");
+			}			
+		}
+		
 		function md_searchBtn(){
 			var year = $("#md_searchYear").val();
 			var month = $("#md_searchMonth").val();
@@ -404,25 +512,40 @@
 					data : {year : year , month : month},
 					datatype : "json",
 					success:function(data){
+						$("#totalListCount").text(data.dListCount);
+						$("#dListPaging").remove();
+						$('.mdDListPot').remove();
 						var $mdTbl = $(".md-tbl");
 		            	var $tr;
+		            	var $td;
 		            	var $td_date;
 		            	var $td_enterTime;
 		            	var $td_exitTime;
 		            	var $td_status;
 		            	var $td_reqMod;
-						console.log(data.pi);
-						console.log(data.dList);
 						
-						for(var i in data.dList){
-							$tr = $("<tr>");
+		            	var $pageTbl = $('#md_page_tbl');
+		            	var td0;
+		            	var td1;
+		            	var td2;
+		            	var td3;
+		            	var td1_1;
+		            	var td1_1_1;
+		            	var td2_1;
+		            	var td2_1_1;
+		            	var td2_2;
+		            	
+		            	
+		            	
+						for(var i in data.dList){					
+							$tr = $("<tr class='mdDListPot'>");
 							$td_date = $(' <td class="md-tbl-td">').text(data.dList[i].dateDiligence);
 							$td_enterTime = $(' <td class="md-tbl-td" colspan="2">').text(data.dList[i].timeEnter);
 							$td_exitTime = $(' <td class="md-tbl-td" colspan="2">').text(data.dList[i].timeExit);
 							$td_status = $(' <td class="md-tbl-td" colspan="2">').text(data.dList[i].statusDiligence);
-							$td_reqMod = $(' <td class="md-tbl-td">');
-							$td_reqMod.append($('<a href="reqDiligence.do"id="detail-r-l" class="cursor" style="color: #477A8F;">').text("요청"));
-						
+							$td_reqMod = $(' <td class="md-tbl-td">').attr("id",data.dList[i].noDiligence);
+							$td_reqMod.append($('<a href="reqDiligence.do?noDiligence='+ data.dList[i].noDiligence +'" id="detail-r-l" class="cursor" style="color: #477A8F;">').text("요청"));
+							
 							$tr.append($td_date);
 							$tr.append($td_enterTime);
 							$tr.append($td_exitTime);
@@ -431,9 +554,48 @@
 							$mdTbl.append($tr);
 						}
 						
-		            	
+						$tr = $('<tr align="center" height="20" id="dListPaging">'); 
+						$td = $('<td colspan="6">');
+						if(data.pi.currentPage == 1){
+							
+							$td0 = "[이전]";
+							$td.append($td0);
+						}
+			        	
+						if(data.pi.currentPage != 1){
+							$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage -1) +')">').text("[이전]");
+				        	
+				        	$td.append($td0);
+						}    	
+			        	
+				       	
+				       	
+				       	for(var p = data.pi.startPage-1; p <  data.pi.endPage; p++){
+				       		if(p = data.pi.currentPage){
+				       			$td0 = $("<b style='color:red; font-size:4'>").text(p);
+				       			$td.append($td0);
+				       		}
+				       		if(p != data.pi.currentPage ){
+				       			$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage) +')">').text(p);
+				       			$td.append($td0);
+				       		}
+				       	
+				       	}
+			        	
+				       	if(data.pi.currentPage == data.pi.maxPage ){
+				       		$td0 = "[다음]";
+				       		$td.append($td0);
+				       	}
+			        	
+			        	if(data.pi.currentPage != data.pi.maxPage){
+			        		$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage + 1) +')">').text("[다음]");
+			        		$td.append($td0);
+			        	}
+			        	
+		            	$tr.append($td);
 						
-	
+		            	$pageTbl.append($tr);
+	 
 					},
 					error: function(request,status,error){
 						console.log(request);
@@ -561,67 +723,23 @@
 						    cursor: pointer;" onclick="md_searchBtn()">
 		    	검색
 		    </button>
-            <h4 style="float: right; font-weight: normal;">총<span>N</span>건</h4>
+            <h4 style="float: right; font-weight: normal;">총<span id="totalListCount">N</span>건</h4>
         </div>
 		<table class="md-tbl">
 			<tr class="md-tbl-il">
 				<th class="md-tbl-th">날짜</th>
-                <th class="md-tbl-th" colspan="2">출근(시간/결과)</th>
-                <th class="md-tbl-th" colspan="2">퇴근(시간/결과)</th>
-                <th class="md-tbl-th" colspan="2">비고</th>
+                <th class="md-tbl-th" colspan="2">출근</th>
+                <th class="md-tbl-th" colspan="2">퇴근</th>
+                <th class="md-tbl-th" colspan="2">상태(결과)</th>
                 <th class="md-tbl-th">수정</th>
             </tr>
             <!-- 리스트 -->
-            <tr>
-                <td class="md-tbl-td">2020-10-01</td>
-                <td class="md-tbl-td" colspan="2">09:00:00 -/ 정상</td>
-                <td class="md-tbl-td" colspan="2">00:00:00 -/</td>
-                <td class="md-tbl-td" colspan="2"> </td>
-                <td class="md-tbl-td" ><a href="reqDiligence.do"id="detail-r-l" class="cursor" style="color: #477A8F;">요청</a></td>
-            </tr>
+            
             
 		</table>
 		<div style="text-align: center; margin-top: 50px;">
-			<table  style=" width: 100%; border-collapse: collapse;" id="md_d_list">
-	            <tr align="center" height="20">
-		        	<td colspan="6">
-			            <!-- [이전] -->
-			            <c:if test="${ pi.currentPage eq 1 }">
-			               [이전] &nbsp;
-			            </c:if>
-			            <c:if test="${ pi.currentPage ne 1 }">
-			               <c:url var="before" value="searchDiligenceYM.do">
-			                  <c:param name="currentPage" value="${ pi.currentPage - 1 }"/>
-			               </c:url>
-			               <a href="${ before }">[이전]</a> &nbsp;
-			            </c:if>
-			            
-			            <!-- 페이지 -->
-			            <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-			               <c:if test="${ p eq pi.currentPage }">
-			                  <font color="red" size="4"><b>[${ p }]</b></font>
-			               </c:if>
-			               
-			               <c:if test="${ p ne pi.currentPage }">
-			                  <c:url var="pagination" value="searchDiligenceYM.do">
-			                     <c:param name="currentPage" value="${ p }"/>
-			                  </c:url>
-			                  <a href="${ pagination }">${ p }</a> &nbsp;
-			               </c:if>
-			            </c:forEach>
-			            
-			            <!-- [다음] -->
-			            <c:if test="${ pi.currentPage eq pi.maxPage }">
-			               [다음]
-			            </c:if>
-			            <c:if test="${ pi.currentPage ne pi.maxPage }">
-			               <c:url var="after" value="searchDiligenceYM.do">
-			                  <c:param name="currentPage" value="${ pi.currentPage + 1 }"/>
-			               </c:url> 
-			               <a href="${ after }">[다음]</a>
-			            </c:if>
-		        	</td>
-				</tr>
+			<table  style=" width: 100%; border-collapse: collapse;" id="md_page_tbl">
+	            
 			</table>
 		</div>
 		<span class="md-btn cursor md-btn-close" style="float:right; color:#477A8F; margin-right:30px">닫기</span>

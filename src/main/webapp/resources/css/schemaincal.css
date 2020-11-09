@@ -254,7 +254,6 @@ a:active {
 .input-group {
 	font-size: 15px;
 	width: 180px;
-	margin-left: 10px;
 	line-height: 30px;
 }
 
@@ -272,6 +271,7 @@ a:active {
 	font-weight: bold;
 	color: #414141;
 	font-size: 18px;
+	margin-left: -10px;
 }
 
 .calbtn {
@@ -409,16 +409,16 @@ a {
 .input-group {
 	font-size: 15px;
 	width: 180px;
-	margin-left: 10px;
 	line-height: 30px;
 }
 
 .calbtn {
 	border: none;
-	background-color: none;
 	float: right;
 	color: #676767;
-	outline: none;
+	left: 168px;
+	position: absolute;
+	background-color: #e8ecee;
 }
 
 .calbtn:hover {
@@ -430,7 +430,7 @@ a {
 	position: relative;
 	float: right;
 	color: #477A8F;
-	left: -30px;
+	left: -15px;
 }
 
 .input-group input {
@@ -493,7 +493,15 @@ header #logo span {
 
 
 
+
+
+
+
  
+
+
+
+
 
 
 
@@ -512,7 +520,15 @@ header #logo span {
 
 
 
+
+
+
+
  
+
+
+
+
 
 
 
@@ -540,7 +556,19 @@ margin-left
 
 
 
+
+
+
+
+
+
+
+
 :
+
+
+
+
 
 
 
@@ -558,8 +586,20 @@ margin-left
 
 
 
+
+
+
+
 0
 .75em
+
+
+
+
+
+
+
+
 
 
 
@@ -594,7 +634,19 @@ background-color
 
 
 
+
+
+
+
+
+
+
+
 :
+
+
+
+
 
 
 
@@ -612,7 +664,19 @@ background-color
 
 
 
+
+
+
+
 #477A8F
+
+
+
+
+
+
+
+
 
 
 
@@ -969,15 +1033,15 @@ background-color
 
 #individualmodal {
 	width: 415px;
-    height: 210px;
-    padding: 10px 35px;
-    background-color: #fefefe;
-    border: 1px solid #888;
-    border-radius: 3px;
+	height: 210px;
+	padding: 10px 35px;
+	background-color: #fefefe;
+	border: 1px solid #888;
+	border-radius: 3px;
 }
 
 #individualmodal .modal-close-btn {
-
+	
 }
 
 .box2 {
@@ -987,10 +1051,10 @@ background-color
 
 .pallet2 {
 	width: 300px;
-    height: 30px;
-    position: relative;
-    left: 65px;
-    top: 15px;
+	height: 30px;
+	position: relative;
+	left: 65px;
+	top: 15px;
 }
 
 .active2 {
@@ -1007,8 +1071,90 @@ background-color
 
 #colorselect2 {
 	width: 20px;
-    height: 20px;
+	height: 20px;
+	position: absolute;
+	top: 106px;
+	left: 69px;
+}
+
+#detail_modal {
+	display: none;
+	width: 420px;
+	height: 326px;
+	padding: 20px 40px;
+	background-color: #fefefe;
+	border: 1px solid #888;
+	border-radius: 3px;
+}
+
+#detail_modal .modal-close-btn {
+	
+}
+
+.detailtb {
+	border-collapse: collapse;
+	border-spacing: 0;
+	width: 370px;
+}
+
+.detailtb td {
+	font-family: "Noto Sans KR", sans-serif;;
+	font-size: 14px;
+	overflow: hidden;
+	word-break: normal;
+	font-size: 14px;
+}
+
+.detailtb th {
+	font-family: "Noto Sans KR", sans-serif;;
+	font-size: 14px;
+	font-weight: normal;
+	overflow: hidden;
+	word-break: normal;
+	font-size: 14px;
+}
+
+.detailtb .tbcontent {
+	border-color: inherit;
+	text-align: left;
+	vertical-align: top;
+	font-size: 14px;
+	color: #444
+}
+
+.tbinput {
+	margin: 5px;
+}
+
+#perimg span {
+	position: absolute;
+	right: 90px;
+	top: 66px;
+	color: #477A8F;
+	font-weight: bold;
+}
+
+#cal_color {
+	width: 20px;
+	height: 20px;
+	position: absolute;
+	top: 67px;
+	right: 141px;
+	border: gray solid 1px;
+}
+
+#chela {
+	font-size: 15px;
+	color: #676767;
+	font-weight: normal;
+	margin-left: 0;
+}
+
+#chela span {
+	display: inline-block;
+    width: 90px;
+    overflow: hidden;
+    text-overflow: ellipsis;
     position: absolute;
-    top: 106px;
-    left: 69px;
+    margin-left: 5px;
 }

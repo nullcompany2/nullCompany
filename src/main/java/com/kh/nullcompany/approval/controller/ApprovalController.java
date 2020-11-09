@@ -20,6 +20,7 @@ import com.kh.nullcompany.member.model.vo.Member;
 
 @Controller
 public class ApprovalController {
+
 	
 	@Autowired
 	private ApprovalService aService;
@@ -101,4 +102,5 @@ public class ApprovalController {
 	public String approvalInsertView(HttpServletResponse response) {
 		return "approval/approvalInsertForm";
 	}
+
 }

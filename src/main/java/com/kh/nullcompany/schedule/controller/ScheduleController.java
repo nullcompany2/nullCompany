@@ -1,7 +1,11 @@
 package com.kh.nullcompany.schedule.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,16 +13,22 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
 import com.kh.nullcompany.mail.model.vo.Email;
 import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.personnelManagement.model.vo.Department;
 import com.kh.nullcompany.schedule.model.service.ScheduleService;
 import com.kh.nullcompany.schedule.model.vo.Calendar;
+import com.kh.nullcompany.schedule.model.vo.DetailSchedule;
 import com.kh.nullcompany.schedule.model.vo.Schedule;
 
 @Controller
@@ -41,6 +51,8 @@ public class ScheduleController {
 		ArrayList<Calendar> IndividualCalList = sService.IndividualCalList();
 		// 일정 리스트
 		ArrayList<Schedule> ScheduleList = sService.ScheduleList();
+		System.out.println(ScheduleList);
+
 
 
 		mv.addObject("deptList", deptList);
@@ -96,6 +108,7 @@ public class ScheduleController {
 
 	}
 
+	// 일정 인써트
 	@RequestMapping("insertSchedule.do")
 	public void insertSchedule(@Param("Schedule") Schedule Schedule ) {
 		int result = sService.insertSchedule(Schedule);
@@ -105,4 +118,28 @@ public class ScheduleController {
 
 
 	}
+	
+	// 일정 디테일
+	@RequestMapping("detailSchedule.do" )
+	public void detailSchedule(@Param("Sche_name") String Sche_name, Model model , HttpServletResponse response) throws JsonIOException, IOException {
+		Schedule sche = new Schedule();
+		
+		String memcount =sService.getCalmemCount(Sche_name);
+		System.out.println(memcount);
+		Map map = new HashMap();
+		map.put("memcount", memcount);
+		map.put("Sche_name", Sche_name);
+		int result = (sService.updateCalCountMember(map));
+		
+		sche = sService.detailSchedule(Sche_name);
+		
+		System.out.println("왜안대냐" + sche);
+		response.setContentType("application/json; charset=UTF-8");
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		gson.toJson(sche,response.getWriter());
+	
+	}
+	
+	// 일정 디테일 총 인원 수
+
 }

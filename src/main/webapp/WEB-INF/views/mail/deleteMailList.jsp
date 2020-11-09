@@ -54,10 +54,9 @@
 	
 	
 	#tb {
-	margin-bottom : 50px;
-	padding-bottom : 30px;
+	margin-bottom : 10px;
+	padding-bottom : 10px;
 	border-bottom:  1px solid #ECECEC;
-	
 	}
 	
 	#hide,#hide a, #countAll{
@@ -67,10 +66,13 @@
 		
 	}
 	
+	#select, #hide, select, #hide a, #countAll{
+		border:none;
+		font-size:16px;
+		color:#477A8F;
+	}
+	
 
-	
-	
-	
 </style>
 
 
@@ -85,35 +87,51 @@
 			<!--여기다가 만들기 -->
 			<br> 
 				&nbsp;&nbsp;<input type="checkbox" id="checkall"> 
+				&nbsp;&nbsp;<span style="color:#477A8F;" id="select"> 보기 : 
+				<select name="listOption" id="listOption"> 
+							<option selected> 받은 편지함 </option>
+							<option>  보낸 편지함 </option>
+							<option> 임시 보관함  </option>
+						</select> &nbsp;
+				</span> 
+						
 				&nbsp;&nbsp;
 				<span id="hide" style="margin-right:40px;">  <span id="count"> </span> &nbsp; <a id="realdelMail"> 완전삭제 </a> </span>
-				 <span style="margin-left:70%;" id="countAll"> </span> <br><br>				
-				 <table align="left" cellspacing="0" width="90%" id="tb">
-					
-					<tr> 
-						<td>&nbsp;&nbsp;<input type="checkbox" name="mail" id=""></td>
-						<td align="left">  <a>이용희 </a>  </td>
-						<td> 그래 집에 보내줄게! 집에 가 ! </td>
-						<td align="right">   2020-10-09  11:32:21 </td>
-					</tr>
-					
-					<tr> 
-						<td>&nbsp;&nbsp;<input type="checkbox" name="mail" id=""></td>
-						<td align="left">  <a>강동우 </a>  </td>
-						<td> 삭제된 메일입니다 ^^ </td>
-						<td align="right">   2020-10-09  04:10:00 </td>
-					</tr>
-					
-				 </table>
+				 <span style="margin-left:50%;" id="countAll"> </span> <br><br>				
+				 
+				 <div id="tableDiv"> 
+					<c:choose>
+				    <c:when test="${!empty list }">
+				        <c:forEach var="ma" items="${list}">
+				        
+						 <table align="left" cellspacing="0" width="90%" id="tb">
+						 
+						 <c:url var="maildetailView" value="maildetailView.do">
+							<c:param name="mailNo" value="${ma.mailNo}" />
+						</c:url>
+						
+						<tr class="trMail" onClick="location.href='${maildetailView}'"> 
+						
+						<c:url var="mailWriteId" value="mailWriteId.do">
+							<c:param name="senderNo" value="${ma.senderNo}" />
+						</c:url>
+						
+							<td>&nbsp;&nbsp;<input type="checkbox" onClick="event.cancelBubble=true" name="mail"></td>
+							<td align="left"><a onClick="event.stopPropagation(); location.href='${mailWriteId}'">${ma.name} < ${ma.sender} > </a></td>
+							<td>${ ma.mTitle }</td>
+							<td align="right"> ${ma.sendDate }</td>
+						</tr>
+						</table>
+					</c:forEach>
+				    </c:when>
+				    
+				    <c:otherwise>
+				      <span> 현재 편지함에 메일이 없습니다. </span>
+				    </c:otherwise>
+				</c:choose>
+				</div>
 			</div>
 			
-			<input id="search" type="text" placeholder="메일 검색"> 
-			<a> 돋보기 </a> <br>
-			
-			<a style="margin-left:35%;">처음</a>
-			<a>이전</a>
-			아무튼 페이징 처리 자리임 ! ^^
-			 
         </div>
         
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.js"></script>
@@ -159,6 +177,8 @@
         $("#realdelMail").click(function(){
         	confirm("완전 삭제하시면 복구 할 수 없습니다. 정말로 삭제하시겠습니까?");
 		});
+        
+        
 
         </script>
 		
