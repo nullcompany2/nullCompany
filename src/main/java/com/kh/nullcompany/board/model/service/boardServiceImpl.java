@@ -71,6 +71,12 @@ public class boardServiceImpl implements boardService {
    }
 
 
+@Override
+public int deleteComment(comment c) {
+	return bDao.deleteComment(c);
+}
+
+
    
    
 

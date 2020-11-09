@@ -21,8 +21,8 @@ public class ApprovalServiceImpl implements ApprovalService {
 	}
 
 	@Override
-	public ArrayList<Document> selectList(int memNo,PageInfo pi) {
-		return null;
+	public ArrayList<Document> selectProgressAllList(int memNo,PageInfo pi) {
+		return aDao.selectProgressAllList(memNo, pi);
 	}
 
 }

@@ -61,5 +61,9 @@ public class boardDao {
       return sqlSession.insert("boardMapper.insertComment",c);
    }
 
+public int deleteComment(comment c) {
+	return sqlSession.update("boardMapper.deleteComment",c);
+}
+
 
 }

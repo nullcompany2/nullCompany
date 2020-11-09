@@ -67,13 +67,10 @@
                                 </tr>
                                 <tr id="info-phone">
                                     <th class="tl">
-										<img src="resources/images/lock-info.jpg" alt="" style="width: 30px; position: absolute;
-										left: 40px;">
 										휴대전화</th>
 									<td class="ts">
-										<input type="text" name="" id="">
-										<input type="checkbox" name="" id="s-phone" class="secret-info">
-										<label for="s-phone" class="s-t">비공개</label>
+										<input type="text" name="" id="" value="${ loginUser. phone }">
+										
 										
 									</td>
 
@@ -84,14 +81,10 @@
                                 </tr>
                                 <tr id="info-personal-email">
                                     <th class="tl">
-										<img src="resources/images/lock-info.jpg" alt="" style="width: 30px; position: absolute;
-										left: 40px;">
-										개인이메일
+										개인 이메일
 									</th>
 									<td class="ts">
-										<input type="text" name="" id="">
-										<input type="checkbox" name="" id="s-email" class="secret-info">
-										<label for="s-email" class="s-t">비공개</label>
+										<input type="text" name="" id="" value="${loginUser.email }">
 									</td>
                                 </tr>
                                 <tr id="info-mem-no">
@@ -104,21 +97,15 @@
                                 </tr>
                                 <tr id="info-birth">
                                     <th class="tl">
-										<img src="resources/images/lock-info.jpg" alt="" style="width: 30px; position: absolute;
-										left: 40px;">
 										생년월일
 									</th>
                                     <td class="ts">
 										${ loginUser.birth}
-										<input type="checkbox" name="" id="s-birth" class="secret-info">
-										<label for="s-birth" class="s-t">비공개</label>
 										
                                     </td>
                                 </tr>
                                 <tr id="info-address">
                                     <th class="tl">
-										<img src="resources/images/lock-info.jpg" alt="" style="width: 30px; position: absolute;
-										left: 40px;">
 										 자택 주소
 									</th>
                                     <td class="ts">
@@ -126,9 +113,6 @@
 										<button type="button" class="save-btn" onclick="openZipSearch()">검색</button><br>
 										<input type="text" name="addr1" style="width:300px; height:30px;" readonly placeholder="도로명 주소"/><br>
 									    <input type="text" name="addr2" style="width:300px; height:30px;" placeholder="상세 주소" />
-
-										<input type="checkbox" name="" id="s-address" class="secret-info">
-										<label for="s-address" class="s-t">비공개</label>
 
                                     </td>
                                 </tr>

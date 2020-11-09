@@ -3,6 +3,7 @@ package com.kh.nullcompany.mail.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,7 +26,6 @@ import org.springframework.web.servlet.mvc.annotation.ModelAndViewResolver;
 import com.kh.nullcompany.common.Pagination;
 import com.kh.nullcompany.mail.model.service.MailService;
 import com.kh.nullcompany.mail.model.vo.Mail;
-import com.kh.nullcompany.mail.model.vo.SaveMail;
 import com.kh.nullcompany.member.controller.MemberController;
 import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.board.model.vo.PageInfo;
@@ -51,12 +51,13 @@ private MailService maService;
 				@RequestParam(value="currentPage",required=false,defaultValue="1") int currentPage) {
 			
 			int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();		
+			String memId = ((Member)session.getAttribute("loginUser")).getId();		
 
 			int listCount = maService.getListCount(memNo);
 
 			PageInfo pi = Pagination.getPageInfo(currentPage,listCount);
 			
-			ArrayList<Mail> list = maService.selectMailReceiveList(pi,memNo);
+			ArrayList<Mail> list = maService.selectMailReceiveList(pi,memId);
 			
 			mv.addObject("list",list);
 			mv.addObject("pi",pi);
@@ -70,18 +71,20 @@ private MailService maService;
 		public ModelAndView mailgosave(ModelAndView mv, Mail ma,HttpServletRequest request,
 				@RequestParam(value="uploadPhoto",required=false)MultipartFile file) {
 			
-				String [] recipientArr = ma.getRecipient().split("<");
-				String [] recipientArr2 = recipientArr[1].split(">");
-				
-				String [] senderArr = ma.getSender().split("<");
-				String [] senderArr2 = senderArr[1].split(">");
-				
-				ma.setRecipient(recipientArr2[0]);
-				ma.setSender(senderArr2[0]);
+			String [] recipientArr = ma.getRecipient().split("<");
+			String [] recipientArr2 = recipientArr[1].split(">");
+			String [] recipientArr3 = recipientArr2[0].split("@");
+			String [] recipientArr4 = recipientArr3[0].split(" ");
 			
+			String [] senderArr = ma.getSender().split("<");
+			String [] senderArr2 = senderArr[1].split(">");
+			String [] senderArr3 = senderArr2[0].split("@");
+			String [] senderArr4 = senderArr3[0].split(" ");
+			
+			ma.setRecipient(recipientArr4[1]);
+			ma.setSender(senderArr4[1]);
 			
 			if(!file.getOriginalFilename().equals("")) {
-
 	         String mailFile = saveMailFile(file,request);
 	         
 	         if(mailFile != null) { 
@@ -120,7 +123,7 @@ private MailService maService;
 
 		      String fileSavePath = folder + File.separator + mailFile;
 		      
-		      System.out.println(mailFile);
+	          System.out.println(mailFile);
 		      System.out.println(fileSavePath);
 		      try {
 		    	  file.transferTo(new File(fileSavePath));
@@ -129,18 +132,66 @@ private MailService maService;
 		      }
 		      return "resources/mailUploadFiles/" + mailFile;
 
-		   }			      
-   // 일단 메일 전송 버튼 누르면 넘어가는 페이지 컨트롤러  
+		   }	
+		
+   // 답장하기 - 보내기 
 	@RequestMapping("sendMail.do")
-		public String mailsend(){
-		return "mail/sendMail";
+	public ModelAndView sendMail(ModelAndView mv, Mail ma,HttpServletRequest request,
+			@RequestParam(value="uploadPhoto",required=false)MultipartFile file) {
+		
+		String [] recipientArr = ma.getRecipient().split("<");
+		String [] recipientArr2 = recipientArr[1].split(">");
+		String [] recipientArr3 = recipientArr2[0].split("@");
+		String [] recipientArr4 = recipientArr3[0].split(" ");
+		
+		String [] senderArr = ma.getSender().split("<");
+		String [] senderArr2 = senderArr[1].split(">");
+		String [] senderArr3 = senderArr2[0].split("@");
+		String [] senderArr4 = senderArr3[0].split(" ");
+		
+		ma.setRecipient(recipientArr4[1]);
+		ma.setSender(senderArr4[1]);
+		
+		if(!file.getOriginalFilename().equals("")) {
+         String mailFile = saveMailFile(file,request);
+         
+         if(mailFile != null) { 
+            ma.setmFileName(mailFile);
+          }
 		}
+		
+		int result = maService.sendMail(ma);
+		
+		if(result > 0 ) {
+			mv.setViewName("mail/sendMail");	
+		}else {
+			mv.addObject("msg", "인서트 실패~ ");
+			mv.setViewName("common/errorPage");	
+		}
+		 return mv;
+	}
 	
-	// 보낸 메일함 리스트 컨트롤러  
+		
+		// 보낸 메일함 리스트 컨트롤러  
 		@RequestMapping("sendMailList.do")
-			public String mailSendList(HttpServletResponse response){
-			return "mail/sendMailList";
-			}
+		public ModelAndView sendMailList(ModelAndView mv, HttpSession session,
+				@RequestParam(value="currentPage",required=false,defaultValue="1") int currentPage) {
+			
+			int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();		
+			String memId = ((Member)session.getAttribute("loginUser")).getId();		
+
+			int listCount = maService.getListCount(memNo);
+
+			PageInfo pi = Pagination.getPageInfo(currentPage,listCount);
+			
+			ArrayList<Mail> list = maService.selectMailSendList(pi,memId);
+			
+			mv.addObject("list",list);
+			mv.addObject("pi",pi);
+			mv.setViewName("mail/sendMailList");
+			
+			return mv;
+		}
 		
 		// 임시보관함 리스트 가져오기   
 		@RequestMapping("saveMailList.do")
@@ -148,12 +199,13 @@ private MailService maService;
 				@RequestParam(value="currentPage",required=false,defaultValue="1") int currentPage) {
 			
 			int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();		
+			String memId = ((Member)session.getAttribute("loginUser")).getId();		
 
 			int listCount = maService.getListCount(memNo);
 
 			PageInfo pi = Pagination.getPageInfo(currentPage,listCount);
 			
-			ArrayList<SaveMail> list = maService. mailSaveList(pi,memNo);
+			ArrayList<Mail> list = maService. mailSaveList(pi,memId);
 			
 			mv.addObject("list",list);
 			mv.addObject("pi",pi);
@@ -162,7 +214,7 @@ private MailService maService;
 			return mv;
 		}
 		
-		// 메일 한개 보기 컨트롤러   
+		// 받은  편지함 메일 한개 보기 컨트롤러   
 		@RequestMapping("maildetailView.do")
 		public ModelAndView mailDetailView(ModelAndView mv,int mailNo){
 			
@@ -174,41 +226,61 @@ private MailService maService;
 			return mv;
 		}
 		
+		// 휴지통 메일 한개 보기 
+		@RequestMapping("delmaildetailView.do")
+		public ModelAndView delMailDetailView(ModelAndView mv, int mailNo) {
+			
+			Mail ma = maService.delMailDetailView(mailNo);
+			
+			mv.addObject("ma",ma);
+			mv.setViewName("mail/delMailDetailView");
+			return mv;
+		}
+		
+		// 보낸 편지함 메일 한개 보기 
+		@RequestMapping("sendMaildetailView.do")
+		public ModelAndView sendMailDetailView(ModelAndView mv,int mailNo){
+			
+			System.out.println(mailNo);
+			Mail ma = maService.sendMailDetailView(mailNo);
+			
+			mv.addObject("ma",ma);
+			mv.setViewName("mail/sendMailDetailView");
+			return mv;
+		}
 		
 		// 리스트 - 아이디 누르고 메일 쓰기 
 		@RequestMapping("mailWriteId.do")
 		public ModelAndView mailWriteId(ModelAndView mv,
-				int senderNo){
+				int memNo){
 			
-			Member m = maService.mailWriteId(senderNo);
+			Member m = maService.mailWriteId(memNo);
 			System.out.println(m);
-			System.out.println(senderNo);
+			System.out.println(memNo);
 			
 			mv.addObject("m",m);
 			mv.setViewName("mail/mailWriteId");
 			
 			return mv;
 			
-		}
-		
+	}
+	
 		// 임시 보관함 메일 한개 보기
 		@RequestMapping("saveDetailView.do")
 		public ModelAndView saveDetailView( ModelAndView mv, int mailNo) {
 			System.out.println(mailNo);
-			SaveMail sma = maService.saveDetailView(mailNo);
-			
-			mv.addObject("ma",sma);
+			Mail ma = maService.saveDetailView(mailNo);
+			System.out.println(ma);
+			mv.addObject("ma",ma);
 			mv.setViewName("mail/saveDetailView");
 			
 			return mv;
 		}
 		
-		
 		// 답장하기 
 		@RequestMapping("mailReply.do")
 		public ModelAndView mailReply(ModelAndView mv, int mailNo){
-			
-			System.out.println(mailNo);
+
 			Mail ma = maService.mailReply(mailNo);
 			
 			mv.addObject("ma",ma);
@@ -260,16 +332,16 @@ private MailService maService;
 		return mv;
 			
 		}
-		
+	
 		// 받은 메일함 리스트에서 삭제 버튼 눌렀을 때 전체삭제 
 		@RequestMapping("allDelMail.do")
 		public String allDelMail( HttpSession session, Model model){
 		
-			int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();		
+			String memId = ((Member)session.getAttribute("loginUser")).getId();		
 
-			int result = maService.allDelMail(memNo);
-//			int upResult = maService.insertAllDelMail() 
-			if(result > 0 ) {
+			int result = maService.allDelMail(memId);
+			
+			if(result > 0) {
 				return "redirect:recieveMail.do";			
 			}else {
 				model.addAttribute("msg", "모든 컬럼 삭제 실패~");
@@ -278,7 +350,7 @@ private MailService maService;
 			
 		}
 		
-		@RequestMapping("RecieveMailbinList.do")
+		@RequestMapping("binMailList.do")
 		public ModelAndView RecieveMailbinList(ModelAndView mv, 
 				HttpSession session,
 				@RequestParam(value="currentPage",required=false,defaultValue="1") int currentPage) throws IOException {
@@ -286,11 +358,11 @@ private MailService maService;
 			String memId = ((Member)session.getAttribute("loginUser")).getId();		
 			int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();		
 
-			int listCount = maService.getListCount(memNo);
+			int listCount = maService.getBinListCount(memId);
 
 			PageInfo pi = Pagination.getPageInfo(currentPage,listCount);
 			
-			ArrayList<Mail> list = maService.RecieveMailbinList(pi,memId);
+			ArrayList<Mail> list = maService.binMailList(pi,memId);
 			
 			mv.addObject("list",list);
 			mv.addObject("pi",pi);
@@ -299,6 +371,5 @@ private MailService maService;
 		return mv;
 			
 		}
-		
 }
 

@@ -22,5 +22,5 @@ public interface ApprovalService {
 	 * @param pi
 	 * @return
 	 */
-	ArrayList<Document> selectList(int memNo, PageInfo pi);
+	ArrayList<Document> selectProgressAllList(int memNo, PageInfo pi);
 }
