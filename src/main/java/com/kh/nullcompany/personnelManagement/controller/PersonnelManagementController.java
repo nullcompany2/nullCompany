@@ -37,14 +37,10 @@ import com.kh.nullcompany.personnelManagement.model.vo.SetAttendance;
 import com.kh.nullcompany.personnelManagement.model.vo.SetLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.TypeLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.TypeUsedLeave;
-import com.sun.org.slf4j.internal.Logger;
-import com.sun.org.slf4j.internal.LoggerFactory;
 	
 @Controller
 public class PersonnelManagementController {
 	
-	// logging	(import-slf4j)
-	private Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
 	@Autowired
 	private PersonnelManagementService pService;
