@@ -1,0 +1,64 @@
+	body {
+            padding: 0px; margin: 0px;
+            box-sizing:board-box;
+            background:#EFEFEF;
+		}
+		
+	#infobox {
+            margin: auto;
+            margin-top: 50px;
+            margin-bottom:40px;
+            width: 600px;
+            height: 760px;
+            text-align:center;
+            background:white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #8E98A4;
+            background:white;
+          
+        }
+        
+        #infobox #title {
+        	font-family: 'Lato', sans-serif;
+        	font-size: 30px; color : #3E4247;
+        }
+
+   	 #infoForm table {
+    	margin : 0px 0px 0px 0px;
+    	padding-top : 40px;
+    	padding-bottom: 40px;
+    	width : 450px;
+    	
+    	}
+    
+    	#infoForm table th {
+    	text-align : left;
+    	}
+
+       input:focus, button:focus {outline:none; }
+
+       #infobox a {
+            text-decoration: none;
+            cursor: pointer;
+            color : #3E4247;
+            font-size: 20px ;
+        }
+        
+       #infobox button{
+            border : none;
+            color: #477A8F;
+            background: none;
+            font-size: 20px ;
+            cursor: pointer;
+            border-radius: 3px;
+            margin-right : 10px;
+             
+        }
+        
+        #emp-photo {
+			height : 130px;
+			width : 130px;
+			border-radius : 80px;
+			margin-top:20px;
+        }
+       

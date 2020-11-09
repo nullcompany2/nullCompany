@@ -2,39 +2,50 @@ package com.kh.nullcompany.mail.model.vo;
 
 public class Mail {
 	
-	private int memNo; 
-	private String name;
+	private int mailNo;
+	private int memNo;
 	private String sender;
 	private String recipient;
 	private String mTitle;
 	private String mFileName;
 	private String mContent;
 	private String sendDate;
-	private String saveStatus;
 	private String mDeleteStatus;
-	private int mailNo;
-	private int senderNo;
+	private String mRealDelStatus;
+	private String mSaveStatus;
 	private int readCount;
+	
+	private String name;
+	private String email;
 	
 	public Mail() {}
 
-	public Mail(int memNo, String name, String sender, String recipient, String mTitle, String mFileName,
-			String mContent, String sendDate, String saveStatus, String mDeleteStatus, int mailNo, int senderNo,
-			int readCount) {
+	public Mail(int mailNo, int memNo, String sender, String recipient, String mTitle, String mFileName,
+			String mContent, String sendDate, String mDeleteStatus, String mRealDelStatus, String mSaveStatus,
+			int readCount, String name, String email) {
 		super();
+		this.mailNo = mailNo;
 		this.memNo = memNo;
-		this.name = name;
 		this.sender = sender;
 		this.recipient = recipient;
 		this.mTitle = mTitle;
 		this.mFileName = mFileName;
 		this.mContent = mContent;
 		this.sendDate = sendDate;
-		this.saveStatus = saveStatus;
 		this.mDeleteStatus = mDeleteStatus;
-		this.mailNo = mailNo;
-		this.senderNo = senderNo;
+		this.mRealDelStatus = mRealDelStatus;
+		this.mSaveStatus = mSaveStatus;
 		this.readCount = readCount;
+		this.name = name;
+		this.email = email;
+	}
+
+	public int getMailNo() {
+		return mailNo;
+	}
+
+	public void setMailNo(int mailNo) {
+		this.mailNo = mailNo;
 	}
 
 	public int getMemNo() {
@@ -43,14 +54,6 @@ public class Mail {
 
 	public void setMemNo(int memNo) {
 		this.memNo = memNo;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getSender() {
@@ -101,14 +104,6 @@ public class Mail {
 		this.sendDate = sendDate;
 	}
 
-	public String getSaveStatus() {
-		return saveStatus;
-	}
-
-	public void setSaveStatus(String saveStatus) {
-		this.saveStatus = saveStatus;
-	}
-
 	public String getmDeleteStatus() {
 		return mDeleteStatus;
 	}
@@ -117,20 +112,20 @@ public class Mail {
 		this.mDeleteStatus = mDeleteStatus;
 	}
 
-	public int getMailNo() {
-		return mailNo;
+	public String getmRealDelStatus() {
+		return mRealDelStatus;
 	}
 
-	public void setMailNo(int mailNo) {
-		this.mailNo = mailNo;
+	public void setmRealDelStatus(String mRealDelStatus) {
+		this.mRealDelStatus = mRealDelStatus;
 	}
 
-	public int getSenderNo() {
-		return senderNo;
+	public String getmSaveStatus() {
+		return mSaveStatus;
 	}
 
-	public void setSenderNo(int senderNo) {
-		this.senderNo = senderNo;
+	public void setmSaveStatus(String mSaveStatus) {
+		this.mSaveStatus = mSaveStatus;
 	}
 
 	public int getReadCount() {
@@ -140,15 +135,31 @@ public class Mail {
 	public void setReadCount(int readCount) {
 		this.readCount = readCount;
 	}
-	
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 	@Override
 	public String toString() {
-		return "Mail [memNo=" + memNo + ", name=" + name + ", sender=" + sender + ", recipient=" + recipient
+		return "Mail [mailNo=" + mailNo + ", memNo=" + memNo + ", sender=" + sender + ", recipient=" + recipient
 				+ ", mTitle=" + mTitle + ", mFileName=" + mFileName + ", mContent=" + mContent + ", sendDate="
-				+ sendDate + ", saveStatus=" + saveStatus + ", mDeleteStatus=" + mDeleteStatus + ", mailNo=" + mailNo
-				+ ", senderNo=" + senderNo + ", readCount=" + readCount + "]";
+				+ sendDate + ", mDeleteStatus=" + mDeleteStatus + ", mRealDelStatus=" + mRealDelStatus
+				+ ", mSaveStatus=" + mSaveStatus + ", readCount=" + readCount + ", name=" + name + ", email=" + email
+				+ "]";
 	}
-	
+
 	
 }
