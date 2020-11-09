@@ -39,7 +39,7 @@ public class ApprovalController {
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
 		
 		// 사용자가 기안자이거나 결재라인에 있는 문서리스트 조회(10개씩)
-		ArrayList<Document> dList = aService.selectList(memNo, pi);
+		ArrayList<Document> dList = aService.selectProgressAllList(memNo, pi);
 		
 		if(dList.isEmpty()) {
 			
