@@ -126,29 +126,15 @@ public interface MailService {
 	 */
 	int getBinListCount(String memId);
 
+	/**
+	 *  휴지통 디테일 뷰 
+	 * @param mailNo
+	 * @return
+	 */
+	Mail delMailDetailView(int mailNo);
 
-//	/**
-//	 * 12. 쓰레기통 from 받은 메일함 
-//	 * @param pi
-//	 * @param memId
-//	 * @return
-//	 */
-//	ArrayList<Mail> RecieveMailbinList(PageInfo pi, String memId);
-//
-//	/**
-//	 *  13. 쓰레기통에 인서트하기전 문서번호 셀렉트 
-//	 * @param memNo
-//	 * @return
-//	 */
-//	ArrayList<Mail> selectRmaNo(int memNo);
-//	
-//	/**
-//	 *  14. 문서번호 리스트 가지고, 맵퍼에 쓰레기통 인서트 하러가기 
-//	 * @param list
-//	 * @param memId 
-//	 * @return
-//	 */
-//	int insertReBin(List<Mail> list);
+
+
 
 	
 	

@@ -66,18 +66,22 @@
         ORDER BY SEND_DATE DESC
 	</select>
 	
-	<!--  보낸 편지함 메일 게시물 한개  -->
+	<!--  받은 편지함 메일 게시물 한개  -->
 	<select id="mailDetailView" parameterType="_int" resultMap="mailResultSet">
-		SELECT R.*, M.NAME, E.EMAIL_ADDRESS
+        SELECT R.*,M.NAME,E.EMAIL_ADDRESS
         FROM MAIL R 
         INNER JOIN MEMBER M ON (R.SENDER = M.ID)
         JOIN EMAIL E ON (R.MEM_NO = E.MEM_NO)
-        WHERE MAIL_NO = #{mailNo}
+        WHERE R.MAIL_NO = #{mailNo}
 	</select>
 	
-	<!--  받은 편지함 메일 게시물 한개  -->
-	<select id="sendMailDetailView " parameterType="_int" resultMap="mailResultSet">
-	
+	<!--  보낸 편지함 메일 게시물 한개  -->
+	<select id="sendMailDetailView" parameterType="_int" resultMap="mailResultSet">
+		SELECT R.*,M.NAME,E.EMAIL_ADDRESS
+        FROM MAIL R 
+        INNER JOIN MEMBER M ON (R.SENDER = M.ID)
+        JOIN EMAIL E ON (R.MEM_NO = E.MEM_NO)
+        WHERE R.MAIL_NO = #{mailNo}
 	</select>
 	
 	<!-- 메일 조회수 +1  -->
@@ -142,6 +146,7 @@
 	    AND MA.MDELETE_STATUS = 'N'
 	</select>
 	
+	<!--  임시보관함 -->
 	<select id="saveMailDetailView" parameterType="_int" resultMap="mailResultSet">
         SELECT MA.*, M.NAME
 	    FROM MAIL MA
@@ -159,5 +164,7 @@
 	     AND MDELETE_STATUS = 'Y'
 	     AND M_REALDEL_STATUS = 'N'
 	</select>
+	
+	
 	 
 </mapper>

@@ -122,6 +122,11 @@ public class MailServiceImpl implements MailService {
 		return maDao.getBinListCount(memId);
 	}
 
+	@Override
+	public Mail delMailDetailView(int mailNo) {
+		return maDao.delMailDetailView(mailNo);
+	}
+
 	
 
 

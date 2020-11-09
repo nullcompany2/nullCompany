@@ -81,11 +81,11 @@
         <div class="contents">
              <div class="contents-title">
               
-             <%--  <c:url var="mailReply" value="mailReply.do">
+              <c:url var="mailReply" value="mailReply.do">
 				<c:param name="mailNo" value="${ma.mailNo}" />
-			  </c:url>  --%>
+			  </c:url>  
               
-                <%-- <a href="${mailReply}"><input type="button" value="답장"/> </a> --%>
+                <a href="${mailReply}"><input type="button" value="답장"/> </a> 
 						<a href=""> <input type="button" value="전달"/></a> 
 						<input  id="delMail" type="button" value="삭제" /> 
 						<input id="realdelMail" type="button" value="완전삭제" />
@@ -95,8 +95,8 @@
 				<span id="viewTitle"> ${ma.mTitle}   </span>	 
 				 <span id="viewdate"> ${ma.sendDate} </span> <br>
 				
-				보낸 사람 : ${ loginUser.name }< ${ loginUser.id }@nullcompany.com ><br> 
-				받는 사람 : ${ma.name} < ${ma.email} > <br> 
+				보낸 사람 : ${ma.sender} < ${ma.email} ><br> 
+				받는 사람 : ${ma.recipient} < ${ma.recipient}@nullcompany.com > <br> 
 				<br> 
 				
 				<div id="viewmailContent"> 

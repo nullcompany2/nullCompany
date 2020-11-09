@@ -111,7 +111,7 @@ public class MailDao {
 	public int allDelMail(String memId) {
 		return sqlSession.update("mailMapper.deleteFromList",memId);
 	}
-
+	
 	public ArrayList<Mail> binMailList(PageInfo pi, String memId) {
 		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
@@ -122,10 +122,10 @@ public class MailDao {
 		return sqlSession.selectOne("mailMapper.getBinListCount",memId);
 	}
 
+	public Mail delMailDetailView(int mailNo) {
+		return sqlSession.selectOne("mailMapper.sendMailDetailView",mailNo);
+	}
 	
-
-	
-
 	
 }
 

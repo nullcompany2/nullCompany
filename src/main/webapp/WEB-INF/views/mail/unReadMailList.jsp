@@ -148,7 +148,7 @@
 				    </c:when>
 				    
 				    <c:otherwise>
-				      <span> 현재 편지함에 메일이 없습니다. </span>
+				      <span> 읽지 않은 메일이 없습니다. </span>
 				    </c:otherwise>
 				</c:choose>
 				</div>

@@ -122,7 +122,7 @@
 						 
 						 <c:url var="maildetailView" value="sendMaildetailView.do">
 							<c:param name="mailNo" value="${ma.mailNo}" />
-						</c:url>
+						 </c:url>
 						
 						<tr class="trMail" onClick="location.href='${maildetailView}'"> 
 						
@@ -136,6 +136,7 @@
 							<td align="right"> ${ma.sendDate }</td>
 						</tr>
 						</table>
+						
 					</c:forEach>
 				    </c:when>
 				    
@@ -248,7 +249,6 @@
 		        }
 
 		});
-        
         
         $("#realdelMail").click(function(){
         	confirm("완전 삭제하시면 복구 할 수 없습니다. 정말로 삭제하시겠습니까?");

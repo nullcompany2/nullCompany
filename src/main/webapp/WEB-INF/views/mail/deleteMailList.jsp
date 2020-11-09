@@ -101,15 +101,14 @@
 				        
 						 <table align="left" cellspacing="0" width="90%" id="tb">
 						 
-						 <c:url var="maildetailView" value="maildetailView.do">
+						 <c:url var="maildetailView" value="delmaildetailView.do">
 							<c:param name="mailNo" value="${ma.mailNo}" />
 						</c:url>
 						
 						<tr class="trMail" onClick="location.href='${maildetailView}'"> 
 						
-						
 							<td>&nbsp;&nbsp;<input type="checkbox" onClick="event.cancelBubble=true" name="mail"></td>
-							<td align="left">< ${ma.sender} ></td>
+							<td align="left">${ma.name} < ${ma.sender} ></td>
 							<td>${ ma.mTitle }</td>
 							<td align="right"> ${ma.sendDate }</td>
 						</tr>

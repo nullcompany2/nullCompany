@@ -226,6 +226,17 @@ private MailService maService;
 			return mv;
 		}
 		
+		// 휴지통 메일 한개 보기 
+		@RequestMapping("delmaildetailView.do")
+		public ModelAndView delMailDetailView(ModelAndView mv, int mailNo) {
+			
+			Mail ma = maService.delMailDetailView(mailNo);
+			
+			mv.addObject("ma",ma);
+			mv.setViewName("mail/delMailDetailView");
+			return mv;
+		}
+		
 		// 보낸 편지함 메일 한개 보기 
 		@RequestMapping("sendMaildetailView.do")
 		public ModelAndView sendMailDetailView(ModelAndView mv,int mailNo){
@@ -237,6 +248,7 @@ private MailService maService;
 			mv.setViewName("mail/sendMailDetailView");
 			return mv;
 		}
+		
 		// 리스트 - 아이디 누르고 메일 쓰기 
 		@RequestMapping("mailWriteId.do")
 		public ModelAndView mailWriteId(ModelAndView mv,
@@ -258,7 +270,7 @@ private MailService maService;
 		public ModelAndView saveDetailView( ModelAndView mv, int mailNo) {
 			System.out.println(mailNo);
 			Mail ma = maService.saveDetailView(mailNo);
-			
+			System.out.println(ma);
 			mv.addObject("ma",ma);
 			mv.setViewName("mail/saveDetailView");
 			
