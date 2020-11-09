@@ -37,14 +37,10 @@ import com.kh.nullcompany.personnelManagement.model.vo.SetAttendance;
 import com.kh.nullcompany.personnelManagement.model.vo.SetLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.TypeLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.TypeUsedLeave;
-import com.sun.org.slf4j.internal.Logger;
-import com.sun.org.slf4j.internal.LoggerFactory;
 	
 @Controller
 public class PersonnelManagementController {
 	
-	// logging	(import-slf4j)
-	private Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
 	@Autowired
 	private PersonnelManagementService pService;
@@ -328,7 +324,6 @@ public class PersonnelManagementController {
 		
 		
 		int dListCount = pService.dListCount(forsearchYM);
-		System.out.println(dListCount);
 		PageInfo pi = Pagination.getPageInfoForModal(currentPage, dListCount);
 		
 		ArrayList<RecordDiligence> dList = pService.searchDiligenceYM(forsearchYM,pi);
@@ -336,6 +331,7 @@ public class PersonnelManagementController {
 		Map list = new HashMap();
 		list.put("dList",dList);
 		list.put("pi",pi);
+		list.put("dListCount",dListCount);
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(list,response.getWriter());
 	}

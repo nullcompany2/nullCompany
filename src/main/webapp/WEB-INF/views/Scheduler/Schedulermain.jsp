@@ -83,6 +83,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 	      navLinks: true, // can click day/week names to navigate views
 	      businessHours: true, // display business hours
 	      editable: true,
+	      eventOverlap : true,
 	      events: [
 	    	
 	    	  <c:forEach items="${ScheduleList}" var="ScheduleList">
@@ -132,7 +133,14 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 							<div>
 
 								<button id="sche_add"
-									style="border: none; border-radius: 3px; background: #477A8F; color: white; font-size: 20px; width: 90%; height: 50px; margin-left: 12px;">
+									style="border: none;
+								    border-radius: 3px;
+								    background: #477A8F;
+								    color: white;
+								    font-size: 20px;
+								    width: 100%;
+								    height: 50px;
+								    margin-left: -2px;">
 									일정 추가</button>
 							</div>
 						</div>
@@ -146,9 +154,20 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 										<div class="input-group">
 											<!-- <select class="filter" id="type_filter" multiple="multiple"> -->
 											<c:forEach var="IndividualCalList" items="${ IndividualCalList }">
-												<input type="checkbox" name="sche_cate" value="${ IndividualCalList.calNo }">
-												${ IndividualCalList.calName }</input>
-											<a>수정</a><br> 
+												<div style="width: 14px;
+												    height: 14px;
+												    position: absolute;
+												    right: 72px;
+												    margin-top: 9px;
+												    border-radius: 70px;
+												    background: ${ IndividualCalList.color } "></div>
+												<div>
+												<input type="checkbox" name="sche_cate" 
+												value="${ IndividualCalList.calNo }" id="${ IndividualCalList.calNo }">
+												<label id="chela" for="${ IndividualCalList.calNo }">
+												<span>${ IndividualCalList.calName }</span>
+												</label></input>
+											<a>수정</a></div> 
 											</c:forEach>
 											<!-- </select> -->
 										</div></li>
@@ -161,9 +180,20 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 										<div class="input-group">
 										
 											<c:forEach var="publicCalList" items="${ publicCalList }">
-												<input type="checkbox" name="sche_cate" value="${ publicCalList.calNo }">
-												${ publicCalList.calName }</input>
-											<a>수정</a><br> 
+													<div style="width: 14px;
+												    height: 14px;
+												    position: absolute;
+												    right: 72px;
+												    margin-top: 9px;
+												    border-radius: 70px;
+												    background: ${ publicCalList.color } "></div>
+												<div>
+												<input type="checkbox" name="sche_cate" 
+												value="${ publicCalList.calNo }" id="${ publicCalList.calNo }">
+												<label id="chela" for="${ publicCalList.calNo }">
+												<span>${ publicCalList.calName }</span>
+												</label></input>
+											<a>수정</a></div> 
 											</c:forEach>
 											
 									
@@ -183,7 +213,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 
 				<div class="contents" style="width: 1000px;">
 					<div class="contents-title">
-						<span class="ct1">일정관리</span>
+						<span class="ct1">일정관리</span> 
 
 						<form action=""
 							style="float: right; position: absolute; right: -130px; top: 10px;">
@@ -520,10 +550,100 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 						</div>
 						
 					</div>
+					
+					<!-- 일정 디테일 모달 -->
+
+					<div id="detail_modal" class="modal-dragscroll">
+						<h4 style="color: #477A8F; margin-bottom: 15px;">일정 내용</h4>
+						<table class="detailtb">
+							<thead>
+								<tr>
+									<th class="tbcontent" style="width: 100px; padding-top: 5px;"><label
+										for="" style="font-size: 14px;">캘린더</label></th>
+									<th class="tbcontent"><p class="tbinput" id="de_cal_name">ddd</p><div id="cal_color" style="width:20px; height:20px"></div></th>
+									<th class="tbcontent" style="width: 120px;">
+										<div id="perimg">
+											<img src="resources/images/detail_count.png"
+												style="width: 50px; height: 25px;position: absolute; top: 65px;">
+												<span id="DeMemCount"></span>
+										</div>
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td class="tbcontent" style="width: 100px; padding-top: 5px;"><label
+										for="" style="font-size: 14px;">일정제목</label></td>
+									<td class="tbcontent" colspan="2"><p class="tbinput" id="de_sche_name" style="width: 130px;">dd</p></td>
+								</tr>
+								<tr>
+									<td class="tbcontent" style="width: 100px; padding-top: 5px;">일정
+										시간</td>
+									<td class="tbcontent" colspan="2"><p class="tbinput" id="de_sche_day">sd</p></td>
+								</tr>
+								<tr>
+									<td class="tbcontent" style="width: 100px; padding-top: 5px;">내용</td>
+									<td class="tbcontent" colspan="2"><p class="tbinput" id="de_sche_content"
+											style="width: 245px; height: 100px;">sdf</p></td>
+								</tr>
+							</tbody>
+						</table>
+
+						<div style="text-align: center;">
+							<button
+								style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">확인</button>
+							<button class="modal-close-btn cursor"
+								style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">취소</button>
+						</div>
+					</div>
 
 
 
 				</div>
+				
+	<script>
+
+      // 일정 디테일
+         $(document).on("click", ".fc-content", function(){
+        	modal('detail_modal');
+            console.log($(this).find('span:eq(1)').text());
+            
+            var Sche_name = $(this).find('span:eq(1)').text();
+            var Sche_color = document.getElementById("cal_color");
+            $.ajax({
+				url : "detailSchedule.do",
+				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+				data : { Sche_name : Sche_name },
+				dataType: "json",
+				async: false,
+				success : function(data){
+					
+					console.log("디테일 성공시"+ data);
+            		$("#de_cal_name").text(data.Cal_name);
+            		$("#de_sche_name").text(data.Sche_name);
+            		$("#de_sche_day").text(data.startdate + " " + data.starttime + " ~ " + data.enddate + " " + data.endtime);
+            		$("#de_sche_content").text(data.Sche_content);
+            		Sche_color.style.backgroundColor = data.color;
+            		console.log(data.color);
+            		$("#DeMemCount").text(data.memcount); 
+            		
+            	
+            
+            		
+				},
+				error: function(request,status,error){
+					console.log(request);
+					console.log(status);
+					console.log(error);
+				}
+			})
+			
+
+		});
+      
+         
+
+	</script>
 <script>
 	// 일정 추가 db
 	 $("#ajaxsche_add").on('click',function () {

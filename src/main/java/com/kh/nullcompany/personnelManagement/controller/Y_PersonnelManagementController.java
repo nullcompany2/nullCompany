@@ -27,8 +27,6 @@ import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.personnelManagement.model.service.Y_PersonnelManagementService;
 import com.kh.nullcompany.personnelManagement.model.vo.Department;
 import com.kh.nullcompany.personnelManagement.model.vo.Rank;
-import com.sun.org.slf4j.internal.Logger;
-import com.sun.org.slf4j.internal.LoggerFactory;
 
 @Controller
 public class Y_PersonnelManagementController {
@@ -146,10 +144,5 @@ public class Y_PersonnelManagementController {
 		return "personnel_management/assignManager";
 	}
 
-//	// 일정관리
-//	@RequestMapping("Schedulermain.do")
-//	public String Schedulermain(HttpServletResponse response) {
-//		return "personnel_Scheduler/Schedulermain";
-//	}
 
 }

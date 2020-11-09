@@ -2,6 +2,7 @@ package com.kh.nullcompany.schedule.model.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import com.kh.nullcompany.personnelManagement.model.vo.Department;
 import com.kh.nullcompany.schedule.model.dao.ScheduleDao;
 import com.kh.nullcompany.schedule.model.vo.Calendar;
 import com.kh.nullcompany.schedule.model.vo.CalendarMember;
+import com.kh.nullcompany.schedule.model.vo.DetailSchedule;
 import com.kh.nullcompany.schedule.model.vo.Schedule;
 
 @Service("sService")
@@ -111,6 +113,23 @@ public class ScheduleServiceImpl implements ScheduleService {
 	@Override
 	public ArrayList<Schedule> ScheduleList() {
 		return sDao.ScheduleList();
+	}
+
+	@Override
+	public Schedule detailSchedule(String sche_name) {
+		return sDao.detailSchedule(sche_name);
+	}
+
+	@Override
+	public String getCalmemCount(String sche_name) {
+		return sDao.getCalmemCount(sche_name);
+		
+	}
+
+	@Override
+	public int updateCalCountMember(Map map) {
+		return sDao.updateCalCountMember(map);
+		
 	}
 
 
