@@ -27,15 +27,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 	}
 
 	@Override
-	public ArrayList<Step> selectProgressStep(int memNo, String docTempNo) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Step> selectStepList(String docTempNo) {
+		return aDao.selectStepList(docTempNo);
 	}
-
-	@Override
-	public int stepListCount(String docTempNo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 }

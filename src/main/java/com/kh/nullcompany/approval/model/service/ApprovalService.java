@@ -31,12 +31,6 @@ public interface ApprovalService {
 	 * @param docTempNo
 	 * @return
 	 */
-	ArrayList<Step> selectProgressStep(int memNo, String docTempNo);
+	ArrayList<Step> selectStepList(String docTempNo);
 
-	/**
-	 * 1_4. 진행 중인 문서 ----> 문서에 속한 결재자 수 조회
-	 * @param docTempNo
-	 * @return
-	 */
-	int stepListCount(String docTempNo);
 }
