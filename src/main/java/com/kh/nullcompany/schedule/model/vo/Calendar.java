@@ -14,6 +14,7 @@ public class Calendar {
 	private int mem_no;
 	private int cal_type_no;
 	
+	
 
 
 	public Calendar() {
@@ -75,7 +76,7 @@ public class Calendar {
 
 	@Override
 	public String toString() {
-		return "Calendar [calNo=" + mem_name + calNo + ", calName=" + calName + ", color=" + color + ", enrollMember="
+		return "Calendar [calNo=" + cal_type_no + mem_name + calNo + ", calName=" + calName + ", color=" + color + ", enrollMember="
 				+ enrollMember + ", lookMember=" + lookMember + "]";
 	}
 

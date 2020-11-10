@@ -44,6 +44,8 @@ public interface ScheduleService {
 
 	ArrayList<Calendar> DetailCalmemberList(String cal_name);
 
+	Schedule editDetailSchedule(String sche_name);
+
 
 
 
