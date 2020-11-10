@@ -10,6 +10,10 @@ public class Calendar {
 	private String enrollMember;
 	private String lookMember;
 	private int cal_type;
+	private String mem_name;
+	private int mem_no;
+	private int cal_type_no;
+	
 	
 
 
@@ -72,7 +76,7 @@ public class Calendar {
 
 	@Override
 	public String toString() {
-		return "Calendar [calNo=" + calNo + ", calName=" + calName + ", color=" + color + ", enrollMember="
+		return "Calendar [calNo=" + cal_type_no + mem_name + calNo + ", calName=" + calName + ", color=" + color + ", enrollMember="
 				+ enrollMember + ", lookMember=" + lookMember + "]";
 	}
 
@@ -82,6 +86,36 @@ public class Calendar {
 
 	public void setCal_type(int cal_type) {
 		this.cal_type = cal_type;
+	}
+
+	public String getMem_name() {
+		return mem_name;
+	}
+
+	public void setMem_name(String mem_name) {
+		this.mem_name = mem_name;
+	}
+
+	public int getMem_no() {
+		return mem_no;
+	}
+
+	public void setMem_no(int mem_no) {
+		this.mem_no = mem_no;
+	}
+
+	/**
+	 * @return the cal_type_no
+	 */
+	public int getCal_type_no() {
+		return cal_type_no;
+	}
+
+	/**
+	 * @param cal_type_no the cal_type_no to set
+	 */
+	public void setCal_type_no(int cal_type_no) {
+		this.cal_type_no = cal_type_no;
 	}
 
 

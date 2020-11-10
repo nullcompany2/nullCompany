@@ -497,7 +497,13 @@ header #logo span {
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -524,7 +530,13 @@ header #logo span {
 
 
 
+
+
+
  
+
+
+
 
 
 
@@ -564,7 +576,16 @@ margin-left
 
 
 
+
+
+
+
+
+
 :
+
+
+
 
 
 
@@ -590,8 +611,17 @@ margin-left
 
 
 
+
+
+
 0
 .75em
+
+
+
+
+
+
 
 
 
@@ -642,7 +672,16 @@ background-color
 
 
 
+
+
+
+
+
+
 :
+
+
+
 
 
 
@@ -668,7 +707,16 @@ background-color
 
 
 
+
+
+
 #477A8F
+
+
+
+
+
+
 
 
 
@@ -1088,7 +1136,14 @@ background-color
 }
 
 #detail_modal .modal-close-btn {
-	
+	position: absolute;
+    top: 4px;
+    right: 14px;
+    font-size: 19px;
+    background: white;
+    border: none;
+    color: #2C3E50;
+    font-weight: bold;
 }
 
 .detailtb {
@@ -1152,9 +1207,57 @@ background-color
 
 #chela span {
 	display: inline-block;
-    width: 90px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    position: absolute;
-    margin-left: 5px;
+	width: 90px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	position: absolute;
+	margin-left: 5px;
+}
+
+#com_detailmodal {
+	width: 501px;
+	height: 435px;
+	padding: 35px 60px;
+	background-color: #fefefe;
+	border: 1px solid #888;
+	border-radius: 3px;
+}
+
+#enrollauthority2 {
+	height: 200px;
+	width: 180px;
+	border: #888 solid 1px;
+	top: -65px;
+	overflow-y: auto;
+	position: relative;
+}
+
+#lookauthority2 {
+    height: 200px;
+    width: 180px;
+    border: #888 solid 1px;
+    left: 195px;
+    overflow-y: auto;
+    position: relative;
+    top:-292px;
+}
+
+#enrollnameDetail span{
+	float : left;
+	margin-left : 7px
+}
+
+#looknameDetail span{
+	float : left;
+	margin-left : 7px
+}
+
+#editsche_modal {
+	display: none;
+	width: 550px;
+	height: 481px;
+	padding: 10px 60px;
+	background-color: #fefefe;
+	border: 1px solid #888;
+	border-radius: 3px;
 }

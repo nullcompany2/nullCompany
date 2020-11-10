@@ -40,6 +40,9 @@
 		<result property="enrollMember" column="ENROLL_MEM" />
 		<result property="lookMember" column="LOOK_MEM" />
 		<result property="calNo" column="CAL_NO" />
+		<result property="mem_name" column="NAME" />
+		<result property="mem_no" column="MEM_NO" />
+		<result property="cal_type_no" column="CAL_MEM_TYPE" />
 	</resultMap>
 
 	<resultMap id="CalendarMemberResultSet" type="CalendarMember">
@@ -167,4 +170,25 @@
 		SET MEMCOUNT = #{memcount}
 		WHERE SCHE_NAME = #{Sche_name}
 	</update>
+	
+	<!-- 등록 조회 멤버 리스트임  -->
+	<select id="DetailCalmemberList" resultMap="CalendarResultSet" parameterType="Calendar">
+		SELECT C.*, CM.*, M.NAME, M.MEM_NO
+		FROM CALENDAR C		
+        JOIN CALENDAR_MEMBER CM ON CM.CAL_NO = C.CAL_NO
+        JOIN MEMBER M ON CM.CAL_MEM = M.MEM_NO
+        WHERE C.CAL_NAME = #{cal_name}
+	</select>
+	
+	
+	<select id="editDetailSchedule" resultType="Schedule" parameterType="Schedule">
+    	SELECT S.SCHE_NO, S.SCHE_NAME, C.CAL_NAME, S.STARTDATE, S.STARTTIME, S.MEMCOUNT,
+        S.ENDDATE, S.ENDTIME, S.SCHE_CONTENT, C.CAL_NO, C.COLOR, C.CAL_TYPE
+		FROM SCHEDULE S
+		JOIN CALENDAR C ON S.CAL_NAME = C.CAL_NAME
+        JOIN CALENDAR_MEMBER CM ON CM.CAL_NO = C.CAL_NO
+        WHERE S.SCHE_NAME = #{Sche_name}
+        GROUP BY S.SCHE_NO, S.SCHE_NAME, C.CAL_NAME, S.STARTDATE, S.STARTTIME, S.MEMCOUNT,
+        S.ENDDATE, S.ENDTIME, S.SCHE_CONTENT, C.CAL_NO, C.COLOR, C.CAL_TYPE
+   </select>
 </mapper>
