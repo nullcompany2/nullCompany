@@ -113,6 +113,7 @@
 							<td align="right"> ${ma.sendDate }</td>
 						</tr>
 						</table>
+						
 					</c:forEach>
 				    </c:when>
 				    

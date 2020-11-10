@@ -212,7 +212,7 @@
 									
 								</table>
 							</div>
-							<input type="button" value="적용" class="save-btn cursor" >
+							<input type="button" value="적용" class="save-btn cursor" id="saveBtn">
 						</div>
 					</form>
 				</div>
@@ -223,35 +223,65 @@
     
     <script >
     	
-    	var newLeaveArr = Array();
+    	var newLeaveArr = new  Array();
+    	var setAnnualLeave = new  Array();
     	var newLeaveCount = 1;
-    	
+    	var firstyear;
     	$(function(){
     		if(${setLeave[0].firstyear} == 0){
     			$("#use-fy").attr('checked','true');
+    			firstyear = 0 ;
     		}else{
     			$("#n-use-fy").attr('checked','true');
+    			firstyear = 1 ;
     		}
     	});
     	
-    	$(".save-btn").click(function(){
-    		var setAnnualLeave = new Array();
-    		
+    	$("#saveBtn").click(function(){
     		for(var i =1; i<=38; i++){
+    			var data = new Object();
     			
-	    		setAnnualLeave.push($("#N"+i).val());
+    			var num ="N" + i;
+    			
+    			data.year= num;
+    			data.days = $("#N"+i).val();
+	    		setAnnualLeave.push(data);
     		}
     		console.log(setAnnualLeave);
     		
     		for(var j =1; j<newLeaveCount; j++){
-    			console.log($("#"+j+"annual").is(":checked"));
+    			var data = new Object();
+    			var name ;
+    			var able ;
+    			var useAnnual;
     			
-    			var newLeave = Array();
-    			newLeave.push($("#"+j+"Name").val(),$("#"+j+"able option:selected").val(),$("#"+j+"annual").is(":checked"));
-    			newLeaveArr.push(newLeave);
-    			console.log(newLeave);
-    			console.log(newLeaveArr);
+    			var newLeave = Object();
+    			
+    			data.name = $("#"+j+"Name").val();
+    			data.able = $("#"+j+"able option:selected").val();
+    			data.useAnnual = $("#"+j+"annual").is(":checked");
+    			 
+    			newLeaveArr.push(data);
+    			
     		}
+   			for(var i = 0; i < newLeaveArr.length; i++){
+   				console.log(newLeaveArr[i]);
+   			}
+    		//newLeaveArr : newLeaveArr, setAnnualLeave : setAnnualLeave, firstyear : firstyear
+    		$.ajax({
+    			url: "fixSetLeave.do",
+    			data : {firstyear : firstyear,setAnnualLeave : JSON.stringify(setAnnualLeave),newLeaveArr :  JSON.stringify(newLeaveArr)},
+    			type : "post",
+    			dataType:"json",
+    			success:function(data){
+					console.log(data);
+				},
+				error: function(request,status,error){
+					console.log(request);
+					console.log(status);
+					console.log(error);
+				}
+    		});
     		
     	});
     	

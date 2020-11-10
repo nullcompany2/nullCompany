@@ -158,6 +158,8 @@ public interface PersonnelManagementService {
 	int dListCount(Map forsearchYM);
 	// 휴가설정 기본
 	ArrayList<SetLeave> setLeaveStandard();
+	// 휴가설정 저장
+	int fixSetLeave(ArrayList newLeaveArr, ArrayList setAnnualLeave, int firstyear);
 	
 	
 }

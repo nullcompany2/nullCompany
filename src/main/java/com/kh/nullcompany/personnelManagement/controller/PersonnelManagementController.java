@@ -7,6 +7,7 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,7 +24,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonIOException;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.common.Pagination;
 import com.kh.nullcompany.member.model.vo.Member;
@@ -407,7 +412,7 @@ public class PersonnelManagementController {
 
 	// 휴가 관리-기본설정
 	@RequestMapping("setLeaveStandard.do")
-	public ModelAndView setLeaveStandard(ModelAndView mv, HttpServletResponse response) {
+	public ModelAndView setLeaveStandard(ModelAndView mv) {
 		
 		ArrayList<SetLeave> setLeave = pService.setLeaveStandard();
 		System.out.println(setLeave);
@@ -419,7 +424,53 @@ public class PersonnelManagementController {
 		mv.setViewName("personnel_management/setLeaveStandard");
 		return mv;
 	}
+////////////////////////////////////////////////**********강사님 여기요!/////////////////////////////jsp는 setLeaveStandard입니ㅏㄷ./////
+	// 휴가 관리 설정저장용
+	@ResponseBody
+	@RequestMapping(value="fixSetLeave.do")
+	public void fixSetLeave(String firstyear, String setAnnualLeave,  String newLeaveArr , HttpServletResponse response) throws JsonIOException, IOException{
+		String str = "311aa";
+		System.out.println(setAnnualLeave);
+		System.out.println(newLeaveArr);
+		System.out.println(firstyear);
+		
+		// 구글의 json paser 라이브러리
+		Gson Gson = new Gson();
 
+		 // jsonPaserPser 클래스 객체를 만들고 해당 객체에 
+		JsonParser jparser = new JsonParser();
+
+//		// param의 id 오브젝트 -> 문자열 파싱 -> jsonElement 파싱
+//		   JsonElement elementId = jparser.parser(setAnnualLeave.get("year").toString());
+//		   JsonElement elementPw = jparser.parser(setAnnualLeave.get("days").toString()); 
+//
+////		// JsonElement -> List<String>으로 파싱
+//		   List <String> idList = Gson.fromJson(elementId, (new TypeToken<List<String>>() {  }).getType());
+//		   List <String> pwList = Gson.fromJson(elementId, (new TypeToken<List<String>>() {  }).getType());
+		   
+		// param의 id 오브젝트 -> 문자열 파싱 -> jsonElement 파싱
+		JsonElement elementId = jparser.parse(setAnnualLeave.toString());
+
+//		// JsonElement -> List<String>으로 파싱
+		List <String> idList = Gson.fromJson(elementId, (new TypeToken<List<String>>() {  }).getType());
+		
+		
+//		System.out.println(newLeaveArr);
+//		for(int i =0; i < newLeaveArr.size();i++) {
+//			for(int j =0; j<3; j++) {
+//				System.out.println(newLeaveArr);
+//			}
+//		}
+//		
+//		int result = pService.fixSetLeave(newLeaveArr,setAnnualLeave,firstyear);
+		// javascript에서 배열형태의 객체를 json형태로 controller로 전달
+		// controller에서는 json문자열을 다시 자바객체(ex 배열) 형태로 다시 바꿔서 값을처리행한다.
+		
+	   Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+	   gson.toJson(str,response.getWriter());
+		   
+	}
+	
 	// 휴가 관리 -직원 휴가 관리
 	@RequestMapping("emLeaveManagement.do")
 	public String emLeaveManagement(HttpServletResponse response) {
