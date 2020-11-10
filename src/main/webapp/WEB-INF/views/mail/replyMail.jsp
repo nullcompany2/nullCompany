@@ -116,9 +116,9 @@ a:active {
 						<input type="submit" id="saveMail"  value="저장하기"/>
 						<input type="button" value="이전으로" onClick="location.href='javascript:history.go(-1);'" /> <br>
 						&nbsp;보내는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-						<input type="text" name="sender" style="width: 60%;" value= "${loginUser.name} <${loginUser.id}> "readonly/> <br>
+						<input type="text" name="sender" style="width: 60%;" value= "${loginUser.name} < ${loginUser.id}@nullcompany.com > "readonly/> <br>
 						&nbsp;받는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="text" name="recipient" style="width: 60%;" value= "${ma.name} <${ma.sender}>" readonly/>
+						<input type="text" name="recipient" style="width: 60%;" value= "${ma.name} < ${ma.email} >" readonly/>
 							  <span style="font-size: 17px; background: #477A8F; color: white; padding: 0px 8px 0px 8px;">+</span>
 						<br> &nbsp;&nbsp;제목
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

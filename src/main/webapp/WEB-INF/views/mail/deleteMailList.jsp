@@ -72,7 +72,9 @@
 		color:#477A8F;
 	}
 	
-
+	#hide {
+	display : none;}
+	
 </style>
 
 
@@ -87,14 +89,7 @@
 			<!--여기다가 만들기 -->
 			<br> 
 				&nbsp;&nbsp;<input type="checkbox" id="checkall"> 
-				&nbsp;&nbsp;<span style="color:#477A8F;" id="select"> 보기 : 
-				<select name="listOption" id="listOption"> 
-							<option selected> 받은 편지함 </option>
-							<option>  보낸 편지함 </option>
-							<option> 임시 보관함  </option>
-						</select> &nbsp;
-				</span> 
-						
+				&nbsp;&nbsp;
 				&nbsp;&nbsp;
 				<span id="hide" style="margin-right:40px;">  <span id="count"> </span> &nbsp; <a id="realdelMail"> 완전삭제 </a> </span>
 				 <span style="margin-left:50%;" id="countAll"> </span> <br><br>				
@@ -106,18 +101,14 @@
 				        
 						 <table align="left" cellspacing="0" width="90%" id="tb">
 						 
-						 <c:url var="maildetailView" value="maildetailView.do">
+						 <c:url var="maildetailView" value="delmaildetailView.do">
 							<c:param name="mailNo" value="${ma.mailNo}" />
 						</c:url>
 						
 						<tr class="trMail" onClick="location.href='${maildetailView}'"> 
 						
-						<c:url var="mailWriteId" value="mailWriteId.do">
-							<c:param name="senderNo" value="${ma.senderNo}" />
-						</c:url>
-						
 							<td>&nbsp;&nbsp;<input type="checkbox" onClick="event.cancelBubble=true" name="mail"></td>
-							<td align="left"><a onClick="event.stopPropagation(); location.href='${mailWriteId}'">${ma.name} < ${ma.sender} > </a></td>
+							<td align="left">${ma.name} < ${ma.sender} ></td>
 							<td>${ ma.mTitle }</td>
 							<td align="right"> ${ma.sendDate }</td>
 						</tr>
@@ -131,6 +122,40 @@
 				</c:choose>
 				</div>
 			</div>
+			<table style=" margin: 10px 0px 0px 80px; width: 80%; border-collapse: collapse">
+			<!-- 페이징처리 -->
+			<tr align="center" height="20">
+				<td colspan="6" align="center">
+					<!-- [이전] --> <c:if test="${ pi.currentPage eq 1 }">
+						이전 &nbsp;
+					</c:if> <c:if test="${ pi.currentPage ne 1 }">
+						<c:url var="before" value="rbinMailList.do">
+							<c:param name="currentPage" value="${ pi.currentPage - 1 }" />
+						</c:url>
+						<a href="${ before }">이전</a> &nbsp;
+					</c:if> <!-- 페이지 --> <c:forEach var="p" begin="${ pi.startPage }"
+						end="${ pi.endPage }">
+						<c:if test="${ p eq pi.currentPage }">
+							<font color="#477A8F" size="3"><b>${ p }</b> </font>
+						</c:if>
+
+						<c:if test="${ p ne pi.currentPage }">
+							<c:url var="pagination" value="binMailList.do">
+								<c:param name="currentPage" value="${ p }" />
+							</c:url>
+							<a href="${ pagination }">${ p }</a> &nbsp;
+						</c:if>
+					</c:forEach> <!-- [다음] --> <c:if test="${ pi.currentPage eq pi.maxPage }">
+						다음
+					</c:if> <c:if test="${ pi.currentPage ne pi.maxPage }">
+						<c:url var="after" value="binMailList.do">
+							<c:param name="currentPage" value="${ pi.currentPage + 1 }" />
+						</c:url>
+						<a href="${ after }">다음</a>
+					</c:if>
+				</td>
+			</tr>
+		</table>
 			
         </div>
         
@@ -149,7 +174,8 @@
                 if($("#checkall").prop("checked")){
                     //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
                     $("input[name=mail]").prop("checked",true);
-                    $("tr").css("background","#ECECEC");
+                    $("#tableDiv tr").css("background","#ECECEC");
+                    $("#hide").show();
                   
                     var count = $("input:checkbox[name=mail]:checked").length;
                    	$("#count").text(count);
@@ -158,19 +184,18 @@
                 }else{
                     //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
                     $("input[name=mail]").prop("checked",false);
-                    $("tr").css("background","white");
+                    $("#tableDiv tr").css("background","white");
+                    $("#hide").hide();
                    
                 }
             })
         })
 	
         $(document).ready(function(){
-		   $('table tr').mouseover(function(){
+		   $('#tableDiv tr').mouseover(function(){
 		      $(this).css("cursor","pointer");
 		   });
-		   $('table tr').mouseout(function(){
-		      $(this).css("font-weight","normal");
-		   });
+		   
 		});
 
         

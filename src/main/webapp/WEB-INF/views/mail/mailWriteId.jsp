@@ -118,18 +118,18 @@ a:active {
 						 <a href="javascript:history.go(-1);"> 
 						 <input type="button" value="이전으로" /></a> <br>
 						 &nbsp;보내는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-						<input type="text" name="me" style="width: 60%;" value= "${loginUser.name} <${loginUser.id}>" readonly/> <br>
+						<input type="text" name="sender" style="width: 60%;" value= "${loginUser.name} <${loginUser.id}@nullcompany.com>" readonly/> <br>
 						&nbsp;받는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="text" name="writer" style="width: 60%;" value= "${m.name} <${m.id}>" readonly/>
+						<input type="text" name="recipient" style="width: 60%;" value= "${m.name} <${m.emailAddress}>" readonly/>
 							  <span style="font-size: 17px; background: #477A8F; color: white; padding: 0px 8px 0px 8px;">+</span>
 						<br> &nbsp;&nbsp;제목
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						&nbsp;<input type="text" name="title" style="width: 60%;"
+						&nbsp;<input type="text" name="mTitle" style="width: 60%;"
 							placeholder="제목 없음" /> <br>
 						&nbsp;파일첨부&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<input type="file" name="file" />
 						<br> <br> 
-						<textarea id="summernote" name="content"></textarea>
+						<textarea id="summernote" name="mContent"></textarea>
 					</form>
 				</div>
 			</div>

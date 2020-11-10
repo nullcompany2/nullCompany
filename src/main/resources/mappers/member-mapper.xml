@@ -25,6 +25,7 @@
       <result property="deptName" column="DEPT_NAME"/>
       <result property="rankName" column="RANK_NAME"/>
       <result property="sAccess" column="S_ACCESS"/>
+      <result property="emailAddress" column="EMAIL_ADDRESS"/>
    </resultMap>
 
 	<!--  로그인  -->
@@ -66,10 +67,11 @@
    
    <!--  메일 보낼시 멤버 정보 가져오기 -->
    <select id="mailWriteId" parameterType="_int" resultMap="memberResultSet">
-	 SELECT *
-     FROM MEMBER
-     WHERE MEM_NO = #{senderNo}
-     AND M_STATUS = 'Y'
+		SELECT M.* , E.EMAIL_ADDRESS
+        FROM MEMBER M
+        JOIN EMAIL E ON (M.MEM_NO = E.MEM_NO)
+        WHERE M.MEM_NO = #{memNo}
+        AND M.M_STATUS = 'Y'
 	</select>
 	
 	

@@ -171,5 +171,18 @@ public class boardController {
             return "fail";
          }
       }
+      
+      @ResponseBody
+      @RequestMapping("deleteComment.do")
+      public String deleteComment(comment c) {
+         
+         int result = bService.insertComment(c);
+         
+         if(result > 0) {
+            return "success";
+         }else {
+            return "fail";
+         }
+      }
 
 }

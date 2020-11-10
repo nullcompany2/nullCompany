@@ -1,0 +1,125 @@
+body {
+            font-family: "Noto Sans KR", sans-serif;
+            padding: 0px; margin: 0px;
+            box-sizing:board-box;
+            background:#EFEFEF;
+		}
+		
+	#infobox {
+            margin: auto;
+            margin-top: 50px;
+            margin-bottom:40px;
+            width: 600px;
+            height: 890px;
+            text-align:center;
+            background:white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #8E98A4;
+            background:white;
+        }
+        
+        #infobox #title {
+        	font-family: 'Lato', sans-serif;
+        	font-size: 30px; color : #3E4247;
+        
+        }
+
+	 #infoForm table {
+    	padding-top : 40px;
+    	padding-bottom: 40px;
+    }
+    
+    #infoForm table th {
+    	text-align : left;
+    }
+    
+    .infoForm {
+        width: 700px;
+    }
+
+    #infobox input{
+            border: none;
+            border: 1px solid #477A8F;
+           	font-size : 16px;
+            height: 25px;
+            border-radius: 3px;
+            padding:0px 7px;
+            
+        }
+        
+        textarea {
+         border: none;
+         border: 1px solid #477A8F;
+         font-size : 16px;
+          border-radius: 3px;
+          padding:7px 7px;
+        
+        
+        }
+        input:focus, button:focus {outline:none; }
+
+		input[type="text"]span {
+		font-family: 'Lato', sans-serif;
+			}
+
+        #infobox a {
+            text-decoration: none;
+            cursor: pointer;
+            color : #3E4247;
+            font-size: 20px ;
+        }
+        #infobox button{
+            border : none;
+            color: #477A8F;
+            background: none;
+            font-size: 20px ;
+            cursor: pointer;
+            border-radius: 3px;
+            margin-right : 10px;
+          
+             
+        }
+        
+        #save {
+          margin-left:-15%;
+        }
+        
+        span.guide{display:none; font-size:12px; top:12px; right:10px;}
+		span.ok{color: #477A8F;}
+		span.error{color:red;}
+		
+		span.guide1{display:none; font-size:12px; top:12px; right:10px;}
+		span.ok1{color: #477A8F;}
+		span.error1{color:red;}
+		
+		
+		#imgLabel {
+		position:relative;
+		width:130px;
+		}
+		
+		#imagePreview img,
+		#emp-photo {
+		
+		height : 130px;
+		width : 130px;
+		border-radius : 80px;
+		cursor:pointer;
+		transition: all ease 0.7s 0s;
+		
+		}
+		
+		#imagePreview img:hover,
+		#emp-photo:hover {
+		filter: brightness(40%);
+		
+		}
+		
+		#imagePreview #addText {
+		position:absolute;
+		display:none;
+		top:42%;
+		left:48%;
+		color:white;
+		transition: all ease 0.7s 0s;
+		}

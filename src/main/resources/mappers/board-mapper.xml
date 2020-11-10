@@ -1,99 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="boardMapper">
-   <resultMap id="boardResultSet" type="board">
-      <id property="bNo" column="BNO"/>
-      <result property="bTitle" column="BTITLE"/>
-      <result property="bWriter" column="BWRITER"/>
-      <result property="bContent" column="BCONTENT"/>
-      <result property="bCount" column="BCOUNT"/>
-      <result property="originalFileName" column="ORIGINAL_FILENAME"/>
-      <result property="renameFileName" column="RENAME_FILENAME"/>
-      <result property="bCreateDate" column="B_CREATE_DATE"/>
-      <result property="bModifyDate" column="B_MODIFY_DATE"/>
-      <result property="bStatus" column="B_STATUS"/>
-      <result property="bImportant" column="B_IMPORTANT"/>
-      <result property="bSave" column="B_SAVE"/>
-      <result property="bType" column="BTYPE"/>
-   </resultMap>
-   
-   <!-- comment resultSet추가 부분 -->
-   <resultMap type="comment" id="commentResultSet">
-      <id property="cNo" column="CNO"/>
-      <result property="cContent" column="CCONTENT"/>
-      <result property="refBno" column="REF_BNO"/>
-      <result property="cWriter" column="CWRITER"/>
-      <result property="cCreateDate" column="C_CREATE_DATE"/>
-      <result property="cModifyDate" column="C_MODIFY_DATE"/>
-      <result property="cStatus" column="C_STATUS"/>
-   </resultMap>
-   
-   <select id="getListCount" resultType="_int">
-      SELECT COUNT(*)
-      FROM BOARD
-      WHERE B_STATUS='Y'
-   </select>
-   
-   
-   
-   <select id="selectListImport" resultMap="boardResultSet">
-      SELECT *
-      FROM BOARD
-      WHERE B_STATUS='Y'
-      AND B_IMPORTANT='Y'
-      ORDER BY BNO DESC
-   </select>
-   
-   <select id="selectListAll" resultMap="boardResultSet">
-      SELECT *
-      FROM BOARD
-      WHERE B_STATUS='Y'
-      AND BTYPE='사내공지'
-      ORDER BY BNO DESC
-   </select>
-   
-   <select id="selectListTeam" resultMap="boardResultSet">
-      SELECT *
-      FROM BOARD
-      WHERE B_STATUS='Y'
-      AND BTYPE='팀내공지'
-      ORDER BY BNO DESC
-   </select>
-   
-   <select id="selectListFree" resultMap="boardResultSet">
-      SELECT *
-      FROM BOARD
-      WHERE B_STATUS='Y'
-      AND BTYPE='자유게시판'
-      ORDER BY BNO DESC
-   </select>
-   
-   <update id="updateCount" parameterType="_int">
-      UPDATE BOARD
-      SET BCOUNT = BCOUNT +1
-      WHERE BNO=#{bNo}
-   </update>
-   
-   <select id="selectBoard" resultMap="boardResultSet">
-      SELECT *
-      FROM BOARD
-      WHERE BNO=#{bNo}
-      AND B_STATUS='Y'
-   </select>
-   
-   
-   <select id="selectCommentList" parameterType="_int" 
-                         resultMap="commentResultSet">
-      SELECT * 
-      FROM BCOMMENT
-      WHERE REF_BNO=#{bNo}
-      AND C_STATUS='Y'
-      ORDER BY CNO DESC
-   </select>
-   
-   <insert id="insertComment" parameterType="comment">
-      INSERT INTO BCOMMENT VALUES
-      (SEQ_CNO.NEXTVAL, #{cContent},#{refBno},#{cWriter},SYSDATE,SYSDATE,DEFAULT)
-   </insert>
-   
+	<resultMap id="boardResultSet" type="board">
+		<id property="bNo" column="BNO" />
+		<result property="bTitle" column="BTITLE" />
+		<result property="bWriter" column="BWRITER" />
+		<result property="bContent" column="BCONTENT" />
+		<result property="bCount" column="BCOUNT" />
+		<result property="originalFileName" column="ORIGINAL_FILENAME" />
+		<result property="renameFileName" column="RENAME_FILENAME" />
+		<result property="bCreateDate" column="B_CREATE_DATE" />
+		<result property="bModifyDate" column="B_MODIFY_DATE" />
+		<result property="bStatus" column="B_STATUS" />
+		<result property="bImportant" column="B_IMPORTANT" />
+		<result property="bSave" column="B_SAVE" />
+		<result property="bType" column="BTYPE" />
+	</resultMap>
+
+	<!-- comment resultSet추가 부분 -->
+	<resultMap type="comment" id="commentResultSet">
+		<id property="cNo" column="CNO" />
+		<result property="cContent" column="CCONTENT" />
+		<result property="refBno" column="REF_BNO" />
+		<result property="cWriter" column="CWRITER" />
+		<result property="cCreateDate" column="C_CREATE_DATE" />
+		<result property="cModifyDate" column="C_MODIFY_DATE" />
+		<result property="cStatus" column="C_STATUS" />
+	</resultMap>
+
+	<select id="getListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM BOARD
+		WHERE B_STATUS='Y'
+	</select>
+
+
+
+	<select id="selectListImport" resultMap="boardResultSet">
+		SELECT *
+		FROM BOARD
+		WHERE B_STATUS='Y'
+		AND B_IMPORTANT='Y'
+		ORDER BY BNO DESC
+	</select>
+
+	<select id="selectListAll" resultMap="boardResultSet">
+		SELECT *
+		FROM BOARD
+		WHERE B_STATUS='Y'
+		AND BTYPE='사내공지'
+		ORDER BY BNO DESC
+	</select>
+
+	<select id="selectListTeam" resultMap="boardResultSet">
+		SELECT *
+		FROM BOARD
+		WHERE B_STATUS='Y'
+		AND BTYPE='팀내공지'
+		ORDER BY BNO DESC
+	</select>
+
+	<select id="selectListFree" resultMap="boardResultSet">
+		SELECT *
+		FROM BOARD
+		WHERE B_STATUS='Y'
+		AND BTYPE='자유게시판'
+		ORDER BY BNO DESC
+	</select>
+
+	<update id="updateCount" parameterType="_int">
+		UPDATE BOARD
+		SET BCOUNT = BCOUNT +1
+		WHERE BNO=#{bNo}
+	</update>
+
+	<select id="selectBoard" resultMap="boardResultSet">
+		SELECT *
+		FROM BOARD
+		WHERE BNO=#{bNo}
+		AND B_STATUS='Y'
+	</select>
+
+
+	<select id="selectCommentList" parameterType="_int"
+		resultMap="commentResultSet">
+		SELECT *
+		FROM BCOMMENT
+		WHERE REF_BNO=#{bNo}
+		ORDER BY CNO ASC
+	</select>
+
+	<insert id="insertComment" parameterType="comment">
+		INSERT INTO BCOMMENT VALUES
+		(SEQ_CNO.NEXTVAL, #{cContent},#{refBno},#{cWriter},SYSDATE,SYSDATE,DEFAULT)
+	</insert>
+
+	<delete id="deleteComment" parameterType="int">
+
+		DELETE FROM BCOMMENT
+
+		WHERE
+
+			CNO = #{cNo}
+
+	</delete>
+
+
+
+	
+
 </mapper>

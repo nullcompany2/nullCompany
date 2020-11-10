@@ -25,7 +25,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.common.Pagination;
-import com.kh.nullcompany.member.controller.MemberController;
 import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.personnelManagement.model.service.PersonnelManagementService;
 import com.kh.nullcompany.personnelManagement.model.vo.Department;
@@ -37,14 +36,10 @@ import com.kh.nullcompany.personnelManagement.model.vo.SetAttendance;
 import com.kh.nullcompany.personnelManagement.model.vo.SetLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.TypeLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.TypeUsedLeave;
-import com.sun.org.slf4j.internal.Logger;
-import com.sun.org.slf4j.internal.LoggerFactory;
 	
 @Controller
 public class PersonnelManagementController {
 	
-	// logging	(import-slf4j)
-	private Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
 	@Autowired
 	private PersonnelManagementService pService;
@@ -82,7 +77,7 @@ public class PersonnelManagementController {
 			}
 			
 		}else {
-			workyear = "N"+period.getYears();			
+			workyear = "N"+period.getYears()+1;			
 			// 생성된 연차
 			annualLeave = pService.leaveCalculate(workyear);
 		}
@@ -212,7 +207,7 @@ public class PersonnelManagementController {
 			}
 			
 		}else {
-			workyear = "N"+period.getYears();			
+			workyear = "N"+period.getYears()+1;			
 			// 생성된 연차
 			annualLeave = pService.leaveCalculate(workyear);
 		}
@@ -416,6 +411,10 @@ public class PersonnelManagementController {
 		
 		ArrayList<SetLeave> setLeave = pService.setLeaveStandard();
 		System.out.println(setLeave);
+		
+		ArrayList<TypeLeave> leaveList = pService.typeLeave();
+		System.out.println(leaveList);
+		mv.addObject("leaveList",leaveList);
 		mv.addObject("setLeave",setLeave);
 		mv.setViewName("personnel_management/setLeaveStandard");
 		return mv;

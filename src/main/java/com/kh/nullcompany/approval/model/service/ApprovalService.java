@@ -3,6 +3,7 @@ package com.kh.nullcompany.approval.model.service;
 import java.util.ArrayList;
 
 import com.kh.nullcompany.approval.model.vo.Document;
+import com.kh.nullcompany.approval.model.vo.Step;
 import com.kh.nullcompany.board.model.vo.PageInfo;
 
 public interface ApprovalService {
@@ -22,5 +23,20 @@ public interface ApprovalService {
 	 * @param pi
 	 * @return
 	 */
-	ArrayList<Document> selectList(int memNo, PageInfo pi);
+	ArrayList<Document> selectProgressAllList(int memNo, PageInfo pi);
+
+	/**
+	 * 1_3. 진행 중인 문서 -----> 게시판 스텝 조회(리스트 상태값 뽑기)
+	 * @param memNo
+	 * @param docTempNo
+	 * @return
+	 */
+	ArrayList<Step> selectProgressStep(int memNo, String docTempNo);
+
+	/**
+	 * 1_4. 진행 중인 문서 ----> 문서에 속한 결재자 수 조회
+	 * @param docTempNo
+	 * @return
+	 */
+	int stepListCount(String docTempNo);
 }

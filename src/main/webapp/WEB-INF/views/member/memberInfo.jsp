@@ -4,78 +4,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>myInfoView</title>
+	<meta charset="UTF-8">
+	<title>myInfoView</title>
+	<link rel="stylesheet" href="<c:url value="/resources/css/memberInfo.css"/>">
 </head>
-<style>
-	
-	body {
-            padding: 0px; margin: 0px;
-            box-sizing:board-box;
-            background:#EFEFEF;
-		}
-		
-	#infobox {
-            margin: auto;
-            margin-top: 50px;
-            margin-bottom:40px;
-            width: 600px;
-            height: 750px;
-            text-align:center;
-            background:white;
-            border-radius: 10px;
-            box-shadow: 0 0 10px #8E98A4;
-            background:white;
-          
-        }
-        
-        #infobox #title {
-        	font-family: 'Lato', sans-serif;
-        	font-size: 30px; color : #3E4247;
-        	
-        
-        }
 
-    .infoForm {
-        width: 700px;
-    }
-    
-    #infoForm table {
-    	padding-top : 40px;
-    	padding-bottom: 40px;
-    	
-    	width : 600px;
-    }
-
-       input:focus, button:focus {outline:none; }
-
-       #infobox a {
-            text-decoration: none;
-            cursor: pointer;
-            color : #3E4247;
-            font-size: 20px ;
-        }
-       #infobox button{
-            border : none;
-            color: #477A8F;
-            background: none;
-            font-size: 20px ;
-            cursor: pointer;
-            border-radius: 3px;
-            margin-right : 10px;
-            margin-left:-10%;
-             
-        }
-        
-        
-        #emp-photo {
-		height : 130px;
-		width : 130px;
-		border-radius : 80px;
-		 margin-top:20px;
-        }
-       
-    </style>
     
     <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <body>
@@ -88,70 +21,70 @@
    			<br>
    			<img src="${ loginUser.photo }" alt="" id="emp-photo">
             <div>
-                <div class="infoForm" align="center">
+                <div align="center">
                     <form action="mupdate.do" method="post" id="infoForm">
                        <table cellspacing="4" >
                        
                        	<tr>
-                             <td width="100">사번</td>
+                             <th width="100" >사번</th>
                              <td>
 	                                ${ loginUser.memNo}
                              </td>
                           </tr>
                           <tr>
-                           <td >입사일</td>
+                             <th> 입사일 </th>
                              <td>
 	                                ${ loginUser.enrollDate}
                              </td>
                           </tr>
                            <tr></tr><tr></tr><tr></tr>
                           <tr>
-                             <td>아이디</td>
+                             <th> 아이디 </th>
                              <td>
 	                                ${ loginUser.id}
                              </td>
                           </tr>
                           <tr>
-                             <td>이름</td>
+                           	 <th> 이름 </th>
                              <td>${ loginUser.name} </td>
                           </tr>
                           <tr>
-                             <td>부서 </td>
+                           	 <th> 부서 </th>
                              <td>${ loginUser.deptName }부</td>
                           </tr>
                           <tr>
-                             <td>직급</td>
+                             <th> 직급 </th>
                              <td>${ loginUser.rankName }</td>
                           </tr>
                           <tr>
-                             <td>생년월일</td>
+                             <th> 생년월일 </th>
                              <td>${ loginUser.birth}</td>            
                           </tr>
                           <tr>
-                             <td>이메일</td>
+                             <th> 이메일 </th>
                              <td>
 								${ loginUser.id} @nullcompany.com                             
                              </td>
                           </tr>
                           <tr>
-                             <td>개인 이메일</td>
+                             <th> 개인 이메일 </th>
                              <td>
                              ${ loginUser.email}
                              </td>
                           </tr>
                           <tr>
-                             <td>휴대전화</td>
+                             <th> 휴대전화 </th>
                              <td> ${ loginUser.phone} </td>
                           </tr>
                           
                           <tr>
-                             <td>자택 주소</td>
+                          	 <th> 자택 주소 </th>
                              <td> ${ loginUser.address}
                              </td>
                           </tr>
                           
                           <tr> 
-                          	<td> 자기소개 </td>
+                             <th> 자기소개 </th>
                           	<td> ${ loginUser.myInfo } </td>
                           </tr>
                       

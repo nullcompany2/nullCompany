@@ -116,19 +116,19 @@ a:active {
 						<input type="submit" id="saveMail"  value="저장하기"/>
 						<input type="button" value="이전으로" onClick="location.href='javascript:history.go(-1);'" /> <br>
 						&nbsp;보내는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-						<input type="text" name="sender" style="width: 60%;" value= "${loginUser.name} <${loginUser.id}> "/> <br>
+						<input type="text" name="sender" style="width: 60%;" value= "${loginUser.name} < ${loginUser.id}@nullcompany.com > "/> <br>
 						&nbsp;받는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="text" name="recipient" style="width: 60%;" value= "${ma.name} <${ma.recipient}>"/>
+						<input type="text" name="recipient" style="width: 60%;" value= "${ma.name} < ${ma.recipient}@nullcompany.com >"/>
 							  <span style="font-size: 17px; background: #477A8F; color: white; padding: 0px 8px 0px 8px;">+</span>
 						<br> &nbsp;&nbsp;제목
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						&nbsp;<input type="text" name="mTitle" style="width: 60%;"
-							placeholder="제목 없음" value="${ma.sTitle}"/> <br>
+							placeholder="제목 없음" value="${ma.mTitle}"/> <br>
 						&nbsp;파일첨부&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<input type="file" name="uploadPhoto" />
 						<br> <br> 
 						<textarea id="summernote" name="mContent">
-						${ma.sContent}
+						${ma.mContent}
 						
 						 </textarea>
 					</form>
@@ -144,7 +144,7 @@ a:active {
 		<hr>
 			<p>메일 제목 : <span id="modalTitle"> 제목없음 </span></p>
 			<p>
-				보낸 사람 : ${ loginUser.name }< ${ loginUser.id } >
+				보낸 사람 : ${ loginUser.name }< ${ loginUser.id } @nullcompany.com >
 				
 			</p>
 			<p>받는 사람 : <span id="modalRecipient"> </span></p>
@@ -216,13 +216,11 @@ a:active {
     $('.go2').on('click', function() {
     	
     	// 메일 제목 input val 옮기기 
-       	$("#modalTitle").text($("input:text[name='title']").val());
+       	$("#modalTitle").text($("input:text[name='mtitle']").val());
     	// 메일 받는 사람 input val 옮기기 
-       	$("#modalRecipient").text($("input:text[name='writer']").val());
+       	$("#modalRecipient").text($("input:text[name='recipient']").val());
     	
     	var modalContent2 = $("#summernote").val();
-    	/* .replace(/<\/?[^>]+(>|$)/g, ""); */
-    	/* modalContent = modalContent.substring(3); */
     	
     	// 메일 summernote textarea val 옮기기 
     	var modalContent = document.getElementById('modalContent');
