@@ -129,9 +129,7 @@
 				function leaveCalculate(){
 					
 					var edate = "<%= ((Member)session.getAttribute("loginUser")).getEnrollDate()%>";
-					console.log(edate);
 					var mem_no = ${loginUser.memNo};
-					console.log(mem_no);
 					$.ajax({
 						url : "leaveCalculate.do",
 						data : {enDate : edate, memNo : mem_no },

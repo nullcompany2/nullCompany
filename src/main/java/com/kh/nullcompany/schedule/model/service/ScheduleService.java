@@ -42,6 +42,8 @@ public interface ScheduleService {
 
 	int updateCalCountMember(Map map);
 
+	ArrayList<Calendar> DetailCalmemberList(String cal_name);
+
 
 
 

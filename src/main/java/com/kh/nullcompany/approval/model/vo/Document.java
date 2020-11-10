@@ -21,15 +21,11 @@ public class Document {
 	private String fileName;          // 첨부파일명
 	private Date draftDate;           // 기안일
 	private Date completeDate;        // 완료일
-	private int staffNo;              // 결재할 사원번호
+	private int turnNo;               // 결재순서
 	private String rStatus;           // 문서 반려여부
 	private String dStatus;           // 문서 삭제여부
-	
-	private ArrayList<Step> stepList; // 결재할 사원 리스트
-	
-	private Leave leaveInfo;          // 휴가 정보(휴가 문서일 경우)
-	private Absence absenceInfo;      // 휴직 정보(휴직 문서일 경우)
-	private Resign resignInfo;        // 사직 정보(사직 문서일 경우)
+	private String sStatus;           // 사용자가 보는 상태값
+	private int stepCount;            // 문서 결재자 수
 	
 	public Document() {
 		super();
@@ -38,9 +34,8 @@ public class Document {
 
 	public Document(String docTempNo, String docNo, int formNo, String formName, String formCode, int drafterNo,
 			String drafterName, int drafterDeptNo, String drafterDeptName, int drafterRankNo, String drafterRankName,
-			String dTitle, String dContent, String fileName, Date draftDate, Date completeDate, int staffNo,
-			String rStatus, String dStatus, ArrayList<Step> stepList, Leave leaveInfo, Absence absenceInfo,
-			Resign resignInfo) {
+			String dTitle, String dContent, String fileName, Date draftDate, Date completeDate, int turnNo,
+			String rStatus, String dStatus, String sStatus, int stepCount) {
 		super();
 		this.docTempNo = docTempNo;
 		this.docNo = docNo;
@@ -58,13 +53,11 @@ public class Document {
 		this.fileName = fileName;
 		this.draftDate = draftDate;
 		this.completeDate = completeDate;
-		this.staffNo = staffNo;
+		this.turnNo = turnNo;
 		this.rStatus = rStatus;
 		this.dStatus = dStatus;
-		this.stepList = stepList;
-		this.leaveInfo = leaveInfo;
-		this.absenceInfo = absenceInfo;
-		this.resignInfo = resignInfo;
+		this.sStatus = sStatus;
+		this.stepCount = stepCount;
 	}
 
 	public String getDocTempNo() {
@@ -195,12 +188,12 @@ public class Document {
 		this.completeDate = completeDate;
 	}
 
-	public int getStaffNo() {
-		return staffNo;
+	public int getTurnNo() {
+		return turnNo;
 	}
 
-	public void setStaffNo(int staffNo) {
-		this.staffNo = staffNo;
+	public void setTurnNo(int turnNo) {
+		this.turnNo = turnNo;
 	}
 
 	public String getrStatus() {
@@ -219,36 +212,20 @@ public class Document {
 		this.dStatus = dStatus;
 	}
 
-	public ArrayList<Step> getStepList() {
-		return stepList;
+	public String getsStatus() {
+		return sStatus;
 	}
 
-	public void setStepList(ArrayList<Step> stepList) {
-		this.stepList = stepList;
+	public void setsStatus(String sStatus) {
+		this.sStatus = sStatus;
 	}
 
-	public Leave getLeaveInfo() {
-		return leaveInfo;
+	public int getStepCount() {
+		return stepCount;
 	}
 
-	public void setLeaveInfo(Leave leaveInfo) {
-		this.leaveInfo = leaveInfo;
-	}
-
-	public Absence getAbsenceInfo() {
-		return absenceInfo;
-	}
-
-	public void setAbsenceInfo(Absence absenceInfo) {
-		this.absenceInfo = absenceInfo;
-	}
-
-	public Resign getResignInfo() {
-		return resignInfo;
-	}
-
-	public void setResignInfo(Resign resignInfo) {
-		this.resignInfo = resignInfo;
+	public void setStepCount(int stepCount) {
+		this.stepCount = stepCount;
 	}
 
 	@Override
@@ -258,8 +235,8 @@ public class Document {
 				+ ", drafterDeptNo=" + drafterDeptNo + ", drafterDeptName=" + drafterDeptName + ", drafterRankNo="
 				+ drafterRankNo + ", drafterRankName=" + drafterRankName + ", dTitle=" + dTitle + ", dContent="
 				+ dContent + ", fileName=" + fileName + ", draftDate=" + draftDate + ", completeDate=" + completeDate
-				+ ", staffNo=" + staffNo + ", rStatus=" + rStatus + ", dStatus=" + dStatus + ", stepList=" + stepList
-				+ ", leaveInfo=" + leaveInfo + ", absenceInfo=" + absenceInfo + ", resignInfo=" + resignInfo + "]";
+				+ ", turnNo=" + turnNo + ", rStatus=" + rStatus + ", dStatus=" + dStatus + ", sStatus=" + sStatus
+				+ ", stepCount=" + stepCount + "]";
 	}
 
 	

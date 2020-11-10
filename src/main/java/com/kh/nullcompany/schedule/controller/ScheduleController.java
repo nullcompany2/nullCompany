@@ -11,11 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.binding.MapperMethod.ParamMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -115,8 +118,6 @@ public class ScheduleController {
 
 		System.out.println("내 캘린더" + Schedule);
 
-
-
 	}
 	
 	// 일정 디테일
@@ -141,5 +142,19 @@ public class ScheduleController {
 	}
 	
 	// 일정 디테일 총 인원 수
+
+
+	@RequestMapping("detailCalMember.do" )
+	public void detailCalMember(@Param("cal_name") String cal_name, Model model , HttpServletResponse response) throws JsonIOException, IOException {
+		ArrayList<Calendar> DetailCalmemberList = sService.DetailCalmemberList(cal_name);
+		
+		System.out.println("멤버 리스트" + DetailCalmemberList);
+		response.setContentType("application/json; charset=UTF-8");
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		gson.toJson(DetailCalmemberList,response.getWriter());
+	
+	}
+
+
 
 }

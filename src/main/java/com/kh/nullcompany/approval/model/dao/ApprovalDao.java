@@ -25,7 +25,7 @@ public class ApprovalDao {
 		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
 		
-		return null;
+		return (ArrayList)sqlSession.selectList("approvalMapper.selectProgressAllList",memNo, rowBounds);
 	}
 
 }

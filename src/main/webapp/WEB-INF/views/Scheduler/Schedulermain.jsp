@@ -560,7 +560,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 								<tr>
 									<th class="tbcontent" style="width: 100px; padding-top: 5px;"><label
 										for="" style="font-size: 14px;">캘린더</label></th>
-									<th class="tbcontent"><p class="tbinput" id="de_cal_name">ddd</p><div id="cal_color" style="width:20px; height:20px"></div></th>
+									<th class="tbcontent"><p class="tbinput" id="de_cal_name"></p><div id="cal_color" style="width:20px; height:20px"></div></th>
 									<th class="tbcontent" style="width: 120px;">
 										<div id="perimg">
 											<img src="resources/images/detail_count.png"
@@ -574,17 +574,17 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 								<tr>
 									<td class="tbcontent" style="width: 100px; padding-top: 5px;"><label
 										for="" style="font-size: 14px;">일정제목</label></td>
-									<td class="tbcontent" colspan="2"><p class="tbinput" id="de_sche_name" style="width: 130px;">dd</p></td>
+									<td class="tbcontent" colspan="2"><p class="tbinput" id="de_sche_name" style="width: 130px;"></p></td>
 								</tr>
 								<tr>
 									<td class="tbcontent" style="width: 100px; padding-top: 5px;">일정
 										시간</td>
-									<td class="tbcontent" colspan="2"><p class="tbinput" id="de_sche_day">sd</p></td>
+									<td class="tbcontent" colspan="2"><p class="tbinput" id="de_sche_day"></p></td>
 								</tr>
 								<tr>
 									<td class="tbcontent" style="width: 100px; padding-top: 5px;">내용</td>
 									<td class="tbcontent" colspan="2"><p class="tbinput" id="de_sche_content"
-											style="width: 245px; height: 100px;">sdf</p></td>
+											style="width: 245px; height: 100px;"></p></td>
 								</tr>
 							</tbody>
 						</table>
@@ -597,6 +597,76 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 						</div>
 					</div>
 
+
+					<!-- 일정 멤버 모달 -->
+					<div id="com_detailmodal" class="modal-dragscroll">
+						<h4 style="color: #477A8F; margin-bottom: 15px;">공유 캘린더</h4>
+
+						<label for="" style="font-size: 14px;">캘린더 이름 </label>
+						&nbsp;&nbsp; <input type="text" id="detailmodalCalname"> &nbsp; <br> <div style="width: 20px;
+						    height: 20px;
+						    background-color: red;
+						    position: absolute;
+						    right: 125px;
+						    top: 82px;
+						    border-radius: 10px;"></div>
+						<br>
+						<br>
+
+						<div style="text-align: center;height: 200px;">
+
+							<label
+								style="    font-size: 12px;
+								    color: #477A8F;
+								    top: -47px;
+								    margin-left: 5px;
+								    position: relative;
+								    left: -150px;">
+								<등록권한>
+							</label>
+							<div id="enrollauthority2">
+
+								<p id="enrollnameDetail"
+									style="width: 100px; font-size: 12px; position: absolute; top: 10px; ">
+									
+									</p>
+
+
+							</div>
+
+
+							<label
+								style="font-size: 12px;
+							    color: #477A8F;
+							    top: -274px;
+							    margin-left: 5px;
+							    position: relative;
+							    right: -45px;">
+								<조회권한>
+							</label>
+
+							<div id="lookauthority2">
+
+								<p id="looknameDetail"
+									style="width: 100px; font-size: 12px; position: absolute; top: 10px;"></p>
+
+							</div>
+
+
+							<div style="position: absolute; bottom: 40px; left: 260px;">
+								<button class="modal-close-btn cursor"
+									style="background: #fff;
+								    color: #2c86dc;
+								    padding: 5px 27px 6px;
+								    border: 1px solid #c8c8c8;
+								    width: 100px;
+								    position: relative;
+    								right: 63px;">확인</button>
+							</div>
+
+						</div>
+						
+					</div>
 
 
 				</div>
@@ -641,6 +711,9 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 
 		});
       
+      
+      
+      
          
 
 	</script>
@@ -684,7 +757,41 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 		 
 	 });
 	 
+	// 일정 멤버 
 	
+	
+	 $("#perimg").on('click',function () {
+		 
+		 var cal_name = $("#de_cal_name").text();
+	     
+		 $.ajax({
+             url: "detailCalMember.do",
+             type: "post",
+             dataType:"json",
+             data: {"cal_name" : cal_name},
+             success: function (data) {
+                 console.log("멤버 리스트");
+                 
+                 for(var i=0 in data){
+                	 if(data[i].cal_type_no = 1){
+                		 $("#enrollnameDetail").append("<span>" + data[i].mem_name + "<" + data[i].mem_no + ">" + "</span><br>");   
+                		 $("#looknameDetail").append("<span>" + data[i].mem_name + "<" + data[i].mem_no + ">" + "</span><br>");   
+                	 }
+                     
+                       }     
+                 
+                 $("#detailmodalCalname").text(data.calName);
+
+             },
+             error: function (request,
+                 status, error) {
+                 console.log("멤버"+ error);
+                 
+             }
+
+         })
+		 
+	 });
 	</script>
 	<script>
     // 내 캘린더 추가 
@@ -810,7 +917,58 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
              bg.remove();
              modal.hide();
           });
+       
+       modal.show().find('#perimg')
+       .on('click', function() {
+           bg.remove();
+           modal.hide();
+        });
+       
     }
+  
+  function modal2(id) {
+      var zIndex = 9999;
+      var modal = $('#' + id);
+
+      // 모달 div 뒤에 희끄무레한 레이어
+             var bg = $('<div>')
+          .css({
+             position: 'fixed',
+             zIndex: zIndex,
+             left: '0px',
+             top: '0px',
+             width: '100%',
+             height: '100%',
+             overflow: 'auto',
+             // 레이어 색갈은 여기서 바꾸면 됨
+             backgroundColor: 'rgba(0,0,0,0.4)'
+          })
+          .appendTo('body');
+ 
+
+      modal
+         .css({
+            position: 'fixed',
+            boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+
+            // 시꺼먼 레이어 보다 한칸 위에 보이기
+            zIndex: zIndex + 1,
+
+            // div center 정렬
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            msTransform: 'translate(-50%, -50%)',
+            webkitTransform: 'translate(-50%, -50%)'
+         })
+         .show()
+         // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
+         .find('.modal-close-btn')
+         .on('click', function() {
+            modal.hide();
+            bg.remove();
+         });
+   }
      $('#sche_add').on('click', function() {
        // 모달창 띄우기
        modal('addsche_modal');
@@ -824,6 +982,16 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
          // 공유 캘린더 모달창 띄우기
          modal('communitymodal');
       });
+
+     
+     $('#perimg').on('click', function() {
+         // 공유 캘린더 모달창 띄우기
+         modal2('com_detailmodal');
+         $("#detail_modal").hide();
+        
+        
+      });
+     
      
     
      
@@ -924,7 +1092,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
  window.onload = function(){
  init();
  init2();
- 
+
  }
 
  
@@ -1003,6 +1171,10 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 						document.getElementById(target2.id).className += " active2";
 						beforeColor = target2.id;
 					}
+					
+					
+
+				
 				</script>
 
 

@@ -132,6 +132,11 @@ public class ScheduleServiceImpl implements ScheduleService {
 		
 	}
 
+	@Override
+	public ArrayList<Calendar> DetailCalmemberList(String cal_name) {
+		return sDao.DetailCalmemberList(cal_name);
+	}
+
 
 
 }

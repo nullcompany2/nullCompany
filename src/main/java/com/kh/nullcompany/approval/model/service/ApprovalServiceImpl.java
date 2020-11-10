@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.nullcompany.approval.model.dao.ApprovalDao;
 import com.kh.nullcompany.approval.model.vo.Document;
+import com.kh.nullcompany.approval.model.vo.Step;
 import com.kh.nullcompany.board.model.vo.PageInfo;
 
 @Service("aService")
@@ -23,6 +24,18 @@ public class ApprovalServiceImpl implements ApprovalService {
 	@Override
 	public ArrayList<Document> selectProgressAllList(int memNo,PageInfo pi) {
 		return aDao.selectProgressAllList(memNo, pi);
+	}
+
+	@Override
+	public ArrayList<Step> selectProgressStep(int memNo, String docTempNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int stepListCount(String docTempNo) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

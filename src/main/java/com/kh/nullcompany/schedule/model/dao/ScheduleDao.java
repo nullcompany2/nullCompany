@@ -85,6 +85,10 @@ public class ScheduleDao {
 		
 	}
 
+	public ArrayList<Calendar> DetailCalmemberList(String cal_name) {
+		return (ArrayList)sqlSession.selectList("scheduleMapper.DetailCalmemberList", cal_name);
+	}
+
 
 
 	

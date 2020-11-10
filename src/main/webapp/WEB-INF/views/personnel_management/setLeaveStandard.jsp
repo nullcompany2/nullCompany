@@ -70,12 +70,19 @@
 														<td>	N+12	</td>
 													</tr>
 													<tr class="set-en-2">
-														<td colspan="2"><input type="text" name="" id="" value="${setLeave[0].annualLeave }"  class="set-l-days">일</td>
-														<td><input type="text" name="" id="" value="${setLeave[1].annualLeave }" class="set-l-days">일</td>
-														<c:forEach var="i" items="setLeave" begin="2" end="11">
-															<td><input type="text" name="" id="" value="${i.annualLeave}" class="set-l-days">일</td>
-														
-														</c:forEach>
+														<td colspan="2"><input type="text" name="" id="N1" value="${setLeave[0].annualLeave }"  class="set-l-days">일</td>
+														<td><input type="text" name="" id="N2" value="${setLeave[1].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="N3" value="${setLeave[2].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="N4" value="${setLeave[3].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="N5" value="${setLeave[4].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="N6" value="${setLeave[5].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="N7" value="${setLeave[6].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="N8" value="${setLeave[7].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="N9" value="${setLeave[8].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="N10" value="${setLeave[9].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="N11" value="${setLeave[10].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="N12" value="${setLeave[11].annualLeave }" class="set-l-days">일</td>
+															
 														
 													</tr>
 													<tr class="set-en-1">
@@ -94,19 +101,19 @@
 														<td>	N+25	</td>
 													</tr>
 													<tr class="set-en-2">
-														<td><input type="text" name="" id="" value="${setLeave[12].annualLeave }" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" value="${setLeave[13].annualLeave }" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" value="${setLeave[14].annualLeave }" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" value="${setLeave[15].annualLeave }" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" value="${setLeave[16].annualLeave }" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" value="${setLeave[17].annualLeave }" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" value="${setLeave[18].annualLeave }" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" value="${setLeave[19].annualLeave }" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" value="${setLeave[20].annualLeave }" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" value="${setLeave[21].annualLeave }" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" value="${setLeave[22].annualLeave }" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" value="${setLeave[23].annualLeave }" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" value="${setLeave[24].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="N13" value="${setLeave[12].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="N14" value="${setLeave[13].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="N15" value="${setLeave[14].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="N16" value="${setLeave[15].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="N17" value="${setLeave[16].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="N18" value="${setLeave[17].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="N19" value="${setLeave[18].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="N20" value="${setLeave[19].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="N21" value="${setLeave[20].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="N22" value="${setLeave[21].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="N23" value="${setLeave[22].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="N24" value="${setLeave[23].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="N25" value="${setLeave[24].annualLeave }" class="set-l-days">일</td>
 	
 													</tr>
 													<tr class="set-en-1">
@@ -125,19 +132,19 @@
 														<td>	N+38	</td>
 													</tr>
 													<tr class="set-en-3">
-														<td><input type="text" name="" id="" value="${setLeave[0].annualLeave }" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" value="${setLeave[0].annualLeave }" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" value="${setLeave[0].annualLeave }" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" value="${setLeave[0].annualLeave }" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" value="${setLeave[0].annualLeave }" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" value="${setLeave[0].annualLeave }" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" value="${setLeave[0].annualLeave }" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" value="${setLeave[0].annualLeave }" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" value="${setLeave[0].annualLeave }" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" value="${setLeave[0].annualLeave }" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" value="${setLeave[0].annualLeave }" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" value="${setLeave[0].annualLeave }" class="set-l-days">일</td>
-														<td><input type="text" name="" id="" value="${setLeave[0].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="N26" value="${setLeave[25].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="N27" value="${setLeave[26].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="N28" value="${setLeave[27].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="N29" value="${setLeave[28].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="N30" value="${setLeave[29].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="N31" value="${setLeave[30].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="N32" value="${setLeave[31].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="N33" value="${setLeave[32].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="N34" value="${setLeave[33].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="N35" value="${setLeave[34].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="N36" value="${setLeave[35].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="N37" value="${setLeave[36].annualLeave }" class="set-l-days">일</td>
+														<td><input type="text" name="" id="N38" value="${setLeave[37].annualLeave }" class="set-l-days">일</td>
 	
 													</tr>   
 												</table>
@@ -152,6 +159,7 @@
 								</div>
 								<div class="set-checkbox-1" >
 									<h4 class="set-e-1">1년차 휴가 자동생성</h4>
+																		
 									<input type="radio" name="ck-firstyear" id="use-fy"><label for="use-fy">사용함</label>
 									<input type="radio" name="ck-firstyear" id="n-use-fy" style="margin-left: 20px;"><label for="n-use-fy">사용 안함</label>
 								</div>
@@ -159,9 +167,9 @@
 							<div>
 								<div style="margin-top: 50px; margin-bottom: 20px;">
 									<h4 class="set-e-1">휴가 종류</h4> 
-									<span class="set-e-3 cursor ">+추가</span>
+									<span class="set-e-3 cursor " id="AddLeaveType">+추가</span>
 								</div>
-								<table class="tp-l-list">
+								<table class="tp-l-list" id="LeaveList">
 									<tr class="tp-l-list-il">
 										<th class="tp-l-list-th">휴가명</th>
 										<th class="tp-l-list-th">사용 여부</th>
@@ -169,19 +177,42 @@
 										
 									</tr>
 									<!-- 리스트 -->
-									<tr>
-										<td class="tp-l-list-td">연차</td>
-										<td class="tp-l-list-td"><select name="availability" id="">
-											<option value="possible">사용</option>
-											<option value="impossible">사용안함</option>
-										</select></td>
-										<td class="tp-l-list-td"><input type="checkbox" name="" id="use-a"><label for="use-a"> 연차사용여부</label></td>
-									   
+									<c:forEach var="tl" items="${leaveList}">
+									<tr >
+										<td class="tp-l-list-td">${tl.nameType }</td>
+										<td class="tp-l-list-td">
+										<c:if test="${tl.status eq 'Y'}">
+											<select name="" id="availability ${ tl.noType }able">
+												<option value="L-use">사용</option>
+												<option value="L-n-use">사용안함</option>
+											</select>										
+										</c:if>
+										<c:if test="${tl.status ne 'Y'}">
+											<select name="" id="availability ${ tl.noType }able" >
+												<option value="L-n-use">사용안함</option>
+												<option value="L-use">사용</option>
+											</select>										
+										</c:if>
+										</td>
+										<c:if test="${tl.annualUse eq 'Y' }">
+											<td class="tp-l-list-td" id="${tbl.noType }ann">
+												<input type="checkbox" name="" id="use-a${tl.noType }" checked>
+												연차사용여부
+											</td>
+										</c:if>
+										<c:if test="${tl.annualUse ne 'Y' }">
+											<td class="tp-l-list-td" id="${tbl.noType }ann">
+												<input type="checkbox" name="" id="use-a${tl.noType }">
+												연차사용여부
+											</td>
+										</c:if>
 									</tr>
+									</c:forEach>
+									
 									
 								</table>
 							</div>
-							<input type="button" value="적용" class="save-btn cursor">
+							<input type="button" value="적용" class="save-btn cursor" >
 						</div>
 					</form>
 				</div>
@@ -189,6 +220,83 @@
 		</div>
 		
     </div>
+    
+    <script >
+    	
+    	var newLeaveArr = Array();
+    	var newLeaveCount = 1;
+    	
+    	$(function(){
+    		if(${setLeave[0].firstyear} == 0){
+    			$("#use-fy").attr('checked','true');
+    		}else{
+    			$("#n-use-fy").attr('checked','true');
+    		}
+    	});
+    	
+    	$(".save-btn").click(function(){
+    		var setAnnualLeave = new Array();
+    		
+    		for(var i =1; i<=38; i++){
+    			
+	    		setAnnualLeave.push($("#N"+i).val());
+    		}
+    		console.log(setAnnualLeave);
+    		
+    		for(var j =1; j<newLeaveCount; j++){
+    			console.log($("#"+j+"annual").is(":checked"));
+    			
+    			var newLeave = Array();
+    			newLeave.push($("#"+j+"Name").val(),$("#"+j+"able option:selected").val(),$("#"+j+"annual").is(":checked"));
+    			newLeaveArr.push(newLeave);
+    			console.log(newLeave);
+    			console.log(newLeaveArr);
+    		}
+    		
+    	});
+    	
+    	
+    
+    	$("#AddLeaveType").click(function(){
+    		var $leaveTbl = $("#LeaveList");
+    		var $tr;
+    		var $leaveName;
+    		var $status;
+    		var $checkBoxTd;
+    		var $checkBox;
+    		var select;
+    		var $option1;
+    		var $option2;
+    		var $input;
+    		
+    		$tr = $('<tr>');
+    		$leaveName = $('<td class="tp-l-list-td">');
+    		$input = $('<input type="text" name="AddLeaveName" style="width: 70px;" />').attr("id",newLeaveCount+"Name");
+    		$status = $('<td class="tp-l-list-td">');
+    		$select = $('<select name="availability">').attr("id",newLeaveCount+"able");
+    		$option1 = $('<option value="able">사용</option>');
+    		$option2 = $('<option value="notable">사용안함</option>');
+    		$checkBoxTd = $('<td class="tp-l-list-td">');
+    		$checkBox = $('<input type="checkbox" name="">').attr("id",newLeaveCount+"annual");
+    		
+    		
+    		$leaveName.append($input);
+    		$select.append($option1);
+    		$select.append($option2);
+    		$status.append($select);
+    		$checkBoxTd.append($checkBox);
+    		$checkBoxTd.append(" 연차사용여부");
+    		
+    		$tr.append($leaveName);
+    		$tr.append($status);
+    		$tr.append($checkBoxTd);
+    		
+    		$leaveTbl.append($tr);
+    		
+    		newLeaveCount++;
+    	});
+    </script>
+    
     <!-- Modal -->
 
 	<script>
