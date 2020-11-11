@@ -18,7 +18,7 @@
 
 <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<title>팀내공지</title>
+<title>자유게시판</title>
 
 </head>
 <style>
@@ -202,6 +202,7 @@ tr>td {
    right: 10px;
 }
 </style>
+
 <body>
 
    <div id='wrap'>
@@ -209,16 +210,13 @@ tr>td {
       <c:import url="../common/boardSubNav.jsp" />
       <div class="contents">
          <div class="contents-title">
-            <span class="ct1" style="margin-right: 77%;">팀내공지</span>
-            
-            
-             
+            <span class="ct1" style="margin-right: 77%;">사내공지</span>
          </div>
 
          <div style="padding: 0px 30px 0px 30px;">
 
-               <table id="mrv_table" class=" table-striped  table-hover">
-             <colgroup>
+            <table id="mrv_table" class=" table-striped  table-hover" >
+               <colgroup>
                   <col width="10%" />
                   <col width="40%" />
                   <col width="15%" />
@@ -239,11 +237,11 @@ tr>td {
                      <tr>
                         <td align="left">${b.bNo }</td>
                         <td align="left"><c:if test="${!empty loginUser }">
-                              <c:url var="boardDetail" value="boardDetail.do">
+                              <c:url var="bdetail" value="bdetail.do">
                                  <c:param name="bNo" value="${b.bNo }" />
                                  <c:param name="currentPage" value="${pi.currentPage }" />
                               </c:url>
-                              <a href="${boardDetail }">${b.bTitle }</a>
+                              <a href="${bdetail }">${b.bTitle }</a>
                            </c:if> <c:if test="${empty loginUser }">
                               ${b.bTitle }
                            </c:if></td>
@@ -265,7 +263,7 @@ tr>td {
                <!-- [이전] --> <c:if test="${ pi.currentPage eq 1 }">
                   [이전] &nbsp;
                </c:if> <c:if test="${ pi.currentPage ne 1 }">
-                  <c:url var="before" value="boardTeam.do">
+                  <c:url var="before" value="board.do">
                      <c:param name="currentPage" value="${ pi.currentPage - 1 }" />
                   </c:url>
                   <a href="${ before }">[이전]</a> &nbsp;
@@ -276,7 +274,7 @@ tr>td {
                   </c:if>
 
                   <c:if test="${ p ne pi.currentPage }">
-                     <c:url var="pagination" value="boardTeam.do">
+                     <c:url var="pagination" value="board.do">
                         <c:param name="currentPage" value="${ p }" />
                      </c:url>
                      <a href="${ pagination }">${ p }</a> &nbsp;
@@ -284,7 +282,7 @@ tr>td {
                </c:forEach> <!-- [다음] --> <c:if test="${ pi.currentPage eq pi.maxPage }">
                   [다음]
                </c:if> <c:if test="${ pi.currentPage ne pi.maxPage }">
-                  <c:url var="after" value="boardTeam.do">
+                  <c:url var="after" value="board.do">
                      <c:param name="currentPage" value="${ pi.currentPage + 1 }" />
                   </c:url>
                   <a href="${ after }">[다음]</a>
@@ -306,59 +304,55 @@ tr>td {
 
       </div>
    </div>
- 
+
 
 
    <script>
-    function modal(id) {
-       var zIndex = 9999;
-       var modal = $('#' + id);
+      function modal(id) {
+         var zIndex = 9999;
+         var modal = $('#' + id);
 
-       // 모달 div 뒤에 희끄무레한 레이어
-       var bg = $('<div>')
-          .css({
-             position: 'fixed',
-             zIndex: zIndex,
-             left: '0px',
-             top: '0px',
-             width: '100%',
-             height: '100%',
-             overflow: 'auto',
-             // 레이어 색갈은 여기서 바꾸면 됨
-             backgroundColor: 'rgba(0,0,0,0.4)'
-          })
-          .appendTo('body');
+         // 모달 div 뒤에 희끄무레한 레이어
+         var bg = $('<div>').css({
+            position : 'fixed',
+            zIndex : zIndex,
+            left : '0px',
+            top : '0px',
+            width : '100%',
+            height : '100%',
+            overflow : 'auto',
+            // 레이어 색갈은 여기서 바꾸면 됨
+            backgroundColor : 'rgba(0,0,0,0.4)'
+         }).appendTo('body');
 
-       modal
-          .css({
-             position: 'fixed',
-             boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+         modal
+               .css(
+                     {
+                        position : 'fixed',
+                        boxShadow : '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
 
-             // 시꺼먼 레이어 보다 한칸 위에 보이기
-             zIndex: zIndex + 1,
+                        // 시꺼먼 레이어 보다 한칸 위에 보이기
+                        zIndex : zIndex + 1,
 
-             // div center 정렬
-             top: '50%',
-             left: '50%',
-             transform: 'translate(-50%, -50%)',
-             msTransform: 'translate(-50%, -50%)',
-             webkitTransform: 'translate(-50%, -50%)'
-          })
-          .show()
-          // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
-          .find('.close_btn')
-          .on('click', function() {
-             bg.remove();
-             modal.hide();
-          });
-    }
+                        // div center 정렬
+                        top : '50%',
+                        left : '50%',
+                        transform : 'translate(-50%, -50%)',
+                        msTransform : 'translate(-50%, -50%)',
+                        webkitTransform : 'translate(-50%, -50%)'
+                     }).show()
+               // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
+               .find('.close_btn').on('click', function() {
+                  bg.remove();
+                  modal.hide();
+               });
+      }
 
-    $('#delete_btn').on('click', function() {
-       // 모달창 띄우기
-       modal('delete_modal');
-    });
-    
- </script>
+      $('#delete_btn').on('click', function() {
+         // 모달창 띄우기
+         modal('delete_modal');
+      });
+   </script>
 
 </body>
 </html>

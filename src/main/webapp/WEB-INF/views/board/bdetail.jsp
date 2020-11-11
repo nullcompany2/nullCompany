@@ -317,7 +317,7 @@ tr>td {
 
       <c:import url="../common/boardSubNav.jsp" />
       <!-- 게시판 -->
-      <div class="boardDeatil">
+      <div class="bdeatil">
          <div class="board_head">
             <div style="width: 90%; margin: auto;">
                <form method="post" action="">
@@ -364,7 +364,6 @@ tr>td {
                <tr>
 
                   <td><span style="color: #7f7f7f;">${b.bWriter }</span></td>
-                  <td style="width:200px;"><span style="color: #7f7f7f;">&nbsp;&nbsp;&nbsp;&nbsp;${b.bType }</span></td>
                   <td style="color: #7f7f7f;">읽은 사람&nbsp;&nbsp;&nbsp;
                      &nbsp;${b.bCount }</td>
 
@@ -373,13 +372,18 @@ tr>td {
                </tr>
                <tr>
                   <td>첨부파일</td>
-                  <td colspan="5"><c:if test="${ !empty b.originalFileName }">
+                  <td colspan="5">
+                  <c:choose>
+                  <c:when test="${ !empty b.originalFileName }">
                         <a
                            href="${contextPath }/resources/buploadFiles/${b.renameFileName}"
                            download="${ b.originalFileName }">${ b.originalFileName }</a>
-                     </c:if>
+                     </c:when>
+                     <c:when test="${ empty n.originalFileName }">
+                        X
+                      </c:when>
+				 </c:choose>
                   </td>
-
                </tr>
                <tr>
 
@@ -399,16 +403,16 @@ tr>td {
 <!-- Ajax를 이용해서 댓글 등록 -->
    <table  style="text-align:center; width=800;"  cellspacing="0">
       <tr>
-         <td><textarea class="form-control" style="resize: none;" cols="80" rows="3" id="cContent"></textarea></td>
+         <td><textarea class="form-control" style="resize: none;" cols="80" rows="3" id="bcContent"></textarea></td>
          <td>
-            <button class="btn btn-default" id="cSubmit">등록하기</button>
+            <button class="btn btn-default" id="bcSubmit">등록하기</button>
          </td>
       </tr>
    </table>
    <table class="table-bordered" align="center" width="800"  cellspacing="0" id="rtb">
       <thead>
          <tr>
-            <td colspan="5"><b id="cCount"></b></td>
+            <td colspan="5"><b id="bcCount"></b></td>
          </tr>
          
       </thead>
@@ -420,31 +424,31 @@ tr>td {
       
    <script>
       $(function(){
-         getCommentList();
+         getbCommentList();
          
          setInterval(function(){
-            getCommentList();
+            getbCommentList();
          },3000);
          
          // 댓글 등록
-         $("#cSubmit").on("click",function(){
-             var cContent = $("#cContent").val();
-             var refBno = ${ b.bNo };
-             var cWriter = "<%= ((Member)session.getAttribute("loginUser")).getName()%>";
+         $("#bcSubmit").on("click",function(){
+             var bcContent = $("#bcContent").val();
+             var bcefBno = ${ b.bNo };
+             var bcWriter = "<%= ((Member)session.getAttribute("loginUser")).getName()%>";
              
              
              $.ajax({
-               url:"addComment.do",
+               url:"addbComment.do",
                data:{
-                  cContent:cContent,
-                  refBno:refBno,
-                  cWriter:cWriter
+                  bcContent:bcContent,
+                  bcefBno:bcefBno,
+                  bcWriter:bcWriter
                },
                type:"post",
                success:function(data){ // 댓글등록 성공 시 : success , 댓글등록 실패 시 :fail 을 반환
                   if(data == "success"){
-                     getCommentList(); // 등록 성공 시 다시 댓글 리스트 불러오기
-                     $("#cContent").val(""); // 등록시에 사용한 댓글내용 초기화
+                     getbCommentList(); // 등록 성공 시 다시 댓글 리스트 불러오기
+                     $("#bcContent").val(""); // 등록시에 사용한 댓글내용 초기화
                   }
                },error:function(){
                   console.log("전송 실패");
@@ -454,11 +458,11 @@ tr>td {
          
       });
    
-      function getCommentList(){
+      function getbCommentList(){
          var bNo = ${ b.bNo };
          
          $.ajax({
-            url:"cList.do",
+            url:"bcList.do",
             data:{ bNo : bNo },
             dataType:"json",
             success:function(data){
@@ -467,25 +471,25 @@ tr>td {
                $tableBody.html("");
                
                var $tr;
-               var $cWriter;
-               var $cContent;
-               var $cCreateDate;
+               var $bcWriter;
+               var $bcContent;
+               var $bcCreateDate;
                
-               $("#cCount").text("댓글 (" + data.length +")"); // 댓글(0)
+               $("#bcCount").text("댓글 (" + data.length +")"); // 댓글(0)
                if(data.length > 0){ // 해당 게시글 댓글이 존재할 경우
                   for(var i in data){
                      $tr = $("<tr text-align:'center'>");
-                     $cWriter = $("<td width='100'>").text(data[i].cWriter);
-                     $cContent=$("<td>").text(data[i].cContent);
-                     $cCreateDate=$("<td width='200'>").text(data[i].cCreateDate);
-                     $cUpdate=$("<td><button class='btn btn-default btn-xs' id='cUpdate'>수정</button></td>")
-                     $cDelete=$("<td><button class='btn btn-default btn-xs' id='btnDelete'>삭제</button></td>")
+                     $bcWriter = $("<td width='100'>").text(data[i].bcWriter);
+                     $bcContent=$("<td>").text(data[i].bcContent);
+                     $bcCreateDate=$("<td width='200'>").text(data[i].bcCreateDate);
+                     $bcUpdate=$("<td><button class='btn btn-default btn-xs' id='cUpdate'>수정</button></td>")
+                     $bcDelete=$("<td><button class='btn btn-default btn-xs' id='btnDelete'>삭제</button></td>")
                      
-                     $tr.append($cWriter);
-                     $tr.append($cContent);
-                     $tr.append($cCreateDate);
-                     $tr.append($cUpdate)
-                     $tr.append($cDelete)
+                     $tr.append($bcWriter);
+                     $tr.append($bcContent);
+                     $tr.append($bcCreateDate);
+                     $tr.append($bcUpdate)
+                     $tr.append($bcDelete)
                      $tableBody.append($tr);
                      
 
@@ -495,7 +499,7 @@ tr>td {
                   $tr = $("<tr>");
                   $cContent = $("<td colspan='3'>").text("등록된 댓글이 없습니다.");
                   
-                  $tr.append($cContent);
+                  $tr.append($bcContent);
                   $tableBody.append($tr);
                }
                

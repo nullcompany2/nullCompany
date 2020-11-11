@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="noticeMapper">
+	<resultMap id="noticeResultSet" type="notice">
+		<id property="nNo" column="NNO" />
+		<result property="nTitle" column="NTITLE" />
+		<result property="nWriter" column="NWRITER" />
+		<result property="nContent" column="NCONTENT" />
+		<result property="nCount" column="NCOUNT" />
+		<result property="originalFileName" column="ORIGINAL_FILENAME" />
+		<result property="renameFileName" column="RENAME_FILENAME" />
+		<result property="nCreateDate" column="N_CREATE_DATE" />
+		<result property="nModifyDate" column="N_MODIFY_DATE" />
+		<result property="nStatus" column="N_STATUS" />
+		<result property="nImport" column="N_IMPORT" />
+		<result property="nSave" column="N_SAVE" />
+		<result property="deptNo" column="DEPT_NO" />
+	</resultMap>
+
+	<resultMap id="tnoticeResultSet" type="tnotice">
+		<id property="tNo" column="TNO" />
+		<result property="tTitle" column="TTITLE" />
+		<result property="tWriter" column="TWRITER" />
+		<result property="tContent" column="TCONTENT" />
+		<result property="tCount" column="TCOUNT" />
+		<result property="originalFileName" column="ORIGINAL_FILENAME" />
+		<result property="renameFileName" column="RENAME_FILENAME" />
+		<result property="tCreateDate" column="T_CREATE_DATE" />
+		<result property="tModifyDate" column="T_MODIFY_DATE" />
+		<result property="tStatus" column="T_STATUS" />
+		<result property="tImport" column="T_IMPORT" />
+		<result property="tSave" column="T_SAVE" />
+		<result property="deptNo" column="DEPT_NO" />
+	</resultMap>
+
+	<resultMap type="ncomment" id="ncommentResultSet">
+		<id property="ncNo" column="NCNO" />
+		<result property="ncContent" column="NCCONTENT" />
+		<result property="ncefNno" column="NCEF_NNO" />
+		<result property="ncWriter" column="NCWRITER" />
+		<result property="ncCreateDate" column="NC_CREATE_DATE" />
+		<result property="ncModifyDate" column="NC_MODIFY_DATE" />
+		<result property="ncStatus" column="NC_STATUS" />
+	</resultMap>
+
+	<resultMap type="tncomment" id="tncommentResultSet">
+		<id property="tncNo" column="TNCNO" />
+		<result property="tncContent" column="TNCCONTENT" />
+		<result property="tncefTno" column="TNCEF_TNO" />
+		<result property="tncWriter" column="TNCWRITER" />
+		<result property="tncCreateDate" column="TNC_CREATE_DATE" />
+		<result property="tncModifyDate" column="TNC_MODIFY_DATE" />
+		<result property="tncStatus" column="TNC_STATUS" />
+	</resultMap>
+
+
+	<!-- 리스트 카운트 가져오기 -->
+	<select id="getListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM
+		TBL_NOTICE
+		WHERE N_STATUS='Y'
+	</select>
+
+	<select id="gettListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM
+		TBL_TNOTICE
+		WHERE T_STATUS='Y'
+	</select>
+	
+	<!-- 목록 가져오기 -->
+	<select id="selectListNotice" resultMap="noticeResultSet">
+		SELECT *
+		FROM TBL_NOTICE
+		WHERE N_STATUS='Y'
+		ORDER BY NNO DESC
+	</select>
+	
+	<select id="selectListtNotice" resultMap="tnoticeResultSet">
+		SELECT *
+		FROM TBL_TNOTICE
+		WHERE T_STATUS='Y'
+		ORDER BY TNO DESC
+	</select>
+
+	<!-- 조회수 증가 -->
+	<update id="updateCount" parameterType="_int">
+		UPDATE TBL_NOTICE
+		SET
+		NCOUNT = NCOUNT +1
+		WHERE NNO=#{nNo}
+	</update>
+	
+	<update id="updatetCount" parameterType="_int">
+		UPDATE TBL_TNOTICE
+		SET
+		TCOUNT = TCOUNT +1
+		WHERE TNO=#{tNo}
+	</update>
+
+	<!-- 디테일 뷰 뽑아내기 -->
+	<select id="selectNotice" resultMap="noticeResultSet">
+		SELECT *
+		FROM TBL_NOTICE
+		WHERE NNO=#{nNo}
+		AND N_STATUS='Y'
+	</select>
+	
+	<select id="selecttNotice" resultMap="tnoticeResultSet">
+		SELECT *
+		FROM TBL_TNOTICE
+		WHERE TNO=#{tNo}
+		AND T_STATUS='Y'
+	</select>
+
+	<!-- 댓글 리스트 뽑아오기 -->
+	<select id="selectnCommentList" parameterType="_int"
+		resultMap="ncommentResultSet">
+		SELECT *
+		FROM CMT_NOTICE
+		WHERE NCEF_NNO=#{nNo}
+		ORDER BY NCNO
+		ASC
+	</select>
+	
+	<select id="selecttCommentList" parameterType="_int"
+		resultMap="tncommentResultSet">
+		SELECT *
+		FROM CMT_TNOTICE
+		WHERE TNCEF_TNO=#{tNo}
+		ORDER BY TNCNO
+		ASC
+	</select>
+	
+	<!-- 댓글 작성하기 -->
+	<insert id="insertnComment" parameterType="ncomment">
+		INSERT INTO CMT_NOTICE
+		VALUES
+		(SEQ_NCNO.NEXTVAL,
+		#{ncContent},#{ncefNno},#{ncWriter},SYSDATE,SYSDATE,DEFAULT)
+	</insert>
+
+	<insert id="inserttComment" parameterType="tncomment">
+		INSERT INTO CMT_TNOTICE
+		VALUES
+		(SEQ_TNCNO.NEXTVAL,
+		#{tncContent},#{tncefTno},#{tncWriter},SYSDATE,SYSDATE,DEFAULT)
+	</insert>
+</mapper>

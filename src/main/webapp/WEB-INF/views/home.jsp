@@ -112,7 +112,7 @@
 
                 <div class="ch">
                     <span> Notice</span> 
-                    <a  style="margin-left:255px;" href="boardAll.do">more</a>
+                    <a  style="margin-left:255px;" href="notice.do">more</a>
                     <hr>
 					동우오빠 <br>
                     공지공지 
@@ -143,7 +143,7 @@
 
             <div class="ch">
                 <span> Team Notice</span> 
-                <a style="margin-left:190px;" href="boardTeam.do">more</a>
+                <a style="margin-left:190px;" href="tnotice.do">more</a>
                     <hr>
                    	동우오빠 <br>
                    	팀 공지 ! 

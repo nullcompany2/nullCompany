@@ -236,21 +236,21 @@ tr>td {
                   </tr>
                </thead>
                <tbody>
-                  <c:forEach var="b" items="${list }">
+                  <c:forEach var="n" items="${list }">
                      <tr>
-                        <td align="left">${b.bNo }</td>
+                        <td align="left">${n.nNo }</td>
                         <td align="left"><c:if test="${!empty loginUser }">
-                              <c:url var="boardDetail" value="boardDetail.do">
-                                 <c:param name="bNo" value="${b.bNo }" />
+                              <c:url var="ndetail" value="ndetail.do">
+                                 <c:param name="nNo" value="${n.nNo }" />
                                  <c:param name="currentPage" value="${pi.currentPage }" />
                               </c:url>
-                              <a href="${boardDetail }">${b.bTitle }</a>
+                              <a href="${ndetail }">${n.nTitle }</a>
                            </c:if> <c:if test="${empty loginUser }">
-                              ${b.bTitle }
+                              ${n.nTitle }
                            </c:if></td>
-                        <td align="left">${b.bWriter }</td>
-                        <td align="left">${b.bCount }</td>
-                        <td align="left">${b.bCreateDate }</td>
+                        <td align="left">${n.nWriter }</td>
+                        <td align="left">${n.nCount }</td>
+                        <td align="left">${n.nCreateDate }</td>
                      </tr>
                   </c:forEach>
             </table>
@@ -266,7 +266,7 @@ tr>td {
                <!-- [이전] --> <c:if test="${ pi.currentPage eq 1 }">
                   [이전] &nbsp;
                </c:if> <c:if test="${ pi.currentPage ne 1 }">
-                  <c:url var="before" value="boardAll.do">
+                  <c:url var="before" value="notice.do">
                      <c:param name="currentPage" value="${ pi.currentPage - 1 }" />
                   </c:url>
                   <a href="${ before }">[이전]</a> &nbsp;
@@ -277,7 +277,7 @@ tr>td {
                   </c:if>
 
                   <c:if test="${ p ne pi.currentPage }">
-                     <c:url var="pagination" value="boardAll.do">
+                     <c:url var="pagination" value="notice.do">
                         <c:param name="currentPage" value="${ p }" />
                      </c:url>
                      <a href="${ pagination }">${ p }</a> &nbsp;
@@ -285,7 +285,7 @@ tr>td {
                </c:forEach> <!-- [다음] --> <c:if test="${ pi.currentPage eq pi.maxPage }">
                   [다음]
                </c:if> <c:if test="${ pi.currentPage ne pi.maxPage }">
-                  <c:url var="after" value="boardAll.do">
+                  <c:url var="after" value="notice.do">
                      <c:param name="currentPage" value="${ pi.currentPage + 1 }" />
                   </c:url>
                   <a href="${ after }">[다음]</a>
