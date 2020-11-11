@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="java.util.Date"%>
 <%@ page import="java.text.SimpleDateFormat"%>
+<%@page import="com.kh.nullcompany.member.model.vo.Member"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -109,13 +110,10 @@ a:active {
 		<div class="drag-scrollbar">
 			<div class="H-personnel-subNavi underline">
 				<div class="H-personnel-subNavi Depth01-1">
-					<li class="subTitle"><a href="myReservation.do">나의 예약 목록</a></li>
-					<li class="subTitle"><a href="reservation.do">회의실</a></li>
-					<li class="subTitle"><a href="reservation.do">비품</a></li>
-					<li class="subTitle"><a href="reservation.do">차량 </a></li>
+					<li class="subTitle" id="sub"><a href="myReservation.do">나의 예약 목록</a></li>
 				</div>
 			</div>
-
+			<c:if test="${loginUser.deptNo == 5}">
 			<div class="H-personnel-subNavi Depth01-1"
 				style="border-top: 1px solid black;">
 				<h2 style="text-align: center;">예약 관리</h2>
@@ -124,10 +122,34 @@ a:active {
 					<li class="subTitle"><a href="returnList.do">반납 관리</a></li>
 					<li class="subTitle"><a href="categoryList.do">카테고리 관리</a></li>
 					<li class="subTitle"><a href="resourceList.do">자원 관리</a></li>
-					<li class="subTitle"><a href="reservationManager.do">예약 관리자</a></li>
 				</div>
 			</div>
+			</c:if>
 		</div>
 	</div>
+	
+	<script>
+/*  	$(document).ready(function(){
+	console.log(${sessionScope.deptNo});
+	}) */
+	  $(function() {
+		$.ajax({
+			url:"subNavi2.do",
+			type:"post",
+			success:function(data){
+				$div =$("#sub");
+ 				var add;
+ 				
+				for(var i in data){
+				$add = $('<li class="subTitle"><a href="reservation.do?rcNo='+data[i].rcNo+'">'+data[i].rcTitle+'</a></li>');
+				$div.append($add);
+				}
+				
+			},error : function() {
+				console.log("전송실패");
+			} 
+		})
+	});
+	</script>
 </body>
 </html>

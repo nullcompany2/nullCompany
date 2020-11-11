@@ -149,7 +149,7 @@ tr>td {
 								onclick="location.href='${categoryUpdateView}'">수정</button> <span
 							style="color: #e4e4e4;">|</span>
 							
-							<button class="rv_but" id="delete_btn" data-id="${ c.rcNo }">삭제</button>
+							<button class="rv_but delete_btn" id="delete_btn" data-id="${ c.rcNo }">삭제</button>
 						</td>
 					</tr>
 				</c:forEach>
@@ -166,7 +166,7 @@ tr>td {
 			<input type="hidden" id="rcNo" name="rcNo" value="">
 			<button class="close_btn" id="delete"
 				style="background: #fc8e8e; color: black; padding: 5px 27px 6px; border: 1px solid #fc8e8e">확인</button>
-			<button class="close_btn"
+			<button class="close_btn" type="button" 
 				style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; border: 1px solid #dadada; background: white;">취소</button>
 			</form>
 		</div>
@@ -216,7 +216,7 @@ tr>td {
           });
     }
 
-    $('#delete_btn').on('click', function() {
+    $('.delete_btn').on('click', function() {
         var num = $(this).data('id');
         $("#rcNo").val( num );
        // 모달창 띄우기

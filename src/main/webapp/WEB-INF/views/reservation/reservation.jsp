@@ -16,6 +16,32 @@
 	rel="stylesheet">
 </head>
 
+<link href="<c:url value="/resources/css/core.css"/>" rel='stylesheet' />
+<link href="<c:url value="/resources/css/daygrid.css"/>"
+	rel='stylesheet' />
+<link href="<c:url value="/resources/css/timegrid.css"/>"
+	rel='stylesheet' />
+<link href="<c:url value="/resources/css/list.css"/>" rel='stylesheet' />
+<script src='<c:url value="/resources/js/core.js"/>'></script>
+<script src='<c:url value="/resources/js/interaction.js"/>'></script>
+<script src='<c:url value="/resources/js/daygrid.js"/>'></script>
+<script src='<c:url value="/resources/js/timegrid.js"/>'></script>
+<script src='<c:url value="/resources/js/list.js"/>'></script>
+
+<!-- 캘린더 -->
+<c:url value="" />
+<link href='<c:url value="/resources/css/fullcalendar.css"/>'
+	rel='stylesheet' />
+<link href='<c:url value="/resources/css/fullcalendar.print.css"/>'
+	rel='stylesheet' media='print' />
+<script src='<c:url value="/resources/js/jquery-1.10.2.js"/>'
+	type="text/javascript"></script>
+<script src='<c:url value="/resources/js/jquery-ui.custom.min.js"/>'
+	type="text/javascript"></script>
+<script src='<c:url value="/resources/js/fullcalendar.js"/>'
+	type="text/javascript"></script>
+
+
 <style>
 #reservation_modal {
 	display: none;
@@ -102,354 +128,56 @@
   div::-webkit-scrollbar { 
       display: none !important; 
   }
+  .fc-unthemed td.fc-today {
+  background: white;
+}
+  dl {
+  margin-bottom: 10px;
+  }
 </style>
 <body>
 
 	<div class="contents">
       <div class="contents-title">
-        <span class="ct1">회의실</span>
+        <span class="ct1">${ c.rcTitle }</span> &nbsp;
+         <select name="resource" style="width:100px;height:30px; border:none;
+		font-size:16px;color:#477A8F;">
+			<c:forEach var ="rs" items="${ r }">
+				<option value="${rs.rsNo }">${ rs.rsTitle }</option>
+			</c:forEach> 
+		</select>
       </div>
+      
       <br>
-			<div style="text-align : center;">
-        <button><</button> &nbsp;
-        <span>10-24</span> &nbsp;
-        <button>></button>
-      </div>
+
       <br>
-      <div style="margin: 0px 30px 0px 30px;" >
-        <table 
-        style="width: 100%;
-        border: 1px solid gray;">
-          <tr style="height: 50px;">
-            <th class="td_color" style="width: 100px;  "></th>
-            <th>회의실</th>
-            <th class="td_color" style="width: 100px;"></th>
-          </tr>
-          <tr style="height: 100px;">
-            <td style="text-align: center;" > < </td>
-            <td style="text-align: center;">이미지</td>
-            <td style="text-align: center;" > > </td>
-          </tr>
-          </table>
+      <div style="text-align: center; margin-bottom: 50px;" >
+				<input type="Image" style="width: 200px; height: 150px" value="">
       </div>
-			<div style="margin: 0px 30px 0px 30px;     overflow-y: scroll;
-      height: 500px;">
-        <table 
-        style="width: 100%;
-        border: 1px solid gray;">
-          <tr>
-            <td class="td_color" style="width: 100px;  "  > 
-              <table class="left_table">
-                <tr>
-                  <th>오전1시</th>
-                </tr>
-                <tr>
-                  <th>오전2시</th>
-                </tr>
-                <tr>
-                  <th>오전3시</th>
-                </tr>
-                <tr>
-                  <th>오전4시</th>
-                </tr>
-                <tr>
-                  <th>오전5시</th>
-                </tr>
-                <tr>
-                  <th>오전6시</th>
-                </tr>
-                <tr>
-                  <th>오전7시</th>
-                </tr>
-                <tr>
-                  <th>오전8시</th>
-                </tr>
-                <tr>
-                  <th>오전9시</th>
-                </tr>
-                <tr>
-                  <th>오전10시</th>
-                </tr>
-                <tr>
-                  <th>오전11시</th>
-                </tr>
-                <tr>
-                  <th>오전12시</th>
-                </tr>
-                <tr>
-                  <th>오후1시</th>
-                </tr>
-                <tr>
-                  <th>오후2시</th>
-                </tr>
-                <tr>
-                  <th>오후3시</th>
-                </tr>
-                <tr>
-                  <th>오후4시</th>
-                </tr>
-                <tr>
-                  <th>오후5시</th>
-                </tr>
-                <tr>
-                  <th>오후6시</th>
-                </tr>
-                <tr>
-                  <th>오후7시</th>
-                </tr>
-                <tr>
-                  <th>오후8시</th>
-                </tr>
-                <tr>
-                  <th>오후9시</th>
-                </tr>
-                <tr>
-                  <th>오후10시</th>
-                </tr>
-                <tr>
-                  <th>오후11시</th>
-                </tr>
-              </table>  
-            </td>
+ 			<div id="cal_size"
+                        style="position: absolute;  width: 70%; height: 500px; left: 15%; ">
+                        <div id='calendar'></div>
+            </div>
 
-            <td>
-              <table id="content_table">
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-                <tr>
-                  <td class="content_td" style="height: 22px;"></td>             
-                </tr>
-
-              </table>  
-            </td>
-
-            <td class="td_color" style="width: 100px;  " >
-              <table class="left_table">
-                <tr>
-                  <th></th>
-                </tr>
-                <tr>
-                  <th></th>
-                </tr>
-                <tr>
-                  <th></th>
-                </tr>
-                <tr>
-                  <th></th>
-                </tr>
-                <tr>
-                  <th></th>
-                </tr>
-                <tr>
-                  <th></th>
-                </tr>
-                <tr>
-                  <th></th>
-                </tr>
-                <tr>
-                  <th></th>
-                </tr>
-                <tr>
-                  <th></th>
-                </tr>
-                <tr>
-                  <th></th>
-                </tr>
-                <tr>
-                  <th></th>
-                </tr>
-                <tr>
-                  <th></th>
-                </tr>
-                <tr>
-                  <th></th>
-                </tr>
-                <tr>
-                  <th></th>
-                </tr>
-                <tr>
-                  <th></th>
-                </tr>
-                <tr>
-                  <th></th>
-                </tr>
-                <tr>
-                  <th></th>
-                </tr>
-                <tr>
-                  <th></th>
-                </tr>
-                <tr>
-                  <th></th>
-                </tr>
-                <tr>
-                  <th></th>
-                </tr>
-                <tr>
-                  <th></th>
-                </tr>
-                <tr>
-                  <th></th>
-                </tr>
-                <tr>
-                  <th></th>
-                </tr>
-              </table>  
-            </td>
-          </tr>
-        </table>
-			</div>
     </div>
 
 	<!-- Modal div -->
 	<div id="reservation_modal" class="modal-dragscroll">
 		<h4 style="color: #477A8F; margin-bottom: 25px;">상세 보기</h4>
 		<div class="n-emp-i">
+			<form action="">
 			<dl>
 				<dt style="float: left;">
 					<label>자원 이름</label>
 				</dt>
-				<dd style="margin-left: 150px;">회의실</dd>
+				<dd style="margin-left: 150px;"><input type="text" id="rsTitle" value="회의실" readonly="readonly"></dd>
 			</dl>
 			<dl>
 				<dt style="float: left;">
 					<label>날짜</label>
 				</dt>
 				<dd style="margin-left: 150px; font-family: monospace;">
-					<input type="date" name="" id="">
+					<input type="date" name="" id="date">
 				</dd>
 			</dl>
 			<dl>
@@ -457,7 +185,7 @@
 					<label>예약 시간</label>
 				</dt>
 				<dd style="margin-left: 150px;">
-					<input type="time" name="" id=""> ~ <input type="time">
+					<input type="time" name="" id="startTime"> ~ <input type="time" id='endTime'>
 				</dd>
 			</dl>
 			<dl>
@@ -465,15 +193,16 @@
 					<label>사용 용도</label>
 				</dt>
 				<dd style="margin-left: 150px;">
-					<textarea name="" id="" cols="30" rows="10" style="resize: none;"></textarea>
+					<textarea name="" id="rsContent" cols="30" rows="10" style="resize: none;"></textarea>
 				</dd>
 			</dl>
-		</div>
-		<div style="text-align: center; margin-top: 50px;">
+		<div style="text-align: center; margin-top: 50px; margin-bottom: 30px;">
 			<button class="close_btn"
 				style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">확인</button>
-			<button class="close_btn"
+			<button class="close_btn" type="button"
 				style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">취소</button>
+		</div>
+		</form>
 		</div>
 	</div>
 
@@ -500,7 +229,8 @@
 							{
 								position : 'fixed',
 								boxShadow : '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
-
+							    width: '600px',
+							    hieght : '',
 								// 시꺼먼 레이어 보다 한칸 위에 보이기
 								zIndex : zIndex + 1,
 
@@ -518,10 +248,85 @@
 					});
 		}
 
-		$('#content_table').on('click', function() {
-			// 모달창 띄우기
-			modal('reservation_modal');
+		document.addEventListener('DOMContentLoaded', function() {
+		    var calendarEl = document.getElementById('calendar');
+		    var rsNo =  $("select[name=resource]").val();
+		    var rcNo = ${c.rcNo};
+		    var calendar = new FullCalendar.Calendar(calendarEl, {
+		      selectable: true,
+		      plugins: [ 'interaction', 'timeGrid', 'list' ],
+		      header: {
+		        left: 'prev',
+		        center: 'title',
+		        right: 'today next'
+		      },
+			  defaultView : 'timeGridDay',
+		      locale : "ko",
+		      editable: true,
+		      eventOverlap : true,
+		      
+		      events :function(start, end , callback){
+		    	  $.ajax({ 
+		    		  type: "get",
+		    		  url: 'reservation2.do', 
+		    		  data: {rcNo : rcNo ,
+		    				rsNo : rsNo  },
+		    		  success: function(data) { 
+		    			  var events=[];
+		    			 for(var i in data) {
+		    				
+		    				var r = {
+    					       title: data[i].rMemberName,
+   			                   start: data[i].rDate+'T'+data[i].start_time+':00',
+   			                   end: data[i].rDate+'T'+data[i].end_time+':00',
+   			                   constraint: data[i].rContent,
+   			                   color: 'red'
+		    				};
+		    				console.log(events);
+		    				console.log(r)
+		    				 events.push(r);
+		    			 };
+		    			 callback(events);
+		    		  }
+		    	  });
+		      },
+		      dateClick: function(info) {
+		    	 var startTime = info.dateStr;
+		    	 var str = startTime.substr(0,10);
+		    	 var str2 = startTime.substr(11,5);
+		    	 $("#date").val(str);
+		    	 $("#startTime").val(str2);
+		    	 console.log(str2);
+		     	   modal('reservation_modal');	
+		    	  },
+    	    select: function(info) {
+    	        var startTime =info.startStr;
+    	        var endTime = info.endStr;
+    	        var str = startTime.substr(0,10);
+		    	var str2 = startTime.substr(11,5);
+		    	var str3 = endTime.substr(11,5);
+		    	$("#date").val(str);
+		    	$("#startTime").val(str2);
+		    	$("#endTime").val(str3);
+		    	console.log(str2);
+		     	modal('reservation_modal');	
+    	      }
+		      
+		    });
+
+		    calendar.render();
+		  });
+		
+		$(function() {
+			 
+			var rs =$("select[name=resource] option").size();
+			if(rs<1){
+				alert("예약할수있는 자원이 없습니다.");
+				document.location.href="myReservation.do";
+			}
+			
 		});
+
 	</script>
 
 </body>
