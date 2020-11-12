@@ -345,7 +345,7 @@
         <button class="menu_icon hover1" onclick="location.href='recieveMail.do'">
           <img src="resources/images/mail.png" /> <img src="resources/images/h_mail.png" />
         </button>
-        <button class="menu_icon hover1" onclick="location.href='boardList.do'">
+        <button class="menu_icon hover1" onclick="location.href='notice.do'">
           <img src="resources/images/board.png" /> <img src="resources/images/board_h.png" />
         </button>
         <button class="menu_icon hover1" onclick="location.href='Schedulermain.do'">
@@ -354,7 +354,7 @@
         <button class="menu_icon hover1" onclick="location.href='organization.do'">
           <img src="resources/images/Personnel.png" /> <img src="resources/images/Personnel_h.png" />
         </button>
-        <button class="menu_icon hover1" onclick="location.href='reservation.do'">
+        <button class="menu_icon hover1" onclick="location.href='myReservation.do'">
           <img src="resources/images/reser.png" /> <img src="resources/images/reser_h.png" />
         </button>
         <button class="menu_icon hover1" onclick="location.href='approvalProgressAllListView.do'">

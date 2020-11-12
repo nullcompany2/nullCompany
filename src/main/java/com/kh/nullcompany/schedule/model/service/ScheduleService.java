@@ -46,6 +46,10 @@ public interface ScheduleService {
 
 	Schedule editDetailSchedule(String sche_name);
 
+	int updateSchedule(Schedule schedule);
+
+	int DeleteSchedule(String sche_name);
+
 
 
 

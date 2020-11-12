@@ -134,7 +134,6 @@ public class ScheduleController {
 		
 		sche = sService.detailSchedule(Sche_name);
 		
-		System.out.println("왜안대냐" + sche);
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(sche,response.getWriter());
@@ -143,31 +142,43 @@ public class ScheduleController {
 	
 	// 일정 디테일 총 인원 수
 
-
 	@RequestMapping("detailCalMember.do" )
 	public void detailCalMember(@Param("cal_name") String cal_name, Model model , HttpServletResponse response) throws JsonIOException, IOException {
 		ArrayList<Calendar> DetailCalmemberList = sService.DetailCalmemberList(cal_name);
 		
-		System.out.println("멤버 리스트" + DetailCalmemberList);
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(DetailCalmemberList,response.getWriter());
 	
 	}
 
-	// 일정 수정
+	// 일정 수정 모달 디테일 뜨게
 	@RequestMapping("editDetailSchedule.do" )
 	public void editDetailSchedule(@Param("Sche_name") String Sche_name, Model model , HttpServletResponse response) throws JsonIOException, IOException {
 		Schedule sche = new Schedule();
 		
 		sche = sService.editDetailSchedule(Sche_name);
 		
-		System.out.println("멤버수정디테일" + sche);
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(sche,response.getWriter());
 	
 	}
 
+	// 일정 수정
+	@RequestMapping("updateSchedule.do")
+	public void updateSchedule(@Param("Schedule") Schedule Schedule ) {
+		int result = sService.updateSchedule(Schedule);
 
+		System.out.println("수정 후 캘린더" + Schedule);
+
+	}
+	
+	@RequestMapping("DeleteSchedule.do")
+	public void DeleteSchedule(@Param("sche_name") String sche_name ) {
+		int result = sService.DeleteSchedule(sche_name);
+
+
+	}
+	
 }

@@ -844,6 +844,7 @@ background-color
 	position: absolute;
 	top: 101px;
 	left: 100px;
+	background : white;
 }
 
 #dept_list {
@@ -1123,6 +1124,7 @@ background-color
 	position: absolute;
 	top: 106px;
 	left: 69px;
+	background: white
 }
 
 #detail_modal {

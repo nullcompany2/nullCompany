@@ -18,7 +18,7 @@
 
 <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<title>자유게시판</title>
+<title>팀내공지</title>
 
 </head>
 <style>
@@ -202,7 +202,6 @@ tr>td {
    right: 10px;
 }
 </style>
-
 <body>
 
    <div id='wrap'>
@@ -210,15 +209,16 @@ tr>td {
       <c:import url="../common/boardSubNav.jsp" />
       <div class="contents">
          <div class="contents-title">
-            <span class="ct1" style="margin-right: 76%;">자유게시판</span> 
-
-
+            <span class="ct1" style="margin-right: 77%;">팀내공지</span>
+            
+            
+             
          </div>
 
          <div style="padding: 0px 30px 0px 30px;">
 
                <table id="mrv_table" class=" table-striped  table-hover">
-               <colgroup>
+             <colgroup>
                   <col width="10%" />
                   <col width="40%" />
                   <col width="15%" />
@@ -228,31 +228,32 @@ tr>td {
                <thead>
                   <tr>
                      <th>번호</th>
-                     <th style="width: 300px;" >제목</th>
+                     <th style="width: 300px;">제목</th>
                      <th>작성자</th>
                      <th>조회수</th>
                      <th align="center">작성일</th>
                   </tr>
                </thead>
-               <tbody> 
-                  <c:forEach var="b" items="${list }">
+               <tbody>
+                  <c:forEach var="t" items="${list }">
                      <tr>
-                        <td align="left">${b.bNo }</td>
+                        <td align="left">${t.tNo }</td>
                         <td align="left"><c:if test="${!empty loginUser }">
-                              <c:url var="boardDetail" value="boardDetail.do">
-                                 <c:param name="bNo" value="${b.bNo }" />
+                              <c:url var="tdetail" value="tdetail.do">
+                                 <c:param name="tNo" value="${t.tNo }" />
                                  <c:param name="currentPage" value="${pi.currentPage }" />
                               </c:url>
-                              <a href="${boardDetail }">${b.bTitle }</a>
+                              <a href="${tdetail }">${t.tTitle }</a>
                            </c:if> <c:if test="${empty loginUser }">
-                              ${b.bTitle }
+                              ${t.tTitle }
                            </c:if></td>
-                        <td align="left">${b.bWriter }</td>
-                        <td align="left">${b.bCount }</td>
-                        <td align="left">${b.bCreateDate }</td>
+                        <td align="left">${t.tWriter }</td>
+                        <td align="left">${t.tCount }</td>
+                        <td align="left">${t.tCreateDate }</td>
                      </tr>
                   </c:forEach>
             </table>
+
 
          </div>
       </div>
@@ -264,7 +265,7 @@ tr>td {
                <!-- [이전] --> <c:if test="${ pi.currentPage eq 1 }">
                   [이전] &nbsp;
                </c:if> <c:if test="${ pi.currentPage ne 1 }">
-                  <c:url var="before" value="boardFree.do">
+                  <c:url var="before" value="tnotice.do">
                      <c:param name="currentPage" value="${ pi.currentPage - 1 }" />
                   </c:url>
                   <a href="${ before }">[이전]</a> &nbsp;
@@ -275,7 +276,7 @@ tr>td {
                   </c:if>
 
                   <c:if test="${ p ne pi.currentPage }">
-                     <c:url var="pagination" value="boardFree.do">
+                     <c:url var="pagination" value="tnotice.do">
                         <c:param name="currentPage" value="${ p }" />
                      </c:url>
                      <a href="${ pagination }">${ p }</a> &nbsp;
@@ -283,7 +284,7 @@ tr>td {
                </c:forEach> <!-- [다음] --> <c:if test="${ pi.currentPage eq pi.maxPage }">
                   [다음]
                </c:if> <c:if test="${ pi.currentPage ne pi.maxPage }">
-                  <c:url var="after" value="boardFree.do">
+                  <c:url var="after" value="tnotice.do">
                      <c:param name="currentPage" value="${ pi.currentPage + 1 }" />
                   </c:url>
                   <a href="${ after }">[다음]</a>
@@ -305,7 +306,7 @@ tr>td {
 
       </div>
    </div>
-
+ 
 
 
    <script>

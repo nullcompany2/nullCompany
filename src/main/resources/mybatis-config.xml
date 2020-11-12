@@ -20,7 +20,11 @@
       <typeAlias type="com.kh.nullcompany.personnelManagement.model.vo.SetAttendance" alias="SetAttendance"/>
       <typeAlias type="com.kh.nullcompany.personnelManagement.model.vo.RecordDiligence" alias="RecordDiligence"/>
       <typeAlias type="com.kh.nullcompany.board.model.vo.board" alias="board"/>
-      <typeAlias type="com.kh.nullcompany.board.model.vo.comment" alias="comment"/>
+       <typeAlias type="com.kh.nullcompany.board.model.vo.bcomment" alias="bcomment"/>
+      <typeAlias type="com.kh.nullcompany.notice.model.vo.notice" alias="notice"/>
+      <typeAlias type="com.kh.nullcompany.notice.model.vo.ncomment" alias="ncomment"/>
+      <typeAlias type="com.kh.nullcompany.notice.model.vo.tnotice" alias="tnotice"/>
+      <typeAlias type="com.kh.nullcompany.notice.model.vo.tcomment" alias="tncomment"/>
       <typeAlias type="com.kh.nullcompany.mail.model.vo.Email" alias="Email"/>
       <typeAlias type="com.kh.nullcompany.mail.model.vo.Mail" alias="Mail"/>
       <typeAlias type="com.kh.nullcompany.mail.model.vo.MailSelectIdNo" alias="MailSelectIdNo"/>
@@ -44,6 +48,7 @@
       <mapper resource="mappers/mail-mapper.xml"/>
       <mapper resource="mappers/personnel-mapper.xml"/>
       <mapper resource="mappers/board-mapper.xml"/>
+      <mapper resource="mappers/notice-mapper.xml"/>
       <mapper resource="mappers/Y_personnel-mapper.xml"/>
       <mapper resource="mappers/schedule-mapper.xml"/>
       <mapper resource="mappers/reservation-mapper.xml"/>

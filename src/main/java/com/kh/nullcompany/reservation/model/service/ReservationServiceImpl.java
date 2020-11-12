@@ -1,12 +1,14 @@
 package com.kh.nullcompany.reservation.model.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.nullcompany.reservation.model.dao.ReservationDao;
 import com.kh.nullcompany.reservation.model.vo.Category;
+import com.kh.nullcompany.reservation.model.vo.Reservation;
 import com.kh.nullcompany.reservation.model.vo.Resource;
 
 @Service("rService")
@@ -53,6 +55,26 @@ public class ReservationServiceImpl implements ReservationService  {
 	@Override
 	public ArrayList<Resource> selectResourceList(int rcNo) {
 		return rDao.selectResourceList(rcNo);
+	}
+
+	@Override
+	public int deleteResource(int rsNo) {
+		return rDao.deleteResource(rsNo);
+	}
+
+	@Override
+	public int updateResouce(Resource r) {
+		return rDao.updateResouce(r);
+	}
+
+	@Override
+	public Resource selectUpdateResource(int rsNo) {
+		return rDao.selectResource(rsNo);
+	}
+
+	@Override
+	public ArrayList<Reservation> selectReservationList(Map map) {
+		return rDao.selectReservationList(map);
 	}
 
 }

@@ -74,6 +74,10 @@
         AND M.M_STATUS = 'Y'
 	</select>
 	
-	
+	<select id="findIdName" resultMap="memberResultSet" >
+		SELECT *
+		FROM MEMBER 
+		WHERE ID = #{recipient} 
+	 </select>
 	
 </mapper>

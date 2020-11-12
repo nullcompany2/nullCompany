@@ -17,12 +17,13 @@ public class Mail {
 	
 	private String name;
 	private String email;
+	private String rName;
 	
 	public Mail() {}
 
 	public Mail(int mailNo, int memNo, String sender, String recipient, String mTitle, String mFileName,
 			String mContent, String sendDate, String mDeleteStatus, String mRealDelStatus, String mSaveStatus,
-			int readCount, String name, String email) {
+			int readCount, String name, String email, String rName) {
 		super();
 		this.mailNo = mailNo;
 		this.memNo = memNo;
@@ -38,6 +39,7 @@ public class Mail {
 		this.readCount = readCount;
 		this.name = name;
 		this.email = email;
+		this.rName = rName;
 	}
 
 	public int getMailNo() {
@@ -152,14 +154,21 @@ public class Mail {
 		this.email = email;
 	}
 
+	public String getrName() {
+		return rName;
+	}
+
+	public void setrName(String rName) {
+		this.rName = rName;
+	}
+
 	@Override
 	public String toString() {
 		return "Mail [mailNo=" + mailNo + ", memNo=" + memNo + ", sender=" + sender + ", recipient=" + recipient
 				+ ", mTitle=" + mTitle + ", mFileName=" + mFileName + ", mContent=" + mContent + ", sendDate="
 				+ sendDate + ", mDeleteStatus=" + mDeleteStatus + ", mRealDelStatus=" + mRealDelStatus
 				+ ", mSaveStatus=" + mSaveStatus + ", readCount=" + readCount + ", name=" + name + ", email=" + email
-				+ "]";
+				+ ", rName=" + rName + "]";
 	}
-
 	
 }

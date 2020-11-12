@@ -77,7 +77,7 @@ a {
 			<div>
 				<button
 					style="border: none; border-radius: 3px; background: #477A8F; font-size: 20px; width: 198px; height: 50px; margin-left: 9px;">
-					<a style="color: white;" href="boardWrite.do"> 글쓰기 </a>
+					<a style="color: white;" href="write.do"> 글쓰기 </a>
 				</button>
 			</div>
 			<br>
@@ -88,15 +88,15 @@ a {
 			<div class="H-personnel-subNavi underline">
 				<div class="H-personnel-subNavi Depth01-1">
 					<li class="subTitle" style="cursor: pointer;"
-						onclick="location.href='boardList.do'">중요 게시물</li>
+						onclick="location.href='iboard.do'">중요 게시물</li>
 					<li class="subTitle" style="cursor: pointer;"
-						onclick="location.href='boardAll.do'">사내공지</li>
+						onclick="location.href='notice.do'">사내공지</li>
 					<li class="subTitle" style="cursor: pointer;"
-						onclick="location.href='boardTeam.do'">팀내공지</li>
+						onclick="location.href='tnotice.do'">팀내공지</li>
 					<li class="subTitle" style="cursor: pointer;"
-						onclick="location.href='boardFree.do'">자유게시판</li>
+						onclick="location.href='board.do'">자유게시판</li>
 					<li class="subTitle" style="cursor: pointer;"
-						onclick="location.href='boardSave.do'">임시 보관함</li>
+						onclick="location.href='save.do'">임시 보관함</li>
 				</div>
 			</div>
 
