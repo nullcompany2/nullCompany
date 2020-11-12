@@ -170,7 +170,7 @@
                 </div>
                 <div class="ch">
                     <span> Approval Document</span>
-                    <a style="margin-left:100px;" href="approvalProgressListView.do">more</a>
+                    <a style="margin-left:100px;" href="approvalProgressAllListView.do">more</a>
                     <hr>
                     
                     <div style="border:1px solid #C8CACC; border-radius:4px;
