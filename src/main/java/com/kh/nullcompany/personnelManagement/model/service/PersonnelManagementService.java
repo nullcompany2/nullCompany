@@ -6,6 +6,8 @@ import java.util.Map;
 import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.personnelManagement.model.vo.Department;
+import com.kh.nullcompany.personnelManagement.model.vo.ForEmLeave;
+import com.kh.nullcompany.personnelManagement.model.vo.ForEmUsedLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.MixForLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.RecordDiligence;
 import com.kh.nullcompany.personnelManagement.model.vo.RecordLeave;
@@ -160,6 +162,11 @@ public interface PersonnelManagementService {
 	ArrayList<SetLeave> setLeaveStandard();
 	// 휴가설정 저장
 	int fixSetLeave(ArrayList newLeaveArr, ArrayList setAnnualLeave, int firstyear);
+	// 직원 휴가관리 전체사원
+	ArrayList<ForEmLeave> emAllMemeber();
+	// 사용된 휴가목록(직원 휴가관리)
+	ArrayList<ForEmUsedLeave> usedLeave();
+	
 	
 	
 }

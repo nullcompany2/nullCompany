@@ -12,6 +12,8 @@ import org.springframework.stereotype.Repository;
 import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.personnelManagement.model.vo.Department;
+import com.kh.nullcompany.personnelManagement.model.vo.ForEmLeave;
+import com.kh.nullcompany.personnelManagement.model.vo.ForEmUsedLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.MixForLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.RecordDiligence;
 import com.kh.nullcompany.personnelManagement.model.vo.RecordLeave;
@@ -192,6 +194,16 @@ public class PersonnelManagementDao {
 			}			
 		}
 		return re;
+	}
+
+
+	public ArrayList<ForEmLeave> emAllMember() {
+		return (ArrayList)sqlSession.selectList("personnelMapper.emAllMember");
+	}
+
+
+	public ArrayList<ForEmUsedLeave> usedLeave() {
+		return (ArrayList)sqlSession.selectList("personnelMapper.usedLeave");
 	}
 
 

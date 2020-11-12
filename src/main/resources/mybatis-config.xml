@@ -19,6 +19,8 @@
       <typeAlias type="com.kh.nullcompany.personnelManagement.model.vo.Rank" alias="Rank"/>
       <typeAlias type="com.kh.nullcompany.personnelManagement.model.vo.SetAttendance" alias="SetAttendance"/>
       <typeAlias type="com.kh.nullcompany.personnelManagement.model.vo.RecordDiligence" alias="RecordDiligence"/>
+      <typeAlias type="com.kh.nullcompany.personnelManagement.model.vo.ForEmLeave" alias="ForEmLeave"/>
+      <typeAlias type="com.kh.nullcompany.personnelManagement.model.vo.ForEmUsedLeave" alias="ForEmUsedLeave"/>
       <typeAlias type="com.kh.nullcompany.board.model.vo.board" alias="board"/>
       <typeAlias type="com.kh.nullcompany.board.model.vo.comment" alias="comment"/>
       <typeAlias type="com.kh.nullcompany.mail.model.vo.Email" alias="Email"/>
