@@ -229,6 +229,11 @@ public class PersonnelManagementServiceImpl implements PersonnelManagementServic
 		return pDao.setLeaveStandard();
 	}
 
+	@Override
+	public int fixSetLeave(ArrayList newLeaveArr, ArrayList setAnnualLeave, int firstyear) {
+		return pDao.fixSetLeave(newLeaveArr,setAnnualLeave,firstyear);
+	}
+
 	
 	
 	

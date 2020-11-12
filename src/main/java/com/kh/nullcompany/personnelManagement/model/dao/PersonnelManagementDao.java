@@ -176,5 +176,24 @@ public class PersonnelManagementDao {
 	}
 
 
+	public int fixSetLeave(ArrayList newLeaveArr, ArrayList setAnnualLeave, int firstyear) {
+		int re = 0;
+		
+		for(int j=0; j<3; j++) {
+			switch(j) {
+			case 0 : for(int i =0; i<newLeaveArr.size();i++) {
+						Object newLeave = newLeaveArr.indexOf(i);
+						System.out.println(newLeave);
+						re= sqlSession.insert("personnelMapper.newLeaveArr",newLeaveArr);
+						System.out.println(re);
+					}
+			case 1 : re= sqlSession.update("personnelMapper.setAnnualLeave",setAnnualLeave);
+			case 2 : re= sqlSession.update("personnelMapper.firstyear",firstyear);
+			}			
+		}
+		return re;
+	}
+
+
 
 }

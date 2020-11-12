@@ -1,17 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="approvalMapper">
-
-	<resultMap id="progressList" type="Document">
+	
+	<!-- 문서 리스트 뽑기 -->
+	<resultMap id="documentResultSet" type="Document">
 		<id property="docTempNo" column="DOC_TEMP_NO"/>
 		<result property="docNo" column="DOC_NO"/>
 		<result property="formCode" column="FORM_CODE"/>
-		<result property="dTitle" column="DTITLE"/>
+		<result property="drafterNo" column="DRAFTER_NO"/>
 		<result property="drafterName" column="DRAFTER_NAME"/>
+		<result property="drafterDeptNo" column="DRAFTER_DEPT_NO"/>
+		<result property="drafterDeptName" column="DRAFTER_DEPT_NAME"/>
+		<result property="drafterRankNo" column="DRAFTER_RANK_NO"/>
+		<result property="drafterRankName" column="DRAFTER_RANK_NAME"/>
+		<result property="dTitle" column="DTITLE"/>
+		<result property="dContent" column="DCONTENT"/>
+		<result property="fileName" column="FILENAME"/>
 		<result property="draftDate" column="DRAFT_DATE"/>
+		<result property="completeDate" column="COMPLETE_DATE"/>
+		<result property="formNo" column="FORM_NO"/>
 		<result property="formName" column="FORM_NAME"/>
+		<result property="turnNo" column="TURN_NO"/>
+		<result property="rStatus" column="R_STATUS"/>
+		<result property="dStatus" column="D_STATUS"/>
 	</resultMap>
-	
+	<!-- 결재스텝 리스트 뽑기 -->
+	<resultMap id="stepResultSet" type="Step">
+		<result property="docTempNo" column="DOC_TEMP_NO"/>
+		<result property="lineNo" column="LINE_NO"/>
+		<result property="staffNo" column="STAFF_NO"/>
+		<result property="staffName" column="STAFF_NAME"/>
+		<result property="staffRankNo" column="STAFF_RANK_NO"/>
+		<result property="staffRankName" column="STAFF_RANK_NAME"/>
+		<result property="stepPriority" column="STAFF_PRIORITY"/>
+		<result property="apprStatus" column="APPR_STATUS"/>
+	</resultMap>
 	
 	<!-- 진행중인 문서(전체) 게시글 갯수 -->
 	<select id="getProgressAllListCount" resultType="_int">
@@ -20,39 +43,90 @@
 		FROM
 		    (SELECT 
 		           DISTINCT AST.DOC_NO AS DOC_TEMP_NO,
-		           AD.DOC_NO,
-		           AF.FORM_CODE,
-		           AD.DTITLE,
-		           M.NAME AS DRAFTER_NAME,
-		           AD.DRAFT_DATE,
-		           AF.FORM_NAME
+			       AD.DOC_NO,
+			       AF.FORM_CODE,
+			       AD.DTITLE,
+			       AD.DCONTENT,
+			       AD.FILENAME,
+			       AD.DRAFTER_NO,
+			       M.NAME AS DRAFTER_NAME,
+			       AD.DRAFTER_DEPT_NO,
+	       		   D.DEPT_NAME AS DRAFTER_DEPT_NAME,
+	               AD.DRAFTER_RANK_NO,
+	               R.RANK_NAME AS DRAFTER_RANK_NAME,
+			       AD.DRAFT_DATE,
+			       AD.COMPLETE_DATE,
+			       AD.FORM_NO,
+			       AF.FORM_NAME,
+			       AD.TURN_NO,
+			       AD.R_STATUS,
+			       AD.D_STATUS
 		    FROM APPROVAL_DOCUMENT AD
 		    JOIN MEMBER M ON(AD.DRAFTER_NO = M.MEM_NO)
 		    JOIN APPROVAL_FORM AF ON(AD.FORM_NO = AF.FORM_NO)
 		    JOIN APPROVAL_STEP AST ON(AD.DOC_TEMP_NO = AST.DOC_NO)
+		    JOIN DEPARTMENT D ON(AD.DRAFTER_DEPT_NO = D.DEPT_NO)
+			JOIN RANK R ON(AD.DRAFTER_RANK_NO = R.RANK_NO)
 		    WHERE
 		         AD.D_STATUS = 'N'
 		    AND  AD.COMPLETE_DATE IS NULL
+		    AND  AD.DOC_NO IS NOT NULL
 		    AND (AD.DRAFTER_NO = #{memNo} OR AST.STAFF_NO = #{memNo})
 		    ORDER BY AD.DRAFT_DATE DESC)
 	</select>
-	<select id="selectProgressAllList" resultMap="progressList">
+	
+	<!-- 진행 중인 문서 게시물 리스트 -->
+	<select id="selectProgressAllList" resultMap="documentResultSet">
 		    SELECT 
 	           DISTINCT AST.DOC_NO AS DOC_TEMP_NO,
-	           AD.DOC_NO,
-	           AF.FORM_CODE,
-	           AD.DTITLE,
-	           M.NAME AS DRAFTER_NAME,
-	           AD.DRAFT_DATE,
-	           AF.FORM_NAME
+		       AD.DOC_NO,
+		       AF.FORM_CODE,
+		       AD.DTITLE,
+		       AD.DCONTENT,
+		       AD.FILENAME,
+		       AD.DRAFTER_NO,
+		       M.NAME AS DRAFTER_NAME,
+		       AD.DRAFTER_DEPT_NO,
+       		   D.DEPT_NAME AS DRAFTER_DEPT_NAME,
+               AD.DRAFTER_RANK_NO,
+               R.RANK_NAME AS DRAFTER_RANK_NAME,
+		       AD.DRAFT_DATE,
+		       AD.COMPLETE_DATE,
+		       AD.FORM_NO,
+		       AF.FORM_NAME,
+		       AD.TURN_NO,
+		       AD.R_STATUS,
+		       AD.D_STATUS
 		    FROM APPROVAL_DOCUMENT AD
 		    JOIN MEMBER M ON(AD.DRAFTER_NO = M.MEM_NO)
 		    JOIN APPROVAL_FORM AF ON(AD.FORM_NO = AF.FORM_NO)
 		    JOIN APPROVAL_STEP AST ON(AD.DOC_TEMP_NO = AST.DOC_NO)
+		    JOIN DEPARTMENT D ON(AD.DRAFTER_DEPT_NO = D.DEPT_NO)
+			JOIN RANK R ON(AD.DRAFTER_RANK_NO = R.RANK_NO)
 		    WHERE
 		         AD.D_STATUS = 'N'
 		    AND  AD.COMPLETE_DATE IS NULL
+		    AND  AD.DOC_NO IS NOT NULL
 		    AND (AD.DRAFTER_NO = #{memNo} OR AST.STAFF_NO = #{memNo})
 		    ORDER BY AD.DRAFT_DATE DESC
+	</select>
+	
+	<!-- 결재자 리스트 -->
+	<select id="selectStepList" resultMap="stepResultSet">
+		SELECT 
+		  A.DOC_NO 
+		, A.LINE_NO
+		, L.LINE_NAME
+		, A.STAFF_NO
+		, M.NAME AS STAFF_NAME
+		, A.STAFF_RANK_NO
+		, R.RANK_NAME
+		, A.STAFF_PRIORITY
+		, A.APPR_STATUS
+		FROM APPROVAL_STEP A
+		JOIN APPROVAL_LINE L ON(A.LINE_NO = L.LINE_NO)
+		JOIN MEMBER M ON(A.STAFF_NO = M.MEM_NO)
+		JOIN RANK R ON(A.STAFF_RANK_NO = R.RANK_NO)
+		WHERE A.DOC_NO = #{docTempNo}
 	</select>
 </mapper>

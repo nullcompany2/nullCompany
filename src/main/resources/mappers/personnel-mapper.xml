@@ -324,5 +324,11 @@
 		FROM SET_LEAVE_STANDARD
 	</select>
 	
+	<insert id="newLeaveArr" parameterType="map">
+		<foreach collection="newLeaveArr" item="newL" open="INSERT INTO TYPE_LEAVE ">
+			VALUES(LEAVE_TYPE_SEQ.nextval,#{newL.newLeave[0]},#{newL.newLeave[1]},#{newL.newLeave[2]})
+		</foreach>
+	</insert>
+	
 	
 </mapper>

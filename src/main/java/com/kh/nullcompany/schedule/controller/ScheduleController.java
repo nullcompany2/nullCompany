@@ -155,6 +155,19 @@ public class ScheduleController {
 	
 	}
 
+	// 일정 수정
+	@RequestMapping("editDetailSchedule.do" )
+	public void editDetailSchedule(@Param("Sche_name") String Sche_name, Model model , HttpServletResponse response) throws JsonIOException, IOException {
+		Schedule sche = new Schedule();
+		
+		sche = sService.editDetailSchedule(Sche_name);
+		
+		System.out.println("멤버수정디테일" + sche);
+		response.setContentType("application/json; charset=UTF-8");
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		gson.toJson(sche,response.getWriter());
+	
+	}
 
 
 }

@@ -137,6 +137,11 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return sDao.DetailCalmemberList(cal_name);
 	}
 
+	@Override
+	public Schedule editDetailSchedule(String sche_name) {
+		return sDao.editDetailSchedule(sche_name);
+	}
+
 
 
 }
