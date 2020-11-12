@@ -93,6 +93,14 @@ public class ScheduleDao {
 		return sqlSession.selectOne("scheduleMapper.editDetailSchedule",sche_name);
 	}
 
+	public int updateSchedule(Schedule schedule) {
+		return sqlSession.update("scheduleMapper.updateSchedule",schedule);
+	}
+
+	public int DeleteSchedule(String sche_name) {
+		return sqlSession.delete("scheduleMapper.DeleteSchedule",sche_name);
+	}
+
 
 
 	
