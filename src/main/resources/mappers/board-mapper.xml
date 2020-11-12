@@ -12,101 +12,59 @@
 		<result property="bCreateDate" column="B_CREATE_DATE" />
 		<result property="bModifyDate" column="B_MODIFY_DATE" />
 		<result property="bStatus" column="B_STATUS" />
-		<result property="bImportant" column="B_IMPORTANT" />
+		<result property="bImport" column="B_IMPORT" />
 		<result property="bSave" column="B_SAVE" />
-		<result property="bType" column="BTYPE" />
 	</resultMap>
 
 	<!-- comment resultSet추가 부분 -->
-	<resultMap type="comment" id="commentResultSet">
-		<id property="cNo" column="CNO" />
-		<result property="cContent" column="CCONTENT" />
-		<result property="refBno" column="REF_BNO" />
-		<result property="cWriter" column="CWRITER" />
-		<result property="cCreateDate" column="C_CREATE_DATE" />
-		<result property="cModifyDate" column="C_MODIFY_DATE" />
-		<result property="cStatus" column="C_STATUS" />
+	<resultMap type="bcomment" id="bcommentResultSet">
+		<id property="bcNo" column="BCNO" />
+		<result property="bcContent" column="BCCONTENT" />
+		<result property="bcefBno" column="BCEF_BNO" />
+		<result property="bcWriter" column="BCWRITER" />
+		<result property="bcCreateDate" column="BC_CREATE_DATE" />
+		<result property="bcModifyDate" column="BC_MODIFY_DATE" />
+		<result property="bcStatus" column="BC_STATUS" />
 	</resultMap>
 
 	<select id="getListCount" resultType="_int">
 		SELECT COUNT(*)
-		FROM BOARD
+		FROM TBL_BOARD
 		WHERE B_STATUS='Y'
 	</select>
 
-
-
-	<select id="selectListImport" resultMap="boardResultSet">
+	<select id="selectListBoard" resultMap="boardResultSet">
 		SELECT *
-		FROM BOARD
+		FROM TBL_BOARD
 		WHERE B_STATUS='Y'
-		AND B_IMPORTANT='Y'
 		ORDER BY BNO DESC
 	</select>
-
-	<select id="selectListAll" resultMap="boardResultSet">
-		SELECT *
-		FROM BOARD
-		WHERE B_STATUS='Y'
-		AND BTYPE='사내공지'
-		ORDER BY BNO DESC
-	</select>
-
-	<select id="selectListTeam" resultMap="boardResultSet">
-		SELECT *
-		FROM BOARD
-		WHERE B_STATUS='Y'
-		AND BTYPE='팀내공지'
-		ORDER BY BNO DESC
-	</select>
-
-	<select id="selectListFree" resultMap="boardResultSet">
-		SELECT *
-		FROM BOARD
-		WHERE B_STATUS='Y'
-		AND BTYPE='자유게시판'
-		ORDER BY BNO DESC
-	</select>
-
+	
 	<update id="updateCount" parameterType="_int">
-		UPDATE BOARD
+		UPDATE TBL_BOARD
 		SET BCOUNT = BCOUNT +1
 		WHERE BNO=#{bNo}
 	</update>
 
 	<select id="selectBoard" resultMap="boardResultSet">
 		SELECT *
-		FROM BOARD
+		FROM TBL_BOARD
 		WHERE BNO=#{bNo}
 		AND B_STATUS='Y'
 	</select>
-
-
-	<select id="selectCommentList" parameterType="_int"
-		resultMap="commentResultSet">
+	
+	<select id="selectbCommentList" parameterType="_int"
+		resultMap="bcommentResultSet">
 		SELECT *
-		FROM BCOMMENT
-		WHERE REF_BNO=#{bNo}
-		ORDER BY CNO ASC
+		FROM CMT_BOARD
+		WHERE BCEF_BNO=#{bNo}
+		ORDER BY BCNO ASC
 	</select>
-
-	<insert id="insertComment" parameterType="comment">
-		INSERT INTO BCOMMENT VALUES
-		(SEQ_CNO.NEXTVAL, #{cContent},#{refBno},#{cWriter},SYSDATE,SYSDATE,DEFAULT)
+	
+	<insert id="insertbComment" parameterType="bcomment">
+		INSERT INTO CMT_BOARD VALUES
+		(SEQ_BCNO.NEXTVAL, #{bcContent},#{bcefBno},#{bcWriter},SYSDATE,SYSDATE,DEFAULT)
 	</insert>
-
-	<delete id="deleteComment" parameterType="int">
-
-		DELETE FROM BCOMMENT
-
-		WHERE
-
-			CNO = #{cNo}
-
-	</delete>
-
-
-
 	
 
 </mapper>

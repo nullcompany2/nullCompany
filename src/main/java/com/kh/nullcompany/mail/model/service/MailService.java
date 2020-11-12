@@ -133,20 +133,42 @@ public interface MailService {
 	 */
 	Mail delMailDetailView(int mailNo);
 
+	/**
+	 *  휴지통에 있는 거 전부 삭제 
+	 * @param memId
+	 * @return
+	 */
+	int allBinDelMail(String memId);
 
 
+	/**
+	 *  메일 전송시 보내는 사람 아이디 이름 가져와서 addOb
+	 * @param recipient
+	 * @return
+	 */
+	Member findIdName(String recipient);
+	
+	/**
+	 * 받는 메일함에서 리얼 삭제 
+	 * @param memId
+	 * @return
+	 */
+	int allRealDelMail(String memId);
 
+	/**
+	 *  메일 디테일뷰에서 한개 삭제 
+	 * 
+	 * @param mailNo
+	 * @return
+	 */
+	int deleteOneMail(int mailNo);
+
+	/**
+	 *  메일 디테일뷰에서 한개 완전 삭제 
+	 * @param mailNo
+	 * @return
+	 */
+	int realDeleteOneMail(int mailNo);
 	
 	
-	
-
-	
-
-	
-
-
-
-	
-	
-
 }

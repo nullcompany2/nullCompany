@@ -108,7 +108,14 @@ a {
 		
 		<script>
 		$("#gobin").click(function(){
-			confirm("완전 삭제하시면 복구 할 수 없습니다. 정말로 삭제하시겠습니까?");
+			 if (confirm("완전 삭제하시면 복구 할 수 없습니다. 정말로 삭제하시겠습니까?") == true){   
+
+				 document.location.href='allBinDelMail.do';
+
+		        }else{   //취소
+
+		            return;
+		        }
 		});
 		
 		</script>

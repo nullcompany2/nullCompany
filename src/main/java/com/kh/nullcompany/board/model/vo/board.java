@@ -14,17 +14,15 @@ public class board {
 	private Date bCreateDate;
 	private Date bModifyDate;
 	private String bStatus;
-	private String bImportant;
+	private String bImport;
 	private String bSave;
-	private String bType;
 	
 	public board() {
 		super();
 	}
 
 	public board(int bNo, String bTitle, String bWriter, String bContent, int bCount, String originalFileName,
-			String renameFileName, Date bCreateDate, Date bModifyDate, String bStatus, String bImportant, String bSave,
-			String bType) {
+			String renameFileName, Date bCreateDate, Date bModifyDate, String bStatus, String bImport, String bSave) {
 		super();
 		this.bNo = bNo;
 		this.bTitle = bTitle;
@@ -36,9 +34,8 @@ public class board {
 		this.bCreateDate = bCreateDate;
 		this.bModifyDate = bModifyDate;
 		this.bStatus = bStatus;
-		this.bImportant = bImportant;
+		this.bImport = bImport;
 		this.bSave = bSave;
-		this.bType = bType;
 	}
 
 	public int getbNo() {
@@ -121,12 +118,12 @@ public class board {
 		this.bStatus = bStatus;
 	}
 
-	public String getbImportant() {
-		return bImportant;
+	public String getbImport() {
+		return bImport;
 	}
 
-	public void setbImportant(String bImportant) {
-		this.bImportant = bImportant;
+	public void setbImport(String bImport) {
+		this.bImport = bImport;
 	}
 
 	public String getbSave() {
@@ -137,21 +134,15 @@ public class board {
 		this.bSave = bSave;
 	}
 
-	public String getbType() {
-		return bType;
-	}
-
-	public void setbType(String bType) {
-		this.bType = bType;
-	}
-
 	@Override
 	public String toString() {
 		return "board [bNo=" + bNo + ", bTitle=" + bTitle + ", bWriter=" + bWriter + ", bContent=" + bContent
 				+ ", bCount=" + bCount + ", originalFileName=" + originalFileName + ", renameFileName=" + renameFileName
 				+ ", bCreateDate=" + bCreateDate + ", bModifyDate=" + bModifyDate + ", bStatus=" + bStatus
-				+ ", bImportant=" + bImportant + ", bSave=" + bSave + ", bType=" + bType + "]";
+				+ ", bImport=" + bImport + ", bSave=" + bSave + "]";
 	}
+
+	
 	
 	
 	

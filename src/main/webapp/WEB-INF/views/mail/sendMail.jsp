@@ -93,7 +93,7 @@
 	<table align="left" cellspacing="0" width="40%" id="tb"> 
 	<tr> 	
 	<th> 받는 사람 </th>
-	<td> 신아라 js01316  </td>
+	<td> ${m.name} < ${m.id} >   </td>
 	</tr>
 	</table>
 	 <br><br>

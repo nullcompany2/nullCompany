@@ -95,8 +95,8 @@
 				<span id="viewTitle"> ${ma.mTitle}   </span>	 
 				 <span id="viewdate"> ${ma.sendDate} </span> <br>
 				
-				보낸 사람 : ${ma.sender} < ${ma.email} ><br> 
-				받는 사람 : ${ma.recipient} < ${ma.recipient}@nullcompany.com > <br> 
+				보낸 사람 : ${ma.name} < ${ma.email} ><br> 
+				받는 사람 : ${ma.rName} < ${ma.recipient}@nullcompany.com > <br> 
 				<br> 
 				
 				<div id="viewmailContent"> 

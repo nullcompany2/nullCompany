@@ -127,6 +127,31 @@ public class MailServiceImpl implements MailService {
 		return maDao.delMailDetailView(mailNo);
 	}
 
+	@Override
+	public int allBinDelMail(String memId) {
+		return maDao.allBinDelMail(memId);
+	}
+
+	@Override
+	public Member findIdName(String recipient) {
+		return maDao.findIdName(recipient);
+	}
+
+	@Override
+	public int allRealDelMail(String memId) {
+		return maDao.allRealDelMail(memId);
+	}
+
+	@Override
+	public int deleteOneMail(int mailNo) {
+		return maDao.deleteOneMail(mailNo);
+	}
+
+	@Override
+	public int realDeleteOneMail(int mailNo) {
+		return maDao.realDeleteOneMail(mailNo);
+	}
+
 	
 
 
