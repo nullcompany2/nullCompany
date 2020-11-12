@@ -127,7 +127,7 @@ a:active {
 						&nbsp;<input type="text" name="mTitle" style="width: 60%;"
 							placeholder="제목 없음" /> <br>
 							&nbsp;파일첨부&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="file" name="uploadPhoto" />
+						<input type="file" name="uploadPhoto" id="ex_file"/>
 						<br> <br> 
 						<textarea id="summernote" name="mContent"></textarea>
 					</form>
@@ -167,9 +167,13 @@ a:active {
 	        maxHeight: null,
 	        focus: true, 
 	        lang : 'ko-KR'
+	        
 	  });
+	
+	  $("button[aria-label=Picture]").css('display','none');	  
+	  $("button[aria-label=Video]").css('display','none');	  
 	});
-
+	
 	</script>
 
 <script>
@@ -237,13 +241,30 @@ a:active {
     });
     
     $("#sendMail").click(function () {
+
+      	if ($("input[name=recipient]").val().length < 1 ){
+      	  alert('보내는 사람을 지정하지 않으셨습니다.');
+    	}if ($('#summernote').summernote('isEmpty')) {
+     		  alert('메일 내용을 입력하지 않으셨습니다.');
+    	}else{
         $("form").attr("action","sendMail.do");
+   		}
         
 	 });
   
  	 $("#saveMail").click(function () {
+ 		if ($('#summernote').summernote('isEmpty')) {
+ 			$('#summernote').summernote('insertText', '작성 내용 없음');
+ 	   		alert('메일 내용을 입력하지 않으셔서 내용 없음으로 저장됩니다.');
+ 		}if($("input[name=recipient]").val().length < 1){
+ 	    	  alert('보내는 사람을 지정하지 않아 없음으로 저장됩니다.');
+ 	    	 $("input[name=recipient]").val('없음');
+ 		}
         $("form").attr("action","gosaveMail.do");
  	}); 
+ 	 
+ 	
+ 	 
  </script>
 </body>
 

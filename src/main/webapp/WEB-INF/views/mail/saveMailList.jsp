@@ -121,7 +121,6 @@
 						</c:url>
 						
 						<tr class="trMail" onClick="location.href='${saveDetailView}'"> 
-						
 							<td>&nbsp;&nbsp;<input type="checkbox" onClick="event.cancelBubble=true" name="mail"></td>
 							<td align="left"><a> ${ma.name} < ${ma.recipient} ></a></td>
 							<td>${ ma.mTitle }</td>
