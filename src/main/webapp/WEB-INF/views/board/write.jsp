@@ -232,9 +232,9 @@ $(document).ready(function() {
 				<div style="width: 90%; margin: auto;">
 					<form method="post" action="">
 
-						<input id="subBtn" type="button" value="확인" style="" "goWrite(this.form)"/>
+						<input id="subBtn" type="button" value="확인"/>
 						<input class="go2" type="button" value="미리보기" /> <a
-							href="saveBoard.do"><input id="" type="button" value="임시저장" />
+							href="goSave.do"><input id="" type="button" value="임시저장" />
 						</a> <a href="javascript:history.go(-1);"> <input id=""
 							type="button" value="이전으로" /></a> <br>
 						<br> &nbsp;게시판 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <select

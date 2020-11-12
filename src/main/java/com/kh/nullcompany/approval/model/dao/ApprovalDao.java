@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.nullcompany.approval.model.vo.Document;
+import com.kh.nullcompany.approval.model.vo.Step;
 import com.kh.nullcompany.board.model.vo.PageInfo;
 
 @Repository("aDao")
@@ -26,6 +27,10 @@ public class ApprovalDao {
 		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
 		
 		return (ArrayList)sqlSession.selectList("approvalMapper.selectProgressAllList",memNo, rowBounds);
+	}
+
+	public ArrayList<Step> selectStepList(String docTempNo) {
+		return (ArrayList)sqlSession.selectList("approvalMapper.selectStepList",docTempNo);
 	}
 
 }

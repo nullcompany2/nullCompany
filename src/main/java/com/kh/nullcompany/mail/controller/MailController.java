@@ -71,6 +71,17 @@ private MailService maService;
 		public ModelAndView mailgosave(ModelAndView mv, Mail ma,HttpServletRequest request,
 				@RequestParam(value="uploadPhoto",required=false)MultipartFile file) {
 			
+			if(ma.getRecipient().equals("없음")) {
+				
+				String [] senderArr = ma.getSender().split("<");
+				String [] senderArr2 = senderArr[1].split(">");
+				String [] senderArr3 = senderArr2[0].split("@");
+				String [] senderArr4 = senderArr3[0].split(" ");
+				
+				ma.setRecipient("없음");
+				ma.setSender(senderArr4[1]);
+				
+			} else {
 			String [] recipientArr = ma.getRecipient().split("<");
 			String [] recipientArr2 = recipientArr[1].split(">");
 			String [] recipientArr3 = recipientArr2[0].split("@");
@@ -83,7 +94,7 @@ private MailService maService;
 			
 			ma.setRecipient(recipientArr4[1]);
 			ma.setSender(senderArr4[1]);
-			
+			}
 			if(!file.getOriginalFilename().equals("")) {
 	         String mailFile = saveMailFile(file,request);
 	         
@@ -97,7 +108,6 @@ private MailService maService;
 			if(result > 0 ) {
 				mv.setViewName("mail/gosaveMail");	
 			}else {
-				mv.addObject("msg", "회원가입에 실패하였습니다.");
 				mv.setViewName("common/errorPage");	
 			}
 			 return mv;
@@ -130,7 +140,7 @@ private MailService maService;
 		      }catch(Exception e) {
 		    	  System.out.println("파일 전송 에러 : " + e.getMessage());
 		      }
-		      return "resources/mailUploadFiles/" + mailFile;
+		      return mailFile;
 
 		   }	
 		
@@ -138,7 +148,13 @@ private MailService maService;
 	@RequestMapping("sendMail.do")
 	public ModelAndView sendMail(ModelAndView mv, Mail ma,HttpServletRequest request,
 			@RequestParam(value="uploadPhoto",required=false)MultipartFile file) {
-		
+		if (ma.getRecipient().equals("없음 < 없음@nullcompany.com >")) {
+			
+			mv.setViewName("mail/failMail");	
+			return mv;
+			
+			
+		}else {
 		String [] recipientArr = ma.getRecipient().split("<");
 		String [] recipientArr2 = recipientArr[1].split(">");
 		String [] recipientArr3 = recipientArr2[0].split("@");
@@ -151,6 +167,7 @@ private MailService maService;
 		
 		ma.setRecipient(recipientArr4[1]);
 		ma.setSender(senderArr4[1]);
+		String recipient = recipientArr4[1];
 		
 		if(!file.getOriginalFilename().equals("")) {
          String mailFile = saveMailFile(file,request);
@@ -162,13 +179,18 @@ private MailService maService;
 		
 		int result = maService.sendMail(ma);
 		
+		
 		if(result > 0 ) {
+			Member m = maService.findIdName(recipient);
+			mv.addObject("m", m);
 			mv.setViewName("mail/sendMail");	
 		}else {
 			mv.addObject("msg", "인서트 실패~ ");
 			mv.setViewName("common/errorPage");	
+			
 		}
 		 return mv;
+		}
 	}
 	
 		
@@ -247,6 +269,7 @@ private MailService maService;
 			mv.addObject("ma",ma);
 			mv.setViewName("mail/sendMailDetailView");
 			return mv;
+			
 		}
 		
 		// 리스트 - 아이디 누르고 메일 쓰기 
@@ -350,6 +373,7 @@ private MailService maService;
 			
 		}
 		
+		// 휴지통 리스트 뽑기 
 		@RequestMapping("binMailList.do")
 		public ModelAndView RecieveMailbinList(ModelAndView mv, 
 				HttpSession session,
@@ -370,6 +394,63 @@ private MailService maService;
 			
 		return mv;
 			
+		}
+		
+		@RequestMapping("allBinDelMail.do")
+		public String allBinDelMail(Model model, HttpSession session) {
+			
+			String memId = ((Member)session.getAttribute("loginUser")).getId();
+			
+			int result = maService.allBinDelMail(memId);
+			
+			if(result > 0) {
+				System.out.println("처리 완료 ");
+				return "redirect:binMailList.do";	
+			}else {
+				model.addAttribute("msg", "모든 컬럼 진짜 삭제 실패~");
+				return "common/errorPage";
+			}
+			
+		}
+		
+		@RequestMapping("allRealDelMail.do")
+		public String allRealDelMail(Model model, HttpSession session) {
+			String memId = ((Member)session.getAttribute("loginUser")).getId();		
+
+			int result = maService.allRealDelMail(memId);
+			
+			if(result > 0) {
+				return "redirect:recieveMail.do";			
+			}else {
+				model.addAttribute("msg", "모든 컬럼 삭제 실패~");
+				return "common/errorPage";
+			}
+			
+		
+		}
+		
+		@RequestMapping("deleteOneMail.do")
+		public String deleteOneMail(Model model, int mailNo) {
+			int result = maService.deleteOneMail(mailNo);
+			
+			if(result > 0) {
+				return "redirect:recieveMail.do";			
+			}else {
+				model.addAttribute("msg", "컬럼하나 삭제 실패~!~");
+				return "common/errorPage";
+			}
+			
+		}
+			
+		@RequestMapping("realDeleteOneMail.do")
+		public String realDeleteOneMail(Model model, int mailNo) {
+			int result = maService.realDeleteOneMail(mailNo);
+			if(result > 0) {
+				return "redirect:recieveMail.do";			
+			}else {
+				model.addAttribute("msg", "컬럼하나 삭제 실패~!~");
+				return "common/errorPage";
+			}
 		}
 }
 

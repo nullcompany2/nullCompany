@@ -215,7 +215,6 @@ a:active {
              modal.hide();
           });
     }
-
     
     	
     $('.go2').on('click', function() {

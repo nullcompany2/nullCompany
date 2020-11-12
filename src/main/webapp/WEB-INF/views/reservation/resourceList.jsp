@@ -131,7 +131,7 @@ tr>td {
 
 		<div style="padding: 0px 30px 0px 30px;">
 			<div style="margin-top: 10px;">
-				자원 목록 : +<a href="categoryInsertView.do" style="color: #779ec0">추가하기</a>
+				자원 목록 : <button class="rv_but" id="add" style="color: #779ec0; font-size: 16px; margin-top: 2px;">추가하기</button>
 			</div>
 			<table id="mrv_table">
 				<thead>
@@ -141,7 +141,7 @@ tr>td {
 					</tr>
 				</thead>
 				<tbody>
-				<c:forEach var ="r" items="${r}">
+			<%-- 	<c:forEach var ="r" items="${r}">
 				<input type="hidden" name="rcNo" value="${ r.rcNo }">
 				<input type="hidden" name="rsNo" value="${ r.rsNo }">
 					<tr>
@@ -156,7 +156,7 @@ tr>td {
 							<button class="rv_but" id="delete_btn"  data-id="${ r.rsNo }">삭제</button>
 						</td>
 					</tr>
-				</c:forEach>
+				</c:forEach> --%>
 				</tbody>
 			</table>
 		</div>
@@ -169,10 +169,10 @@ tr>td {
 		<div class="n-emp-i">자원을 삭제 하시겠습니까?</div>
 		<div style="text-align: center; margin-top: 30px;">
 			<form action="resourceDelete.do">
-			<input type="hidden" name="rsNo" value="">
+			<input type="hidden" id="rsNo" name="rsNo" value="">
 			<button class="close_btn"
 				style="background: #fc8e8e; color: black; padding: 5px 27px 6px; border: 1px solid #fc8e8e">확인</button>
-			<button class="close_btn"
+			<button class="close_btn" type="button"
 				style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; border: 1px solid #dadada; background: white;">취소</button>
 			</form>
 		</div>
@@ -222,42 +222,60 @@ tr>td {
           });
     }
 
-    $('#delete_btn').on('click', function() {
+    $(document).on('click', '.delete_btn', function(){
         var num = $(this).data('id');
         $("#rsNo").val( num );
        // 모달창 띄우기
        modal('delete_modal');
     });
     
-/*    $(function() {
+    $(document).on('click','.update_btn',function(){
+    	var rsNo=$(this).val();
+    	document.location.href="resourceUpdateView.do?rsNo="+rsNo;
+    });
+    $(function() {
 	  getList();
 	});
+    
+    $("select[name=category]").change(function() {
+    	getList();
+    });
+    
+    $("#add").on('click', function() {
+    	 var rcNo = $("select[name=category]").val();
+    	document.location.href="resourceInsertView.do?rcNo="+rcNo;
+    });
+
    function getList(){
-	   var rcNo = ${list.rcNo};
+	   var rcNo = $("select[name=category]").val();
 		$.ajax({
-			url:"resourceList2.do",
+			url:"List.do",
 			type:"post",
-			data:"",
-			dataType : "gson",
-			success:function(){
+			data:{rcNo : rcNo},
+			success:function(data){
  				console.log(data);
 	            $tableBody = $("tbody");
 	            $tableBody.html("");
 	            
 	            var $tr;
 	            var $rsTitle;
-	            
-				for(var i in data)
+	            var $btn;
+
+				for(var i in data){
 				$tr = $("<tr>");
 				$rsTitle = $("<td>").text(data[i].rsTitle);
-				
+				$btn = $('<td><button class="rv_but update_btn" id="update_btn" value="'+data[i].rsNo+'">수정</button> <span style="color: #e4e4e4;">|</span> <button class="rv_but delete_btn" id="delete_btn"  data-id="'+data[i].rsNo+'">삭제</button>');
 				$tr.append($rsTitle);
+				$tr.append($btn);
 				$tableBody.append($tr);
+				}
+				
 			},error : function() {
 				console.log("전송실패");
 			} 
 		})
-   } */
+   } 
+   
  </script>
 </body>
 </html>

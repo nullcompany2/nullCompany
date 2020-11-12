@@ -10,7 +10,7 @@
 
 
 <!-- include libraries(jQuery, bootstrap) -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
@@ -101,7 +101,7 @@ a:active {
 </head>
 <body>
 		<c:import url="../common/mailSubNav.jsp"/>
-
+		<c:set var="contextPath" value="${ pageContext.servletContext.contextPath }" scope="application"/>
 		<div class="contents">
 			<div class="contents-title">
 				<span class="ct1">임시 보관함 </span>
@@ -119,14 +119,16 @@ a:active {
 						<input type="text" name="sender" style="width: 60%;" value= "${loginUser.name} < ${loginUser.id}@nullcompany.com > "/> <br>
 						&nbsp;받는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<input type="text" name="recipient" style="width: 60%;" value= "${ma.name} < ${ma.recipient}@nullcompany.com >"/>
-							  <span style="font-size: 17px; background: #477A8F; color: white; padding: 0px 8px 0px 8px;">+</span>
+						<span style="font-size: 17px; background: #477A8F; color: white; padding: 0px 8px 0px 8px;">+</span>
 						<br> &nbsp;&nbsp;제목
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						&nbsp;<input type="text" name="mTitle" style="width: 60%;"
 							placeholder="제목 없음" value="${ma.mTitle}"/> <br>
-						&nbsp;파일첨부&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="file" name="uploadPhoto" />
-						<br> <br> 
+						
+							&nbsp;파일첨부&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="file" name="uploadPhoto" /><br> <br> 
+						
+						
 						<textarea id="summernote" name="mContent">
 						${ma.mContent}
 						
@@ -168,6 +170,11 @@ a:active {
 	        focus: true, 
 	        lang : 'ko-KR'
 	  });
+	  
+
+	  $("button[aria-label=Picture]").css('display','none');	  
+	  $("button[aria-label=Video]").css('display','none');	  
+	
 	});
 
     function modal(id) {
@@ -231,14 +238,31 @@ a:active {
        	
     });
     
+    
     $("#sendMail").click(function () {
+
+      	if ($("input[name=recipient]").val().length < 1 ){
+      	  alert('보내는 사람을 지정하지 않으셨습니다.');
+    	}if ($('#summernote').summernote('isEmpty')) {
+     		  alert('메일 내용을 입력하지 않으셨습니다.');
+    	}else{
         $("form").attr("action","sendMail.do");
+   		}
         
 	 });
   
  	 $("#saveMail").click(function () {
+ 		if ($('#summernote').summernote('isEmpty')) {
+ 			$('#summernote').summernote('insertText', '작성 내용 없음');
+ 	   		alert('메일 내용을 입력하지 않으셔서 내용 없음으로 저장됩니다.');
+ 		}if($("input[name=recipient]").val().length < 1){
+ 	    	  alert('보내는 사람을 지정하지 않아 없음으로 저장됩니다.');
+ 	    	 $("input[name=recipient]").val('없음');
+ 		}
         $("form").attr("action","gosaveMail.do");
  	}); 
+ 	 
+ 	 
 
  </script>
  

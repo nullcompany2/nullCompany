@@ -123,8 +123,29 @@ public class MailDao {
 	}
 
 	public Mail delMailDetailView(int mailNo) {
-		return sqlSession.selectOne("mailMapper.sendMailDetailView",mailNo);
+		return sqlSession.selectOne("mailMapper.delMailDetailView",mailNo);
 	}
+
+	public int allBinDelMail(String memId) {
+		return sqlSession.update("mailMapper.allBinDelMail",memId);
+	}
+
+	public Member findIdName(String recipient) {
+		return sqlSession.selectOne("memberMapper.findIdName",recipient);
+	}
+
+	public int allRealDelMail(String memId) {
+		return sqlSession.update("mailMapper.allRealDelMail",memId);
+	}
+
+	public int deleteOneMail(int mailNo) {
+		return sqlSession.update("mailMapper.deleteOneMail",mailNo);
+	}
+
+	public int realDeleteOneMail(int mailNo) {
+		return sqlSession.update("mailMapper.realDeleteOneMail",mailNo);
+	}
+	
 	
 	
 }

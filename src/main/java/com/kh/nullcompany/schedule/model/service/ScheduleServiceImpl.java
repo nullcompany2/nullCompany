@@ -142,6 +142,16 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return sDao.editDetailSchedule(sche_name);
 	}
 
+	@Override
+	public int updateSchedule(Schedule schedule) {
+		return sDao.updateSchedule(schedule);
+	}
+
+	@Override
+	public int DeleteSchedule(String sche_name) {
+		return sDao.DeleteSchedule(sche_name);
+	}
+
 
 
 }

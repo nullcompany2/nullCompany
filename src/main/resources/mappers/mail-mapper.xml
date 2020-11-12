@@ -19,6 +19,7 @@
 		<result property="readCount" column="READ_COUNT"/>
 		<result property="email" column="EMAIL_ADDRESS"/>
 		<result property="name" column="NAME"/>
+		<result property="rName" column="RNAME"/>
 		
 	</resultMap>
 	
@@ -32,6 +33,8 @@
 			SELECT COUNT(*)
 			FROM MAIL
 			WHERE MDELETE_STATUS='N'
+			AND MSAVE_STATUS = 'N'
+       		 AND M_REALDEL_STATUS = 'N'
 			AND MEM_NO = #{memNo}
 	 </select>
 	 
@@ -52,6 +55,7 @@
         WHERE RECIPIENT = #{memId}
         AND MDELETE_STATUS = 'N'
         AND MSAVE_STATUS = 'N'
+        AND M_REALDEL_STATUS = 'N'
         ORDER BY SEND_DATE DESC
 	</select>
 	
@@ -79,7 +83,7 @@
 	<select id="sendMailDetailView" parameterType="_int" resultMap="mailResultSet">
 		SELECT R.*,M.NAME,E.EMAIL_ADDRESS
         FROM MAIL R 
-        INNER JOIN MEMBER M ON (R.SENDER = M.ID)
+        INNER JOIN MEMBER M ON (R.RECIPIENT = M.ID)
         JOIN EMAIL E ON (R.MEM_NO = E.MEM_NO)
         WHERE R.MAIL_NO = #{mailNo}
 	</select>
@@ -95,14 +99,14 @@
 	 <insert id="saveMail" parameterType="Mail">
 	 INSERT INTO MAIL VALUES 
 	 (MAIL_SEQ.nextval,#{memNo},#{sender},#{recipient},
-	 #{mTitle},#{mFileName},#{mContent},SYSDATE,'N','Y',0,DEFAULT)
+	 #{mTitle},#{mContent},SYSDATE,'N','Y',0,DEFAULT,#{mFileName})
 	 </insert>
 	 
 	 <!--  답장하기 - 보내기  -->
 	 <insert id="sendMail" parameterType="Mail">
 	 INSERT INTO MAIL VALUES 
 	 (MAIL_SEQ.nextval,#{memNo},#{sender},#{recipient},
-	 #{mTitle},#{mFileName},#{mContent},SYSDATE,'N','N',0,DEFAULT)
+	 #{mTitle},#{mContent},SYSDATE,'N','N',0,DEFAULT,#{mFileName})
 	 </insert>
 	 
 	<!--  받은 편지함 - 읽은 메일 리스트 -->
@@ -113,6 +117,7 @@
         WHERE READ_COUNT >0
         AND RECIPIENT = #{memId}
         AND MDELETE_STATUS = 'N'
+        AND M_REALDEL_STATUS = 'N'
         ORDER BY SEND_DATE DESC
 	 </select>
 	 
@@ -124,7 +129,8 @@
         WHERE READ_COUNT = 0
         AND RECIPIENT =  #{memId}
         AND MDELETE_STATUS = 'N'
-        ORDER BY SEND_DATE ASC
+         AND M_REALDEL_STATUS = 'N'
+        ORDER BY SEND_DATE DESC
 	 </select>
 	 
 	 <!--  받은 편지함에서 전체 삭제 / 업데이트   -->
@@ -144,6 +150,7 @@
 	    WHERE MA.SENDER = #{memId}
 	    AND MA.MSAVE_STATUS = 'Y'
 	    AND MA.MDELETE_STATUS = 'N'
+	    ORDER BY SEND_DATE DESC
 	</select>
 	
 	<!--  임시보관함 -->
@@ -157,14 +164,59 @@
 	</select>
 	
 	<select id="binMailList" resultMap="mailResultSet">
-		 SELECT *
+		SELECT *
 	     FROM MAIL 
-	     WHERE RECIPIENT = #{memId}
-	     OR SENDER = #{memId}
+	     WHERE 
+         (RECIPIENT = #{memId}
+	     OR SENDER = #{memId})
 	     AND MDELETE_STATUS = 'Y'
 	     AND M_REALDEL_STATUS = 'N'
+	     ORDER BY SEND_DATE DESC
 	</select>
 	
+	<select id="delMailDetailView" parameterType="_int" resultMap="mailResultSet" >
+		SELECT Y.*, P.NAME AS RNAME
+        FROM 
+        (   SELECT R.*,M.NAME,E.EMAIL_ADDRESS
+            FROM MAIL R 
+            INNER JOIN MEMBER M ON (R.SENDER = M.ID)
+            JOIN EMAIL E ON (R.MEM_NO = E.MEM_NO)
+            WHERE R.MAIL_NO = 101
+        ) Y,
+        (SELECT NAME  FROM MEMBER WHERE ID IN (SELECT r.recipient
+                                                FROM MAIL R 
+                                                WHERE R.MAIL_NO = #{mailNo})
+        ) P
+	</select>
 	
-	 
+	<update id="allBinDelMail" parameterType="Mail">
+		UPDATE MAIL
+        SET M_REALDEL_STATUS = 'Y'
+        WHERE (RECIPIENT = #{memId}
+	     OR SENDER = #{memId})
+        AND M_REALDEL_STATUS = 'N'
+        AND MDELETE_STATUS = 'Y'
+	</update>
+	
+	<update id="allRealDelMail" parameterType="Mail">
+		UPDATE MAIL 
+		SET M_REALDEL_STATUS = 'Y'
+		WHERE RECIPIENT = #{memId}
+        AND MDELETE_STATUS = 'N'
+        AND MSAVE_STATUS = 'N'
+        AND M_REALDEL_STATUS = 'N'
+	</update>
+	
+	<update id="deleteOneMail" parameterType="Mail">
+		UPDATE MAIL
+		SET MDELETE_STATUS = 'Y'
+		WHERE MAIL_NO = #{mailNo}
+	</update>
+	
+	<update id="realDeleteOneMail" parameterType="Mail">
+		UPDATE MAIL
+		SET M_REALDEL_STATUS = 'Y'
+		WHERE MAIL_NO = #{mailNo}
+	</update>
+	
 </mapper>

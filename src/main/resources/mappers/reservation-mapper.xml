@@ -7,7 +7,7 @@
 		<result property="rcTitle" column="RC_TITLE"/>
 		<result property="rcContent" column="RC_CONTENT"/>
 		<result property="rcStatus" column="RC_STATUS"/>
-		<result property="rsNo" column="RS_NO"/>
+		<result property="rsNo" column="RSNO"/>
 	</resultMap>
 	
 	<resultMap type="Resource" id="resourceResultSet">
@@ -20,14 +20,32 @@
 		<result property="rsStatus" column="RS_STATUS"/>
 	</resultMap>
 	
+	<resultMap type="Reservation" id="reservationResultSet">
+		<id property="rNo" column="R_NUM"/>
+		<result property="rcNo" column="RC_NUM"/>
+		<result property="rsNo" column="RS_NUM"/>
+		<result property="rMember" column="R_MEMBER"/>
+		<result property="rDate" column="R_DATE"/>
+		<result property="rContent" column="R_CONTENT"/>
+		<result property="start_time" column="START_TIME"/>
+		<result property="end_time" column="END_TIME"/>
+		<result property="rReturn" column="R_RETURN"/>
+		<result property="rMemberName" column="NAME"/>
+		
+	</resultMap>
+	
 	<insert id="insertCategory" parameterType="Category">
 	INSERT INTO RCATEGORY
 	VALUES (SEQ_RCNO.NEXTVAL,#{rcTitle},#{rcContent},DEFAULT,DEFAULT)
 	</insert>
 	
 	<select id="selectCategory" parameterType="_int" resultMap="categoryResultSet">
-	SELECT *
-	FROM RCATEGORY
+	SELECT R.*,
+	(SELECT COUNT(*)
+	FROM "RESOURCE" RS
+	WHERE R.RC_NUM = RS.RC_NUM
+	AND RS.RS_STATUS = 'Y') RSNO
+	FROM RCATEGORY R
 	WHERE RC_STATUS = 'Y'
 	</select>
 	
@@ -60,8 +78,47 @@
 	WHERE RS_STATUS='Y'
 	</select>
 	
+	<select id="selectResourceList2" parameterType="_int" resultMap="resourceResultSet">
+	SELECT * 
+	FROM "RESOURCE"
+	WHERE RS_STATUS='Y'
+	AND RC_NUM=#{rcNo}
+	</select>
+	
 	<insert id="insertResource" parameterType="Resource">
 	INSERT INTO "RESOURCE"
-	VALUES (SEQ_RSNO.NEXTVAL,#{rsTitle},#{rsContent},DEFAULT,DEFAULT)
+	VALUES (SEQ_RSNO.NEXTVAL,#{rcNo},#{rsTitle},#{rsContent},#{rsReturn},#{rsImg},DEFAULT)
 	</insert>
+	
+	<update id="DeleteResouce" parameterType="Resource">
+	UPDATE "RESOURCE" 
+	SET 
+		RS_STATUS='N'
+	WHERE
+		RS_NUM = #{rsNo}
+	</update>
+	<update id="UpdateResouce" parameterType="Resource">
+		UPDATE "RESOURCE" 
+	SET 
+		RS_TITLE=#{rsTitle},
+		RS_CONTENT=#{rsContent},
+		RS_RETURN=#{rsReturn},
+		RS_IMG=#{rsImg}
+	WHERE
+		RS_NUM = #{rsNo}
+	</update>
+	
+	<select id="selectResource" parameterType="_int" resultMap="resourceResultSet">
+	SELECT *
+	FROM "RESOURCE" 
+	WHERE RS_STATUS = 'Y'
+	AND RS_NUM=#{rsNo}
+	</select>
+	<select id="selectReservationList" parameterType="_int" resultMap="reservationResultSet">
+	SELECT R.*,M.NAME
+	FROM RESERVATION R
+	JOIN MEMBER M ON (R.R_MEMBER = M.ID)
+	WHERE RC_NUM = #{rcNo}
+	AND RS_NUM = #{rsNo}
+	</select>
 </mapper>

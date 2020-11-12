@@ -50,28 +50,47 @@ form p {
 		<div class="contents-title">
 			<span class="ct1">자원 수정하기</span>
 		</div>
-		<form action="" method="POST">
+		<form action="resourceUpdate.do" method="POST">
 			<ul>
 				<li>
-					<p>자원 이름</p> <input type="text" value="회의실"> <br>
+					<p>자원 이름</p> <input type="text" name = "rsTitle" value="${ r.rsTitle }"> <br>
 				</li>
 				<li>
-					<p>자원 설명</p> <textarea name="" id="" cols="50" rows="10"
-						style="resize: none;">1번회의실</textarea>
+					<p>자원 설명</p> <textarea name="rsContent" id="" cols="50" rows="10"
+						style="resize: none;">${r.rsContent }</textarea>
 				</li>
 				<li>
-					<p>사진</p> <input type="file" name="" id="">
+					<p>사진</p> <input type="file" name="rsImg" id="" value = "${r.rsImg }">
 				</li>
 				<li>
+				<c:choose>
+				 <c:when test="${r.rsReturn eq 'Y'}">
 					<p>반납여부</p> <input type="radio" name="return" value="Y" checked>
 					반납 필요 &nbsp; <input type="radio" name="return" value="N">
 					반납 불필요
+				</c:when>
+				<c:when test="${r.rsReturn eq 'N'}">
+					<p>반납여부</p> <input type="radio" name="return" value="Y">
+					반납 필요 &nbsp; <input type="radio" name="return" value="N" checked>
+					반납 불필요
+				</c:when>
+				</c:choose>
+				<input type="hidden" id="rsReturn" name="rsReturn" value=""/>
+				<input type="hidden" id="rsNo" name="rsNo" value="${r.rsNo }"/>
+				<input type="hidden" id="rcNo" name="rcNo" value="${r.rcNo }"/>
 				</li>
 			</ul>
-			<button
+			<button id = "submit"
 				style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">저
 				장</button>
 		</form>
+		
+		<script>
+		$("#submit").click(function(){
+		var r = $('input[name="return"]:checked').val();
+		$('#rsReturn').val(r);
+		});
+		</script>
 	</div>
 </body>
 </html>

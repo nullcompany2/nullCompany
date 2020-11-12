@@ -112,7 +112,7 @@
 
                 <div class="ch">
                     <span> Notice</span> 
-                    <a  style="margin-left:255px;" href="boardAll.do">more</a>
+                    <a  style="margin-left:255px;" href="notice.do">more</a>
                     <hr>
 					동우오빠 <br>
                     공지공지 
@@ -128,7 +128,7 @@
                     <div class="pt2"style="width: 400px; height:310px;">
                         <div class="ch" style="background: #477A8F;"> 
                              &nbsp; Reservation <br> <br><br>
-                         <a href="reservation.do"> <span> →  바로가기 </span> </a> 
+                         <a href="myReservation.do"> <span> →  바로가기 </span> </a> 
                        
                         </div>
                         <div class="ch" style="background: #5e9eba;">
@@ -143,7 +143,7 @@
 
             <div class="ch">
                 <span> Team Notice</span> 
-                <a style="margin-left:190px;" href="boardTeam.do">more</a>
+                <a style="margin-left:190px;" href="tnotice.do">more</a>
                     <hr>
                    	동우오빠 <br>
                    	팀 공지 ! 
@@ -170,7 +170,7 @@
                 </div>
                 <div class="ch">
                     <span> Approval Document</span>
-                    <a style="margin-left:100px;" href="approvalProgressListView.do">more</a>
+                    <a style="margin-left:100px;" href="approvalProgressAllListView.do">more</a>
                     <hr>
                     
                     <div style="border:1px solid #C8CACC; border-radius:4px;

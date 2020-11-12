@@ -191,4 +191,15 @@
         GROUP BY S.SCHE_NO, S.SCHE_NAME, C.CAL_NAME, S.STARTDATE, S.STARTTIME, S.MEMCOUNT,
         S.ENDDATE, S.ENDTIME, S.SCHE_CONTENT, C.CAL_NO, C.COLOR, C.CAL_TYPE
    </select>
+   
+   <update id="updateSchedule" parameterType="Schedule">
+     	UPDATE SCHEDULE
+		SET SCHE_NAME = #{Sche_name}, STARTDATE = #{startdate}, STARTTIME = #{starttime}, 
+		ENDDATE = #{enddate}, ENDTIME = #{endtime}, SCHE_CONTENT = #{Sche_content}
+		WHERE CAL_NAME = #{Cal_name}
+   </update>
+   
+    <delete id="DeleteSchedule" parameterType="Schedule">
+     	DELETE FROM SCHEDULE WHERE SCHE_NAME = #{sche_name}
+   </delete>
 </mapper>
