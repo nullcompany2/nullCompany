@@ -67,8 +67,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 
 	@Override
-	public ArrayList<Calendar> publicCalList() {
-		return sDao.publicCalList();
+	public ArrayList<Calendar> publicCalList(int memNo) {
+		return sDao.publicCalList(memNo);
 	}
 
 	@Override
@@ -101,8 +101,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 
 	@Override
-	public ArrayList<Calendar> IndividualCalList() {
-		return sDao.IndividualCalList();
+	public ArrayList<Calendar> IndividualCalList(int memNo) {
+		return sDao.IndividualCalList(memNo);
 	}
 
 	@Override
@@ -111,8 +111,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 
 	@Override
-	public ArrayList<Schedule> ScheduleList() {
-		return sDao.ScheduleList();
+	public ArrayList<Schedule> ScheduleList(int memNo) {
+		return sDao.ScheduleList(memNo);
 	}
 
 	@Override
@@ -150,6 +150,11 @@ public class ScheduleServiceImpl implements ScheduleService {
 	@Override
 	public int DeleteSchedule(String sche_name) {
 		return sDao.DeleteSchedule(sche_name);
+	}
+
+	@Override
+	public ArrayList<Calendar> SelectpublicCalList(int memNo) {
+		return sDao.SelectpublicCalList(memNo);
 	}
 
 
