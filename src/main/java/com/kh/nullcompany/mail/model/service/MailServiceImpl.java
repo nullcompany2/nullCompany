@@ -16,14 +16,6 @@ public class MailServiceImpl implements MailService {
 @Autowired
 	private MailDao maDao;
 
-	
-
-	// 리스트 카운트 
-	@Override
-	public int getListCount(int memNo) {
-		return maDao.getListCount(memNo);
-	}
-
 	// 받은 편지함 리스트 가져오기 
 	@Override
 	public ArrayList<Mail> selectMailReceiveList(PageInfo pi, String memId) {
@@ -152,12 +144,28 @@ public class MailServiceImpl implements MailService {
 		return maDao.realDeleteOneMail(mailNo);
 	}
 
-	
+	// 받은 메일함 편지 갯수 세기 
+	@Override
+	public int getReListCount(String memId) {
+		return maDao.getReListCount(memId);
+	}
 
+	// 보낸 메일함 편지 갯수 세기 
+	@Override
+	public int getSendListCount(String memId) {
+		return maDao.getSendListCount(memId);
+	}
 
-	
+	// 임시보관함 편지 갯수 세기 
+	@Override
+	public int getSaveListCount(String memId) {
+		return maDao.getSaveListCount(memId);
+	}
 
+	@Override
+	public ArrayList<Member> autoComplete(String text) {
+		return maDao.autoComplete(text);
+	}
 
-	
 	
 }

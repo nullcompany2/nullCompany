@@ -203,7 +203,7 @@
             	var div = document.createElement("div"); 
             	img.setAttribute("src", event.target.result); 
             	document.querySelector("div#imagePreview").appendChild(img); 
-            	}; 
+            	};
             	reader.readAsDataURL(event.target.files[0]); 
             	};
             
