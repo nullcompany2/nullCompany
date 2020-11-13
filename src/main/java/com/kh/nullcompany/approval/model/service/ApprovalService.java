@@ -18,7 +18,7 @@ public interface ApprovalService {
 	int getProgressAllListCount(int memNo);
 
 	/**
-	 * 1_2 . 진행 중인 문서 --------> 게시판 리스트 조회
+	 * 1_2. 진행 중인 문서 --------> 게시판 리스트 조회
 	 * @param memNo 
 	 * @param pi
 	 * @return
@@ -32,5 +32,20 @@ public interface ApprovalService {
 	 * @return
 	 */
 	ArrayList<Step> selectStepList(String docTempNo);
+
+	/**
+	 * 2_1. 문서함/전체 ----> 문서함 갯수 조회 
+	 * @param memNo
+	 * @return
+	 */
+	int getCompleteAllListCount(int memNo);
+
+	/**
+	 * 2_2. 문서함 ------> 게시판 리스트 조회 
+	 * @param memNo
+	 * @param pi
+	 * @return
+	 */
+	ArrayList<Document> selectCompleteAllList(int memNo, PageInfo pi);
 
 }

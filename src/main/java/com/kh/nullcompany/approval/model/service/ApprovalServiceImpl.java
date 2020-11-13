@@ -30,4 +30,14 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public ArrayList<Step> selectStepList(String docTempNo) {
 		return aDao.selectStepList(docTempNo);
 	}
+
+	@Override
+	public int getCompleteAllListCount(int memNo) {
+		return aDao.getCompleteAllListCount(memNo);
+	}
+
+	@Override
+	public ArrayList<Document> selectCompleteAllList(int memNo, PageInfo pi) {
+		return aDao.selectCompleteAllList(memNo, pi);
+	}
 }
