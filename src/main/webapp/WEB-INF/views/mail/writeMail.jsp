@@ -187,8 +187,8 @@ a:active {
 			style="background: #477A8F; color: white; text-align: center; border: none; padding: 12px 4px 12px 4px; 
 			border-radius: 3px; margin-left: 180px; cursor: pointer; font-size:15px;" />
 	</div>
-	<!-- Modal div -->
-
+	
+	
 <script type="text/javaScript">
 	$(document).ready(function() {
 	  $('#summernote').summernote({
@@ -301,7 +301,7 @@ a:active {
         $("form").attr("action","gosaveMail.do");
  	}); 
  	 
- 	 
+ 	 // 자동 완성 에이작스 
  	
           $("#address").on("keyup",function(){
               var text = $(this).val();
@@ -325,7 +325,7 @@ a:active {
  				   
  				 	$.each(data,function(ind,entry){
  				 	
- 				 		str += "<li>" + entry['name'] + "< " 
+ 				 		str += "<li>" + entry['name'] + " < " 
  				 		str += entry['emailAddress'] +" > </li>" 
  				 		
  				 	});
@@ -343,7 +343,6 @@ a:active {
               }else {
             	  $("#autoAddress").hide();
               }
-              
               
  		});
           

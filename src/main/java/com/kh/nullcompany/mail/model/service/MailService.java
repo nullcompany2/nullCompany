@@ -195,5 +195,13 @@ public interface MailService {
 	 * @return
 	 */
 	ArrayList<Member> autoComplete(String text);
+
+
+	/**
+	 *  스레기통에서 복구 하기... 
+	 * @param mailNo
+	 * @return
+	 */
+	int backMail(int mailNo);
 	
 }

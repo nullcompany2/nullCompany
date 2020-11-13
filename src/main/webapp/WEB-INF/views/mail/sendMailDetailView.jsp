@@ -112,7 +112,7 @@
 	 $("#delMail").click(function(){
 			 if (confirm("정말로 삭제하시겠습니까? 휴지통으로 이동합니다.") == true){ 
 
-				 document.location.href='deleteOneMail.do?mailNo='+ test;
+				 document.location.href='deleteOneMail_send.do?mailNo='+ test;
 
 		        }else{   //취소
 

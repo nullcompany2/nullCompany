@@ -158,6 +158,10 @@ public class MailDao {
 	public ArrayList<Member> autoComplete(String text) {
 		return(ArrayList) sqlSession.selectList("memberMapper.autoComplete",text);
 	}
+
+	public int backMail(int mailNo) {
+		return sqlSession.update("mailMapper.backOneMail",mailNo);
+	}
 	
 	
 }

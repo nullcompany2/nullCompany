@@ -436,6 +436,19 @@ private MailService maService;
 				return "common/errorPage";
 			}
 		}
+		
+		// 보낸 메일함에서 개별 삭제 
+		@RequestMapping("deleteOneMail_send.do")
+		public String deleteOneMail_send(Model model, int mailNo) {
+			int result = maService.deleteOneMail(mailNo);
+			
+			if(result > 0) {
+				return "redirect:sendMailList.do";			
+			}else {
+				model.addAttribute("msg", "컬럼하나 삭제 실패~!~");
+				return "common/errorPage";
+			}
+		}
 			
 		@RequestMapping("realDeleteOneMail.do")
 		public String realDeleteOneMail(Model model, int mailNo) {
@@ -448,7 +461,7 @@ private MailService maService;
 			}
 		}
 		
-		
+		// 메일 쓰기 때 에이작스 메일 주소 자동완성 
 		@RequestMapping("autoComplete.do")
 		public void autoComplete(HttpServletResponse response, String text) throws JsonIOException, IOException {
 			response.setContentType("application/json; charset=utf-8");
@@ -457,6 +470,20 @@ private MailService maService;
 			ArrayList<Member> m = maService.autoComplete(text);
 			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 			gson.toJson(m,response.getWriter());
+		}
+		
+		// 쓰레기통에서 복원하기 
+		@RequestMapping("backMail.do")
+		public String backMail(Model model, int mailNo) {
+			
+			System.out.println("쓰레기통 번호 : " + mailNo);
+			int result = maService.backMail(mailNo);
+			if(result > 0) {
+				return "redirect:binMailList.do";			
+			}else {
+				model.addAttribute("msg", "컬럼하나 삭제 실패~!~");
+				return "common/errorPage";
+			}
 		}
 		
 }

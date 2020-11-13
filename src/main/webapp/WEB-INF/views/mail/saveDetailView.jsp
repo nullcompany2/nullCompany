@@ -322,7 +322,7 @@ a:active {
 			   
 			 	$.each(data,function(ind,entry){
 			 	
-			 		str += "<li>" + entry['name'] + "< " 
+			 		str += "<li>" + entry['name'] + " < " 
 			 		str += entry['emailAddress'] +" > </li>" 
 			 		
 			 	});

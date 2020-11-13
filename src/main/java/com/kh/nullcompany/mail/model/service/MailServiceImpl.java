@@ -167,5 +167,10 @@ public class MailServiceImpl implements MailService {
 		return maDao.autoComplete(text);
 	}
 
+	@Override
+	public int backMail(int mailNo) {
+		return maDao.backMail(mailNo);
+	}
+
 	
 }

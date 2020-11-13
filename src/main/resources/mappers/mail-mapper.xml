@@ -243,5 +243,12 @@
 		WHERE MAIL_NO = #{mailNo}
 	</update>
 	
+	<!--  휴지통 개별 보기에서 복원하기  -->
+	<update id="backOneMail" parameterType="Mail">
+		UPDATE MAIL
+		SET MDELETE_STATUS = 'N'
+		WHERE MAIL_NO = #{mailNo}
+	</update>
+	
 	
 </mapper>
