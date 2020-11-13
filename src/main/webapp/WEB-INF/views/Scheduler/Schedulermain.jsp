@@ -76,7 +76,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 	      header: {
 	        left: 'prev,next today',
 	        center: 'title',
-	        right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+	        right: 'dayGridMonth,listMonth'
 	      },
 
 	      locale : "ko",
@@ -201,7 +201,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 												<label id="chela" for="${ IndividualCalList.calNo }">
 												<span>${ IndividualCalList.calName }</span>
 												</label></input>
-											<a>수정</a></div> 
+											<a id="${IndividualCalList.calName}">수정</a></div> 
 											</c:forEach>
 											<!-- </select> -->
 										</div></li>
@@ -290,8 +290,9 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 											<option class="selectpublicCal" value="${ publicCalList.calNo }">${ publicCalList.calName }</option>
 									    </c:forEach>
 									    <c:forEach var="IndividualCalList" items="${ IndividualCalList }">
-											<option class="selectindiCal" value="${ IndividualCalList.calNo }">${ IndividualCalList.calName }</option>
+											<option class="selectpublicCal" value="${ IndividualCalList.calNo }">${ IndividualCalList.calName }</option>
 									    </c:forEach>
+									 
 									</select>
 								</dd>
 							</dl>
@@ -585,6 +586,33 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 						
 					</div>
 					
+						<!-- 개인 모달 수정-->
+					<div id="editindividualmodal" class="modal-dragscroll">
+						<h4 style="color: #477A8F; margin-bottom: 15px;margin-top: 10px;">내 캘린더 수정</h4>
+						<div>
+							<label for="" style="font-size: 14px;">캘린더 이름 </label>
+							&nbsp;&nbsp; <input type="text" id="cal_name2" /> &nbsp;
+
+							<div class="palletBox4">
+
+								<div id="box4" class="box4">
+									<label style="font-size: 14px; position: absolute; top: 100px;">색상</label>
+									<div id="colorselect4"></div>
+									<div id="palletBox4" class="pallet4"></div>
+								</div>
+							</div>
+						</div>
+
+
+						<div style="text-align: center;position: relative;top: 20px;">
+							<button id="indi_sub"
+								style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">확인</button>
+							<button class="modal-close-btn cursor"
+								style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">취소</button>
+						</div>
+						
+					</div>
+					
 					<!-- 일정 디테일 모달 -->
 
 					<div id="detail_modal" class="modal-dragscroll">
@@ -629,7 +657,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 								style="background: #fff; color: #2c86dc;
 								 padding: 5px 27px 6px; border: 1px solid #c8c8c8">수정</button>
 							
-							<button
+							<button id="scheDelete" onclick="func_confirm()"
 								style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; 
 								border: 1px solid #dadada; background: #dadada;">삭제</button>
 						</div>
@@ -723,7 +751,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 									    height: 20px;
 									    border: gray solid 1px;
 									    position: absolute;
-									    left: 300px;
+									    left: 385px;
 									    top: 86px;" ></div>
 									
 								</dd>
@@ -868,14 +896,14 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 						
 						<div
 							style="text-align: center; position: relative; top: 185px; left: -35px;">
-							<button id="ajaxsche_add"
+							<button id="ajaxsche_edit"
 								style=" background: #fff;
 									    color: #2c86dc;
 									    padding: 5px 27px 6px;
 									    border: 1px solid #c8c8c8;
 									    position: absolute;
 									    
-									    left: 150px;">확인</button>
+									    left: 150px;">수정</button>
 								<button class="modal-close-btn cursor"
 								style="absolute;
 							    left: 245PX;
@@ -953,8 +981,79 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 
 	</script>
 <script>
-	// 일정 추가 db
+	// 일정 수정 db
+	 $("#ajaxsche_edit").on('click',function () {
+		 var Cal_name = $("#editCalName").text();
+		 var Sche_name = $("#editsche_name").val();
+		 var startdate = $('#editstartdate').val();
+		 var starttime = $("#editstarttime option:selected").val();
+		 var enddate = $('#editenddate').val();
+		 var endtime = $("#editendtime option:selected").val();
+		 var sche_content = $('#editsche_content').val();
+	     
+		 $.ajax({
+             url: "updateSchedule.do",
+             type: "post",
+             dataType: "json",
+             traditional: true,
+             data: {
+                 "Cal_name": Cal_name,
+                 "Sche_name": Sche_name,
+                 "startdate": startdate,
+                 "starttime": starttime,
+                 "Cal_name": Cal_name,
+                 "enddate": enddate,
+                 "endtime": endtime,
+                 "sche_content": sche_content
+             },
+             success: function (data) {
+                 console.log("수정 에작"+ data);
+                
+             },
+             error: function (request,
+                 status, error) {
+                 console.log("수정 에작 오류임"+ request);
+                 location.reload();
+                
+             }
+
+         })
+		 
+	 });
+	
+	// 일정 삭제
+	function func_confirm () {
+	        		if(confirm('일정을 삭제하시겠습니까?')){
+	        			 var sche_name = $("#de_sche_name").text();
+	        		     
+	        			 $.ajax({
+	        	             url: "DeleteSchedule.do",
+	        	             type: "post",
+	        	             data: {"sche_name" : sche_name},
+	        	             success: function (data) {
+	        	                 console.log("삭제 성공임");
+	        	                 location.reload();
+	        	             },
+	        	             error: function (request,
+	        	                 status, error) {
+	        	            	 console.log("삭제 실패임");
+	        	            	 location.reload();
+	        	                 
+	        	             }
+
+	        	         })
+	        			
+	        			
+	        		} else {
+	        			return false;
+	        		}
+	        	}
+	
+	// 일정 추가 DB
+	
 	 $("#ajaxsche_add").on('click',function () {
+		 
+	
 		 var Cal_name = $("#selectCal option:selected").text();
 		 var Sche_name = $("#sche_name").val();
 		 var startdate = $('#startdate').val();
@@ -963,6 +1062,22 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 		 var endtime = $("#endtime option:selected").val();
 		 var sche_content = $('#sche_content').val();
 	     
+		 if(Sche_name.length < 1){
+			 alert("일정 제목을 입력해주세요.")
+			 return false;
+		 } 
+		 if(startdate == ''){
+			 alert("시작 날짜를 지정해주세요.")
+			 return false;
+		 } 
+		 if(enddate == ''){
+			 alert("종료 날짜를 지정해주세요.")
+			 return false;
+		 } 
+		 if(sche_content == ''){
+			 alert("일정 내용을 입력해주세요.")
+			 return false;}
+			 
 		 $.ajax({
              url: "insertSchedule.do",
              type: "post",
@@ -991,7 +1106,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
          })
 		 
 	 });
-	 
+	
 	// 일정 멤버 
 	
 	
@@ -1049,6 +1164,16 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
                 var color = document.querySelector('#colorselect2').style.background;
                 var enrollMember = "${ loginUser.memNo }";
 				var lookMember  = "${ loginUser.memNo }";
+				
+				 if(calName.length < 1){
+					 alert("캘린더 제목을 입력해주세요.")
+					 return false;
+				}
+				 if(color.length<1){
+					 alert("캘린더 색상을 선택해주세요.")
+					 return false;
+				}
+					 
                 $
                     .ajax({
                         url: "insertIndividual.do",
@@ -1078,17 +1203,35 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
     /*    $(document).on('click', "#cal_sub", function(){ */
     $("#cal_sub").off("click").on('click',
             function () {
+    	
+    	
+    			
                 var calName = $('#cal_name').val();
                 var color = document.querySelector('#colorselect').style.background;
                 var enroll = $('#enrollname').text();
                 var enrollArray = enroll.split(',');
+                var look = $('#lookname').text();
+                var lookArray = look.split(',');
+                
+                if(calName.length < 1){
+       			 alert("캘린더 제목을 입력해주세요.")
+       			 return false;
+	       		 } 
+                if(color.length<1){
+	       			 alert("캘린더 색상을 선택해주세요")
+	       			 return false;
+	       		 } 
+	       		 if(enroll.length < 1){
+	       			 alert("등록 권한을 지정해주세요.")
+	       			 return false;
+	       		 } 
+	       		if(look.length < 1){
+	       			alert("조회 권한을 지정해주세요.")
+	       			 return false;}
 
                 for (var i = 0; i < enrollArray.length; i++) {
                     enrollArray[i] = enrollArray[i].substring(enrollArray[i].length - 5,enrollArray[i].length - 1);
                 }
-
-                var look = $('#lookname').text();
-                var lookArray = look.split(',');
 
                 for (var i = 0; i < lookArray.length; i++) {
                     lookArray[i] = lookArray[i].substring(lookArray[i].length - 5,lookArray[i].length - 1);
@@ -1226,6 +1369,11 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
      $('#sche_add').on('click', function() {
        // 모달창 띄우기
        modal('addsche_modal');
+       $("#startdate").val('');
+       $("#enddate").val('');
+       $("#starttime option:eq(0)").prop("selected", true);
+       $("#endtime option:eq(0)").prop("selected", true);
+
     });
      
      $('#individual').on('click', function() {
@@ -1386,6 +1534,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
  window.onload = function(){
  init();
  init2();
+ init4();
 
  }
 
@@ -1465,6 +1614,38 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 						document.getElementById(target2.id).className += " active2";
 						beforeColor = target2.id;
 					}
+					
+			         
+					   function init4(){
+					   //2차원 배열 파레트 데이터
+					         var pallet4 = [["#F15F5F", "#F29661", "#F2CB61", "#E5D85C", "#BCE55C",
+					          "#86E57F", "#5CD1E5", "#6799FF", "#6B66FF", "#A566FF", "#F361DC", "#F361A6", "#A6A6A6", "#8C8C8C"]];
+					         var tag4 = "";
+					         for(i=0; i<pallet4.length; i++){
+					            for(j=0; j<pallet4[i].length; j++){
+					               tag4 += "<div id="+pallet4[i][j]+" class='colorBox4' onclick='colorSet4(this)'></div>";
+					            }
+					         }
+					         //파레트 파싱
+					         document.getElementById("palletBox4").innerHTML = tag4;
+
+					         //색상 입히기
+					         var colorBox4 = document.getElementsByClassName("colorBox4");
+					         for(i=0; i<colorBox4.length; i++){
+					            colorBox4[i].style.background = colorBox4[i].id;
+					         }
+					         }
+
+					         // onclick event
+					         function colorSet4(target4){
+					         document.querySelector("#colorselect4").style.background = target4.id;
+
+					         if(beforeColor != undefined && beforeColor != null){
+					            document.getElementById(beforeColor).className = document.getElementById(beforeColor).className.replace(" active4", "");
+					         }
+					         document.getElementById(target4.id).className += " active4";
+					         beforeColor = target4.id;
+					         }
 					
 					
 

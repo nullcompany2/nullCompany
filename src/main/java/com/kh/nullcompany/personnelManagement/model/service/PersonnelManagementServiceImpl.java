@@ -10,6 +10,8 @@ import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.personnelManagement.model.dao.PersonnelManagementDao;
 import com.kh.nullcompany.personnelManagement.model.vo.Department;
+import com.kh.nullcompany.personnelManagement.model.vo.ForEmLeave;
+import com.kh.nullcompany.personnelManagement.model.vo.ForEmUsedLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.MixForLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.RecordDiligence;
 import com.kh.nullcompany.personnelManagement.model.vo.RecordLeave;
@@ -232,6 +234,16 @@ public class PersonnelManagementServiceImpl implements PersonnelManagementServic
 	@Override
 	public int fixSetLeave(ArrayList newLeaveArr, ArrayList setAnnualLeave, int firstyear) {
 		return pDao.fixSetLeave(newLeaveArr,setAnnualLeave,firstyear);
+	}
+
+	@Override
+	public ArrayList<ForEmLeave> emAllMemeber() {
+		return pDao.emAllMember();
+	}
+
+	@Override
+	public ArrayList<ForEmUsedLeave> usedLeave() {
+		return pDao.usedLeave();
 	}
 
 	

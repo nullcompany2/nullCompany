@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.binding.MapperMethod.ParamMap;
@@ -42,29 +43,32 @@ public class ScheduleController {
 
 	// 일정 관리 메인
 	@RequestMapping("Schedulermain.do")
-	public ModelAndView Schedulermain(ModelAndView mv) {
-
+	public ModelAndView Schedulermain(ModelAndView mv,  HttpServletResponse response, HttpSession session) {
+		
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();	
+		
 		// 총 부서 리스트
 		ArrayList<Department> deptList = sService.deptList();
 		// 총 사원 리스트
 		ArrayList<Member> memList = sService.memList();
 		// 공유 캘린더 리스트
-		ArrayList<Calendar> publicCalList = sService.publicCalList();
+		ArrayList<Calendar> publicCalList = sService.publicCalList(memNo);
 		// 내 캘린더 리스트
-		ArrayList<Calendar> IndividualCalList = sService.IndividualCalList();
+		ArrayList<Calendar> IndividualCalList = sService.IndividualCalList(memNo);
+		ArrayList<Calendar> SelectpublicCalList = sService.SelectpublicCalList(memNo);
 		// 일정 리스트
-		ArrayList<Schedule> ScheduleList = sService.ScheduleList();
-		System.out.println(ScheduleList);
-
-
+		ArrayList<Schedule> ScheduleList = sService.ScheduleList(memNo);
 
 		mv.addObject("deptList", deptList);
 		mv.addObject("memList", memList);
 		mv.addObject("publicCalList", publicCalList);
 		mv.addObject("IndividualCalList", IndividualCalList);
+		mv.addObject("SelectpublicCalList", SelectpublicCalList);
 		mv.addObject("ScheduleList", ScheduleList);
 		
 		mv.setViewName("Scheduler/Schedulermain");
+		System.out.println(publicCalList);
+		System.out.println(SelectpublicCalList);
 		return mv;
 	}
 
@@ -134,7 +138,6 @@ public class ScheduleController {
 		
 		sche = sService.detailSchedule(Sche_name);
 		
-		System.out.println("왜안대냐" + sche);
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(sche,response.getWriter());
@@ -143,31 +146,43 @@ public class ScheduleController {
 	
 	// 일정 디테일 총 인원 수
 
-
 	@RequestMapping("detailCalMember.do" )
 	public void detailCalMember(@Param("cal_name") String cal_name, Model model , HttpServletResponse response) throws JsonIOException, IOException {
 		ArrayList<Calendar> DetailCalmemberList = sService.DetailCalmemberList(cal_name);
 		
-		System.out.println("멤버 리스트" + DetailCalmemberList);
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(DetailCalmemberList,response.getWriter());
 	
 	}
 
-	// 일정 수정
+	// 일정 수정 모달 디테일 뜨게
 	@RequestMapping("editDetailSchedule.do" )
 	public void editDetailSchedule(@Param("Sche_name") String Sche_name, Model model , HttpServletResponse response) throws JsonIOException, IOException {
 		Schedule sche = new Schedule();
 		
 		sche = sService.editDetailSchedule(Sche_name);
 		
-		System.out.println("멤버수정디테일" + sche);
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(sche,response.getWriter());
 	
 	}
 
+	// 일정 수정
+	@RequestMapping("updateSchedule.do")
+	public void updateSchedule(@Param("Schedule") Schedule Schedule ) {
+		int result = sService.updateSchedule(Schedule);
 
+		System.out.println("수정 후 캘린더" + Schedule);
+
+	}
+	
+	@RequestMapping("DeleteSchedule.do")
+	public void DeleteSchedule(@Param("sche_name") String sche_name ) {
+		int result = sService.DeleteSchedule(sche_name);
+
+
+	}
+	
 }

@@ -43,6 +43,7 @@
 		<result property="mem_name" column="NAME" />
 		<result property="mem_no" column="MEM_NO" />
 		<result property="cal_type_no" column="CAL_MEM_TYPE" />
+		<result property="memNo" column="CAL_MEM" />
 	</resultMap>
 
 	<resultMap id="CalendarMemberResultSet" type="CalendarMember">
@@ -104,15 +105,17 @@
 	</insert>
 	
 	<select id="publicCalList" resultMap="CalendarResultSet" parameterType="Calendar">
-		SELECT *
-		FROM CALENDAR
-		WHERE CAL_TYPE = 1
+		SELECT DISTINCT C.*, CM.CAL_MEM
+		FROM CALENDAR C
+        JOIN CALENDAR_MEMBER CM ON CM.CAL_NO = C.CAL_NO
+		WHERE CAL_TYPE = 1 AND CM.CAL_MEM = #{memNo} AND CAL_MEM_TYPE = 1
 	</select>
 	
 	<select id="IndividualCalList" resultMap="CalendarResultSet" parameterType="Calendar">
-		SELECT *
-		FROM CALENDAR
-		WHERE CAL_TYPE = 2
+		SELECT DISTINCT C.*, CM.CAL_MEM
+		FROM CALENDAR C
+        JOIN CALENDAR_MEMBER CM ON CM.CAL_NO = C.CAL_NO
+		WHERE CAL_TYPE = 2 AND CM.CAL_MEM = #{memNo}
 	</select>
 	
 	<insert id="insertIndividual" parameterType="Calendar">
@@ -138,11 +141,20 @@
       VALUES(SCHE_SEQ.NEXTVAL, #{cal_name}, #{sche_name}, #{startdate}, #{starttime}, #{enddate}, #{endtime}, #{sche_content}, '0')
    </insert>
    
+   <!-- 조회권한용 옵션 리스트  -->
+   <select id="SelectpublicCalList" resultType="Calendar" parameterType="Calendar">
+    	SELECT DISTINCT C.*, CM.CAL_MEM_TYPE
+		FROM CALENDAR C
+        JOIN CALENDAR_MEMBER CM ON CM.CAL_NO = C.CAL_NO
+        WHERE CM.CAL_MEM = #{memNo} AND CAL_MEM_TYPE = 1 AND CAL_TYPE = 1
+   </select>
+   
    <select id="ScheduleList" resultType="Schedule" parameterType="Schedule">
-    	SELECT *
+    	SELECT DISTINCT S.*, C.*
 		FROM SCHEDULE S
-		JOIN CALENDAR C
-		ON S.CAL_NAME = C.CAL_NAME
+		JOIN CALENDAR C ON S.CAL_NAME = C.CAL_NAME
+        JOIN CALENDAR_MEMBER CM ON CM.CAL_NO = C.CAL_NO
+        WHERE CM.CAL_MEM = #{memNo} AND CAL_MEM_TYPE = 2
    </select>
    
     <select id="detailSchedule" resultType="Schedule" parameterType="Schedule">
@@ -191,4 +203,15 @@
         GROUP BY S.SCHE_NO, S.SCHE_NAME, C.CAL_NAME, S.STARTDATE, S.STARTTIME, S.MEMCOUNT,
         S.ENDDATE, S.ENDTIME, S.SCHE_CONTENT, C.CAL_NO, C.COLOR, C.CAL_TYPE
    </select>
+   
+   <update id="updateSchedule" parameterType="Schedule">
+     	UPDATE SCHEDULE
+		SET SCHE_NAME = #{Sche_name}, STARTDATE = #{startdate}, STARTTIME = #{starttime}, 
+		ENDDATE = #{enddate}, ENDTIME = #{endtime}, SCHE_CONTENT = #{Sche_content}
+		WHERE CAL_NAME = #{Cal_name}
+   </update>
+   
+    <delete id="DeleteSchedule" parameterType="Schedule">
+     	DELETE FROM SCHEDULE WHERE SCHE_NAME = #{sche_name}
+   </delete>
 </mapper>

@@ -40,8 +40,8 @@ public class ScheduleDao {
 		return sqlSession.insert("scheduleMapper.LookMember",calendarMember);
 	}
 
-	public ArrayList<Calendar> publicCalList() {
-		return (ArrayList)sqlSession.selectList("scheduleMapper.publicCalList");
+	public ArrayList<Calendar> publicCalList(int memNo) {
+		return (ArrayList)sqlSession.selectList("scheduleMapper.publicCalList", memNo);
 	}
 
 	public int insertIndividual(Calendar calendar) {
@@ -57,16 +57,16 @@ public class ScheduleDao {
 	
 	}
 
-	public ArrayList<Calendar> IndividualCalList() {
-		return (ArrayList)sqlSession.selectList("scheduleMapper.IndividualCalList");
+	public ArrayList<Calendar> IndividualCalList(int memNo) {
+		return (ArrayList)sqlSession.selectList("scheduleMapper.IndividualCalList", memNo);
 	}
 
 	public int insertSchedule(Schedule schedule) {
 		return sqlSession.insert("scheduleMapper.insertSchedule",schedule);
 	}
 
-	public ArrayList<Schedule> ScheduleList() {
-		return (ArrayList)sqlSession.selectList("scheduleMapper.ScheduleList");
+	public ArrayList<Schedule> ScheduleList(int memNo) {
+		return (ArrayList)sqlSession.selectList("scheduleMapper.ScheduleList", memNo);
 	}
 
 	public Schedule detailSchedule(String sche_name) {
@@ -91,6 +91,18 @@ public class ScheduleDao {
 
 	public Schedule editDetailSchedule(String sche_name) {
 		return sqlSession.selectOne("scheduleMapper.editDetailSchedule",sche_name);
+	}
+
+	public int updateSchedule(Schedule schedule) {
+		return sqlSession.update("scheduleMapper.updateSchedule",schedule);
+	}
+
+	public int DeleteSchedule(String sche_name) {
+		return sqlSession.delete("scheduleMapper.DeleteSchedule",sche_name);
+	}
+
+	public ArrayList<Calendar> SelectpublicCalList(int memNo) {
+		return (ArrayList)sqlSession.selectList("scheduleMapper.SelectpublicCalList", memNo);
 	}
 
 

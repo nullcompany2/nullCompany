@@ -16,7 +16,6 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -33,6 +32,8 @@ import com.kh.nullcompany.common.Pagination;
 import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.personnelManagement.model.service.PersonnelManagementService;
 import com.kh.nullcompany.personnelManagement.model.vo.Department;
+import com.kh.nullcompany.personnelManagement.model.vo.ForEmLeave;
+import com.kh.nullcompany.personnelManagement.model.vo.ForEmUsedLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.MixForLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.RecordDiligence;
 import com.kh.nullcompany.personnelManagement.model.vo.RecordLeave;
@@ -55,9 +56,6 @@ public class PersonnelManagementController {
 	public String leaveCalculate(String enDate, int memNo){
 		int rewardLeave = 0;
 		
-		
-		SimpleDateFormat formatD = new SimpleDateFormat("yyyy-MM-dd");
-		
 		int w1 = Integer.parseInt(enDate.substring(0,4));
 		int w2 = Integer.parseInt(enDate.substring(5,7));
 		int w3 = Integer.parseInt(enDate.substring(8,10));
@@ -73,6 +71,7 @@ public class PersonnelManagementController {
 		int annualLeave = 0;
 		if(period.getYears() > 38) {
 			workyear = "N" + 38;
+			annualLeave = pService.leaveCalculate(workyear);
 		}else if(period.getYears() == 0){
 			SetLeave firstyearLeave = pService.firstyearLeave();
 			if(firstyearLeave.getFirstyear() == 0) {
@@ -82,7 +81,7 @@ public class PersonnelManagementController {
 			}
 			
 		}else {
-			workyear = "N"+period.getYears()+1;			
+			workyear = "N"+(period.getYears()+1);			
 			// 생성된 연차
 			annualLeave = pService.leaveCalculate(workyear);
 		}
@@ -203,16 +202,19 @@ public class PersonnelManagementController {
 		int annualLeave = 0;
 		if(period.getYears() > 38) {
 			workyear = "N" + 38;
+			annualLeave = pService.leaveCalculate(workyear);
 		}else if(period.getYears() == 0){
 			SetLeave firstyearLeave = pService.firstyearLeave();
 			if(firstyearLeave.getFirstyear() == 0) {
 				annualLeave = period.getMonths();
+				System.out.println(annualLeave + " 1년차 미만 휴가생성 월당 1 일경우");
 			}else {
 				annualLeave = firstyearLeave.getAnnualLeave();
+				System.out.println(annualLeave + " 1년차 미만 휴가생성 사용 미적용할시");
 			}
 			
 		}else {
-			workyear = "N"+period.getYears()+1;			
+			workyear = "N"+(period.getYears()+1);			
 			// 생성된 연차
 			annualLeave = pService.leaveCalculate(workyear);
 		}
@@ -406,6 +408,7 @@ public class PersonnelManagementController {
 		response.setContentType("application/json; charset=utf-8");
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
 		RecordDiligence RecordToday = pService.RecordToday(memNo);
+		
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(RecordToday,response.getWriter());
 	}
@@ -473,8 +476,112 @@ public class PersonnelManagementController {
 	
 	// 휴가 관리 -직원 휴가 관리
 	@RequestMapping("emLeaveManagement.do")
-	public String emLeaveManagement(HttpServletResponse response) {
-		return "personnel_management/emLeaveManagement";
+	public ModelAndView emLeaveManagement(ModelAndView mv, HttpServletResponse response) {
+		
+		SimpleDateFormat formatD = new SimpleDateFormat("yyyy-MM-dd");
+		
+		
+		ArrayList<ForEmLeave> emList = pService.emAllMemeber();
+		System.out.println(emList + "길이 : " + emList.size());
+		
+		ArrayList<TypeLeave> leaveList = pService.typeLeave();
+		
+
+		
+		String workyear = "";
+		int annualLeave = 0;
+		
+		
+		ForEmLeave fel2 = new ForEmLeave();
+		
+		for(ForEmLeave fel : emList) {
+			fel2 = fel;
+			workyear = fel2.getWorkyear();
+			String enDate = formatD.format(fel2.getEnrollDate());
+			if(workyear.equals("N1")) {
+				SetLeave firstyearLeave = pService.firstyearLeave();
+				if(firstyearLeave.getFirstyear() == 0) {
+					
+					int w1 = Integer.parseInt(enDate.substring(0,4));
+					int w2 = Integer.parseInt(enDate.substring(5,7));
+					int w3 = Integer.parseInt(enDate.substring(8,10));
+
+					
+					LocalDate today = LocalDate.now();
+					
+					LocalDate hiredDate = LocalDate.of(w1,w2,w3);
+					// 입사일로부터 오늘까지의 날짜 차이 계산
+					Period period = hiredDate.until(today);
+					annualLeave = period.getMonths();
+					fel2.setAnnualLeave(annualLeave);
+				}else {
+					annualLeave = firstyearLeave.getAnnualLeave();
+					fel2.setAnnualLeave(annualLeave);
+				}
+			}else {
+				annualLeave = pService.leaveCalculate(workyear);
+				fel2.setAnnualLeave(annualLeave);
+			}
+			
+		}
+		
+		mv.addObject("leaveList",leaveList);
+		mv.addObject("emList",emList);
+		mv.setViewName("personnel_management/emLeaveManagement");
+		return mv;
+	}
+	
+	// 직원휴가관리 수정 모달
+	@RequestMapping("modalModifyLeave.do")
+	public void modalModifyLeave(HttpServletResponse response, int memNo) throws JsonIOException, IOException {
+		response.setContentType("application/json; charset=utf-8");
+		SimpleDateFormat formatD = new SimpleDateFormat("yyyy-MM-dd");
+		
+		Member m = pService.detailMemberInfo(memNo);
+		
+		String enDate = formatD.format(m.getEnrollDate());
+		
+		int w1 = Integer.parseInt(enDate.substring(0,4));
+		int w2 = Integer.parseInt(enDate.substring(5,7));
+		int w3 = Integer.parseInt(enDate.substring(8,10));
+		
+		LocalDate today = LocalDate.now();
+		LocalDate hiredDate = LocalDate.of(w1, w2, w3);
+		// 입사일로부터 오늘까지의 날짜 차이 계산
+		Period period = hiredDate.until(today);
+		
+		String createDate ="";
+		String endDate="";
+		if(period.getYears() != 0) {
+			createDate = w1+period.getYears()+"-"+w2+"-"+w3;
+			endDate = w1+(period.getYears()+1)+"-"+w2+"-"+w3;
+		}else {
+			createDate = enDate;
+			endDate = w1+1+"-"+w2+"-"+w3;
+		}
+		
+		int remainAnnual = m.getAnnualLeave();
+		int remainReward = m.getRewardLeave();
+		
+		Map member = new HashMap();
+		member.put("m",m);
+		member.put("createDate",createDate);
+		member.put("endDate",endDate);
+		
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		   gson.toJson(member,response.getWriter());
+	}
+	
+	// 직원 휴가관리 사용된 휴가 계산
+	@RequestMapping("AllMemberUsedLeave.do")
+	public void AllMemberUsedLeave(HttpServletResponse response) throws JsonIOException, IOException {
+		response.setContentType("application/json; charset=utf-8");
+		
+		ArrayList<ForEmUsedLeave> usedLeave = pService.usedLeave();
+		
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		gson.toJson(usedLeave,response.getWriter());
+		
 	}
 
 	//근태관리 - 기본설정
