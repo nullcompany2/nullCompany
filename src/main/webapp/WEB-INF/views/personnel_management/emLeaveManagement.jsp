@@ -275,7 +275,7 @@
         	
         	
         	if(md1_changeAnnual != "" && md1_changeReward != ""){
-        		if(md1_annualLeave = md1_changeAnnual && md1_rewardLeave = md1_changeReward){
+        		if(md1_annualLeave == md1_changeAnnual && md1_rewardLeave == md1_changeReward){
         			alert("변경될 휴가가 존재하지 않습니다.");
         		}else if(md1_annualLeave >= md1_changeAnnual && md1_rewardLeave >= md1_changeReward){
         			alert("사용가능");
