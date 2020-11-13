@@ -254,8 +254,8 @@
 					$("#md1_leaveCreateRecord").text("휴가 생성내역 : ("+data.createDate + ") ~ (" + data.endDate + ")");
 					$("#md1_enrollDate").text("입사일 : ( "+data.m.enrollDate+" )");
 					$("#md1_memName").text("사원명 : " + data.m.name );
-					$("#md1_annualLeave").text(data.m.annualLeave);
-					$("#md1_rewardLeave").text(data.m.rewardLeave);
+					$("#md1_annualLeave").attr('value',data.m.annualLeave).text(data.m.annualLeave);
+					$("#md1_rewardLeave").attr('value',data.m.rewardLeave).text(data.m.rewardLeave);
 					
 				},
 				error: function(request,status,error){
@@ -265,6 +265,27 @@
 				}
 			})
 		}
+
+        function md1_saveBtn(){
+        	var md1_annualLeave = $("#md1_annualLeave").text();
+        	var md1_rewardLeave = $("#md1_rewardLeave").text();
+        	
+        	var md1_changeAnnual = $("#md1_changeAnnual").val();
+        	var md1_changeReward = $("#md1_changeReward").val();
+        	
+        	
+        	if(md1_changeAnnual != "" && md1_changeReward != ""){
+        		if(md1_annualLeave = md1_changeAnnual && md1_rewardLeave = md1_changeReward){
+        			alert("변경될 휴가가 존재하지 않습니다.");
+        		}else if(md1_annualLeave >= md1_changeAnnual && md1_rewardLeave >= md1_changeReward){
+        			alert("사용가능");
+        		}else{
+					alert("변경할 값이 기존의 값보다 클수는 없습니다. (기존휴가에서 차감만 가능.)");
+        		}
+        	}else{
+        		alert("변경후 값을 입력해주세요. 변경을 원하지않을경우 동일한 값을 입력해주세요.");
+        	}
+        }
 		
 		function detail(memNo){
 			modal('my_modal-2');
@@ -274,13 +295,7 @@
 			// 모달창 띄우기
 			modal('my_modal-3');
         });
-        /* confirm 창 */
-		$(document).ready(function(){
-			$(".md-btn-save").click(function(){
-				var result = confirm("저장하시겠습니까?");
-            })
-            	
-        })
+        
         $(function(){
             $("#modal-create-history").click(function(){
                 $("#show-used-history").css("display","none")
@@ -303,6 +318,13 @@
                 }
             })
         })
+        function digit_check(evt){
+		    var code = evt.which?evt.which:event.keyCode;
+		    if(code < 48 || code > 57){
+		        return false;
+		    }
+		}
+        
 
     </script>
     <style>
@@ -446,19 +468,19 @@
                 <tr>
                     <td class="md-ta">정기연차</td>
                     <td class="md-ta" id="md1_annualLeave"></td>
-                    <td class="md-ta"><input type="text" name="" id="md1_changeAnnual" style="width: 30px;"></td>
+                    <td class="md-ta"><input type="text" name="" id="md1_changeAnnual" style="width: 30px;" onkeypress="return digit_check(event)"></td>
                     <td class="md-ta"><input type="text" name="" id="md1_reasonAnnual" style="width: 100%;" placeholder="내용을 입력하세요."></td>
                 </tr>
                 <tr>
                     <td class="md-ta">포상</td>
                     <td class="md-ta" id="md1_rewardLeave"></td>
-                    <td class="md-ta"><input type="text" name="" id="md1_changeReward" style="width: 30px;"></td>
+                    <td class="md-ta"><input type="text" name="" id="md1_changeReward" style="width: 30px;" onkeypress="return digit_check(event)"></td>
                     <td class="md-ta"><input type="text" name="" id="md1_reasonReward" style="width: 100%;" placeholder="내용을 입력하세요."></td>
                 </tr>
             </tbody>
 		</table>
 		<div style="text-align: center; margin-top: 50px;">
-			<input type="button" class="md-btn cursor md-btn-save" id="md1_saveBtn" value="저장">
+			<input type="button" class="md-btn cursor md-btn-save" onclick="md1_saveBtn()" value="저장">
 			<input type="button" class="md-btn cursor md-btn-close" style="margin-left: 50px;" value="닫기">
 		</div>
 
