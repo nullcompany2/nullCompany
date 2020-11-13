@@ -357,7 +357,7 @@
         <button class="menu_icon hover1" onclick="location.href='myReservation.do'">
           <img src="resources/images/reser.png" /> <img src="resources/images/reser_h.png" />
         </button>
-        <button class="menu_icon hover1" onclick="location.href='approvalProgressListView.do'">
+        <button class="menu_icon hover1" onclick="location.href='approvalProgressAllListView.do'">
           <img src="resources/images/elec.png" /> <img src="resources/images/elec_h.png" />
         </button>
         <button class="menu_icon hover1" onclick="location.href='officeMain.do'">

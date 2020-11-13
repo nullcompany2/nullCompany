@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.kh.nullcompany.personnelManagement.model.vo.ForEmUsedLeave" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -53,7 +55,7 @@
                                     <th scope="col" rowspan="2" class="tl">입사일</th>
                                     <th scope="col" rowspan="2" class="tl">올해생성</th>
                                     <th scope="col" colspan="2" class="tl">생성내역</th>
-                                    <th scope="col" colspan="8" class="tl">사용현황</th>
+                                    <th scope="col" colspan="${leaveList.size() }" class="tl">사용현황</th>
                                     <th scope="col" rowspan="2" class="tl">잔여</th>
                                     <th scope="col" rowspan="2" class="tl sepa-line">수정 | 상세</th>
     
@@ -62,40 +64,36 @@
                                     <th scope="col" class="tl">정기</th>
                                     <th scope="col" class="tl">포상</th>
                                     <!-- 휴가 목록 리스트-->
-                                    <th scope="col" class="ts">연차</th>
-                                    <th scope="col" class="ts">포상</th>
-                                    <th scope="col" class="ts">훈련</th>
-                                    <th scope="col" class="ts">교육</th>
-                                    <th scope="col" class="ts">경조사</th>
-                                    <th scope="col" class="ts">병가</th>
-                                    <th scope="col" class="ts">출산</th>
-                                    <th scope="col" class="ts">무급</th>
+                                <c:forEach var="leaveType" items="${ leaveList }">
+                                    <th scope="col" class="ts" id="${leaveType.noType }">${leaveType.nameType }</th>
+                                </c:forEach>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="ta">신아라</td>
-                                    <td class="ta">1992-12-28</td>
-                                    <td class="ta">27</td>
-                                    <td class="ta">25</td>
-                                    <td class="ta">2</td>
+                            <tbody id="memList">
+                            	<c:forEach var="m" items="${emList}">
+                            	
+                                <tr id="${m.memNo }_tr">
+                                    <td class="ta">${m.name }</td>
+                                    <td class="ta"><fmt:formatDate value="${m.enrollDate}" pattern="yyyy.MM.dd"/></td>
+                                    <td class="ta">${m.annualLeave + m.rewardLeave }</td>
+                                    <td class="ta">${m.annualLeave }</td>
+                                    <td class="ta">${m.rewardLeave }</td>
                                     <!-- 휴가 목록 리스트 맞춰서 -->
-                                    <td class="ta">0</td>
-                                    <td class="ta">0</td>
-                                    <td class="ta">0</td>
-                                    <td class="ta">0</td>
-                                    <td class="ta">0</td>
-                                    <td class="ta">0</td>
-                                    <td class="ta">0</td>
-                                    <td class="ta">0</td>
+                                    <c:forEach var="leaveL" items="${leaveList }">
+                                    <c:set var="i" value="${m.memNo }_${leaveL.noType }"/>
+                                    <c:set var="j" value="${usedL.num }"/>
+                                   	
+                                   		<td class="ta" id="${m.memNo}_${leaveL.noType}">0</td>
+                                    </c:forEach>
                                     <!-- 여기까지 -->
-                                    <td class="ta">27</td>
+                                    <td class="ta">${ m.remainAnnual + m.remainReward }</td>
                                     <td class="ta sepa-line">
-                                        <a href="#"id="detail-r-l" class="cursor" style="color: #477A8F;">수정</a> |
-                                        <a href="#"id="detail-r-2" class="cursor" style="color: #477A8F;">상세</a>
+                                        <a href="#" class="cursor" style="color: #477A8F;" onclick="modfiy(${m.memNo})">수정</a> |
+                                        <a href="#" class="cursor" style="color: #477A8F;" onclick="detail(${m.memNo})">상세</a>
                                     </td>
                                 </tr>
-                                
+                                </c:forEach>
+                                                                
                             </tbody>
                         </table>
                     </div>	
@@ -174,6 +172,29 @@
 			$("#leave-status").css("color","black")
 			$("#reward-leave").css("color","#477A8F")
 		})
+		
+		$(function(){
+			$.ajax({
+				url: "AllMemberUsedLeave.do",
+				dataType : "json",
+				success:function(data){
+					for( var i=0; i<data.length; i++) {
+						var num = data[i].num;
+						console.log(num);
+						$("#"+num).html(data[i].useCount);
+					}
+						
+					
+					
+				},
+				error: function(request,status,error){
+					console.log(request);
+					console.log(status);
+					console.log(error);
+				}
+			})
+		})
+		
 	</script>
 	<!-- Modal -->
 	
@@ -221,15 +242,34 @@
 				});
 				
 		}
-
-		$('#detail-r-l').on('click', function() {
-			// 모달창 띄우기
+		function modfiy(memNo){
 			modal('my_modal-1');
-        });
-        $('#detail-r-2').on('click', function() {
-			// 모달창 띄우기
+			
+			$.ajax({
+				url : "modalModifyLeave.do",
+				data : {memNo : memNo},
+				dataType : "json",
+				success:function(data){
+					console.log(data);
+					$("#md1_leaveCreateRecord").text("휴가 생성내역 : ("+data.createDate + ") ~ (" + data.endDate + ")");
+					$("#md1_enrollDate").text("입사일 : ( "+data.m.enrollDate+" )");
+					$("#md1_memName").text("사원명 : " + data.m.name );
+					$("#md1_annualLeave").text(data.m.annualLeave);
+					$("#md1_rewardLeave").text(data.m.rewardLeave);
+					
+				},
+				error: function(request,status,error){
+					console.log(request);
+					console.log(status);
+					console.log(error);
+				}
+			})
+		}
+		
+		function detail(memNo){
 			modal('my_modal-2');
-        });
+		}
+       
         $('#pick-em-1').on('click', function() {
 			// 모달창 띄우기
 			modal('my_modal-3');
@@ -391,9 +431,9 @@
 	<div id="my_modal-1" class="modal-dragscroll">
 		<h4 style="color: #477A8F; margin-bottom: 30px;">직원 휴가일 수정</h4>
 		<table class="md-l-table">
-			<h4 style="font-weight:normal;">휴가 생성내역(<span>2019-12-28</span>~<span>2020-12-28</span>)</h4>
-            <h5 style="font-weight:normal;">입사일 : (<span>1992-12-28</span>)</h5>
-            <h5 style="font-weight:normal;">사원명 : (<span>ID</span>)</h5>
+			<h4 style="font-weight:normal;" id="md1_leaveCreateRecord">휴가 생성내역(<span>2019-12-28</span>~<span>2020-12-28</span>)</h4>
+            <h5 style="font-weight:normal;" id="md1_enrollDate">입사일 : (<span>1992-12-28</span>)</h5>
+            <h5 style="font-weight:normal;" id="md1_memName">사원명 : (<span>ID</span>)</h5>
             <thead style="background: #e8ecee;">
                 <tr>
                     <th scope="col" rowspan="2" class="md-tr">종류</th>
@@ -405,20 +445,20 @@
             <tbody>
                 <tr>
                     <td class="md-ta">정기연차</td>
-                    <td class="md-ta"><span>25</span></td>
-                    <td class="md-ta"><input type="text" name="" id="" style="width: 30px;"></td>
-                    <td class="md-ta"><input type="text" name="" id="" style="width: 100%;" placeholder="내용을 입력하세요."></td>
+                    <td class="md-ta" id="md1_annualLeave"></td>
+                    <td class="md-ta"><input type="text" name="" id="md1_changeAnnual" style="width: 30px;"></td>
+                    <td class="md-ta"><input type="text" name="" id="md1_reasonAnnual" style="width: 100%;" placeholder="내용을 입력하세요."></td>
                 </tr>
                 <tr>
                     <td class="md-ta">포상</td>
-                    <td class="md-ta"><span>2</span></td>
-                    <td class="md-ta"><input type="text" name="" id="" style="width: 30px;"></td>
-                    <td class="md-ta"><input type="text" name="" id="" style="width: 100%;" placeholder="내용을 입력하세요."></td>
+                    <td class="md-ta" id="md1_rewardLeave"></td>
+                    <td class="md-ta"><input type="text" name="" id="md1_changeReward" style="width: 30px;"></td>
+                    <td class="md-ta"><input type="text" name="" id="md1_reasonReward" style="width: 100%;" placeholder="내용을 입력하세요."></td>
                 </tr>
             </tbody>
 		</table>
 		<div style="text-align: center; margin-top: 50px;">
-			<input type="button" class="md-btn cursor md-btn-save" value="저장">
+			<input type="button" class="md-btn cursor md-btn-save" id="md1_saveBtn" value="저장">
 			<input type="button" class="md-btn cursor md-btn-close" style="margin-left: 50px;" value="닫기">
 		</div>
 

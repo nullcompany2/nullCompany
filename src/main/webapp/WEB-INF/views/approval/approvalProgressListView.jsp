@@ -31,11 +31,11 @@
 							</li>
 						</div>
 						<ul id="Tab1" class="H-personnel-subNavi Depth02">
-							<li><a href="approvalProgressDList.do" id="">전체</a></li>
-							<li><a href="#" id="">대기</a></li>
-							<li><a href="#" id="">확인</a></li>
-							<li><a href="#" id="">예정</a></li>
-							<li><a href="#" id="">진행</a></li>
+							<li><a href="approvalProgressAllListView.do" id="">전체</a></li>
+							<li><a href="standByDocListView.do" id="">대기</a></li>
+							<li><a href="checkDocListView.do" id="">확인</a></li>
+							<li><a href="scheduledDocListView.do" id="">예정</a></li>
+							<li><a href="progressListView.do" id="">진행</a></li>
 						</ul>
 		
 						<div class="H-personnel-subNavi Depth01-2">
@@ -94,107 +94,102 @@
 			<div class="contents-wrap drag-scrollbar">
 				<div class="contents-title">
 						<span class="ct1">
-							진행 중인 문서&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;전체
+							진행 중인 문서&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;${ catagory }
 						</span>
 				</div>
 				<div class="c-ic">
-					<table class="appr_list" >
-						<thead>
-							<c:forEach var = "d" items="${docList}">
-									<tr>
-										<th>문서 번호</th>
-										<th style="color: #999;">|</th>
-										<th>제목</th>
-										<th style="color: #999;">|</th>
-										<th>기안자</th>
-										<th style="color: #999;">|</th>
-										<th>기안일&nbsp;&nbsp;<label class="appr_date_desc" id="insert_date">▼</label></th>
-										<th style="color: #999;">|</th>
-										<th>문서 종류</th>
-										<th style="color: #999;">|</th>
-										<th>상태</th>
-									</tr>
-							</c:forEach>
-						</thead>
-						<tbody>
-							<tr onclick="location.href='referDetail.do'">
-								<td>00001</td>
-								<td></td>
-								<td>회람 문서</td>
-								<td></td>
-								<td>기안자 성명</td>
-								<td></td>
-								<td>2020-10-20</td>
-								<td></td>
-								<td>회람</td>
-								<td></td>
-								<td>확인</td>
+				<c:choose>
+						<c:when test="${ !empty dList }">
+								<table class="appr_list" >
+									<thead>	
+											<tr>
+												<th>문서 번호</th>
+												<th style="color: #999;">|</th>
+												<th>제목</th>
+												<th style="color: #999;">|</th>
+												<th>기안자</th>
+												<th style="color: #999;">|</th>
+												<th>기안일&nbsp;&nbsp;<label class="appr_date_desc" id="insert_date">▼</label></th>
+												<th style="color: #999;">|</th>
+												<th>문서 종류</th>
+												<th style="color: #999;">|</th>
+												<th>상태</th>
+											</tr>
+									</thead>
+									<tbody>
+									<c:forEach var="d" items="${ dList }">
+										<tr>
+											<td>${ d.formCode }_${ d.docNo }</td>
+											<td></td>
+											<td>${ d.dTitle}</td>
+											<td></td>
+											<td>${ d.drafterName }</td>
+											<td></td>
+											<td>${ d.draftDate }</td>
+											<td></td>
+											<td>${ d.formName }</td>
+											<td></td>
+											<td>${ d.sStatus }</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+					</c:when>
+					<c:otherwise>
+						<span>문서가 없습니다.</span>
+					</c:otherwise>
+				</c:choose>
+						<label id="doc_count">문서 수&nbsp;&nbsp;:&nbsp;&nbsp;
+							<span id="doc_count_value">${ dList.size() }</span>
+						</label>
+						<br>
+						<br>
+						<table style=" margin: 10px 0px 0px 80px; width: 80%; border-collapse: collapse">
+							<!-- 페이징처리 -->
+							<tr align="center" height="20">
+								<td colspan="6" align="center">
+									<!-- [이전] --> <c:if test="${ pi.currentPage eq 1 }">
+										이전 &nbsp;
+									</c:if> <c:if test="${ pi.currentPage ne 1 }">
+										<c:url var="before" value="approvalProgressListView.do">
+											<c:param name="currentPage" value="${ pi.currentPage - 1 }" />
+										</c:url>
+										<a href="${ before }">이전</a> &nbsp;
+									</c:if> <!-- 페이지 --> <c:forEach var="p" begin="${ pi.startPage }"
+										end="${ pi.endPage }">
+										<c:if test="${ p eq pi.currentPage }">
+											<font color="#477A8F" size="3"><b>${ p }</b> </font>
+										</c:if>
+				
+										<c:if test="${ p ne pi.currentPage }">
+											<c:url var="pagination" value="approvalProgressListView.do">
+												<c:param name="currentPage" value="${ p }" />
+											</c:url>
+											<a href="${ pagination }">${ p }</a> &nbsp;
+										</c:if>
+									</c:forEach> <!-- [다음] --> <c:if test="${ pi.currentPage eq pi.maxPage }">
+										다음
+									</c:if> <c:if test="${ pi.currentPage ne pi.maxPage }">
+										<c:url var="after" value="approvalProgressListView.do">
+											<c:param name="currentPage" value="${ pi.currentPage + 1 }" />
+										</c:url>
+										<a href="${ after }">다음</a>
+									</c:if>
+								</td>
 							</tr>
-							<tr onclick="location.href='contactDetail.do'">
-								<td>00002</td>
-								<td></td>
-								<td>업무 연락 문서</td>
-								<td></td>
-								<td>기안자 성명</td>
-								<td></td>
-								<td>2020-10-20</td>
-								<td></td>
-								<td>업무연락</td>
-								<td></td>
-								<td>대기</td>
-							</tr>
-							<tr onclick="location.href='leaveDetail.do'">
-								<td>00003</td>
-								<td></td>
-								<td>휴가신청_(휴가종류)_휴가시작일/일수</td>
-								<td></td>
-								<td>기안자 성명</td>
-								<td></td>
-								<td>2020-10-20</td>
-								<td></td>
-								<td>휴가</td>
-								<td></td>
-								<td>대기</td>
-							</tr>
-							<tr onclick="location.href='absenceDetail.do'">
-								<td>00004</td>
-								<td></td>
-								<td>휴직신청_(휴직종류)_휴직시작일/일수</td>
-								<td></td>
-								<td>기안자 성명</td>
-								<td></td>
-								<td>2020-10-20</td>
-								<td></td>
-								<td>휴직</td>
-								<td></td>
-								<td>확인</td>
-							</tr>
-						</tbody>
-					</table>
-					<label id="doc_count">문서 수&nbsp;&nbsp;:&nbsp;&nbsp;
-						<span id="doc_count_value">3</span>
-					</label>
-					<br>
-					<br>
-					<div id="numberList" style="text-align: center;">
-						<button><strong>1</strong></button>
-						<button><strong>2</strong></button>
-						<button><strong>3</strong></button>
-						<button><strong>4</strong></button>
-						<button><strong>5</strong></button>
-					</div>
-					<br>
-					<div id="search_bar">
-						<select class="search_tool" id="search_tool">
-							<option value="dNo">문서 번호</option>
-							<option value="dWriter">기안자</option>
-							<option value="dTitle">문서 제목</option>
-						</select>
-						<input type="text" id="appr_search" maxlength="24" placeholder="문서검색"/>
-						<input type="button" id="search_btn" value="   "/>
+						</table>
+						<br>
+						<div id="search_bar">
+							<select class="search_tool" id="search_tool">
+								<option value="dNo">문서 번호</option>
+								<option value="dWriter">기안자</option>
+								<option value="dTitle">문서 제목</option>
+							</select>
+							<input type="text" id="appr_search" maxlength="24" placeholder="문서검색"/>
+							<input type="button" id="search_btn" value="   "/>
+						</div>
 					</div>
 				</div>
-			</div>
 			<script>
 				$(function(){
 					$("#numberList button").mouseover(function(){
