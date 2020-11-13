@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.binding.MapperMethod.ParamMap;
@@ -42,29 +43,32 @@ public class ScheduleController {
 
 	// 일정 관리 메인
 	@RequestMapping("Schedulermain.do")
-	public ModelAndView Schedulermain(ModelAndView mv) {
-
+	public ModelAndView Schedulermain(ModelAndView mv,  HttpServletResponse response, HttpSession session) {
+		
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();	
+		
 		// 총 부서 리스트
 		ArrayList<Department> deptList = sService.deptList();
 		// 총 사원 리스트
 		ArrayList<Member> memList = sService.memList();
 		// 공유 캘린더 리스트
-		ArrayList<Calendar> publicCalList = sService.publicCalList();
+		ArrayList<Calendar> publicCalList = sService.publicCalList(memNo);
 		// 내 캘린더 리스트
-		ArrayList<Calendar> IndividualCalList = sService.IndividualCalList();
+		ArrayList<Calendar> IndividualCalList = sService.IndividualCalList(memNo);
+		ArrayList<Calendar> SelectpublicCalList = sService.SelectpublicCalList(memNo);
 		// 일정 리스트
-		ArrayList<Schedule> ScheduleList = sService.ScheduleList();
-		System.out.println(ScheduleList);
-
-
+		ArrayList<Schedule> ScheduleList = sService.ScheduleList(memNo);
 
 		mv.addObject("deptList", deptList);
 		mv.addObject("memList", memList);
 		mv.addObject("publicCalList", publicCalList);
 		mv.addObject("IndividualCalList", IndividualCalList);
+		mv.addObject("SelectpublicCalList", SelectpublicCalList);
 		mv.addObject("ScheduleList", ScheduleList);
 		
 		mv.setViewName("Scheduler/Schedulermain");
+		System.out.println(publicCalList);
+		System.out.println(SelectpublicCalList);
 		return mv;
 	}
 

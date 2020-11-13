@@ -349,7 +349,7 @@
           <img src="resources/images/board.png" /> <img src="resources/images/board_h.png" />
         </button>
         <button class="menu_icon hover1" onclick="location.href='Schedulermain.do'">
-          <img src="resources/images//sche.png" /> <img src="resources/images/sche_h.png" />
+          <img src="resources/images/sche.png" /> <img src="resources/images/sche_h.png" />
         </button>
         <button class="menu_icon hover1" onclick="location.href='organization.do'">
           <img src="resources/images/Personnel.png" /> <img src="resources/images/Personnel_h.png" />
@@ -472,7 +472,9 @@
        // 모달창 띄우기
        modal('off-work');
     });
- </script>
+    
+
+	</script>
 </body>
 
 </html>

@@ -175,7 +175,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 								    width: 100%;
 								    height: 50px;
 								    margin-left: -2px;">
-									일정 추가${ loginUser.memNo }</button>
+									일정 추가</button>
 							</div>
 						</div>
 						<div class="drag-scrollbar2">
@@ -201,7 +201,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 												<label id="chela" for="${ IndividualCalList.calNo }">
 												<span>${ IndividualCalList.calName }</span>
 												</label></input>
-											<a>수정</a></div> 
+											<a id="${IndividualCalList.calName}">수정</a></div> 
 											</c:forEach>
 											<!-- </select> -->
 										</div></li>
@@ -290,8 +290,9 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 											<option class="selectpublicCal" value="${ publicCalList.calNo }">${ publicCalList.calName }</option>
 									    </c:forEach>
 									    <c:forEach var="IndividualCalList" items="${ IndividualCalList }">
-											<option class="selectindiCal" value="${ IndividualCalList.calNo }">${ IndividualCalList.calName }</option>
+											<option class="selectpublicCal" value="${ IndividualCalList.calNo }">${ IndividualCalList.calName }</option>
 									    </c:forEach>
+									 
 									</select>
 								</dd>
 							</dl>
@@ -574,6 +575,33 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 								<div id="palletBox2" class="pallet2"></div>
 							</div>
 						</div></div>
+
+
+						<div style="text-align: center;position: relative;top: 20px;">
+							<button id="indi_sub"
+								style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">확인</button>
+							<button class="modal-close-btn cursor"
+								style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">취소</button>
+						</div>
+						
+					</div>
+					
+						<!-- 개인 모달 수정-->
+					<div id="editindividualmodal" class="modal-dragscroll">
+						<h4 style="color: #477A8F; margin-bottom: 15px;margin-top: 10px;">내 캘린더 수정</h4>
+						<div>
+							<label for="" style="font-size: 14px;">캘린더 이름 </label>
+							&nbsp;&nbsp; <input type="text" id="cal_name2" /> &nbsp;
+
+							<div class="palletBox4">
+
+								<div id="box4" class="box4">
+									<label style="font-size: 14px; position: absolute; top: 100px;">색상</label>
+									<div id="colorselect4"></div>
+									<div id="palletBox4" class="pallet4"></div>
+								</div>
+							</div>
+						</div>
 
 
 						<div style="text-align: center;position: relative;top: 20px;">
@@ -1141,7 +1169,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 					 alert("캘린더 제목을 입력해주세요.")
 					 return false;
 				}
-				 if(color = "white"){
+				 if(color.length<1){
 					 alert("캘린더 색상을 선택해주세요.")
 					 return false;
 				}
@@ -1189,7 +1217,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
        			 alert("캘린더 제목을 입력해주세요.")
        			 return false;
 	       		 } 
-	       		 if(color = 'white'){
+                if(color.length<1){
 	       			 alert("캘린더 색상을 선택해주세요")
 	       			 return false;
 	       		 } 
@@ -1506,6 +1534,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
  window.onload = function(){
  init();
  init2();
+ init4();
 
  }
 
@@ -1585,6 +1614,38 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 						document.getElementById(target2.id).className += " active2";
 						beforeColor = target2.id;
 					}
+					
+			         
+					   function init4(){
+					   //2차원 배열 파레트 데이터
+					         var pallet4 = [["#F15F5F", "#F29661", "#F2CB61", "#E5D85C", "#BCE55C",
+					          "#86E57F", "#5CD1E5", "#6799FF", "#6B66FF", "#A566FF", "#F361DC", "#F361A6", "#A6A6A6", "#8C8C8C"]];
+					         var tag4 = "";
+					         for(i=0; i<pallet4.length; i++){
+					            for(j=0; j<pallet4[i].length; j++){
+					               tag4 += "<div id="+pallet4[i][j]+" class='colorBox4' onclick='colorSet4(this)'></div>";
+					            }
+					         }
+					         //파레트 파싱
+					         document.getElementById("palletBox4").innerHTML = tag4;
+
+					         //색상 입히기
+					         var colorBox4 = document.getElementsByClassName("colorBox4");
+					         for(i=0; i<colorBox4.length; i++){
+					            colorBox4[i].style.background = colorBox4[i].id;
+					         }
+					         }
+
+					         // onclick event
+					         function colorSet4(target4){
+					         document.querySelector("#colorselect4").style.background = target4.id;
+
+					         if(beforeColor != undefined && beforeColor != null){
+					            document.getElementById(beforeColor).className = document.getElementById(beforeColor).className.replace(" active4", "");
+					         }
+					         document.getElementById(target4.id).className += " active4";
+					         beforeColor = target4.id;
+					         }
 					
 					
 
