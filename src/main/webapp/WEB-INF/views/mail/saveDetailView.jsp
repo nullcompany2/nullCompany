@@ -95,6 +95,28 @@ a:active {
  margin-bottom: 25px;
  overflow-y: scroll;
 }
+#auto #autoAddress {
+		position:absolute;
+		display:none;
+		top:24%;
+		left:11.6%;
+		color :black;
+		background :white;
+		transition: all ease 0.7s 0s;
+		z-index : 700;
+	 	margin : 2px 50px 0px 20px;
+		box-shadow: 0px 0px 5px lightgrey;
+		
+}
+
+#auto #autoAddress li {
+	font-size :14px;
+}
+
+#auto #autoAddress li:hover {
+	background : #477A8F;
+	color : white;
+}
 
 </style>
 
@@ -117,10 +139,19 @@ a:active {
 						<input type="button" value="이전으로" onClick="location.href='javascript:history.go(-1);'" /> <br>
 						&nbsp;보내는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 						<input type="text" name="sender" style="width: 60%;" value= "${loginUser.name} < ${loginUser.id}@nullcompany.com > "/> <br>
+						<div id="auto"> 
 						&nbsp;받는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="text" name="recipient" style="width: 60%;" value= "${ma.name} < ${ma.recipient}@nullcompany.com >"/>
-						<span style="font-size: 17px; background: #477A8F; color: white; padding: 0px 8px 0px 8px;">+</span>
-						<br> &nbsp;&nbsp;제목
+						<input type="text" name="recipient" id="address" style="width: 60%;"
+							placeholder="이름 혹은 메일 주소를 입력해주세요." />
+							 <span style="font-size: 17px; background: #477A8F; color: white; padding: 0px 8px 0px 8px;">+</span>
+							 	<div id="autoAddress"> 
+							 	 <!--  검색 결과  -->
+							 	</div>
+							</div>
+							
+						
+						
+						 &nbsp;&nbsp;제목
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						&nbsp;<input type="text" name="mTitle" style="width: 60%;"
 							placeholder="제목 없음" value="${ma.mTitle}"/> <br>
@@ -176,6 +207,13 @@ a:active {
 	  $("button[aria-label=Video]").css('display','none');	  
 	
 	});
+	
+	$(document).on("click","#ulAuto li",function(){
+		 
+        $("input[name=recipient]").val($(this).text());
+        $("#autoAddress").hide();
+        
+    });
 
     function modal(id) {
        var zIndex = 9999;
@@ -261,6 +299,49 @@ a:active {
  		}
         $("form").attr("action","gosaveMail.do");
  	}); 
+ 	 
+     $("#address").on("keyup",function(){
+         var text = $(this).val();
+        
+         if(text.length > 1){
+             
+		$.ajax({
+			url:"autoComplete.do",
+			type:"post",
+			data:{text : text},
+			success:function(data){
+ 				console.log(text);
+			 	console.log(data);
+                $(text).val(0); 
+			 
+			 	var auto = $("#autoAddress");
+               	var str = "";
+			 	$("#autoAddress").empty();
+			 		
+			 		str += "<ul id='ulAuto'>"
+			   
+			 	$.each(data,function(ind,entry){
+			 	
+			 		str += "<li>" + entry['name'] + "< " 
+			 		str += entry['emailAddress'] +" > </li>" 
+			 		
+			 	});
+			 	
+			 		str += "</ul>"
+			 		auto.append(str);
+			 		$("#autoAddress").show();
+			 	
+                  
+			},error : function() {
+				console.log("전송실패");
+			} 
+		});
+		
+         }else {
+       	  $("#autoAddress").hide();
+         }
+	});
+     
  	 
  	 
 

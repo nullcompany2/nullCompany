@@ -78,6 +78,7 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	
+	<!-- session 120분으로 설정  -->
 	<session-config>
 		<session-timeout> 
 			120

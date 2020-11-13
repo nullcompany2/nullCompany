@@ -22,7 +22,7 @@ public interface ScheduleService {
 
 	void LookMember(int[] lookmemno, int calNo);
 
-	ArrayList<Calendar> publicCalList();
+	ArrayList<Calendar> publicCalList(int memNo);
 
 	int insertIndividual(Calendar calendar);
 
@@ -30,11 +30,11 @@ public interface ScheduleService {
 
 	void IndLookMember(int indLookMember, int calNo);
 
-	ArrayList<Calendar> IndividualCalList();
+	ArrayList<Calendar> IndividualCalList(int memNo);
 
 	int insertSchedule(Schedule schedule);
 
-	ArrayList<Schedule> ScheduleList();
+	ArrayList<Schedule> ScheduleList(int memNo);
 
 	Schedule detailSchedule(String sche_name);
 
@@ -49,6 +49,8 @@ public interface ScheduleService {
 	int updateSchedule(Schedule schedule);
 
 	int DeleteSchedule(String sche_name);
+
+	ArrayList<Calendar> SelectpublicCalList(int memNo);
 
 
 
