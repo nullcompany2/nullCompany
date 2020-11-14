@@ -15,6 +15,7 @@ import com.kh.nullcompany.personnelManagement.model.vo.Department;
 import com.kh.nullcompany.personnelManagement.model.vo.ForEmLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.ForEmUsedLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.MixForLeave;
+import com.kh.nullcompany.personnelManagement.model.vo.ModificationDiligence;
 import com.kh.nullcompany.personnelManagement.model.vo.RecordDiligence;
 import com.kh.nullcompany.personnelManagement.model.vo.RecordLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.RewardLeave;
@@ -232,6 +233,21 @@ public class PersonnelManagementDao {
 
 	public int reduceRewardLeave(Map changeRL) {
 		return sqlSession.insert("personnelMapper.reduceRewardLeave",changeRL);
+	}
+
+
+	public RecordDiligence recordDiligence(int noDiligence) {
+		return sqlSession.selectOne("personnelMapper.recordDiligence",noDiligence);
+	}
+
+
+	public int modificationDiligence(ModificationDiligence mod) {
+		return sqlSession.insert("personnelMapper.modificationDiligence",mod);
+	}
+
+
+	public ArrayList<ModificationDiligence> selectRecordModification(int memNo) {
+		return(ArrayList)sqlSession.selectList("personnelMapper.selectRecordModification",memNo);
 	}
 
 

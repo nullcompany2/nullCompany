@@ -157,6 +157,8 @@
 								</table>
 								
 								<div class="set-checkbox-1" >
+									<h5>※ 1년차 휴가 자동생성 설정값 변경시 사원이 로그인하여 휴가현황을 조회하여야지 휴가설정이 변경됩니다.</h5>
+									<br>
 									<h4 class="set-e-1">1년차 휴가 자동생성</h4>
 																		
 									<input type="radio" name="ck-firstyear" id="use-fy" value="0"><label for="use-fy">사용함</label>

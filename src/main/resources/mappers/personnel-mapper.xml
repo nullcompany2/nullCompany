@@ -122,6 +122,23 @@
    		<result property="num" column="NUM"/>
    		<result property="useCount" column="USECOUNT"/>
    	</resultMap>
+   	
+   	<resultMap type="ModificationDiligence" id="modificationDiligenceResultSet">
+   	
+   		<result property="noMod" column="NO_MOD_D"/>
+   		<result property="dateApply" column="DATE_APPLY_D"/>
+   		<result property="name" column="NAME_REQUESTER_D"/>
+   		<result property="id" column="ID_REQUESTER_D"/>
+   		<result property="memNo" column="EN_REQUESTER_D"/>
+   		<result property="dateMod" column="DATE_MOD_D"/>
+   		<result property="statusMod" column="STATUS_MOD_D"/>
+   		<result property="reasonMod" column="REASON_MOD_D"/>
+   		<result property="originalAttachmentMod" column="ORIGINAL_ATTACHMENT_MOD_D"/>
+   		<result property="renameAttachmentMod" column="RENAME_ATTACHMENT_MOD_D"/>
+   		<result property="timeEnter" column="TIME_ENTER"/>
+   		<result property="timeExit" column="TIME_EXIT"/>
+   		<result property="statusDiligence" column="STATUS_DILIGENCE"/>
+   	</resultMap>
    	<!-- **************************************************************************************** -->
    
 	<!-- 휴가일수 계산 -->
@@ -325,6 +342,7 @@
 		WHERE EXTRACT(YEAR FROM DATE_DILIGENCE) = #{year}
 		AND EXTRACT (MONTH FROM DATE_DILIGENCE) = #{month}
 		AND MEM_NO = #{memNo}
+		ORDER BY DATE_DILIGENCE
 	</select>
 	<!-- 근태 년/월 사번조회 카운트 페이징처리용 -->
 	<select id="dListCount" parameterType="map" resultType="_int">
@@ -384,4 +402,20 @@
 	<insert id="reduceRewardLeave">
 		INSERT INTO RECORD_LEAVE VALUES(LEAVE_RECORD_SEQ.nextval,#{memNo},2,SYSDATE,#{reductionDaysReward},'','결재완료',SYSDATE,#{reasonReward})
 	</insert>
+	
+	<select id="recordDiligence" resultMap="RecordDiligenceResultSet">
+		SELECT *
+		FROM RECORD_DILIGENCE
+		WHERE NO_DILIGENCE = #{noDiligence}	
+	</select>
+	<insert id="modificationDiligence">
+		INSERT INTO MOD_DILIGENCE VALUES(#{noMod},SYSDATE,#{name},#{id},#{memNo},#{dateMod},'결재중',#{reasonMod},#{originalAttachmentMod},#{renameAttachmentMod})
+	</insert>
+	
+	<select id="selectRecordModification" resultMap="modificationDiligenceResultSet" parameterType="_int">
+		SELECT *		
+		FROM MOD_DILIGENCE M
+		JOIN RECORD_DILIGENCE R ON(R.NO_DILIGENCE = M.NO_MOD_D)
+		WHERE MEM_NO =#{memNo}
+	</select>
 </mapper>

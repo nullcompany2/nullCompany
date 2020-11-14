@@ -13,6 +13,7 @@ import com.kh.nullcompany.personnelManagement.model.vo.Department;
 import com.kh.nullcompany.personnelManagement.model.vo.ForEmLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.ForEmUsedLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.MixForLeave;
+import com.kh.nullcompany.personnelManagement.model.vo.ModificationDiligence;
 import com.kh.nullcompany.personnelManagement.model.vo.RecordDiligence;
 import com.kh.nullcompany.personnelManagement.model.vo.RecordLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.RewardLeave;
@@ -264,6 +265,21 @@ public class PersonnelManagementServiceImpl implements PersonnelManagementServic
 	@Override
 	public int reduceRewardLeave(Map changeRL) {
 		return pDao.reduceRewardLeave(changeRL);
+	}
+
+	@Override
+	public RecordDiligence recordDiligence(int noDiligence) {
+		return pDao.recordDiligence(noDiligence);
+	}
+
+	@Override
+	public int modificationDiligence(ModificationDiligence mod) {
+		return pDao.modificationDiligence(mod);
+	}
+
+	@Override
+	public ArrayList<ModificationDiligence> selectRecordModification(int memNo) {
+		return pDao.selectRecordModification(memNo);
 	}
 
 	

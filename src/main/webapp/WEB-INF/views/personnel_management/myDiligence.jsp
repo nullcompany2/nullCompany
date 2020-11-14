@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -106,11 +107,11 @@
 					</div>
 					<!-- 근태 수정내역 -->
 					<div id="show-modi-diligence" class="c-ic">
-						<h4>수정내역</h4>
+						<h4>올해 근태 수정내역</h4>
 						<div style="margin-top: 10px; margin-bottom: 10px;">
 							보기 : 
 							<select name="modi-record" id="" class="sel-status cursor">
-								<option value="">전체</option>
+								<option value="" >전체</option>
 								<option value="">결재중</option>
 								<option value="">결재 완료</option>
 								<option value="">결재 취소</option>
@@ -120,22 +121,28 @@
 						</div>
 						<table class="mr-tbl">
 							<tr class="mr-tbl-il">
-								<th class="mr-tbl-th" colspan="2">요청 날짜</th>
-								<th class="mr-tbl-th">종류</th>
-								<th class="mr-tbl-th" colspan="2">기존 시간</th>
-								<th class="mr-tbl-th" colspan="2">요청 시간</th>
+								<th class="mr-tbl-th" colspan="2">신청일</th>
+								<th class="mr-tbl-th" colspan="2" >근태번호</th>
+								<th class="mr-tbl-th" colspan="2">수정요청일</th>
+								<th class="mr-tbl-th" colspan="2">기존 시간 및 상태</th>
 								<th class="mr-tbl-th" colspan="2">사유</th>
-								<th class="mr-tbl-th">결과</th>
+								<th class="mr-tbl-th" colspan="2">상태</th>
+								<th class="mr-tbl-th">요청취소</th>
 							</tr>
 							<!-- 리스트 -->
+							<c:forEach var="list" items="${recordMod }">
 							<tr>
-								<td class="mr-tbl-td" colspan="2">2020-10-01</td>
-								<td class="mr-tbl-td">출근</td>
-								<td class="mr-tbl-td" colspan="2">00:00:00</td>
-								<td class="mr-tbl-td" colspan="2">09:00:00</td>
-								<td class="mr-tbl-td" colspan="2">전산오류</td>
-								<td class="mr-tbl-td" >결재완료</td>
+								<fmt:formatDate var="applyDate" value="${list.dateApply }" pattern="yyyy-MM-dd"/>
+								<fmt:formatDate var="modDate" value="${list.dateMod }" pattern="yyyy-MM-dd"/>
+								<td class="mr-tbl-td" colspan="2">${ applyDate }</td>
+								<td class="mr-tbl-td" colspan="2">NO_${ list.noMod }</td>
+								<td class="mr-tbl-td" colspan="2">${ modDate }</td>
+								<td class="mr-tbl-td" colspan="2">${list.timeEnter }/${list.timeExit} - ${list.statusDiligence }</td>
+								<td class="mr-tbl-td" colspan="2">${list.reasonMod }</td>
+								<td class="mr-tbl-td" colspan="2">${list.statusMod }</td>
+								<td class="mr-tbl-td" >요청취소</td>
 							</tr>
+							</c:forEach>
 							
 						</table>
 					</div>
@@ -543,8 +550,12 @@
 							$td_enterTime = $(' <td class="md-tbl-td" colspan="2">').text(data.dList[i].timeEnter);
 							$td_exitTime = $(' <td class="md-tbl-td" colspan="2">').text(data.dList[i].timeExit);
 							$td_status = $(' <td class="md-tbl-td" colspan="2">').text(data.dList[i].statusDiligence);
-							$td_reqMod = $(' <td class="md-tbl-td">').attr("id",data.dList[i].noDiligence);
-							$td_reqMod.append($('<a href="reqDiligence.do?noDiligence='+ data.dList[i].noDiligence +'" id="detail-r-l" class="cursor" style="color: #477A8F;">').text("요청"));
+							if(data.dList[i].statusDiligence == '정상'){
+								$td_reqMod = "";
+							}else{
+								$td_reqMod = $(' <td class="md-tbl-td">').attr("id",data.dList[i].noDiligence);
+								$td_reqMod.append($('<a href="reqDiligence.do?noDiligence='+ data.dList[i].noDiligence +'" id="detail-r-l" class="cursor" style="color: #477A8F;">').text("요청"));								
+							}
 							
 							$tr.append($td_date);
 							$tr.append($td_enterTime);
