@@ -11,8 +11,8 @@
 
 <!-- include libraries(jQuery, bootstrap) -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
 <title>메일 쓰기</title>
 
@@ -107,7 +107,6 @@ a:active {
 		z-index : 700;
 	 	margin : 2px 50px 0px 20px;
 		box-shadow: 0px 0px 5px lightgrey;
-		
 }
 
 #auto #autoAddress li {
@@ -118,6 +117,7 @@ a:active {
 	background : #477A8F;
 	color : white;
 }
+
 </style>
 
 </head>
@@ -132,6 +132,7 @@ a:active {
 			<div>
 				<div style="width: 90%; margin: auto;">
 					<form method="post" enctype="multipart/form-data">
+					<!-- 전송하기 미리보기 저장하기 이전으로 버튼   -->
 						<input type="hidden" value="${loginUser.memNo}" name= memNo>
 						<input type="submit" value="보내기" id="sendMail" />
 						<input class="go2" type="button" value="미리보기"/> 
@@ -145,27 +146,35 @@ a:active {
 						&nbsp;받는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<input type="text" name="recipient" id="address" style="width: 60%;"
 							placeholder="이름 혹은 메일 주소를 입력해주세요." />
-							 <span style="font-size: 17px; background: #477A8F; color: white; padding: 0px 8px 0px 8px;">+</span>
+							
+							 <span style="font-size: 17px; 
+							 background: #477A8F; 
+							 color: white; 
+							 padding: 0px 8px 0px 8px;">+</span>
+							 	
 							 	<div id="autoAddress"> 
-							 	 <!--  검색 결과  -->
+							 	 <!--  자동 완성 검색 결과  -->
 							 	</div>
 							</div>
 							
 						
 						 &nbsp;&nbsp;제목
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						&nbsp;<input type="text" name="mTitle" style="width: 60%;"
-							placeholder="제목 없음" /> <br>
-							&nbsp;파일첨부&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;<input type="text" name="mTitle" style="width: 60%;" placeholder="제목 없음" /> <br>
+						&nbsp;파일첨부
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<input type="file" name="uploadPhoto" id="ex_file"/>
 						<br> <br> 
+						<!--  썸머노트  -->
 						<textarea id="summernote" name="mContent"></textarea>
 					</form>
 				</div>
 			</div>
 		</div>
 	
-	<!-- Modal div -->
+	
+	<!-- 미리보기 모달  -->
 	<div id="my_modal2" class="modal-dragscroll">
 
 		<span style="font-size: 20px; color: #477A8F;"> 미리보기 </span> 
@@ -188,9 +197,19 @@ a:active {
 			border-radius: 3px; margin-left: 180px; cursor: pointer; font-size:15px;" />
 	</div>
 	
+		
 	
-<script type="text/javaScript">
+	
+	<script type="text/javaScript">
+	
 	$(document).ready(function() {
+		
+	
+	/*   $('#community').on('click', function() {
+	         // 공유 캘린더 모달창 띄우기
+	         modal('communitymodal');
+	      }); */
+		
 	  $('#summernote').summernote({
  	    	placeholder: '내용을 작성해주세요.',
 	        minHeight: 370,
@@ -202,7 +221,8 @@ a:active {
 	
 	  $("button[aria-label=Picture]").css('display','none');	  
 	  $("button[aria-label=Video]").css('display','none');	  
-	});
+	   
+	  });
 	
 	
 	$(document).on("click","#ulAuto li",function(){
@@ -210,11 +230,12 @@ a:active {
 	            $("input[name=recipient]").val($(this).text());
 	            $("#autoAddress").hide();
 	            
-	        });
+	   });
 	
 	</script>
 
-<script>
+	<script>
+	
     function modal(id) {
        var zIndex = 9999;
        var modal = $('#' + id);
@@ -259,7 +280,7 @@ a:active {
     }
 
     
-    	
+   // 미리보기 모달 
     $('.go2').on('click', function() {
     	
     	// 메일 제목 input val 옮기기 
@@ -278,6 +299,7 @@ a:active {
        	
     });
     
+    // 메일 전송 버튼 
     $("#sendMail").click(function () {
 
       	if ($("input[name=recipient]").val().length < 1 ){
@@ -290,6 +312,7 @@ a:active {
         
 	 });
   
+    // 메일 임시 저장 버튼 
  	 $("#saveMail").click(function () {
  		if ($('#summernote').summernote('isEmpty')) {
  			$('#summernote').summernote('insertText', '작성 내용 없음');
@@ -346,9 +369,7 @@ a:active {
               
  		});
           
- 	 
  </script>
+ 
 </body>
-
-	
 </html>

@@ -3,33 +3,28 @@ package com.kh.nullcompany.mail.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.annotation.ModelAndViewResolver;
 
 import com.kh.nullcompany.common.Pagination;
 import com.kh.nullcompany.mail.model.service.MailService;
 import com.kh.nullcompany.mail.model.vo.Mail;
-import com.kh.nullcompany.member.controller.MemberController;
 import com.kh.nullcompany.member.model.vo.Member;
-import com.kh.nullcompany.reservation.model.vo.Resource;
+import com.kh.nullcompany.personnelManagement.model.vo.Department;
+import com.kh.nullcompany.schedule.model.service.ScheduleService;
+import com.kh.nullcompany.schedule.model.vo.Calendar;
+import com.kh.nullcompany.schedule.model.vo.Schedule;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
@@ -41,14 +36,28 @@ public class MailController {
 
 @Autowired
 private MailService maService;
+@Autowired
+private ScheduleService sService;
 
 
-		// 메일쓰기로 보내주는 컨트롤러 
+		// 메일쓰기 
 		@RequestMapping("mailWrite.do")
-		public String mailWrite(HttpServletResponse response){
-			return "mail/writeMail";
+		public ModelAndView Schedulermain(ModelAndView mv,  HttpServletResponse response, HttpSession session) {
+			
+			int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();	
+			
+			// 조직도 모달을 위한 정보가져오기 
+			// 총 부서 리스트
+			ArrayList<Department> deptList = sService.deptList();
+			// 총 사원 리스트
+			ArrayList<Member> memList = sService.memList();
+			
+			mv.addObject("deptList", deptList);
+			mv.addObject("memList", memList);
+			
+			mv.setViewName("mail/writeMail");
+			return mv;
 		}
-		
 
 		// 받은 메일함 리스트
 		@RequestMapping("recieveMail.do")
@@ -75,6 +84,7 @@ private MailService maService;
 		public ModelAndView mailgosave(ModelAndView mv, Mail ma,HttpServletRequest request,
 				@RequestParam(value="uploadPhoto",required=false)MultipartFile file) {
 			
+			// 보낸이 받는이 주소가 아이디로 DB에 들어갈 수 있게 파싱 작업 
 			if(ma.getRecipient().equals("없음")) {
 				
 				String [] senderArr = ma.getSender().split("<");
@@ -118,6 +128,7 @@ private MailService maService;
 		}
 		
 		// 파일 저장 메소드 
+		// 손봐야함 ...
 		public String saveMailFile(MultipartFile file, HttpServletRequest request) {
 		     
 		      String root = request.getSession().getServletContext().getRealPath("resources");

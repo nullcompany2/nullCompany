@@ -21,7 +21,6 @@
 		<result property="name" column="NAME"/>
 		<result property="rName" column="RNAME"/>
 		
-		
 	</resultMap>
 	
 	<resultMap id="selectIdNoSet" type="MailSelectIdNo">
