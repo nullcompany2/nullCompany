@@ -245,10 +245,10 @@
 	  $(function(){
          mailBox();
       
-      // 5초에 한번씩 계속 업데이트 하기 
+      // 5분에 한번씩 계속 업데이트 하기 
        setInterval(function(){
             mailBox();
-         },5000); 
+         },50000); 
       });
       
       function  mailBox(){
@@ -267,8 +267,8 @@
                mail3.empty();
                
                var allCount = "<span> 받은 편지함 : " + data.reCount + " 개 </span> <br>";
-               var unreadCount = "<span> 안 읽은 편지 : " + data.unreadCount + "개 </span> <br>";
-               var saveCount = "<span> 임시 보관함 : " + data.saveCount + "개 </span>";
+               var unreadCount = "<span> 안 읽은 편지 : " + data.unreadCount + " 개 </span> <br>";
+               var saveCount = "<span> 임시 보관함 : " + data.saveCount + " 개 </span>";
                
                mail1.append(allCount);
                mail2.append(unreadCount);
@@ -276,10 +276,7 @@
               
             },
             error:function(request,status,error){
-               alert("code: " + request.status+"\n"
-                     + "message : " + request.responseText + "\n"
-                     + "error : " + error
-               )
+			console.log("main mailBox 오류");
             }
          });
       }
