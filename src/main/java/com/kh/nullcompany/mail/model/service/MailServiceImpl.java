@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.mail.model.dao.MailDao;
 import com.kh.nullcompany.mail.model.vo.Mail;
+import com.kh.nullcompany.mail.model.vo.MailListCount;
 import com.kh.nullcompany.member.model.vo.Member;
 
 @Service("maService")
@@ -167,9 +168,21 @@ public class MailServiceImpl implements MailService {
 		return maDao.autoComplete(text);
 	}
 
+	// 휴지통에서 복구하기 
 	@Override
 	public int backMail(int mailNo) {
 		return maDao.backMail(mailNo);
+	}
+
+	// 안 읽은 메일 갯수 세기 
+	@Override
+	public int getReReListCount(String memId) {
+		return maDao.getReReListCount(memId);
+	}
+
+	@Override
+	public MailListCount getMailBoxCount(String memId) {
+		return maDao.getMailBoxCount(memId);
 	}
 
 	

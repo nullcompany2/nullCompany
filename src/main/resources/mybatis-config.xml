@@ -30,6 +30,7 @@
       <typeAlias type="com.kh.nullcompany.mail.model.vo.Email" alias="Email"/>
       <typeAlias type="com.kh.nullcompany.mail.model.vo.Mail" alias="Mail"/>
       <typeAlias type="com.kh.nullcompany.mail.model.vo.MailSelectIdNo" alias="MailSelectIdNo"/>
+      <typeAlias type="com.kh.nullcompany.mail.model.vo.MailListCount" alias="MailListCount"/>
       <typeAlias type="com.kh.nullcompany.schedule.model.vo.Calendar" alias="Calendar"/>
       <typeAlias type="com.kh.nullcompany.schedule.model.vo.CalendarMember" alias="CalendarMember"/>
       <typeAlias type="com.kh.nullcompany.schedule.model.vo.Schedule" alias="Schedule"/>

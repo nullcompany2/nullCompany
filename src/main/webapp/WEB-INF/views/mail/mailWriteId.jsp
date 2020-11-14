@@ -118,10 +118,9 @@ a:active {
 						 <a href="javascript:history.go(-1);"> 
 						 <input type="button" value="이전으로" /></a> <br>
 						 &nbsp;보내는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-						<input type="text" name="sender" style="width: 60%;" value= "${loginUser.name} <${loginUser.id}@nullcompany.com>" readonly/> <br>
+						<input type="text" name="sender" style="width: 60%;" value= "${loginUser.name} < ${loginUser.id}@nullcompany.com >" readonly/> <br>
 						&nbsp;받는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="text" name="recipient" style="width: 60%;" value= "${m.name} <${m.emailAddress}>" readonly/>
-							  <span style="font-size: 17px; background: #477A8F; color: white; padding: 0px 8px 0px 8px;">+</span>
+						<input type="text" name="recipient" style="width: 60%;" value= "${m.name} < ${m.emailAddress} >" readonly/>
 						<br> &nbsp;&nbsp;제목
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						&nbsp;<input type="text" name="mTitle" style="width: 60%;"
@@ -236,6 +235,32 @@ a:active {
        modal('my_modal2');
        	
     });
+    
+    // 메일 전송 버튼 
+    $("#sendMail").click(function () {
+
+      	if ($("input[name=recipient]").val().length < 1 ){
+      	  alert('보내는 사람을 지정하지 않으셨습니다.');
+    	}if ($('#summernote').summernote('isEmpty')) {
+     		  alert('메일 내용을 입력하지 않으셨습니다.');
+    	}else{
+        $("form").attr("action","sendMail.do");
+   		}
+        
+	 });
+    
+  
+    // 메일 임시 저장 버튼 
+ 	 $("#saveMail").click(function () {
+ 		if ($('#summernote').summernote('isEmpty')) {
+ 			$('#summernote').summernote('insertText', '작성 내용 없음');
+ 	   		alert('메일 내용을 입력하지 않으셔서 내용 없음으로 저장됩니다.');
+ 		}if($("input[name=recipient]").val().length < 1){
+ 	    	  alert('보내는 사람을 지정하지 않아 없음으로 저장됩니다.');
+ 	    	 $("input[name=recipient]").val('없음');
+ 		}
+        $("form").attr("action","gosaveMail.do");
+ 	}); 
  </script>
 </body>
 

@@ -59,6 +59,10 @@
 	border-bottom:  1px solid #ECECEC;
 	}
 	
+	#tb:last-child {
+	margin-bottom : 30px;
+	}
+	
 	#hide,#hide a, #countAll{
 		border:none;
 		font-size:16px;
@@ -66,7 +70,7 @@
 		
 	}
 	
-	#select, #hide, select, #hide a, #countAll{
+	#select, #hide {
 		border:none;
 		font-size:16px;
 		color:#477A8F;
@@ -74,6 +78,11 @@
 	
 	#hide {
 	display : none;}
+	
+	#countAll {
+	position: absolute;
+	right : 115px;
+	}
 	
 </style>
 
@@ -91,8 +100,10 @@
 				&nbsp;&nbsp;<input type="checkbox" id="checkall"> 
 				&nbsp;&nbsp;
 				&nbsp;&nbsp;
-				<span id="hide" style="margin-right:40px;">  <span id="count"> </span> &nbsp; <a id="realdelMail"> 완전삭제 </a> </span>
-				 <span style="margin-left:50%;" id="countAll"> </span> <br><br>				
+				
+				<span id="hide" style="margin-right:50px;"><span id="count"> </span>  &nbsp; <a id="realdelMail"> 완전삭제 </a> </span>
+				<span id="countAll"> </span> <br><br>
+				
 				 
 				 <div id="tableDiv"> 
 					<c:choose>
@@ -109,7 +120,7 @@
 						
 							<td>&nbsp;&nbsp;<input type="checkbox" onClick="event.cancelBubble=true" name="mail"></td>
 							<td align="left">${ma.name} < ${ma.sender} ></td>
-							<td>${ ma.mTitle }</td>
+							<td align="center">${ ma.mTitle }</td>
 							<td align="right"> ${ma.sendDate }</td>
 						</tr>
 						</table>
@@ -161,12 +172,14 @@
         </div>
         
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.js"></script>
+       
         <script>
-        $(document).ready(function(){
+ 		$(document).ready(function(){
         	
         	var countAll = $("#tb tr").length;
         	$("#countAll").text("편지수 : " + countAll);
         	 //선택된 갯수
+        	
         	
             //최상단 체크박스 클릭
             
@@ -175,23 +188,24 @@
                 if($("#checkall").prop("checked")){
                     //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
                     $("input[name=mail]").prop("checked",true);
-                    $("#tableDiv tr").css("background","#ECECEC");
+                    $(".trMail").css("background","#ECECEC");
                     $("#hide").show();
-                  
+                    $("#select").hide(); 
+                    
                     var count = $("input:checkbox[name=mail]:checked").length;
                    	$("#count").text(count);
-                 
+                   	
                     //클릭이 안되있으면
                 }else{
                     //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
                     $("input[name=mail]").prop("checked",false);
-                    $("#tableDiv tr").css("background","white");
+                    $(".trMail").css("background","white");
                     $("#hide").hide();
-                   
+                    $("#select").show(); 
                 }
             })
         })
-	
+        
         $(document).ready(function(){
 		   $('#tableDiv tr').mouseover(function(){
 		      $(this).css("cursor","pointer");

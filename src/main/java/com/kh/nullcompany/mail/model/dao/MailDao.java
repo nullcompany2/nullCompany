@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.mail.model.vo.Mail;
+import com.kh.nullcompany.mail.model.vo.MailListCount;
 import com.kh.nullcompany.member.model.vo.Member;
 
 @Repository("maDao")
@@ -161,6 +162,14 @@ public class MailDao {
 
 	public int backMail(int mailNo) {
 		return sqlSession.update("mailMapper.backOneMail",mailNo);
+	}
+
+	public int getReReListCount(String memId) {
+		return sqlSession.selectOne("mailMapper.getReReListCount",memId);
+	}
+
+	public MailListCount getMailBoxCount(String memId) {
+		return sqlSession.selectOne("mailMapper.mailListCount",memId);
 	}
 	
 	
