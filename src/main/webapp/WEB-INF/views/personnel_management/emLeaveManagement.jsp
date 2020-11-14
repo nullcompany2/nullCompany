@@ -45,7 +45,7 @@
     
                     <div id="show-leave-status" class="c-ic">
                         <form action="" style="float: right;">
-                            <input type="text" name="" id="" class="search-emp">
+                            <input type="text"  class="search-emp">
                             <button class="search-btn cursor">검색</button>
                         </form>
                         <table class="l-table" id="leave-status-tbl">
@@ -254,9 +254,9 @@
 					$("#md1_leaveCreateRecord").text("휴가 생성내역 : ("+data.createDate + ") ~ (" + data.endDate + ")");
 					$("#md1_enrollDate").text("입사일 : ( "+data.m.enrollDate+" )");
 					$("#md1_memName").text("사원명 : " + data.m.name );
+					$("#md1_memNo").text( data.m.memNo);
 					$("#md1_annualLeave").attr('value',data.m.annualLeave).text(data.m.annualLeave);
 					$("#md1_rewardLeave").attr('value',data.m.rewardLeave).text(data.m.rewardLeave);
-					
 				},
 				error: function(request,status,error){
 					console.log(request);
@@ -267,18 +267,44 @@
 		}
 
         function md1_saveBtn(){
+        	var md1_memNo = $("#md1_memNo").text();
+        	var md1_memName  =$("#md1_memName").text();
         	var md1_annualLeave = $("#md1_annualLeave").text();
         	var md1_rewardLeave = $("#md1_rewardLeave").text();
         	
         	var md1_changeAnnual = $("#md1_changeAnnual").val();
         	var md1_changeReward = $("#md1_changeReward").val();
         	
+        	var md1_reasonAnnual = $("#md1_reasonAnnual").val();
+        	var md1_reasonReward = $("#md1_reasonReward").val();
+        	
         	
         	if(md1_changeAnnual != "" && md1_changeReward != ""){
         		if(md1_annualLeave == md1_changeAnnual && md1_rewardLeave == md1_changeReward){
         			alert("변경될 휴가가 존재하지 않습니다.");
         		}else if(md1_annualLeave >= md1_changeAnnual && md1_rewardLeave >= md1_changeReward){
-        			alert("사용가능");
+        			var result = confirm(md1_memNo + " / " + md1_memName + "의 휴가를 변경하시겠습니까 ? ")
+        			if(result){
+        				$.ajax({
+        					url : "emLeaveManagement.do",
+        					data : {
+        							changeAnnual : md1_changeAnnual , changeReward : md1_changeReward ,
+        							reasonAnnual : md1_reasonAnnual , reasonReward : md1_reasonReward ,
+        							changeMemNo : md1_memNo
+        							},
+        					Type : "POST",
+        					success:function(data){
+                				alert("변경 완료");
+                				location.href = location.href;
+    						},
+    						error: function(request,status,error){
+    							console.log(request);
+    							console.log(status);
+    							console.log(error);
+    						}
+        				});
+        			}
+        			
         		}else{
 					alert("변경할 값이 기존의 값보다 클수는 없습니다. (기존휴가에서 차감만 가능.)");
         		}
@@ -456,6 +482,7 @@
 			<h4 style="font-weight:normal;" id="md1_leaveCreateRecord">휴가 생성내역(<span>2019-12-28</span>~<span>2020-12-28</span>)</h4>
             <h5 style="font-weight:normal;" id="md1_enrollDate">입사일 : (<span>1992-12-28</span>)</h5>
             <h5 style="font-weight:normal;" id="md1_memName">사원명 : (<span>ID</span>)</h5>
+            <h5 style="font-weight:normal;" id="md1_memNo"></h5>
             <thead style="background: #e8ecee;">
                 <tr>
                     <th scope="col" rowspan="2" class="md-tr">종류</th>

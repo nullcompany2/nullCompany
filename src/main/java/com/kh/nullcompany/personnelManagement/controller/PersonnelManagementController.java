@@ -7,7 +7,6 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -23,10 +22,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonIOException;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.google.gson.reflect.TypeToken;
 import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.common.Pagination;
 import com.kh.nullcompany.member.model.vo.Member;
@@ -436,34 +435,63 @@ public class PersonnelManagementController {
 		System.out.println(setAnnualLeave);
 		System.out.println(newLeaveArr);
 		System.out.println(firstyear);
-		
-		// 구글의 json paser 라이브러리
-		Gson Gson = new Gson();
+		Date today = new Date();
+		ArrayList<SetLeave> setLeave = new ArrayList<SetLeave>();
+		ArrayList<TypeLeave> newLeave = new ArrayList<TypeLeave>();
 
-		 // jsonPaserPser 클래스 객체를 만들고 해당 객체에 
-		JsonParser jparser = new JsonParser();
-
-//		// param의 id 오브젝트 -> 문자열 파싱 -> jsonElement 파싱
-//		   JsonElement elementId = jparser.parser(setAnnualLeave.get("year").toString());
-//		   JsonElement elementPw = jparser.parser(setAnnualLeave.get("days").toString()); 
-//
-////		// JsonElement -> List<String>으로 파싱
-//		   List <String> idList = Gson.fromJson(elementId, (new TypeToken<List<String>>() {  }).getType());
-//		   List <String> pwList = Gson.fromJson(elementId, (new TypeToken<List<String>>() {  }).getType());
-		   
-		// param의 id 오브젝트 -> 문자열 파싱 -> jsonElement 파싱
-		JsonElement elementId = jparser.parse(setAnnualLeave.toString());
-
-//		// JsonElement -> List<String>으로 파싱
-		List <String> idList = Gson.fromJson(elementId, (new TypeToken<List<String>>() {  }).getType());
+		JsonParser jsonParser = new JsonParser();
+		JsonArray jsonArray = (JsonArray)jsonParser.parse(setAnnualLeave);
+		System.out.println(jsonArray.size() + ":oeoe"  );
+		for (int i = 0; i < jsonArray.size(); i++) {
+			JsonObject object = (JsonObject) jsonArray.get(i);
+		      
+		    String year = (object.get("year")).getAsString();
+		    int days = (object.get("days")).getAsInt();
+		    SetLeave setArr = new SetLeave(year, days,0,Integer.parseInt(firstyear),today);
+		    setLeave.add(setArr);
+		}
 		
 		
-//		System.out.println(newLeaveArr);
-//		for(int i =0; i < newLeaveArr.size();i++) {
-//			for(int j =0; j<3; j++) {
-//				System.out.println(newLeaveArr);
-//			}
-//		}
+		if(!newLeaveArr.isEmpty() ) {
+			jsonArray = (JsonArray)jsonParser.parse(newLeaveArr);
+			for(int j=0; j<jsonArray.size(); j++) {
+				JsonObject object = (JsonObject) jsonArray.get(j);
+				System.out.println(object.toString());
+				   
+				String nameType = (object.get("name")).getAsString();
+				String annualUse = (object.get("useAnnual")).getAsString();
+				String status = (object.get("able")).getAsString();
+				
+				if(annualUse.equals("false")) {
+					annualUse = "N";
+				}else {
+					annualUse = "Y";
+				}
+				
+				if(status.equals("able")) {
+					status = "Y";
+				}else {
+					status = "N";
+				}
+				TypeLeave newArr = new TypeLeave(0, nameType, annualUse, status);
+				
+				newLeave.add(newArr);
+			}
+			for(TypeLeave j : newLeave) {
+				System.out.println(j);
+			}
+			
+			
+		}
+	       
+	       
+	       
+	       int updateLeaveSetting = pService.updateLeaveSetting(setLeave);
+	       
+	       if(!newLeave.isEmpty()) {
+	    	   int insertLeaveType = pService.insertLeaveType(newLeave);	    	   
+	       }
+
 //		
 //		int result = pService.fixSetLeave(newLeaveArr,setAnnualLeave,firstyear);
 		// javascript에서 배열형태의 객체를 json형태로 controller로 전달
@@ -476,8 +504,47 @@ public class PersonnelManagementController {
 	
 	// 휴가 관리 -직원 휴가 관리
 	@RequestMapping("emLeaveManagement.do")
-	public ModelAndView emLeaveManagement(ModelAndView mv, HttpServletResponse response) {
-		
+	public ModelAndView emLeaveManagement(ModelAndView mv, HttpServletResponse response, 
+									String changeMemNo,String changeAnnual, String changeReward, String reasonAnnual, String reasonReward) {
+		if(changeMemNo != null) {
+			System.out.println(changeMemNo);
+			Member changeMember = pService.detailMemberInfo(Integer.parseInt(changeMemNo));
+			Map changeAL = new HashMap();
+			Map changeRL = new HashMap();
+			changeAL.put("memNo",changeMember.getMemNo());
+			changeRL.put("memNo",changeMember.getMemNo());
+			if(changeMember.getAnnualLeave() != Integer.parseInt(changeAnnual)&& changeMember.getRewardLeave() != Integer.parseInt(changeReward)) {
+				// 포상 , 연차 둘다 변경
+				int reductionDaysAnnual = (changeMember.getAnnualLeave() - Integer.parseInt(changeAnnual));
+				changeAL.put("reductionDaysAnnual",reductionDaysAnnual);
+				changeAL.put("reasonAnnual",reasonAnnual);
+				
+				int reduceAnnualLeave = pService.reduceAnnualLeave(changeAL);
+				
+				int reductionDaysReward = (changeMember.getRewardLeave() - Integer.parseInt(changeReward));
+				changeRL.put("reductionDaysReward",reductionDaysReward);
+				changeRL.put("reasonReward",reasonReward);
+				
+				int reduceRewardLeave = pService.reduceRewardLeave(changeRL);
+				
+			}else if(changeMember.getAnnualLeave() != Integer.parseInt(changeAnnual)) {
+				// 연차만 변경
+				int reductionDaysAnnual = (changeMember.getAnnualLeave() - Integer.parseInt(changeAnnual));
+				changeAL.put("reductionDaysAnnual",reductionDaysAnnual);
+				changeAL.put("reasonAnnual",reasonAnnual);
+				
+				int reduceAnnualLeave = pService.reduceAnnualLeave(changeAL);
+				
+			}else {
+				// 포상만 변경
+				int reductionDaysReward = (changeMember.getRewardLeave() - Integer.parseInt(changeReward));
+				changeRL.put("reductionDaysReward",reductionDaysReward);
+				changeRL.put("reasonReward",reasonReward);
+				
+				int reduceRewardLeave = pService.reduceRewardLeave(changeRL);
+			}
+			
+		}
 		SimpleDateFormat formatD = new SimpleDateFormat("yyyy-MM-dd");
 		
 		
