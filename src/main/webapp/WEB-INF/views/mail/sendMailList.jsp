@@ -154,7 +154,7 @@
 					<!-- [이전] --> <c:if test="${ pi.currentPage eq 1 }">
 						이전 &nbsp;
 					</c:if> <c:if test="${ pi.currentPage ne 1 }">
-						<c:url var="before" value="recieveMail.do">
+						<c:url var="before" value="sendMailList.do">
 							<c:param name="currentPage" value="${ pi.currentPage - 1 }" />
 						</c:url>
 						<a href="${ before }">이전</a> &nbsp;
@@ -165,7 +165,7 @@
 						</c:if>
 
 						<c:if test="${ p ne pi.currentPage }">
-							<c:url var="pagination" value="recieveMail.do">
+							<c:url var="pagination" value="sendMailList.do">
 								<c:param name="currentPage" value="${ p }" />
 							</c:url>
 							<a href="${ pagination }">${ p }</a> &nbsp;
@@ -173,7 +173,7 @@
 					</c:forEach> <!-- [다음] --> <c:if test="${ pi.currentPage eq pi.maxPage }">
 						다음
 					</c:if> <c:if test="${ pi.currentPage ne pi.maxPage }">
-						<c:url var="after" value="recieveMail.do">
+						<c:url var="after" value="sendMailList.do">
 							<c:param name="currentPage" value="${ pi.currentPage + 1 }" />
 						</c:url>
 						<a href="${ after }">다음</a>
@@ -238,6 +238,7 @@
 		   });
 		});
 
+        // 삭제 
         $("#delMail").click(function(){
 			 if (confirm("정말로 삭제하시겠습니까? 휴지통으로 이동합니다.") == true){    //확인
 
@@ -250,6 +251,7 @@
 
 		});
         
+        // 복원 
         $("#realdelMail").click(function(){
         	confirm("완전 삭제하시면 복구 할 수 없습니다. 정말로 삭제하시겠습니까?");
 		});

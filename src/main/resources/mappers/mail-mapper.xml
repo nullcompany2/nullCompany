@@ -21,6 +21,7 @@
 		<result property="name" column="NAME"/>
 		<result property="rName" column="RNAME"/>
 		
+		
 	</resultMap>
 	
 	<resultMap id="selectIdNoSet" type="MailSelectIdNo">
@@ -29,22 +30,45 @@
 	</resultMap>
 	
 	  <!-- 받은 편지함 갯수 세기  -->
-	  <select id="getListCount" resultType="_int">
-			SELECT COUNT(*)
-			FROM MAIL
-			WHERE MDELETE_STATUS='N'
-			AND MSAVE_STATUS = 'N'
-       		 AND M_REALDEL_STATUS = 'N'
-			AND MEM_NO = #{memNo}
+	  <select id="getReListCount" resultType="_int">
+		SELECT COUNT(*)
+        FROM MAIL MA
+        JOIN MEMBER M ON (MA.SENDER = M.ID)
+        WHERE RECIPIENT = #{memId}
+        AND MDELETE_STATUS = 'N'
+        AND MSAVE_STATUS = 'N'
+        AND M_REALDEL_STATUS = 'N'
 	 </select>
 	 
+	 <!--  보낸 편지함 갯수 세기  -->
+	 <select id="getSendListCount" resultType="_int">
+	 	SELECT COUNT(*)
+        FROM MAIL MA
+        JOIN MEMBER M ON (MA.RECIPIENT = M.ID)
+        WHERE SENDER = #{memId}
+        AND MDELETE_STATUS = 'N'
+        AND MSAVE_STATUS = 'N'
+	 </select>
+	 
+	 <!--  쓰레기통 갯수 세기  -->
 	 <select id="getBinListCount" resultType="_int">
 		 SELECT COUNT(*)
 	     FROM MAIL 
-	     WHERE RECIPIENT = #{memId}
-	     or SENDER = #{memId}
+	     WHERE 
+         (RECIPIENT = #{memId}
+	     OR SENDER = #{memId})
 	     AND MDELETE_STATUS = 'Y'
 	     AND M_REALDEL_STATUS = 'N'
+	 </select>
+	 
+	 <!--  임시보관함 갯수 세기  -->
+	 <select id="getSaveListCount" resultType="_int">
+	 	SELECT COUNT(*)
+	    FROM MAIL MA
+	    JOIN MEMBER M ON (MA.RECIPIENT = M.ID)
+	    WHERE MA.SENDER = #{memId}
+	    AND MA.MSAVE_STATUS = 'Y'
+	    AND MA.MDELETE_STATUS = 'N'
 	 </select>
 	
   	<!-- 받은 메일함 리스트  -->
@@ -218,5 +242,13 @@
 		SET M_REALDEL_STATUS = 'Y'
 		WHERE MAIL_NO = #{mailNo}
 	</update>
+	
+	<!--  휴지통 개별 보기에서 복원하기  -->
+	<update id="backOneMail" parameterType="Mail">
+		UPDATE MAIL
+		SET MDELETE_STATUS = 'N'
+		WHERE MAIL_NO = #{mailNo}
+	</update>
+	
 	
 </mapper>

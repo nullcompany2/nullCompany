@@ -79,5 +79,13 @@
 		FROM MEMBER 
 		WHERE ID = #{recipient} 
 	 </select>
+	 
+	 <!--  메일 작성시 받는 사람 주소 자동 완성 -->
+	 <select id="autoComplete" resultMap="memberResultSet">
+	 	select m.name, m.mem_no, e.email_address
+        from member m
+        join email e on (m.mem_no = e.mem_no)
+        where (id LIKE  '%' || #{text} || '%'  or name LIKE'%' || #{text} || '%')
+	 </select>
 	
 </mapper>

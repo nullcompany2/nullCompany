@@ -18,6 +18,7 @@ public class Mail {
 	private String name;
 	private String email;
 	private String rName;
+	private int count;
 	
 	public Mail() {}
 

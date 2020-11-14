@@ -10,7 +10,7 @@
 
 
 <!-- include libraries(jQuery, bootstrap) -->
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
@@ -96,6 +96,28 @@ a:active {
  overflow-y: scroll;
 }
 
+#auto #autoAddress {
+		position:absolute;
+		display:none;
+		top:24%;
+		left:11.6%;
+		color :black;
+		background :white;
+		transition: all ease 0.7s 0s;
+		z-index : 700;
+	 	margin : 2px 50px 0px 20px;
+		box-shadow: 0px 0px 5px lightgrey;
+		
+}
+
+#auto #autoAddress li {
+	font-size :14px;
+}
+
+#auto #autoAddress li:hover {
+	background : #477A8F;
+	color : white;
+}
 </style>
 
 </head>
@@ -118,11 +140,19 @@ a:active {
 						 <input type="button" value="이전으로" /></a> <br>
 						 &nbsp;보내는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 						<input type="text" name="sender" style="width: 60%;" value= "${loginUser.name} < ${loginUser.id}@nullcompany.com >" readonly/> <br>
+							
+							<div id="auto"> 
 						&nbsp;받는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="text" name="recipient" style="width: 60%;"
-							placeholder="메일 주소 사이에 ,(콤마)으로 구분하여 입력해주세요." />
+						<input type="text" name="recipient" id="address" style="width: 60%;"
+							placeholder="이름 혹은 메일 주소를 입력해주세요." />
 							 <span style="font-size: 17px; background: #477A8F; color: white; padding: 0px 8px 0px 8px;">+</span>
-						<br> &nbsp;&nbsp;제목
+							 	<div id="autoAddress"> 
+							 	 <!--  검색 결과  -->
+							 	</div>
+							</div>
+							
+						
+						 &nbsp;&nbsp;제목
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						&nbsp;<input type="text" name="mTitle" style="width: 60%;"
 							placeholder="제목 없음" /> <br>
@@ -157,8 +187,8 @@ a:active {
 			style="background: #477A8F; color: white; text-align: center; border: none; padding: 12px 4px 12px 4px; 
 			border-radius: 3px; margin-left: 180px; cursor: pointer; font-size:15px;" />
 	</div>
-	<!-- Modal div -->
-
+	
+	
 <script type="text/javaScript">
 	$(document).ready(function() {
 	  $('#summernote').summernote({
@@ -173,6 +203,14 @@ a:active {
 	  $("button[aria-label=Picture]").css('display','none');	  
 	  $("button[aria-label=Video]").css('display','none');	  
 	});
+	
+	
+	$(document).on("click","#ulAuto li",function(){
+		 
+	            $("input[name=recipient]").val($(this).text());
+	            $("#autoAddress").hide();
+	            
+	        });
 	
 	</script>
 
@@ -263,7 +301,51 @@ a:active {
         $("form").attr("action","gosaveMail.do");
  	}); 
  	 
+ 	 // 자동 완성 에이작스 
  	
+          $("#address").on("keyup",function(){
+              var text = $(this).val();
+             
+              if(text.length > 1){
+                  
+ 			$.ajax({
+ 				url:"autoComplete.do",
+ 				type:"post",
+ 				data:{text : text},
+ 				success:function(data){
+ 	 				console.log(text);
+ 				 	console.log(data);
+ 	                $(text).val(0); 
+ 				 
+ 				 	var auto = $("#autoAddress");
+ 	               	var str = "";
+ 				 	$("#autoAddress").empty();
+ 				 		
+ 				 		str += "<ul id='ulAuto'>"
+ 				   
+ 				 	$.each(data,function(ind,entry){
+ 				 	
+ 				 		str += "<li>" + entry['name'] + " < " 
+ 				 		str += entry['emailAddress'] +" > </li>" 
+ 				 		
+ 				 	});
+ 				 	
+ 				 		str += "</ul>"
+ 				 		auto.append(str);
+ 				 		$("#autoAddress").show();
+ 				 	
+ 	                  
+ 				},error : function() {
+ 					console.log("전송실패");
+ 				} 
+ 			});
+ 			
+              }else {
+            	  $("#autoAddress").hide();
+              }
+              
+ 		});
+          
  	 
  </script>
 </body>

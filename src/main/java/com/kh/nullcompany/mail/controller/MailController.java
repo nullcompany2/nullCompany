@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,6 +29,10 @@ import com.kh.nullcompany.mail.model.service.MailService;
 import com.kh.nullcompany.mail.model.vo.Mail;
 import com.kh.nullcompany.member.controller.MemberController;
 import com.kh.nullcompany.member.model.vo.Member;
+import com.kh.nullcompany.reservation.model.vo.Resource;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
 import com.kh.nullcompany.board.model.vo.PageInfo;
 
 @SessionAttributes("loginUser")	
@@ -50,10 +55,9 @@ private MailService maService;
 		public ModelAndView reciveMailList(ModelAndView mv, HttpSession session,
 				@RequestParam(value="currentPage",required=false,defaultValue="1") int currentPage) {
 			
-			int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();		
 			String memId = ((Member)session.getAttribute("loginUser")).getId();		
 
-			int listCount = maService.getListCount(memNo);
+			int listCount = maService.getReListCount(memId);
 
 			PageInfo pi = Pagination.getPageInfo(currentPage,listCount);
 			
@@ -153,7 +157,6 @@ private MailService maService;
 			mv.setViewName("mail/failMail");	
 			return mv;
 			
-			
 		}else {
 		String [] recipientArr = ma.getRecipient().split("<");
 		String [] recipientArr2 = recipientArr[1].split(">");
@@ -199,10 +202,9 @@ private MailService maService;
 		public ModelAndView sendMailList(ModelAndView mv, HttpSession session,
 				@RequestParam(value="currentPage",required=false,defaultValue="1") int currentPage) {
 			
-			int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();		
 			String memId = ((Member)session.getAttribute("loginUser")).getId();		
 
-			int listCount = maService.getListCount(memNo);
+			int listCount = maService.getSendListCount(memId);
 
 			PageInfo pi = Pagination.getPageInfo(currentPage,listCount);
 			
@@ -220,10 +222,9 @@ private MailService maService;
 		public ModelAndView mailSaveList(ModelAndView mv, HttpSession session,
 				@RequestParam(value="currentPage",required=false,defaultValue="1") int currentPage) {
 			
-			int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();		
 			String memId = ((Member)session.getAttribute("loginUser")).getId();		
 
-			int listCount = maService.getListCount(memNo);
+			int listCount = maService.getSaveListCount(memId);
 
 			PageInfo pi = Pagination.getPageInfo(currentPage,listCount);
 			
@@ -268,6 +269,7 @@ private MailService maService;
 			
 			mv.addObject("ma",ma);
 			mv.setViewName("mail/sendMailDetailView");
+			
 			return mv;
 			
 		}
@@ -296,7 +298,7 @@ private MailService maService;
 			System.out.println(ma);
 			mv.addObject("ma",ma);
 			mv.setViewName("mail/saveDetailView");
-			
+
 			return mv;
 		}
 		
@@ -308,6 +310,7 @@ private MailService maService;
 			
 			mv.addObject("ma",ma);
 			mv.setViewName("mail/replyMail");
+			
 			return mv;
 		}
 		
@@ -317,9 +320,8 @@ private MailService maService;
 				@RequestParam(value="currentPage",required=false,defaultValue="1") int currentPage) throws IOException {
 			
 			String memId = ((Member)session.getAttribute("loginUser")).getId();		
-			int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();		
 
-			int listCount = maService.getListCount(memNo);
+			int listCount = maService.getReListCount(memId);
 
 			PageInfo pi = Pagination.getPageInfo(currentPage,listCount);
 			
@@ -340,9 +342,8 @@ private MailService maService;
 			
 			
 			String memId = ((Member)session.getAttribute("loginUser")).getId();		
-			int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();		
 
-			int listCount = maService.getListCount(memNo);
+			int listCount = maService.getReListCount(memId);
 
 			PageInfo pi = Pagination.getPageInfo(currentPage,listCount);
 			
@@ -370,7 +371,6 @@ private MailService maService;
 				model.addAttribute("msg", "모든 컬럼 삭제 실패~");
 				return "common/errorPage";
 			}
-			
 		}
 		
 		// 휴지통 리스트 뽑기 
@@ -380,7 +380,6 @@ private MailService maService;
 				@RequestParam(value="currentPage",required=false,defaultValue="1") int currentPage) throws IOException {
 			
 			String memId = ((Member)session.getAttribute("loginUser")).getId();		
-			int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();		
 
 			int listCount = maService.getBinListCount(memId);
 
@@ -410,7 +409,6 @@ private MailService maService;
 				model.addAttribute("msg", "모든 컬럼 진짜 삭제 실패~");
 				return "common/errorPage";
 			}
-			
 		}
 		
 		@RequestMapping("allRealDelMail.do")
@@ -425,8 +423,6 @@ private MailService maService;
 				model.addAttribute("msg", "모든 컬럼 삭제 실패~");
 				return "common/errorPage";
 			}
-			
-		
 		}
 		
 		@RequestMapping("deleteOneMail.do")
@@ -439,7 +435,19 @@ private MailService maService;
 				model.addAttribute("msg", "컬럼하나 삭제 실패~!~");
 				return "common/errorPage";
 			}
+		}
+		
+		// 보낸 메일함에서 개별 삭제 
+		@RequestMapping("deleteOneMail_send.do")
+		public String deleteOneMail_send(Model model, int mailNo) {
+			int result = maService.deleteOneMail(mailNo);
 			
+			if(result > 0) {
+				return "redirect:sendMailList.do";			
+			}else {
+				model.addAttribute("msg", "컬럼하나 삭제 실패~!~");
+				return "common/errorPage";
+			}
 		}
 			
 		@RequestMapping("realDeleteOneMail.do")
@@ -452,5 +460,31 @@ private MailService maService;
 				return "common/errorPage";
 			}
 		}
+		
+		// 메일 쓰기 때 에이작스 메일 주소 자동완성 
+		@RequestMapping("autoComplete.do")
+		public void autoComplete(HttpServletResponse response, String text) throws JsonIOException, IOException {
+			response.setContentType("application/json; charset=utf-8");
+			System.out.println(text);
+			
+			ArrayList<Member> m = maService.autoComplete(text);
+			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+			gson.toJson(m,response.getWriter());
+		}
+		
+		// 쓰레기통에서 복원하기 
+		@RequestMapping("backMail.do")
+		public String backMail(Model model, int mailNo) {
+			
+			System.out.println("쓰레기통 번호 : " + mailNo);
+			int result = maService.backMail(mailNo);
+			if(result > 0) {
+				return "redirect:binMailList.do";			
+			}else {
+				model.addAttribute("msg", "컬럼하나 삭제 실패~!~");
+				return "common/errorPage";
+			}
+		}
+		
 }
 
