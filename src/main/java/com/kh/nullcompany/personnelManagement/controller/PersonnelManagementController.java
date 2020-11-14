@@ -1,6 +1,8 @@
 package com.kh.nullcompany.personnelManagement.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
@@ -9,6 +11,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -18,6 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
@@ -34,6 +38,7 @@ import com.kh.nullcompany.personnelManagement.model.vo.Department;
 import com.kh.nullcompany.personnelManagement.model.vo.ForEmLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.ForEmUsedLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.MixForLeave;
+import com.kh.nullcompany.personnelManagement.model.vo.ModificationDiligence;
 import com.kh.nullcompany.personnelManagement.model.vo.RecordDiligence;
 import com.kh.nullcompany.personnelManagement.model.vo.RecordLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.RewardLeave;
@@ -304,9 +309,15 @@ public class PersonnelManagementController {
 		// 출퇴근 기록 미체크-(출근기록이없는날-결근) , 퇴근체크(비정상)-(출근은했지만 퇴근기록이없는상황)
 		int noAttendanceCount = pService.noAttendanceCount(memNo);
 		int noCheckOffwork = pService.noCheckOffwork(memNo);
+		
 		// 전체 근태기록
 		
 		// 전체 휴가 사용날 / 사용일수 기록
+		
+		// 근태 수정내역 보기 
+		ArrayList<ModificationDiligence> recordMod = pService.selectRecordModification(memNo);
+		System.out.println(recordMod);
+		mv.addObject("recordMod",recordMod);
 		mv.addObject("noAttendanceCount",noAttendanceCount);
 		mv.addObject("noCheckOffwork",noCheckOffwork);
 		mv.addObject("lateCount",lateCount);
@@ -641,7 +652,7 @@ public class PersonnelManagementController {
 	
 	// 직원 휴가관리 사용된 휴가 계산
 	@RequestMapping("AllMemberUsedLeave.do")
-	public void AllMemberUsedLeave(HttpServletResponse response) throws JsonIOException, IOException {
+	public void allMemberUsedLeave(HttpServletResponse response) throws JsonIOException, IOException {
 		response.setContentType("application/json; charset=utf-8");
 		
 		ArrayList<ForEmUsedLeave> usedLeave = pService.usedLeave();
@@ -649,6 +660,105 @@ public class PersonnelManagementController {
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(usedLeave,response.getWriter());
 		
+	}
+	
+	// 직원 휴가관리 상세보기
+	@RequestMapping("selectedMemberDetailLeave.do")
+	public void selectedMemberDetailLeave(int memNo,HttpServletResponse response) throws JsonIOException, IOException {
+		response.setContentType("application/json; charset=utf-8");
+		SimpleDateFormat formatD = new SimpleDateFormat("yyyy-MM-dd");
+		Member m = pService.detailMemberInfo(memNo);
+		String enDate = formatD.format(m.getEnrollDate());
+			
+		
+		int w1 = Integer.parseInt(enDate.substring(0,4));
+		int w2 = Integer.parseInt(enDate.substring(5,7));
+		int w3 = Integer.parseInt(enDate.substring(8,10));
+		
+		LocalDate today = LocalDate.now();
+		LocalDate hiredDate = LocalDate.of(w1, w2, w3);
+		// 입사일로부터 오늘까지의 날짜 차이 계산
+		Period period = hiredDate.until(today);
+		
+		String createDate ="";
+		String endDate="";
+		if(period.getYears() != 0) {
+			createDate = w1+period.getYears()+"-"+w2+"-"+w3;
+			endDate = w1+(period.getYears()+1)+"-"+w2+"-"+w3;
+		}else {
+			createDate = enDate;
+			endDate = w1+1+"-"+w2+"-"+w3;
+		}
+		
+		String workyear = "";
+		int annualLeave = 0;
+		if(period.getYears() > 38) {
+			workyear = "N" + 38;
+			annualLeave = pService.leaveCalculate(workyear);
+		}else if(period.getYears() == 0){
+			SetLeave firstyearLeave = pService.firstyearLeave();
+			if(firstyearLeave.getFirstyear() == 0) {
+				annualLeave = period.getMonths();
+				System.out.println(annualLeave + " 1년차 미만 휴가생성 월당 1 일경우");
+			}else {
+				annualLeave = firstyearLeave.getAnnualLeave();
+				System.out.println(annualLeave + " 1년차 미만 휴가생성 사용 미적용할시");
+			}
+			
+		}else {
+			workyear = "N"+(period.getYears()+1);			
+			// 생성된 연차
+			annualLeave = pService.leaveCalculate(workyear);
+		}
+		
+		// 포상휴가 수 체크 (+)
+		int rewardLeave = pService.rewardLeave(memNo);
+		
+		// 사용한 포상휴가 계산
+		int usedRewardLeave = pService.usedRewardLeave(memNo);
+		// 사용한 연차 계산
+		int usedAnnualLeave = pService.usedAnnualLeave(memNo);
+		
+		// 남은 휴가
+		int remainingLeave = annualLeave + rewardLeave - usedRewardLeave - usedAnnualLeave;
+		// 총 얻은 휴가
+		int totalLeave = annualLeave + rewardLeave;
+		// 총사용된 휴가
+		int totalUsedLeave = usedRewardLeave + usedAnnualLeave;
+		
+		// 포상휴가 테이블 전체조회(사번)
+		ArrayList<RewardLeave> createdReward = pService.createdReward(memNo);
+		// 휴가 신청 기록테이블 전체조회(사번)
+		ArrayList<RecordLeave> applyLeave = pService.applyLeave(memNo);
+		// 휴가 종류 리스트
+		ArrayList<TypeLeave> typeLeave = pService.typeLeave();
+		
+		//휴가 신청 기록테이블(휴가 타입믹스)
+		ArrayList<MixForLeave> mixLeave = pService.mixLeave(memNo); 
+		
+		// 휴가별 사용횟수
+		ArrayList<TypeUsedLeave> TUL = pService.tul(memNo);
+		
+		Map detail = new HashMap();
+		detail.put("createdReward",createdReward);
+		detail.put("applyLeave",applyLeave);
+		detail.put("typeLeave",typeLeave);
+		detail.put("mixLeave",mixLeave);
+		detail.put("typeUsedLeave",TUL);
+		
+		detail.put("annualLeave",annualLeave);
+		detail.put("rewardLeave",rewardLeave);
+		detail.put("totalUsedLeave",totalUsedLeave);
+		detail.put("remainingLeave",remainingLeave);
+		detail.put("totalLeave",totalLeave);
+		detail.put("usedRewardLeave",usedRewardLeave);
+		detail.put("usedAnnualLeave",usedAnnualLeave);
+		
+		detail.put("createDate",createDate);
+		detail.put("endDate",endDate);
+		detail.put("m",m);
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		gson.toJson(detail,response.getWriter());
 	}
 
 	//근태관리 - 기본설정
@@ -672,10 +782,76 @@ public class PersonnelManagementController {
 	// 근태 수정요청 페이지
 
 	@RequestMapping("reqDiligence.do")
-	public String reqDiligence(HttpServletResponse response) {
-		return "personnel_management/reqDiligence";
+	public ModelAndView reqDiligence(ModelAndView mv, HttpServletResponse response, int noDiligence) {
+		System.out.println(noDiligence);
+		RecordDiligence record = pService.recordDiligence(noDiligence);
+		System.out.println(record);
+		mv.addObject("record",record);
+		mv.setViewName("personnel_management/reqDiligence");
+		return mv;
+	}
+	// 근태 수정요청
+	@RequestMapping("modificationDiligence.do")
+	public String modificationDiligence(ModificationDiligence mod , HttpServletRequest request,
+			@RequestParam(name="uploadFile", required=false)MultipartFile file) throws ParseException {
+		SimpleDateFormat formatD = new SimpleDateFormat("yyyy/MM/dd");
+		
+		
+		if(!file.getOriginalFilename().equals("")) {
+			// 서버에 업로드를 진행
+			// 파일을 저장하는 메소드 생성 (saveFile)
+			// saveFile : 저장하고자 하는 file과 request를 전달해서 서버에 업로드시키고 저장된 파일을 반환해주는 메소드
+			String renameFileName = saveFile(file,request);
+			
+			if(renameFileName != null) {	//파일이 잘저장된 경우
+				mod.setOriginalAttachmentMod(file.getOriginalFilename());
+				mod.setRenameAttachmentMod(renameFileName);
+			}
+		}
+		
+		System.out.println(mod);
+		int result = pService.modificationDiligence(mod);
+		return "redirect:myDiligence.do";
 	}
 	
+	private String saveFile(MultipartFile file, HttpServletRequest request) {
+		// 파일이 저장될 경로를 지정
+		
+		// 웹 서버 ContextPath를 불러와서 폴더의 경로를 가져온다.(webapp하위의 resources)
+		// C:\Users\dbstn\Documents\H\springWorkspace\SpringProject
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		
+		// root 하위의 buploadFiles 폴더를 연결
+		// \를 문자로 인식하기 위해서는 \\를 사용한다.
+		// C:\Users\dbstn\Documents\H\springWorkspace\SpringProject\buploadFiles
+		String savePath = root + "\\modificationDiligenceUploadFiles";
+		
+		File folder = new File(savePath); //savePath의 폴더를 불러온다.
+		
+		if(!folder.exists()) {
+			//폴더가 없으면 만들자.
+			folder.mkdirs();
+		}
+		
+		// 원본 파일명을 년월일시분초.파일명으로 변경
+		String originalFileName = file.getOriginalFilename();  // test.png
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		
+//								[		20200929191522.											]
+		String renameFileName = sdf.format(new java.sql.Date(System.currentTimeMillis())) + "."
+									//	20200929191522.png
+									+ originalFileName.substring(originalFileName.lastIndexOf(".")+1);
+		String renamePath = folder + "\\" + renameFileName;	//실제 저장될 파일 경로 + 파일명
+		
+		// 파일저장
+		try {
+			file.transferTo(new File(renamePath));	//전달받은 file이 rename명으로 이때 서버에 저장이된다.
+		}catch(Exception e) {
+			System.out.println("파일전송에러 : " + e.getMessage());
+		}
+		return renameFileName;
+	}
 
 	
 
