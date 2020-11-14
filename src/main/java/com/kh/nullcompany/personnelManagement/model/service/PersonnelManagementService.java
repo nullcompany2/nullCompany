@@ -166,6 +166,14 @@ public interface PersonnelManagementService {
 	ArrayList<ForEmLeave> emAllMemeber();
 	// 사용된 휴가목록(직원 휴가관리)
 	ArrayList<ForEmUsedLeave> usedLeave();
+	// 휴가 기본설정 업데이트
+	int updateLeaveSetting(ArrayList<SetLeave> setLeave);
+	// 새로운 휴가 등록
+	int insertLeaveType(ArrayList<TypeLeave> newLeave);
+	// 직원 연차수정(감소)
+	int reduceAnnualLeave(Map changeAL);
+	// 직원 포상수정(감소)
+	int reduceRewardLeave(Map changeRL);
 	
 	
 	

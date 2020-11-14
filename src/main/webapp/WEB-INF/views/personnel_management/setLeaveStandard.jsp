@@ -36,7 +36,7 @@
 					<span class="ct1">기본 설정</span>
 				</div>
 				<!-- ---- -->
-				<div class="contents-wrap drag-scrollbar">
+				<div class="contents-wrap drag-scrollbar" >
 					<form action="">
 						<div class="c-ic">
 							<div>
@@ -281,21 +281,22 @@
     			data.name = $("#"+j+"Name").val();
     			data.able = $("#"+j+"able option:selected").val();
     			data.useAnnual = $("#"+j+"annual").is(":checked");
-    			 
+    			if(data.name ==""){
+    				alert("휴가명을 입력해주세요.");
+    				location.reload();
+    			}
     			newLeaveArr.push(data);
     			
     		}
-   			for(var i = 0; i < newLeaveArr.length; i++){
-   				console.log(newLeaveArr[i]);
-   			}
     		//newLeaveArr : newLeaveArr, setAnnualLeave : setAnnualLeave, firstyear : firstyear
     		$.ajax({
     			url: "fixSetLeave.do",
     			data : {firstyear : firstyear,setAnnualLeave : JSON.stringify(setAnnualLeave),newLeaveArr :  JSON.stringify(newLeaveArr)},
     			type : "post",
-    			dataType:"json",
+    			
     			success:function(data){
-					console.log(data);
+					alert("변경완료");
+					location.href = location.href;
 				},
 				error: function(request,status,error){
 					console.log(request);

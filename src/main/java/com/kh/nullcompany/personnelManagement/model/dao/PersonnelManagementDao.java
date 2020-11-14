@@ -206,6 +206,34 @@ public class PersonnelManagementDao {
 		return (ArrayList)sqlSession.selectList("personnelMapper.usedLeave");
 	}
 
+	
+	public int updateLeaveSetting(ArrayList<SetLeave> setLeave) {
+		int result = 0;
+		for(SetLeave set : setLeave) {
+			result = sqlSession.update("personnelMapper.updateLeaveSetting",set);			
+		}
+		return result;
+	}
+
+
+	public int insertLeaveType(ArrayList<TypeLeave> newLeave) {
+		int result = 0;
+		for(TypeLeave i : newLeave) {
+			result = sqlSession.insert("personnelMapper.insertLeaveType",i);
+		}
+		return result;
+	}
+
+
+	public int reduceAnnualLeave(Map changeAL) {
+		return sqlSession.insert("personnelMapper.reduceAnnualLeave",changeAL);
+	}
+
+
+	public int reduceRewardLeave(Map changeRL) {
+		return sqlSession.insert("personnelMapper.reduceRewardLeave",changeRL);
+	}
+
 
 
 }

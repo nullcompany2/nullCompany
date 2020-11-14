@@ -366,4 +366,22 @@
 		GROUP BY T.NO_TYPE_LEAVE, T.NAME_TYPE_LEAVE, R.MEM_NO
 		ORDER BY R.MEM_NO
 	</select>
+	
+	<update id="updateLeaveSetting" >
+		UPDATE SET_LEAVE_STANDARD SET
+		ANNUAL_LEAVE= #{annualLeave}, CARRYOVER_LEAVE = #{carryover},
+		FIRSTYEAR_LEAVE = #{firstyear}, SETTING_DATE = SYSDATE	WHERE WORKING_YEARS = #{workyear}	
+	</update>
+	
+	<insert id="insertLeaveType">
+		INSERT INTO TYPE_LEAVE VALUES(LEAVE_TYPE_SEQ.NEXTVAL,#{nameType},#{annualUse},#{status})
+	</insert>
+	
+	<insert id="reduceAnnualLeave">
+		INSERT INTO RECORD_LEAVE VALUES(LEAVE_RECORD_SEQ.nextval,#{memNo},1,SYSDATE,#{reductionDaysAnnual},'','결재완료',SYSDATE,#{reasonAnnual})
+	</insert>
+	
+	<insert id="reduceRewardLeave">
+		INSERT INTO RECORD_LEAVE VALUES(LEAVE_RECORD_SEQ.nextval,#{memNo},2,SYSDATE,#{reductionDaysReward},'','결재완료',SYSDATE,#{reasonReward})
+	</insert>
 </mapper>

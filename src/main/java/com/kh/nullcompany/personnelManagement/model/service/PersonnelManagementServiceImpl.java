@@ -246,6 +246,26 @@ public class PersonnelManagementServiceImpl implements PersonnelManagementServic
 		return pDao.usedLeave();
 	}
 
+	@Override
+	public int updateLeaveSetting(ArrayList<SetLeave> setLeave) {
+		return pDao.updateLeaveSetting(setLeave);
+	}
+
+	@Override
+	public int insertLeaveType(ArrayList<TypeLeave> newLeave) {
+		return pDao.insertLeaveType(newLeave);
+	}
+
+	@Override
+	public int reduceAnnualLeave(Map changeAL) {
+		return pDao.reduceAnnualLeave(changeAL);
+	}
+
+	@Override
+	public int reduceRewardLeave(Map changeRL) {
+		return pDao.reduceRewardLeave(changeRL);
+	}
+
 	
 	
 	
