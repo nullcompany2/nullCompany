@@ -650,6 +650,48 @@ public class ApprovalController {
 		mv.setViewName("approval/approvalCompleteListView");
 		return mv;
 	}
+	
+	// 업무연락 문서 상세보기
+	@RequestMapping("approvalDetail.do")
+	public ModelAndView approvalDetail(ModelAndView mv, HttpServletResponse response, HttpSession session, String docNo, int formNo) {
+		
+		Document d = aService.approvalDetail(docNo);
+		System.out.println("문서 정보 : " + d);
+		
+		ArrayList<Step> sList = aService.selectStepList(d.getDocTempNo());
+		
+		ArrayList<Step> apprList = new ArrayList<Step>();
+		ArrayList<Step> checkList = new ArrayList<Step>();
+		ArrayList<Step> receiveList = new ArrayList<Step>();
+		
+		for(Step s : sList) {
+			if(s.getLineNo() == 1) {
+				apprList.add(s);
+			}else if(s.getLineNo() == 2) {
+				checkList.add(s);
+			}else {
+				receiveList.add(s);
+			}
+		}
+		
+		System.out.println("apprList : " + apprList);
+		System.out.println("checkList : " + checkList);
+		System.out.println("receiveList : " + receiveList);
+		
+		
+		mv.addObject("d",d);
+		mv.addObject("apprList",apprList);
+		mv.addObject("checkList",checkList);
+		mv.addObject("receiveList",receiveList);
+		
+		
+		
+		if(d.getFormNo() == 1) {
+			mv.setViewName("approval/businessDocumentDetail");
+		}
+		
+		return mv;
+	}
 
 	@RequestMapping("approvalAllDList.do")
 	public String approvalAllDList(HttpServletResponse response) {

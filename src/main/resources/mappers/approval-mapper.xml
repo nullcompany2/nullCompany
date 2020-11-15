@@ -26,7 +26,7 @@
 	</resultMap>
 	<!-- 결재스텝 리스트 뽑기 -->
 	<resultMap id="stepResultSet" type="Step">
-		<result property="docTempNo" column="DOC_TEMP_NO"/>
+		<result property="docTempNo" column="DOC_NO"/>
 		<result property="lineNo" column="LINE_NO"/>
 		<result property="staffNo" column="STAFF_NO"/>
 		<result property="staffName" column="STAFF_NAME"/>
@@ -120,7 +120,7 @@
 		, A.STAFF_NO
 		, M.NAME AS STAFF_NAME
 		, A.STAFF_RANK_NO
-		, R.RANK_NAME
+		, R.RANK_NAME AS STAFF_RANK_NAME
 		, A.STAFF_PRIORITY
 		, A.APPR_STATUS
 		FROM APPROVAL_STEP A
@@ -169,6 +169,7 @@
 		    ORDER BY AD.DRAFT_DATE DESC)
 	</select>
 	
+	<!-- 문서함 게시물 리스트 -->
 	<select id="selectCompleteAllList" resultMap="documentResultSet">
 		SELECT 
 	           DISTINCT AST.DOC_NO AS DOC_TEMP_NO,
@@ -202,5 +203,37 @@
 		    AND  AD.DOC_NO IS NOT NULL
 		    AND (AD.DRAFTER_NO = #{memNo} OR AST.STAFF_NO = #{memNo})
 		    ORDER BY AD.DRAFT_DATE DESC
+	</select>
+	
+	<!-- 문서 상세보기 -->
+	<select id="approvalDetail" parameterType="String" resultMap="documentResultSet">
+		SELECT
+		       DISTINCT AST.DOC_NO AS DOC_TEMP_NO,
+		       AD.DOC_NO,
+		       AF.FORM_CODE,
+		       AD.DTITLE,
+		       AD.DCONTENT,
+		       AD.FILENAME,
+		       AD.DRAFTER_NO,
+		       M.NAME AS DRAFTER_NAME,
+		       AD.DRAFTER_DEPT_NO,
+		       D.DEPT_NAME AS DRAFTER_DEPT_NAME,
+		       AD.DRAFTER_RANK_NO,
+		       R.RANK_NAME AS DRAFTER_RANK_NAME,
+		       AD.DRAFT_DATE,
+		       AD.COMPLETE_DATE,
+		       AD.FORM_NO,
+		       AF.FORM_NAME,
+		       AD.TURN_NO,
+		       AD.R_STATUS,
+		       AD.D_STATUS
+		FROM APPROVAL_DOCUMENT AD
+		JOIN MEMBER M ON(AD.DRAFTER_NO = M.MEM_NO)
+		JOIN APPROVAL_FORM AF ON(AD.FORM_NO = AF.FORM_NO)
+		JOIN APPROVAL_STEP AST ON(AD.DOC_TEMP_NO = AST.DOC_NO)
+		JOIN DEPARTMENT D ON(AD.DRAFTER_DEPT_NO = D.DEPT_NO)
+		JOIN RANK R ON(AD.DRAFTER_RANK_NO = R.RANK_NO)
+		WHERE
+		     AD.DOC_NO = #{docNo}
 	</select>
 </mapper>

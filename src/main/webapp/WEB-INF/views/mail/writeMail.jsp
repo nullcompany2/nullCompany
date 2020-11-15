@@ -183,7 +183,7 @@ a:active {
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						&nbsp;
-						<input type="text" name="mTitle" style="width: 60%;" placeholder="제목 없음" /> <br>
+						<input type="text" name="mTitle" style="width: 60%;" placeholder="제목을 입력해주세요." /> <br>
 						&nbsp;파일첨부
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<input type="file" name="uploadPhoto" id="ex_file"/>
