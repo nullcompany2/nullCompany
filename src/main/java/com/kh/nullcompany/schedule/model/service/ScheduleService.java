@@ -42,15 +42,28 @@ public interface ScheduleService {
 
 	int updateCalCountMember(Map map);
 
-	ArrayList<Calendar> DetailCalmemberList(String cal_name);
+	ArrayList<Calendar> DetailCalmemberList(int calNo);
 
-	Schedule editDetailSchedule(String sche_name);
+	Schedule editDetailSchedule(int sche_no);
 
 	int updateSchedule(Schedule schedule);
 
-	int DeleteSchedule(String sche_name);
+	int DeleteSchedule(int sche_no);
 
 	ArrayList<Calendar> SelectpublicCalList(int memNo);
+
+	Calendar editDetailIndiCal(int calNo);
+
+	int editIndiCal(Calendar calendar);
+
+	int DeleteIndiCal(int calNo);
+	
+	int DeleteIndiCal_Sche(int calNo);
+
+	int editIndiCal_Sche(int cal_no);
+
+
+
 
 
 
