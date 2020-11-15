@@ -118,6 +118,25 @@ a:active {
 	color : white;
 }
 
+#auto #searchPop {
+	cursor : pointer;
+}
+
+#auto #searchAddress {
+	position : absolute;
+	background: #477A8F; 
+	color : white;
+	right : 312px;
+	top : 143px;
+	font-size : 12px;
+	padding : 3.5px 6px 3.5px 3.5px;
+	display : none;
+	border-radius : 0px 6px 6px 0px;
+
+}
+
+
+
 </style>
 
 </head>
@@ -147,25 +166,29 @@ a:active {
 						<input type="text" name="recipient" id="address" style="width: 60%;"
 							placeholder="이름 혹은 메일 주소를 입력해주세요." />
 							
-							 <span style="font-size: 17px; 
+							 <span  id="searchPop"
+							 style="font-size: 17px; 
 							 background: #477A8F; 
 							 color: white; 
 							 padding: 0px 8px 0px 8px;">+</span>
 							 	
+							 <span id="searchAddress"> 주소 검색 </span>
 							 	<div id="autoAddress"> 
 							 	 <!--  자동 완성 검색 결과  -->
 							 	</div>
 							</div>
 							
 						
-						 &nbsp;&nbsp;제목
+						&nbsp;&nbsp;제목
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						&nbsp;<input type="text" name="mTitle" style="width: 60%;" placeholder="제목 없음" /> <br>
+						&nbsp;
+						<input type="text" name="mTitle" style="width: 60%;" placeholder="제목 없음" /> <br>
 						&nbsp;파일첨부
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<input type="file" name="uploadPhoto" id="ex_file"/>
 						<br> <br> 
+						
 						<!--  썸머노트  -->
 						<textarea id="summernote" name="mContent"></textarea>
 					</form>
@@ -311,6 +334,7 @@ a:active {
    		}
         
 	 });
+    
   
     // 메일 임시 저장 버튼 
  	 $("#saveMail").click(function () {
@@ -368,6 +392,18 @@ a:active {
               }
               
  		});
+          searchPop
+          $('#searchPop')
+          .mouseover(function(){
+          $('#searchAddress').css('display','block');
+          })
+          
+           searchPop
+          $('#searchPop')
+          .mouseout(function(){
+          $('#searchAddress').css('display','none');
+          })
+          
           
  </script>
  

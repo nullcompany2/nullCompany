@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.nullcompany.common.Pagination;
 import com.kh.nullcompany.mail.model.service.MailService;
 import com.kh.nullcompany.mail.model.vo.Mail;
+import com.kh.nullcompany.mail.model.vo.MailListCount;
 import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.personnelManagement.model.vo.Department;
 import com.kh.nullcompany.schedule.model.service.ScheduleService;
@@ -39,6 +40,23 @@ private MailService maService;
 @Autowired
 private ScheduleService sService;
 
+
+		// 메인에서 그려주기 
+		@RequestMapping("mailBox.do")
+		public void mailBox(HttpServletResponse response, HttpSession session) 
+				throws JsonIOException, IOException {
+			
+			response.setContentType("application/json; charset=utf-8");
+			
+			String memId = ((Member)session.getAttribute("loginUser")).getId();		
+			MailListCount listCount = maService.getMailBoxCount(memId);
+			
+			System.out.println("가져온 리스트 : "+ listCount);
+			
+			
+			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+			gson.toJson(listCount,response.getWriter());
+		}
 
 		// 메일쓰기 
 		@RequestMapping("mailWrite.do")
@@ -354,7 +372,7 @@ private ScheduleService sService;
 			
 			String memId = ((Member)session.getAttribute("loginUser")).getId();		
 
-			int listCount = maService.getReListCount(memId);
+			int listCount = maService.getReReListCount(memId);
 
 			PageInfo pi = Pagination.getPageInfo(currentPage,listCount);
 			
@@ -496,6 +514,8 @@ private ScheduleService sService;
 				return "common/errorPage";
 			}
 		}
+		
+		
 		
 }
 

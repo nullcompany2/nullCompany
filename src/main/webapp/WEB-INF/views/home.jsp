@@ -74,9 +74,12 @@
 	  .jb-text span { font-size:45px; color:#477A8F; opacity: 2;}
 
 		#clock {
+			position : absolute;
+			right : 80px;
 			color : #3E4247;
 			font-family: 'Lato', sans-serif;
 			font-size:20px; 
+			
 		}
 
 		 .jb-box, #tothetop {
@@ -91,25 +94,39 @@
 		color : white;
 		}
 		
+		
+		#mail1, #mail2, #mail3,
+		#approval1, #approval2, #approval3
+		 { 
+			border:1px solid #C8CACC; 
+			border-radius:4px;
+            margin : 15 15 15 5px; 
+            padding:20px;
+		
+		 }
+		 
+		 #top {
+		 	height: 1035px; margin:auto;
+		 }
+		
     </style>
 </head> 
 
 <body  onload="printClock()">
 	  <c:import url="common/header.jsp"/>
 
-    <div class="form" id="top" style="width: 1300px; height: 1100px; margin:auto;">
+    <div class="form" id="top">
 		<br>
-       <div class="jb-box">
+       <div class="jb-box" style="width: 1300px;">
       <video muted autoplay loop>
         <source src="resources/images/main.mp4" type="video/mp4">
-        <strong>Your browser does not support the video tag.</strong>
       </video>
       <div class="jb-text">
         <p> <span>Null Company</span>에 오신 것을 환영합니다:)</p>
       </div>
     </div>
          <br>
-           <h1 id="clock" style="margin-left:81%;" ></h1> <br>
+           <h1 id="clock" ></h1> <br> <br> <br>
         <div class="pt" style="width: 1200px; height:310px;" >
 
                 <div class="ch">
@@ -155,18 +172,14 @@
                     <a style="margin-left:235px;" href="recieveMail.do">more</a>
                     <hr>
                     
-                   <div style="border:1px solid #C8CACC; border-radius:4px;
-                   margin : 15 15 15 5px; padding:20px; "> 
-                    받은 편지함 : 23 개 <br>
+                   <div id="mail1"> 
+                    <span> 받은 편지함 : </span> <br>
                    </div>
-                    <div style="background:#C8CACC; border-radius:4px;
-                   margin : 15 15 15 5px; padding:20px; "> 
-                    안 읽은 메일 : 7 개 <br>
+                    <div id="mail2" style="background:#C8CACC;"> 
+                    <span> 안 읽은 메일 : </span> <br>
                    </div>
-                    
-                    <div style="border:1px solid #C8CACC; border-radius:4px;
-                   margin : 15 15 15 5px; padding:20px; "> 
-                    임시 보관함 : 10 개 
+                    <div id="mail3"> 
+                     <span> 임시 보관함 :  </span>
                    </div>
                     
                 </div>
@@ -174,21 +187,18 @@
                     <span> Approval Document</span>
                     <a style="margin-left:100px;" href="approvalProgressAllListView.do">more</a>
                     <hr>
-                    
-                    <div style="border:1px solid #C8CACC; border-radius:4px;
-                   margin : 15 15 15 5px; padding:20px; "> 
+                    <div id="approval1" style="background:#C8CACC;"> 
                    결재 문서 : 2 건 <br>
                    </div>
-                    <div style="background:#C8CACC; border-radius:4px;
-                   margin : 15 15 15 5px; padding:20px; "> 
+                   <div id="approval2"> 
                     확인 문서 : 2 건 <br>
                    </div>
                     
-                    <div style="border:1px solid #C8CACC; border-radius:4px;
-                   margin : 15 15 15 5px; padding:20px; "> 
+                    <div id="approval3" style="background:#C8CACC;"> 
                     수신 문서 : 0 건
                    </div>
             
+        </div>
         </div>
         </div>
         
@@ -197,6 +207,7 @@
     <c:import url="common/footer.jsp"/>
     	<script>
 
+    // 오늘의 날짜 프린트 
 	function printClock() {
     
     var clock = document.getElementById("clock");            
@@ -233,6 +244,52 @@
 	  }
 	  return zero + num;
 }
+	
+	
+	// 메일 에이작스 - 신아라 
+	
+	  $(function(){
+         mailBox();
+      
+      // 5분에 한번씩 계속 업데이트 하기 
+       setInterval(function(){
+            mailBox();
+         },50000); 
+      });
+      
+      function  mailBox(){
+         $.ajax({
+            url:"mailBox.do",
+            dataType:"json",
+            success:function(data){
+               console.log(data);
+               
+               // 각 div 선언 
+               var mail1 = $("#mail1");
+               var mail2 = $("#mail2");
+               var mail3 = $("#mail3");
+              
+               // 각 div 비워주고 
+               mail1.empty();
+               mail2.empty();
+               mail3.empty();
+               
+               // 넣어주고 
+               var allCount = "<span> 받은 편지함 : " + data.reCount + " 개 </span> <br>";
+               var unreadCount = "<span> 안 읽은 편지 : " + data.unreadCount + " 개 </span> <br>";
+               var saveCount = "<span> 임시 보관함 : " + data.saveCount + " 개 </span>";
+               
+               // 더해주고 
+               mail1.append(allCount);
+               mail2.append(unreadCount);
+               mail3.append(saveCount);
+              
+            },
+            error:function(request,status,error){
+			console.log("main mailBox 오류");
+            }
+         });
+      }
 	
 </script>
     </body>

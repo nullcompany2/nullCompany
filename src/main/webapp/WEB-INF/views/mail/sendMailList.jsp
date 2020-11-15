@@ -94,6 +94,15 @@
 	display:none; 
 	}
 	
+	#countAll {
+	position: absolute;
+	right : 115px;
+	}
+	
+	#idWrite {
+	color : black;
+	}
+	
 </style>
 
 <body>
@@ -112,7 +121,7 @@
 						
 						&nbsp;&nbsp;
 						<span id="hide" style="margin-right:40px;">  <span id="count"> </span> <a id="delMail">삭제 </a>  &nbsp; <a id="realdelMail"> 완전삭제 </a> </span>
-						<span style="margin-left:65%;" id="countAll"> </span> <br><br>
+						<span id="countAll"> </span> <br><br>
 						
 					<c:choose>
 				    <c:when test="${!empty list }">
@@ -131,7 +140,7 @@
 						</c:url>
 						
 							<td>&nbsp;&nbsp;<input type="checkbox" onClick="event.cancelBubble=true" name="mail"></td>
-							<td align="left"><a onClick="event.stopPropagation(); location.href='${mailWriteId}'">${ma.name} < ${ma.recipient} > </a></td>
+							<td align="left"><a id="idWrite" onClick="event.stopPropagation(); location.href='${mailWriteId}'">${ma.name} < ${ma.recipient} > </a></td>
 							<td>${ ma.mTitle }</td>
 							<td align="right"> ${ma.sendDate }</td>
 						</tr>
