@@ -251,5 +251,10 @@ public class PersonnelManagementDao {
 	}
 
 
+	public int cancelMod(int noMod) {
+		return sqlSession.delete("personnelMapper.cancelMod",noMod);
+	}
+
+
 
 }

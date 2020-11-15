@@ -117,7 +117,6 @@
 								<option value="">결재 취소</option>
 								<option value="">반려</option>
 							</select>
-							<h4 style=" font-weight: normal;">총 <span>N</span>건</h4>
 						</div>
 						<table class="mr-tbl">
 							<tr class="mr-tbl-il">
@@ -140,7 +139,14 @@
 								<td class="mr-tbl-td" colspan="2">${list.timeEnter }/${list.timeExit} - ${list.statusDiligence }</td>
 								<td class="mr-tbl-td" colspan="2">${list.reasonMod }</td>
 								<td class="mr-tbl-td" colspan="2">${list.statusMod }</td>
-								<td class="mr-tbl-td" >요청취소</td>
+								<c:choose>
+									<c:when test="${list.statusMod eq '결재중' }">
+										<td class="mr-tbl-td" ><a style="color:#477A8F" onclick="cancelMod(${list.noMod})">요청취소 </a></td>								
+									</c:when>
+									<c:otherwise>
+										<td class="mr-tbl-td"><span style="color:red">취소불가</span> </td>
+									</c:otherwise>
+								</c:choose>
 							</tr>
 							</c:forEach>
 							
@@ -343,6 +349,28 @@
 			}
 			
 		}
+		
+		function cancelMod(noMod){
+			var result = confirm("NO_"+noMod+"휴가신청을 취소하시겠습니까?");
+			
+			if(result){
+				$.ajax({
+					url : "cancelMod.do",
+					data : {noMod : noMod},
+					datatype : "json",
+					success:function(data){
+						alert("수정취소 완료");
+						location.reload();
+					},
+					error: function(request,status,error){
+						console.log(request);
+						console.log(status);
+						console.log(error);
+					}
+					
+				})
+			}
+		}
 
 	</script>	
 	<!-- Modal -->
@@ -443,9 +471,14 @@
 							$td_enterTime = $(' <td class="md-tbl-td" colspan="2">').text(data.dList[i].timeEnter);
 							$td_exitTime = $(' <td class="md-tbl-td" colspan="2">').text(data.dList[i].timeExit);
 							$td_status = $(' <td class="md-tbl-td" colspan="2">').text(data.dList[i].statusDiligence);
-							$td_reqMod = $(' <td class="md-tbl-td">').attr("id",data.dList[i].noDiligence);
-							$td_reqMod.append($('<a href="reqDiligence.do?noDiligence='+ data.dList[i].noDiligence +'" id="detail-r-l" class="cursor" style="color: #477A8F;">').text("요청"));
 							
+							
+							if(data.dList[i].statusDiligence == '정상'){
+								$td_reqMod = $(' <td class="md-tbl-td">').attr("id",data.dList[i].noDiligence);
+							}else{
+								$td_reqMod = $(' <td class="md-tbl-td">').attr("id",data.dList[i].noDiligence);
+								$td_reqMod.append($('<a href="reqDiligence.do?noDiligence='+ data.dList[i].noDiligence +'" id="detail-r-l" class="cursor" style="color: #477A8F;">').text("요청"));								
+							}
 							$tr.append($td_date);
 							$tr.append($td_enterTime);
 							$tr.append($td_exitTime);
@@ -550,8 +583,9 @@
 							$td_enterTime = $(' <td class="md-tbl-td" colspan="2">').text(data.dList[i].timeEnter);
 							$td_exitTime = $(' <td class="md-tbl-td" colspan="2">').text(data.dList[i].timeExit);
 							$td_status = $(' <td class="md-tbl-td" colspan="2">').text(data.dList[i].statusDiligence);
+														
 							if(data.dList[i].statusDiligence == '정상'){
-								$td_reqMod = "";
+								$td_reqMod = $(' <td class="md-tbl-td">').attr("id",data.dList[i].noDiligence);
 							}else{
 								$td_reqMod = $(' <td class="md-tbl-td">').attr("id",data.dList[i].noDiligence);
 								$td_reqMod.append($('<a href="reqDiligence.do?noDiligence='+ data.dList[i].noDiligence +'" id="detail-r-l" class="cursor" style="color: #477A8F;">').text("요청"));								

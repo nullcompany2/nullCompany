@@ -181,6 +181,9 @@ public interface PersonnelManagementService {
 	int modificationDiligence(ModificationDiligence mod);
 	// 근태 수정기록 조회
 	ArrayList<ModificationDiligence> selectRecordModification(int memNo);
+	// 근태 수정 취소
+	int cancelMod(int noMod);
+	
 	
 	
 	

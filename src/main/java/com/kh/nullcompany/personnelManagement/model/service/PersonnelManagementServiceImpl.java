@@ -282,6 +282,11 @@ public class PersonnelManagementServiceImpl implements PersonnelManagementServic
 		return pDao.selectRecordModification(memNo);
 	}
 
+	@Override
+	public int cancelMod(int noMod) {
+		return pDao.cancelMod(noMod);
+	}
+
 	
 	
 	

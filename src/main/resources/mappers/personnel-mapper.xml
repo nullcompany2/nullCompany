@@ -418,4 +418,8 @@
 		JOIN RECORD_DILIGENCE R ON(R.NO_DILIGENCE = M.NO_MOD_D)
 		WHERE MEM_NO =#{memNo}
 	</select>
+	
+	<delete id="cancelMod">
+		DELETE MOD_DILIGENCE WHERE NO_MOD_D = #{noMod}
+	</delete>
 </mapper>
