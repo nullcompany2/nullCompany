@@ -74,7 +74,6 @@ public class ScheduleDao {
 	}
 
 	public String getCalmemCount(String sche_name) {
-		System.out.println("DAO : " + sche_name);
 		return sqlSession.selectOne("scheduleMapper.getCalmemCount",sche_name);
 	}
 
@@ -85,25 +84,47 @@ public class ScheduleDao {
 		
 	}
 
-	public ArrayList<Calendar> DetailCalmemberList(String cal_name) {
-		return (ArrayList)sqlSession.selectList("scheduleMapper.DetailCalmemberList", cal_name);
+	public ArrayList<Calendar> DetailCalmemberList(int calNo) {
+		return (ArrayList)sqlSession.selectList("scheduleMapper.DetailCalmemberList", calNo);
 	}
 
-	public Schedule editDetailSchedule(String sche_name) {
-		return sqlSession.selectOne("scheduleMapper.editDetailSchedule",sche_name);
+	public Schedule editDetailSchedule(int sche_no) {
+		return sqlSession.selectOne("scheduleMapper.editDetailSchedule",sche_no);
 	}
 
 	public int updateSchedule(Schedule schedule) {
 		return sqlSession.update("scheduleMapper.updateSchedule",schedule);
 	}
 
-	public int DeleteSchedule(String sche_name) {
-		return sqlSession.delete("scheduleMapper.DeleteSchedule",sche_name);
+	public int DeleteSchedule(int sche_no) {
+		return sqlSession.delete("scheduleMapper.DeleteSchedule",sche_no);
 	}
 
 	public ArrayList<Calendar> SelectpublicCalList(int memNo) {
 		return (ArrayList)sqlSession.selectList("scheduleMapper.SelectpublicCalList", memNo);
 	}
+
+	public Calendar editDetailIndiCal(int calNo) {
+		return sqlSession.selectOne("scheduleMapper.editDetailIndiCal",calNo);
+	}
+
+	public int editIndiCal(Calendar calendar) {
+		return sqlSession.update("scheduleMapper.editIndiCal",calendar);
+	}
+
+	public int DeleteIndiCal(int calNo) {
+		return sqlSession.delete("scheduleMapper.DeleteIndiCal",calNo);
+	}
+
+	public int DeleteIndiCal_Sche(int calNo) {
+		return sqlSession.delete("scheduleMapper.DeleteIndiCal_Sche",calNo);
+	}
+	
+	public int editIndiCal_Sche(int cal_no) {
+		return sqlSession.update("scheduleMapper.editIndiCal_Sche",cal_no);
+	}
+
+
 
 
 

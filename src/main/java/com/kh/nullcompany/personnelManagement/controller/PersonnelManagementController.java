@@ -794,7 +794,6 @@ public class PersonnelManagementController {
 	@RequestMapping("modificationDiligence.do")
 	public String modificationDiligence(ModificationDiligence mod , HttpServletRequest request,
 			@RequestParam(name="uploadFile", required=false)MultipartFile file) throws ParseException {
-		SimpleDateFormat formatD = new SimpleDateFormat("yyyy/MM/dd");
 		
 		
 		if(!file.getOriginalFilename().equals("")) {
@@ -851,6 +850,20 @@ public class PersonnelManagementController {
 			System.out.println("파일전송에러 : " + e.getMessage());
 		}
 		return renameFileName;
+	}
+	
+	// 근태 수정 취소
+	@RequestMapping("cancelMod.do")
+	public void cancelMod (int noMod,HttpServletRequest request, HttpServletResponse response) throws JsonIOException, IOException {
+		response.setContentType("application/json; charset=utf-8");
+		int result = pService.cancelMod(noMod);
+		String str ="";
+		if(result >0) {
+			str = "수정취소 완료.";
+			System.out.println(str);
+		}
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		gson.toJson(str,response.getWriter());
 	}
 
 	

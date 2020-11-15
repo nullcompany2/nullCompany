@@ -650,6 +650,27 @@ public class ApprovalController {
 		mv.setViewName("approval/approvalCompleteListView");
 		return mv;
 	}
+	
+	// 문서 디테일 중개 메소드
+	@RequestMapping("approvalDetailBroker.do")
+	public void approvalDetailBroker(ModelAndView mv, HttpServletResponse response, HttpSession session, String docNo, int formNo){
+
+		if(formNo == 1) {
+			businessDetail(mv, response, session, docNo, formNo);
+		}
+		
+	}
+	
+	// 업무연락 문서 상세보기
+	public ModelAndView businessDetail(ModelAndView mv, HttpServletResponse response, HttpSession session, String docNo, int formNo) {
+		
+		int memNo = ((Member) session.getAttribute("loginUser")).getMemNo();
+		String memName= ((Member) session.getAttribute("loginUser")).getName();
+		System.out.println("사용자번호 : " + memNo);
+		System.out.println("사용자이름 : " + memName);
+		
+		return mv;
+	}
 
 	@RequestMapping("approvalAllDList.do")
 	public String approvalAllDList(HttpServletResponse response) {

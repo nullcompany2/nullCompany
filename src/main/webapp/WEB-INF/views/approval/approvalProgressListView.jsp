@@ -118,7 +118,11 @@
 									</thead>
 									<tbody>
 									<c:forEach var="d" items="${ dList }">
-										<tr>
+									<c:url var="approvalDetailBroker" value="approvalDetailBroker.do">
+										<c:param name="docNo" value="${d.docNo}"/>
+										<c:param name="formNo" value="${d.formNo}"/>
+									</c:url>
+										<tr onclick="location.href='${approvalDetailBroker}'">
 											<td>${ d.formCode }_${ d.docNo }</td>
 											<td></td>
 											<td>${ d.dTitle}</td>
