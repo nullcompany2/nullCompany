@@ -184,6 +184,10 @@ public interface PersonnelManagementService {
 	// 근태 수정 취소
 	int cancelMod(int noMod);
 	
+	ArrayList<RecordDiligence> recordDiligenceList(int memNo);
+	// 출근일 확인
+	ArrayList<SetAttendance> AttendanceDays();
+	
 	
 	
 	

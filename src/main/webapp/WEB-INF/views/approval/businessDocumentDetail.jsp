@@ -31,11 +31,11 @@
 							</li>
 						</div>
 						<ul id="Tab1" class="H-personnel-subNavi Depth02">
-							<li><a href="approvalProgressDList.do" id="">전체</a></li>
-							<li><a href="#" id="">대기</a></li>
-							<li><a href="#" id="">확인</a></li>
-							<li><a href="#" id="">예정</a></li>
-							<li><a href="#" id="">진행</a></li>
+							<li><a href="approvalProgressAllListView.do" id="">전체</a></li>
+							<li><a href="standByDocListView.do" id="">대기</a></li>
+							<li><a href="checkDocListView.do" id="">확인</a></li>
+							<li><a href="scheduledDocListView.do" id="">예정</a></li>
+							<li><a href="progressListView.do" id="">진행</a></li>
 						</ul>
 		
 						<div class="H-personnel-subNavi Depth01-2">
@@ -44,12 +44,12 @@
 							</li>
 						</div>
 						<ul id="Tab2" class="H-personnel-subNavi Depth02">
-							<li><a href="approvalCompleteDList.do" id="">전체</a></li>
-							<li><a href="#" id="">기안</a></li>
-							<li><a href="#" id="">결재</a></li>
-							<li><a href="#" id="">수신</a></li>
-							<li><a href="#" id="">회람</a></li>
-							<li><a href="#" id="">반려</a></li>
+							<li><a href="approvalCompleteAllListView.do" id="">전체</a></li>
+							<li><a href="draftListView.do" id="">기안</a></li>
+							<li><a href="approvalListView.do" id="">결재</a></li>
+							<li><a href="receiveListView.do" id="">수신</a></li>
+							<li><a href="referenceListView.do" id="">회람</a></li>
+							<li><a href="rejectListView.do" id="">반려</a></li>
 							<li><a href="#" id="">임시 저장</a></li>
 						</ul>
 						<div class="H-personnel-subNavi Depth01-3">
@@ -98,7 +98,7 @@
 				</div>
 				<div class="c-ic">
 					<div class="doc_type">
-						<span class="doc_type" id="doc_type">업무 연락</span>
+						<span class="doc_type" id="doc_type">${d.formName}</span>
 					</div>
 					<br>
 					<br>
@@ -106,30 +106,30 @@
 						<tbody>
 							<tr id="tr1">
 								<td>기안 부서</td>
-								<td colspan="4">기안자 소속부서</td>
+								<td colspan="4">${d.drafterDeptName}부</td>
 								<td>기안자</td>
-								<td colspan="4">기안자 성명</td>
+								<td colspan="4">${d.drafterRankName} / ${d.drafterName}</td>
 							</tr>
 							<tr id="tr2">
 								<td>문서 번호</td>
-								<td colspan="4">등록된 문서 번호</td>
+								<td colspan="4">${d.formCode}_${d.docNo}</td>
 								<td>기안 일시</td>
-								<td colspan="4">기안시 일자</td>
+								<td colspan="4">${d.draftDate}</td>
 							</tr>
 							<tr id="tr3">
 								<td rowspan="4">결재</td>
-								<td>이전 결재자 직급</td>
-								<td>대리</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
+								<td>${ apprList[0].staffRankName }</td>
+								<td>${ apprList[1].staffRankName }</td>
+								<td>${ apprList[2].staffRankName }</td>
+								<td>${ apprList[3].staffRankName }</td>
+								<td>${ apprList[4].staffRankName }</td>
+								<td>${ apprList[5].staffRankName }</td>
+								<td>${ apprList[6].staffRankName }</td>
+								<td>${ apprList[7].staffRankName }</td>
+								<td>${ apprList[8].staffRankName }</td>
 							</tr>
 							<tr id="tr4">
-								<td>결재완료 이미지</td>
+								<td></td>
 								<td><button class="appr_btn">결재</button></td>
 								<td></td>
 								<td></td>
@@ -140,41 +140,41 @@
 								<td></td>
 							</tr>
 							<tr id="tr5">
-								<td>이전 결재완료 일자</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
+								<td>${ apprList[0].apprDate }</td>
+								<td>${ apprList[1].apprDate }</td>
+								<td>${ apprList[2].apprDate }</td>
+								<td>${ apprList[3].apprDate }</td>
+								<td>${ apprList[4].apprDate }</td>
+								<td>${ apprList[5].apprDate }</td>
+								<td>${ apprList[6].apprDate }</td>
+								<td>${ apprList[7].apprDate }</td>
+								<td>${ apprList[8].apprDate }</td>
 							</tr>
 							<tr id="tr6">
-								<td>이전 결재자 성명</td>
-								<td>이뫄뫄</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
+								<td>${ apprList[0].staffName }</td>
+								<td>${ apprList[1].staffName }</td>
+								<td>${ apprList[2].staffName }</td>
+								<td>${ apprList[3].staffName }</td>
+								<td>${ apprList[4].staffName }</td>
+								<td>${ apprList[5].staffName }</td>
+								<td>${ apprList[6].staffName }</td>
+								<td>${ apprList[7].staffName }</td>
+								<td>${ apprList[8].staffName }</td>
 							</tr>
 							<tr id="tr7">
 								<td rowspan="3">참조</td>
-                                <td>확인자 직급</td>
-                                <td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-                                <td></td>
-                                <td></td>
+                                <td>${ checkList[0].staffRankName }</td>
+                                <td>${ checkList[1].staffRankName }</td>
+								<td>${ checkList[2].staffRankName }</td>
+								<td>${ checkList[3].staffRankName }</td>
+								<td>${ checkList[4].staffRankName }</td>
+								<td>${ checkList[5].staffRankName }</td>
+								<td>${ checkList[6].staffRankName }</td>
+                                <td>${ checkList[7].staffRankName }</td>
+                                <td>${ checkList[8].staffRankName }</td>
 							</tr>
 							<tr id="tr8">
-								<td>확인 완료 문구</td>
+								<td></td>
 								<td></td>
 								<td></td>
 								<td></td>
@@ -185,38 +185,38 @@
                                 <td></td>
 							</tr>
 							<tr id="tr9">
-								<td>확인자 성명</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+								<td>${ checkList[0].staffName }</td>
+								<td>${ checkList[1].staffName }</td>
+								<td>${ checkList[2].staffName }</td>
+								<td>${ checkList[3].staffName }</td>
+								<td>${ checkList[4].staffName }</td>
+								<td>${ checkList[5].staffName }</td>
+                                <td>${ checkList[6].staffName }</td>
+                                <td>${ checkList[7].staffName }</td>
+                                <td>${ checkList[8].staffName }</td>
 							</tr>
 							<tr id="tr10">
 								<td rowspan="2">수신</td>
-                                <td>수신자 직급</td>
-                                <td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-                                <td></td>
-                                <td></td>
+                                <td>${ receiveList[0].staffRankName }</td>
+                                <td>${ receiveList[1].staffRankName }</td>
+								<td>${ receiveList[2].staffRankName }</td>
+								<td>${ receiveList[3].staffRankName }</td>
+								<td>${ receiveList[4].staffRankName }</td>
+								<td>${ receiveList[5].staffRankName }</td>
+								<td>${ receiveList[6].staffRankName }</td>
+                                <td>${ receiveList[7].staffRankName }</td>
+                                <td>${ receiveList[8].staffRankName }</td>
 							</tr>
 							<tr id="tr11">
-								<td>수신자 성명</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+								<td>${ receiveList[0].staffName }</td>
+								<td>${ receiveList[1].staffName }</td>
+								<td>${ receiveList[2].staffName }</td>
+								<td>${ receiveList[3].staffName }</td>
+								<td>${ receiveList[4].staffName }</td>
+								<td>${ receiveList[5].staffName }</td>
+                                <td>${ receiveList[6].staffName }</td>
+                                <td>${ receiveList[7].staffName }</td>
+                                <td>${ receiveList[8].staffName }</td>
 							</tr>
 						</tbody>
 					</table>

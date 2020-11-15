@@ -43,4 +43,8 @@ public class ApprovalDao {
 		return (ArrayList)sqlSession.selectList("approvalMapper.selectCompleteAllList",memNo, rowBounds);
 	}
 
+	public Document approvalDetail(String docNo) {
+		return sqlSession.selectOne("approvalMapper.approvalDetail",docNo);
+	}
+
 }
