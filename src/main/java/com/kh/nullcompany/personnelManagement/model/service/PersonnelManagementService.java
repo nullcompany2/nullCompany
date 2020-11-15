@@ -9,6 +9,7 @@ import com.kh.nullcompany.personnelManagement.model.vo.Department;
 import com.kh.nullcompany.personnelManagement.model.vo.ForEmLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.ForEmUsedLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.MixForLeave;
+import com.kh.nullcompany.personnelManagement.model.vo.ModificationDiligence;
 import com.kh.nullcompany.personnelManagement.model.vo.RecordDiligence;
 import com.kh.nullcompany.personnelManagement.model.vo.RecordLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.RewardLeave;
@@ -166,6 +167,23 @@ public interface PersonnelManagementService {
 	ArrayList<ForEmLeave> emAllMemeber();
 	// 사용된 휴가목록(직원 휴가관리)
 	ArrayList<ForEmUsedLeave> usedLeave();
+	// 휴가 기본설정 업데이트
+	int updateLeaveSetting(ArrayList<SetLeave> setLeave);
+	// 새로운 휴가 등록
+	int insertLeaveType(ArrayList<TypeLeave> newLeave);
+	// 직원 연차수정(감소)
+	int reduceAnnualLeave(Map changeAL);
+	// 직원 포상수정(감소)
+	int reduceRewardLeave(Map changeRL);
+	// 근태수정요청용 근태기록 검색(기록번호)
+	RecordDiligence recordDiligence(int noDiligence);
+	// 근태 수정요청
+	int modificationDiligence(ModificationDiligence mod);
+	// 근태 수정기록 조회
+	ArrayList<ModificationDiligence> selectRecordModification(int memNo);
+	// 근태 수정 취소
+	int cancelMod(int noMod);
+	
 	
 	
 	

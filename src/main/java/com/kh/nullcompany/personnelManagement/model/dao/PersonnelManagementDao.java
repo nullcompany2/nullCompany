@@ -15,6 +15,7 @@ import com.kh.nullcompany.personnelManagement.model.vo.Department;
 import com.kh.nullcompany.personnelManagement.model.vo.ForEmLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.ForEmUsedLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.MixForLeave;
+import com.kh.nullcompany.personnelManagement.model.vo.ModificationDiligence;
 import com.kh.nullcompany.personnelManagement.model.vo.RecordDiligence;
 import com.kh.nullcompany.personnelManagement.model.vo.RecordLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.RewardLeave;
@@ -204,6 +205,54 @@ public class PersonnelManagementDao {
 
 	public ArrayList<ForEmUsedLeave> usedLeave() {
 		return (ArrayList)sqlSession.selectList("personnelMapper.usedLeave");
+	}
+
+	
+	public int updateLeaveSetting(ArrayList<SetLeave> setLeave) {
+		int result = 0;
+		for(SetLeave set : setLeave) {
+			result = sqlSession.update("personnelMapper.updateLeaveSetting",set);			
+		}
+		return result;
+	}
+
+
+	public int insertLeaveType(ArrayList<TypeLeave> newLeave) {
+		int result = 0;
+		for(TypeLeave i : newLeave) {
+			result = sqlSession.insert("personnelMapper.insertLeaveType",i);
+		}
+		return result;
+	}
+
+
+	public int reduceAnnualLeave(Map changeAL) {
+		return sqlSession.insert("personnelMapper.reduceAnnualLeave",changeAL);
+	}
+
+
+	public int reduceRewardLeave(Map changeRL) {
+		return sqlSession.insert("personnelMapper.reduceRewardLeave",changeRL);
+	}
+
+
+	public RecordDiligence recordDiligence(int noDiligence) {
+		return sqlSession.selectOne("personnelMapper.recordDiligence",noDiligence);
+	}
+
+
+	public int modificationDiligence(ModificationDiligence mod) {
+		return sqlSession.insert("personnelMapper.modificationDiligence",mod);
+	}
+
+
+	public ArrayList<ModificationDiligence> selectRecordModification(int memNo) {
+		return(ArrayList)sqlSession.selectList("personnelMapper.selectRecordModification",memNo);
+	}
+
+
+	public int cancelMod(int noMod) {
+		return sqlSession.delete("personnelMapper.cancelMod",noMod);
 	}
 
 

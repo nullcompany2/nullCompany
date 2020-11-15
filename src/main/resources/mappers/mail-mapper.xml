@@ -21,7 +21,6 @@
 		<result property="name" column="NAME"/>
 		<result property="rName" column="RNAME"/>
 		
-		
 	</resultMap>
 	
 	<resultMap id="selectIdNoSet" type="MailSelectIdNo">
@@ -29,6 +28,11 @@
 		<result property="memId" column="MEM_ID"/>
 	</resultMap>
 	
+	<resultMap id="mailListCountSet" type="MailListCount">
+		<result property="reCount" column="RE_COUNT"/>
+		<result property="unreadCount" column="UNREAD_COUNT"/>
+		<result property="saveCount" column="SAVE_COUNT"/>
+	</resultMap>
 	  <!-- 받은 편지함 갯수 세기  -->
 	  <select id="getReListCount" resultType="_int">
 		SELECT COUNT(*)
@@ -242,6 +246,48 @@
 		SET M_REALDEL_STATUS = 'Y'
 		WHERE MAIL_NO = #{mailNo}
 	</update>
+	
+	<!--  휴지통 개별 보기에서 복원하기  -->
+	<update id="backOneMail" parameterType="Mail">
+		UPDATE MAIL
+		SET MDELETE_STATUS = 'N'
+		WHERE MAIL_NO = #{mailNo}
+	</update>
+	
+	<!-- 안 읽은 메일 갯수 세기  -->
+	 <select id="getReReListCount" resultType="_int">
+	 	SELECT COUNT(*) 
+        FROM MAIL R 
+        INNER JOIN MEMBER M ON (R.SENDER = M.ID)
+        WHERE READ_COUNT = 0
+        AND RECIPIENT =  #{memId}
+        AND MDELETE_STATUS = 'N'
+        AND M_REALDEL_STATUS = 'N'
+	 </select>
+	 
+	 <!--  메인에서 카운트 뿌리기  -->
+	 <select id="mailListCount" resultMap="mailListCountSet">
+	  SELECT 
+        (SELECT COUNT(*)
+        FROM MAIL 
+        WHERE RECIPIENT = #{memId}
+        AND MDELETE_STATUS = 'N'
+        AND MSAVE_STATUS = 'N'
+        AND M_REALDEL_STATUS = 'N') as RE_COUNT,
+        (SELECT COUNT(*)
+        FROM MAIL
+        WHERE READ_COUNT = 0
+        AND RECIPIENT =  #{memId}
+        AND MDELETE_STATUS = 'N'
+        AND M_REALDEL_STATUS = 'N') as UNREAD_COUNT,
+        (SELECT COUNT(*)
+	    FROM MAIL 
+	    WHERE SENDER = #{memId}
+	    AND MSAVE_STATUS = 'Y'
+	    AND MDELETE_STATUS = 'N') as SAVE_COUNT
+        FROM DUAL
+	 </select>
+	 
 	
 	
 </mapper>

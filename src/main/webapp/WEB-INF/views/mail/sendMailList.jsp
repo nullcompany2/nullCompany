@@ -94,6 +94,15 @@
 	display:none; 
 	}
 	
+	#countAll {
+	position: absolute;
+	right : 115px;
+	}
+	
+	#idWrite {
+	color : black;
+	}
+	
 </style>
 
 <body>
@@ -112,7 +121,7 @@
 						
 						&nbsp;&nbsp;
 						<span id="hide" style="margin-right:40px;">  <span id="count"> </span> <a id="delMail">삭제 </a>  &nbsp; <a id="realdelMail"> 완전삭제 </a> </span>
-						<span style="margin-left:65%;" id="countAll"> </span> <br><br>
+						<span id="countAll"> </span> <br><br>
 						
 					<c:choose>
 				    <c:when test="${!empty list }">
@@ -131,7 +140,7 @@
 						</c:url>
 						
 							<td>&nbsp;&nbsp;<input type="checkbox" onClick="event.cancelBubble=true" name="mail"></td>
-							<td align="left"><a onClick="event.stopPropagation(); location.href='${mailWriteId}'">${ma.name} < ${ma.recipient} > </a></td>
+							<td align="left"><a id="idWrite" onClick="event.stopPropagation(); location.href='${mailWriteId}'">${ma.name} < ${ma.recipient} > </a></td>
 							<td>${ ma.mTitle }</td>
 							<td align="right"> ${ma.sendDate }</td>
 						</tr>
@@ -154,7 +163,7 @@
 					<!-- [이전] --> <c:if test="${ pi.currentPage eq 1 }">
 						이전 &nbsp;
 					</c:if> <c:if test="${ pi.currentPage ne 1 }">
-						<c:url var="before" value="recieveMail.do">
+						<c:url var="before" value="sendMailList.do">
 							<c:param name="currentPage" value="${ pi.currentPage - 1 }" />
 						</c:url>
 						<a href="${ before }">이전</a> &nbsp;
@@ -165,7 +174,7 @@
 						</c:if>
 
 						<c:if test="${ p ne pi.currentPage }">
-							<c:url var="pagination" value="recieveMail.do">
+							<c:url var="pagination" value="sendMailList.do">
 								<c:param name="currentPage" value="${ p }" />
 							</c:url>
 							<a href="${ pagination }">${ p }</a> &nbsp;
@@ -173,7 +182,7 @@
 					</c:forEach> <!-- [다음] --> <c:if test="${ pi.currentPage eq pi.maxPage }">
 						다음
 					</c:if> <c:if test="${ pi.currentPage ne pi.maxPage }">
-						<c:url var="after" value="recieveMail.do">
+						<c:url var="after" value="sendMailList.do">
 							<c:param name="currentPage" value="${ pi.currentPage + 1 }" />
 						</c:url>
 						<a href="${ after }">다음</a>
@@ -238,6 +247,7 @@
 		   });
 		});
 
+        // 삭제 
         $("#delMail").click(function(){
 			 if (confirm("정말로 삭제하시겠습니까? 휴지통으로 이동합니다.") == true){    //확인
 
@@ -250,6 +260,7 @@
 
 		});
         
+        // 복원 
         $("#realdelMail").click(function(){
         	confirm("완전 삭제하시면 복구 할 수 없습니다. 정말로 삭제하시겠습니까?");
 		});

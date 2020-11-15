@@ -21,6 +21,7 @@
       <typeAlias type="com.kh.nullcompany.personnelManagement.model.vo.RecordDiligence" alias="RecordDiligence"/>
       <typeAlias type="com.kh.nullcompany.personnelManagement.model.vo.ForEmLeave" alias="ForEmLeave"/>
       <typeAlias type="com.kh.nullcompany.personnelManagement.model.vo.ForEmUsedLeave" alias="ForEmUsedLeave"/>
+      <typeAlias type="com.kh.nullcompany.personnelManagement.model.vo.ModificationDiligence" alias="ModificationDiligence"/>
       <typeAlias type="com.kh.nullcompany.board.model.vo.board" alias="board"/>
        <typeAlias type="com.kh.nullcompany.board.model.vo.bcomment" alias="bcomment"/>
       <typeAlias type="com.kh.nullcompany.notice.model.vo.notice" alias="notice"/>
@@ -30,6 +31,7 @@
       <typeAlias type="com.kh.nullcompany.mail.model.vo.Email" alias="Email"/>
       <typeAlias type="com.kh.nullcompany.mail.model.vo.Mail" alias="Mail"/>
       <typeAlias type="com.kh.nullcompany.mail.model.vo.MailSelectIdNo" alias="MailSelectIdNo"/>
+      <typeAlias type="com.kh.nullcompany.mail.model.vo.MailListCount" alias="MailListCount"/>
       <typeAlias type="com.kh.nullcompany.schedule.model.vo.Calendar" alias="Calendar"/>
       <typeAlias type="com.kh.nullcompany.schedule.model.vo.CalendarMember" alias="CalendarMember"/>
       <typeAlias type="com.kh.nullcompany.schedule.model.vo.Schedule" alias="Schedule"/>

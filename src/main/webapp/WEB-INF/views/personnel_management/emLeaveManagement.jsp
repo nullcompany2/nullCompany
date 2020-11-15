@@ -45,7 +45,7 @@
     
                     <div id="show-leave-status" class="c-ic">
                         <form action="" style="float: right;">
-                            <input type="text" name="" id="" class="search-emp">
+                            <input type="text"  class="search-emp">
                             <button class="search-btn cursor">검색</button>
                         </form>
                         <table class="l-table" id="leave-status-tbl">
@@ -72,7 +72,7 @@
                             <tbody id="memList">
                             	<c:forEach var="m" items="${emList}">
                             	
-                                <tr id="${m.memNo }_tr">
+                                <tr id="${m.memNo }_tr" style="    border-bottom: solid 1px #477A8F;">
                                     <td class="ta">${m.name }</td>
                                     <td class="ta"><fmt:formatDate value="${m.enrollDate}" pattern="yyyy.MM.dd"/></td>
                                     <td class="ta">${m.annualLeave + m.rewardLeave }</td>
@@ -254,9 +254,9 @@
 					$("#md1_leaveCreateRecord").text("휴가 생성내역 : ("+data.createDate + ") ~ (" + data.endDate + ")");
 					$("#md1_enrollDate").text("입사일 : ( "+data.m.enrollDate+" )");
 					$("#md1_memName").text("사원명 : " + data.m.name );
+					$("#md1_memNo").text( data.m.memNo);
 					$("#md1_annualLeave").attr('value',data.m.annualLeave).text(data.m.annualLeave);
 					$("#md1_rewardLeave").attr('value',data.m.rewardLeave).text(data.m.rewardLeave);
-					
 				},
 				error: function(request,status,error){
 					console.log(request);
@@ -265,20 +265,45 @@
 				}
 			})
 		}
-
         function md1_saveBtn(){
+        	var md1_memNo = $("#md1_memNo").text();
+        	var md1_memName  =$("#md1_memName").text();
         	var md1_annualLeave = $("#md1_annualLeave").text();
         	var md1_rewardLeave = $("#md1_rewardLeave").text();
         	
         	var md1_changeAnnual = $("#md1_changeAnnual").val();
         	var md1_changeReward = $("#md1_changeReward").val();
         	
+        	var md1_reasonAnnual = $("#md1_reasonAnnual").val();
+        	var md1_reasonReward = $("#md1_reasonReward").val();
+        	
         	
         	if(md1_changeAnnual != "" && md1_changeReward != ""){
         		if(md1_annualLeave == md1_changeAnnual && md1_rewardLeave == md1_changeReward){
         			alert("변경될 휴가가 존재하지 않습니다.");
         		}else if(md1_annualLeave >= md1_changeAnnual && md1_rewardLeave >= md1_changeReward){
-        			alert("사용가능");
+        			var result = confirm(md1_memNo + " / " + md1_memName + "의 휴가를 변경하시겠습니까 ? ")
+        			if(result){
+        				$.ajax({
+        					url : "emLeaveManagement.do",
+        					data : {
+        							changeAnnual : md1_changeAnnual , changeReward : md1_changeReward ,
+        							reasonAnnual : md1_reasonAnnual , reasonReward : md1_reasonReward ,
+        							changeMemNo : md1_memNo
+        							},
+        					Type : "POST",
+        					success:function(data){
+                				alert("변경 완료");
+                				location.href = location.href;
+    						},
+    						error: function(request,status,error){
+    							console.log(request);
+    							console.log(status);
+    							console.log(error);
+    						}
+        				});
+        			}
+        			
         		}else{
 					alert("변경할 값이 기존의 값보다 클수는 없습니다. (기존휴가에서 차감만 가능.)");
         		}
@@ -289,6 +314,119 @@
 		
 		function detail(memNo){
 			modal('my_modal-2');
+			
+			$.ajax({
+				url : "selectedMemberDetailLeave.do",
+				data : {memNo : memNo},
+				dataType : "json",
+				success:function(data){
+					
+				
+                
+					
+					console.log(data);
+					$("#md2_createLeaveList tr").remove();
+					var $recordTbl = $("#md2_createLeaveList");
+					var $tr;
+					var $createDate;
+					var $createLeave;
+					var $totalLeave;
+					var $contentDescription;
+					var $fullRecord;
+					
+					
+					
+					var totalLeaveCount = data.annualLeave;
+					// 정기휴가(기본);
+					$tr = $('<tr>');
+					$createDate = $('<td class="md-ta">').text(data.createDate);
+					$createLeave = $('<td class="md-ta">').text(data.annualLeave+"일");
+					$totalLeave = $('<td class="md-ta">').text(totalLeaveCount+"일");
+					$contentDescription = $('<td class="md-ta">').text("정기휴가");
+					$fullRecord = $('<td class="md-ta">').text("금년발생일("+ data.annualLeave +") , 최종연차("+totalLeaveCount+")");
+										
+					$tr.append($createDate);
+					$tr.append($createLeave);
+					$tr.append($totalLeave);
+					$tr.append($contentDescription);
+					$tr.append($fullRecord);
+					$recordTbl.append($tr);
+					
+					//포상휴가 (반복);
+					
+					for(var j in data.createdReward){
+						totalLeaveCount = totalLeaveCount + data.createdReward[j].rewardDays;
+						
+						$tr = $('<tr>');
+						$createDate = $('<td class="md-ta">').text(data.createdReward[j].createDate);
+						$createLeave = $('<td class="md-ta">').text(data.createdReward[j].rewardDays+"일");
+						$totalLeave = $('<td class="md-ta">').text(totalLeaveCount+"일");
+						$contentDescription = $('<td class="md-ta">').text("포상휴가");
+						$fullRecord = $('<td class="md-ta">').text("포상("+ data.createdReward[j].rewardDays +") , 최종연차("+totalLeaveCount+")");
+						
+						
+						$tr.append($createDate);
+						$tr.append($createLeave);
+						$tr.append($totalLeave);
+						$tr.append($contentDescription);
+						$tr.append($fullRecord);
+						$recordTbl.append($tr);
+					}
+				
+					// 휴가사용 기록
+					$("#md2_usedLeaveHistory tr").remove();
+					var $usedLeaveTbl = $("#md2_usedLeaveHistory");
+					var $noRecord;
+					var $name;
+					var $leaveTypeName;
+					var $useDays
+					var $useTerm;
+					var $status;
+					
+					var $typeUsedLeave = "";
+					for(var j in data.typeUsedLeave){
+						$typeUsedLeave +=(data.typeUsedLeave[j].tName+"("+data.typeUsedLeave[j].num+") "); 
+					}
+					
+					for(var j in data.mixLeave){
+						$tr = $('<tr>');
+						$noRecode =$('<td class="md-ta">').text(data.mixLeave[j].noRecord);
+						$name =$('<td class="md-ta">').text(data.m.name);
+						$leaveTypeNo = $('<td class="md-ta">').text(data.mixLeave[j].nameType);
+						$useDays = $('<td class="md-ta">').text(data.mixLeave[j].useDays);
+						$useTerm =$('<td class="md-ta">').text(data.mixLeave[j].applyDate + "~ (" + data.mixLeave[j].useDays + ")일");
+						$status = $('<td class="md-ta">').text(data.mixLeave[j].status);
+						
+						$tr.append($noRecode);
+						$tr.append($name);
+						$tr.append($leaveTypeNo);
+						$tr.append($useDays);
+						$tr.append($useTerm);
+						$tr.append($status);
+						$usedLeaveTbl.append($tr);
+						
+					}
+					
+					
+					$("#md2_leaveCreateRecord").text("휴가 생성내역 : ("+data.createDate + ") ~ (" + data.endDate + ")");
+					$("#md2_enrollDate").text("입사일 : ( " + data.m.enrollDate + " )");
+					$("#md2_memName").text("사원명 : " + data.m.name );
+					$("#md2_memNo").text( data.m.memNo);
+					$("#md2-1_leaveCreateRecord").text("휴가 생성내역 : ("+data.createDate + ") ~ (" + data.endDate + ")");
+					$("#md2-1_enrollDate").text("입사일 : ( " + data.m.enrollDate + " )");
+					$("#md2-1_memName").text("사원명 : " + data.m.name );
+					$("#md2-1_memNo").text( data.m.memNo);
+					
+					$("#md2-1_simpleStatistics").text("당해 사용휴가 간략 통계 : "+ $typeUsedLeave);
+					
+					
+				},
+				error: function(request,status,error){
+					console.log(request);
+					console.log(status);
+					console.log(error);
+				}
+			})
 		}
        
         $('#pick-em-1').on('click', function() {
@@ -340,7 +478,7 @@
         #my_modal-2{
             display: none;
             width: 800px;
-            height: 450px;
+            height: 500px;
             padding: 20px 60px;
             background-color: #fefefe;
             border: 1px solid #888;
@@ -456,6 +594,7 @@
 			<h4 style="font-weight:normal;" id="md1_leaveCreateRecord">휴가 생성내역(<span>2019-12-28</span>~<span>2020-12-28</span>)</h4>
             <h5 style="font-weight:normal;" id="md1_enrollDate">입사일 : (<span>1992-12-28</span>)</h5>
             <h5 style="font-weight:normal;" id="md1_memName">사원명 : (<span>ID</span>)</h5>
+            <h5 style="font-weight:normal;" id="md1_memNo"></h5>
             <thead style="background: #e8ecee;">
                 <tr>
                     <th scope="col" rowspan="2" class="md-tr">종류</th>
@@ -495,9 +634,10 @@
         </div>
         <!-- 생성내역 -->
         <div id="show-create-history">
-            <h4 style="font-weight:normal;">휴가 생성내역(<span>2019-12-28</span>~<span>2020-12-28</span>)</h4>
-            <h5 style="font-weight:normal;">입사일 : (<span>1992-12-28</span>)</h5>
-            <h5 style="font-weight:normal;">사원명 : (<span>ID</span>)</h5>
+            <h4 style="font-weight:normal;" id="md2_leaveCreateRecord">휴가 생성내역(<span>2019-12-28</span>~<span>2020-12-28</span>)</h4>
+            <h5 style="font-weight:normal;" id="md2_enrollDate">입사일 : (<span>1992-12-28</span>)</h5>
+            <h5 style="font-weight:normal;" id="md2_memName">사원명 : (<span>ID</span>)</h5>
+            <h5 style="font-weight:normal;" id="md2_memNo"></h5>
             <table class="md-l-table" id="md-create-tbl">
                 <thead style="background: #e8ecee;">
                     <tr>
@@ -511,38 +651,21 @@
                         <th scope="col" class="ts">최종</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="md2_createLeaveList">
                     <!-- 휴가 획득 리스트 -->
-                    <tr>
-                        <td class="md-ta">2020.09.17</td>
-                        <td class="md-ta">25일</td>
-                        <td class="md-ta">25일</td>
-                        <td class="md-ta">정기 휴가</td>
-                        <td class="md-ta">금년발생일(25), 최종연차(25)</td>
-                    </tr>
-                    <tr>
-                        <td class="md-ta">2020.09.27</td>
-                        <td class="md-ta">2일</td>
-                        <td class="md-ta">27일</td>
-                        <td class="md-ta">포상 휴가</td>
-                        <td class="md-ta">포상(2), 최종연차(27)</td>
-                    </tr>
-                    <tr>
-                        <td class="md-ta">2020.10.18</td>
-                        <td class="md-ta">-2일</td>
-                        <td class="md-ta">25일</td>
-                        <td class="md-ta">포상 휴가</td>
-                        <td class="md-ta">사유(-2), 최종연차(25)</td>
-                    </tr>
+                    
+                    
                 </tbody>
             </table>
         </div>
         <!-- 사용내역 -->
         <div id="show-used-history">
             <table class="md-tbl">
-                <h4 style="font-weight:normal;">휴가 생성내역(<span>2019-12-28</span>~<span>2020-12-28</span>)</h4>
-                <h5 style="font-weight:normal;">입사일 : (<span>1992-12-28</span>)</h5>
-                <h5 style="font-weight:normal;">사원명 : (<span>ID</span>)</h5>
+                <h4 style="font-weight:normal;" id="md2-1_leaveCreateRecord">휴가 생성내역(<span>2019-12-28</span>~<span>2020-12-28</span>)</h4>
+	            <h5 style="font-weight:normal;" id="md2-1_enrollDate">입사일 : (<span>1992-12-28</span>)</h5>
+	            <h5 style="font-weight:normal;" id="md2-1_memName">사원명 : (<span>ID</span>)</h5>
+	            <h5 style="font-weight:normal;" id="md2-1_memNo"></h5>
+				<h5 style="font-weight:normal;" id="md2-1_simpleStatistics">당해 간략 통계 : 연차() 포상() 교육() 경조사() 병가() 출산() 무급()</h5>
                 <table class="md-l-table" id="md-used-tbl">
                     <thead style="background: #e8ecee;">
                         <tr>
@@ -554,7 +677,7 @@
                             <th scope="col" rowspan="2" class="md-tr">상태</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="md2_usedLeaveHistory">
                         <tr>
                             <td class="md-ta">1</td>
                             <td class="md-ta">Shin</td>
@@ -564,7 +687,6 @@
                             <td class="md-ta">결재완료</td>
                         </tr>
                     </tbody>
-					<h5 style="font-weight:normal;">당해 간략 통계 : 연차() 포상() 교육() 경조사() 병가() 출산() 무급()</h5>
                 </table>
             </table>
         </div>

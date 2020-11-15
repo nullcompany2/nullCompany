@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.mail.model.vo.Mail;
+import com.kh.nullcompany.mail.model.vo.MailListCount;
 import com.kh.nullcompany.member.model.vo.Member;
 
 public interface MailService {
@@ -195,5 +196,29 @@ public interface MailService {
 	 * @return
 	 */
 	ArrayList<Member> autoComplete(String text);
+
+
+	/**
+	 *  스레기통에서 복구 하기... 
+	 * @param mailNo
+	 * @return
+	 */
+	int backMail(int mailNo);
+
+
+	/** 
+	 * 안 읽은 메일 갯수 세기 
+	 * @param memId
+	 * @return
+	 */
+	int getReReListCount(String memId);
+
+
+	/**
+	 * 메인에 뿌릴 메일 갯수 세기 
+	 * @param memId
+	 * @return
+	 */
+	MailListCount getMailBoxCount(String memId);
 	
 }

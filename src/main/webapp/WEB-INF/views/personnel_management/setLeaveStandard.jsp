@@ -36,7 +36,7 @@
 					<span class="ct1">기본 설정</span>
 				</div>
 				<!-- ---- -->
-				<div class="contents-wrap drag-scrollbar">
+				<div class="contents-wrap drag-scrollbar" >
 					<form action="">
 						<div class="c-ic">
 							<div>
@@ -157,6 +157,8 @@
 								</table>
 								
 								<div class="set-checkbox-1" >
+									<h5>※ 1년차 휴가 자동생성 설정값 변경시 사원이 로그인하여 휴가현황을 조회하여야지 휴가설정이 변경됩니다.</h5>
+									<br>
 									<h4 class="set-e-1">1년차 휴가 자동생성</h4>
 																		
 									<input type="radio" name="ck-firstyear" id="use-fy" value="0"><label for="use-fy">사용함</label>
@@ -281,21 +283,22 @@
     			data.name = $("#"+j+"Name").val();
     			data.able = $("#"+j+"able option:selected").val();
     			data.useAnnual = $("#"+j+"annual").is(":checked");
-    			 
+    			if(data.name ==""){
+    				alert("휴가명을 입력해주세요.");
+    				location.reload();
+    			}
     			newLeaveArr.push(data);
     			
     		}
-   			for(var i = 0; i < newLeaveArr.length; i++){
-   				console.log(newLeaveArr[i]);
-   			}
     		//newLeaveArr : newLeaveArr, setAnnualLeave : setAnnualLeave, firstyear : firstyear
     		$.ajax({
     			url: "fixSetLeave.do",
     			data : {firstyear : firstyear,setAnnualLeave : JSON.stringify(setAnnualLeave),newLeaveArr :  JSON.stringify(newLeaveArr)},
     			type : "post",
-    			dataType:"json",
+    			
     			success:function(data){
-					console.log(data);
+					alert("변경완료");
+					location.href = location.href;
 				},
 				error: function(request,status,error){
 					console.log(request);
