@@ -84,9 +84,13 @@
               <c:url var="mailReply" value="mailReply.do">
 				<c:param name="mailNo" value="${ma.mailNo}" />
 			  </c:url> 
+			  
+			  <c:url var="mailFoward" value="mailFoward.do">
+				<c:param name="mailNo" value="${ma.mailNo}" />
+			  </c:url> 
               
                 <a href="${mailReply}"><input type="button" value="답장"/> </a>
-						<a href=""> <input type="button" value="전달"/></a> 
+						<a href="${mailFoward}"> <input type="button" value="전달"/></a> 
 						<input  id="delMail" type="button" value="삭제" /> 
 						<input id="realdelMail" type="button" value="완전삭제" />
 						<br> 
