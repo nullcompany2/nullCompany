@@ -40,4 +40,9 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public ArrayList<Document> selectCompleteAllList(int memNo, PageInfo pi) {
 		return aDao.selectCompleteAllList(memNo, pi);
 	}
+
+	@Override
+	public Document approvalDetail(String docNo) {
+		return aDao.approvalDetail(docNo);
+	}
 }

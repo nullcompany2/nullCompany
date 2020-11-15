@@ -48,4 +48,11 @@ public interface ApprovalService {
 	 */
 	ArrayList<Document> selectCompleteAllList(int memNo, PageInfo pi);
 
+	/**
+	 * 3_1. 문서 한 개 정보 가져오기
+	 * @param docNo
+	 * @return
+	 */
+	Document approvalDetail(String docNo);
+
 }
