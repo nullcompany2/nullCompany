@@ -9,16 +9,18 @@ public class SetAttendance {
 	private String dayAvailable;
 	private String timeAttendance;
 	private String timeOffWork;
+	private int noDay;
 	public SetAttendance() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public SetAttendance(String dayWeek, String dayAvailable, String timeAttendance, String timeOffWork) {
+	public SetAttendance(String dayWeek, String dayAvailable, String timeAttendance, String timeOffWork, int noDay) {
 		super();
 		this.dayWeek = dayWeek;
 		this.dayAvailable = dayAvailable;
 		this.timeAttendance = timeAttendance;
 		this.timeOffWork = timeOffWork;
+		this.noDay = noDay;
 	}
 	public String getDayWeek() {
 		return dayWeek;
@@ -44,10 +46,18 @@ public class SetAttendance {
 	public void setTimeOffWork(String timeOffWork) {
 		this.timeOffWork = timeOffWork;
 	}
+	public int getNoDay() {
+		return noDay;
+	}
+	public void setNoDay(int noDay) {
+		this.noDay = noDay;
+	}
 	@Override
 	public String toString() {
 		return "SetAttendance [dayWeek=" + dayWeek + ", dayAvailable=" + dayAvailable + ", timeAttendance="
-				+ timeAttendance + ", timeOffWork=" + timeOffWork + "]";
+				+ timeAttendance + ", timeOffWork=" + timeOffWork + ", noDay=" + noDay + "]";
 	}
+	
+	
 	
 }

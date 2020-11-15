@@ -95,6 +95,7 @@
    		<result property="dayAvailable" column="DAY_AVAILABLE"/>
    		<result property="timeAttendance" column="TIME_ATTENDANCE"/>
    		<result property="timeOffWork" column="TIME_OFFWORK"/>
+   		<result property="noDay" column="NO_DAY" />
    	</resultMap>
    	
    	<resultMap type="RecordDiligence" id="RecordDiligenceResultSet">
@@ -422,4 +423,16 @@
 	<delete id="cancelMod">
 		DELETE MOD_DILIGENCE WHERE NO_MOD_D = #{noMod}
 	</delete>
+	
+	<select id="recordDiligenceList" resultMap="RecordDiligenceResultSet" parameterType="_int">
+		SELECT *
+		FROM RECORD_DILIGENCE
+		WHERE MEM_NO = #{memNo}
+		ORDER BY DATE_DILIGENCE
+	</select>
+	
+	<select id="AttendanceDays" resultMap="SetAttendanceResultSet">
+		SELECT *
+		FROM SET_ATTENDANCE_STANDARD
+	</select>
 </mapper>

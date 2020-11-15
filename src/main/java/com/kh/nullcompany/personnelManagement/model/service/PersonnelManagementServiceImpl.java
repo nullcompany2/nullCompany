@@ -287,6 +287,16 @@ public class PersonnelManagementServiceImpl implements PersonnelManagementServic
 		return pDao.cancelMod(noMod);
 	}
 
+	@Override
+	public ArrayList<RecordDiligence> recordDiligenceList(int memNo) {
+		return pDao.recordDiligenceList(memNo);
+	}
+
+	@Override
+	public ArrayList<SetAttendance> AttendanceDays() {
+		return pDao.AttendanceDays();
+	}
+
 	
 	
 	
