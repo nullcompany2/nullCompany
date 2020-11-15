@@ -13,6 +13,11 @@ public class SetLeave {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	public SetLeave(String workyear, int annualLeave) {
+		super();
+		this.workyear = workyear;
+		this.annualLeave = annualLeave;
+	}
 	public SetLeave(String workyear, int annualLeave, int carryover, int firstyear, Date setting) {
 		super();
 		this.workyear = workyear;

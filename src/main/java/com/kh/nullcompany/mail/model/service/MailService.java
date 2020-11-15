@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.mail.model.vo.Mail;
+import com.kh.nullcompany.mail.model.vo.MailListCount;
 import com.kh.nullcompany.member.model.vo.Member;
 
 public interface MailService {
@@ -15,11 +16,6 @@ public interface MailService {
 	 */
 	Member mailWriteId(int memNo);
 
-	/**
-	 * 2. 받은 메일함 리스트 갯수 세기 
-	 * @return
-	 */
-	int getListCount(int memNo);
 
 	/**
 	 * 3. 받은 메일함 리스트 가져오기 
@@ -169,6 +165,60 @@ public interface MailService {
 	 * @return
 	 */
 	int realDeleteOneMail(int mailNo);
-	
+
+	/**
+	 * 2. 받은 메일함 리스트 갯수 세기 
+	 * @return
+	 */
+	int getReListCount(String memId);
+
+	/**
+	 * 
+	 * 3. 보낸 메일함 리스트 갯수 세기 
+	 * @param memId
+	 * @return
+	 */
+	int getSendListCount(String memId);
+
+
+	/**
+	 * 
+	 *  4. 임시보관함 리스트 갯수 세기 
+	 * @param memId
+	 * @return
+	 */
+	int getSaveListCount(String memId);
+
+	/**
+	 *  메일쓰기 -> 받는 사람 이메일 주소 자동완성 
+	 * 
+	 * @param text
+	 * @return
+	 */
+	ArrayList<Member> autoComplete(String text);
+
+
+	/**
+	 *  스레기통에서 복구 하기... 
+	 * @param mailNo
+	 * @return
+	 */
+	int backMail(int mailNo);
+
+
+	/** 
+	 * 안 읽은 메일 갯수 세기 
+	 * @param memId
+	 * @return
+	 */
+	int getReReListCount(String memId);
+
+
+	/**
+	 * 메인에 뿌릴 메일 갯수 세기 
+	 * @param memId
+	 * @return
+	 */
+	MailListCount getMailBoxCount(String memId);
 	
 }

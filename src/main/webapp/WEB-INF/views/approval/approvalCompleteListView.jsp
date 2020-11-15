@@ -32,11 +32,11 @@
 							</li>
 						</div>
 						<ul id="Tab1" class="H-personnel-subNavi Depth02">
-							<li><a href="approvalProgressDList.do" id="">전체</a></li>
-							<li><a href="#" id="">대기</a></li>
-							<li><a href="#" id="">확인</a></li>
-							<li><a href="#" id="">예정</a></li>
-							<li><a href="#" id="">진행</a></li>
+							<li><a href="approvalProgressAllListView.do" id="">전체</a></li>
+							<li><a href="standByDocListView.do" id="">대기</a></li>
+							<li><a href="checkDocListView.do" id="">확인</a></li>
+							<li><a href="scheduledDocListView.do" id="">예정</a></li>
+							<li><a href="progressListView.do" id="">진행</a></li>
 						</ul>
 		
 						<div class="H-personnel-subNavi Depth01-2">
@@ -45,12 +45,12 @@
 							</li>
 						</div>
 						<ul id="Tab2" class="H-personnel-subNavi Depth02">
-							<li><a href="approvalCompleteDList.do" id="">전체</a></li>
-							<li><a href="#" id="">기안</a></li>
-							<li><a href="#" id="">결재</a></li>
-							<li><a href="#" id="">수신</a></li>
-							<li><a href="#" id="">회람</a></li>
-							<li><a href="#" id="">반려</a></li>
+							<li><a href="approvalCompleteAllListView.do" id="">전체</a></li>
+							<li><a href="draftListView.do" id="">기안</a></li>
+							<li><a href="approvalListView.do" id="">결재</a></li>
+							<li><a href="receiveListView.do" id="">수신</a></li>
+							<li><a href="referenceListView.do" id="">회람</a></li>
+							<li><a href="rejectListView.do" id="">반려</a></li>
 							<li><a href="#" id="">임시 저장</a></li>
 						</ul>
 						<div class="H-personnel-subNavi Depth01-3">
@@ -95,11 +95,13 @@
 			<div class="contents-wrap drag-scrollbar">
 				<div class="contents-title">
 						<span class="ct1">
-							문서함&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;전체
+							문서함&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;${ catagory }
 						</span>
 				</div>
 				<div class="c-ic">
-					<table class="appr_list" >
+				<c:choose>
+					<c:when test="${ !empty dList }">
+						<table class="appr_list" >
 						<thead>
 							<tr>
 								<th>문서 번호</th>
@@ -112,63 +114,264 @@
 								<th style="color: #999;">|</th>
 								<th>완료일&nbsp;&nbsp;<label class="appr_date_desc" id="complete_date">▼</label></th>
 								<th style="color: #999;">|</th>
-								<th>문서종류</th>
+								<th>문서 종류</th>
+								<th style="color: #999;">|</th>
+								<th>구분</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr onclick="location.href='resignDetail.do'">
-								<td>00001</td>
-								<td></td>
-								<td>사직서_사직일/기안자명</td>
-								<td></td>
-								<td>현승구</td>
-								<td></td>
-								<td>2020-10-20</td>
-								<td></td>
-								<td>2020-10-21</td>
-								<td></td>
-								<td>사직</td>
-							</tr>
+						<c:forEach var="d" items="${ dList }">
 							<tr>
-								<td>00002</td>
+								<td>${ d.formCode }_${ d.docNo }</td>
 								<td></td>
-								<td>문서제목</td>
+								<td>${ d.dTitle}</td>
 								<td></td>
-								<td>현승구</td>
+								<td>${ d.drafterName }</td>
 								<td></td>
-								<td>2020-10-20</td>
+								<td>${ d.draftDate }</td>
 								<td></td>
-								<td>2020-10-21</td>
+								<td>${ d.completeDate }</td>
 								<td></td>
-								<td>업무연락</td>
+								<td>${ d.formName }</td>
+								<td></td>
+								<td>${ d.sStatus }</td>
 							</tr>
-							<tr>
-								<td>00003</td>
-								<td></td>
-								<td>문서제목</td>
-								<td></td>
-								<td>현승구</td>
-								<td></td>
-								<td>2020-10-20</td>
-								<td></td>
-								<td>2020-10-21</td>
-								<td></td>
-								<td>업무연락</td>
-							</tr>
+						</c:forEach>
 						</tbody>
 					</table>
+					</c:when>
+					<c:otherwise>
+						<br>
+						<br>
+						<span style=" margin-left: 430px; font-size:26pt; font-weight: bolder;">문서가 없습니다.</span>
+						<br>
+						<br>
+						<br>
+					</c:otherwise>
+				</c:choose>
 					<label id="doc_count">문서 수&nbsp;&nbsp;:&nbsp;&nbsp;
-						<span id="doc_count_value">3</span>
+						<span id="doc_count_value">${ dList.size() }</span>
 					</label>
 					<br>
 					<br>
-					<div id="numberList" style="text-align: center;">
-						<button><strong>1</strong></button>
-						<button><strong>2</strong></button>
-						<button><strong>3</strong></button>
-						<button><strong>4</strong></button>
-						<button><strong>5</strong></button>
-					</div>
+				<c:choose>
+					<c:when test="${ catagory eq '전체' }">
+						<table style=" margin: 10px 0px 0px 80px; width: 80%; border-collapse: collapse">
+							<!-- 페이징처리 -->
+							<tr align="center" height="20">
+								<td colspan="6" align="center">
+									<!-- [이전] --> <c:if test="${ pi.currentPage eq 1 }">
+										이전 &nbsp;
+									</c:if> <c:if test="${ pi.currentPage ne 1 }">
+										<c:url var="before" value="approvalCompleteAllListView.do">
+											<c:param name="currentPage" value="${ pi.currentPage - 1 }" />
+										</c:url>
+										<a href="${ before }">이전</a> &nbsp;
+									</c:if> <!-- 페이지 --> <c:forEach var="p" begin="${ pi.startPage }"
+										end="${ pi.endPage }">
+										<c:if test="${ p eq pi.currentPage }">
+											<font color="#477A8F" size="3"><b>${ p }</b> </font>
+										</c:if>
+				
+										<c:if test="${ p ne pi.currentPage }">
+											<c:url var="pagination" value="approvalCompleteAllListView.do">
+												<c:param name="currentPage" value="${ p }" />
+											</c:url>
+											<a href="${ pagination }">${ p }</a> &nbsp;
+										</c:if>
+									</c:forEach> <!-- [다음] --> <c:if test="${ pi.currentPage eq pi.maxPage }">
+										다음
+									</c:if> <c:if test="${ pi.currentPage ne pi.maxPage }">
+										<c:url var="after" value="approvalCompleteAllListView.do">
+											<c:param name="currentPage" value="${ pi.currentPage + 1 }" />
+										</c:url>
+										<a href="${ after }">다음</a>
+									</c:if>
+								</td>
+							</tr>
+						</table>
+					</c:when>
+					<c:when test="${ catagory eq '기안' }">
+						<table style=" margin: 10px 0px 0px 80px; width: 80%; border-collapse: collapse">
+							<!-- 페이징처리 -->
+							<tr align="center" height="20">
+								<td colspan="6" align="center">
+									<!-- [이전] --> <c:if test="${ pi.currentPage eq 1 }">
+										이전 &nbsp;
+									</c:if> <c:if test="${ pi.currentPage ne 1 }">
+										<c:url var="before" value="draftListView.do">
+											<c:param name="currentPage" value="${ pi.currentPage - 1 }" />
+										</c:url>
+										<a href="${ before }">이전</a> &nbsp;
+									</c:if> <!-- 페이지 --> <c:forEach var="p" begin="${ pi.startPage }"
+										end="${ pi.endPage }">
+										<c:if test="${ p eq pi.currentPage }">
+											<font color="#477A8F" size="3"><b>${ p }</b> </font>
+										</c:if>
+				
+										<c:if test="${ p ne pi.currentPage }">
+											<c:url var="pagination" value="draftListView.do">
+												<c:param name="currentPage" value="${ p }" />
+											</c:url>
+											<a href="${ pagination }">${ p }</a> &nbsp;
+										</c:if>
+									</c:forEach> <!-- [다음] --> <c:if test="${ pi.currentPage eq pi.maxPage }">
+										다음
+									</c:if> <c:if test="${ pi.currentPage ne pi.maxPage }">
+										<c:url var="after" value="draftListView.do">
+											<c:param name="currentPage" value="${ pi.currentPage + 1 }" />
+										</c:url>
+										<a href="${ after }">다음</a>
+									</c:if>
+								</td>
+							</tr>
+						</table>
+					</c:when>
+					<c:when test="${ catagory eq '결재' }">
+						<table style=" margin: 10px 0px 0px 80px; width: 80%; border-collapse: collapse">
+							<!-- 페이징처리 -->
+							<tr align="center" height="20">
+								<td colspan="6" align="center">
+									<!-- [이전] --> <c:if test="${ pi.currentPage eq 1 }">
+										이전 &nbsp;
+									</c:if> <c:if test="${ pi.currentPage ne 1 }">
+										<c:url var="before" value="approvalListView.do">
+											<c:param name="currentPage" value="${ pi.currentPage - 1 }" />
+										</c:url>
+										<a href="${ before }">이전</a> &nbsp;
+									</c:if> <!-- 페이지 --> <c:forEach var="p" begin="${ pi.startPage }"
+										end="${ pi.endPage }">
+										<c:if test="${ p eq pi.currentPage }">
+											<font color="#477A8F" size="3"><b>${ p }</b> </font>
+										</c:if>
+				
+										<c:if test="${ p ne pi.currentPage }">
+											<c:url var="pagination" value="approvalListView.do">
+												<c:param name="currentPage" value="${ p }" />
+											</c:url>
+											<a href="${ pagination }">${ p }</a> &nbsp;
+										</c:if>
+									</c:forEach> <!-- [다음] --> <c:if test="${ pi.currentPage eq pi.maxPage }">
+										다음
+									</c:if> <c:if test="${ pi.currentPage ne pi.maxPage }">
+										<c:url var="after" value="approvalListView.do">
+											<c:param name="currentPage" value="${ pi.currentPage + 1 }" />
+										</c:url>
+										<a href="${ after }">다음</a>
+									</c:if>
+								</td>
+							</tr>
+						</table>
+					</c:when>
+					<c:when test="${ catagory eq '수신' }">
+						<table style=" margin: 10px 0px 0px 80px; width: 80%; border-collapse: collapse">
+							<!-- 페이징처리 -->
+							<tr align="center" height="20">
+								<td colspan="6" align="center">
+									<!-- [이전] --> <c:if test="${ pi.currentPage eq 1 }">
+										이전 &nbsp;
+									</c:if> <c:if test="${ pi.currentPage ne 1 }">
+										<c:url var="before" value="receiveListView.do">
+											<c:param name="currentPage" value="${ pi.currentPage - 1 }" />
+										</c:url>
+										<a href="${ before }">이전</a> &nbsp;
+									</c:if> <!-- 페이지 --> <c:forEach var="p" begin="${ pi.startPage }"
+										end="${ pi.endPage }">
+										<c:if test="${ p eq pi.currentPage }">
+											<font color="#477A8F" size="3"><b>${ p }</b> </font>
+										</c:if>
+				
+										<c:if test="${ p ne pi.currentPage }">
+											<c:url var="pagination" value="receiveListView.do">
+												<c:param name="currentPage" value="${ p }" />
+											</c:url>
+											<a href="${ pagination }">${ p }</a> &nbsp;
+										</c:if>
+									</c:forEach> <!-- [다음] --> <c:if test="${ pi.currentPage eq pi.maxPage }">
+										다음
+									</c:if> <c:if test="${ pi.currentPage ne pi.maxPage }">
+										<c:url var="after" value="receiveListView.do">
+											<c:param name="currentPage" value="${ pi.currentPage + 1 }" />
+										</c:url>
+										<a href="${ after }">다음</a>
+									</c:if>
+								</td>
+							</tr>
+						</table>
+					</c:when>
+					<c:when test="${ catagory eq '회람' }">
+						<table style=" margin: 10px 0px 0px 80px; width: 80%; border-collapse: collapse">
+							<!-- 페이징처리 -->
+							<tr align="center" height="20">
+								<td colspan="6" align="center">
+									<!-- [이전] --> <c:if test="${ pi.currentPage eq 1 }">
+										이전 &nbsp;
+									</c:if> <c:if test="${ pi.currentPage ne 1 }">
+										<c:url var="before" value="referenceListView.do">
+											<c:param name="currentPage" value="${ pi.currentPage - 1 }" />
+										</c:url>
+										<a href="${ before }">이전</a> &nbsp;
+									</c:if> <!-- 페이지 --> <c:forEach var="p" begin="${ pi.startPage }"
+										end="${ pi.endPage }">
+										<c:if test="${ p eq pi.currentPage }">
+											<font color="#477A8F" size="3"><b>${ p }</b> </font>
+										</c:if>
+				
+										<c:if test="${ p ne pi.currentPage }">
+											<c:url var="pagination" value="referenceListView.do">
+												<c:param name="currentPage" value="${ p }" />
+											</c:url>
+											<a href="${ pagination }">${ p }</a> &nbsp;
+										</c:if>
+									</c:forEach> <!-- [다음] --> <c:if test="${ pi.currentPage eq pi.maxPage }">
+										다음
+									</c:if> <c:if test="${ pi.currentPage ne pi.maxPage }">
+										<c:url var="after" value="referenceListView.do">
+											<c:param name="currentPage" value="${ pi.currentPage + 1 }" />
+										</c:url>
+										<a href="${ after }">다음</a>
+									</c:if>
+								</td>
+							</tr>
+						</table>
+					</c:when>
+					<c:when test="${ catagory eq '반려' }">
+						<table style=" margin: 10px 0px 0px 80px; width: 80%; border-collapse: collapse">
+							<!-- 페이징처리 -->
+							<tr align="center" height="20">
+								<td colspan="6" align="center">
+									<!-- [이전] --> <c:if test="${ pi.currentPage eq 1 }">
+										이전 &nbsp;
+									</c:if> <c:if test="${ pi.currentPage ne 1 }">
+										<c:url var="before" value="rejectListView.do">
+											<c:param name="currentPage" value="${ pi.currentPage - 1 }" />
+										</c:url>
+										<a href="${ before }">이전</a> &nbsp;
+									</c:if> <!-- 페이지 --> <c:forEach var="p" begin="${ pi.startPage }"
+										end="${ pi.endPage }">
+										<c:if test="${ p eq pi.currentPage }">
+											<font color="#477A8F" size="3"><b>${ p }</b> </font>
+										</c:if>
+				
+										<c:if test="${ p ne pi.currentPage }">
+											<c:url var="pagination" value="rejectListView.do">
+												<c:param name="currentPage" value="${ p }" />
+											</c:url>
+											<a href="${ pagination }">${ p }</a> &nbsp;
+										</c:if>
+									</c:forEach> <!-- [다음] --> <c:if test="${ pi.currentPage eq pi.maxPage }">
+										다음
+									</c:if> <c:if test="${ pi.currentPage ne pi.maxPage }">
+										<c:url var="after" value="rejectListView.do">
+											<c:param name="currentPage" value="${ pi.currentPage + 1 }" />
+										</c:url>
+										<a href="${ after }">다음</a>
+									</c:if>
+								</td>
+							</tr>
+						</table>
+					</c:when>
+				</c:choose>
 					<br>
 					<div id="search_bar">
 						<select class="search_tool" id="search_tool">

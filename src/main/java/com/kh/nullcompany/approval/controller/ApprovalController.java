@@ -338,13 +338,336 @@ public class ApprovalController {
 		
 		return mv;
 	}
-
-	@RequestMapping("approvalCompleteListView.do")
+	
+	// 문서함 목록(전체) 불러오기
+	@RequestMapping("approvalCompleteAllListView.do")
 	public ModelAndView approvalCompleteListView(ModelAndView mv, HttpServletResponse response, HttpSession session,
 			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
+			
+			// 로그인 세션 사용자 사번 가져오기
+			int memNo = ((Member) session.getAttribute("loginUser")).getMemNo();
+			System.out.println("사용자 사번 : " + memNo);
+
+			// 로그인 사용자가 기안자이거나 결재 스탭에 포함되어 있는 문서의 갯수 조회
+			int listCount = aService.getCompleteAllListCount(memNo);
+
+			// 페이징
+			PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+
+			// 로그인 사용자가 기안자이거나 결재라인에 있는 문서리스트 조회(10개씩)
+			ArrayList<Document> dList = aService.selectCompleteAllList(memNo, pi);
 		
+			for(Document d : dList) {
+				ArrayList<Step> sList = aService.selectStepList(d.getDocTempNo());
+				// 로그인 사용자가 기안자이거나 문서가 반려되지 않았을 때
+				if(memNo == d.getDrafterNo() && d.getrStatus().equals("N")) {
+					d.setsStatus("기안");
+				// 문서가 반려되었을 때
+				}else if(d.getrStatus().equals("Y")) {
+					d.setsStatus("반려");
+				}else {
+					for(Step s : sList) {
+						if(memNo == s.getStaffNo()) {
+							if(s.getLineNo() == 1) {
+								d.setsStatus("결재");
+							}else if(s.getLineNo() == 2) {
+								d.setsStatus("회람");
+							}else if(s.getLineNo() == 3) {
+								d.setsStatus("수신");
+							}
+						}
+					}
+				}
+			}
+		String catagory="전체";
+		mv.addObject("dList",dList);
+		mv.addObject("pi",pi);
+		mv.addObject("catagory",catagory);
+		mv.setViewName("approval/approvalCompleteListView");
+		return mv;
+	}
+	
+	// 문서함 목록(기안) 불러오기
+	@RequestMapping("draftListView.do")
+	public ModelAndView draftListView(ModelAndView mv, HttpServletResponse response, HttpSession session,
+			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
+			
+			// 로그인 세션 사용자 사번 가져오기
+			int memNo = ((Member) session.getAttribute("loginUser")).getMemNo();
+			System.out.println("사용자 사번 : " + memNo);
+
+			// 로그인 사용자가 기안자이거나 결재 스탭에 포함되어 있는 문서의 갯수 조회
+			int listCount = aService.getCompleteAllListCount(memNo);
+
+			// 페이징
+			PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+
+			// 로그인 사용자가 기안자이거나 결재라인에 있는 문서리스트 조회(10개씩)
+			ArrayList<Document> dList = aService.selectCompleteAllList(memNo, pi);
+			
+			ArrayList<Document> dList2 = new ArrayList<Document>();
 		
+			for(Document d : dList) {
+				ArrayList<Step> sList = aService.selectStepList(d.getDocTempNo());
+				// 로그인 사용자가 기안자이거나 문서가 반려되지 않았을 때
+				if(memNo == d.getDrafterNo() && d.getrStatus().equals("N")) {
+					d.setsStatus("기안");
+				// 문서가 반려되었을 때
+				}else if(d.getrStatus().equals("Y")) {
+					d.setsStatus("반려");
+				}else {
+					for(Step s : sList) {
+						if(memNo == s.getStaffNo()) {
+							if(s.getLineNo() == 1) {
+								d.setsStatus("결재");
+							}else if(s.getLineNo() == 2) {
+								d.setsStatus("회람");
+							}else if(s.getLineNo() == 3) {
+								d.setsStatus("수신");
+							}
+						}
+					}
+				}
+				if(d.getsStatus().equals("기안")) {
+					dList2.add(d);
+				}
+			}
+		String catagory="기안";
+		mv.addObject("dList",dList2);
+		mv.addObject("pi",pi);
+		mv.addObject("catagory",catagory);
+		mv.setViewName("approval/approvalCompleteListView");
+		return mv;
+	}
+	
+	// 문서함 목록(결재) 불러오기
+	@RequestMapping("approvalListView.do")
+	public ModelAndView approvalListView(ModelAndView mv, HttpServletResponse response, HttpSession session,
+			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
+			
+			// 로그인 세션 사용자 사번 가져오기
+			int memNo = ((Member) session.getAttribute("loginUser")).getMemNo();
+			System.out.println("사용자 사번 : " + memNo);
+
+			// 로그인 사용자가 기안자이거나 결재 스탭에 포함되어 있는 문서의 갯수 조회
+			int listCount = aService.getCompleteAllListCount(memNo);
+
+			// 페이징
+			PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+
+			// 로그인 사용자가 기안자이거나 결재라인에 있는 문서리스트 조회(10개씩)
+			ArrayList<Document> dList = aService.selectCompleteAllList(memNo, pi);
+			
+			ArrayList<Document> dList2 = new ArrayList<Document>();
 		
+			for(Document d : dList) {
+				ArrayList<Step> sList = aService.selectStepList(d.getDocTempNo());
+				// 로그인 사용자가 기안자이거나 문서가 반려되지 않았을 때
+				if(memNo == d.getDrafterNo() && d.getrStatus().equals("N")) {
+					d.setsStatus("기안");
+				// 문서가 반려되었을 때
+				}else if(d.getrStatus().equals("Y")) {
+					d.setsStatus("반려");
+				}else {
+					for(Step s : sList) {
+						if(memNo == s.getStaffNo()) {
+							if(s.getLineNo() == 1) {
+								d.setsStatus("결재");
+							}else if(s.getLineNo() == 2) {
+								d.setsStatus("회람");
+							}else if(s.getLineNo() == 3) {
+								d.setsStatus("수신");
+							}
+						}
+					}
+				}
+				if(d.getsStatus().equals("결재")) {
+					dList2.add(d);
+				}
+			}
+		String catagory="결재";
+		mv.addObject("dList",dList2);
+		mv.addObject("pi",pi);
+		mv.addObject("catagory",catagory);
+		mv.setViewName("approval/approvalCompleteListView");
+		return mv;
+	}
+	// 문서함 목록(수신) 불러오기
+	@RequestMapping("receiveListView.do")
+	public ModelAndView recevieListView(ModelAndView mv, HttpServletResponse response, HttpSession session,
+			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
+			
+			// 로그인 세션 사용자 사번 가져오기
+			int memNo = ((Member) session.getAttribute("loginUser")).getMemNo();
+			System.out.println("사용자 사번 : " + memNo);
+
+			// 로그인 사용자가 기안자이거나 결재 스탭에 포함되어 있는 문서의 갯수 조회
+			int listCount = aService.getCompleteAllListCount(memNo);
+
+			// 페이징
+			PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+
+			// 로그인 사용자가 기안자이거나 결재라인에 있는 문서리스트 조회(10개씩)
+			ArrayList<Document> dList = aService.selectCompleteAllList(memNo, pi);
+			
+			ArrayList<Document> dList2 = new ArrayList<Document>();
+		
+			for(Document d : dList) {
+				ArrayList<Step> sList = aService.selectStepList(d.getDocTempNo());
+				// 로그인 사용자가 기안자이거나 문서가 반려되지 않았을 때
+				if(memNo == d.getDrafterNo() && d.getrStatus().equals("N")) {
+					d.setsStatus("기안");
+				// 문서가 반려되었을 때
+				}else if(d.getrStatus().equals("Y")) {
+					d.setsStatus("반려");
+				}else {
+					for(Step s : sList) {
+						if(memNo == s.getStaffNo()) {
+							if(s.getLineNo() == 1) {
+								d.setsStatus("결재");
+							}else if(s.getLineNo() == 2) {
+								d.setsStatus("회람");
+							}else if(s.getLineNo() == 3) {
+								d.setsStatus("수신");
+							}
+						}
+					}
+				}
+				if(d.getsStatus().equals("수신")) {
+					dList2.add(d);
+				}
+			}
+		String catagory="수신";
+		mv.addObject("dList",dList2);
+		mv.addObject("pi",pi);
+		mv.addObject("catagory",catagory);
+		mv.setViewName("approval/approvalCompleteListView");
+		return mv;
+	}
+	
+	// 문서함 목록(회람) 불러오기
+	@RequestMapping("referenceListView.do")
+	public ModelAndView referenceListView(ModelAndView mv, HttpServletResponse response, HttpSession session,
+			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
+			
+			// 로그인 세션 사용자 사번 가져오기
+			int memNo = ((Member) session.getAttribute("loginUser")).getMemNo();
+			System.out.println("사용자 사번 : " + memNo);
+
+			// 로그인 사용자가 기안자이거나 결재 스탭에 포함되어 있는 문서의 갯수 조회
+			int listCount = aService.getCompleteAllListCount(memNo);
+
+			// 페이징
+			PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+
+			// 로그인 사용자가 기안자이거나 결재라인에 있는 문서리스트 조회(10개씩)
+			ArrayList<Document> dList = aService.selectCompleteAllList(memNo, pi);
+			
+			ArrayList<Document> dList2 = new ArrayList<Document>();
+		
+			for(Document d : dList) {
+				ArrayList<Step> sList = aService.selectStepList(d.getDocTempNo());
+				// 로그인 사용자가 기안자이거나 문서가 반려되지 않았을 때
+				if(memNo == d.getDrafterNo() && d.getrStatus().equals("N")) {
+					d.setsStatus("기안");
+				// 문서가 반려되었을 때
+				}else if(d.getrStatus().equals("Y")) {
+					d.setsStatus("반려");
+				}else {
+					for(Step s : sList) {
+						if(memNo == s.getStaffNo()) {
+							if(s.getLineNo() == 1) {
+								d.setsStatus("결재");
+							}else if(s.getLineNo() == 2) {
+								d.setsStatus("회람");
+							}else if(s.getLineNo() == 3) {
+								d.setsStatus("수신");
+							}
+						}
+					}
+				}
+				if(d.getsStatus().equals("회람")) {
+					dList2.add(d);
+				}
+			}
+		String catagory="회람";
+		mv.addObject("dList",dList2);
+		mv.addObject("pi",pi);
+		mv.addObject("catagory",catagory);
+		mv.setViewName("approval/approvalCompleteListView");
+		return mv;
+	}
+	
+	// 문서함 목록(반려) 불러오기
+	@RequestMapping("rejectListView.do")
+	public ModelAndView rejectListView(ModelAndView mv, HttpServletResponse response, HttpSession session,
+			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
+			
+			// 로그인 세션 사용자 사번 가져오기
+			int memNo = ((Member) session.getAttribute("loginUser")).getMemNo();
+			System.out.println("사용자 사번 : " + memNo);
+
+			// 로그인 사용자가 기안자이거나 결재 스탭에 포함되어 있는 문서의 갯수 조회
+			int listCount = aService.getCompleteAllListCount(memNo);
+
+			// 페이징
+			PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+
+			// 로그인 사용자가 기안자이거나 결재라인에 있는 문서리스트 조회(10개씩)
+			ArrayList<Document> dList = aService.selectCompleteAllList(memNo, pi);
+			
+			ArrayList<Document> dList2 = new ArrayList<Document>();
+		
+			for(Document d : dList) {
+				ArrayList<Step> sList = aService.selectStepList(d.getDocTempNo());
+				// 로그인 사용자가 기안자이거나 문서가 반려되지 않았을 때
+				if(memNo == d.getDrafterNo() && d.getrStatus().equals("N")) {
+					d.setsStatus("기안");
+				// 문서가 반려되었을 때
+				}else if(d.getrStatus().equals("Y")) {
+					d.setsStatus("반려");
+				}else {
+					for(Step s : sList) {
+						if(memNo == s.getStaffNo()) {
+							if(s.getLineNo() == 1) {
+								d.setsStatus("결재");
+							}else if(s.getLineNo() == 2) {
+								d.setsStatus("회람");
+							}else if(s.getLineNo() == 3) {
+								d.setsStatus("수신");
+							}
+						}
+					}
+				}
+				if(d.getsStatus().equals("반려")) {
+					dList2.add(d);
+				}
+			}
+		String catagory="반려";
+		mv.addObject("dList",dList2);
+		mv.addObject("pi",pi);
+		mv.addObject("catagory",catagory);
+		mv.setViewName("approval/approvalCompleteListView");
+		return mv;
+	}
+	
+	// 문서 디테일 중개 메소드
+	@RequestMapping("approvalDetailBroker.do")
+	public void approvalDetailBroker(ModelAndView mv, HttpServletResponse response, HttpSession session, String docNo, int formNo){
+
+		if(formNo == 1) {
+			businessDetail(mv, response, session, docNo, formNo);
+		}
+		
+	}
+	
+	// 업무연락 문서 상세보기
+	public ModelAndView businessDetail(ModelAndView mv, HttpServletResponse response, HttpSession session, String docNo, int formNo) {
+		
+		int memNo = ((Member) session.getAttribute("loginUser")).getMemNo();
+		String memName= ((Member) session.getAttribute("loginUser")).getName();
+		System.out.println("사용자번호 : " + memNo);
+		System.out.println("사용자이름 : " + memName);
 		
 		return mv;
 	}

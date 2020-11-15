@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.mail.model.dao.MailDao;
 import com.kh.nullcompany.mail.model.vo.Mail;
+import com.kh.nullcompany.mail.model.vo.MailListCount;
 import com.kh.nullcompany.member.model.vo.Member;
 
 @Service("maService")
@@ -15,14 +16,6 @@ public class MailServiceImpl implements MailService {
 
 @Autowired
 	private MailDao maDao;
-
-	
-
-	// 리스트 카운트 
-	@Override
-	public int getListCount(int memNo) {
-		return maDao.getListCount(memNo);
-	}
 
 	// 받은 편지함 리스트 가져오기 
 	@Override
@@ -152,12 +145,45 @@ public class MailServiceImpl implements MailService {
 		return maDao.realDeleteOneMail(mailNo);
 	}
 
-	
+	// 받은 메일함 편지 갯수 세기 
+	@Override
+	public int getReListCount(String memId) {
+		return maDao.getReListCount(memId);
+	}
 
+	// 보낸 메일함 편지 갯수 세기 
+	@Override
+	public int getSendListCount(String memId) {
+		return maDao.getSendListCount(memId);
+	}
 
-	
+	// 임시보관함 편지 갯수 세기 
+	@Override
+	public int getSaveListCount(String memId) {
+		return maDao.getSaveListCount(memId);
+	}
 
+	@Override
+	public ArrayList<Member> autoComplete(String text) {
+		return maDao.autoComplete(text);
+	}
 
-	
+	// 휴지통에서 복구하기 
+	@Override
+	public int backMail(int mailNo) {
+		return maDao.backMail(mailNo);
+	}
+
+	// 안 읽은 메일 갯수 세기 
+	@Override
+	public int getReReListCount(String memId) {
+		return maDao.getReReListCount(memId);
+	}
+
+	@Override
+	public MailListCount getMailBoxCount(String memId) {
+		return maDao.getMailBoxCount(memId);
+	}
+
 	
 }
