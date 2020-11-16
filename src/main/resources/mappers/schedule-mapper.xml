@@ -245,4 +245,11 @@
                 WHERE CAL_NO = #{cal_no}
                ) WHERE CAL_NO = #{cal_no}
 	</update>
+	
+	 <select id="SearchMem_public" resultMap="memberResultSet">
+	 	select m.name, m.mem_no
+        from member m
+        join department d on d.dept_no = m.dept_no
+        where (m.name LIKE  '%' || #{text} || '%'  or d.dept_name LIKE'%' || #{text} || '%')
+	 </select>
 </mapper>

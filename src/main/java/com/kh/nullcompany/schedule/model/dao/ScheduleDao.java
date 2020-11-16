@@ -124,6 +124,10 @@ public class ScheduleDao {
 		return sqlSession.update("scheduleMapper.editIndiCal_Sche",cal_no);
 	}
 
+	public ArrayList<Member> SearchMem_public(String text) {
+		return(ArrayList) sqlSession.selectList("scheduleMapper.SearchMem_public",text);
+	}
+
 
 
 

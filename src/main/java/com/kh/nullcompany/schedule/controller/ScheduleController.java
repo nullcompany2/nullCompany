@@ -95,6 +95,17 @@ public class ScheduleController {
 		sService.LookMember(lookmemno, Calendar.getCalNo());
 
 	}
+	
+	// 공유 캘린더 사원 검색 아라언니 최고!
+	@RequestMapping("SearchMem_public.do")
+	public void autoComplete(HttpServletResponse response, String text) throws JsonIOException, IOException {
+		response.setContentType("application/json; charset=utf-8");
+		System.out.println(text);
+		
+		ArrayList<Member> m = sService.SearchMem_public(text);
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		gson.toJson(m,response.getWriter());
+	}
 
 	// 내 캘린더 인써트
 	@RequestMapping("insertIndividual.do")

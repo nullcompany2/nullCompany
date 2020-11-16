@@ -183,6 +183,11 @@ public class ScheduleServiceImpl implements ScheduleService {
 		
 	}
 
+	@Override
+	public ArrayList<Member> SearchMem_public(String text) {
+		return sDao.SearchMem_public(text);
+	}
+
 
 
 }

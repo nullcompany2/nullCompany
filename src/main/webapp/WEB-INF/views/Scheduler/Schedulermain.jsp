@@ -486,9 +486,14 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 							</div>
 						</div>
 						<div style="position: absolute; top: 130px; font-size: 14px;">
-							사원 이름 &nbsp; <input type="text" id="testText"
-								style="margin-left: 19px;"> &nbsp;
-							<btn style="font-size: 14px; color: #477A8F;">검색</btn>
+							사원 이름 &nbsp; <input type="text" id="search_mem"
+								style="margin-left: 19px;"/> &nbsp;
+								
+								<span id="searchAddress" style="font-size: 14px; color: #477A8F;">검색 </span>
+							 	<div id="autoAddress"> 
+							 	 <!--  자동 완성 검색 결과  -->
+							 	</div>
+							
 						</div>
 
 
@@ -1235,7 +1240,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
     /*    $(document).on('click', "#cal_sub", function(){ */
     $("#cal_sub").off("click").on('click',
             function () {
-    	
+    		   $("#search_mem").empty();
     	
     			
                 var calName = $('#cal_name').val();
@@ -1245,6 +1250,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
                 var look = $('#lookname').text();
                 var lookArray = look.split(',');
                 
+               
                 if(calName.length < 1){
        			 alert("캘린더 제목을 입력해주세요.")
        			 return false;
@@ -1294,6 +1300,53 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
                     })
 
             })
+            
+            
+            // 공유 캘린더 자동완성
+            
+              $("#search_mem").on("keyup",function(){
+              var text = $(this).val();
+             
+              if(text.length > 1){
+                  
+ 			$.ajax({
+ 				url:"SearchMem_public.do",
+ 				type:"post",
+ 				data:{text : text},
+ 				success:function(data){
+ 	 				console.log(text);
+ 				 	console.log(data);
+ 	                $(text).val(0); 
+ 				 
+ 				 	var auto = $("#autoAddress");
+ 	               	var str = "";
+ 				 	$("#autoAddress").empty();
+ 				 		
+ 				 		str += "<ul id='ulAuto'>"
+ 				   
+ 				 	$.each(data,function(ind,entry){
+ 				 	
+ 				 		str += "<li>" + entry['name'] + "(" ;
+ 				 		str += entry['memNo'] +")" + "</li>" ;
+ 				 		
+ 				 	});
+ 				 	
+ 				 		str += "</ul>"
+ 				 		auto.append(str);
+ 				 		$("#autoAddress").show();
+ 				 	
+ 	                  
+ 				},error : function() {
+ 					console.log("전송실패");
+ 				} 
+ 			});
+ 			
+              }else {
+            	  $("#autoAddress").hide();
+              }
+              
+ 		});
+        
 </script>
 	
 
@@ -1532,6 +1585,13 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
      
      $('#community').on('click', function() {
          // 공유 캘린더 모달창 띄우기
+         var Cal_color = document.getElementById("colorselect");
+         $("#cal_name").val('');
+         Cal_color.style.backgroundColor = 'white';
+         $("#result").empty();
+         $("#lookname").empty();
+         $("#enrollname").empty();
+         
          modal('communitymodal');
       });
 
@@ -1540,7 +1600,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
          // 캘린더 멤버 띄우기
          modal2('com_detailmodal');
          $("#detail_modal").hide();
-        
+  
         
       });
      
