@@ -104,7 +104,7 @@ public class noticeController {
 				n.setOriginalFileName(file.getOriginalFilename());
 				n.setRenameFileName(renameFileName);
 			}
-		}
+		} 
 
 		int result = nService.insertNotice(n);
 
