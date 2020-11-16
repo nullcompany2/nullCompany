@@ -86,7 +86,6 @@
 			  </c:url>  
               
                 <a href="${mailReply}"><input type="button" value="답장"/> </a> 
-						<a href=""> <input type="button" value="전달"/></a> 
 						<input  id="backMail" type="button" value="복원" /> 
 						<input id="realdelMail" type="button" value="완전삭제" />
 						<br> 

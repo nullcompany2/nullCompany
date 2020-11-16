@@ -3,6 +3,8 @@ package com.kh.nullcompany.mail.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -343,6 +345,7 @@ private ScheduleService sService;
 			return mv;
 		}
 		
+		// 읽은 메일 보기 
 		@RequestMapping("readMail.do")
 		public ModelAndView readMailList(ModelAndView mv, HttpServletResponse response,
 				HttpSession session,
@@ -364,6 +367,7 @@ private ScheduleService sService;
 			
 		}
 		
+		// 안읽은 메일 보기 
 		@RequestMapping("unReadMail.do")
 		public ModelAndView unReadMailList(ModelAndView mv, HttpServletResponse response,
 				HttpSession session,
@@ -515,7 +519,46 @@ private ScheduleService sService;
 			}
 		}
 		
+		// 받은 메일 디테일뷰에서 전달하기 
+		@RequestMapping("mailFoward.do")
+		public ModelAndView mailFoward(ModelAndView mv, int mailNo){
+
+			Mail ma = maService.mailReply(mailNo);
+			
+			mv.addObject("ma",ma);
+			mv.setViewName("mail/forwardMail");
+			
+			return mv;
+		}
 		
+		// 받은 메일함  - 제목으로
+		@RequestMapping("searchTitle.do")
+		public ModelAndView searchTitle(ModelAndView mv, String category, String search,HttpSession session) {
 		
+			String memId = ((Member)session.getAttribute("loginUser")).getId();
+		
+		Map map = new HashMap();
+		
+		map.put("search",search);
+		map.put("memId",memId);
+		
+		if(category.equals("제목")) {
+		ArrayList<Mail> list = maService.searchTitle(map);
+		mv.addObject("list",list);
+		}else if(category.equals("보낸사람")){
+		ArrayList<Mail> list = maService.searchRecipient(map);
+		mv.addObject("list",list);
+		}else if(category.equals("내용")) {
+			ArrayList<Mail> list = maService.searchMcontent(map);
+			mv.addObject("list",list);
+		}else if(category.equals("제목내용")) {
+			ArrayList<Mail> list = maService.searchMtitleContent(map);
+			mv.addObject("list",list);
+		}
+		
+		mv.setViewName("mail/searchResult");
+		return mv;
+		}
 }
+
 

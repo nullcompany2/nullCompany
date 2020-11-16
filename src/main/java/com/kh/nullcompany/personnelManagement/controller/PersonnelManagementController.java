@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -293,6 +294,7 @@ public class PersonnelManagementController {
 	// 근태현황
 	@RequestMapping("myDiligence.do")
 	public ModelAndView myDiligence(ModelAndView mv, HttpServletResponse response, HttpSession session) {
+		SimpleDateFormat formatD = new SimpleDateFormat("yyyy-MM-dd");
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
 		// 올해 몇월인지(월평 지각수 계산용)
 		Date today = new Date();
@@ -310,13 +312,19 @@ public class PersonnelManagementController {
 		int noAttendanceCount = pService.noAttendanceCount(memNo);
 		int noCheckOffwork = pService.noCheckOffwork(memNo);
 		
-		// 전체 근태기록
+		// 전체 근태기록 (for Calendar)
+		ArrayList<RecordDiligence> recordDiligenceList = pService.recordDiligenceList(memNo);
 		
-		// 전체 휴가 사용날 / 사용일수 기록
+		
+		System.out.println(recordDiligenceList);
+		
+		// 전체 휴가 사용날 / 사용일수 기록(for Calendar)
 		
 		// 근태 수정내역 보기 
 		ArrayList<ModificationDiligence> recordMod = pService.selectRecordModification(memNo);
 		System.out.println(recordMod);
+		
+		mv.addObject("recordDiligenceList",recordDiligenceList);
 		mv.addObject("recordMod",recordMod);
 		mv.addObject("noAttendanceCount",noAttendanceCount);
 		mv.addObject("noCheckOffwork",noCheckOffwork);
@@ -369,44 +377,68 @@ public class PersonnelManagementController {
 		int setCTime = Integer.parseInt(currentTime.replaceAll(":", ""));
 		Map	forR = new HashMap(); // 기록 상태값용
 		forR.put("memNo",memNo);
-		if(or ==1) {
-			int RecordAB_A = pService.RecordAB_A(memNo);
-			System.out.println(RecordAB_A);
-			if(RecordAB_A == 0) {
-				if(setCTime < 1400) {
-					if(setCTime > setATime) {
-						forR.put("statusD","지각");
+		
+		// 출퇴근 해당날자인지 체크
+		ArrayList<SetAttendance> ADay = pService.AttendanceDays();
+		System.out.println(ADay);
+		Calendar todayCalen = Calendar.getInstance();
+		int todayDate = todayCalen.get(Calendar.DAY_OF_WEEK)-1;
+		int checkADay = 0;
+		System.out.println(todayDate + "오늘 요일");
+		for(SetAttendance i : ADay) {
+			if(i.getDayAvailable().equals("Y")) {
+				System.out.println("확인"+i.getNoDay());
+				if(todayDate == i.getNoDay()) {
+					checkADay=1;
+					break;
+				}
+			}
+		}
+		System.out.println(checkADay +"오늘 출근여부");
+		// 출근 & 퇴근 기록 및 알림
+		if(checkADay ==1) {
+			if(or ==1) {
+				int RecordAB_A = pService.RecordAB_A(memNo);
+				System.out.println(RecordAB_A);
+				if(RecordAB_A == 0) {
+					if(setCTime < 1400) {
+						if(setCTime > setATime) {
+							forR.put("statusD","지각");
+						}else {
+							forR.put("statusD","정상");
+						}
+						int insertRA= pService.insertRA(forR);
+						str = "출근시간 : "+currentTime+" "+((Member)session.getAttribute("loginUser")).getName()+"님 오늘도 열씸히 근무해주세요. ";					
 					}else {
-						forR.put("statusD","정상");
+						str="결근입니다.";
 					}
-					int insertRA= pService.insertRA(forR);
-					str = "출근시간 : "+currentTime+" "+((Member)session.getAttribute("loginUser")).getName()+"님 오늘도 열씸히 근무해주세요. ";					
+				}else if(RecordAB_A==1) {
+					str = "이미 출근되어 있습니다.";
 				}else {
-					str="결근입니다.";
+					str = "뭔가잘못된듯..";
 				}
-			}else if(RecordAB_A==1) {
-				str = "이미 출근되어 있습니다.";
-			}else {
-				str = "뭔가잘못된듯..";
-			}
-		}else if(or==2) {
-			if(setCTime > setOTime) {
-				int RecordAB_O = pService.RecordAB_O(memNo);
-				if(RecordAB_O == 1) {
-					int insertRO = pService.insertRO(forR);
-					if(insertRO == 1) {
-						str=((Member)session.getAttribute("loginUser")).getName()+"님 오늘하루 고생하셨습니다. ";	
-					}else {
-						str="오류 발생 인사담당자에게 연락주세요";
+			}else if(or==2) {
+				if(setCTime > setOTime) {
+					int RecordAB_O = pService.RecordAB_O(memNo);
+					if(RecordAB_O == 1) {
+						int insertRO = pService.insertRO(forR);
+						if(insertRO == 1) {
+							str=((Member)session.getAttribute("loginUser")).getName()+"님 오늘하루 고생하셨습니다. ";	
+						}else {
+							str="오류 발생 인사담당자에게 연락주세요";
+						}
+					}else if(RecordAB_O == 0) {
+						str ="출근을 하지않으셨거나, 결근처리 또는 이미퇴근이 완료되었습니다.";
 					}
-				}else if(RecordAB_O == 0) {
-					str ="출근을 하지않으셨거나, 결근처리 또는 이미퇴근이 완료되었습니다.";
+				}else {
+					str="퇴근시간이 되지 않았습니다.";
 				}
-			}else {
-				str="퇴근시간이 되지 않았습니다.";
+				
+				
 			}
 			
-			
+		}else {
+			str="출근일이 아닙니다.";
 		}
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(str,response.getWriter());
@@ -437,7 +469,6 @@ public class PersonnelManagementController {
 		mv.setViewName("personnel_management/setLeaveStandard");
 		return mv;
 	}
-////////////////////////////////////////////////**********강사님 여기요!/////////////////////////////jsp는 setLeaveStandard입니ㅏㄷ./////
 	// 휴가 관리 설정저장용
 	@ResponseBody
 	@RequestMapping(value="fixSetLeave.do")
@@ -865,7 +896,6 @@ public class PersonnelManagementController {
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(str,response.getWriter());
 	}
-
 	
 
 }

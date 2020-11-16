@@ -234,7 +234,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 												<label id="chela" for="${ publicCalList.calNo }">
 												<span>${ publicCalList.calName }</span>
 												</label></input>
-											<a>수정</a></div> 
+											<a id="${publicCalList.calNo}" class="editpubCal">수정</a></div> 
 											</c:forEach>
 											
 									
@@ -486,9 +486,14 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 							</div>
 						</div>
 						<div style="position: absolute; top: 130px; font-size: 14px;">
-							사원 이름 &nbsp; <input type="text" id="testText"
-								style="margin-left: 19px;"> &nbsp;
-							<btn style="font-size: 14px; color: #477A8F;">검색</btn>
+							사원 이름 &nbsp; <input type="text" id="search_mem"
+								style="margin-left: 19px;"/> &nbsp;
+								
+								<span id="searchAddress" style="font-size: 14px; color: #477A8F;">검색 </span>
+							 	<div id="autoAddress"> 
+							 	 <!--  자동 완성 검색 결과  -->
+							 	</div>
+							
 						</div>
 
 
@@ -552,6 +557,115 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 							<div id="lookauthority">
 
 								<p id="lookname"
+									style="width: 100px; font-size: 12px; position: absolute; text-align: left; top: 5px; margin-left: 5px;"></p>
+
+							</div>
+
+
+							<div style="position: absolute; bottom: 40px; left: 220px;">
+								<button id="cal_sub"
+									style="background: #fff; color: #2c86dc; cursor: pointer;
+									 padding: 5px 27px 6px; border: 1px solid #c8c8c8">저장</button>
+								<button class="modal-close-btn cursor"
+								style="position: absolute; left: 90px; top: 0px; cursor: pointer;  padding: 5px 27px 6px; color: #444;
+								 letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">취소</button>
+							</div>
+
+						</div>
+		
+					</div>
+					
+					<!-- 공유 캘린더 수정 모달 -->
+						<div id="edit_communitymodal" class="modal-dragscroll">
+						<h4 style="color: #477A8F; margin-bottom: 15px; margin-top: 12px;">공유
+							캘린더 수정</h4>
+
+						<label for="" style="font-size: 14px;">캘린더 이름 </label>
+						&nbsp;&nbsp; <input type="text" id="edit_publiccal_name"> &nbsp;
+							<input type="hidden" id="edit_public_calno"/>
+
+						  
+						   <div class="palletBox3">
+						
+						      <div id="box3" class="box3">
+						         <label style="font-size: 14px; position: absolute; top: 100px;">색상</label>
+						         <div id="colorselect3"></div>
+						         <div id="palletBox3" class="pallet3"></div>
+						      </div>
+						   </div>
+						   
+						<div style="position: absolute; top: 130px; font-size: 14px;">
+							사원 이름 &nbsp; <input type="text" id="search_mem2"
+								style="margin-left: 19px;"/> &nbsp;
+								
+								<span id="searchAddress2" style="font-size: 14px; color: #477A8F;">검색 </span>
+							 	<div id="autoAddress2"> 
+							 	 <!--  자동 완성 검색 결과  -->
+							 	</div>
+							
+						</div>
+
+
+
+						<div style="text-align: center;">
+							<div>
+								<div id="dept_list">
+									<ul class="tree">
+										<c:forEach var="deptList" items="${ deptList }" begin="1">
+
+											<li>
+												<button>${ deptList.deptName }부</button>
+												<ul>
+													<c:forEach var="memList" items="${ memList }">
+														<c:if test='${deptList.deptNo eq memList.deptNo}'>
+															<li><label><input type="checkbox" id="name2"
+																	value="${ memList.name }(${ memList.memNo })" />${ memList.name }(${ memList.memNo })</label></li>
+														</c:if>
+													</c:forEach>
+												</ul>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+								<div id="name_list">
+									<div id='result2'
+										style="margin-left: 10px; margin-top: 10px; text-align: left; font-size: 12px;"></div>
+								</div>
+							</div>
+
+							<div style="position: absolute; right: 191px; top: 190px;">
+								<img src="resources/images/right.png" id="enrolladd2" style="cursor: pointer;"><br>
+								<img src="resources/images/left.png" id="enrollsub2" style="cursor: pointer;">
+							</div>
+
+
+							<p
+								style="font-size: 12px; color: #477A8F; position: absolute; position: absolute; right: 110px; top: 145px;">
+								<등록권한>
+							</p>
+							<div id="enrollauthority">
+
+								<p id="enrollname2"
+									style="width: 100px; font-size: 12px; position: absolute; text-align: left; top: 5px; margin-left: 5px;">
+
+
+
+								</p>
+
+
+							</div>
+
+							<div style="position: absolute; right: 191px; top: 330px;">
+								<img src="resources/images/right.png" id="lookadd2" style="cursor: pointer;"><br>
+								<img src="resources/images/left.png" id="looksub2" style="cursor: pointer;">
+							</div>
+							<p
+								style="font-size: 12px; color: #477A8F; position: absolute; right: 110px; top: 290px;">
+								<조회권한>
+							</p>
+							<div id="lookauthority">
+
+								<p id="lookname2"
 									style="width: 100px; font-size: 12px; position: absolute; text-align: left; top: 5px; margin-left: 5px;"></p>
 
 							</div>
@@ -1235,7 +1349,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
     /*    $(document).on('click', "#cal_sub", function(){ */
     $("#cal_sub").off("click").on('click',
             function () {
-    	
+    		   $("#search_mem").empty();
     	
     			
                 var calName = $('#cal_name').val();
@@ -1245,6 +1359,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
                 var look = $('#lookname').text();
                 var lookArray = look.split(',');
                 
+               
                 if(calName.length < 1){
        			 alert("캘린더 제목을 입력해주세요.")
        			 return false;
@@ -1294,6 +1409,136 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
                     })
 
             })
+            
+            
+            // 공유 캘린더 자동완성
+           
+              $("#search_mem").on("keyup",function(){
+              var text = $(this).val();
+             
+              if(text.length > 1){
+                  
+ 			$.ajax({
+ 				url:"SearchMem_public.do",
+ 				type:"post",
+ 				data:{text : text},
+ 				success:function(data){
+ 	 				console.log(text);
+ 				 	console.log(data);
+ 	                $(text).val(0); 
+ 				 
+ 				 	var auto = $("#autoAddress");
+ 	               	var str = "";
+ 				 	$("#autoAddress").empty();
+ 				 		
+ 				 		str += "<ul id='ulAuto'>"
+ 				   
+ 				 	$.each(data,function(ind,entry){
+ 				 	
+ 				 		str += "<li>" +entry['name'] + "(" ;
+ 				 		str += entry['memNo'] +")" + "</li>" ;
+ 				 		
+ 				 	});
+ 				 	
+ 				 		str += "</ul>"
+ 				 		auto.append(str);
+ 				 		$("#autoAddress").show();
+ 				 	
+ 	                  
+ 				},error : function() {
+ 					console.log("전송실패");
+ 				} 
+ 			});
+ 			
+              }else {
+            	  $("#autoAddress").hide();
+              }
+              
+ 		});
+    $(document).on("click", "#ulAuto li", function(){
+    	var a = $(this).text();
+    	$('input:checkbox[id="name"]').each(function(){
+    	     if(this.value ==  a){
+    	        this.checked = true;
+    	     }
+    	});
+    	
+    	$("#autoAddress").mouseenter(function() {
+    	       $("#ulAuto").show();
+    	});
+    	$("#autoAddress").mouseleave(function() {
+    	       $("#ulAuto").hide();
+    	});
+
+    	 
+    	 
+    });
+    
+    
+    // 공유 캘린더 수정 자동완성
+    
+    $("#search_mem2").on("keyup",function(){
+    var text = $(this).val();
+   
+    if(text.length > 1){
+        
+	$.ajax({
+		url:"SearchMem_public.do",
+		type:"post",
+		data:{text : text},
+		success:function(data){
+			console.log(text);
+		 	console.log(data);
+           $(text).val(0); 
+		 
+		 	var auto = $("#autoAddress2");
+          	var str = "";
+		 	$("#autoAddress2").empty();
+		 		
+		 		str += "<ul id='ulAuto2'>"
+		   
+		 	$.each(data,function(ind,entry){
+		 	
+		 		str += "<li>" +entry['name'] + "(" ;
+		 		str += entry['memNo'] +")" + "</li>" ;
+		 		
+		 	});
+		 	
+		 		str += "</ul>"
+		 		auto.append(str);
+		 		$("#autoAddress2").show();
+		 	
+             
+		},error : function() {
+			console.log("전송실패");
+		} 
+		});
+		
+	    }else {
+	  	  $("#autoAddress2").hide();
+	    }
+    
+			});
+			$(document).on("click", "#ulAuto2 li", function(){
+			var a = $(this).text();
+			$('input:checkbox[id="name2"]').each(function(){
+			   if(this.value ==  a){
+			      this.checked = true;
+			   }
+			});
+			
+			$("#autoAddress2").mouseenter(function() {
+			     $("#ulAuto2").show();
+			});
+			$("#autoAddress2").mouseleave(function() {
+			     $("#ulAuto2").hide();
+			});
+			
+			
+			
+			});
+    
+        
 </script>
 	
 
@@ -1532,15 +1777,52 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
      
      $('#community').on('click', function() {
          // 공유 캘린더 모달창 띄우기
+         var Cal_color = document.getElementById("colorselect");
+         $("#cal_name").val('');
+         $("#search_mem").val('');
+         Cal_color.style.backgroundColor = 'white';
+         $("#result").empty();
+         $("#lookname").empty();
+         $("#enrollname").empty();
+         $("input:checkbox[id='name']").prop("checked", false);
+
          modal('communitymodal');
       });
 
+     $('.editpubCal').on('click', function() {
+         // 공유 캘린더 수정 모달
+         var calNo = $(this).attr("id");
+         var Sche_color = document.getElementById("colorselect3");
+         
+         
+         modal('edit_communitymodal');
+         // 공유 캘린더 수정 전 정보 가져오기
+         $.ajax({
+             url: "editDetailPublicCal.do",
+             type: "post",
+             data: {
+                 "calNo": calNo
+             },
+             success: function (data) {
+                 console.log("내 캘린더 수정"+ data);
+                 $("#edit_publiccal_name").val(data.calName);
+                 Sche_color.style.backgroundColor = data.color;
+                 $("#edit_public_calno").val(data.calNo);
+             },
+             error: function (request,
+                 status, error) {
+                 console.log("내 캘린더 정보 실패"+ error);
+               
+             }
+
+         })
+     });
      
      $('#perimg').on('click', function() {
          // 캘린더 멤버 띄우기
          modal2('com_detailmodal');
          $("#detail_modal").hide();
-        
+  
         
       });
      
@@ -1624,14 +1906,31 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
          
              })
          })
-
-        // 조회 버튼
+		// 공유 캘린더 수정용 
+          $(document).ready(function () {
+             // input객체에 이벤트 발생시
+             $('input').change(function () {
+                 // input 중 checked인것들 다 모으기
+                 var inputArray = $('input[id="name2"]:checked');
+                 var tmp = '';
+               
+                 $.each(inputArray, function (index, item) {
+                     // tmp+=item.value+' ';
+                     
+                   //   tmp +='<option value="'+ inputArray.eq(index).val() + '">' + inputArray.eq(index).val() +'</option>';
+                   tmp +='<label for="'+inputArray.eq(index).val()+'3"><input type="checkbox"" name="checkname2" id="' +inputArray.eq(index).val()+ '3" class="checklist" value="'+ inputArray.eq(index).val() + '">' + inputArray.eq(index).val() +'</input><label><br>';
+                 });
+                //   $('#result').text(tmp)
+                  document.getElementById("result2").innerHTML= tmp
+             
+         
+             })
+         })
 
         // 등록 권한 추가 
-        var arraybox = "";
- 
-    	
         $('#enrolladd').click(function(){
+        	 var arraybox = "";
+        
         	$("#enrollname:last-child").empty();
           $('[name="checkname"]:checked').each(function(i){ //i는 체크수를 알수있음
            arraybox = $(this).val();
@@ -1641,11 +1940,30 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
       });
        }); 
 
+    // 공유 캘린더 수정용 등록 권한 수정
+    $('#enrolladd2').click(function(){
+   	 var arraybox = "";
+   
+   	$("#enrollname2:last-child").empty();
+     $('[name="checkname2"]:checked').each(function(i){ //i는 체크수를 알수있음
+      arraybox = $(this).val();
+     
+  	  $('#enrollname2').append('<p><input type="checkbox" name="finalname2" id="' + arraybox + '2" class="finallist2" value="'+ arraybox + '2"/><label id="lb" for="'+ arraybox+'2">' + arraybox +'</label><span style="color:white">,</span><br></p>');
+      console.log("중복없을때" + arraybox); 
+ 		});
+  }); 
     
        // 등록 권한 빼기 
      $('#enrollsub').on('click', function() {
  
        $('[name="finalname"]:checked').parent('p').remove(); 
+     });
+       
+       
+     // 공유 캘린더 수정용 등록 권한 빼기 
+     $('#enrollsub2').on('click', function() {
+ 
+       $('[name="finalname2"]:checked').parent('p').remove(); 
      });
        
        
@@ -1662,12 +1980,31 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
         console.log("중복없을때" + arraybox); 
    });
     }); 
+     
+     
+  // 공유 캘린더 수정용 조회 권한 수정
+
+     $('#lookadd2').click(function(){
+     	$("#lookname2:last-child").empty();
+       $('[name="checkname2"]:checked').each(function(i){ //i는 체크수를 알수있음
+        arraybox = $(this).val();
+       
+    	  $('#lookname2').append('<p><input type="checkbox" name="finallookname2" id="' + arraybox + '4" class="finallist" value="'+ arraybox + '4"/><label id="lb" for="'+ arraybox+'4">' + arraybox +'</label><span style="color:white">,</span><br></p>');
+        console.log("중복없을때" + arraybox); 
+   });
+    }); 
 
  
     // 조회 권한 빼기 
   $('#looksub').on('click', function() {
 
     $('[name="finallookname"]:checked').parent('p').remove(); 
+  });
+  
+  //  공유 캘린더 수정용 조회 권한 빼기 
+  $('#looksub2').on('click', function() {
+
+    $('[name="finallookname2"]:checked').parent('p').remove(); 
   });
   
       
@@ -1679,6 +2016,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
  window.onload = function(){
  init();
  init2();
+ init3();
  init4();
 
  }
@@ -1746,6 +2084,39 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 							colorBox2[i].style.background = colorBox2[i].id;
 						}
 					}
+					
+					 function init3(){
+						   //2차원 배열 파레트 데이터
+						         var pallet3 =[ [ "#FFA7A7", "#FFC19E", "#FFE08C",
+														"#FAED7D", "#CEF279", "#B7F0B1", "#B2EBF4",
+														"#B2CCFF", "#B5B2FF", "#D1B2FF", "#FFB2F5",
+														"#FFB2D9", "#D5D5D5", "#BDBDBD" ] ];
+						         var tag3 = "";
+						         for(i=0; i<pallet3.length; i++){
+						            for(j=0; j<pallet3[i].length; j++){
+						               tag3 += "<div id="+pallet3[i][j]+" class='colorBox3' onclick='colorSet3(this)'></div>";
+						            }
+						         }
+						         //파레트 파싱
+						         document.getElementById("palletBox3").innerHTML = tag3;
+
+						         //색상 입히기
+						         var colorBox3 = document.getElementsByClassName("colorBox3");
+						         for(i=0; i<colorBox3.length; i++){
+						            colorBox3[i].style.background = colorBox3[i].id;
+						         }
+						         }
+
+						         // onclick event
+						         function colorSet3(target3){
+						         document.querySelector("#colorselect3").style.background = target3.id;
+
+						         if(beforeColor != undefined && beforeColor != null){
+						            document.getElementById(beforeColor).className = document.getElementById(beforeColor).className.replace(" active3", "");
+						         }
+						         document.getElementById(target3.id).className += " active3";
+						         beforeColor = target3.id;
+						         }
 
 					// onclick event
 					function colorSet2(target2) {

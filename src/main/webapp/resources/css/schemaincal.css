@@ -503,7 +503,9 @@ header #logo span {
 
 
 
+
  
+
 
 
 
@@ -542,7 +544,9 @@ header #logo span {
 
 
 
+
  
+
 
 
 
@@ -600,7 +604,10 @@ margin-left
 
 
 
+
+
 :
+
 
 
 
@@ -638,8 +645,11 @@ margin-left
 
 
 
+
 0
 .75em
+
+
 
 
 
@@ -714,7 +724,10 @@ background-color
 
 
 
+
+
 :
+
 
 
 
@@ -752,7 +765,10 @@ background-color
 
 
 
+
 #477A8F
+
+
 
 
 
@@ -1357,4 +1373,177 @@ background-color
 	position: absolute;
 	top: 106px;
 	left: 69px;
+}
+
+#autoAddress li:hover {
+	background: #dadada;
+}
+
+#ulAuto {
+	height: 100%
+}
+
+#autoAddress {
+	width: 176px;
+	margin-left: 84px;
+	font-size: 13px;
+	background: white;
+	z-index: 30;
+	position: relative;
+	box-shadow: 0px 0px 2px grey;
+	max-height: 100px;
+	overflow: auto
+}
+
+#autoAddress2 li:hover {
+	background: #dadada;
+}
+
+#ulAuto2 {
+	height: 100%
+}
+
+#autoAddress2 {
+	width: 176px;
+	margin-left: 84px;
+	font-size: 13px;
+	background: white;
+	z-index: 30;
+	position: relative;
+	box-shadow: 0px 0px 2px grey;
+	max-height: 100px;
+	overflow: auto
+}
+
+#edit_communitymodal {
+	display: none;
+	width: 621px;
+	height: 510px;
+	padding: 10px 60px;
+	background-color: #fefefe;
+	border: 1px solid #888;
+	border-radius: 3px;
+}
+
+#edit_communitymodal .modal-close-btn {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+
+.box3 {
+	width: 200px;
+	height: 45px;
+}
+
+.pallet3{
+	width: 300px;
+    height: 30px;
+    position: relative;
+    left: 83px;
+    top: 8px;
+}
+
+.active3 {
+	outline: 1px solid black;
+}
+
+.colorBox3 {
+	width: 20px;
+	height: 20px;
+	float: left;
+	margin: 1px 1px 0px 0px;
+	cursor: pointer;
+}
+
+#colorselect3 {
+	width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 101px;
+    left: 105px;
+}
+
+#enrollname2 input[type="checkbox"] {
+	display: none;
+}
+
+//
+웹의 경우 커서에 pointer 설정
+
+#enrollname2 input[type="checkbox"]+label {
+	display: inline-block;
+	position: relative;
+	cusor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	backgroung-color: red;
+}
+
+//
+#enrollname2 input[type="checkbox"] ~ #lb:before {
+	content: ' ';
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	line-height: 18px;
+	margin: -2px 8px 0 0;
+	text-align: center;
+	vertical-align: middle;
+	background: #fafafa;
+	border: 1px solid #cacece;
+	border-radius: 3px;
+}
+
+#enrollname2 input[type="checkbox"]:checked ~ #lb:before {
+	content: '\2713';
+	color: #314ca2;
+	border-color: #adb8c0;
+}
+
+#cc {
+	color: white
+}
+
+#lookname2 input[type="checkbox"] {
+	display: none;
+}
+
+//
+웹의 경우 커서에 pointer 설정
+
+#lookname2 input[type="checkbox"]+label {
+	display: inline-block;
+	position: relative;
+	cusor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	backgroung-color: red;
+}
+
+//
+새로운 디자인의 체크박스 만들기
+
+#lookname2 input[type="checkbox"] ~ #lb:before {
+	content: ' ';
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	line-height: 18px;
+	margin: -2px 8px 0 0;
+	text-align: center;
+	vertical-align: middle;
+	background: #fafafa;
+	border: 1px solid #cacece;
+	border-radius: 3px;
+}
+
+#lookname2 input[type="checkbox"]:checked ~ #lb:before {
+	content: '\2713';
+	color: #314ca2;
+	border-color: #adb8c0;
 }

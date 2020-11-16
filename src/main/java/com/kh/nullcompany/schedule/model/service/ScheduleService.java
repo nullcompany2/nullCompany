@@ -62,6 +62,10 @@ public interface ScheduleService {
 
 	int editIndiCal_Sche(int cal_no);
 
+	ArrayList<Member> SearchMem_public(String text);
+
+	Calendar editDetailPublicCal(int calNo);
+
 
 
 
