@@ -16,7 +16,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.kh.nullcompany.board.model.vo.PageInfo;
-import com.kh.nullcompany.board.model.vo.board;
 import com.kh.nullcompany.common.Pagination;
 import com.kh.nullcompany.notice.model.service.noticeService;
 import com.kh.nullcompany.notice.model.vo.ncomment;
@@ -87,4 +86,12 @@ public class noticeController {
 	            return "fail";
 	         }
 	      }
+	      
+	      
+	  		
+
+	
+
+
+
 }

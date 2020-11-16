@@ -195,6 +195,7 @@ a:active {
 
 	<script type="text/javaScript">
 $(document).ready(function() {
+	
 	  $('#summernote').summernote({
 		  	
  	    	placeholder: '내용을 작성해주세요.',
@@ -216,9 +217,13 @@ $(document).ready(function() {
 			  ],
 			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋음체','바탕체'],
 			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
+	  	
 	  });
+	  $("button[aria-label=Picture]").css('display','none');	  
+	  $("button[aria-label=Video]").css('display','none');	  
+	
 	});
-
+	
 
 </script>
 	<div id='wrap'>

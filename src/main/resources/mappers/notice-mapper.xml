@@ -147,4 +147,8 @@
 		(SEQ_TNCNO.NEXTVAL,
 		#{tncContent},#{tncefTno},#{tncWriter},SYSDATE,SYSDATE,DEFAULT)
 	</insert>
+	
+
 </mapper>
+
+
