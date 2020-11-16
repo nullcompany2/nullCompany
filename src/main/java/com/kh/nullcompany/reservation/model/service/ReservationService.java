@@ -33,4 +33,6 @@ public interface ReservationService {
 
 	public ArrayList<Reservation> selectReservationList(Map map);
 
+	public int insertReservation(Reservation r);
+
 }

@@ -66,5 +66,9 @@ public class ReservationDao {
 	public ArrayList<Reservation> selectReservationList(Map map) {
 		return (ArrayList)sqlSession.selectList("reservationMapper.selectReservationList",map);
 	}
+
+	public int insertReservation(Reservation r) {
+		return sqlSession.insert("reservationMapper.insertReservation",r);
+	}
 	
 }
