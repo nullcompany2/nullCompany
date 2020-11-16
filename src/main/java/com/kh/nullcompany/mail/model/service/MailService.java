@@ -1,6 +1,7 @@
 package com.kh.nullcompany.mail.model.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.mail.model.vo.Mail;
@@ -220,5 +221,14 @@ public interface MailService {
 	 * @return
 	 */
 	MailListCount getMailBoxCount(String memId);
+
+
+	/**
+	 * 제목 검색하기 
+	 * 
+	 * @param map
+	 * @return
+	 */
+	ArrayList<Mail> searchTitle(Map map);
 	
 }
