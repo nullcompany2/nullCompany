@@ -288,6 +288,17 @@
         FROM DUAL
 	 </select>
 	 
+	 <select id="searchTitle" resultMap="mailListCountSet">
+	 SELECT MA.*, M.NAME
+        FROM MAIL MA
+        JOIN MEMBER M ON (MA.SENDER = M.ID)
+        WHERE RECIPIENT = #{memId}
+        AND MDELETE_STATUS = 'N'
+        AND MSAVE_STATUS = 'N'
+        AND M_REALDEL_STATUS = 'N'
+        AND M_TITLE LIKE '%' || #{search} || '%';
+	 </select>
+	 
 	
 	
 </mapper>
