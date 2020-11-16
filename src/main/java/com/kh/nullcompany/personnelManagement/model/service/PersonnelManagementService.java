@@ -187,6 +187,8 @@ public interface PersonnelManagementService {
 	ArrayList<RecordDiligence> recordDiligenceList(int memNo);
 	// 출근일 확인
 	ArrayList<SetAttendance> AttendanceDays();
+	//
+	ArrayList<Member> selectTargetReward(Map searchCondition);
 	
 	
 	
