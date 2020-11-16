@@ -199,11 +199,11 @@
 		<br>
 			
 			<select id="category"> 
-				<option> ----- </option>
-				<option> 보낸사람 </option>
-				<option> 제목 </option>
-				<option> 내용 </option>
-				<option> 제목 + 내용 </option>
+				<option>-----</option>
+				<option value="보낸사람">보낸사람</option>
+				<option value="제목">제목</option>
+				<option value="내용">내용</option>
+				<option value="제목내용">제목 + 내용</option>
 			</select>
 			<input  id="search" type="text" placeholder="메일 검색"> 
 			<button id="searchBtn" onclick="goSearch();" > 검색 </button> <br>
@@ -303,14 +303,16 @@
        	
         	/* alert($("#category").children("option:selected").text()); */
         	
-       		var category=  $("#category").children("option:selected").text();
+       		var category=  $("#category").children("option:selected").val();
         	var search = $("#search").val();
         	
         	console.log(category+search);
 
-        	if(search != ""){
+        	if(category =="-----"){
+          	  alert("분류를 선택하지 않았습니다.");
+        	}else if(search != ""){
         			document.location.href='searchTitle.do?category='+category+'&search='+search;	
-        		}
+        	}
         	  }
         
         </script>

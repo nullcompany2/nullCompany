@@ -542,15 +542,18 @@ private ScheduleService sService;
 		map.put("search",search);
 		map.put("memId",memId);
 		
-		System.out.println(map);
-		System.out.println(category);
-		
-		String title = "제목";
-		if(category.equals(title)) {
-			
-		System.out.println("아라 최고");
-		ArrayList<Mail> mail = maService.searchTitle(map);
-		mv.addObject("list",mail);
+		if(category.equals("제목")) {
+		ArrayList<Mail> list = maService.searchTitle(map);
+		mv.addObject("list",list);
+		}else if(category.equals("보낸사람")){
+		ArrayList<Mail> list = maService.searchRecipient(map);
+		mv.addObject("list",list);
+		}else if(category.equals("내용")) {
+			ArrayList<Mail> list = maService.searchMcontent(map);
+			mv.addObject("list",list);
+		}else if(category.equals("제목내용")) {
+			ArrayList<Mail> list = maService.searchMtitleContent(map);
+			mv.addObject("list",list);
 		}
 		
 		mv.setViewName("mail/searchResult");
