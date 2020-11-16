@@ -95,7 +95,6 @@ public class noticeController {
 	@RequestMapping("writer.do")
 	public String insertNotice(notice n,HttpServletRequest request,
 			@RequestParam(name="uploadFile",required=false)MultipartFile file) {
-		System.out.println(n);
 		if(!file.getOriginalFilename().equals("")) {
 			// 서버에 업로드 진행
 			// saveFile메소드 : 저장하고자하는 file과 request를 전달해서 서버에 업로드시키고 저장된 파일명을 반환해주는 메소드
