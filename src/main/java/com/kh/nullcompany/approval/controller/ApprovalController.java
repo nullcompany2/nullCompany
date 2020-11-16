@@ -651,23 +651,44 @@ public class ApprovalController {
 		return mv;
 	}
 	
-	// 문서 디테일 중개 메소드
-	@RequestMapping("approvalDetailBroker.do")
-	public void approvalDetailBroker(ModelAndView mv, HttpServletResponse response, HttpSession session, String docNo, int formNo){
-
-		if(formNo == 1) {
-			businessDetail(mv, response, session, docNo, formNo);
+	// 업무연락 문서 상세보기
+	@RequestMapping("approvalDetail.do")
+	public ModelAndView approvalDetail(ModelAndView mv, HttpServletResponse response, HttpSession session, String docNo, int formNo) {
+		
+		Document d = aService.approvalDetail(docNo);
+		System.out.println("문서 정보 : " + d);
+		
+		ArrayList<Step> sList = aService.selectStepList(d.getDocTempNo());
+		
+		ArrayList<Step> apprList = new ArrayList<Step>();
+		ArrayList<Step> checkList = new ArrayList<Step>();
+		ArrayList<Step> receiveList = new ArrayList<Step>();
+		
+		for(Step s : sList) {
+			if(s.getLineNo() == 1) {
+				apprList.add(s);
+			}else if(s.getLineNo() == 2) {
+				checkList.add(s);
+			}else {
+				receiveList.add(s);
+			}
 		}
 		
-	}
-	
-	// 업무연락 문서 상세보기
-	public ModelAndView businessDetail(ModelAndView mv, HttpServletResponse response, HttpSession session, String docNo, int formNo) {
+		System.out.println("apprList : " + apprList);
+		System.out.println("checkList : " + checkList);
+		System.out.println("receiveList : " + receiveList);
 		
-		int memNo = ((Member) session.getAttribute("loginUser")).getMemNo();
-		String memName= ((Member) session.getAttribute("loginUser")).getName();
-		System.out.println("사용자번호 : " + memNo);
-		System.out.println("사용자이름 : " + memName);
+		
+		mv.addObject("d",d);
+		mv.addObject("apprList",apprList);
+		mv.addObject("checkList",checkList);
+		mv.addObject("receiveList",receiveList);
+		
+		
+		
+		if(d.getFormNo() == 1) {
+			mv.setViewName("approval/businessDocumentDetail");
+		}
 		
 		return mv;
 	}

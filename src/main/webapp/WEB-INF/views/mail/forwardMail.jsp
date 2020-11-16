@@ -11,10 +11,10 @@
 
 <!-- include libraries(jQuery, bootstrap) -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
-<title>메일 쓰기</title>
+<title>답장하기  </title>
 
 <style>
 
@@ -136,7 +136,6 @@ a:active {
 }
 
 
-
 </style>
 
 </head>
@@ -145,24 +144,24 @@ a:active {
 
 		<div class="contents">
 			<div class="contents-title">
-				<span class="ct1">메일 쓰기 </span>
+				<span class="ct1">답장 하기 </span>
 			</div>
 
 			<div>
 				<div style="width: 90%; margin: auto;">
 					<form method="post" enctype="multipart/form-data">
-					<!-- 전송하기 미리보기 저장하기 이전으로 버튼   -->
 						<input type="hidden" value="${loginUser.memNo}" name= memNo>
 						<input type="submit" value="보내기" id="sendMail" />
 						<input class="go2" type="button" value="미리보기"/> 
 						<input type="submit" id="saveMail"  value="저장하기"/>
-						 <a href="javascript:history.go(-1);"> 
-						 <input type="button" value="이전으로" /></a> <br>
-						 &nbsp;보내는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-						<input type="text" name="sender" style="width: 60%;" value= "${loginUser.name} < ${loginUser.id}@nullcompany.com >" readonly/> <br>
-							
-							<div id="auto"> 
-						&nbsp;받는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="button" value="이전으로" onClick="location.href='javascript:history.go(-1);'" /> <br>
+						&nbsp;보내는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+						<input type="text" name="sender" style="width: 60%;" value= "${loginUser.name} < ${loginUser.id}@nullcompany.com > "readonly/> <br>
+
+						<div id="auto"> 
+						&nbsp;받는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						
 						<input type="text" name="recipient" id="address" style="width: 60%;"
 							placeholder="이름 혹은 메일 주소를 입력해주세요." />
 							
@@ -178,26 +177,26 @@ a:active {
 							 	</div>
 							</div>
 							
-						
+
 						&nbsp;&nbsp;제목
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						&nbsp;
-						<input type="text" name="mTitle" style="width: 60%;" placeholder="제목을 입력해주세요." /> <br>
-						&nbsp;파일첨부
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="file" name="uploadPhoto" id="ex_file"/>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;<input type="text" name="mTitle" style="width: 60%;"
+						placeholder="제목 없음" value="전달 : ${ma.mTitle}"/> <br>
+						&nbsp;파일첨부&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="file" name="uploadPhoto" />
 						<br> <br> 
+						<textarea id="summernote" name="mContent">
 						
-						<!--  썸머노트  -->
-						<textarea id="summernote" name="mContent"></textarea>
+						${ma.mContent}
+						
+						 </textarea>
 					</form>
 				</div>
 			</div>
 		</div>
 	
-	
-	<!-- 미리보기 모달  -->
+	<!-- Modal div -->
 	<div id="my_modal2" class="modal-dragscroll">
 
 		<span style="font-size: 20px; color: #477A8F;"> 미리보기 </span> 
@@ -205,7 +204,7 @@ a:active {
 		<hr>
 			<p>메일 제목 : <span id="modalTitle"> 제목없음 </span></p>
 			<p>
-				보낸사람 : ${ loginUser.name } < ${loginUser.id}@nullcompany.com >
+				보낸 사람 : ${ loginUser.name }< ${ loginUser.id } >
 				
 			</p>
 			<p>받는 사람 : <span id="modalRecipient"> </span></p>
@@ -214,15 +213,12 @@ a:active {
 			<div id="modalContent">  </div>
 		</div>
 
-
 		<input class="modal-close-btn cursor" value="닫기"
 			style="background: #477A8F; color: white; text-align: center; border: none; padding: 12px 4px 12px 4px; 
 			border-radius: 3px; margin-left: 180px; cursor: pointer; font-size:15px;" />
 	</div>
-	
-		
-	
-	
+	<!-- Modal div -->
+
 	<script type="text/javaScript">
 	
 	$(document).ready(function() {
@@ -406,6 +402,6 @@ a:active {
           
           
  </script>
- 
 </body>
+
 </html>

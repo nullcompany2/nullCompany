@@ -256,5 +256,15 @@ public class PersonnelManagementDao {
 	}
 
 
+	public ArrayList<RecordDiligence> recordDiligenceList(int memNo) {
+		return (ArrayList)sqlSession.selectList("personnelMapper.recordDiligenceList",memNo);
+	}
+
+
+	public ArrayList<SetAttendance> AttendanceDays() {
+		return (ArrayList)sqlSession.selectList("personnelMapper.AttendanceDays");
+	}
+
+
 
 }

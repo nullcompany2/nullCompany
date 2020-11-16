@@ -164,10 +164,12 @@ public class MailDao {
 		return sqlSession.update("mailMapper.backOneMail",mailNo);
 	}
 
+	// 안읽은 메일 세기 
 	public int getReReListCount(String memId) {
-		return sqlSession.selectOne("mailMapper.getReReListCount",memId);
+		return sqlSession.selectOne("mailMapper.getReUnreadListCount",memId);
 	}
 
+	// 메일에 카운트 에이작스 뿌리기 
 	public MailListCount getMailBoxCount(String memId) {
 		return sqlSession.selectOne("mailMapper.mailListCount",memId);
 	}

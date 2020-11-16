@@ -209,7 +209,7 @@
             FROM MAIL R 
             INNER JOIN MEMBER M ON (R.SENDER = M.ID)
             JOIN EMAIL E ON (R.MEM_NO = E.MEM_NO)
-            WHERE R.MAIL_NO = 101
+            WHERE R.MAIL_NO = #{mailNo}
         ) Y,
         (SELECT NAME  FROM MEMBER WHERE ID IN (SELECT r.recipient
                                                 FROM MAIL R 
@@ -255,7 +255,7 @@
 	</update>
 	
 	<!-- 안 읽은 메일 갯수 세기  -->
-	 <select id="getReReListCount" resultType="_int">
+	 <select id="getReUnreadListCount" resultType="_int">
 	 	SELECT COUNT(*) 
         FROM MAIL R 
         INNER JOIN MEMBER M ON (R.SENDER = M.ID)

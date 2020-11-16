@@ -343,6 +343,7 @@ private ScheduleService sService;
 			return mv;
 		}
 		
+		// 읽은 메일 보기 
 		@RequestMapping("readMail.do")
 		public ModelAndView readMailList(ModelAndView mv, HttpServletResponse response,
 				HttpSession session,
@@ -364,6 +365,7 @@ private ScheduleService sService;
 			
 		}
 		
+		// 안읽은 메일 보기 
 		@RequestMapping("unReadMail.do")
 		public ModelAndView unReadMailList(ModelAndView mv, HttpServletResponse response,
 				HttpSession session,
@@ -515,7 +517,17 @@ private ScheduleService sService;
 			}
 		}
 		
-		
+		// 받은 메일 디테일뷰에서 전달하기 
+		@RequestMapping("mailFoward.do")
+		public ModelAndView mailFoward(ModelAndView mv, int mailNo){
+
+			Mail ma = maService.mailReply(mailNo);
+			
+			mv.addObject("ma",ma);
+			mv.setViewName("mail/forwardMail");
+			
+			return mv;
+		}
 		
 }
 
