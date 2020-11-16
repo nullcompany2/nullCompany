@@ -64,6 +64,8 @@ public interface ScheduleService {
 
 	ArrayList<Member> SearchMem_public(String text);
 
+	Calendar editDetailPublicCal(int calNo);
+
 
 
 

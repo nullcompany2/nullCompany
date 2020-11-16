@@ -271,4 +271,17 @@ public class ScheduleController {
 	}
 	
 	
+	// 공유 캘린더 정보 가져오기
+	@RequestMapping("editDetailPublicCal.do" )
+	public void editDetailPublicCal(ModelAndView mv, int calNo, HttpServletResponse response) throws JsonIOException, IOException{
+		Calendar cal = sService.editDetailPublicCal(calNo);
+		
+		response.setContentType("application/json; charset=UTF-8");
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		gson.toJson(cal,response.getWriter());
+
+	
+	}
+	
+	
 }

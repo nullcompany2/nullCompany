@@ -216,7 +216,7 @@
      	DELETE FROM SCHEDULE WHERE SCHE_NO = #{sche_no}
    </delete>
    
-   <!-- 내 캘린더 수정용 모달 -->
+   <!-- 내 캘린더 수정용 전 정보 -->
    <select id="editDetailIndiCal" resultMap="CalendarResultSet" parameterType="Calendar">
    		SELECT * FROM CALENDAR WHERE CAL_TYPE=2 AND CAL_NO = #{calNo}
    </select>
@@ -246,10 +246,15 @@
                ) WHERE CAL_NO = #{cal_no}
 	</update>
 	
-	 <select id="SearchMem_public" resultMap="memberResultSet">
+	<!-- 자동완성 -->
+	<select id="SearchMem_public" resultMap="memberResultSet">
 	 	select m.name, m.mem_no
         from member m
-        join department d on d.dept_no = m.dept_no
-        where (m.name LIKE  '%' || #{text} || '%'  or d.dept_name LIKE'%' || #{text} || '%')
-	 </select>
+        where (m.name LIKE  '%' || #{text} || '%')
+	</select>
+	 
+	    <!-- 공유 캘린더 수정 전 정보 -->
+    <select id="editDetailPublicCal" resultMap="CalendarResultSet" parameterType="Calendar">
+   		SELECT * FROM CALENDAR WHERE CAL_TYPE=1 AND CAL_NO = #{calNo}
+    </select>
 </mapper>

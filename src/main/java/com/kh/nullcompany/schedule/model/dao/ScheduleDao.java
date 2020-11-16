@@ -128,6 +128,10 @@ public class ScheduleDao {
 		return(ArrayList) sqlSession.selectList("scheduleMapper.SearchMem_public",text);
 	}
 
+	public Calendar editDetailPublicCal(int calNo) {
+		return sqlSession.selectOne("scheduleMapper.editDetailPublicCal",calNo);
+	}
+
 
 
 

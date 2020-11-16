@@ -188,6 +188,11 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return sDao.SearchMem_public(text);
 	}
 
+	@Override
+	public Calendar editDetailPublicCal(int calNo) {
+		return sDao.editDetailPublicCal(calNo);
+	}
+
 
 
 }
