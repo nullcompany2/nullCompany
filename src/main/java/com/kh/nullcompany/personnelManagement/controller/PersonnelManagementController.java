@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -313,16 +314,8 @@ public class PersonnelManagementController {
 		
 		// 전체 근태기록 (for Calendar)
 		ArrayList<RecordDiligence> recordDiligenceList = pService.recordDiligenceList(memNo);
-		ArrayList<forDate> recordStatusList = new ArrayList();
 		
 		
-		for(RecordDiligence i : recordDiligenceList) {
-			String date = formatD.format(i.getDateDiligence());
-			String status = i.getStatusDiligence();
-			forDate fdl = new forDate(date, status);
-			
-			recordStatusList.add(fdl);
-		}
 		System.out.println(recordDiligenceList);
 		
 		// 전체 휴가 사용날 / 사용일수 기록(for Calendar)
@@ -331,7 +324,6 @@ public class PersonnelManagementController {
 		ArrayList<ModificationDiligence> recordMod = pService.selectRecordModification(memNo);
 		System.out.println(recordMod);
 		
-		mv.addObject("recordStatusList",recordStatusList);
 		mv.addObject("recordDiligenceList",recordDiligenceList);
 		mv.addObject("recordMod",recordMod);
 		mv.addObject("noAttendanceCount",noAttendanceCount);
@@ -389,12 +381,13 @@ public class PersonnelManagementController {
 		// 출퇴근 해당날자인지 체크
 		ArrayList<SetAttendance> ADay = pService.AttendanceDays();
 		System.out.println(ADay);
-		
-		int todayDate = today.getDate();
+		Calendar todayCalen = Calendar.getInstance();
+		int todayDate = todayCalen.get(Calendar.DAY_OF_WEEK)-1;
 		int checkADay = 0;
 		System.out.println(todayDate + "오늘 요일");
 		for(SetAttendance i : ADay) {
 			if(i.getDayAvailable().equals("Y")) {
+				System.out.println("확인"+i.getNoDay());
 				if(todayDate == i.getNoDay()) {
 					checkADay=1;
 					break;
@@ -902,37 +895,6 @@ public class PersonnelManagementController {
 		}
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(str,response.getWriter());
-	}
-	
-	class forDate {
-		private String date;
-		private String status;
-		public forDate(String date, String status) {
-			super();
-			this.date = date;
-			this.status = status;
-		}
-		public forDate() {
-			super();
-			// TODO Auto-generated constructor stub
-		}
-		public String getDate() {
-			return date;
-		}
-		public void setDate(String date) {
-			this.date = date;
-		}
-		public String getStatus() {
-			return status;
-		}
-		public void setStatus(String status) {
-			this.status = status;
-		}
-		@Override
-		public String toString() {
-			return "forDate [date=" + date + ", status=" + status + "]";
-		}
-		
 	}
 	
 
