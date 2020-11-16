@@ -3,6 +3,8 @@ package com.kh.nullcompany.mail.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -529,5 +531,31 @@ private ScheduleService sService;
 			return mv;
 		}
 		
+		// 받은 메일함  - 제목으로
+		@RequestMapping("searchTitle.do")
+		public ModelAndView searchTitle(ModelAndView mv, String category, String search,HttpSession session) {
+		
+			String memId = ((Member)session.getAttribute("loginUser")).getId();
+		
+		Map map = new HashMap();
+		
+		map.put("search",search);
+		map.put("memId",memId);
+		
+		System.out.println(map);
+		System.out.println(category);
+		
+		String title = "제목";
+		if(category.equals(title)) {
+			
+		System.out.println("아라 최고");
+		ArrayList<Mail> mail = maService.searchTitle(map);
+		mv.addObject("list",mail);
+		}
+		
+		mv.setViewName("mail/searchResult");
+		return mv;
+		}
 }
+
 

@@ -1,6 +1,7 @@
 package com.kh.nullcompany.mail.model.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -183,6 +184,11 @@ public class MailServiceImpl implements MailService {
 	@Override
 	public MailListCount getMailBoxCount(String memId) {
 		return maDao.getMailBoxCount(memId);
+	}
+
+	@Override
+	public ArrayList<Mail> searchTitle(Map map) {
+		return maDao.searchTitle(map);
 	}
 
 	
