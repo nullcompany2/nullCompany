@@ -84,9 +84,13 @@
               <c:url var="mailReply" value="mailReply.do">
 				<c:param name="mailNo" value="${ma.mailNo}" />
 			  </c:url> 
+			  
+			  <c:url var="mailFoward" value="mailFoward.do">
+				<c:param name="mailNo" value="${ma.mailNo}" />
+			  </c:url> 
               
                 <a href="${mailReply}"><input type="button" value="답장"/> </a>
-						<a href=""> <input type="button" value="전달"/></a> 
+						<a href="${mailFoward}"> <input type="button" value="전달"/></a> 
 						<input  id="delMail" type="button" value="삭제" /> 
 						<input id="realdelMail" type="button" value="완전삭제" />
 						<br> 
@@ -112,15 +116,29 @@
 		</div>
 
 	<script>
-	
+	 var test = ${ ma.mailNo };
+	 
 	 $("#delMail").click(function(){
-			confirm("정말로 삭제하시겠습니까? 휴지통으로 이동합니다.");
+			 if (confirm("정말로 삭제하시겠습니까? 휴지통으로 이동합니다.") == true){ 
+
+				 document.location.href='deleteOneMail.do?mailNo='+ test;
+
+		        }else{   //취소
+
+		            return;
+		        }
 		});
      
      $("#realdelMail").click(function(){
-     	confirm("완전 삭제하시면 복구 할 수 없습니다. 정말로 삭제하시겠습니까?");
-		});
+     	 if (confirm("완전 삭제하시면 복구 할 수 없습니다. 정말로 삭제하시겠습니까?") == true){ 
 
+			 document.location.href='realDeleteOneMail.do?mailNo='+ test;
+
+	        }else{   //취소
+
+	            return;
+	        }
+		});
 	</script>
 </body>
 </html>

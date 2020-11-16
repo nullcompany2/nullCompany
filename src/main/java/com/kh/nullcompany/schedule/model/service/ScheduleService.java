@@ -22,7 +22,7 @@ public interface ScheduleService {
 
 	void LookMember(int[] lookmemno, int calNo);
 
-	ArrayList<Calendar> publicCalList();
+	ArrayList<Calendar> publicCalList(int memNo);
 
 	int insertIndividual(Calendar calendar);
 
@@ -30,11 +30,11 @@ public interface ScheduleService {
 
 	void IndLookMember(int indLookMember, int calNo);
 
-	ArrayList<Calendar> IndividualCalList();
+	ArrayList<Calendar> IndividualCalList(int memNo);
 
 	int insertSchedule(Schedule schedule);
 
-	ArrayList<Schedule> ScheduleList();
+	ArrayList<Schedule> ScheduleList(int memNo);
 
 	Schedule detailSchedule(String sche_name);
 
@@ -42,9 +42,28 @@ public interface ScheduleService {
 
 	int updateCalCountMember(Map map);
 
-	ArrayList<Calendar> DetailCalmemberList(String cal_name);
+	ArrayList<Calendar> DetailCalmemberList(int calNo);
 
-	Schedule editDetailSchedule(String sche_name);
+	Schedule editDetailSchedule(int sche_no);
+
+	int updateSchedule(Schedule schedule);
+
+	int DeleteSchedule(int sche_no);
+
+	ArrayList<Calendar> SelectpublicCalList(int memNo);
+
+	Calendar editDetailIndiCal(int calNo);
+
+	int editIndiCal(Calendar calendar);
+
+	int DeleteIndiCal(int calNo);
+	
+	int DeleteIndiCal_Sche(int calNo);
+
+	int editIndiCal_Sche(int cal_no);
+
+
+
 
 
 

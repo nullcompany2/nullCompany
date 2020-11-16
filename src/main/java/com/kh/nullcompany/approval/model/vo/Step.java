@@ -1,5 +1,7 @@
 package com.kh.nullcompany.approval.model.vo;
 
+import java.sql.Date;
+
 public class Step {
 	
     private String docTempNo;        // 결재 임시문서번호 --> 임시저장된 번호가 pk이기 때문
@@ -10,6 +12,7 @@ public class Step {
 	private String staffRankName;    // 결재할 사원 직급명 --> rank 조인
 	private int stepPriority;        // 결재우선순위
 	private String apprStatus;       // 결재여부
+	private Date apprDate;           // 결재 일자
 	
 	public Step() {
 		super();
@@ -17,7 +20,7 @@ public class Step {
 	}
 
 	public Step(String docTempNo, int lineNo, int staffNo, String staffName, int staffRankNo, String staffRankName,
-			int stepPriority, String apprStatus) {
+			int stepPriority, String apprStatus, Date apprDate) {
 		super();
 		this.docTempNo = docTempNo;
 		this.lineNo = lineNo;
@@ -27,6 +30,7 @@ public class Step {
 		this.staffRankName = staffRankName;
 		this.stepPriority = stepPriority;
 		this.apprStatus = apprStatus;
+		this.apprDate = apprDate;
 	}
 
 	public String getDocTempNo() {
@@ -93,13 +97,22 @@ public class Step {
 		this.apprStatus = apprStatus;
 	}
 
+	public Date getApprDate() {
+		return apprDate;
+	}
+
+	public void setApprDate(Date apprDate) {
+		this.apprDate = apprDate;
+	}
+
 	@Override
 	public String toString() {
 		return "Step [docTempNo=" + docTempNo + ", lineNo=" + lineNo + ", staffNo=" + staffNo + ", staffName="
 				+ staffName + ", staffRankNo=" + staffRankNo + ", staffRankName=" + staffRankName + ", stepPriority="
-				+ stepPriority + ", apprStatus=" + apprStatus + "]";
+				+ stepPriority + ", apprStatus=" + apprStatus + ", apprDate=" + apprDate + "]";
 	}
-    
+
+	
 	
 	
 	

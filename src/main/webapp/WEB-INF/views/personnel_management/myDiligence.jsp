@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -76,7 +77,8 @@
 						
 						
 						<div>
-							<h4 style="margin-top: 100px; margin-bottom: 50px;">근태 현황</h4>
+							<h4 style="margin-top: 100px; margin-bottom: 50px;">근태 현황 </h4>
+							
 							<table class="i-table" id="application-record" onload="build();">
 								<thead style="background: #e8ecee;">
 									<tr class="date_tbl_title">
@@ -102,40 +104,59 @@
 							</table>
 							
 						</div>
+						<h5 style="padding:10px">
+						정상(<span style="color:lightGreen">●</span>),
+						지각(<span style="color:orange">◎</span>),
+						결근(<span style="color:red">○</span>),
+						수정됨(<span style="color:blue">◇</span>)
+						
+						</h5>
 						
 					</div>
 					<!-- 근태 수정내역 -->
 					<div id="show-modi-diligence" class="c-ic">
-						<h4>수정내역</h4>
+						<h4>올해 근태 수정내역</h4>
 						<div style="margin-top: 10px; margin-bottom: 10px;">
 							보기 : 
 							<select name="modi-record" id="" class="sel-status cursor">
-								<option value="">전체</option>
+								<option value="" >전체</option>
 								<option value="">결재중</option>
 								<option value="">결재 완료</option>
 								<option value="">결재 취소</option>
 								<option value="">반려</option>
 							</select>
-							<h4 style=" font-weight: normal;">총 <span>N</span>건</h4>
 						</div>
 						<table class="mr-tbl">
 							<tr class="mr-tbl-il">
-								<th class="mr-tbl-th" colspan="2">요청 날짜</th>
-								<th class="mr-tbl-th">종류</th>
-								<th class="mr-tbl-th" colspan="2">기존 시간</th>
-								<th class="mr-tbl-th" colspan="2">요청 시간</th>
+								<th class="mr-tbl-th" colspan="2">신청일</th>
+								<th class="mr-tbl-th" colspan="2" >근태번호</th>
+								<th class="mr-tbl-th" colspan="2">수정요청일</th>
+								<th class="mr-tbl-th" colspan="2">기존 시간 및 상태</th>
 								<th class="mr-tbl-th" colspan="2">사유</th>
-								<th class="mr-tbl-th">결과</th>
+								<th class="mr-tbl-th" colspan="2">상태</th>
+								<th class="mr-tbl-th">요청취소</th>
 							</tr>
 							<!-- 리스트 -->
+							<c:forEach var="list" items="${recordMod }">
 							<tr>
-								<td class="mr-tbl-td" colspan="2">2020-10-01</td>
-								<td class="mr-tbl-td">출근</td>
-								<td class="mr-tbl-td" colspan="2">00:00:00</td>
-								<td class="mr-tbl-td" colspan="2">09:00:00</td>
-								<td class="mr-tbl-td" colspan="2">전산오류</td>
-								<td class="mr-tbl-td" >결재완료</td>
+								<fmt:formatDate var="applyDate" value="${list.dateApply }" pattern="yyyy-MM-dd"/>
+								<fmt:formatDate var="modDate" value="${list.dateMod }" pattern="yyyy-MM-dd"/>
+								<td class="mr-tbl-td" colspan="2">${ applyDate }</td>
+								<td class="mr-tbl-td" colspan="2">NO_${ list.noMod }</td>
+								<td class="mr-tbl-td" colspan="2">${ modDate }</td>
+								<td class="mr-tbl-td" colspan="2">${list.timeEnter }/${list.timeExit} - ${list.statusDiligence }</td>
+								<td class="mr-tbl-td" colspan="2">${list.reasonMod }</td>
+								<td class="mr-tbl-td" colspan="2">${list.statusMod }</td>
+								<c:choose>
+									<c:when test="${list.statusMod eq '결재중' }">
+										<td class="mr-tbl-td" ><a style="color:#477A8F" onclick="cancelMod(${list.noMod})">요청취소 </a></td>								
+									</c:when>
+									<c:otherwise>
+										<td class="mr-tbl-td"><span style="color:red">취소불가</span> </td>
+									</c:otherwise>
+								</c:choose>
 							</tr>
+							</c:forEach>
 							
 						</table>
 					</div>
@@ -167,11 +188,18 @@
 		var lastDay;
 		
 		$(function(){
-		var forcalculDate = new Date(today.getFullYear(),today.getMonth()+1,0);	// 일자 테이블을 만들기위함.
+			var forcalculDate = new Date(today.getFullYear(),today.getMonth()+1,0);	// 일자 테이블을 만들기위함.
 			lastDay = forcalculDate.getDate();
 			createDateTbl(lastDay);
-
+			
 			yearmonth.innerHTML = today.getFullYear() + "년 "+ (today.getMonth() + 1) + "월";
+			
+			var todayDate = today.getFullYear()+"/"+(today.getMonth()+1);	// showRecordDiligence를 위함.
+			showRecordDiligence(todayDate);
+			
+			var todayFW =today.getFullYear()+"/"+(today.getMonth()+1)+"/"+1; // 요일 체크용
+			daysLable(todayFW,lastDay);
+			
 			build();
 		});
 		
@@ -183,6 +211,13 @@
 			
 			$("#pp").trigger("click");
 			console.log(today.getMonth()+1);
+			
+			var todayDate = today.getFullYear()+"/"+(today.getMonth()+1);	// showRecordDiligence를 위함.
+			showRecordDiligence(todayDate);
+			
+			var todayFW =today.getFullYear()+"/"+(today.getMonth()+1)+"/"+1; // 요일 체크용
+			daysLable(todayFW,lastDay);
+			
 			build();
 		}
 
@@ -193,6 +228,12 @@
 			var forcalculDate = new Date(today.getFullYear(),today.getMonth()+1,0);	// 일자 테이블을 만들기위함.
 			lastDay = forcalculDate.getDate();
 			createDateTbl(lastDay);
+			
+			var todayDate = today.getFullYear()+"/"+(today.getMonth()+1);	// showRecordDiligence를 위함.
+			showRecordDiligence(todayDate);
+			
+			var todayFW =today.getFullYear()+"/"+(today.getMonth()+1)+"/"+1; // 요일 체크용
+			daysLable(todayFW,lastDay);
 			
 			build();
 			$("#pp").trigger("click");
@@ -257,13 +298,13 @@
 						
 					}
 					else if(i<16){
-						$th_tr = $("<th class='tr one-fifteen'>").text(i+"일");
+						$th_tr = $("<th class='tr one-fifteen'>").text(i+"일").attr("id",i+"D");
 						$tr_td = $("<td class='ta one-fifteen'>").attr("id",i + "R");
 					}else if(i == lastDay+2){
 						$th_tr = $("<th class='tr sixteen-thirtyOne cursor' id='pp' onclick='predays()'>").text("PRE");
 						$tr_td = $("<td class='ta sixteen-thirtyOne'>").text("<<");
 					}else{
-						$th_tr = $("<th class='tr sixteen-thirtyOne' >").text(i-1+"일");
+						$th_tr = $("<th class='tr sixteen-thirtyOne' >").text(i-1+"일").attr("id",i-1+"D");
 						$tr_td = $("<td class='ta sixteen-thirtyOne'>").attr("id",i-1 + "R");
 					}
 					$sTble.append($th_tr);
@@ -277,7 +318,7 @@
 						$tr_td = $("<td class='ta one-fifteen'>").text(">>");
 					}
 					else if(i<16){
-						$th_tr = $("<th class='tr one-fifteen'>").text(i+"일");		
+						$th_tr = $("<th class='tr one-fifteen'>").text(i+"일").attr("id",i+"D");		
 						$tr_td = $("<td class='ta one-fifteen'>").attr("id",i + "R");
 
 					}else if(i == lastDay+2){
@@ -285,7 +326,7 @@
 						$tr_td = $("<td class='ta sixteen-thirtyOne'>").text("<<");
 
 					}else{
-						$th_tr = $("<th class='tr sixteen-thirtyOne'>").text(i-1+"일");
+						$th_tr = $("<th class='tr sixteen-thirtyOne'>").text(i-1+"일").attr("id",i-1+"D");
 						$tr_td = $("<td class='ta sixteen-thirtyOne'>").attr("id",i-1 + "R");
 
 					}
@@ -300,13 +341,13 @@
 						$tr_td = $("<td class='ta one-fifteen'>").text(">>");
 					}
 					else if(i<16){
-						$th_tr = $("<th class='tr one-fifteen' >").text(i+"일");		
+						$th_tr = $("<th class='tr one-fifteen' >").text(i+"일").attr("id",i+"D");		
 						$tr_td = $("<td class='ta one-fifteen'>").attr("id",i+"R");
 					}else if(i == lastDay+2){
 						$th_tr = $("<th class='tr sixteen-thirtyOne cursor' id='pp' onclick='predays()'>").text("PRE");
 						$tr_td = $("<td class='ta sixteen-thirtyOne'>").text("<<");
 					}else{
-						$th_tr = $("<th class='tr sixteen-thirtyOne' >").text(i-1+"일");
+						$th_tr = $("<th class='tr sixteen-thirtyOne' >").text(i-1+"일").attr("id",i-1+"D");
 						$tr_td = $("<td class='ta sixteen-thirtyOne'>").attr("id",i-1 + "R");
 					}
 					$sTble.append($th_tr);
@@ -320,13 +361,13 @@
 						$tr_td = $("<td class='ta one-fifteen'>").text(">>");
 					}
 					else if(i<16){
-						$th_tr = $("<th class='tr one-fifteen' >").text(i+"일");		
+						$th_tr = $("<th class='tr one-fifteen' >").text(i+"일").attr("id",i+"D");		
 						$tr_td = $("<td class='ta one-fifteen'>").attr("id",i+"R");
 					}else if(i == lastDay+2){
 						$th_tr = $("<th class='tr sixteen-thirtyOne cursor' id='pp' onclick='predays()'>").text("PRE");
 						$tr_td = $("<td class='ta sixteen-thirtyOne'>").text("<<");
 					}else{
-						$th_tr = $("<th class='tr sixteen-thirtyOne' >").text(i-1+"일");
+						$th_tr = $("<th class='tr sixteen-thirtyOne' >").text(i-1+"일").attr("id",i-1+"D");
 						$tr_td = $("<td class='ta sixteen-thirtyOne'>").attr("id",i-1+"R");
 					}
 					$sTble.append($th_tr);
@@ -334,6 +375,87 @@
 					
 				}
 			}
+			
+						
+		}
+		// 주말 체크용
+		function daysLable(todayFW,lastDay){
+			var getday = new Date(todayFW).getDay();
+			console.log(todayFW);
+			console.log(lastDay);
+			console.log(getday);
+			
+			for(var i =1; i<=lastDay; i++){
+				if(getday == 6){
+					$("#"+i+"D").attr("style","color:blue");
+				}else if(getday ==0){
+					$("#"+i+"D").attr("style","color:red");
+				}
+				
+				getday ++;
+				if(getday == 7){
+					getday=0;
+				}
+			}
+			
+		}
+		
+		function cancelMod(noMod){
+			var result = confirm("NO_"+noMod+"휴가신청을 취소하시겠습니까?");
+			
+			if(result){
+				$.ajax({
+					url : "cancelMod.do",
+					data : {noMod : noMod},
+					datatype : "json",
+					success:function(data){
+						alert("수정취소 완료");
+						location.reload();
+					},
+					error: function(request,status,error){
+						console.log(request);
+						console.log(status);
+						console.log(error);
+					}
+					
+				})
+			}
+		}
+		// 근태기록 생성용
+		function showRecordDiligence(todayDate){
+			<c:forEach var="list" items="${recordDiligenceList}">
+				<fmt:formatDate var="dateY" value="${list.dateDiligence }" pattern="yyyy"/>
+				<fmt:formatDate var="dateM" value="${list.dateDiligence }" pattern="MM"/>
+				<fmt:formatDate var="dateD" value="${list.dateDiligence }" pattern="dd"/>
+				var date = ${dateY}+"/"+${dateM};// 근태기록 날짜
+				
+				if(date == todayDate){
+					var day = ${dateD}+"R";
+					var status ="";
+					<c:choose>
+						<c:when test="${list.statusDiligence eq '결근'}">
+							status ="○";
+							$("#"+day).text(status).attr("style","color:red");
+						</c:when>
+						<c:when test="${list.statusDiligence eq '지각'}">
+							status ="◎";
+							$("#"+day).text(status).attr("style","color:orange");
+						</c:when>
+						<c:when test="${list.statusDiligence eq '정상'}">
+							status ="●";
+							$("#"+day).text(status).attr("style","color:lightGreen");
+						</c:when>
+						<c:otherwise>
+							status ="◇";
+							$("#"+day).text(status).attr("style","color:blue");
+						</c:otherwise>
+					</c:choose>
+					console.log(status);
+					console.log(day);
+				}
+				console.log(todayDate);
+				console.log(date);
+			</c:forEach>
 			
 		}
 
@@ -436,9 +558,14 @@
 							$td_enterTime = $(' <td class="md-tbl-td" colspan="2">').text(data.dList[i].timeEnter);
 							$td_exitTime = $(' <td class="md-tbl-td" colspan="2">').text(data.dList[i].timeExit);
 							$td_status = $(' <td class="md-tbl-td" colspan="2">').text(data.dList[i].statusDiligence);
-							$td_reqMod = $(' <td class="md-tbl-td">').attr("id",data.dList[i].noDiligence);
-							$td_reqMod.append($('<a href="reqDiligence.do?noDiligence='+ data.dList[i].noDiligence +'" id="detail-r-l" class="cursor" style="color: #477A8F;">').text("요청"));
 							
+							
+							if(data.dList[i].statusDiligence == '정상'){
+								$td_reqMod = $(' <td class="md-tbl-td">').attr("id",data.dList[i].noDiligence);
+							}else{
+								$td_reqMod = $(' <td class="md-tbl-td">').attr("id",data.dList[i].noDiligence);
+								$td_reqMod.append($('<a href="reqDiligence.do?noDiligence='+ data.dList[i].noDiligence +'" id="detail-r-l" class="cursor" style="color: #477A8F;">').text("요청"));								
+							}
 							$tr.append($td_date);
 							$tr.append($td_enterTime);
 							$tr.append($td_exitTime);
@@ -543,8 +670,13 @@
 							$td_enterTime = $(' <td class="md-tbl-td" colspan="2">').text(data.dList[i].timeEnter);
 							$td_exitTime = $(' <td class="md-tbl-td" colspan="2">').text(data.dList[i].timeExit);
 							$td_status = $(' <td class="md-tbl-td" colspan="2">').text(data.dList[i].statusDiligence);
-							$td_reqMod = $(' <td class="md-tbl-td">').attr("id",data.dList[i].noDiligence);
-							$td_reqMod.append($('<a href="reqDiligence.do?noDiligence='+ data.dList[i].noDiligence +'" id="detail-r-l" class="cursor" style="color: #477A8F;">').text("요청"));
+														
+							if(data.dList[i].statusDiligence == '정상'){
+								$td_reqMod = $(' <td class="md-tbl-td">').attr("id",data.dList[i].noDiligence);
+							}else{
+								$td_reqMod = $(' <td class="md-tbl-td">').attr("id",data.dList[i].noDiligence);
+								$td_reqMod.append($('<a href="reqDiligence.do?noDiligence='+ data.dList[i].noDiligence +'" id="detail-r-l" class="cursor" style="color: #477A8F;">').text("요청"));								
+							}
 							
 							$tr.append($td_date);
 							$tr.append($td_enterTime);

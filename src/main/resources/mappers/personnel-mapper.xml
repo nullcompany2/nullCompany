@@ -17,8 +17,8 @@
 		<result property="enrollDate" column="ENROLL_DATE"/>
 		<result property="updateDate" column="UPDATE_DATE"/>
 		<result property="mStatus" column="M_STATUS"/>
-		<result property="annualLeave" column="ANNUAL_DATE"/>
-		<result property="rewardLeave" column="REWARD_DATE"/>
+		<result property="annualLeave" column="ANNUAL_LEAVE"/>
+		<result property="rewardLeave" column="REWARD_LEAVE"/>
 		<result property="joinStatus" column="JOIN_STATUS"/>
 		<result property="myInfo" column="MY_INFO"/>
 		<result property="deptNo" column="DEPT_NO"/>
@@ -95,6 +95,7 @@
    		<result property="dayAvailable" column="DAY_AVAILABLE"/>
    		<result property="timeAttendance" column="TIME_ATTENDANCE"/>
    		<result property="timeOffWork" column="TIME_OFFWORK"/>
+   		<result property="noDay" column="NO_DAY" />
    	</resultMap>
    	
    	<resultMap type="RecordDiligence" id="RecordDiligenceResultSet">
@@ -105,6 +106,39 @@
    		<result property="memNo" column="MEM_NO"/>
    		<result property="statusDiligence" column="STATUS_DILIGENCE"/>
    		<result property="timeExit" column="TIME_EXIT"/>
+   	</resultMap>
+
+   	<resultMap type="ForEmLeave" id="forEmLeaveResultSet">
+   		<result property="memNo" column="MEM_NO"/>
+   		<result property="enrollDate" column="ENROLL_DATE"/>
+   		<result property="name" column="NAME"/>
+   		<result property="annualLeave" column="ANNUAL_LEAVE"/>
+   		<result property="rewardLeave" column="REWARD_LEAVE"/>
+   		<result property="remainAnnual" column="REMAIN_ANNUAL"/>
+   		<result property="remainReward" column="REMAIN_REWARD"/>
+   	</resultMap>
+   	
+   	<resultMap type="ForEmUsedLeave" id="forEmUsedLeaveResultSet">
+   		<result property="memNo" column="MEM_NO"/>
+   		<result property="num" column="NUM"/>
+   		<result property="useCount" column="USECOUNT"/>
+   	</resultMap>
+   	
+   	<resultMap type="ModificationDiligence" id="modificationDiligenceResultSet">
+   	
+   		<result property="noMod" column="NO_MOD_D"/>
+   		<result property="dateApply" column="DATE_APPLY_D"/>
+   		<result property="name" column="NAME_REQUESTER_D"/>
+   		<result property="id" column="ID_REQUESTER_D"/>
+   		<result property="memNo" column="EN_REQUESTER_D"/>
+   		<result property="dateMod" column="DATE_MOD_D"/>
+   		<result property="statusMod" column="STATUS_MOD_D"/>
+   		<result property="reasonMod" column="REASON_MOD_D"/>
+   		<result property="originalAttachmentMod" column="ORIGINAL_ATTACHMENT_MOD_D"/>
+   		<result property="renameAttachmentMod" column="RENAME_ATTACHMENT_MOD_D"/>
+   		<result property="timeEnter" column="TIME_ENTER"/>
+   		<result property="timeExit" column="TIME_EXIT"/>
+   		<result property="statusDiligence" column="STATUS_DILIGENCE"/>
    	</resultMap>
    	<!-- **************************************************************************************** -->
    
@@ -309,6 +343,7 @@
 		WHERE EXTRACT(YEAR FROM DATE_DILIGENCE) = #{year}
 		AND EXTRACT (MONTH FROM DATE_DILIGENCE) = #{month}
 		AND MEM_NO = #{memNo}
+		ORDER BY DATE_DILIGENCE
 	</select>
 	<!-- 근태 년/월 사번조회 카운트 페이징처리용 -->
 	<select id="dListCount" parameterType="map" resultType="_int">
@@ -330,5 +365,74 @@
 		</foreach>
 	</insert>
 	
+	<select id="emAllMember" resultMap="forEmLeaveResultSet">
+		SELECT M1.NAME,M1.ENROLL_DATE,M1.MEM_NO, M1.ANNUAL_LEAVE AS REMAIN_ANNUAL, M1.REWARD_LEAVE AS REMAIN_REWARD,
+																(select NVL(sum(days_r_leave),0)
+		                                                        from reward_leave
+		                                                        WHERE MEM_NO = M1.MEM_NO
+		                                                        ) AS REWARD_LEAVE,
+		                                                        M1.WORKYEAR
+		FROM (SELECT M.*,'N'||(TRUNC((TO_DATE(SYSDATE, 'YYYY/MM/DD') - TO_DATE(M.ENROLL_DATE,'YYYY/MM/DD'))/365)+1) AS WORKYEAR
+		        FROM MEMBER M
+		        ) M1
+		ORDER BY M1.MEM_NO
+	</select>
 	
+	<select id="usedLeave" resultMap="forEmUsedLeaveResultSet">
+		select R.MEM_NO,(R.MEM_NO||'_'||T.NO_TYPE_LEAVE) AS NUM, NVL(SUM(R.DAYS_USE_LEAVE),0)AS USECOUNT
+		from record_leave R
+		RIGHT JOIN TYPE_LEAVE T ON(T.NO_TYPE_LEAVE = R.TYPE_USE_LEAVE)
+		GROUP BY T.NO_TYPE_LEAVE, T.NAME_TYPE_LEAVE, R.MEM_NO
+		ORDER BY R.MEM_NO
+	</select>
+	
+	<update id="updateLeaveSetting" >
+		UPDATE SET_LEAVE_STANDARD SET
+		ANNUAL_LEAVE= #{annualLeave}, CARRYOVER_LEAVE = #{carryover},
+		FIRSTYEAR_LEAVE = #{firstyear}, SETTING_DATE = SYSDATE	WHERE WORKING_YEARS = #{workyear}	
+	</update>
+	
+	<insert id="insertLeaveType">
+		INSERT INTO TYPE_LEAVE VALUES(LEAVE_TYPE_SEQ.NEXTVAL,#{nameType},#{annualUse},#{status})
+	</insert>
+	
+	<insert id="reduceAnnualLeave">
+		INSERT INTO RECORD_LEAVE VALUES(LEAVE_RECORD_SEQ.nextval,#{memNo},1,SYSDATE,#{reductionDaysAnnual},'','결재완료',SYSDATE,#{reasonAnnual})
+	</insert>
+	
+	<insert id="reduceRewardLeave">
+		INSERT INTO RECORD_LEAVE VALUES(LEAVE_RECORD_SEQ.nextval,#{memNo},2,SYSDATE,#{reductionDaysReward},'','결재완료',SYSDATE,#{reasonReward})
+	</insert>
+	
+	<select id="recordDiligence" resultMap="RecordDiligenceResultSet">
+		SELECT *
+		FROM RECORD_DILIGENCE
+		WHERE NO_DILIGENCE = #{noDiligence}	
+	</select>
+	<insert id="modificationDiligence">
+		INSERT INTO MOD_DILIGENCE VALUES(#{noMod},SYSDATE,#{name},#{id},#{memNo},#{dateMod},'결재중',#{reasonMod},#{originalAttachmentMod},#{renameAttachmentMod})
+	</insert>
+	
+	<select id="selectRecordModification" resultMap="modificationDiligenceResultSet" parameterType="_int">
+		SELECT *		
+		FROM MOD_DILIGENCE M
+		JOIN RECORD_DILIGENCE R ON(R.NO_DILIGENCE = M.NO_MOD_D)
+		WHERE MEM_NO =#{memNo}
+	</select>
+	
+	<delete id="cancelMod">
+		DELETE MOD_DILIGENCE WHERE NO_MOD_D = #{noMod}
+	</delete>
+	
+	<select id="recordDiligenceList" resultMap="RecordDiligenceResultSet" parameterType="_int">
+		SELECT *
+		FROM RECORD_DILIGENCE
+		WHERE MEM_NO = #{memNo}
+		ORDER BY DATE_DILIGENCE
+	</select>
+	
+	<select id="AttendanceDays" resultMap="SetAttendanceResultSet">
+		SELECT *
+		FROM SET_ATTENDANCE_STANDARD
+	</select>
 </mapper>

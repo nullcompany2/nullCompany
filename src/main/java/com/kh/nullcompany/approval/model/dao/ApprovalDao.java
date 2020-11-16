@@ -33,4 +33,18 @@ public class ApprovalDao {
 		return (ArrayList)sqlSession.selectList("approvalMapper.selectStepList",docTempNo);
 	}
 
+	public int getCompleteAllListCount(int memNo) {
+		return sqlSession.selectOne("approvalMapper.getCompleteAllListCount", memNo);
+	}
+
+	public ArrayList<Document> selectCompleteAllList(int memNo, PageInfo pi) {
+		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("approvalMapper.selectCompleteAllList",memNo, rowBounds);
+	}
+
+	public Document approvalDetail(String docNo) {
+		return sqlSession.selectOne("approvalMapper.approvalDetail",docNo);
+	}
+
 }

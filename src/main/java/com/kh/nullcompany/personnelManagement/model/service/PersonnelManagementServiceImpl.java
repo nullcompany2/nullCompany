@@ -10,7 +10,10 @@ import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.personnelManagement.model.dao.PersonnelManagementDao;
 import com.kh.nullcompany.personnelManagement.model.vo.Department;
+import com.kh.nullcompany.personnelManagement.model.vo.ForEmLeave;
+import com.kh.nullcompany.personnelManagement.model.vo.ForEmUsedLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.MixForLeave;
+import com.kh.nullcompany.personnelManagement.model.vo.ModificationDiligence;
 import com.kh.nullcompany.personnelManagement.model.vo.RecordDiligence;
 import com.kh.nullcompany.personnelManagement.model.vo.RecordLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.RewardLeave;
@@ -232,6 +235,66 @@ public class PersonnelManagementServiceImpl implements PersonnelManagementServic
 	@Override
 	public int fixSetLeave(ArrayList newLeaveArr, ArrayList setAnnualLeave, int firstyear) {
 		return pDao.fixSetLeave(newLeaveArr,setAnnualLeave,firstyear);
+	}
+
+	@Override
+	public ArrayList<ForEmLeave> emAllMemeber() {
+		return pDao.emAllMember();
+	}
+
+	@Override
+	public ArrayList<ForEmUsedLeave> usedLeave() {
+		return pDao.usedLeave();
+	}
+
+	@Override
+	public int updateLeaveSetting(ArrayList<SetLeave> setLeave) {
+		return pDao.updateLeaveSetting(setLeave);
+	}
+
+	@Override
+	public int insertLeaveType(ArrayList<TypeLeave> newLeave) {
+		return pDao.insertLeaveType(newLeave);
+	}
+
+	@Override
+	public int reduceAnnualLeave(Map changeAL) {
+		return pDao.reduceAnnualLeave(changeAL);
+	}
+
+	@Override
+	public int reduceRewardLeave(Map changeRL) {
+		return pDao.reduceRewardLeave(changeRL);
+	}
+
+	@Override
+	public RecordDiligence recordDiligence(int noDiligence) {
+		return pDao.recordDiligence(noDiligence);
+	}
+
+	@Override
+	public int modificationDiligence(ModificationDiligence mod) {
+		return pDao.modificationDiligence(mod);
+	}
+
+	@Override
+	public ArrayList<ModificationDiligence> selectRecordModification(int memNo) {
+		return pDao.selectRecordModification(memNo);
+	}
+
+	@Override
+	public int cancelMod(int noMod) {
+		return pDao.cancelMod(noMod);
+	}
+
+	@Override
+	public ArrayList<RecordDiligence> recordDiligenceList(int memNo) {
+		return pDao.recordDiligenceList(memNo);
+	}
+
+	@Override
+	public ArrayList<SetAttendance> AttendanceDays() {
+		return pDao.AttendanceDays();
 	}
 
 	

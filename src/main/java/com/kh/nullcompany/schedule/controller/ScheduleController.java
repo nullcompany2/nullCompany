@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.binding.MapperMethod.ParamMap;
@@ -42,29 +43,31 @@ public class ScheduleController {
 
 	// 일정 관리 메인
 	@RequestMapping("Schedulermain.do")
-	public ModelAndView Schedulermain(ModelAndView mv) {
-
+	public ModelAndView Schedulermain(ModelAndView mv,  HttpServletResponse response, HttpSession session) {
+		
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();	
+		
 		// 총 부서 리스트
 		ArrayList<Department> deptList = sService.deptList();
 		// 총 사원 리스트
 		ArrayList<Member> memList = sService.memList();
 		// 공유 캘린더 리스트
-		ArrayList<Calendar> publicCalList = sService.publicCalList();
+		ArrayList<Calendar> publicCalList = sService.publicCalList(memNo);
 		// 내 캘린더 리스트
-		ArrayList<Calendar> IndividualCalList = sService.IndividualCalList();
+		ArrayList<Calendar> IndividualCalList = sService.IndividualCalList(memNo);
+		ArrayList<Calendar> SelectpublicCalList = sService.SelectpublicCalList(memNo);
 		// 일정 리스트
-		ArrayList<Schedule> ScheduleList = sService.ScheduleList();
-		System.out.println(ScheduleList);
-
-
+		ArrayList<Schedule> ScheduleList = sService.ScheduleList(memNo);
 
 		mv.addObject("deptList", deptList);
 		mv.addObject("memList", memList);
 		mv.addObject("publicCalList", publicCalList);
 		mv.addObject("IndividualCalList", IndividualCalList);
+		mv.addObject("SelectpublicCalList", SelectpublicCalList);
 		mv.addObject("ScheduleList", ScheduleList);
 		
 		mv.setViewName("Scheduler/Schedulermain");
+
 		return mv;
 	}
 
@@ -79,7 +82,6 @@ public class ScheduleController {
 	public void insertCommunity(@Param("Calendar") Calendar Calendar ) {
 		sService.insertCommunity(Calendar);
 
-		System.out.println("공유캘린더" + Calendar);
 
 		// 등록권한 리스트
 		String[] enrollarray = Calendar.getEnrollMember().split(",");
@@ -100,7 +102,6 @@ public class ScheduleController {
 	public void insertIndividual(@Param("Calendar") Calendar Calendar ) {
 		int result = sService.insertIndividual(Calendar);
 
-		System.out.println("내 캘린더" + Calendar);
 
 		int IndEnrollMember = Integer.parseInt(Calendar.getEnrollMember());
 		int IndLookMember = Integer.parseInt(Calendar.getLookMember());
@@ -116,7 +117,7 @@ public class ScheduleController {
 	public void insertSchedule(@Param("Schedule") Schedule Schedule ) {
 		int result = sService.insertSchedule(Schedule);
 
-		System.out.println("내 캘린더" + Schedule);
+		
 
 	}
 	
@@ -126,7 +127,7 @@ public class ScheduleController {
 		Schedule sche = new Schedule();
 		
 		String memcount =sService.getCalmemCount(Sche_name);
-		System.out.println(memcount);
+
 		Map map = new HashMap();
 		map.put("memcount", memcount);
 		map.put("Sche_name", Sche_name);
@@ -134,7 +135,6 @@ public class ScheduleController {
 		
 		sche = sService.detailSchedule(Sche_name);
 		
-		System.out.println("왜안대냐" + sche);
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(sche,response.getWriter());
@@ -143,31 +143,121 @@ public class ScheduleController {
 	
 	// 일정 디테일 총 인원 수
 
-
 	@RequestMapping("detailCalMember.do" )
-	public void detailCalMember(@Param("cal_name") String cal_name, Model model , HttpServletResponse response) throws JsonIOException, IOException {
-		ArrayList<Calendar> DetailCalmemberList = sService.DetailCalmemberList(cal_name);
-		
-		System.out.println("멤버 리스트" + DetailCalmemberList);
+	public void detailCalMember(@Param("calNo") int calNo, Model model , HttpServletResponse response) throws JsonIOException, IOException {
+		ArrayList<Calendar> DetailCalmemberList = sService.DetailCalmemberList(calNo);
+		System.out.println(calNo);
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(DetailCalmemberList,response.getWriter());
 	
 	}
 
-	// 일정 수정
+	// 일정 수정 모달 디테일 뜨게
 	@RequestMapping("editDetailSchedule.do" )
-	public void editDetailSchedule(@Param("Sche_name") String Sche_name, Model model , HttpServletResponse response) throws JsonIOException, IOException {
+	public void editDetailSchedule(@Param("Sche_name") int Sche_no, Model model , HttpServletResponse response) throws JsonIOException, IOException {
 		Schedule sche = new Schedule();
 		
-		sche = sService.editDetailSchedule(Sche_name);
+		sche = sService.editDetailSchedule(Sche_no);
 		
-		System.out.println("멤버수정디테일" + sche);
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(sche,response.getWriter());
 	
 	}
 
+	// 일정 수정
+	@RequestMapping("updateSchedule.do")
+	public ModelAndView updateSchedule(ModelAndView mv,Schedule Schedule ,HttpServletRequest request){
+		int result = sService.updateSchedule(Schedule);
+		System.out.println(Schedule);
+		System.out.println(result);
+		if(result>0) {
+			mv.setViewName("Scheduler/Schedulermain");
+		}else {
+			mv.addObject("msg","삭제실패").setViewName("common/errorPage");
+		}
+		return mv;
 
+
+	}
+	
+	// 일정 삭제
+	@RequestMapping("DeleteSchedule.do")
+	public ModelAndView DeleteSchedule(ModelAndView mv, int sche_no,HttpServletRequest request){
+
+		int result = (sService.DeleteSchedule(sche_no));
+
+		if(result>0) {
+			mv.setViewName("Scheduler/Schedulermain");
+		}else {
+			mv.addObject("msg","삭제실패").setViewName("common/errorPage");
+		}
+		return mv;
+	}
+	
+		
+	// 내 캘린더 정보 가져오기
+	@RequestMapping("editDetailIndiCal.do" )
+	public void editDetailIndiCal(ModelAndView mv, int calNo, HttpServletResponse response) throws JsonIOException, IOException{
+		Calendar cal = sService.editDetailIndiCal(calNo);
+		
+		response.setContentType("application/json; charset=UTF-8");
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		gson.toJson(cal,response.getWriter());
+
+	
+	}
+		
+	// 내 캘린더 수정
+	@RequestMapping("editIndiCal.do" )
+	public void editIndiCal(@Param("Calendar") Calendar calendar, HttpServletResponse response) throws JsonIOException, IOException {
+		
+		int result = sService.editIndiCal(calendar);
+	
+		response.setContentType("application/json; charset=UTF-8");
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		gson.toJson(result,response.getWriter());
+
+	
+	}
+
+		
+		
+	// 내 캘린더 삭제
+	@RequestMapping("DeleteIndiCal.do")
+	public ModelAndView DeleteIndiCal(ModelAndView mv, int calNo, HttpServletRequest request){
+		int result = sService.DeleteIndiCal(calNo);
+		int result2 = sService.DeleteIndiCal_Sche(calNo);
+		
+		if(result>0 && result2 > 0) {
+			mv.setViewName("Scheduler/Schedulermain");
+		}else {
+			mv.addObject("msg","수정실패").setViewName("common/errorPage");
+		}
+		return mv;
+		
+		
+		
+		
+	}
+	
+	// 일정도 같이 업데이트
+	@RequestMapping("editIndiCal_Sche.do" )
+	public ModelAndView updateacceptMember(ModelAndView mv, int cal_no,
+			HttpServletRequest request){
+
+		int result = (sService.editIndiCal_Sche(cal_no));
+
+		if(result>0) {
+			mv.setViewName("Scheduler/Schedulermain");
+		}else {
+			mv.addObject("msg","수정실패").setViewName("common/errorPage");
+		}
+		return mv;
+		
+	
+	}
+	
+	
 }

@@ -36,7 +36,7 @@
 					<span class="ct1">기본 설정</span>
 				</div>
 				<!-- ---- -->
-				<div class="contents-wrap drag-scrollbar">
+				<div class="contents-wrap drag-scrollbar" >
 					<form action="">
 						<div class="c-ic">
 							<div>
@@ -69,8 +69,11 @@
 														<td>	N+11	</td>
 														<td>	N+12	</td>
 													</tr>
-													<tr class="set-en-2">
-														<td colspan="2"><input type="text" name="" id="N1" value="${setLeave[0].annualLeave }"  class="set-l-days">일</td>
+													<tr class="set-en-2">													
+														<td colspan="2" id="notAutoCreate">
+														<input type="text" name="" id="N1" value="${setLeave[0].annualLeave }"  class="set-l-days ">일
+														</td>
+														<td colspan="2" id="autoCreate">자동생성</td>
 														<td><input type="text" name="" id="N2" value="${setLeave[1].annualLeave }" class="set-l-days">일</td>
 														<td><input type="text" name="" id="N3" value="${setLeave[2].annualLeave }" class="set-l-days">일</td>
 														<td><input type="text" name="" id="N4" value="${setLeave[3].annualLeave }" class="set-l-days">일</td>
@@ -152,16 +155,14 @@
 										</tr>
 									</tbody>
 								</table>
-								<div class="set-checkbox-1">
-									<h4 class="set-e-1">휴가 이월 설정</h4> 
-									<span class="set-e-2">포상,정기휴가 이월</span> 
-									<span class="set-e-3 cursor" id="ch-set">변경</span>
-								</div>
+								
 								<div class="set-checkbox-1" >
+									<h5>※ 1년차 휴가 자동생성 설정값 변경시 사원이 로그인하여 휴가현황을 조회하여야지 휴가설정이 변경됩니다.</h5>
+									<br>
 									<h4 class="set-e-1">1년차 휴가 자동생성</h4>
 																		
-									<input type="radio" name="ck-firstyear" id="use-fy"><label for="use-fy">사용함</label>
-									<input type="radio" name="ck-firstyear" id="n-use-fy" style="margin-left: 20px;"><label for="n-use-fy">사용 안함</label>
+									<input type="radio" name="ck-firstyear" id="use-fy" value="0"><label for="use-fy">사용함</label>
+									<input type="radio" name="ck-firstyear" id="n-use-fy" style="margin-left: 20px;" value="1"><label for="n-use-fy">사용 안함</label>
 								</div>
 							</div>
 							<div>
@@ -227,15 +228,37 @@
     	var setAnnualLeave = new  Array();
     	var newLeaveCount = 1;
     	var firstyear;
+    	
+    	
     	$(function(){
     		if(${setLeave[0].firstyear} == 0){
     			$("#use-fy").attr('checked','true');
+    			$("#notAutoCreate").attr('style','display:none');
     			firstyear = 0 ;
     		}else{
     			$("#n-use-fy").attr('checked','true');
+    			$("#autoCreate").attr('style','display:none');
     			firstyear = 1 ;
     		}
     	});
+    	
+    	$("input[type=radio][name=ck-firstyear]").change(function(){
+    		var check = $(this).val();
+    		
+    		if(check == 0){
+    			$("#notAutoCreate").attr('style','display:none');
+    			$("#autoCreate").attr('style','display:table-cell');
+    			
+    			firstyear = 0 ;
+    		}else if (check == 1){
+    			$("#notAutoCreate").attr('style','display:table-cell');
+    			$("#autoCreate").attr('style','display:none');
+    			
+    			firstyear = 1 ;
+    		}
+    		
+    	})
+    	
     	
     	$("#saveBtn").click(function(){
     		for(var i =1; i<=38; i++){
@@ -260,21 +283,22 @@
     			data.name = $("#"+j+"Name").val();
     			data.able = $("#"+j+"able option:selected").val();
     			data.useAnnual = $("#"+j+"annual").is(":checked");
-    			 
+    			if(data.name ==""){
+    				alert("휴가명을 입력해주세요.");
+    				location.reload();
+    			}
     			newLeaveArr.push(data);
     			
     		}
-   			for(var i = 0; i < newLeaveArr.length; i++){
-   				console.log(newLeaveArr[i]);
-   			}
     		//newLeaveArr : newLeaveArr, setAnnualLeave : setAnnualLeave, firstyear : firstyear
     		$.ajax({
     			url: "fixSetLeave.do",
     			data : {firstyear : firstyear,setAnnualLeave : JSON.stringify(setAnnualLeave),newLeaveArr :  JSON.stringify(newLeaveArr)},
     			type : "post",
-    			dataType:"json",
+    			
     			success:function(data){
-					console.log(data);
+					alert("변경완료");
+					location.href = location.href;
 				},
 				error: function(request,status,error){
 					console.log(request);
@@ -327,131 +351,7 @@
     	});
     </script>
     
-    <!-- Modal -->
-
-	<script>
-		function modal(id) {
-			var zIndex = 9999;
-			var modal = $('#' + id);
-
-			// 모달 div 뒤에 희끄무레한 레이어
-			var bg = $('<div>')
-				.css({
-					position: 'fixed',
-					zIndex: zIndex,
-					left: '0px',
-					top: '0px',
-					width: '100%',
-					height: '100%',
-					overflow: 'auto',
-					// 레이어 색갈은 여기서 바꾸면 됨
-					backgroundColor: 'rgba(0,0,0,0.4)'
-				})
-				.appendTo('body');
-
-			modal
-				.css({
-					position: 'fixed',
-					boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
-
-					// 시꺼먼 레이어 보다 한칸 위에 보이기
-					zIndex: zIndex + 1,
-
-					// div center 정렬
-					top: '50%',
-					left: '50%',
-					transform: 'translate(-50%, -50%)',
-					msTransform: 'translate(-50%, -50%)',
-					webkitTransform: 'translate(-50%, -50%)'
-				})
-				.show()
-				// 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
-				.find('.md-btn-close')
-				.on('click', function() {
-					bg.remove();
-					modal.hide();
-				});
-				
-		}
-
-		$('#ch-set').on('click', function() {
-			// 모달창 띄우기
-			modal('my_modal');
-		});
-		$(document).ready(function(){
-			$(".md-btn-cancel").click(function(){
-				var result = confirm("휴가신청을 취소하시겠습니까?");
-			})
-		})
-	</script>
-		<style>
-			#my_modal {
-				display: none;
-				width: 500px;
-				height: 380px;
-				padding: 20px 60px;
-				background-color: #fefefe;
-				border: 1px solid #888;
-				border-radius: 3px;
-			}
-	
-			#my_modal .modal-close-btn {
-				position: absolute;
-				top: 10px;
-				right: 10px;
-			}
-			.modal-dragscroll{
-				overflow: auto;
-			}
-			.modal-dragscroll::-webkit-scrollbar {
-				width: 10px;
-
-			}
-			.modal-dragscroll::-webkit-scrollbar-thumb {
-				background-color: #e8ecee;
-				border-radius: 15px;
-			}
-			.modal-dragscroll::-webkit-scrollbar-track {
-				background-color: white;
-				border-radius: 15px;
-				box-shadow: white;
-			}
-			.cb-po-1{
-                margin-top: 50px;
-            }
-            .md-btn{
-                border: solid 0.1px #477A8F;
-                border-radius: 5px;
-                margin: 5px;
-                padding-left: 15px;
-                padding-right: 15px;
-            }
-            .md-btn-close{
-                background: #e8ecee;
-            }
-		</style>
-	<!-- Modal div -->
-	<div id="my_modal" class="modal-dragscroll">
-        <h4 style="color: #477A8F; margin-bottom: 30px;">휴가 이월 설정</h4>
-        <div>
-            <span>
-                올해 사용하지 않고 남은 연차 휴가, <br>
-                포상 휴가를 다음 연도 기준으로 이월하려면 체크하세요.
-            </span>
-        </div>
-        <div class="cb-po-1">
-            <input type="checkbox" name="" id="a-ov"><label for="a-ov"> 연차 휴가 이월</label> 
-        </div>
-        <div class="cb-po-1">
-            <input type="checkbox" name="" id="r-ov"><label for="r-ov"> 포상 휴가 이월</label> 
-        </div>
-        <div style="text-align: center; margin-top: 50px;">
-            <span class="md-btn cursor ">저장</span>
-			<span class="md-btn cursor md-btn-close">닫기</span>
-		</div>
-
-		<a class="modal-close-btn cursor md-btn-close">X</a>
-    </div>
+    
     
 </body>
 </html>

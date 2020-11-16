@@ -83,19 +83,14 @@
     <div id='wrap'>
         <div class="contents">
             <div class="contents-title">
-                <span class="ct1">메일 전송 </span>
+                <span class="ct1">메일 전송 실패 </span>
 			</div>
 			<div>
 <div style="width: 90%; margin: auto;">
 	<br>
-	 메일이 정상적으로 발송되었습니다. 
+	메일 주소가 유효하지 않아 메일 전송에 실패했습니다. 
 	 <br><br>
-	<table align="left" cellspacing="0" width="40%" id="tb"> 
-	<tr> 	
-	<th> 받는 사람 </th>
-	<td> ${m.name} < ${m.id} >   </td>
-	</tr>
-	</table>
+	
 	 <br><br>
 	 <a href="recieveMail.do"> 메일 홈으로 가기  </a>
 	 

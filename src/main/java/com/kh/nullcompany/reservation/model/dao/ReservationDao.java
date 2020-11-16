@@ -1,12 +1,14 @@
 package com.kh.nullcompany.reservation.model.dao;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.nullcompany.reservation.model.vo.Category;
+import com.kh.nullcompany.reservation.model.vo.Reservation;
 import com.kh.nullcompany.reservation.model.vo.Resource;
 
 @Repository("rDao")
@@ -46,7 +48,23 @@ public class ReservationDao {
 	}
 
 	public ArrayList<Resource> selectResourceList(int rcNo) {
-		return (ArrayList)sqlSession.selectList("reservationMapper.selectResourceList");
+		return (ArrayList)sqlSession.selectList("reservationMapper.selectResourceList2",rcNo);
+	}
+
+	public int deleteResource(int rsNo) {
+		return sqlSession.update("reservationMapper.DeleteResouce",rsNo);
+	}
+
+	public int updateResouce(Resource r) {
+		return sqlSession.update("reservationMapper.UpdateResouce",r);
+	}
+
+	public Resource selectResource(int rsNo) {
+		return sqlSession.selectOne("reservationMapper.selectResource",rsNo);
+	}
+
+	public ArrayList<Reservation> selectReservationList(Map map) {
+		return (ArrayList)sqlSession.selectList("reservationMapper.selectReservationList",map);
 	}
 	
 }

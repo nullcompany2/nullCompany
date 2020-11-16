@@ -94,6 +94,11 @@
 	display:none; 
 	}
 	
+	#countAll {
+	position: absolute;
+	right : 115px;
+	}
+	
 </style>
 
 <body>
@@ -121,9 +126,8 @@
 						</c:url>
 						
 						<tr class="trMail" onClick="location.href='${saveDetailView}'"> 
-						
 							<td>&nbsp;&nbsp;<input type="checkbox" onClick="event.cancelBubble=true" name="mail"></td>
-							<td align="left"><a> ${ma.name} < ${ma.recipient} ></a></td>
+							<td align="left"> ${ma.name} < ${ma.recipient} > </td>
 							<td>${ ma.mTitle }</td>
 							<td align="right"> ${ma.sendDate }</td>
 						</tr>
@@ -145,7 +149,7 @@
 					<!-- [이전] --> <c:if test="${ pi.currentPage eq 1 }">
 						이전 &nbsp;
 					</c:if> <c:if test="${ pi.currentPage ne 1 }">
-						<c:url var="before" value="recieveMail.do">
+						<c:url var="before" value="saveMailList.do">
 							<c:param name="currentPage" value="${ pi.currentPage - 1 }" />
 						</c:url>
 						<a href="${ before }">이전</a> &nbsp;
@@ -156,7 +160,7 @@
 						</c:if>
 
 						<c:if test="${ p ne pi.currentPage }">
-							<c:url var="pagination" value="recieveMail.do">
+							<c:url var="pagination" value="saveMailList.do">
 								<c:param name="currentPage" value="${ p }" />
 							</c:url>
 							<a href="${ pagination }">${ p }</a> &nbsp;
@@ -164,7 +168,7 @@
 					</c:forEach> <!-- [다음] --> <c:if test="${ pi.currentPage eq pi.maxPage }">
 						다음
 					</c:if> <c:if test="${ pi.currentPage ne pi.maxPage }">
-						<c:url var="after" value="recieveMail.do">
+						<c:url var="after" value="saveMailList.do">
 							<c:param name="currentPage" value="${ pi.currentPage + 1 }" />
 						</c:url>
 						<a href="${ after }">다음</a>
@@ -173,16 +177,6 @@
 			</tr>
 		</table>
 		<br>
-			
-			
-			<select id="category"> 
-				<option> ----- </option>
-				<option> 보낸사람 </option>
-				<option> 제목 </option>
-				<option> 내용 </option>
-			</select>
-			<input  id="search" type="text" placeholder="메일 검색"> 
-			<button id="searchBtn" > 검색 </button> <br>
 			
         </div>
         
@@ -204,7 +198,7 @@
                     $("input[name=mail]").prop("checked",true);
                     $(".trMail").css("background","#ECECEC");
                     $("#hide").show();
-                    $("#countAll").hide();
+                    $("#select").hide(); 
                     
                     var count = $("input:checkbox[name=mail]:checked").length;
                    	$("#count").text(count);
@@ -215,7 +209,7 @@
                     $("input[name=mail]").prop("checked",false);
                     $(".trMail").css("background","white");
                     $("#hide").hide();
-                    $("#countAll").show();
+                    $("#select").show(); 
                 }
             })
         })
@@ -238,7 +232,6 @@
 		});
         
         
-
         </script>
 		
 

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.mail.model.vo.Mail;
+import com.kh.nullcompany.mail.model.vo.MailListCount;
 import com.kh.nullcompany.member.model.vo.Member;
 
 @Repository("maDao")
@@ -18,10 +19,6 @@ public class MailDao {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
-	// 받은 메일함 리스트 갯수 카운트 
-	public int getListCount(int memNo) {
-		return sqlSession.selectOne("mailMapper.getListCount",memNo);
-	}
 
 	// 이름 누르고 그 사람에게 메일 보내기 
 	public Member mailWriteId(int memNo) {
@@ -65,10 +62,6 @@ public class MailDao {
 		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
 		return (ArrayList)sqlSession.selectList("mailMapper.recieveMailBin",memId,rowBounds);
-	}
-
-	public ArrayList<Mail> selectRmaNo(int memNo) {
-		return (ArrayList)sqlSession.selectList("mailMapper.selectAllNoId",memNo);
 	}
 
 
@@ -118,12 +111,67 @@ public class MailDao {
 		return (ArrayList)sqlSession.selectList("mailMapper.binMailList",memId,rowBounds);
 	}
 
+
+	public Mail delMailDetailView(int mailNo) {
+		return sqlSession.selectOne("mailMapper.delMailDetailView",mailNo);
+	}
+
+	public int allBinDelMail(String memId) {
+		return sqlSession.update("mailMapper.allBinDelMail",memId);
+	}
+
+	public Member findIdName(String recipient) {
+		return sqlSession.selectOne("memberMapper.findIdName",recipient);
+	}
+
+	public int allRealDelMail(String memId) {
+		return sqlSession.update("mailMapper.allRealDelMail",memId);
+	}
+
+	public int deleteOneMail(int mailNo) {
+		return sqlSession.update("mailMapper.deleteOneMail",mailNo);
+	}
+
+	public int realDeleteOneMail(int mailNo) {
+		return sqlSession.update("mailMapper.realDeleteOneMail",mailNo);
+	}
+
+	// 받은 메일함 편지 갯수 세기 
+	public int getReListCount(String memId) {
+		return sqlSession.selectOne("mailMapper.getReListCount",memId);
+	}
+	
+	// 쓰레기통 편지 갯수 세기 
 	public int getBinListCount(String memId) {
 		return sqlSession.selectOne("mailMapper.getBinListCount",memId);
 	}
 
-	public Mail delMailDetailView(int mailNo) {
-		return sqlSession.selectOne("mailMapper.sendMailDetailView",mailNo);
+	// 보낸 메일함 편지 갯수 세기 
+	public int getSendListCount(String memId) {
+		return sqlSession.selectOne("mailMapper.getSendListCount",memId);
+	}
+
+	// 임시보관함 편지 갯수 세기 
+	public int getSaveListCount(String memId) {
+		return sqlSession.selectOne("mailMapper.getSaveListCount",memId);
+	}
+
+	public ArrayList<Member> autoComplete(String text) {
+		return(ArrayList) sqlSession.selectList("memberMapper.autoComplete",text);
+	}
+
+	public int backMail(int mailNo) {
+		return sqlSession.update("mailMapper.backOneMail",mailNo);
+	}
+
+	// 안읽은 메일 세기 
+	public int getReReListCount(String memId) {
+		return sqlSession.selectOne("mailMapper.getReUnreadListCount",memId);
+	}
+
+	// 메일에 카운트 에이작스 뿌리기 
+	public MailListCount getMailBoxCount(String memId) {
+		return sqlSession.selectOne("mailMapper.mailListCount",memId);
 	}
 	
 	

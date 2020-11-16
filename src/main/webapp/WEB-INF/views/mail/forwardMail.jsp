@@ -10,11 +10,11 @@
 
 
 <!-- include libraries(jQuery, bootstrap) -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
-<title> 임시 보관함 디테일뷰 </title>
+<title>답장하기  </title>
 
 <style>
 
@@ -95,6 +95,7 @@ a:active {
  margin-bottom: 25px;
  overflow-y: scroll;
 }
+
 #auto #autoAddress {
 		position:absolute;
 		display:none;
@@ -106,7 +107,6 @@ a:active {
 		z-index : 700;
 	 	margin : 2px 50px 0px 20px;
 		box-shadow: 0px 0px 5px lightgrey;
-		
 }
 
 #auto #autoAddress li {
@@ -118,15 +118,33 @@ a:active {
 	color : white;
 }
 
+#auto #searchPop {
+	cursor : pointer;
+}
+
+#auto #searchAddress {
+	position : absolute;
+	background: #477A8F; 
+	color : white;
+	right : 312px;
+	top : 143px;
+	font-size : 12px;
+	padding : 3.5px 6px 3.5px 3.5px;
+	display : none;
+	border-radius : 0px 6px 6px 0px;
+
+}
+
+
 </style>
 
 </head>
 <body>
 		<c:import url="../common/mailSubNav.jsp"/>
-		<c:set var="contextPath" value="${ pageContext.servletContext.contextPath }" scope="application"/>
+
 		<div class="contents">
 			<div class="contents-title">
-				<span class="ct1">임시 보관함 </span>
+				<span class="ct1">답장 하기 </span>
 			</div>
 
 			<div>
@@ -138,29 +156,38 @@ a:active {
 						<input type="submit" id="saveMail"  value="저장하기"/>
 						<input type="button" value="이전으로" onClick="location.href='javascript:history.go(-1);'" /> <br>
 						&nbsp;보내는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-						<input type="text" name="sender" style="width: 60%;" value= "${loginUser.name} < ${loginUser.id}@nullcompany.com > "/> <br>
+						<input type="text" name="sender" style="width: 60%;" value= "${loginUser.name} < ${loginUser.id}@nullcompany.com > "readonly/> <br>
+
 						<div id="auto"> 
-						&nbsp;받는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;받는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						
 						<input type="text" name="recipient" id="address" style="width: 60%;"
 							placeholder="이름 혹은 메일 주소를 입력해주세요." />
-							 <span style="font-size: 17px; background: #477A8F; color: white; padding: 0px 8px 0px 8px;">+</span>
+							
+							 <span  id="searchPop"
+							 style="font-size: 17px; 
+							 background: #477A8F; 
+							 color: white; 
+							 padding: 0px 8px 0px 8px;">+</span>
+							 	
+							 <span id="searchAddress"> 주소 검색 </span>
 							 	<div id="autoAddress"> 
-							 	 <!--  검색 결과  -->
+							 	 <!--  자동 완성 검색 결과  -->
 							 	</div>
 							</div>
 							
-						
-						
-						 &nbsp;&nbsp;제목
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+						&nbsp;&nbsp;제목
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						&nbsp;<input type="text" name="mTitle" style="width: 60%;"
-							placeholder="제목 없음" value="${ma.mTitle}"/> <br>
-						
-							&nbsp;파일첨부&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="file" name="uploadPhoto" /><br> <br> 
-						
-						
+						placeholder="제목 없음" value="전달 : ${ma.mTitle}"/> <br>
+						&nbsp;파일첨부&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="file" name="uploadPhoto" />
+						<br> <br> 
 						<textarea id="summernote" name="mContent">
+						
 						${ma.mContent}
 						
 						 </textarea>
@@ -177,7 +204,7 @@ a:active {
 		<hr>
 			<p>메일 제목 : <span id="modalTitle"> 제목없음 </span></p>
 			<p>
-				보낸 사람 : ${ loginUser.name }< ${ loginUser.id } @nullcompany.com >
+				보낸 사람 : ${ loginUser.name }< ${ loginUser.id } >
 				
 			</p>
 			<p>받는 사람 : <span id="modalRecipient"> </span></p>
@@ -193,28 +220,41 @@ a:active {
 	<!-- Modal div -->
 
 	<script type="text/javaScript">
+	
 	$(document).ready(function() {
+		
+	
+	/*   $('#community').on('click', function() {
+	         // 공유 캘린더 모달창 띄우기
+	         modal('communitymodal');
+	      }); */
+		
 	  $('#summernote').summernote({
  	    	placeholder: '내용을 작성해주세요.',
 	        minHeight: 370,
-	        maxHeight: 370,
+	        maxHeight: null,
 	        focus: true, 
 	        lang : 'ko-KR'
+	        
 	  });
-	  
-
+	
 	  $("button[aria-label=Picture]").css('display','none');	  
 	  $("button[aria-label=Video]").css('display','none');	  
+	   
+	  });
 	
-	});
 	
 	$(document).on("click","#ulAuto li",function(){
 		 
-        $("input[name=recipient]").val($(this).text());
-        $("#autoAddress").hide();
-        
-    });
+	            $("input[name=recipient]").val($(this).text());
+	            $("#autoAddress").hide();
+	            
+	   });
+	
+	</script>
 
+	<script>
+	
     function modal(id) {
        var zIndex = 9999;
        var modal = $('#' + id);
@@ -257,11 +297,13 @@ a:active {
              modal.hide();
           });
     }
-    	
+
+    
+   // 미리보기 모달 
     $('.go2').on('click', function() {
     	
     	// 메일 제목 input val 옮기기 
-       	$("#modalTitle").text($("input:text[name='mtitle']").val());
+       	$("#modalTitle").text($("input:text[name='mTitle']").val());
     	// 메일 받는 사람 input val 옮기기 
        	$("#modalRecipient").text($("input:text[name='recipient']").val());
     	
@@ -276,7 +318,7 @@ a:active {
        	
     });
     
-    
+    // 메일 전송 버튼 
     $("#sendMail").click(function () {
 
       	if ($("input[name=recipient]").val().length < 1 ){
@@ -288,7 +330,9 @@ a:active {
    		}
         
 	 });
+    
   
+    // 메일 임시 저장 버튼 
  	 $("#saveMail").click(function () {
  		if ($('#summernote').summernote('isEmpty')) {
  			$('#summernote').summernote('insertText', '작성 내용 없음');
@@ -300,53 +344,64 @@ a:active {
         $("form").attr("action","gosaveMail.do");
  	}); 
  	 
-     $("#address").on("keyup",function(){
-         var text = $(this).val();
-        
-         if(text.length > 1){
+ 	 // 자동 완성 에이작스 
+ 	
+          $("#address").on("keyup",function(){
+              var text = $(this).val();
              
-		$.ajax({
-			url:"autoComplete.do",
-			type:"post",
-			data:{text : text},
-			success:function(data){
- 				console.log(text);
-			 	console.log(data);
-                $(text).val(0); 
-			 
-			 	var auto = $("#autoAddress");
-               	var str = "";
-			 	$("#autoAddress").empty();
-			 		
-			 		str += "<ul id='ulAuto'>"
-			   
-			 	$.each(data,function(ind,entry){
-			 	
-			 		str += "<li>" + entry['name'] + " < " 
-			 		str += entry['emailAddress'] +" > </li>" 
-			 		
-			 	});
-			 	
-			 		str += "</ul>"
-			 		auto.append(str);
-			 		$("#autoAddress").show();
-			 	
+              if(text.length > 1){
                   
-			},error : function() {
-				console.log("전송실패");
-			} 
-		});
-		
-         }else {
-       	  $("#autoAddress").hide();
-         }
-	});
-     
- 	 
- 	 
-
+ 			$.ajax({
+ 				url:"autoComplete.do",
+ 				type:"post",
+ 				data:{text : text},
+ 				success:function(data){
+ 	 				console.log(text);
+ 				 	console.log(data);
+ 	                $(text).val(0); 
+ 				 
+ 				 	var auto = $("#autoAddress");
+ 	               	var str = "";
+ 				 	$("#autoAddress").empty();
+ 				 		
+ 				 		str += "<ul id='ulAuto'>"
+ 				   
+ 				 	$.each(data,function(ind,entry){
+ 				 	
+ 				 		str += "<li>" + entry['name'] + " < " 
+ 				 		str += entry['emailAddress'] +" > </li>" 
+ 				 		
+ 				 	});
+ 				 	
+ 				 		str += "</ul>"
+ 				 		auto.append(str);
+ 				 		$("#autoAddress").show();
+ 				 	
+ 	                  
+ 				},error : function() {
+ 					console.log("전송실패");
+ 				} 
+ 			});
+ 			
+              }else {
+            	  $("#autoAddress").hide();
+              }
+              
+ 		});
+          searchPop
+          $('#searchPop')
+          .mouseover(function(){
+          $('#searchAddress').css('display','block');
+          })
+          
+           searchPop
+          $('#searchPop')
+          .mouseout(function(){
+          $('#searchAddress').css('display','none');
+          })
+          
+          
  </script>
- 
 </body>
 
 </html>

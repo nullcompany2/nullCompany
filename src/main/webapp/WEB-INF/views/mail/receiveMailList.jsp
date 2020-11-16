@@ -28,7 +28,6 @@
 		border-bottom: solid 0.1px #cacaca;
 	}
 	
-	
 	.ct1{
 
 		margin-left: 50px;
@@ -94,6 +93,15 @@
 	display:none; 
 	}
 	
+	#countAll {
+	position: absolute;
+	right : 115px;
+	}
+	
+	#idWrite {
+	color : black;
+	}
+	
 </style>
 
 <body>
@@ -119,7 +127,7 @@
 						
 						&nbsp;&nbsp;
 						<span id="hide" style="margin-right:40px;">  <span id="count"> </span> <a id="delMail">삭제 </a>  &nbsp; <a id="realdelMail"> 완전삭제 </a> </span>
-						<span style="margin-left:65%;" id="countAll"> </span> <br><br>
+						<span id="countAll"> </span> <br><br>
 						
 						<div id="tableDiv"> 
 					<c:choose>
@@ -139,7 +147,7 @@
 						</c:url>
 						
 							<td>&nbsp;&nbsp;<input type="checkbox" onClick="event.cancelBubble=true" name="mail"></td>
-							<td align="left"><a onClick="event.stopPropagation(); location.href='${mailWriteId}'">${ma.name} < ${ma.sender} > </a></td>
+							<td align="left"><a id="idWrite" onClick="event.stopPropagation(); location.href='${mailWriteId}'">${ma.name} < ${ma.sender} > </a></td>
 							<td>${ ma.mTitle }</td>
 							<td align="right"> ${ma.sendDate }</td>
 						</tr>
@@ -259,7 +267,14 @@
         
         
         $("#realdelMail").click(function(){
-        	confirm("완전 삭제하시면 복구 할 수 없습니다. 정말로 삭제하시겠습니까?");
+        	 if (confirm("완전 삭제하시면 복구 할 수 없습니다. 정말로 삭제하시겠습니까?") == true){ 
+
+				 document.location.href='allRealDelMail.do';
+
+		        }else{   //취소
+
+		            return;
+		        }
 		});
         
         $("#listOption").change(function() {

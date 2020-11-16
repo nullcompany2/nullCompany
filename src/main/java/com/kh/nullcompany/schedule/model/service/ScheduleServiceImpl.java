@@ -67,8 +67,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 
 	@Override
-	public ArrayList<Calendar> publicCalList() {
-		return sDao.publicCalList();
+	public ArrayList<Calendar> publicCalList(int memNo) {
+		return sDao.publicCalList(memNo);
 	}
 
 	@Override
@@ -101,8 +101,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 
 	@Override
-	public ArrayList<Calendar> IndividualCalList() {
-		return sDao.IndividualCalList();
+	public ArrayList<Calendar> IndividualCalList(int memNo) {
+		return sDao.IndividualCalList(memNo);
 	}
 
 	@Override
@@ -111,8 +111,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 
 	@Override
-	public ArrayList<Schedule> ScheduleList() {
-		return sDao.ScheduleList();
+	public ArrayList<Schedule> ScheduleList(int memNo) {
+		return sDao.ScheduleList(memNo);
 	}
 
 	@Override
@@ -133,13 +133,54 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 
 	@Override
-	public ArrayList<Calendar> DetailCalmemberList(String cal_name) {
-		return sDao.DetailCalmemberList(cal_name);
+	public ArrayList<Calendar> DetailCalmemberList(int calNo) {
+		return sDao.DetailCalmemberList(calNo);
 	}
 
 	@Override
-	public Schedule editDetailSchedule(String sche_name) {
-		return sDao.editDetailSchedule(sche_name);
+	public Schedule editDetailSchedule(int Sche_no) {
+		return sDao.editDetailSchedule(Sche_no);
+	}
+
+	@Override
+	public int updateSchedule(Schedule schedule) {
+		return sDao.updateSchedule(schedule);
+	}
+
+	@Override
+	public int DeleteSchedule(int sche_no) {
+		return sDao.DeleteSchedule(sche_no);
+	}
+
+	@Override
+	public ArrayList<Calendar> SelectpublicCalList(int memNo) {
+		return sDao.SelectpublicCalList(memNo);
+	}
+
+	@Override
+	public Calendar editDetailIndiCal(int calNo) {
+		return sDao.editDetailIndiCal(calNo);
+	}
+
+	@Override
+	public int editIndiCal(Calendar calendar) {
+		return sDao.editIndiCal(calendar);
+	}
+
+	@Override
+	public int DeleteIndiCal(int calNo) {
+		return sDao.DeleteIndiCal(calNo);
+	}
+	
+	@Override
+	public int DeleteIndiCal_Sche(int calNo) {
+		return sDao.DeleteIndiCal_Sche(calNo);
+	}
+
+	@Override
+	public int editIndiCal_Sche(int cal_no) {
+		return sDao.editIndiCal_Sche(cal_no);
+		
 	}
 
 

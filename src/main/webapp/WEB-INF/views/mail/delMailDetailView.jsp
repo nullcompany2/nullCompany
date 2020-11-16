@@ -86,8 +86,7 @@
 			  </c:url>  
               
                 <a href="${mailReply}"><input type="button" value="답장"/> </a> 
-						<a href=""> <input type="button" value="전달"/></a> 
-						<input  id="delMail" type="button" value="삭제" /> 
+						<input  id="backMail" type="button" value="복원" /> 
 						<input id="realdelMail" type="button" value="완전삭제" />
 						<br> 
 			</div>
@@ -95,8 +94,8 @@
 				<span id="viewTitle"> ${ma.mTitle}   </span>	 
 				 <span id="viewdate"> ${ma.sendDate} </span> <br>
 				
-				보낸 사람 : ${ma.sender} < ${ma.email} ><br> 
-				받는 사람 : ${ma.recipient} < ${ma.recipient}@nullcompany.com > <br> 
+				보낸 사람 : ${ma.name} < ${ma.email} ><br> 
+				받는 사람 : ${ma.rName} < ${ma.recipient}@nullcompany.com > <br> 
 				<br> 
 				
 				<div id="viewmailContent"> 
@@ -113,12 +112,28 @@
 
 	<script>
 	
-	 $("#delMail").click(function(){
-			confirm("정말로 삭제하시겠습니까? 휴지통으로 이동합니다.");
+	var test = ${ ma.mailNo };
+	
+	 $("#backMail").click(function(){
+			if (confirm("복원하시겠습니까?") == true){ 
+
+				 document.location.href='backMail.do?mailNo='+ test;
+
+		        }else{   //취소
+
+		            return;
+		        }
 		});
      
-     $("#realdelMail").click(function(){
-     	confirm("완전 삭제하시면 복구 할 수 없습니다. 정말로 삭제하시겠습니까?");
+	 $("#realdelMail").click(function(){
+     	 if (confirm("완전 삭제하시면 복구 할 수 없습니다. 정말로 삭제하시겠습니까?") == true){ 
+
+			 document.location.href='realDeleteOneMail.do?mailNo='+ test;
+
+	        }else{   //취소
+
+	            return;
+	        }
 		});
 
 	</script>
