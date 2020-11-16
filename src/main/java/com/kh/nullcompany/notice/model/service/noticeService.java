@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.notice.model.vo.ncomment;
 import com.kh.nullcompany.notice.model.vo.notice;
+import com.kh.nullcompany.notice.model.vo.tnotice;
 
 public interface noticeService {
 
@@ -38,5 +39,16 @@ public interface noticeService {
 	ArrayList<ncomment> selectnCommentList(int nNo);
 
 	int insertnComment(ncomment c);
+
+	int insertNotice(notice n);
+
+	int inserttNotice(tnotice t);
+
+	notice selectUpdateNotice(int nNo);
+
+
+	int updateNotice(notice n);
+
+	int ndelete(int nNo);
 
 }

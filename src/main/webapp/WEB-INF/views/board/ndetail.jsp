@@ -1,6 +1,6 @@
 <%@page import="com.kh.nullcompany.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
@@ -10,420 +10,425 @@
 <c:import url="../common/header.jsp" />
 
 <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR"
-   rel="stylesheet">
+	rel="stylesheet">
 <!-- 합쳐지고 최소화된 최신 CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
 <!-- 부가적인 테마 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 
 <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <title>게시판디테일</title>
 
 </head>
 <style>
 .icon.impt {
-   top: 0;
-   left: 0;
-   width: 16px;
-   height: 16px;
-   background: url(resources/images/sp_menu.png) 0 0 no-repeat;
-   background-position: -148px -311px;
+	top: 0;
+	left: 0;
+	width: 16px;
+	height: 16px;
+	background: url(resources/images/sp_menu.png) 0 0 no-repeat;
+	background-position: -148px -311px;
 }
 
 select {
-   -webkit-appearance: none; /* 네이티브 외형 감추기 */
-   -moz-appearance: none;
-   appearance: none; /* 화살표 모양의 이미지 */
-   width: 100px; /* 원하는 너비설정 */
-   padding: .5em .5em; /* 여백으로 높이 설정 */
-   font-family: inherit; /* 폰트 상속 */
-   background:
-      url(https://farm1.staticflickr.com/379/19928272501_4ef877c265_t.jpg)
-      no-repeat 95% 50%; /* 네이티브 화살표 대체 */
-   -moz-appearance: none;
-   border-radius: 0px;
+	-webkit-appearance: none; /* 네이티브 외형 감추기 */
+	-moz-appearance: none;
+	appearance: none; /* 화살표 모양의 이미지 */
+	width: 100px; /* 원하는 너비설정 */
+	padding: .5em .5em; /* 여백으로 높이 설정 */
+	font-family: inherit; /* 폰트 상속 */
+	background:
+		url(https://farm1.staticflickr.com/379/19928272501_4ef877c265_t.jpg)
+		no-repeat 95% 50%; /* 네이티브 화살표 대체 */
+	-moz-appearance: none;
+	border-radius: 0px;
 }
 
 form input[type=button] {
-   font-size: 18px;
-   margin: 7px 5px 7px 5px;
-   background: none;
-   border: none;
-   color: #477A8F;
+	font-size: 18px;
+	margin: 7px 5px 7px 5px;
+	background: none;
+	border: none;
+	color: #477A8F;
 }
 
 body {
-   font-family: "Noto Sans KR", sans-serif;
-   padding: 0px;
-   margin: 0px;
+	font-family: "Noto Sans KR", sans-serif;
+	padding: 0px;
+	margin: 0px;
 }
 
 .container {
-   position: relative;
-   border-radius: 10px;
-   background: #e8ecee;
-   color: #676767;
-   width: 250px;
-   height: 100%;
-   font-size: 1.15em;
-   float: left;
-   border-bottom: none;
-   padding-top: 2px;
+	position: relative;
+	border-radius: 10px;
+	background: #e8ecee;
+	color: #676767;
+	width: 250px;
+	height: 100%;
+	font-size: 1.15em;
+	float: left;
+	border-bottom: none;
+	padding-top: 2px;
 }
 
 .drag-scrollbar {
-   overflow: auto;
-   height: 600px;
+	overflow: auto;
+	height: 600px;
 }
 
 .H-personnel-subNavi {
-   margin-left: 15px;
-   margin-right: 15px;
+	margin-left: 15px;
+	margin-right: 15px;
 }
 
 li {
-   list-style: none;
-   margin-bottom: 10px;
-   font-size: 18px;
+	list-style: none;
+	margin-bottom: 10px;
+	font-size: 18px;
 }
 
 a {
-   text-decoration: none;
-   color: #676767;
+	text-decoration: none;
+	color: #676767;
 }
 
 .title {
-   font-size: 16px;
-   font-weight: bold;
-   margin-right: 50px;
+	font-size: 16px;
+	font-weight: bold;
+	margin-right: 50px;
 }
 
 .subTitle {
-   list-style: none;
+	list-style: none;
 }
 
 /* contents */
 .contents {
-   position: relative;
-   margin-left: 250px;
+	position: relative;
+	margin-left: 250px;
 }
 
 .contents-title {
-   padding-top: 10px;
-   height: 50px;
-   border-bottom: solid 0.1px #cacaca;
+	padding-top: 10px;
+	height: 50px;
+	border-bottom: solid 0.1px #cacaca;
 }
 
 .ct1 {
-   margin-left: 50px;
-   font-size: 20px;
-   font-weight: bolder;
+	margin-left: 50px;
+	font-size: 20px;
+	font-weight: bolder;
 }
 
 .del {
-   opacity: 0%;
+	opacity: 0%;
 }
 
 .del:hover {
-   opacity: 100%;
+	opacity: 100%;
 }
 
 a:active {
-   font-weight: bolder;
+	font-weight: bolder;
 }
 
 #search {
-   position: relatived;
-   margin-left: 37%;
+	position: relatived;
+	margin-left: 37%;
 }
 
 table tr:last-of-type {
-   padding-bottom: 50px;
+	padding-bottom: 50px;
 }
 
 #mrv_table {
-   margin: 10px 0px 0px 0px;
-   width: 100%;
-   border-top: 1px solid #cdcdcd;
-   border-bottom: 1px solid #cdcdcd;
-   border-collapse: collapse
+	margin: 10px 0px 0px 0px;
+	width: 100%;
+	border-top: 1px solid #cdcdcd;
+	border-bottom: 1px solid #cdcdcd;
+	border-collapse: collapse
 }
 
 input[type="submit"] {
-   -webkit-appearance: button; // 2
-   cursor: pointer;
-   //
-   3
+	-webkit-appearance: button; // 2
+	cursor: pointer;
+	//
+	3
 }
 
 #mrv_table>thead {
-   width: 8px;
-   border-radius: 8px;
-   background: #e1e1e1;
+	width: 8px;
+	border-radius: 8px;
+	background: #e1e1e1;
 }
 
 thead tr {
-   background: #e1e1e1;
+	background: #e1e1e1;
 }
 
 tr>th {
-   padding: 14px 10px 14px 15px;
-   text-align: left;
+	padding: 14px 10px 14px 15px;
+	text-align: left;
 }
 
 tr>td {
-   padding: 14px 10px 14px 15px;
-   text-align: left;
+	padding: 14px 10px 14px 15px;
+	text-align: left;
 }
 
 .rv_but {
-   border: 0 none;
-   background-color: transparent;
-   cursor: pointer;
-   color: #779ec0 !important;
+	border: 0 none;
+	background-color: transparent;
+	cursor: pointer;
+	color: #779ec0 !important;
 }
 
 .n-emp-i {
-   width: 100%;
-   height: 30%;
+	width: 100%;
+	height: 30%;
 }
 
 .modal-dragscroll>div>dl>dd {
-   margin-bottom: 15px;
+	margin-bottom: 15px;
 }
 
 .modal-dragscroll {
-   overflow: auto;
+	overflow: auto;
 }
 
 .modal-dragscroll::-webkit-scrollbar {
-   width: 10px;
+	width: 10px;
 }
 
 .modal-dragscroll::-webkit-scrollbar-thumb {
-   background-color: #e8ecee;
-   border-radius: 15px;
+	background-color: #e8ecee;
+	border-radius: 15px;
 }
 
 .modal-dragscroll::-webkit-scrollbar-track {
-   background-color: white;
-   border-radius: 15px;
-   box-shadow: white;
+	background-color: white;
+	border-radius: 15px;
+	box-shadow: white;
 }
 
 #delete_modal {
-   display: none;
-   padding: 10px 60px;
-   background-color: #fefefe;
-   border: 1px solid #888;
-   border-radius: 3px;
+	display: none;
+	padding: 10px 60px;
+	background-color: #fefefe;
+	border: 1px solid #888;
+	border-radius: 3px;
 }
 
 #delete_modal .modal-close-btn {
-   position: absolute;
-   top: 10px;
-   right: 10px;
+	position: absolute;
+	top: 10px;
+	right: 10px;
 }
 
 input:hover {
-   color: black;
-   cursor: pointer;
+	color: black;
+	cursor: pointer;
 }
 
 #mrv_table {
-   margin: 10px 0px 0px 0px;
-   width: 100%;
-   border-top: 1px solid #cdcdcd;
-   border-bottom: 1px solid #cdcdcd;
-   border-collapse: collapse
+	margin: 10px 0px 0px 0px;
+	width: 100%;
+	border-top: 1px solid #cdcdcd;
+	border-bottom: 1px solid #cdcdcd;
+	border-collapse: collapse
 }
 
 #mrv_table>thead {
-   width: 8px;
-   border-radius: 8px;
-   background: #e1e1e1;
+	width: 8px;
+	border-radius: 8px;
+	background: #e1e1e1;
 }
 
 thead tr {
-   background: #e1e1e1;
+	background: #e1e1e1;
 }
 
 tr>th {
-   padding: 14px 10px 14px 15px;
-   text-align: left;
+	padding: 14px 10px 14px 15px;
+	text-align: left;
 }
 
 tr>td {
-   padding: 14px 10px 14px 15px;
-   text-align: left;
+	padding: 14px 10px 14px 15px;
+	text-align: left;
 }
 
 .rv_but {
-   border: 0 none;
-   background-color: transparent;
-   cursor: pointer;
-   color: #779ec0 !important;
+	border: 0 none;
+	background-color: transparent;
+	cursor: pointer;
+	color: #779ec0 !important;
 }
 
 .n-emp-i {
-   width: 100%;
-   height: 30%;
+	width: 100%;
+	height: 30%;
 }
 
 .modal-dragscroll>div>dl>dd {
-   margin-bottom: 15px;
+	margin-bottom: 15px;
 }
 
 .modal-dragscroll {
-   overflow: auto;
+	overflow: auto;
 }
 
 .modal-dragscroll::-webkit-scrollbar {
-   width: 10px;
+	width: 10px;
 }
 
 .modal-dragscroll::-webkit-scrollbar-thumb {
-   background-color: #e8ecee;
-   border-radius: 15px;
+	background-color: #e8ecee;
+	border-radius: 15px;
 }
 
 .modal-dragscroll::-webkit-scrollbar-track {
-   background-color: white;
-   border-radius: 15px;
-   box-shadow: white;
+	background-color: white;
+	border-radius: 15px;
+	box-shadow: white;
 }
 
 #delete_modal {
-   display: none;
-   padding: 10px 60px;
-   background-color: #fefefe;
-   border: 1px solid #888;
-   border-radius: 3px;
+	display: none;
+	padding: 10px 60px;
+	background-color: #fefefe;
+	border: 1px solid #888;
+	border-radius: 3px;
 }
 
 #delete_modal .modal-close-btn {
-   position: absolute;
-   top: 10px;
-   right: 10px;
+	position: absolute;
+	top: 10px;
+	right: 10px;
 }
 </style>
 
 
 <body>
 
-   <div id='wrap'>
+	<div id='wrap'>
 
-      <c:import url="../common/boardSubNav.jsp" />
-      <!-- 게시판 -->
-      <div class="ndeatil">
-         <div class="board_head">
-            <div style="width: 90%; margin: auto;">
-               <form method="post" action="">
+		<c:import url="../common/boardSubNav.jsp" />
+		<!-- 게시판 -->
+		<div class="ndeatil">
+			<div class="board_head">
+				<div style="width: 90%; margin: auto;">
+					<form method="post" action="">
+						<input name="nupview" id="nupview" type="button" value="수정"
+							style="margin-left: 15px" onclick="" />
+						<input id="ndelete" type="button" value="삭제" />
+						<input type="text" id="ShareUrl" OnClick="javascript:CopyUrlToClipboard()"
+							style="position: absolute; top: 0; left: 0; width: 1px; height: 1px; margin: 0; padding: 0; border: 0;">
+						<button style="font-size: 18px; margin: 7px 5px 7px 5px; background: none; border: none; color: #477A8F; cursor: pointer;"
+							OnClick="javascript:CopyUrlToClipboard()">주소 복사</button>
+						<a href="javascript:history.go(-1);"> <input id=""
+							type="button" value="이전으로" /></a>
+				<c:if test="${ loginUser.id eq n.nWriter }">
+					<a href="${ nupview }">수정</a>
+					<a href="${ ndelete }">삭제</a>
+				</c:if>
+					</form>
+				</div>
 
-                  <input id="subBtn" type="button" value="수정"
-                     style="margin-left: 15px" onclick="" /> <input id="subBtn"
-                     class="go" type="button" value="삭제" /> <input type="text"
-                     id="ShareUrl" OnClick="javascript:CopyUrlToClipboard()"
-                     style="position: absolute; top: 0; left: 0; width: 1px; height: 1px; margin: 0; padding: 0; border: 0;">
-                  <button
-                     style="font-size: 18px; margin: 7px 5px 7px 5px; background: none; border: none; color: #477A8F; cursor: pointer;"
-                     OnClick="javascript:CopyUrlToClipboard()">주소 복사</button>
-                  <a href="javascript:history.go(-1);"> <input id=""
-                     type="button" value="이전으로" /></a>
-                  <div id="delete_modal" class="modal-dragscroll">
-                     <h4 style="color: #477A8F; margin-bottom: 25px;">게시글 삭제</h4>
-                     <div class="n-emp-i">
-                        선택한 글을 삭제하시겠습니까?<br> <br>
+			</div>
+			<div class="board_body">
+				<br>&nbsp;&nbsp;&nbsp;<a href="#" class="icon impt "
+					ng-click='setImportant()'><span class="blind">별</span></a>
 
-                     </div>
-                     <div style="text-align: center;">
-                        <button
-                           style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">확인</button>
-                        <button
-                           style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">취소</button>
-                     </div>
-               </form>
-            </div>
+				<table class="deatil" align="center" width="800px">
+					<tr>
+						<td width=140px;><img class="myphoto"
+							src="resources/images/person.png"></td>
+						<td colspan="5"
+							style="font-size: 22px; font-weight: 40; line-height: 18px;"><span>${n.nTitle }</span></td>
+					</tr>
+					<tr>
 
+						<td><span style="color: #7f7f7f;">${n.nWriter }</span></td>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<td style="color: #7f7f7f;">읽은 사람&nbsp;&nbsp;&nbsp; &nbsp;${n.nCount }</td>
 
+						<td><span style="color: #7f7f7f;">${n.nCreateDate }</span></td>
 
-         </div>
-         <div class="board_body">
-            <br>&nbsp;&nbsp;&nbsp;<a href="#" class="icon impt "
-               ng-click='setImportant()'><span class="blind">별</span></a>
-
-            <table class="deatil" align="center" width="800px">
-               <tr>
-                  <td width=140px;><img class="myphoto"
-                     src="resources/images/person.png"></td>
-                  <td colspan="5"
-                     style="font-size: 22px; font-weight: 40; line-height: 18px;"><span>${n.nTitle }</span></td>
-               </tr>
-               <tr>
-
-                  <td><span style="color: #7f7f7f;">${n.nWriter }</span></td>
-                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <td style="color: #7f7f7f;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;읽은 사람&nbsp;&nbsp;&nbsp;
-                     &nbsp;${n.nCount }</td>
-
-                  <td><span style="color: #7f7f7f;">${n.nCreateDate }</span></td>
-
-               </tr>
-               <tr>
-                  <td>첨부 파일</td>
-                  <td colspan="5">
-                  <c:choose>
-                  <c:when test="${ !empty n.originalFileName }">
-                        <a href="${contextPath }/resources/buploadFiles/${n.renameFileName}"
-                           download="${ n.originalFileName }">${ n.originalFileName }</a>
+					</tr>
+					<tr>
+						<td>첨부 파일</td>
+						<td colspan="5"><c:choose>
+								<c:when test="${ !empty n.originalFileName }">
+									<a
+										href="${contextPath }/resources/buploadFiles/${n.renameFileName}"
+										download="${ n.originalFileName }">${ n.originalFileName }</a>
                            <
                      </c:when>
-                      <c:when test="${ empty n.originalFileName }">
+								<c:when test="${ empty n.originalFileName }">
                         X
                       </c:when>
-                      </c:choose>
-                  </td>
+							</c:choose></td>
 
-               </tr>
-               <tr>
+					</tr>
+					<tr>
 
-                  <td>내용</td>
-                  
-                  <td colspan="4" style="font-size: 20px;">${ n.nContent }</td>
-                  </tr>
-               <tr>
-                  
-               </tr>
+						<td>내용</td>
 
-            </table>
+						<td colspan="4" style="font-size: 20px;">${ n.nContent }</td>
+					</tr>
+					<tr>
 
-         </div>
+					</tr>
+
+				</table>
+
+			</div>
 
 
-<!-- Ajax를 이용해서 댓글 등록 -->
-   <table  style="text-align:center; width=800;"  cellspacing="0">
-      <tr>
-         <td><textarea class="form-control" style="resize: none;" cols="80" rows="3" id="ncContent"></textarea></td>
-         <td>
-            <button class="btn btn-default" id="ncSubmit">등록하기</button>
-         </td>
-      </tr>
-   </table>
-   <table class="table-bordered" align="center" width="800"  cellspacing="0" id="rtb">
-      <thead>
-         <tr>
-            <td colspan="5"><b id="ncCount"></b></td>
-         </tr>
-         
-      </thead>
-      <tbody>
-      </tbody>
-   </table>
+			<!-- Ajax를 이용해서 댓글 등록 -->
+			<table style="text-align: center;" cellspacing="0">
+				<tr>
+					<td><textarea class="form-control" style="resize: none;"
+							cols="80" rows="3" id="ncContent"></textarea></td>
+					<td>
+						<button class="btn btn-default" id="ncSubmit">등록하기</button>
+					</td>
+				</tr>
+			</table>
+			<table class="table-bordered" align="center" width="800"
+				cellspacing="0" id="rtb">
+				<thead>
+					<tr>
+						<td colspan="5"><b id="ncCount"></b></td>
+					</tr>
+
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+
+
+
+			<script>
+   $("#ndelete").click(function(){
+		if(confirm("정말로 삭제하시겠습니까?") == true){
+			
+			document.location.href='ndelete.do?nNo';
+		
+   }else{
+	   
+	   return;
    
-      
-      
-   <script>
+		}
+	});
+   
+   
       $(function(){
          getnCommentList();
          

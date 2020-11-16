@@ -66,5 +66,5 @@
 		(SEQ_BCNO.NEXTVAL, #{bcContent},#{bcefBno},#{bcWriter},SYSDATE,SYSDATE,DEFAULT)
 	</insert>
 	
-
+	
 </mapper>
