@@ -148,7 +148,41 @@
 		#{tncContent},#{tncefTno},#{tncWriter},SYSDATE,SYSDATE,DEFAULT)
 	</insert>
 	
+	<!-- 글 작성하기 -->
+	<insert id="insertNotice" parameterType="notice">
+		INSERT INTO TBL_NOTICE
+		VALUES(
+			SEQ_NNO.NEXTVAL,#{nTitle},#{nContent},#{nWriter},
+			#{originalFileName},#{renameFileName},DEFAULT,SYSDATE,SYSDATE,DEFAULT,DEFAULT,DEFAULT,5)
+	</insert>
 
+	<insert id="inserttNotice" parameterType="tnotice">
+		INSERT INTO TBL_TNOTICE
+		VALUES(
+			SEQ_TNO.NEXTVAL,#{tTitle},#{tWriter},#{tContent},
+			#{originalFileName},#{renameFileName},DEFAULT,SYSDATE,SYSDATE,DEFAULT)
+	</insert>
+	
+	<update id="updateNotice" parameterType="notice">
+		UPDATE TBL_NOTICE
+		SET 
+			NTITLE=#{nTitle}
+		,	NCONTENT=#{nContent}
+		,	ORIGINAL_FILENAME=#{originalFileName}
+		,	RENAME_FILENAME=#{renameFileName}
+		,	N_MODIFY_DATE=SYSDATE
+		WHERE 
+		    NNO=#{nNo}
+	</update>
+	
+	<!-- 글 삭제하기 -->
+	<update id="ndelete" parameterType="_int">
+		UPDATE TBL_NOTICE
+		SET 
+			N_STATUS='N'
+		WHERE
+			NNO=#{nNo}
+	</update>
 </mapper>
 
 

@@ -212,7 +212,10 @@ tr>td {
          <div class="contents-title">
             <span class="ct1" style="margin-right: 77%;">자유게시판</span>
          </div>
-
+ <br>
+         <div style="margin-left:40px;">
+			총 게시글 갯수 : ${ pi.listCount }
+		</div>
          <div style="padding: 0px 30px 0px 30px;">
 
             <table id="mrv_table" class=" table-striped  table-hover" >

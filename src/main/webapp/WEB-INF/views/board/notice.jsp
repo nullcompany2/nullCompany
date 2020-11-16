@@ -215,7 +215,10 @@ tr>td {
          <div class="contents-title">
             <span class="ct1" style="margin-right: 77%;">사내공지</span>
          </div>
-
+		<br>
+		<div style="margin-left:40px;">
+			총 게시글 갯수 : ${ pi.listCount }
+		</div>
          <div style="padding: 0px 30px 0px 30px;">
 
             <table id="mrv_table" class=" table-striped  table-hover" >
@@ -297,7 +300,7 @@ tr>td {
 
      <div class="searchArea" align="center">
          <select id="searchCondition" name="searchCondition">
-            <option>---</option>
+            <option>-----</option>
             <option value="title">제목</option>
             <option value="content">내용</option>
             <option value="writer">작성자</option>
@@ -306,9 +309,15 @@ tr>td {
 
       </div>
 
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.js"></script>
+        <script>
+        $(document).ready(function(){
+        	
+        	var countAll = $("#tb tr").length;
+        	$("#countAll").text("편지수 : " + countAll);
 
 
-
+        	 </script>
 
 </body>
 </html>

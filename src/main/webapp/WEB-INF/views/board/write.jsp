@@ -35,7 +35,7 @@ select {
 	-webkit-appearance: none; /* 네이티브 외형 감추기 */
 	-moz-appearance: none;
 	appearance: none; /* 화살표 모양의 이미지 */
-	width: 100px; /* 원하는 너비설정 */
+	width: 120px; /* 원하는 너비설정 */
 	padding: .3em .5em; /* 여백으로 높이 설정 */
 	font-family: inherit; /* 폰트 상속 */
 	background:
@@ -184,7 +184,19 @@ a:active {
 	border-bottom: 1px solid #F4F4F4;
 	margin-bottom: 25px;
 	overflow: scroll;
+	
+	
 }
+
+form input[type=submit],form input[type=button] 
+	{
+	font-size: 18px;
+	margin: 20px 5px 7px 5px;
+	background: none;
+	border: none;
+	color: #477A8F;
+	cursor:pointer;
+} 
 </style>
 </head>
 
@@ -235,26 +247,30 @@ $(document).ready(function() {
 
 			<div>
 				<div style="width: 90%; margin: auto;">
-					<form method="post" action="">
-
-						<input id="subBtn" type="button" value="확인"/>
+					<form action="writer.do" method="post" enctype="multipart/form-data">
+						<input type="hidden" value="${loginUser.memNo}" name= memNo>	
+						<input type="submit" value="확인" id="write"/>
 						<input class="go2" type="button" value="미리보기" /> <a
 							href="goSave.do"><input id="" type="button" value="임시저장" />
-						</a> <a href="javascript:history.go(-1);"> <input id=""
-							type="button" value="이전으로" /></a> <br>
+						</a> <a href="javascript:history.go(-1);"> 
+						<input type="button" value="이전으로" /></a> <br>
 						<br> &nbsp;게시판 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <select
-							id="writerBoard" name="writerBoard">
-							<option value="boardAll">사내공지</option>
-							<option value="boardTeam">팀내공지</option>
+							id="category" name="category">
+							<option value="notice">사내공지</option>
+							<option value="tnotice">팀내공지</option>
 							<option disabled>--------------</option>
-							<option value="boardFree">자유게시판</option>
-						</select><br> <br> &nbsp;&nbsp;제목&nbsp;
+							<option value="board">자유게시판</option>
+						</select><br> <br> 
+						&nbsp;작성자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="text" name="nWriter" style="width: 60%;" value= "  ${loginUser.name}" readonly/> <br> <br>
+						&nbsp;제목&nbsp;&nbsp;
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<input type="text"
-							name="title" style="width: 60%;" placeholder="제목 없음" /> <br>
+							name="nTitle"  style="width: 60%;" placeholder="제목을 입력해주세요." /> <br>
 						<br>&nbsp;<label id="uploadFile">
-							파일첨부&nbsp;&nbsp;&nbsp;</label> <input type="file" name="uploadFile"><br>
+							파일첨부&nbsp;&nbsp;&nbsp;</label> 
+							<input type="file" name="uploadFile" id="bfile"><br>
 						<br>
-						<textarea id="summernote" name="content"></textarea>
+						<textarea id="summernote" name="nContent"></textarea>
 
 					</form>
 
@@ -338,7 +354,17 @@ $(document).ready(function() {
           });
     }
 
-    
+    $("#write").click(function () {
+
+      	if ($("input[category]").val().length < 1 ){
+      	  alert('게시판 타입을 지정하지 않으셨습니다.');
+    	}if ($('#summernote').summernote('isEmpty')) {
+     		  alert('내용을 입력하지 않으셨습니다.');
+    	}else{
+        $("form").attr("action","sendMail.do");
+   		}
+        
+	 });
     	
     $('.go2').on('click', function() {
     	

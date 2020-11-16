@@ -9,6 +9,7 @@ import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.notice.model.dao.noticeDao;
 import com.kh.nullcompany.notice.model.vo.ncomment;
 import com.kh.nullcompany.notice.model.vo.notice;
+import com.kh.nullcompany.notice.model.vo.tnotice;
 
 @Service("nService")
 public class noticeServiceImpl implements noticeService {
@@ -47,4 +48,30 @@ public class noticeServiceImpl implements noticeService {
 		return nDao.insertnComment(c);
 	}
 
+	@Override
+	public int insertNotice(notice n) {
+		return nDao.insertNotice(n);
+	}
+
+	@Override
+	public int inserttNotice(tnotice t) {
+		return nDao.insettNotice(t);
+	}
+
+	@Override
+	public notice selectUpdateNotice(int nNo) {
+		return nDao.selectNotice(nNo);
+	}
+
+
+
+	@Override
+	public int updateNotice(notice n) {
+		return nDao.updateNotice(n);
+	}
+
+	@Override
+	public int ndelete(int nNo) {
+		return nDao.ndelete(nNo);
+	}
 }
