@@ -95,8 +95,6 @@ a {
 						onclick="location.href='tnotice.do'">팀내공지</li>
 					<li class="subTitle" style="cursor: pointer;"
 						onclick="location.href='board.do'">자유게시판</li>
-					<li class="subTitle" style="cursor: pointer;"
-						onclick="location.href='save.do'">임시 보관함</li>
 				</div>
 			</div>
 

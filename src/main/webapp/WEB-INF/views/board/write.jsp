@@ -250,9 +250,7 @@ $(document).ready(function() {
 					<form action="writer.do" method="post" enctype="multipart/form-data">
 						<input type="hidden" value="${loginUser.memNo}" name= memNo>	
 						<input type="submit" value="확인" id="write"/>
-						<input class="go2" type="button" value="미리보기" /> <a
-							href="goSave.do"><input id="" type="button" value="임시저장" />
-						</a> <a href="javascript:history.go(-1);"> 
+						<input class="go2" type="button" value="미리보기" /> <a href="javascript:history.go(-1);"> 
 						<input type="button" value="이전으로" /></a> <br>
 						<br> &nbsp;게시판 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <select
 							id="category" name="category">
@@ -295,8 +293,8 @@ $(document).ready(function() {
 			<p>
 				제목 : <span id="modalTitle"> 제목없음 </span>
 			</p>
-			<p>작성자 : ${ loginUser.name }< ${ loginUser.id } ></p>
-			<p>작성일 : 시스데이트쓸거임</p>
+			<p>작성자 : ${ loginUser.name }</p>
+			<p>작성일 : <span id="modalDate"> </p>
 			<p>파일첨부 :</p>
 			<hr>
 			<div id="modalContent">내용</div>
@@ -371,7 +369,9 @@ $(document).ready(function() {
     	// 게시판 타입 val
     	$("#modalType").text($("#writerBoard option:selected").text());
     	// 게시판 제목 input val 옮기기 
-       	$("#modalTitle").text($("input:text[name='title']").val());
+       $("#modalTitle").text($("input:text[name='nTitle']").val());
+    	// 게시판 작성일
+    	$("modalDate").text($("input:text[date='SYSDATE']").val());
     	
     	var modalContent2 = $("#summernote").val();
     	

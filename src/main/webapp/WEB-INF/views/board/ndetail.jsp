@@ -392,7 +392,7 @@ tr>td {
 
 
 			<!-- Ajax를 이용해서 댓글 등록 -->
-			<table style="text-align: center;" cellspacing="0">
+			<table style="text-align: center ;" cellspacing="0">
 				<tr>
 					<td><textarea class="form-control" style="resize: none;"
 							cols="80" rows="3" id="ncContent"></textarea></td>
