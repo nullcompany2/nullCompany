@@ -431,8 +431,47 @@
        
         $('#pick-em-1').on('click', function() {
 			// 모달창 띄우기
+			
 			modal('my_modal-3');
         });
+        
+        function md3_search(){
+        	console.log("ffff");
+        	var sDate = $("#sDate").val();
+        	var eDate = $("#eDate").val();
+        	var inputword = $("#md3_inputwords").val();
+        	
+        	var check = 0;
+        	
+	        if(sDate >eDate){
+	    		alert("날짜를 올바르게 입력해주세요.");
+	    	}else if(sDate !="" && eDate == ""){
+        		alert("날짜를 모두 입력해주세요");
+        	}else if(sDate =="" && eDate != ""){
+        		alert("날짜를 모두 입력해주세요");
+        	}else{
+        		check = 1;
+        	}
+	        
+	        if(check ==1){
+	        	if(sDate != "" || inputword !=""){
+	        		$.ajax({
+	        			url: "selectTargetReward.do",
+	        			data : {sDate : sDate , eDate : eDate, inputword : inputword},
+	        			typedate : "json",
+	        			success : function(date){
+	        				
+	        			},
+	        			error : function(request,status,error){
+	        				console.log(request);
+	        				console.log(status);
+	        				console.log(error);
+	        			}
+	        		});
+	        	}
+	        }
+	        
+        };
         
         $(function(){
             $("#modal-create-history").click(function(){
@@ -703,9 +742,9 @@
                 <dl>
                     <dt style="width: 100px; float: left;">입사일</dt>
                     <dd>
-                        <input type="date" name="" id="">
+                        <input type="date" name="" id="sDate">
                         ~
-                        <input type="date" name="" id="">
+                        <input type="date" name="" id="eDate">
                     </dd>
                 </dl>
             </div>
@@ -713,12 +752,12 @@
                 <dl>
                     <dt style="width: 100px; float: left;">이름 / 부서</dt>
                     <dd>
-                        <input type="text" name="" id="">
+                        <input type="text" name="" id="md3_inputwords">
                     </dd>
                 </dl>
             </div>
             <div class="md-search-btn">
-                <input type="button" value="검색" class="md-btn ">
+                <input type="button" id="md3_searchBtn" onclick="md3_search()" value="검색" class="md-btn cursor ">
             </div>
         </form>
         <table class="re-l-list">
@@ -740,17 +779,10 @@
                 <td class="re-l-list-td">25일</td>
                 <td class="re-l-list-td">0일</td>
             </tr>
-            <tr class="re-l-list">
-                <td class="re-l-list-ck-td"><input type="checkbox" name="md-chk" id=""></td>
-                <td class="re-l-list-td">Han</td>
-                <td class="re-l-list-td">ys211</td>
-                <td class="re-l-list-td">인사</td>
-                <td class="re-l-list-td">25일</td>
-                <td class="re-l-list-td" >0일</td>
-            </tr>
+            
         </table>
 		<div style="text-align: center; margin-top: 50px;">
-			<input type="button" class="md-btn cursor md-btn-save" value="저장">
+			<input type="button" class="md-btn cursor md-btn-save" id="md3_saveBtn" value="저장">
 			<input type="button" class="md-btn cursor md-btn-close" style="margin-left: 50px;" value="닫기">
 		</div>
 

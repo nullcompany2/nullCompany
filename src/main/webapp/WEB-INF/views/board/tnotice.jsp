@@ -211,10 +211,11 @@ tr>td {
          <div class="contents-title">
             <span class="ct1" style="margin-right: 77%;">팀내공지</span>
             
-            
-             
          </div>
-
+         <br>
+         <div style="margin-left:40px;">
+			총 게시글 갯수 : ${ pi.listCount }
+		</div>
          <div style="padding: 0px 30px 0px 30px;">
 
                <table id="mrv_table" class=" table-striped  table-hover">
@@ -260,37 +261,37 @@ tr>td {
       <table
          style="margin: 10px 0px 0px 0px; width: 80%; border-collapse: collapse">
          <!-- 페이징처리 -->
-         <tr align="center" height="20">
-            <td colspan="6" align="center">
-               <!-- [이전] --> <c:if test="${ pi.currentPage eq 1 }">
-                  [이전] &nbsp;
-               </c:if> <c:if test="${ pi.currentPage ne 1 }">
-                  <c:url var="before" value="tnotice.do">
-                     <c:param name="currentPage" value="${ pi.currentPage - 1 }" />
-                  </c:url>
-                  <a href="${ before }">[이전]</a> &nbsp;
-               </c:if> <!-- 페이지 --> <c:forEach var="p" begin="${ pi.startPage }"
-                  end="${ pi.endPage }">
-                  <c:if test="${ p eq pi.currentPage }">
-                     <font color="red" size="4"><b>[${ p }]</b></font>
-                  </c:if>
+			<tr align="center" height="20">
+				<td colspan="6" align="center">
+					<!-- [이전] --> <c:if test="${ pi.currentPage eq 1 }">
+						이전 &nbsp;
+					</c:if> <c:if test="${ pi.currentPage ne 1 }">
+						<c:url var="before" value="tnotice.do">
+							<c:param name="currentPage" value="${ pi.currentPage - 1 }" />
+						</c:url>
+						<a href="${ before }">이전</a> &nbsp;
+					</c:if> <!-- 페이지 --> <c:forEach var="p" begin="${ pi.startPage }"
+						end="${ pi.endPage }">
+						<c:if test="${ p eq pi.currentPage }">
+							<font color="#477A8F" size="3"><b>${ p }</b> </font>
+						</c:if>
 
-                  <c:if test="${ p ne pi.currentPage }">
-                     <c:url var="pagination" value="tnotice.do">
-                        <c:param name="currentPage" value="${ p }" />
-                     </c:url>
-                     <a href="${ pagination }">${ p }</a> &nbsp;
-                  </c:if>
-               </c:forEach> <!-- [다음] --> <c:if test="${ pi.currentPage eq pi.maxPage }">
-                  [다음]
-               </c:if> <c:if test="${ pi.currentPage ne pi.maxPage }">
-                  <c:url var="after" value="tnotice.do">
-                     <c:param name="currentPage" value="${ pi.currentPage + 1 }" />
-                  </c:url>
-                  <a href="${ after }">[다음]</a>
-               </c:if>
-            </td>
-         </tr>
+						<c:if test="${ p ne pi.currentPage }">
+							<c:url var="pagination" value="tnotice.do">
+								<c:param name="currentPage" value="${ p }" />
+							</c:url>
+							<a href="${ pagination }">${ p }</a> &nbsp;
+						</c:if>
+					</c:forEach> <!-- [다음] --> &nbsp;<c:if test="${ pi.currentPage eq pi.maxPage }">
+						다음
+					</c:if> <c:if test="${ pi.currentPage ne pi.maxPage }">
+						<c:url var="after" value="tnotice.do">
+							<c:param name="currentPage" value="${ pi.currentPage + 1 }" />
+						</c:url>
+						<a href="${ after }">다음</a>
+					</c:if>
+				</td>
+			</tr>
       </table>
       <br>
 
@@ -300,7 +301,6 @@ tr>td {
             <option value="title">제목</option>
             <option value="content">내용</option>
             <option value="writer">작성자</option>
-            <option value="">제목+내용</option>
          </select> <input type="search" style="padding: .5em .5em;">
          <button type="submit" style="padding: .5em .5em;">검색하기</button>
 

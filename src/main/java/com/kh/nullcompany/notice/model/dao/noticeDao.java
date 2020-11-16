@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.notice.model.vo.ncomment;
 import com.kh.nullcompany.notice.model.vo.notice;
+import com.kh.nullcompany.notice.model.vo.tnotice;
 
 @Repository("nDao")
 public class noticeDao {
@@ -42,5 +43,23 @@ public class noticeDao {
 	public int insertnComment(ncomment c) {
 	      return sqlSession.insert("noticeMapper.insertnComment",c);
 	   }
+
+	public int insertNotice(notice n) {
+		return sqlSession.insert("noticeMapper.insertNotice",n);
+	}
+
+	public int insettNotice(tnotice t) {
+		return sqlSession.insert("noticeMapper.inserttNotice",t);
+	}
+
+
+
+	public int updateNotice(notice n) {
+		return sqlSession.update("noticeMapper.updateNotice", n);
+	}
+
+	public int ndelete(int nNo) {
+		return sqlSession.update("noticeMapper.ndelete",nNo);
+	}
 
 }

@@ -105,10 +105,10 @@
 							
 						</div>
 						<h5 style="padding:10px">
-						정상(<span style="color:lightGreen">●</span>),
-						지각(<span style="color:orange">◎</span>),
-						결근(<span style="color:red">○</span>),
-						수정됨(<span style="color:blue">◇</span>)
+						정상(<span style="color:#477A8F">●</span>),
+						지각(<span style="color:#477A8F">◎</span>),
+						결근(<span style="color:#477A8F">○</span>),
+						수정됨(<span style="color:#477A8F">◇</span>)
 						
 						</h5>
 						
@@ -387,9 +387,9 @@
 			
 			for(var i =1; i<=lastDay; i++){
 				if(getday == 6){
-					$("#"+i+"D").attr("style","color:blue");
+					$("#"+i+"D").attr("style","color:#387CCC");
 				}else if(getday ==0){
-					$("#"+i+"D").attr("style","color:red");
+					$("#"+i+"D").attr("style","color:#E94B4B");
 				}
 				
 				getday ++;
@@ -434,20 +434,20 @@
 					var status ="";
 					<c:choose>
 						<c:when test="${list.statusDiligence eq '결근'}">
-							status ="○";
-							$("#"+day).text(status).attr("style","color:red");
+							status ="X";
+							$("#"+day).text(status).attr("style","color:#477A8F");
 						</c:when>
 						<c:when test="${list.statusDiligence eq '지각'}">
-							status ="◎";
-							$("#"+day).text(status).attr("style","color:orange");
+							status ="△";
+							$("#"+day).text(status).attr("style","color:#477A8F");
 						</c:when>
 						<c:when test="${list.statusDiligence eq '정상'}">
-							status ="●";
-							$("#"+day).text(status).attr("style","color:lightGreen");
+							status ="○";
+							$("#"+day).text(status).attr("style","color:#477A8F");
 						</c:when>
 						<c:otherwise>
 							status ="◇";
-							$("#"+day).text(status).attr("style","color:blue");
+							$("#"+day).text(status).attr("style","color:#477A8F");
 						</c:otherwise>
 					</c:choose>
 					console.log(status);

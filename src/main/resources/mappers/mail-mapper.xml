@@ -288,6 +288,48 @@
         FROM DUAL
 	 </select>
 	 
-	
-	
+	 <select id="searchTitle" resultMap="mailResultSet" parameterType="map">
+	 	SELECT MA.*, M.NAME
+        FROM MAIL MA
+        JOIN MEMBER M ON (MA.SENDER = M.ID)
+        WHERE RECIPIENT = #{memId}
+        AND MDELETE_STATUS = 'N'
+        AND MSAVE_STATUS = 'N'
+        AND M_REALDEL_STATUS = 'N'
+        AND M_TITLE LIKE '%' || #{search} || '%'
+	 </select>
+	 
+	 <select id="searchRecipient" resultMap="mailResultSet" parameterType="map">
+		SELECT MA.*, M.NAME
+        FROM MAIL MA
+        JOIN MEMBER M ON (MA.SENDER = M.ID)
+        WHERE RECIPIENT = #{memId}
+        AND MDELETE_STATUS = 'N'
+        AND MSAVE_STATUS = 'N'
+        AND M_REALDEL_STATUS = 'N'
+        AND (SENDER LIKE '%' || #{search} || '%' OR M.NAME LIKE'%' || #{search} || '%')
+	 </select>
+	 
+	 <select id="searchMcontent" resultMap="mailResultSet" parameterType="map">
+	 	SELECT MA.*, M.NAME
+        FROM MAIL MA
+        JOIN MEMBER M ON (MA.SENDER = M.ID)
+        WHERE RECIPIENT = #{memId}
+        AND MDELETE_STATUS = 'N'
+        AND MSAVE_STATUS = 'N'
+        AND M_REALDEL_STATUS = 'N'
+        AND M_CONTENT LIKE '%' || #{search} || '%'
+	 </select>
+	 
+	 <select id="searchMtitleContent" resultMap="mailResultSet" parameterType="map"> 
+	 	SELECT MA.*, M.NAME
+        FROM MAIL MA
+        JOIN MEMBER M ON (MA.SENDER = M.ID)
+        WHERE RECIPIENT = #{memId}
+        AND MDELETE_STATUS = 'N'
+        AND MSAVE_STATUS = 'N'
+        AND M_REALDEL_STATUS = 'N'
+        AND (M_TITLE LIKE '%' || #{search} || '%' OR M_CONTENT LIKE '%' || #{search} || '%')
+	 </select>
+	 
 </mapper>

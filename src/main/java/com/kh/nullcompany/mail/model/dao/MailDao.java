@@ -2,6 +2,7 @@ package com.kh.nullcompany.mail.model.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -173,7 +174,21 @@ public class MailDao {
 	public MailListCount getMailBoxCount(String memId) {
 		return sqlSession.selectOne("mailMapper.mailListCount",memId);
 	}
-	
+
+	public ArrayList<Mail> searchTitle(Map map) {
+		return (ArrayList)sqlSession.selectList("mailMapper.searchTitle",map);
+	}
+
+	public ArrayList<Mail> searchRecipient(Map map) {
+		return (ArrayList)sqlSession.selectList("mailMapper.searchRecipient",map);
+	}
+
+	public ArrayList<Mail> searchMcontent(Map map) {
+		return (ArrayList)sqlSession.selectList("mailMapper.searchMcontent",map);
+	}
+
+	public ArrayList<Mail> searchMtitleContent(Map map) {
+		return (ArrayList)sqlSession.selectList("mailMapper.searchMtitleContent",map);
+	}
 	
 }
-
