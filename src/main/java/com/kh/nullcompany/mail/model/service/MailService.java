@@ -230,5 +230,27 @@ public interface MailService {
 	 * @return
 	 */
 	ArrayList<Mail> searchTitle(Map map);
+
+	/**
+	 *  보낸사람 검색하기 
+	 * @param map
+	 * @return
+	 */
+	ArrayList<Mail> searchRecipient(Map map);
+
+
+	/**
+	 *  메일 내용 검색하기 
+	 * @param map
+	 * @return
+	 */
+	ArrayList<Mail> searchMcontent(Map map);
+
+	/**
+	 * 메일 제목 + 내용 검색하기 
+	 * @param map
+	 * @return
+	 */
+	ArrayList<Mail> searchMtitleContent(Map map);
 	
 }

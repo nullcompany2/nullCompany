@@ -191,5 +191,20 @@ public class MailServiceImpl implements MailService {
 		return maDao.searchTitle(map);
 	}
 
+	@Override
+	public ArrayList<Mail> searchRecipient(Map map) {
+		return maDao.searchRecipient(map);
+	}
+
+	@Override
+	public ArrayList<Mail> searchMcontent(Map map) {
+		return maDao.searchMcontent(map);
+	}
+
+	@Override
+	public ArrayList<Mail> searchMtitleContent(Map map) {
+		return maDao.searchMtitleContent(map);
+	}
+
 	
 }

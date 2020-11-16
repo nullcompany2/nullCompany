@@ -115,18 +115,8 @@
 			<div style="margin-left:40px;">
 			<!--여기다가 만들기 -->
 			<br> 
-						&nbsp;&nbsp;<input type="checkbox" id="checkall"> 
-						&nbsp;&nbsp; <span style="color:#477A8F;" id="select"> 보기 : 
-						
-						<select name="listOption" id="listOption"> 
-							<option selected> 모두 </option>
-							<option> 읽은 메일  </option>
-							<option> 안읽은 메일  </option>
-						</select> &nbsp;
-						</span> 
 						
 						&nbsp;&nbsp;
-						<span id="hide" style="margin-right:40px;">  <span id="count"> </span> <a id="delMail">삭제 </a>  &nbsp; <a id="realdelMail"> 완전삭제 </a> </span>
 						<span id="countAll"> </span> <br><br>
 						
 						<div id="tableDiv"> 
@@ -156,54 +146,20 @@
 				    </c:when>
 				    
 				    <c:otherwise>
-				      <span> 현재 편지함에 메일이 없습니다. </span>
+				      <span> 검색된 메일이 없습니다. </span>
 				    </c:otherwise>
 				</c:choose>
 				</div>
 			</div>
 			
-			<table style=" margin: 10px 0px 0px 80px; width: 80%; border-collapse: collapse">
-			<!-- 페이징처리 -->
-			<tr align="center" height="20">
-				<td colspan="6" align="center">
-					<!-- [이전] --> <c:if test="${ pi.currentPage eq 1 }">
-						이전 &nbsp;
-					</c:if> <c:if test="${ pi.currentPage ne 1 }">
-						<c:url var="before" value="recieveMail.do">
-							<c:param name="currentPage" value="${ pi.currentPage - 1 }" />
-						</c:url>
-						<a href="${ before }">이전</a> &nbsp;
-					</c:if> <!-- 페이지 --> <c:forEach var="p" begin="${ pi.startPage }"
-						end="${ pi.endPage }">
-						<c:if test="${ p eq pi.currentPage }">
-							<font color="#477A8F" size="3"><b>${ p }</b> </font>
-						</c:if>
-
-						<c:if test="${ p ne pi.currentPage }">
-							<c:url var="pagination" value="recieveMail.do">
-								<c:param name="currentPage" value="${ p }" />
-							</c:url>
-							<a href="${ pagination }">${ p }</a> &nbsp;
-						</c:if>
-					</c:forEach> <!-- [다음] --> <c:if test="${ pi.currentPage eq pi.maxPage }">
-						다음
-					</c:if> <c:if test="${ pi.currentPage ne pi.maxPage }">
-						<c:url var="after" value="recieveMail.do">
-							<c:param name="currentPage" value="${ pi.currentPage + 1 }" />
-						</c:url>
-						<a href="${ after }">다음</a>
-					</c:if>
-				</td>
-			</tr>
-		</table>
 		<br>
 			
 			<select id="category"> 
-				<option> ----- </option>
-				<option> 보낸사람 </option>
-				<option> 제목 </option>
-				<option> 내용 </option>
-				<option> 제목 + 내용 </option>
+				<option>-----</option>
+				<option value="보낸사람">보낸사람</option>
+				<option value="제목">제목</option>
+				<option value="내용">내용</option>
+				<option value="제목내용">제목 + 내용</option>
 			</select>
 			<input  id="search" type="text" placeholder="메일 검색"> 
 			<button id="searchBtn" onclick="goSearch();" > 검색 </button> <br>
@@ -217,33 +173,9 @@
         	var countAll = $("#tb tr").length;
         	$("#countAll").text("편지수 : " + countAll);
         	 //선택된 갯수
-        	
-        	
-            //최상단 체크박스 클릭
-            
-            $("#checkall").click(function(){
-                //클릭되었으면
-                if($("#checkall").prop("checked")){
-                    //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
-                    $("input[name=mail]").prop("checked",true);
-                    $(".trMail").css("background","#ECECEC");
-                    $("#hide").show();
-                    $("#select").hide(); 
-                    
-                    var count = $("input:checkbox[name=mail]:checked").length;
-                   	$("#count").text(count);
-                   	
-                    //클릭이 안되있으면
-                }else{
-                    //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
-                    $("input[name=mail]").prop("checked",false);
-                    $(".trMail").css("background","white");
-                    $("#hide").hide();
-                    $("#select").show(); 
-                }
-            })
+           
         })
-	
+        
 	
         $(document).ready(function(){
 		   $('table tr').mouseover(function(){
@@ -297,21 +229,22 @@
         
         
         // 검색 카테고리 분류 
-      		
-        	
-       		function goSearch(){
-       	
-        	/* alert($("#category").children("option:selected").text()); */
-        	
-       		var category=  $("#category").children("option:selected").text();
-        	var search = $("#search").val();
-        	
-        	console.log(category+search);
+    	
+   		function goSearch(){
+   	
+    	/* alert($("#category").children("option:selected").text()); */
+    	
+   		var category=  $("#category").children("option:selected").val();
+    	var search = $("#search").val();
+    	
+    	console.log(category+search);
 
-        	if(search != ""){
-        			document.location.href='searchTitle.do?category='+category+'&search='+search;	
-        		}
-        	  }
+    	if(category =="-----"){
+      	  alert("분류를 선택하지 않았습니다.");
+    	}else if(search != ""){
+    			document.location.href='searchTitle.do?category='+category+'&search='+search;	
+    	}
+    	  }
         
         </script>
 </body>
