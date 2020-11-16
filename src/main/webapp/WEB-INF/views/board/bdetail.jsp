@@ -323,8 +323,8 @@ tr>td {
                <form method="post" action="">
 
                   <input id="subBtn" type="button" value="수정"
-                     style="margin-left: 15px" onclick="" /> <input id="subBtn"
-                     class="go" type="button" value="삭제" /> <input type="text"
+                     style="margin-left: 15px" onclick="" />
+                      <input  id="delBoard" type="button" value="삭제" /><input type="text"
                      id="ShareUrl" OnClick="javascript:CopyUrlToClipboard()"
                      style="position: absolute; top: 0; left: 0; width: 1px; height: 1px; margin: 0; padding: 0; border: 0;">
                   <button
@@ -332,18 +332,7 @@ tr>td {
                      OnClick="javascript:CopyUrlToClipboard()">주소 복사</button>
                   <a href="javascript:history.go(-1);"> <input id=""
                      type="button" value="이전으로" /></a>
-                  <div id="delete_modal" class="modal-dragscroll">
-                     <h4 style="color: #477A8F; margin-bottom: 25px;">게시글 삭제</h4>
-                     <div class="n-emp-i">
-                        선택한 글을 삭제하시겠습니까?<br> <br>
-
-                     </div>
-                     <div style="text-align: center;">
-                        <button
-                           style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">확인</button>
-                        <button
-                           style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">취소</button>
-                     </div>
+                 
                </form>
             </div>
 
@@ -423,6 +412,9 @@ tr>td {
       
       
    <script>
+   $("#delBoard").click(function(){
+		confirm("정말로 삭제하시겠습니까? 휴지통으로 이동합니다.");
+	});
       $(function(){
          getbCommentList();
          

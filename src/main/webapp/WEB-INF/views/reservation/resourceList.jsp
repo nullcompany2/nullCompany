@@ -141,22 +141,7 @@ tr>td {
 					</tr>
 				</thead>
 				<tbody>
-			<%-- 	<c:forEach var ="r" items="${r}">
-				<input type="hidden" name="rcNo" value="${ r.rcNo }">
-				<input type="hidden" name="rsNo" value="${ r.rsNo }">
-					<tr>
-						<td>${ r.rsTitle }</td>
-						<td>
-				           <c:url var="resourceUpdateView" value="resourceUpdateView.do">
-			             	  <c:param name="rsNo" value="${r.rsNo }"/>
-			               </c:url>
-							<button class="rv_but" id="update_btn"
-								onclick="location.href='${resourceUpdateView}'">수정</button> 
-								<span style="color: #e4e4e4;">|</span>
-							<button class="rv_but" id="delete_btn"  data-id="${ r.rsNo }">삭제</button>
-						</td>
-					</tr>
-				</c:forEach> --%>
+
 				</tbody>
 			</table>
 		</div>

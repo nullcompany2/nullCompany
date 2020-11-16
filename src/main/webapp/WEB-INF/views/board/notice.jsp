@@ -215,7 +215,10 @@ tr>td {
          <div class="contents-title">
             <span class="ct1" style="margin-right: 77%;">사내공지</span>
          </div>
-
+		<br>
+		<div style="margin-left:40px;">
+			총 게시글 갯수 : ${ pi.listCount }
+		</div>
          <div style="padding: 0px 30px 0px 30px;">
 
             <table id="mrv_table" class=" table-striped  table-hover" >
@@ -261,101 +264,60 @@ tr>td {
       <table
          style="margin: 10px 0px 0px 0px; width: 80%; border-collapse: collapse">
          <!-- 페이징처리 -->
-         <tr align="center" height="20">
-            <td colspan="6" align="center">
-               <!-- [이전] --> <c:if test="${ pi.currentPage eq 1 }">
-                  [이전] &nbsp;
-               </c:if> <c:if test="${ pi.currentPage ne 1 }">
-                  <c:url var="before" value="notice.do">
-                     <c:param name="currentPage" value="${ pi.currentPage - 1 }" />
-                  </c:url>
-                  <a href="${ before }">[이전]</a> &nbsp;
-               </c:if> <!-- 페이지 --> <c:forEach var="p" begin="${ pi.startPage }"
-                  end="${ pi.endPage }">
-                  <c:if test="${ p eq pi.currentPage }">
-                     <font color="red" size="4"><b>[${ p }]</b></font>
-                  </c:if>
+			<tr align="center" height="20">
+				<td colspan="6" align="center">
+					<!-- [이전] --> <c:if test="${ pi.currentPage eq 1 }">
+						이전 &nbsp;
+					</c:if> <c:if test="${ pi.currentPage ne 1 }">
+						<c:url var="before" value="notice.do">
+							<c:param name="currentPage" value="${ pi.currentPage - 1 }" />
+						</c:url>
+						<a href="${ before }">이전</a> &nbsp;
+					</c:if> <!-- 페이지 --> <c:forEach var="p" begin="${ pi.startPage }"
+						end="${ pi.endPage }">
+						<c:if test="${ p eq pi.currentPage }">
+							<font color="#477A8F" size="3"><b>${ p }</b> </font>
+						</c:if>
 
-                  <c:if test="${ p ne pi.currentPage }">
-                     <c:url var="pagination" value="notice.do">
-                        <c:param name="currentPage" value="${ p }" />
-                     </c:url>
-                     <a href="${ pagination }">${ p }</a> &nbsp;
-                  </c:if>
-               </c:forEach> <!-- [다음] --> <c:if test="${ pi.currentPage eq pi.maxPage }">
-                  [다음]
-               </c:if> <c:if test="${ pi.currentPage ne pi.maxPage }">
-                  <c:url var="after" value="notice.do">
-                     <c:param name="currentPage" value="${ pi.currentPage + 1 }" />
-                  </c:url>
-                  <a href="${ after }">[다음]</a>
-               </c:if>
-            </td>
-         </tr>
+						<c:if test="${ p ne pi.currentPage }">
+							<c:url var="pagination" value="notice.do">
+								<c:param name="currentPage" value="${ p }" />
+							</c:url>
+							<a href="${ pagination }">${ p }</a> &nbsp;
+						</c:if>
+					</c:forEach> <!-- [다음] --> &nbsp;<c:if test="${ pi.currentPage eq pi.maxPage }">
+						다음
+					</c:if> <c:if test="${ pi.currentPage ne pi.maxPage }">
+						<c:url var="after" value="notice.do">
+							<c:param name="currentPage" value="${ pi.currentPage + 1 }" />
+						</c:url>
+						<a href="${ after }">다음</a>
+					</c:if>
+				</td>
+			</tr>
       </table>
       <br>
 
-      <div class="searchArea" align="center">
+     <div class="searchArea" align="center">
          <select id="searchCondition" name="searchCondition">
-            <option>---</option>
+            <option>-----</option>
             <option value="title">제목</option>
             <option value="content">내용</option>
             <option value="writer">작성자</option>
-            <option value="">제목+내용</option>
          </select> <input type="search" style="padding: .5em .5em;">
          <button type="submit" style="padding: .5em .5em;">검색하기</button>
 
       </div>
-   </div>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.js"></script>
+        <script>
+        $(document).ready(function(){
+        	
+        	var countAll = $("#tb tr").length;
+        	$("#countAll").text("편지수 : " + countAll);
 
 
-
-   <script>
-      function modal(id) {
-         var zIndex = 9999;
-         var modal = $('#' + id);
-
-         // 모달 div 뒤에 희끄무레한 레이어
-         var bg = $('<div>').css({
-            position : 'fixed',
-            zIndex : zIndex,
-            left : '0px',
-            top : '0px',
-            width : '100%',
-            height : '100%',
-            overflow : 'auto',
-            // 레이어 색갈은 여기서 바꾸면 됨
-            backgroundColor : 'rgba(0,0,0,0.4)'
-         }).appendTo('body');
-
-         modal
-               .css(
-                     {
-                        position : 'fixed',
-                        boxShadow : '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
-
-                        // 시꺼먼 레이어 보다 한칸 위에 보이기
-                        zIndex : zIndex + 1,
-
-                        // div center 정렬
-                        top : '50%',
-                        left : '50%',
-                        transform : 'translate(-50%, -50%)',
-                        msTransform : 'translate(-50%, -50%)',
-                        webkitTransform : 'translate(-50%, -50%)'
-                     }).show()
-               // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
-               .find('.close_btn').on('click', function() {
-                  bg.remove();
-                  modal.hide();
-               });
-      }
-
-      $('#delete_btn').on('click', function() {
-         // 모달창 띄우기
-         modal('delete_modal');
-      });
-   </script>
+        	 </script>
 
 </body>
 </html>
