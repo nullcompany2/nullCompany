@@ -257,10 +257,9 @@ $(document).ready(function() {
 							<option value="사내공지">사내공지</option>
 							<option value="팀내공지">팀내공지</option>
 							<option value="없음">------------</option>
-							<option value="board">자유게시판</option>
+							<option value="자유게시판">자유게시판</option>
 						</select><br> <br> 
 						&nbsp;작성자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="hidden" id="hiddenCategory" name="category">
 						
 						<input type="text" name="nWriter" style="width: 60%;" value= "  ${loginUser.name}" readonly/> <br> <br>
 						
@@ -421,13 +420,24 @@ $(document).ready(function() {
        	
     });
     
-    $("#category").change(function() {
-		 alert($(this).val());
-		
-		var ca = $(this).val();
-		
-		$("hiddenCategory").val(ca);
-		console.log($("#hiddenCategory").val());
+    
+    // 메일 임시 저장 버튼 
+	 $("#write").click(function () {
+		 var ca = $("#category").children("option:selected").val();
+		 alert(ca);
+
+		if(val == "사내공지" ){
+			// 사내공지 매핑 
+			 $("form").attr("action","write.do");
+		}else if ( val == "팀내공지"){
+			// 팀내공지 매핑 
+			 $("form").attr("action","팀내공지.do");
+		}else if ( val == "자유게시판"){
+			// 자유게시판 매핑 
+			 $("form").attr("action","자유게시판.do");
+		}else {
+			alert("게시판을 선택해주세요.")
+		}
 		});
     
   
