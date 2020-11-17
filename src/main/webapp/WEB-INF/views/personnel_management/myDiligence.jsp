@@ -105,9 +105,9 @@
 							
 						</div>
 						<h5 style="padding:10px">
-						정상(<span style="color:#477A8F">●</span>),
-						지각(<span style="color:#477A8F">◎</span>),
-						결근(<span style="color:#477A8F">○</span>),
+						정상(<span style="color:#477A8F">○</span>),
+						지각(<span style="color:#477A8F">△</span>),
+						결근(<span style="color:#477A8F">X</span>),
 						수정됨(<span style="color:#477A8F">◇</span>)
 						
 						</h5>

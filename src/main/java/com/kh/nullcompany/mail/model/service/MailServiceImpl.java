@@ -181,11 +181,13 @@ public class MailServiceImpl implements MailService {
 		return maDao.getReReListCount(memId);
 	}
 
+	// 메인 카운트 뿌리기 
 	@Override
 	public MailListCount getMailBoxCount(String memId) {
 		return maDao.getMailBoxCount(memId);
 	}
 
+	// 받은 편지함 
 	@Override
 	public ArrayList<Mail> searchTitle(Map map) {
 		return maDao.searchTitle(map);
@@ -204,6 +206,27 @@ public class MailServiceImpl implements MailService {
 	@Override
 	public ArrayList<Mail> searchMtitleContent(Map map) {
 		return maDao.searchMtitleContent(map);
+	}
+
+	// 보낸 편지함 
+	@Override
+	public ArrayList<Mail> searchSendTitle(Map map) {
+		return maDao.searchSendTitle(map);
+	}
+
+	@Override
+	public ArrayList<Mail> searchSendMcontent(Map map) {
+		return maDao.searchSendMcontent(map);
+	}
+
+	@Override
+	public ArrayList<Mail> searchSendMtitleContent(Map map) {
+		return maDao.searchSendMtitleContent(map);
+	}
+
+	@Override
+	public ArrayList<Mail> searchSender(Map map) {
+		return maDao.searchSender(map);
 	}
 
 	

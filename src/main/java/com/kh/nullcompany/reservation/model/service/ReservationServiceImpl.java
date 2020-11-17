@@ -77,4 +77,9 @@ public class ReservationServiceImpl implements ReservationService  {
 		return rDao.selectReservationList(map);
 	}
 
+	@Override
+	public int insertReservation(Reservation r) {
+		return rDao.insertReservation(r);
+	}
+
 }

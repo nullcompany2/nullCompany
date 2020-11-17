@@ -66,5 +66,11 @@
 		(SEQ_BCNO.NEXTVAL, #{bcContent},#{bcefBno},#{bcWriter},SYSDATE,SYSDATE,DEFAULT)
 	</insert>
 	
+	<insert id="insertBoard" parameterType="board">
+		INSERT INTO TBL_BOARD
+		VALUES(
+			SEQ_NNO.NEXTVAL,#{bTitle},#{bContent},#{bWriter},
+			#{originalFileName},#{renameFileName},DEFAULT,SYSDATE,SYSDATE,DEFAULT,DEFAULT,DEFAULT)
+	</insert>
 	
 </mapper>

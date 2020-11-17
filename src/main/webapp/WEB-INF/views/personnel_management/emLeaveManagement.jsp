@@ -114,7 +114,7 @@
                                             <h5 style="float: left; margin-bottom: 20px;">포상 휴가 일수를 입력한 후 '생성하기'를 클릭하세요.</h5>                                         
                                             <table class="re-l-list">
                                                 <tr class="re-l-list-il">
-                                                    <th class="re-l-list-ck-th" rowspan="2"><input type="checkbox" name="" id="All-chk"></th>
+                                                    <th class="re-l-list-ck-th" rowspan="2"><input type="checkbox" name="" id="All-"></th>
                                                     <th class="re-l-list-th" rowspan="2">이름</th>
                                                     <th class="re-l-list-th" rowspan="2">ID</th>
                                                     <th class="re-l-list-th" rowspan="2">부서</th>
@@ -129,7 +129,7 @@
                                                 </tr>
                                                 <!-- 리스트 -->
                                                 <tr>
-                                                    <td class="re-l-list-ck-td"><input type="checkbox" name="chk" id=""></td>
+                                                    <td class="re-l-list-ck-td"><input type="checkbox" name="chk" ></td>
                                                     <td class="re-l-list-td">Han</td>
                                                     <td class="re-l-list-td">ys211</td>
                                                     <td class="re-l-list-td">인사</td>
@@ -436,7 +436,6 @@
         });
         
         function md3_search(){
-        	console.log("ffff");
         	var sDate = $("#sDate").val();
         	var eDate = $("#eDate").val();
         	var inputword = $("#md3_inputwords").val();
@@ -458,9 +457,39 @@
 	        		$.ajax({
 	        			url: "selectTargetReward.do",
 	        			data : {sDate : sDate , eDate : eDate, inputword : inputword},
-	        			typedate : "json",
-	        			success : function(date){
-	        				
+	        			dataType : "json",
+	        			success : function(data){
+	        				console.log(data);
+        				
+	        				$("#md3_searchList tr").remove();
+	        				var $searchTbl =$("#md3_searchList");
+	        				var $tr;
+	        				var $checkBox;
+	        				var $name;
+	        				var $id;
+	        				var $dept;
+	        				var $annual;
+	        				var $reward;
+	        				var $td;
+	        				for(var i in data){
+		        				$tr = $('<tr class="re-l-list">');
+		        				$checkBox = $(' <td class="re-l-list-ck-td">');
+		        				$td = $('<input type="checkbox" name="md-chk" id="">').attr('id',data[i].memNo)
+		        				$name = $('<td class="re-l-list-td">').text(data[i].name);
+		        				$id = $('<td class="re-l-list-td">').text(data[i].id);
+		        				$dept = $('<td class="re-l-list-td">').text(data[i].deptName);
+		        				$annual = $('<td class="re-l-list-td">').text(data[i].annualLeave);
+		        				$reward = $('<td class="re-l-list-td">').text(data[i].rewardLeave);
+	        					
+		        				$checkBox.append($td);
+		        				$tr.append($checkBox);
+		        				$tr.append($name);
+		        				$tr.append($id);
+		        				$tr.append($dept);
+		        				$tr.append($annual);
+		        				$tr.append($reward);
+		        				$searchTbl.append($tr);
+	        				}
 	        			},
 	        			error : function(request,status,error){
 	        				console.log(request);
@@ -468,10 +497,48 @@
 	        				console.log(error);
 	        			}
 	        		});
+	        	}else{
+	        		alert("날짜 또는 검색어를 입력해주세요.");
 	        	}
 	        }
 	        
         };
+        
+       	var listArr = new Array();
+        function md3_saveBtn(){
+        	listArr = new Array();
+        	var size = $('input:checkbox[name="md-chk"]').length;
+        	console.log(size);
+        	for( var i =0; i<size;i++){
+	        	if($('input:checkbox[name="md-chk"]')[i].checked){
+	        		listArr.push($('input:checkbox[name="md-chk"]')[i].id);
+	        		console.log(listArr);
+	        		console.log(listArr.length);
+	        	}
+        		
+        	}
+        	if(listArr.length > 0){
+        		console.log(listArr);
+	        	$.ajax({
+	        		url: "grantReward.do",
+	        		data : {listArr :  JSON.stringify(listArr) },
+	        		type:"post",
+	        		
+	        		success : function(data){
+	        			console.log(data);
+	        		},
+	        		error : function(request,status,error){
+	        			console.log(request);
+	        			console.log(status);
+	        			console.log(error);
+	        		}
+	        	});        		
+        	}else{
+        		alert("대상자를 선택하세요.");
+        	}
+        	
+        	
+        }
         
         $(function(){
             $("#modal-create-history").click(function(){
@@ -486,7 +553,7 @@
                 $("#modal-create-history").css("color","black")
                 $("#modal-used-history").css("color","#477A8F")
             })
-            /* ic checkbox oneclick */
+            /* ic checkbox onclick */
             $("#md-All-chk").click(function(){
                 if($("#md-All-chk").prop("checked")){
                     $("input[name=md-chk]").prop("checked",true);
@@ -762,27 +829,21 @@
         </form>
         <table class="re-l-list">
             <tr class="re-l-list-il">
-                <th class="re-l-list-ck-th" ><input type="checkbox" name="" id="md-All-chk"></th>
+                <th class="re-l-list-ck-th" ><input type="checkbox" id="md-All-chk"></th>
                 <th class="re-l-list-th" >이름</th>
                 <th class="re-l-list-th">ID</th>
                 <th class="re-l-list-th" >부서</th>
                 <th class="re-l-list-th">연차</th>
                 <th class="re-l-list-th">포상</th>                
             </tr>
-
+		<tbody id="md3_searchList">
             <!-- 리스트 -->
-            <tr class="re-l-list">
-                <td class="re-l-list-ck-td"><input type="checkbox" name="md-chk" id=""></td>
-                <td class="re-l-list-td">Han</td>
-                <td class="re-l-list-td">ys211</td>
-                <td class="re-l-list-td">인사</td>
-                <td class="re-l-list-td">25일</td>
-                <td class="re-l-list-td">0일</td>
-            </tr>
+            
+		</tbody>
             
         </table>
 		<div style="text-align: center; margin-top: 50px;">
-			<input type="button" class="md-btn cursor md-btn-save" id="md3_saveBtn" value="저장">
+			<input type="button" class="md-btn cursor md-btn-save" onclick="md3_saveBtn()" value="저장">
 			<input type="button" class="md-btn cursor md-btn-close" style="margin-left: 50px;" value="닫기">
 		</div>
 

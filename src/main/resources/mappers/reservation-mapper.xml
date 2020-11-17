@@ -31,7 +31,6 @@
 		<result property="end_time" column="END_TIME"/>
 		<result property="rReturn" column="R_RETURN"/>
 		<result property="rMemberName" column="NAME"/>
-		
 	</resultMap>
 	
 	<insert id="insertCategory" parameterType="Category">
@@ -121,4 +120,9 @@
 	WHERE RC_NUM = #{rcNo}
 	AND RS_NUM = #{rsNo}
 	</select>
+	
+	<insert id="insertReservation" parameterType="Reservation">
+	INSERT INTO RESERVATION
+	VALUES (SEQ_RNO.NEXTVAL,#{rcNo},#{rsNo},#{rMember},#{rDate},#{start_time},#{end_time},#{rContent},DEFAULT)
+	</insert>
 </mapper>

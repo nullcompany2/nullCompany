@@ -18,6 +18,8 @@ public interface boardService {
 
 	int insertbComment(bcomment c);
 
+	int insertBoard(board b);
+
 
 
 

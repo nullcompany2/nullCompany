@@ -190,5 +190,21 @@ public class MailDao {
 	public ArrayList<Mail> searchMtitleContent(Map map) {
 		return (ArrayList)sqlSession.selectList("mailMapper.searchMtitleContent",map);
 	}
+
+	public ArrayList<Mail> searchSendTitle(Map map) {
+		return (ArrayList)sqlSession.selectList("mailMapper.searchSendTitle",map);
+	}
+
+	public ArrayList<Mail> searchSendMcontent(Map map) {
+		return (ArrayList)sqlSession.selectList("mailMapper.searchSendMcontent",map);
+	}
+
+	public ArrayList<Mail> searchSendMtitleContent(Map map) {
+		return (ArrayList)sqlSession.selectList("mailMapper.searchSendMtitleContent",map);
+	}
+
+	public ArrayList<Mail> searchSender(Map map) {
+		return (ArrayList)sqlSession.selectList("mailMapper.searchSender",map);
+	}
 	
 }

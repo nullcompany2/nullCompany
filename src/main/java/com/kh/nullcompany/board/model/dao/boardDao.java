@@ -20,7 +20,6 @@ public class boardDao {
 	public int getListCount() {
 		return sqlSession.selectOne("boardMapper.getListCount");
 
-
 	}
 
 	public ArrayList<board> selectListBoard(PageInfo pi) {
@@ -43,5 +42,9 @@ public class boardDao {
 
 	public int insertbComment(bcomment c) {
 		return sqlSession.insert("boardMapper.insertbComment",c);
+	}
+
+	public int insertBoard(board b) {
+		return sqlSession.insert("boardMapper.insertBoard",b);
 	}
 }

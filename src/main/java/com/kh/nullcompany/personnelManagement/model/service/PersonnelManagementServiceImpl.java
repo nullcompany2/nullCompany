@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.gson.JsonObject;
 import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.personnelManagement.model.dao.PersonnelManagementDao;
@@ -295,6 +296,17 @@ public class PersonnelManagementServiceImpl implements PersonnelManagementServic
 	@Override
 	public ArrayList<SetAttendance> AttendanceDays() {
 		return pDao.AttendanceDays();
+	}
+
+	@Override
+	public ArrayList<Member> selectTargetReward(Map searchCondition) {
+		return pDao.selectTargetReward(searchCondition);
+	}
+
+	@Override
+	public Object selectedMember(JsonObject obj) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	
