@@ -92,7 +92,7 @@ public class noticeController {
 		}
 	}
 
-	@RequestMapping("writer.do")
+	@RequestMapping("nwrite.do")
 	public String insertNotice(notice n,HttpServletRequest request,
 			@RequestParam(name="uploadFile",required=false)MultipartFile file) {
 	
