@@ -17,17 +17,17 @@ public class noticeDao {
 
 	@Autowired
 	private SqlSession sqlSession;
-	
-	
+
+
 	public int getListCount() {
 		return sqlSession.selectOne("noticeMapper.getListCount");
 	}
-	
+
 	public ArrayList<notice> selectListNotice(PageInfo pi) {
-	      int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
-	      RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
-	      return (ArrayList)sqlSession.selectList("noticeMapper.selectListNotice",null,rowBounds);
-	   }
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("noticeMapper.selectListNotice",null,rowBounds);
+	}
 
 	public int updateCount(int nNo) {
 		return sqlSession.update("noticeMapper.updateCount",nNo);
@@ -41,8 +41,8 @@ public class noticeDao {
 		return (ArrayList)sqlSession.selectList("noticeMapper.selectnCommentList",nNo);
 	}
 	public int insertnComment(ncomment c) {
-	      return sqlSession.insert("noticeMapper.insertnComment",c);
-	   }
+		return sqlSession.insert("noticeMapper.insertnComment",c);
+	}
 
 	public int insertNotice(notice n) {
 		return sqlSession.insert("noticeMapper.insertNotice",n);
@@ -54,12 +54,15 @@ public class noticeDao {
 
 
 
-	public int updateNotice(notice n) {
-		return sqlSession.update("noticeMapper.updateNotice", n);
-	}
+
 
 	public int ndelete(int nNo) {
 		return sqlSession.update("noticeMapper.ndelete",nNo);
 	}
 
+	public int nupdate(notice n) {
+		return sqlSession.update("noticeMapper.nupdate", n);
+	}
 }
+
+

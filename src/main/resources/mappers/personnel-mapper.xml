@@ -435,4 +435,17 @@
 		SELECT *
 		FROM SET_ATTENDANCE_STANDARD
 	</select>
+	
+	<select id="selectTargetReward" resultMap="memberResultSet" parameterType="map">
+	<![CDATA[ 
+		SELECT *
+		FROM MEMBER
+		JOIN DEPARTMENT USING(DEPT_NO )
+		WHERE ENROLL_DATE > #{sDate}
+		AND ENROLL_DATE < #{eDate}
+		AND (DEPT_NAME LIKE '%'|| #{inputword} ||'%' 
+		OR NAME LIKE '%'|| #{inputword} ||'%' )
+		ORDER BY MEM_NO
+		]]>
+	</select>
 </mapper>

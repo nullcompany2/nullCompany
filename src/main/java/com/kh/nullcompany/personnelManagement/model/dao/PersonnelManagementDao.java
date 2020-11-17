@@ -2,6 +2,7 @@ package com.kh.nullcompany.personnelManagement.model.dao;
 
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
@@ -263,6 +264,19 @@ public class PersonnelManagementDao {
 
 	public ArrayList<SetAttendance> AttendanceDays() {
 		return (ArrayList)sqlSession.selectList("personnelMapper.AttendanceDays");
+	}
+
+
+	public ArrayList<Member> selectTargetReward(Map searchCondition) {
+		if(searchCondition.get("sDate") == "") {
+			String sDate = "2001-01-01";
+			Date today = new Date();
+			searchCondition.put("sDate",sDate);
+			searchCondition.put("eDate", today);
+			
+			System.out.println(searchCondition.get("sDate"));
+		}
+		return (ArrayList)sqlSession.selectList("personnelMapper.selectTargetReward",searchCondition);
 	}
 
 

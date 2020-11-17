@@ -320,11 +320,11 @@ tr>td {
 
 		<c:import url="../common/boardSubNav.jsp" />
 		<!-- 게시판 -->
-		<div class="ndeatil">
+		<div class="nupdate">
 			<div class="board_head">
 				<div style="width: 90%; margin: auto;">
 					<form method="post" action="">
-						<input name="nupview" id="nupview" type="button" value="수정"
+						<input name="nupdate" id="nupdate" type="button" value="수정"
 							style="margin-left: 15px" onclick="" />
 						<input id="ndelete" type="button" value="삭제" />
 						<input type="text" id="ShareUrl" OnClick="javascript:CopyUrlToClipboard()"
@@ -341,7 +341,7 @@ tr>td {
 				</div>
 
 			</div>
-			<div class="board_body">
+			<div class="board_body" style="margin:10px;">
 				<br>&nbsp;&nbsp;&nbsp;<a href="#" class="icon impt "
 					ng-click='setImportant()'><span class="blind">별</span></a>
 
@@ -363,17 +363,18 @@ tr>td {
 					</tr>
 					<tr>
 						<td>첨부 파일</td>
-						<td colspan="5"><c:choose>
-								<c:when test="${ !empty n.originalFileName }">
-									<a
-										href="${contextPath }/resources/buploadFiles/${n.renameFileName}"
+						<td colspan="5">
+						<c:choose>
+							<c:when test="${ !empty n.originalFileName }">
+									<a href="${contextPath }/resources/buploadFiles/${n.renameFileName}"
 										download="${ n.originalFileName }">${ n.originalFileName }</a>
                            <
-                     </c:when>
+                    		 </c:when>
 								<c:when test="${ empty n.originalFileName }">
-                        X
-                      </c:when>
-							</c:choose></td>
+                     			   X
+                    		    </c:when>
+						</c:choose>
+						</td>
 
 					</tr>
 					<tr>
@@ -392,7 +393,7 @@ tr>td {
 
 
 			<!-- Ajax를 이용해서 댓글 등록 -->
-			<table style="text-align: center;" cellspacing="0">
+			<table style="text-align: center ;" cellspacing="0">
 				<tr>
 					<td><textarea class="form-control" style="resize: none;"
 							cols="80" rows="3" id="ncContent"></textarea></td>

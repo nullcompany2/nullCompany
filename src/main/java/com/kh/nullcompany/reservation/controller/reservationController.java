@@ -52,6 +52,27 @@ public class reservationController {
 		gson.toJson(list,response.getWriter());
 	}
 	
+	@RequestMapping("reservation3.do")
+	public void reservation3(HttpServletResponse response,int rsNo) throws JsonIOException, IOException {
+		response.setContentType("application/json; charset=utf-8");
+		Resource r = rService.selectUpdateResource(rsNo);
+		System.out.println(r);
+		Gson gson = new GsonBuilder().create();
+		gson.toJson(r,response.getWriter());
+	}
+	
+	@RequestMapping("insertReservation.do")
+	public String insertReservation(HttpServletResponse response,Reservation r) throws JsonIOException, IOException {
+		r.getRcNo();
+		int result = rService.insertReservation(r);
+		System.out.println(result);
+		if(result>0) {
+			return "redirect:reservation.do?rcNo="+r.getRcNo();
+		}else {
+			return "common/errorPage";
+		}
+	}
+	
 	@RequestMapping("subNavi2.do")
 	public void subNavi(HttpServletResponse response) throws JsonIOException, IOException {
 		response.setContentType("application/json; charset=utf-8");

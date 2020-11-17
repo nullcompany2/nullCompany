@@ -163,7 +163,7 @@
 			#{originalFileName},#{renameFileName},DEFAULT,SYSDATE,SYSDATE,DEFAULT)
 	</insert>
 	
-	<update id="updateNotice" parameterType="notice">
+	<update id="nupdate" parameterType="notice">
 		UPDATE TBL_NOTICE
 		SET 
 			NTITLE=#{nTitle}

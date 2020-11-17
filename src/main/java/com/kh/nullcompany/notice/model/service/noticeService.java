@@ -47,8 +47,9 @@ public interface noticeService {
 	notice selectUpdateNotice(int nNo);
 
 
-	int updateNotice(notice n);
 
 	int ndelete(int nNo);
+
+	int nupdate(notice n);
 
 }

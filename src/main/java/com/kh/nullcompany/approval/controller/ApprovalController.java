@@ -68,7 +68,7 @@ public class ApprovalController {
 								d.setsStatus("예정");
 								// 나보다 뒷 순번 결재자가 먼저 결재를 하였을때(후결상황)
 							} else if (d.getTurnNo() > s.getStepPriority()) {
-								d.setsStatus("대기");
+								d.setsStatus("후결 대기");
 							}
 						}
 					}
@@ -121,6 +121,7 @@ public class ApprovalController {
 						} else {
 							// 현재 문서 결재순번과 결재사원의 순서가 같을때(지금 결재순번이 사용자 차례일 때)
 							if (d.getTurnNo() == s.getStepPriority()) {
+								
 								d.setsStatus("대기");
 								// 결재사원의 결재선 타입이 참조이거나, 문서 서식종류가 회람문서일경우
 							} else if (s.getLineNo() == 2 || d.getFormNo() == 2) {
@@ -193,7 +194,7 @@ public class ApprovalController {
 								d.setsStatus("예정");
 								// 나보다 뒷 순번 결재자가 먼저 결재를 하였을때(후결상황)
 							} else if (d.getTurnNo() > s.getStepPriority()) {
-								d.setsStatus("후결대기");
+								d.setsStatus("후결 대기");
 							}
 						}
 					}
@@ -256,7 +257,7 @@ public class ApprovalController {
 								d.setsStatus("예정");
 								// 나보다 뒷 순번 결재자가 먼저 결재를 하였을때(후결상황)
 							} else if (d.getTurnNo() > s.getStepPriority()) {
-								d.setsStatus("후결대기");
+								d.setsStatus("후결 대기");
 							}
 						}
 					}
@@ -319,7 +320,7 @@ public class ApprovalController {
 								d.setsStatus("예정");
 								// 나보다 뒷 순번 결재자가 먼저 결재를 하였을때(후결상황)
 							} else if (d.getTurnNo() > s.getStepPriority()) {
-								d.setsStatus("후결대기");
+								d.setsStatus("후결 대기");
 							}
 						}
 					}
@@ -651,7 +652,7 @@ public class ApprovalController {
 		return mv;
 	}
 	
-	// 업무연락 문서 상세보기
+	// 문서 상세보기
 	@RequestMapping("approvalDetail.do")
 	public ModelAndView approvalDetail(ModelAndView mv, HttpServletResponse response, HttpSession session, String docNo, int formNo) {
 		

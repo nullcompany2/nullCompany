@@ -297,6 +297,11 @@ public class PersonnelManagementServiceImpl implements PersonnelManagementServic
 		return pDao.AttendanceDays();
 	}
 
+	@Override
+	public ArrayList<Member> selectTargetReward(Map searchCondition) {
+		return pDao.selectTargetReward(searchCondition);
+	}
+
 	
 	
 	
