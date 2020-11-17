@@ -13,7 +13,42 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/younsu-subNavi.css"/>">
     <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
 
+<style>
+#imgLabel {
+		position:relative;
+		width:130px;
+		}
+		
+		#imagePreview img,
+		#emp-photo {
+		
+		height : 130px;
+		width : 130px;
+		border-radius : 80px;
+		cursor:pointer;
+		transition: all ease 0.7s 0s;
+		
+		}
+		
+		#imagePreview img:hover,
+		#emp-photo:hover {
+		filter: brightness(40%);
+		
+		}
+		
+		#imagePreview #addText {
+		position:absolute;
+		display:none;
+		top:42%;
+		left:48%;
+		color:white;
+		transition: all ease 0.7s 0s;
+		}
+
+</style>
 </head>
+
+
 
 <body>
 	
@@ -36,18 +71,17 @@
 				</div>
 				<!-- 수정창 -->
 				<div class="contents-wrap drag-scrollbar">
+				<form action="mupdateGo.do" method="post" id="infoForm" enctype="multipart/form-data">
+				
                     <!-- photo -->
                     <div style="position: absolute; left: 500px; top: 70px;">
-                        <div> 
-                            <img src="${ loginUser.photo }" alt="" style="width: 100px; height: 100px;" id="emp-photo">
+                        <div id="imagePreview"> 
+                            <img  id="imgLabel" src="${ loginUser.photo }" alt="" id="emp-photo">
+							<div id="addText" > 파일 선택 </div>
 						</div>
+						
 						<div class="filebox"> 
-							<label for="ex_file" id="up-file" >
-								<img src="resources/images/camera.png" alt="" style="width: 50px; margin-left: -13px;">
-							</label>
-							<input type="file" id="ex_file">
-							<label for="" style="float: right;" id="delete-file">
-							</label>
+							<input type="file" id="ex_file" name="uploadPhoto">
 						</div>
                     </div>
 					<div id="myinfo" class="c-ic">
@@ -55,15 +89,15 @@
                             <table>
                                 <tr id="info-name">
                                     <th class="tl">이름</th>
-                                    <td class="ts"><span>${ loginUser.name }</span></td>
+                                    <td class="ts"> <input type="text" name="name" id="name" value="${ loginUser.name }" readonly></td>
                                 </tr>
                                 <tr id="info-dept">
                                     <th class="tl">부서</th>
-                                    <td class="ts"><span>${ loginUser.deptName }부</span></td>
+                                    <td class="ts"><input type="text" name="deptName" id="deptName" value="${ loginUser.deptName }부" readonly></td>
                                 </tr>
                                 <tr id="info-rank">
                                     <th class="tl">직급</th>
-                                    <td class="ts"><span>${ loginUser.rankName }</span></td>
+                                    <td class="ts"> <input type="text" name="rankName" id="rankName" value="${ loginUser.rankName }" readonly></td>
                                 </tr>
                                 <tr id="info-phone">
                                     <th class="tl">
@@ -84,24 +118,23 @@
 										개인 이메일
 									</th>
 									<td class="ts">
-										<input type="text" name="" id="" value="${loginUser.email }">
+										 <input type="email" name="email" id="email" value="${ loginUser.email }">
 									</td>
                                 </tr>
                                 <tr id="info-mem-no">
                                     <th class="tl">사번</th>
-                                    <td class="ts"><span>${ loginUser.memNo}</span></td>
+                                    <td class="ts"><input type="text" name="memNo" id="memNo" value="${ loginUser.memNo}" readonly></td>
                                 </tr>
                                 <tr id="info-enrolldate">
                                     <th class="tl">입사일</th>
-                                    <td class="ts"><span>${ loginUser.enrollDate}</span></td>
+                                    <td class="ts"><input type="text" name="enrollDate" id="enrollDate" value="${ loginUser.enrollDate}" readonly></td>
                                 </tr>
                                 <tr id="info-birth">
                                     <th class="tl">
 										생년월일
 									</th>
                                     <td class="ts">
-										${ loginUser.birth}
-										
+										<input type="text" name="birth" id="birth" value="${ loginUser.birth}" readonly>
                                     </td>
                                 </tr>
                                 <tr id="info-address">
@@ -125,7 +158,7 @@
                                 <input type="button" value="저장" class="save-btn cursor">
                             </div>
                         </div>
-                        
+                        </form>
 					</div>	
                 </div>
                 <script>
@@ -143,6 +176,20 @@
 						console.log($("#ex_file").attr("src"));
 						 
 					})
+					
+				function changeImageFile(event) { 
+            	var reader = new FileReader(); 
+           
+            	reader.onload = function(event) { 
+            		 $('#imagePreview').empty();
+            	var img = document.createElement("img"); 
+            	var div = document.createElement("div"); 
+            	img.setAttribute("src", event.target.result); 
+            	document.querySelector("div#imagePreview").appendChild(img); 
+            	};
+            	reader.readAsDataURL(event.target.files[0]); 
+            	};
+            
 				</script>
 				
 			</div>
@@ -206,6 +253,36 @@
 				var result = confirm("휴가신청을 취소하시겠습니까?");
 			})
 		})
+		
+		  $('#imgLabel').mouseover(()=>{
+        	 $('#addText').attr('style', "display:block;");
+        	 
+         });
+         
+         $('#imgLabel').mouseout(()=>{
+        	 $('#addText').attr('style', "display:none;");
+        	 
+         });
+            
+            $('#imgLabel').click(()=>{
+            	$('#ex_file').click();
+            	
+            });
+            
+            function changeImageFile(event) { 
+            	var reader = new FileReader(); 
+           
+            	reader.onload = function(event) { 
+            		 $('#imagePreview').empty();
+            	var img = document.createElement("img"); 
+            	var div = document.createElement("div"); 
+            	img.setAttribute("src", event.target.result); 
+            	document.querySelector("div#imagePreview").appendChild(img); 
+            	};
+            	reader.readAsDataURL(event.target.files[0]); 
+            	};
+            	
+            
 	</script>
 		<style>
 			#my_modal {

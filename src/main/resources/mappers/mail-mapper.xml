@@ -168,7 +168,6 @@
 	     WHERE RECIPIENT = #{memId}
 	     AND MDELETE_STATUS= 'N'
 	 </update>
-	
 	 
 	 <!--  임시 보관함 리스트 -->
 	<select id="selectSaveList" resultMap="mailResultSet">
@@ -251,6 +250,7 @@
 	<update id="backOneMail" parameterType="Mail">
 		UPDATE MAIL
 		SET MDELETE_STATUS = 'N'
+		AND M_REALDEL_STATUS = 'N'
 		WHERE MAIL_NO = #{mailNo}
 	</update>
 	
@@ -297,6 +297,7 @@
         AND MSAVE_STATUS = 'N'
         AND M_REALDEL_STATUS = 'N'
         AND M_TITLE LIKE '%' || #{search} || '%'
+        ORDER BY SEND_DATE DESC
 	 </select>
 	 
 	 <select id="searchRecipient" resultMap="mailResultSet" parameterType="map">
@@ -308,6 +309,7 @@
         AND MSAVE_STATUS = 'N'
         AND M_REALDEL_STATUS = 'N'
         AND (SENDER LIKE '%' || #{search} || '%' OR M.NAME LIKE'%' || #{search} || '%')
+        ORDER BY SEND_DATE DESC
 	 </select>
 	 
 	 <select id="searchMcontent" resultMap="mailResultSet" parameterType="map">
@@ -319,6 +321,7 @@
         AND MSAVE_STATUS = 'N'
         AND M_REALDEL_STATUS = 'N'
         AND M_CONTENT LIKE '%' || #{search} || '%'
+        ORDER BY SEND_DATE DESC
 	 </select>
 	 
 	 <select id="searchMtitleContent" resultMap="mailResultSet" parameterType="map"> 
@@ -330,6 +333,53 @@
         AND MSAVE_STATUS = 'N'
         AND M_REALDEL_STATUS = 'N'
         AND (M_TITLE LIKE '%' || #{search} || '%' OR M_CONTENT LIKE '%' || #{search} || '%')
+        ORDER BY SEND_DATE DESC
+	 </select>
+	 
+	 <select id="searchSendTitle" resultMap="mailResultSet" parameterType="map">
+	 	SELECT MA.*, M.NAME
+        FROM MAIL MA
+        JOIN MEMBER M ON (MA.RECIPIENT= M.ID)
+        WHERE SENDER = #{memId}
+        AND MDELETE_STATUS = 'N'
+        AND MSAVE_STATUS = 'N'
+        AND M_TITLE LIKE '%' || #{search} || '%'
+        ORDER BY SEND_DATE DESC
+	 </select>
+	 
+	 <select id="searchSendMcontent" resultMap="mailResultSet" parameterType="map">
+	 	SELECT MA.*, M.NAME
+        FROM MAIL MA
+       	JOIN MEMBER M ON (MA.RECIPIENT= M.ID)
+        WHERE SENDER = #{memId}
+        AND MDELETE_STATUS = 'N'
+        AND MSAVE_STATUS = 'N'
+        AND M_CONTENT LIKE '%' || #{search} || '%'
+        ORDER BY SEND_DATE DESC
+	 </select>
+	 
+	 <select id="searchSendMtitleContent" resultMap="mailResultSet" parameterType="map">
+	 	SELECT MA.*, M.NAME
+        FROM MAIL MA
+        JOIN MEMBER M ON (MA.RECIPIENT= M.ID)
+      	WHERE SENDER = #{memId}
+        AND MDELETE_STATUS = 'N'
+        AND MSAVE_STATUS = 'N'
+        AND M_REALDEL_STATUS = 'N'
+        AND (M_TITLE LIKE '%' || #{search} || '%' OR M_CONTENT LIKE '%' || #{search} || '%')
+        ORDER BY SEND_DATE DESC
+	 </select>
+	 
+	 <select id="searchSender" resultMap="mailResultSet" parameterType="map">
+	 	SELECT MA.*, M.NAME
+        FROM MAIL MA
+        JOIN MEMBER M ON (MA.RECIPIENT= M.ID)
+      	WHERE SENDER = #{memId}
+        AND MDELETE_STATUS = 'N'
+        AND MSAVE_STATUS = 'N'
+        AND M_REALDEL_STATUS = 'N'
+       	AND (RECIPIENT LIKE '%' || #{search} || '%' OR M.NAME LIKE'%' || #{search} || '%')
+        ORDER BY SEND_DATE DESC
 	 </select>
 	 
 </mapper>

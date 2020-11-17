@@ -120,9 +120,9 @@
 						&nbsp;&nbsp; <span style="color:#477A8F;" id="select"> 보기 : 
 						
 						<select name="listOption" id="listOption"> 
-							<option value="recieveMail.do"> 모두 </option>
-							<option> 읽은 메일  </option>
-							<option selected > 안읽은 메일  </option>
+							<option  value="모두"> 모두 </option>
+							<option value="읽은메일"> 읽은 메일  </option>
+							<option selected value="안읽은메일">  안읽은 메일  </option>
 						</select> &nbsp;
 						</span> 
 						
@@ -131,6 +131,7 @@
 						<span id="countAll"> </span> <br><br>
 						
 						<div id="tableDiv"> 
+					 	
 					<c:choose>
 				    <c:when test="${!empty list }">
 				        <c:forEach var="ma" items="${list}">
@@ -264,22 +265,24 @@
         
 
         
+        // 셀렉트 박스 선택시 읽은 메일 안 읽은 메일 
         $("#listOption").change(function() {
     		/* alert($(this).val());
     		alert($(this).children("option:selected").text()); */
     		
     		var val = $(this).val();
     		console.log(val);
-    		if( val.length == 5){
+    		if(val == "읽은메일" ){
     			// 읽은 메일 
     			document.location.href='readMail.do';
-    		}else if ( val.length == 6){
+    		}else if ( val == "안읽은메일"){
     			// 안읽은 메일  
     			document.location.href='unReadMail.do';
     		}else {
     			document.location.href='recieveMail.do';
     		}
     		});
+        
        
         </script>
 		

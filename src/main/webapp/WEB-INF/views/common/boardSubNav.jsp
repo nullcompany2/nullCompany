@@ -88,15 +88,13 @@ a {
 			<div class="H-personnel-subNavi underline">
 				<div class="H-personnel-subNavi Depth01-1">
 					<li class="subTitle" style="cursor: pointer;"
-						onclick="location.href='iboard.do'">중요 게시물</li>
+						onclick="location.href='iboard.do'">중요 게시물 </li>
 					<li class="subTitle" style="cursor: pointer;"
 						onclick="location.href='notice.do'">사내공지</li>
 					<li class="subTitle" style="cursor: pointer;"
 						onclick="location.href='tnotice.do'">팀내공지</li>
 					<li class="subTitle" style="cursor: pointer;"
 						onclick="location.href='board.do'">자유게시판</li>
-					<li class="subTitle" style="cursor: pointer;"
-						onclick="location.href='save.do'">임시 보관함</li>
 				</div>
 			</div>
 
