@@ -42,8 +42,6 @@ public interface noticeService {
 
 	int insertNotice(notice n);
 
-	int inserttNotice(tnotice t);
-
 	notice selectUpdateNotice(int nNo);
 
 

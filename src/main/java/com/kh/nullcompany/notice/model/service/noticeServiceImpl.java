@@ -53,10 +53,7 @@ public class noticeServiceImpl implements noticeService {
 		return nDao.insertNotice(n);
 	}
 
-	@Override
-	public int inserttNotice(tnotice t) {
-		return nDao.insettNotice(t);
-	}
+	
 
 	@Override
 	public notice selectUpdateNotice(int nNo) {
@@ -73,4 +70,6 @@ public class noticeServiceImpl implements noticeService {
 	public int nupdate(notice n) {
 		return nDao.nupdate(n);
 	}
+
+	
 }

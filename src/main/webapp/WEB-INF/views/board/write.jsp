@@ -247,65 +247,35 @@ $(document).ready(function() {
 
 			<div>
 				<div style="width: 90%; margin: auto;">
-					<form action="write.do" method="post" enctype="multipart/form-data">
+					<form id="form" action="" method="post" enctype="multipart/form-data">
 						<input type="hidden" value="${loginUser.memNo}" name= memNo>	
+						
 						<input type="submit" value="확인" id="write"/>
-						<input class="go2" type="button" value="미리보기" /> <a href="javascript:history.go(-1);"> 
-						<input type="button" value="이전으로" /></a> <br>
-						<br> &nbsp;게시판 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+						
+						<input class="go2" type="button" value="미리보기" />
+						
+						<a href="javascript:history.go(-1);"> 
+						<input type="button" value="이전으로" /></a> <br> <br> 
+						
+						&nbsp;게시판 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 						<select id="category" name="category">
 							<option value="사내공지">사내공지</option>
 							<option value="팀내공지">팀내공지</option>
-							<option value="없음">------------</option>
+							<option value="없음">---------</option>
 							<option value="자유게시판">자유게시판</option>
 						</select><br> <br> 
+						
 						&nbsp;작성자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="text" id="writer" style="width: 3%;" value= " ${loginUser.name}" readonly/>  <br>
 						
-						<input type="text" name="nWriter" style="width: 60%;" value= "  ${loginUser.name}" readonly/> <br> <br>
+						&nbsp;제목&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+						<input type="text" id="title" style="width: 60%;" placeholder="제목을 입력해주세요." /> <br>
 						
-						&nbsp;제목&nbsp;&nbsp;
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
-						<input type="text" name="nTitle"  style="width: 60%;" placeholder="제목을 입력해주세요." /> <br>
-						
-						<br>&nbsp;<label id="uploadFile">
-							파일첨부&nbsp;&nbsp;&nbsp;</label> 
+						<br>&nbsp;<label id="uploadFile">파일첨부&nbsp;&nbsp;&nbsp;</label> 
 							<input type="file" name="uploadFile" id="bfile"><br>
 						<br>
 						
-						<textarea id="summernote" name="nContent"></textarea>
-						<c:choose>
-							<c:when test="${param.category=='notice' }">
-						&nbsp;작성자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="text" name="nWriter" style="width: 60%;" value= "  ${loginUser.name}" readonly/> <br> <br>
-						
-						&nbsp;제목&nbsp;&nbsp;
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
-						<input type="text" name="nTitle"  style="width: 60%;" placeholder="제목을 입력해주세요." /> <br>
-						
-						<br>&nbsp;<label id="uploadFile">
-							파일첨부&nbsp;&nbsp;&nbsp;</label> 
-							<input type="file" name="uploadFile" id="bfile"><br>
-						<br>
-						
-						<textarea id="summernote" name="nContent"></textarea>
-							</c:when>
-							<c:when test="${param.category=='tnotice' }">
-							&nbsp;작성자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="text" name="tWriter" style="width: 60%;" value= "  ${loginUser.name}" readonly/> <br> <br>
-						
-						&nbsp;제목&nbsp;&nbsp;
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
-						<input type="text" name="tTitle"  style="width: 60%;" placeholder="제목을 입력해주세요." /> <br>
-						
-						<br>&nbsp;<label id="uploadFile">
-							파일첨부&nbsp;&nbsp;&nbsp;</label> 
-							<input type="file" name="uploadFile" id="bfile"><br>
-						<br>
-						
-						<textarea id="summernote" name="tContent"></textarea>
-							</c:when>
-							
-						</c:choose>
+						<textarea id="summernote"  ></textarea>
 					</form>
 
 				</div>
@@ -313,8 +283,6 @@ $(document).ready(function() {
 		</div>
 
 	</div>
-
-
 
 
 	<!-- Modal div -->
@@ -330,21 +298,20 @@ $(document).ready(function() {
 				제목 : <span id="modalTitle"> 제목없음 </span>
 			</p>
 			<p>작성자 : ${ loginUser.name }</p>
-			<p>작성일 : <span id="modalDate"> </p>
+			<p>작성일 : <span id="modalDate"></span> </p>
 			<p>파일첨부 :</p>
 			<hr>
 			<div id="modalContent">내용</div>
 		</div>
-
-
+		
 		<input class="modal-close-btn cursor" value="닫기"
 			style="background: #477A8F; color: white; text-align: center; border: none; padding: 12px 4px 12px 4px; border-radius: 3px; margin-left: 180px; cursor: pointer; font-size: 15px;" />
 	</div>
 	<!-- Modal div -->
-
 </body>
 
 <script>
+
     function modal(id) {
        var zIndex = 9999;
        var modal = $('#' + id);
@@ -388,17 +355,7 @@ $(document).ready(function() {
           });
     }
 
-    $("#write").click(function () {
-
-      	if ($("input[category]").val().length < 1 ){
-      	  alert('게시판 타입을 지정하지 않으셨습니다.');
-    	}if ($('#summernote').summernote('isEmpty')) {
-     		  alert('내용을 입력하지 않으셨습니다.');
-    	}else{
-        $("form").attr("action","sendMail.do");
-   		}
-        
-	 });
+   
     	
     $('.go2').on('click', function() {
     	
@@ -407,34 +364,41 @@ $(document).ready(function() {
     	// 게시판 제목 input val 옮기기 
        $("#modalTitle").text($("input:text[name='nTitle']").val());
     	// 게시판 작성일
-    	$("modalDate").text($("input:text[date='SYSDATE']").val());
+    	$("modalDate").text($("input:text[date='nCreateDate']").val());
     	
     	var modalContent2 = $("#summernote").val();
-    	
     	
     	// 게시판 summernote textarea val 옮기기 
        var modalContent = document.getElementById('modalContent');
        	modalContent.innerHTML = modalContent2;
        // 모달창 띄우기
        modal('my_modal2');
-       	
     });
     
     
     // 메일 임시 저장 버튼 
 	 $("#write").click(function () {
 		 var ca = $("#category").children("option:selected").val();
-		 alert(ca);
-
-		if(val == "사내공지" ){
+	
+		 
+		if(ca == "사내공지" ){
 			// 사내공지 매핑 
-			 $("form").attr("action","write.do");
-		}else if ( val == "팀내공지"){
+			 $("#form").attr("action","nwrite.do");
+			 $("#writer").attr("name","nWriter")
+			 $("#title").attr("name","nTitle")
+			 $("#summernote").attr("name","nContent")
+		}else if ( ca == "팀내공지"){
 			// 팀내공지 매핑 
-			 $("form").attr("action","팀내공지.do");
-		}else if ( val == "자유게시판"){
+			 $("#form").attr("action","twrite.do");
+			 $("#writer").attr("name","tWriter")
+			 $("#title").attr("name","tTitle")
+			 $("#summernote").attr("name","tContent")
+		}else if ( ca == "자유게시판"){
 			// 자유게시판 매핑 
-			 $("form").attr("action","자유게시판.do");
+			 $("#form").attr("action","bwrite.do");
+			 $("#writer").attr("name","bWriter")
+			 $("#title").attr("name","bTitle")
+			 $("#summernote").attr("name","bContent")
 		}else {
 			alert("게시판을 선택해주세요.")
 		}

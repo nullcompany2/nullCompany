@@ -294,12 +294,6 @@ tr>td {
 						</c:url>
 						<a href="${ after }">다음</a>
 					</c:if>
-					<c:if test="${loginUser.deptNo eq 5 }">
-					<button
-					style="border: none; border-radius: 3px; background: #477A8F; font-size: 15px; width: 60px; height: 40px; margin-left: 9px;">
-					<a style="color: white;" href="write.do"> 글쓰기 </a>
-				</button>
-					</c:if>
 				</td>
 			</tr>
       </table>

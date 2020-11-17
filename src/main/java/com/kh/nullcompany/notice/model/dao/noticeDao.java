@@ -48,9 +48,7 @@ public class noticeDao {
 		return sqlSession.insert("noticeMapper.insertNotice",n);
 	}
 
-	public int insettNotice(tnotice t) {
-		return sqlSession.insert("noticeMapper.inserttNotice",t);
-	}
+	
 
 
 
