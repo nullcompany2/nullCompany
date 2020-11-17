@@ -75,7 +75,7 @@
 
 		#clock {
 			position : absolute;
-			right : 80px;
+			right : 10%;
 			color : #3E4247;
 			font-family: 'Lato', sans-serif;
 			font-size:20px; 
