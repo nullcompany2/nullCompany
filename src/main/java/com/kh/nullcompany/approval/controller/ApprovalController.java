@@ -674,21 +674,18 @@ public class ApprovalController {
 				receiveList.add(s);
 			}
 		}
-		
-		System.out.println("apprList : " + apprList);
-		System.out.println("checkList : " + checkList);
-		System.out.println("receiveList : " + receiveList);
-		
-		
 		mv.addObject("d",d);
-		mv.addObject("apprList",apprList);
-		mv.addObject("checkList",checkList);
-		mv.addObject("receiveList",receiveList);
 		
-		
-		
+		// 업무연락 문서일 때 
 		if(d.getFormNo() == 1) {
+			mv.addObject("apprList",apprList);
+			mv.addObject("checkList",checkList);
+			mv.addObject("receiveList",receiveList);
 			mv.setViewName("approval/businessDocumentDetail");
+		// 회람 문서일 때
+		}else if(d.getFormNo() == 2) {
+			mv.addObject("checkList",checkList);
+			mv.setViewName("approval/referDocumentDetail");
 		}
 		
 		return mv;

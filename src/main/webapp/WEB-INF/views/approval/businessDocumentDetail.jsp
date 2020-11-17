@@ -93,8 +93,13 @@
         <div class="contents" style="top:110px">
 			<div class="contents-wrap drag-scrollbar">
 				<div class="top-btns">
-						
-						<span class="cb" id="cb3">결재선 변경</span>
+				<c:if test="${ d.completeDate == null }">
+					<c:if test="${ loginUser.memNo eq d.drafterNo }">
+							<span class="cb" id="cb1">내용 수정</span>
+	                        <span class="cb" id="cb2">기안 취소</span>
+					</c:if>
+							<span class="cb" id="cb3">결재선 변경</span>
+				</c:if>
 				</div>
 				<div class="c-ic">
 					<div class="doc_type">
@@ -295,16 +300,43 @@
 							<script>
 								$(function(){
 					
-									var td = $("#tr4").children(); 
+									var td = $("#tr4").children();
+									var td2 = $("#tr8").children();
 
 								    var size = ${apprList.size()};
-  
+								    var size2 = ${checkList.size()};
+  									
+								    // 후결 버튼 생성
 								    for(var i = 0; i < size; i++){
 								    	for(var j = i+1; j < size-1; j++){
-								    		var tdText2 = (td.eq(j).text()).trim();
-								    		if(tdText2 == '결재 완료' || tdText2 == '반려'){
+								    		var tdText = (td.eq(j).text()).trim();
+								    		if(tdText == '결재 완료' || tdText == '반려'){
 								    			$(".appr_btn").text('후결');
 								    		}
+								    	}
+								    }
+								    
+								    // 결재선 완료 문구 글씨 색
+								    for(var i = 0; i < size; i++){
+								    	var tdText = td.eq(i);
+								    	if((tdText.text()).trim() == '결재 완료' || (tdText.text()).trim() == '전결' ){
+								    		tdText.css("color","#477A8F");
+								    		tdText.css("font-weight","bold");
+								    	}else{
+								    		tdText.css("color","#E94B4B");
+								    		tdText.css("font-weight","bold");
+								    	}
+								    }
+								    
+								    // 참조선 완료 문구 글씨 색
+								    for(var i = 0; i < size2; i++){
+								    	var tdText = td2.eq(i);
+								    	if((tdText.text()).trim() == '확인 완료'){
+								    		tdText.css("color","#477A8F");
+								    		tdText.css("font-weight","bold");
+								    	}else{
+								    		tdText.css("color","#E94B4B");
+								    		tdText.css("font-weight","bold");
 								    	}
 								    }
 								}); 
@@ -527,10 +559,16 @@
 					</div>
 					<br>
 					<br>
-					<form method="post" enctype="multipart/form-data">					
-						<label id="uploadFile">첨부파일(관련문서 첨부)&nbsp;&nbsp;&nbsp;</label>
-						<input type="file" name="uploadFile"></td>
-					</form>
+					
+					<span style="color:#477A8F; font-weight:bold">첨부파일 : 
+						<c:if test="${ d.fileName != null }">
+							    <a href="${ contextPath }/resources/approvalUploadFiles/${d.fileName}"
+								  download="${ d.fileName }">${ d.fileName }</a>
+						</c:if>
+						<c:if test="${ d.fileName == null }">
+							없음
+						</c:if>
+					</span>
 					<br>
 					<br>
 					<br>
