@@ -531,9 +531,9 @@ private ScheduleService sService;
 			return mv;
 		}
 		
-		// 받은 메일함  - 제목으로
-		@RequestMapping("searchTitle.do")
-		public ModelAndView searchTitle(ModelAndView mv, String category, String search,HttpSession session) {
+		// 받은 메일함  - 검색하기 
+		@RequestMapping("searchRecieve.do")
+		public ModelAndView searchRecieve(ModelAndView mv, String category, String search,HttpSession session) {
 		
 			String memId = ((Member)session.getAttribute("loginUser")).getId();
 		
@@ -541,6 +541,7 @@ private ScheduleService sService;
 		
 		map.put("search",search);
 		map.put("memId",memId);
+		
 		
 		if(category.equals("제목")) {
 		ArrayList<Mail> list = maService.searchTitle(map);
@@ -556,9 +557,41 @@ private ScheduleService sService;
 			mv.addObject("list",list);
 		}
 		
+		mv.addObject("search",search);
 		mv.setViewName("mail/searchResult");
 		return mv;
 		}
+		
+		// 보낸 메일함  - 검색하기 
+				@RequestMapping("searchSend.do")
+				public ModelAndView searchSend(ModelAndView mv, String category, String search,HttpSession session) {
+				
+				String memId = ((Member)session.getAttribute("loginUser")).getId();
+				
+				Map map = new HashMap();
+				
+				map.put("search",search);
+				map.put("memId",memId);
+				
+				
+				if(category.equals("제목")) {
+				ArrayList<Mail> list = maService.searchSendTitle(map);
+				mv.addObject("list",list);
+				}else if(category.equals("받는사람")){
+				ArrayList<Mail> list = maService.searchSender(map);
+				mv.addObject("list",list);
+				}else if(category.equals("내용")) {
+					ArrayList<Mail> list = maService.searchSendMcontent(map);
+					mv.addObject("list",list);
+				}else if(category.equals("제목내용")) {
+					ArrayList<Mail> list = maService.searchSendMtitleContent(map);
+					mv.addObject("list",list);
+				}
+				
+				mv.addObject("search",search);
+				mv.setViewName("mail/searchSendResult");
+				return mv;
+				}
 }
 
 

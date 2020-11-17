@@ -119,9 +119,9 @@
 						&nbsp;&nbsp; <span style="color:#477A8F;" id="select"> 보기 : 
 						
 						<select name="listOption" id="listOption"> 
-							<option selected> 모두 </option>
-							<option> 읽은 메일  </option>
-							<option> 안읽은 메일  </option>
+							<option selected value="모두"> 모두 </option>
+							<option value="읽은메일"> 읽은 메일  </option>
+							<option value="안읽은메일">  안읽은 메일  </option>
 						</select> &nbsp;
 						</span> 
 						
@@ -145,7 +145,6 @@
 						<c:url var="mailWriteId" value="mailWriteId.do">
 							<c:param name="memNo" value="${ma.memNo}" />
 						</c:url>
-						
 							<td>&nbsp;&nbsp;<input type="checkbox" onClick="event.cancelBubble=true" name="mail"></td>
 							<td align="left"><a id="idWrite" onClick="event.stopPropagation(); location.href='${mailWriteId}'">${ma.name} < ${ma.sender} > </a></td>
 							<td>${ ma.mTitle }</td>
@@ -252,6 +251,7 @@
 		   $('table tr').mouseout(function(){
 		      $(this).css("font-weight","normal");
 		   });
+
 		});
 
         $("#delMail").click(function(){
@@ -278,16 +278,17 @@
 		        }
 		});
         
+        // 셀렉트 박스 선택시 읽은 메일 안 읽은 메일 
         $("#listOption").change(function() {
     		/* alert($(this).val());
     		alert($(this).children("option:selected").text()); */
     		
     		var val = $(this).val();
     		console.log(val);
-    		if( val.length == 5){
+    		if(val == "읽은메일" ){
     			// 읽은 메일 
     			document.location.href='readMail.do';
-    		}else if ( val.length == 6){
+    		}else if ( val == "안읽은메일"){
     			// 안읽은 메일  
     			document.location.href='unReadMail.do';
     		}else {
@@ -306,12 +307,10 @@
        		var category=  $("#category").children("option:selected").val();
         	var search = $("#search").val();
         	
-        	console.log(category+search);
-
         	if(category =="-----"){
           	  alert("분류를 선택하지 않았습니다.");
         	}else if(search != ""){
-        			document.location.href='searchTitle.do?category='+category+'&search='+search;	
+        			document.location.href='searchRecieve.do?category='+category+'&search='+search;	
         	}
         	  }
         
