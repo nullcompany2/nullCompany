@@ -483,7 +483,6 @@ public class PersonnelManagementController {
 
 		JsonParser jsonParser = new JsonParser();
 		JsonArray jsonArray = (JsonArray)jsonParser.parse(setAnnualLeave);
-		System.out.println(jsonArray.size() + ":oeoe"  );
 		for (int i = 0; i < jsonArray.size(); i++) {
 			JsonObject object = (JsonObject) jsonArray.get(i);
 		      
@@ -914,6 +913,33 @@ public class PersonnelManagementController {
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(mList,response.getWriter());
 	}
-	
+	@ResponseBody
+	@RequestMapping(value="grantReward.do")
+	public void grantReward(HttpServletResponse response, String listArr) throws JsonIOException, IOException {
+		response.setContentType("application/json; charset=utf-8");
+		System.out.println("list 확인 : " + listArr);
+		
+		JsonParser jsonParser = new JsonParser();
+		JsonArray jsonArray = (JsonArray)jsonParser.parse(listArr);
+		System.out.println(jsonArray.get(0));
+		ArrayList<Member> selectedList = new ArrayList<Member>();
+		
+		for(int i =0; i<jsonArray.size(); i++) {
+			JsonObject object = (JsonObject)jsonArray.get(i);
+			System.out.println(object.toString());
+			System.out.println(selectedList);
+			String year = (object).getAsString();
+			System.out.println(year);
+		}
+		
+		
+		
+		
+		
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		gson.toJson(selectedList,response.getWriter());
+		
+		
+	}
 
 }
