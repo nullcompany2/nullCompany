@@ -219,6 +219,7 @@ tr>td {
 		<div style="margin-left:40px;">
 			총 게시글 갯수 : ${ pi.listCount }
 		</div>
+		
          <div style="padding: 0px 30px 0px 30px;">
 
             <table id="mrv_table" class=" table-striped  table-hover" >
@@ -292,6 +293,12 @@ tr>td {
 							<c:param name="currentPage" value="${ pi.currentPage + 1 }" />
 						</c:url>
 						<a href="${ after }">다음</a>
+					</c:if>
+					<c:if test="${loginUser.deptNo eq 5 }">
+					<button
+					style="border: none; border-radius: 3px; background: #477A8F; font-size: 15px; width: 60px; height: 40px; margin-left: 9px;">
+					<a style="color: white;" href="write.do"> 글쓰기 </a>
+				</button>
 					</c:if>
 				</td>
 			</tr>

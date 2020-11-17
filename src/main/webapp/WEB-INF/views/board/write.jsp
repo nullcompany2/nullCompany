@@ -247,29 +247,66 @@ $(document).ready(function() {
 
 			<div>
 				<div style="width: 90%; margin: auto;">
-					<form action="writer.do" method="post" enctype="multipart/form-data">
+					<form action="write.do" method="post" enctype="multipart/form-data">
 						<input type="hidden" value="${loginUser.memNo}" name= memNo>	
 						<input type="submit" value="확인" id="write"/>
 						<input class="go2" type="button" value="미리보기" /> <a href="javascript:history.go(-1);"> 
 						<input type="button" value="이전으로" /></a> <br>
-						<br> &nbsp;게시판 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <select
-							id="category" name="category">
-							<option value="notice">사내공지</option>
-							<option value="tnotice">팀내공지</option>
-							<option disabled>--------------</option>
+						<br> &nbsp;게시판 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+						<select id="category" name="category">
+							<option value="사내공지">사내공지</option>
+							<option value="팀내공지">팀내공지</option>
+							<option value="없음">------------</option>
 							<option value="board">자유게시판</option>
 						</select><br> <br> 
 						&nbsp;작성자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="hidden" id="hiddenCategory" name="category">
+						
 						<input type="text" name="nWriter" style="width: 60%;" value= "  ${loginUser.name}" readonly/> <br> <br>
+						
 						&nbsp;제목&nbsp;&nbsp;
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<input type="text"
-							name="nTitle"  style="width: 60%;" placeholder="제목을 입력해주세요." /> <br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+						<input type="text" name="nTitle"  style="width: 60%;" placeholder="제목을 입력해주세요." /> <br>
+						
 						<br>&nbsp;<label id="uploadFile">
 							파일첨부&nbsp;&nbsp;&nbsp;</label> 
 							<input type="file" name="uploadFile" id="bfile"><br>
 						<br>
+						
 						<textarea id="summernote" name="nContent"></textarea>
-
+						<c:choose>
+							<c:when test="${param.category=='notice' }">
+						&nbsp;작성자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="text" name="nWriter" style="width: 60%;" value= "  ${loginUser.name}" readonly/> <br> <br>
+						
+						&nbsp;제목&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+						<input type="text" name="nTitle"  style="width: 60%;" placeholder="제목을 입력해주세요." /> <br>
+						
+						<br>&nbsp;<label id="uploadFile">
+							파일첨부&nbsp;&nbsp;&nbsp;</label> 
+							<input type="file" name="uploadFile" id="bfile"><br>
+						<br>
+						
+						<textarea id="summernote" name="nContent"></textarea>
+							</c:when>
+							<c:when test="${param.category=='tnotice' }">
+							&nbsp;작성자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="text" name="tWriter" style="width: 60%;" value= "  ${loginUser.name}" readonly/> <br> <br>
+						
+						&nbsp;제목&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+						<input type="text" name="tTitle"  style="width: 60%;" placeholder="제목을 입력해주세요." /> <br>
+						
+						<br>&nbsp;<label id="uploadFile">
+							파일첨부&nbsp;&nbsp;&nbsp;</label> 
+							<input type="file" name="uploadFile" id="bfile"><br>
+						<br>
+						
+						<textarea id="summernote" name="tContent"></textarea>
+							</c:when>
+							
+						</c:choose>
 					</form>
 
 				</div>
@@ -383,5 +420,16 @@ $(document).ready(function() {
        modal('my_modal2');
        	
     });
+    
+    $("#category").change(function() {
+		 alert($(this).val());
+		
+		var ca = $(this).val();
+		
+		$("hiddenCategory").val(ca);
+		console.log($("#hiddenCategory").val());
+		});
+    
+  
  </script>
 </html>

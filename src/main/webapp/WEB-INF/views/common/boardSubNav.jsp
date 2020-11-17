@@ -88,7 +88,7 @@ a {
 			<div class="H-personnel-subNavi underline">
 				<div class="H-personnel-subNavi Depth01-1">
 					<li class="subTitle" style="cursor: pointer;"
-						onclick="location.href='iboard.do'">중요 게시물</li>
+						onclick="location.href='iboard.do'">중요 게시물 </li>
 					<li class="subTitle" style="cursor: pointer;"
 						onclick="location.href='notice.do'">사내공지</li>
 					<li class="subTitle" style="cursor: pointer;"

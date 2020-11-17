@@ -1,0 +1,265 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<c:import url="../common/header.jsp" />
+
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR"
+	rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+	integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+	crossorigin="anonymous"></script>
+<link
+	href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css"
+	rel="stylesheet">
+<script
+	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+
+<title>글 수정 </title>
+
+<style>
+
+/* contents */
+.contents {
+	position: relative;
+	margin-left: 250px;
+}
+
+.contents-title {
+	padding-top: 10px;
+	height: 50px;
+	border-bottom: solid 0.1px #cacaca;
+}
+
+.ct1 {
+	margin-left: 50px;
+	font-size: 20px;
+	font-weight: bolder;
+}
+
+form input[type=submit],form input[type=button] 
+	{
+	font-size: 18px;
+	margin: 20px 5px 7px 5px;
+	background: none;
+	border: none;
+	color: #477A8F;
+	cursor:pointer;
+} 
+
+form input[type=text] {
+	margin: 5px 0px 5px 0px;
+	border: none;
+	background: #F3F3F3;
+	height: 30px;
+	padding:0px 13px;
+	
+}
+
+form input[type=button]:focus,
+ form>input[type=text]:focus, 
+ li:focus, a:focus {
+	outline: none;
+}
+
+a:active {
+	font-weight: bolder;
+}
+
+#my_modal2 {
+	display: none;
+	width: 600px;
+	height: 650px;
+	padding: 40px 35px;
+	background-color: #fefefe;
+	border: 1px solid #888;
+	border-radius: 3px;
+	text-align: left;
+	color: rgb(65, 65, 66);
+	
+} 
+
+.n-emp-i2 {
+	margin-top : 30px;
+
+}
+
+ #mailTitle {
+	padding-top:0px; padding-bottom:10px;
+	margin-top:0px;
+
+}  
+
+#my_modal2 #modalContent {
+ border-bottom: 1px solid #F4F4F4; 
+ height: 350px;
+ margin-bottom: 25px;
+ overflow-y: scroll;
+}
+
+</style>
+
+</head>
+<body>
+		<c:import url="../common/boardSubNav.jsp"/>
+
+		<div class="contents">
+			<div class="contents-title">
+				<span class="ct1">게시물 쓰기</span>
+			</div>
+
+			<div>
+				<div style="width: 90%; margin: auto;">
+				<form action="nupdate.do" method="post" enctype="multipart/form-data">
+						<input type="hidden" name="nNo" value="${ n.nNo }">
+						<input type="hidden" name="originalFileName" value="${ n.originalFileName }">
+						<input type="hidden" name="renameFileName" value="${ n.renameFileName }">	
+						<input type="submit" value="확인" id="update"/>
+						<input class="go2" type="button" value="미리보기" />
+						<a href="javascript:history.go(-1);"> 
+						<input type="button" value="이전으로" /></a> <br>
+						<br> &nbsp;게시판 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <select
+							id="category" name="category">
+							<option value="notice">사내공지</option>
+							<option value="tnotice">팀내공지</option>
+							<option disabled>--------------</option>
+							<option value="board">자유게시판</option>
+						</select><br> <br> 
+						&nbsp;작성자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="text" name="nWriter" style="width: 60%;" value= "  ${n.nWriter}" readonly/> <br> <br>
+						&nbsp;제목&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<input type="text"
+							name="nTitle"  style="width: 60%;" value="${n.nTitle }" /> <br>
+						<br>&nbsp;<label id="uploadFile">
+							파일첨부&nbsp;&nbsp;&nbsp;</label> 
+							<input type="file" name="uploadFile" id="bfile"><br>
+							<c:if test="${ !empty n.originalFileName }">
+							<br>현재 업로드한 파일:
+							<a href="${ contextPath }/resources/buploadFiles/${ n.renameFileName}" download="${ n.originalFileName }">${ n.originalFileName }</a>
+					</c:if>
+						<br>
+						<textarea id="summernote" name="nContent">${n.nContent}</textarea>
+
+					</form>
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+
+
+
+	<!-- Modal div -->
+	<div id="my_modal2" class="modal-dragscroll">
+
+		<span style="font-size: 20px; color: #477A8F;"> 미리보기 </span>
+		<div class="n-emp-i2">
+			<hr>
+			<p>
+				게시판 : <span id="modalType"> </span>
+			</p>
+			<p>
+				제목 : <span id="modalTitle"> 제목없음 </span>
+			</p>
+			<p>작성자 : ${ loginUser.name }</p>
+			<p>작성일 : <span id="modalDate"> </p>
+			<p>파일첨부 :</p>
+			<hr>
+			<div id="modalContent">내용</div>
+		</div>
+
+
+		<input class="modal-close-btn cursor" value="닫기"
+			style="background: #477A8F; color: white; text-align: center; border: none; padding: 12px 4px 12px 4px; border-radius: 3px; margin-left: 180px; cursor: pointer; font-size: 15px;" />
+	</div>
+	<!-- Modal div -->
+
+</body>
+
+<script>
+    function modal(id) {
+       var zIndex = 9999;
+       var modal = $('#' + id);
+
+       // 모달 div 뒤에 희끄무레한 레이어
+       var bg = $('<div>')
+          .css({
+             position: 'fixed',
+             zIndex: zIndex,
+             left: '0px',
+             top: '0px',
+             width: '100%',
+             height: '100%',
+             overflow: 'auto',
+             // 레이어 색갈은 여기서 바꾸면 됨
+             backgroundColor: 'rgba(0,0,0,0.4)'
+          })
+          .appendTo('body');
+
+       modal
+          .css({
+             position: 'fixed',
+             boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+
+             // 시꺼먼 레이어 보다 한칸 위에 보이기
+             zIndex: zIndex + 1,
+
+             // div center 정렬
+             top: '50%',
+             left: '50%',
+             transform: 'translate(-50%, -50%)',
+             msTransform: 'translate(-50%, -50%)',
+             webkitTransform: 'translate(-50%, -50%)'
+          })
+          .show()
+          // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
+          .find('.modal-close-btn')
+          .on('click', function() {
+             bg.remove();
+             modal.hide();
+          });
+    }
+
+    $("#write").click(function () {
+
+      	if ($("input[category]").val().length < 1 ){
+      	  alert('게시판 타입을 지정하지 않으셨습니다.');
+    	}if ($('#summernote').summernote('isEmpty')) {
+     		  alert('내용을 입력하지 않으셨습니다.');
+    	}else{
+        $("form").attr("action","sendMail.do");
+   		}
+        
+	 });
+    	
+    $('.go2').on('click', function() {
+    	
+    	// 게시판 타입 val
+    	$("#modalType").text($("#writerBoard option:selected").text());
+    	// 게시판 제목 input val 옮기기 
+       $("#modalTitle").text($("input:text[name='nTitle']").val());
+    	// 게시판 작성일
+    	$("modalDate").text($("input:text[date='SYSDATE']").val());
+    	
+    	var modalContent2 = $("#summernote").val();
+    	
+    	
+    	// 게시판 summernote textarea val 옮기기 
+       var modalContent = document.getElementById('modalContent');
+       	modalContent.innerHTML = modalContent2;
+       // 모달창 띄우기
+       modal('my_modal2');
+       	
+    });
+ </script>
+</body>
+
+	
+</html>

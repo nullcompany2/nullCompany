@@ -17,6 +17,7 @@ public class notice {
 	private String nImport;
 	private String nSave;
 	private int deptNo;
+	private String category;
 	
 	public notice() {
 		super();
@@ -25,7 +26,7 @@ public class notice {
 
 	public notice(int nNo, String nTitle, String nContent, String nWriter, String originalFileName,
 			String renameFileName, int nCount, Date nCreateDate, Date nModifyDate, String nStatus, String nImport,
-			String nSave, int deptNo) {
+			String nSave, int deptNo, String category) {
 		super();
 		this.nNo = nNo;
 		this.nTitle = nTitle;
@@ -40,6 +41,7 @@ public class notice {
 		this.nImport = nImport;
 		this.nSave = nSave;
 		this.deptNo = deptNo;
+		this.category = category;
 	}
 
 	public int getnNo() {
@@ -146,13 +148,22 @@ public class notice {
 		this.deptNo = deptNo;
 	}
 
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
 	@Override
 	public String toString() {
 		return "notice [nNo=" + nNo + ", nTitle=" + nTitle + ", nContent=" + nContent + ", nWriter=" + nWriter
 				+ ", originalFileName=" + originalFileName + ", renameFileName=" + renameFileName + ", nCount=" + nCount
 				+ ", nCreateDate=" + nCreateDate + ", nModifyDate=" + nModifyDate + ", nStatus=" + nStatus
-				+ ", nImport=" + nImport + ", nSave=" + nSave + ", deptNo=" + deptNo + "]";
+				+ ", nImport=" + nImport + ", nSave=" + nSave + ", deptNo=" + deptNo + ", category=" + category + "]";
 	}
+
 	
 	
 	
