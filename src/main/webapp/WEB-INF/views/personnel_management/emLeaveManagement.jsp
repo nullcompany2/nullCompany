@@ -457,7 +457,7 @@
 	        		$.ajax({
 	        			url: "selectTargetReward.do",
 	        			data : {sDate : sDate , eDate : eDate, inputword : inputword},
-	        			typedate : "json",
+	        			dataType : "json",
 	        			success : function(data){
 	        				console.log(data);
         				
@@ -504,10 +504,40 @@
 	        
         };
         
+       	var listArr = new Array();
         function md3_saveBtn(){
-        	var listArr = new Array();
+        	listArr = new Array();
         	var size = $('input:checkbox[name="md-chk"]').length;
         	console.log(size);
+        	for( var i =0; i<size;i++){
+	        	if($('input:checkbox[name="md-chk"]')[i].checked){
+	        		listArr.push($('input:checkbox[name="md-chk"]')[i].id);
+	        		console.log(listArr);
+	        		console.log(listArr.length);
+	        	}
+        		
+        	}
+        	if(listArr.length > 0){
+        		console.log(listArr);
+	        	$.ajax({
+	        		url: "grantReward.do",
+	        		data : {listArr :  JSON.stringify(listArr) },
+	        		type:"post",
+	        		
+	        		success : function(data){
+	        			console.log(data);
+	        		},
+	        		error : function(request,status,error){
+	        			console.log(request);
+	        			console.log(status);
+	        			console.log(error);
+	        		}
+	        	});        		
+        	}else{
+        		alert("대상자를 선택하세요.");
+        	}
+        	
+        	
         }
         
         $(function(){
@@ -813,7 +843,7 @@
             
         </table>
 		<div style="text-align: center; margin-top: 50px;">
-			<input type="button" class="md-btn cursor md-btn-save" id="md3_saveBtn" value="저장">
+			<input type="button" class="md-btn cursor md-btn-save" onclick="md3_saveBtn()" value="저장">
 			<input type="button" class="md-btn cursor md-btn-close" style="margin-left: 50px;" value="닫기">
 		</div>
 

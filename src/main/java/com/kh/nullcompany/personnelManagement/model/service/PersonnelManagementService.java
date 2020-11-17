@@ -3,6 +3,7 @@ package com.kh.nullcompany.personnelManagement.model.service;
 import java.util.ArrayList;
 import java.util.Map;
 
+import com.google.gson.JsonObject;
 import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.personnelManagement.model.vo.Department;
@@ -189,6 +190,8 @@ public interface PersonnelManagementService {
 	ArrayList<SetAttendance> AttendanceDays();
 	//
 	ArrayList<Member> selectTargetReward(Map searchCondition);
+
+	Object selectedMember(JsonObject obj);
 	
 	
 	
