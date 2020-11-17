@@ -13,6 +13,7 @@ public class Step {
 	private int stepPriority;        // 결재우선순위
 	private String apprStatus;       // 결재여부
 	private Date apprDate;           // 결재 일자
+	private String rStatus;          // 반려여부
 	
 	public Step() {
 		super();
@@ -20,7 +21,7 @@ public class Step {
 	}
 
 	public Step(String docTempNo, int lineNo, int staffNo, String staffName, int staffRankNo, String staffRankName,
-			int stepPriority, String apprStatus, Date apprDate) {
+			int stepPriority, String apprStatus, Date apprDate, String rStatus) {
 		super();
 		this.docTempNo = docTempNo;
 		this.lineNo = lineNo;
@@ -31,6 +32,7 @@ public class Step {
 		this.stepPriority = stepPriority;
 		this.apprStatus = apprStatus;
 		this.apprDate = apprDate;
+		this.rStatus = rStatus;
 	}
 
 	public String getDocTempNo() {
@@ -105,17 +107,19 @@ public class Step {
 		this.apprDate = apprDate;
 	}
 
+	public String getrStatus() {
+		return rStatus;
+	}
+
+	public void setrStatus(String rStatus) {
+		this.rStatus = rStatus;
+	}
+
 	@Override
 	public String toString() {
 		return "Step [docTempNo=" + docTempNo + ", lineNo=" + lineNo + ", staffNo=" + staffNo + ", staffName="
 				+ staffName + ", staffRankNo=" + staffRankNo + ", staffRankName=" + staffRankName + ", stepPriority="
-				+ stepPriority + ", apprStatus=" + apprStatus + ", apprDate=" + apprDate + "]";
+				+ stepPriority + ", apprStatus=" + apprStatus + ", apprDate=" + apprDate + ", rStatus=" + rStatus + "]";
 	}
 
-	
-	
-	
-	
-	
-	
 }

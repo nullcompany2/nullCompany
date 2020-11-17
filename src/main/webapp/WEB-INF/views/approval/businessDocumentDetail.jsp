@@ -129,16 +129,186 @@
 								<td>${ apprList[8].staffRankName }</td>
 							</tr>
 							<tr id="tr4">
-								<td></td>
-								<td><button class="appr_btn">결재</button></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
+								<td>
+									<c:if test="${ !empty apprList[0]}">
+										<c:choose>
+											<c:when test = "${ d.completeDate != null && apprList[0].apprStatus eq 'N' }">
+												전결
+											</c:when>
+											<c:when test = "${ loginUser.memNo eq apprList[0].staffNo && apprList[0].apprStatus eq 'N'}">
+												<button class="appr_btn">결재</button>
+											</c:when>
+											<c:when test = "${ apprList[0].apprStatus eq 'Y' && apprList[0].rStatus eq 'N'}">
+												결재 완료
+											</c:when>
+											<c:when test = "${ apprList[0].apprStatus eq 'Y' && apprList[0].rStatus eq 'Y'}">
+												반려 완료
+											</c:when>
+										</c:choose>
+									</c:if>
+								</td>
+								<td>
+									<c:if test="${ !empty apprList[1]}">
+										<c:choose>
+											<c:when test = "${ d.completeDate != null && apprList[1].apprStatus eq 'N' }">
+												전결
+											</c:when>
+											<c:when test = "${ loginUser.memNo eq apprList[1].staffNo && apprList[1].apprStatus eq 'N'}">
+												<button class="appr_btn">결재</button>
+											</c:when>
+											<c:when test = "${ apprList[1].apprStatus eq 'Y' && apprList[1].rStatus eq 'N'}">
+												결재 완료
+											</c:when>
+											<c:when test = "${ apprList[1].apprStatus eq 'Y' && apprList[1].rStatus eq 'Y'}">
+												반려
+											</c:when>
+										</c:choose>
+									</c:if>
+								</td>
+								<td>
+									<c:if test="${ !empty apprList[2]}">
+										<c:choose>
+											<c:when test = "${ d.completeDate != null && apprList[2].apprStatus eq 'N' }">
+												전결
+											</c:when>
+											<c:when test = "${ loginUser.memNo eq apprList[2].staffNo && apprList[2].apprStatus eq 'N'}">
+												<button class="appr_btn">결재</button>
+											</c:when>
+											<c:when test = "${ apprList[2].apprStatus eq 'Y' && apprList[2].rStatus eq 'N'}">
+												결재 완료
+											</c:when>
+											<c:when test = "${ apprList[2].apprStatus eq 'Y' && apprList[2].rStatus eq 'Y'}">
+												반려
+											</c:when>
+										</c:choose>
+									</c:if>
+								</td>
+								<td>
+									<c:if test="${ !empty apprList[3]}">
+										<c:choose>
+											<c:when test = "${ d.completeDate != null && apprList[3].apprStatus eq 'N' }">
+												전결
+											</c:when>
+											<c:when test = "${ loginUser.memNo eq apprList[3].staffNo && apprList[3].apprStatus eq 'N'}">
+												<button class="appr_btn">결재</button>
+											</c:when>
+											<c:when test = "${ apprList[3].apprStatus eq 'Y' && apprList[3].rStatus eq 'N'}">
+												결재 완료
+											</c:when>
+											<c:when test = "${ apprList[3].apprStatus eq 'Y' && apprList[3].rStatus eq 'Y'}">
+												반려
+											</c:when>
+										</c:choose>
+									</c:if>
+								</td>
+								<td>
+									<c:if test="${ !empty apprList[4]}">
+										<c:choose>
+											<c:when test = "${ d.completeDate != null && apprList[4].apprStatus eq 'N' }">
+												전결
+											</c:when>
+											<c:when test = "${ loginUser.memNo eq apprList[4].staffNo && apprList[4].apprStatus eq 'N'}">
+												<button class="appr_btn">결재</button>
+											</c:when>
+											<c:when test = "${ apprList[4].apprStatus eq 'Y' && apprList[4].rStatus eq 'N'}">
+												결재 완료
+											</c:when>
+											<c:when test = "${ apprList[4].apprStatus eq 'Y' && apprList[4].rStatus eq 'Y'}">
+												반려
+											</c:when>
+										</c:choose>
+									</c:if>
+								</td>
+								<td>
+									<c:if test="${ !empty apprList[5]}">
+										<c:choose>
+											<c:when test = "${ d.completeDate != null && apprList[5].apprStatus eq 'N' }">
+												전결
+											</c:when>
+											<c:when test = "${ loginUser.memNo eq apprList[5].staffNo && apprList[5].apprStatus eq 'N'}">
+												<button class="appr_btn">결재</button>
+											</c:when>
+											<c:when test = "${ apprList[5].apprStatus eq 'Y' && apprList[5].rStatus eq 'N'}">
+												결재 완료
+											</c:when>
+											<c:when test = "${ apprList[5].apprStatus eq 'Y' && apprList[5].rStatus eq 'Y'}">
+												반려
+											</c:when>
+										</c:choose>
+									</c:if>
+								</td>
+								<td>
+									<c:if test="${ !empty apprList[6]}">
+										<c:choose>
+											<c:when test = "${ d.completeDate != null && apprList[6].apprStatus eq 'N' }">
+												전결
+											</c:when>
+											<c:when test = "${ loginUser.memNo eq apprList[6].staffNo && apprList[6].apprStatus eq 'N'}">
+												<button class="appr_btn">결재</button>
+											</c:when>
+											<c:when test = "${ apprList[6].apprStatus eq 'Y' && apprList[6].rStatus eq 'N'}">
+												결재 완료
+											</c:when>
+											<c:when test = "${ apprList[6].apprStatus eq 'Y' && apprList[6].rStatus eq 'Y'}">
+												반려
+											</c:when>
+										</c:choose>
+									</c:if>
+								</td>
+								<td>
+									<c:if test="${ !empty apprList[7]}">
+										<c:choose>
+											<c:when test = "${ d.completeDate != null && apprList[7].apprStatus eq 'N' }">
+												전결
+											</c:when>
+											<c:when test = "${ loginUser.memNo eq apprList[7].staffNo && apprList[7].apprStatus eq 'N'}">
+												<button class="appr_btn">결재</button>
+											</c:when>
+											<c:when test = "${ apprList[7].apprStatus eq 'Y' && apprList[7].rStatus eq 'N'}">
+												결재 완료
+											</c:when>
+											<c:when test = "${ apprList[7].apprStatus eq 'Y' && apprList[7].rStatus eq 'Y'}">
+												반려
+											</c:when>
+										</c:choose>
+									</c:if>
+								</td>
+								<td>
+									<c:if test="${ !empty apprList[8]}">
+										<c:choose>
+											<c:when test = "${ d.completeDate != null && apprList[8].apprStatus eq 'N' }">
+												전결
+											</c:when>
+											<c:when test = "${ loginUser.memNo eq apprList[8].staffNo && apprList[8].apprStatus eq 'N'}">
+												<button class="appr_btn">결재</button>
+											</c:when>
+											<c:when test = "${ apprList[8].apprStatus eq 'Y' && apprList[8].rStatus eq 'N'}">
+												결재 완료
+											</c:when>
+											<c:when test = "${ apprList[8].apprStatus eq 'Y' && apprList[8].rStatus eq 'Y'}">
+												반려
+											</c:when>
+										</c:choose>
+									</c:if>
+								</td>
 							</tr>
+							<script>
+								$(function(){
+					
+									var td = $("#tr4").children(); 
+
+								    var size = ${apprList.size()};
+  
+								    for(var i = 0; i < size; i++){
+								    	for(var j = i+1; j < size-1; j++){
+								    		var tdText2 = (td.eq(j).text()).trim();
+								    		if(tdText2 == '결재 완료' || tdText2 == '반려'){
+								    			$(".appr_btn").text('후결');
+								    		}
+								    	}
+								    }
+								}); 
+							</script>
 							<tr id="tr5">
 								<td>${ apprList[0].apprDate }</td>
 								<td>${ apprList[1].apprDate }</td>
@@ -174,15 +344,141 @@
                                 <td>${ checkList[8].staffRankName }</td>
 							</tr>
 							<tr id="tr8">
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+								<td>
+									<c:if test="${ !empty checkList[0]}">
+										<c:choose>
+											<c:when test = "${ d.completeDate != null && checkList[0].apprStatus eq 'N' }">
+												미확인
+											</c:when>
+											<c:when test = "${ loginUser.memNo eq checkList[0].staffNo && checkList[0].apprStatus eq 'N'}">
+												<button class="confirm_btn">확인</button>
+											</c:when>
+											<c:when test = "${ checkList[0].apprStatus eq 'Y'}">
+												확인 완료
+											</c:when>
+										</c:choose>
+									</c:if>
+								</td>
+								<td>
+									<c:if test="${ !empty checkList[1]}">
+										<c:choose>
+											<c:when test = "${ d.completeDate != null && checkList[1].apprStatus eq 'N' }">
+												미확인
+											</c:when>
+											<c:when test = "${ loginUser.memNo eq checkList[1].staffNo && checkList[1].apprStatus eq 'N'}">
+												<button class="confirm_btn">확인</button>
+											</c:when>
+											<c:when test = "${ checkList[1].apprStatus eq 'Y'}">
+												확인 완료
+											</c:when>
+										</c:choose>
+									</c:if>
+								</td>
+								<td>
+									<c:if test="${ !empty checkList[2]}">
+										<c:choose>
+											<c:when test = "${ d.completeDate != null && checkList[2].apprStatus eq 'N' }">
+												미확인
+											</c:when>
+											<c:when test = "${ loginUser.memNo eq checkList[2].staffNo && checkList[2].apprStatus eq 'N'}">
+												<button class="confirm_btn">확인</button>
+											</c:when>
+											<c:when test = "${ checkList[2].apprStatus eq 'Y'}">
+												확인 완료
+											</c:when>
+										</c:choose>
+									</c:if>
+								</td>
+								<td>
+									<c:if test="${ !empty checkList[3]}">
+										<c:choose>
+											<c:when test = "${ d.completeDate != null && checkList[3].apprStatus eq 'N' }">
+												미확인
+											</c:when>
+											<c:when test = "${ loginUser.memNo eq checkList[3].staffNo && checkList[3].apprStatus eq 'N'}">
+												<button class="confirm_btn">확인</button>
+											</c:when>
+											<c:when test = "${ checkList[3].apprStatus eq 'Y'}">
+												확인 완료
+											</c:when>
+										</c:choose>
+									</c:if>
+								</td>
+								<td>
+									<c:if test="${ !empty checkList[4]}">
+										<c:choose>
+											<c:when test = "${ d.completeDate != null && checkList[4].apprStatus eq 'N' }">
+												미확인
+											</c:when>
+											<c:when test = "${ loginUser.memNo eq checkList[4].staffNo && checkList[4].apprStatus eq 'N'}">
+												<button class="confirm_btn">확인</button>
+											</c:when>
+											<c:when test = "${ checkList[4].apprStatus eq 'Y'}">
+												확인 완료
+											</c:when>
+										</c:choose>
+									</c:if>
+								</td>
+								<td>
+									<c:if test="${ !empty checkList[5]}">
+										<c:choose>
+											<c:when test = "${ d.completeDate != null && checkList[5].apprStatus eq 'N' }">
+												미확인
+											</c:when>
+											<c:when test = "${ loginUser.memNo eq checkList[5].staffNo && checkList[5].apprStatus eq 'N'}">
+												<button class="confirm_btn">확인</button>
+											</c:when>
+											<c:when test = "${ checkList[5].apprStatus eq 'Y'}">
+												확인 완료
+											</c:when>
+										</c:choose>
+									</c:if>
+								</td>
+                                <td>
+									<c:if test="${ !empty checkList[6]}">
+										<c:choose>
+											<c:when test = "${ d.completeDate != null && checkList[6].apprStatus eq 'N' }">
+												미확인
+											</c:when>
+											<c:when test = "${ loginUser.memNo eq checkList[6].staffNo && checkList[6].apprStatus eq 'N'}">
+												<button class="confirm_btn">확인</button>
+											</c:when>
+											<c:when test = "${ checkList[6].apprStatus eq 'Y'}">
+												확인 완료
+											</c:when>
+										</c:choose>
+									</c:if>
+								</td>
+                                <td>
+									<c:if test="${ !empty checkList[7]}">
+										<c:choose>
+											<c:when test = "${ d.completeDate != null && checkList[7].apprStatus eq 'N' }">
+												미확인
+											</c:when>
+											<c:when test = "${ loginUser.memNo eq checkList[7].staffNo && checkList[7].apprStatus eq 'N'}">
+												<button class="confirm_btn">확인</button>
+											</c:when>
+											<c:when test = "${ checkList[7].apprStatus eq 'Y'}">
+												확인 완료
+											</c:when>
+										</c:choose>
+									</c:if>
+								</td>
+                                <td>
+									<c:if test="${ !empty checkList[8]}">
+										<c:choose>
+											<c:when test = "${ d.completeDate != null && checkList[8].apprStatus eq 'N' }">
+												미확인
+											</c:when>
+											<c:when test = "${ loginUser.memNo eq checkList[8].staffNo && checkList[8].apprStatus eq 'N'}">
+												<button class="confirm_btn">확인</button>
+											</c:when>
+											<c:when test = "${ checkList[8].apprStatus eq 'Y'}">
+												확인 완료
+											</c:when>
+										</c:choose>
+									</c:if>
+								</td>
 							</tr>
 							<tr id="tr9">
 								<td>${ checkList[0].staffName }</td>
@@ -222,17 +518,19 @@
 					</table>
 					<br>
 					<br>
-					<span id="doc_title">문서 제목입니다.</span>
+					<span id="doc_title">${ d.dTitle }</span>
 					<br>
 					<br>
 					<br>
 				    <div id="doc_content">
-						<p>문서 상세 내용입니다.</p>
+						<p>${ d.dContent }</p>
 					</div>
 					<br>
 					<br>
-					<label id="uploadFile">첨부파일(관련문서 첨부)&nbsp;&nbsp;&nbsp;</label>
-					<input type="file" name="uploadFile"></td>
+					<form method="post" enctype="multipart/form-data">					
+						<label id="uploadFile">첨부파일(관련문서 첨부)&nbsp;&nbsp;&nbsp;</label>
+						<input type="file" name="uploadFile"></td>
+					</form>
 					<br>
 					<br>
 					<br>

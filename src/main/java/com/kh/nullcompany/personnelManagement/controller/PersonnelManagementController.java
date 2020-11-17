@@ -897,5 +897,23 @@ public class PersonnelManagementController {
 		gson.toJson(str,response.getWriter());
 	}
 	
+	@RequestMapping("selectTargetReward.do")
+	public void selectTargetReward(HttpServletResponse response, String eDate, String sDate, String inputword) throws JsonIOException, IOException {
+		response.setContentType("application/json; charset=utf-8");
+		Map searchCondition = new HashMap();
+		
+		searchCondition.put("sDate",sDate);
+		searchCondition.put("eDate",eDate);
+		searchCondition.put("inputword",inputword);
+		System.out.println(searchCondition);
+		
+		ArrayList<Member> mList = pService.selectTargetReward(searchCondition);
+		
+		System.out.println(mList);
+		
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		gson.toJson(mList,response.getWriter());
+	}
+	
 
 }

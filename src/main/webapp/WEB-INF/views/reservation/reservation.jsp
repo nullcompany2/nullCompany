@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
@@ -11,16 +11,16 @@
 <c:import url="../common/reservationSubNav.jsp" />
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+   src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR"
-	rel="stylesheet">
+   rel="stylesheet">
 </head>
 
 <link href="<c:url value="/resources/css/core.css"/>" rel='stylesheet' />
 <link href="<c:url value="/resources/css/daygrid.css"/>"
-	rel='stylesheet' />
+   rel='stylesheet' />
 <link href="<c:url value="/resources/css/timegrid.css"/>"
-	rel='stylesheet' />
+   rel='stylesheet' />
 <link href="<c:url value="/resources/css/list.css"/>" rel='stylesheet' />
 <script src='<c:url value="/resources/js/core.js"/>'></script>
 <script src='<c:url value="/resources/js/interaction.js"/>'></script>
@@ -31,63 +31,63 @@
 <!-- 캘린더 -->
 <c:url value="" />
 <link href='<c:url value="/resources/css/fullcalendar.css"/>'
-	rel='stylesheet' />
+   rel='stylesheet' />
 <link href='<c:url value="/resources/css/fullcalendar.print.css"/>'
-	rel='stylesheet' media='print' />
+   rel='stylesheet' media='print' />
 <script src='<c:url value="/resources/js/jquery-1.10.2.js"/>'
-	type="text/javascript"></script>
+   type="text/javascript"></script>
 <script src='<c:url value="/resources/js/jquery-ui.custom.min.js"/>'
-	type="text/javascript"></script>
+   type="text/javascript"></script>
 <script src='<c:url value="/resources/js/fullcalendar.js"/>'
-	type="text/javascript"></script>
+   type="text/javascript"></script>
 
 
 <style>
 #reservation_modal {
-	display: none;
-	padding: 10px 60px;
-	width: 500px;
-	background-color: #fefefe;
-	border: 1px solid #888;
-	border-radius: 3px;
+   display: none;
+   padding: 10px 60px;
+   width: 500px;
+   background-color: #fefefe;
+   border: 1px solid #888;
+   border-radius: 3px;
 }
 
 #reservation_modal .modal-close-btn {
-	position: absolute;
-	top: 10px;
-	right: 10px;
+   position: absolute;
+   top: 10px;
+   right: 10px;
 }
 
 .n-emp-i {
-	width: 100%;
-	height: 30%;
+   width: 100%;
+   height: 30%;
 }
 
 .modal-dragscroll>div>dl>dd {
-	margin-bottom: 15px;
+   margin-bottom: 15px;
 }
 
 .modal-dragscroll {
-	overflow: auto;
+   overflow: auto;
 }
 
 .modal-dragscroll::-webkit-scrollbar {
-	width: 10px;
+   width: 10px;
 }
 
 .modal-dragscroll::-webkit-scrollbar-thumb {
-	background-color: #e8ecee;
-	border-radius: 15px;
+   background-color: #e8ecee;
+   border-radius: 15px;
 }
 
 .modal-dragscroll::-webkit-scrollbar-track {
-	background-color: white;
-	border-radius: 15px;
-	box-shadow: white;
+   background-color: white;
+   border-radius: 15px;
+   box-shadow: white;
 }
 
 .close_btn {
-	cursor: pointer;
+   cursor: pointer;
 }
     table {
     width: 100%;
@@ -134,200 +134,320 @@
   dl {
   margin-bottom: 10px;
   }
+  
+.fc-view-container *,
+.fc-view-container *:before,
+.fc-view-container *:after {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  width : 100%;
+}
 </style>
 <body>
 
-	<div class="contents">
+   <div class="contents">
       <div class="contents-title">
         <span class="ct1">${ c.rcTitle }</span> &nbsp;
          <select name="resource" style="width:100px;height:30px; border:none;
-		font-size:16px;color:#477A8F;">
-			<c:forEach var ="rs" items="${ r }">
-				<option value="${rs.rsNo }">${ rs.rsTitle }</option>
-			</c:forEach> 
-		</select>
+      font-size:16px;color:#477A8F;">
+         <c:forEach var ="rs" items="${ r }">
+            <option value="${rs.rsNo }">${ rs.rsTitle }</option>
+         </c:forEach> 
+      </select>
+      
       </div>
       
       <br>
 
       <br>
       <div style="text-align: center; margin-bottom: 50px;" >
-				<input type="Image" style="width: 200px; height: 150px" value="">
+             <input type="Image" id="Img" style="width: 200px; height: 150px" value="">
       </div>
- 			<div id="cal_size"
+          <div id="cal_size"
                         style="position: absolute;  width: 70%; height: 500px; left: 15%; ">
-                        <div id='calendar'></div>
+                      <div id='calendar'></div>
             </div>
 
     </div>
 
-	<!-- Modal div -->
-	<div id="reservation_modal" class="modal-dragscroll">
-		<h4 style="color: #477A8F; margin-bottom: 25px;">상세 보기</h4>
-		<div class="n-emp-i">
-			<form action="">
-			<dl>
-				<dt style="float: left;">
-					<label>자원 이름</label>
-				</dt>
-				<dd style="margin-left: 150px;"><input type="text" id="rsTitle" value="회의실" readonly="readonly"></dd>
-			</dl>
-			<dl>
-				<dt style="float: left;">
-					<label>날짜</label>
-				</dt>
-				<dd style="margin-left: 150px; font-family: monospace;">
-					<input type="date" name="" id="date">
-				</dd>
-			</dl>
-			<dl>
-				<dt style="float: left;">
-					<label>예약 시간</label>
-				</dt>
-				<dd style="margin-left: 150px;">
-					<input type="time" name="" id="startTime"> ~ <input type="time" id='endTime'>
-				</dd>
-			</dl>
-			<dl>
-				<dt style="float: left;">
-					<label>사용 용도</label>
-				</dt>
-				<dd style="margin-left: 150px;">
-					<textarea name="" id="rsContent" cols="30" rows="10" style="resize: none;"></textarea>
-				</dd>
-			</dl>
-		<div style="text-align: center; margin-top: 50px; margin-bottom: 30px;">
-			<button class="close_btn"
-				style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">확인</button>
-			<button class="close_btn" type="button"
-				style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">취소</button>
-		</div>
-		</form>
-		</div>
-	</div>
+   <!-- Modal div -->
+   <div id="reservation_modal" class="modal-dragscroll">
+      <h4 style="color: #477A8F; margin-bottom: 25px;">상세 보기</h4>
+      <div class="n-emp-i">
+         <form action="insertReservation.do">
+         <input type="hidden" name ="rcNo" id ="rcNo" value="">
+         <input type="hidden" name ="rsNo" id ="rsNo" value="">
+         <input type="hidden" name ="rMember" id ="rMember" value="">
+         <dl>
+            <dt style="float: left;">
+               <label>자원 이름</label>
+            </dt>
+            <dd style="margin-left: 150px;"><input type="text" id="rsTitle" value="회의실" readonly="readonly"></dd>
+         </dl>
+         <dl>
+            <dt style="float: left;">
+               <label>날짜</label>
+            </dt>
+            <dd style="margin-left: 150px; font-family: monospace;">
+               <input type="date" name="rDate" id="date">
+            </dd>
+         </dl>
+         <dl>
+            <dt style="float: left;">
+               <label>예약 시간</label>
+            </dt>
+            <dd style="margin-left: 150px;">
+               <input type="time" name="start_time" id="startTime"> ~ <input type="time" name ="end_time" id='endTime'>
+            </dd>
+         </dl>
+         <dl>
+            <dt style="float: left;">
+               <label>사용 용도</label>
+            </dt>
+            <dd style="margin-left: 150px;">
+               <textarea name="rContent" id="rContent" cols="30" rows="10" style="resize: none;"></textarea>
+            </dd>
+         </dl>
+      <div style="text-align: center; margin-top: 50px; margin-bottom: 30px;">
+         <button class="close_btn insert_btn" id="insert_btn" type="button"
+            style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">확인</button>
+         <button class="close_btn" type="button"
+            style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">취소</button>
+      </div>
+      </form>
+      </div>
+   </div>
 
-	<script>
-		function modal(id) {
-			var zIndex = 9999;
-			var modal = $('#' + id);
+   <script>
+   	var end = [];
+   	var start=[];
+      function modal(id) {
+         var zIndex = 9999;
+         var modal = $('#' + id);
 
-			// 모달 div 뒤에 희끄무레한 레이어
-			var bg = $('<div>').css({
-				position : 'fixed',
-				zIndex : zIndex,
-				left : '0px',
-				top : '0px',
-				width : '100%',
-				height : '100%',
-				overflow : 'auto',
-				// 레이어 색갈은 여기서 바꾸면 됨
-				backgroundColor : 'rgba(0,0,0,0.4)'
-			}).appendTo('body');
+         // 모달 div 뒤에 희끄무레한 레이어
+         var bg = $('<div>').css({
+            position : 'fixed',
+            zIndex : zIndex,
+            left : '0px',
+            top : '0px',
+            width : '100%',
+            height : '100%',
+            overflow : 'auto',
+            // 레이어 색갈은 여기서 바꾸면 됨
+            backgroundColor : 'rgba(0,0,0,0.4)'
+         }).appendTo('body');
 
-			modal
-					.css(
-							{
-								position : 'fixed',
-								boxShadow : '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
-							    width: '600px',
-							    hieght : '',
-								// 시꺼먼 레이어 보다 한칸 위에 보이기
-								zIndex : zIndex + 1,
+         modal
+               .css(
+                     {
+                        position : 'fixed',
+                        boxShadow : '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+                         width: '600px',
+                         hieght : '',
+                        // 시꺼먼 레이어 보다 한칸 위에 보이기
+                        zIndex : zIndex + 1,
 
-								// div center 정렬
-								top : '50%',
-								left : '50%',
-								transform : 'translate(-50%, -50%)',
-								msTransform : 'translate(-50%, -50%)',
-								webkitTransform : 'translate(-50%, -50%)'
-							}).show()
-					// 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
-					.find('.close_btn').on('click', function() {
-						bg.remove();
-						modal.hide();
-					});
-		}
+                        // div center 정렬
+                        top : '50%',
+                        left : '50%',
+                        transform : 'translate(-50%, -50%)',
+                        msTransform : 'translate(-50%, -50%)',
+                        webkitTransform : 'translate(-50%, -50%)'
+                     }).show()
+               // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
+               .find('.close_btn').on('click', function() {
+                  bg.remove();
+                  modal.hide();
+               });
+         
+         	  modal.find('.insert_btn').on('click', function() {
+         		 for(var i=0; i<end.length;i++){
+             	  	if($("#startTime").val() > end[i]){
+             	  		alert("이미 예약되어 있습니다.");
+             	  		break;
+             	  	} else if($("#endTime").val() < start[i]){
+             	  		alert("이미 예약되어 있습니다.");
+             	  		break;
+             	  	}
+         	  }
+      });
+      }
+       
+      function getEvent(rsNo,rcNo){
+         var evt;
+            $.ajax({ 
+               type: "get",
+               url: 'reservation2.do', 
+               dataType:"json",
+               data: {rcNo : rcNo ,
+                   rsNo : rsNo  },
+               async:false, // <- 원래 ajax에서 async가 기본값이 true인데
+                             // 이걸 안주게되면 무슨현상이 일어나냐면 리턴되는 값이 받아는지는 
+                             // 결과 리턴이 undefined 이걸로 뜨거든요
+                             // 그래서 데이터 다 받아오고 밑에있는 코드까지해서 동기로 처리하겠다고하는 
+                             // 조건을 걸어줘야지 정상적으로 코드를 받아와요
+                             
+               success: function(data) { 
+                   var sum = [];
 
-		document.addEventListener('DOMContentLoaded', function() {
-		    var calendarEl = document.getElementById('calendar');
-		    var rsNo =  $("select[name=resource]").val();
-		    var rcNo = ${c.rcNo};
-		    var calendar = new FullCalendar.Calendar(calendarEl, {
-		      selectable: true,
-		      plugins: [ 'interaction', 'timeGrid', 'list' ],
-		      header: {
-		        left: 'prev',
-		        center: 'title',
-		        right: 'today next'
-		      },
-			  defaultView : 'timeGridDay',
-		      locale : "ko",
-		      editable: true,
-		      eventOverlap : true,
-		      
-		      events :function(start, end , callback){
-		    	  $.ajax({ 
-		    		  type: "get",
-		    		  url: 'reservation2.do', 
-		    		  data: {rcNo : rcNo ,
-		    				rsNo : rsNo  },
-		    		  success: function(data) { 
-		    			  var events=[];
-		    			 for(var i in data) {
-		    				
-		    				var r = {
-    					       title: data[i].rMemberName,
-   			                   start: data[i].rDate+'T'+data[i].start_time+':00',
-   			                   end: data[i].rDate+'T'+data[i].end_time+':00',
-   			                   constraint: data[i].rContent,
-   			                   color: 'red'
-		    				};
-		    				console.log(events);
-		    				console.log(r)
-		    				 events.push(r);
-		    			 };
-		    			 callback(events);
-		    		  }
-		    	  });
-		      },
-		      dateClick: function(info) {
-		    	 var startTime = info.dateStr;
-		    	 var str = startTime.substr(0,10);
-		    	 var str2 = startTime.substr(11,5);
-		    	 $("#date").val(str);
-		    	 $("#startTime").val(str2);
-		    	 console.log(str2);
-		     	   modal('reservation_modal');	
-		    	  },
-    	    select: function(info) {
-    	        var startTime =info.startStr;
-    	        var endTime = info.endStr;
-    	        var str = startTime.substr(0,10);
-		    	var str2 = startTime.substr(11,5);
-		    	var str3 = endTime.substr(11,5);
-		    	$("#date").val(str);
-		    	$("#startTime").val(str2);
-		    	$("#endTime").val(str3);
-		    	console.log(str2);
-		     	modal('reservation_modal');	
-    	      }
-		      
-		    });
+                 for(var i in data) {
+                   var str = data[i].end_time;
+                   var str2 = data[i].start_time;
+                   var r = {
+                       title: data[i].rMemberName,
+                            start: data[i].rDate+'T'+data[i].start_time+':00',
+                            end: data[i].rDate+'T'+data[i].end_time+':00',
+                            constraint: data[i].rContent,
+                            color: 'red'
+                   };
+                   console.log(r)
+                   sum.push(r);
+                   end.push(str);
+                   start.push(str2);
+                   console.log("sum : " + sum);
+                 }
+                 evt = sum;
+                 
+                  console.log("event1 : " +evt);
+                  console.log("str : " +end);
+               }
+            });
+            console.log("event2 : " +evt);
+          return evt;
+      }
+      
+      function chImg(rsNo){
+    	  $.ajax({
+    		 url : "reservation3.do",
+    		 data : {rsNo : rsNo},
+    		 success: function(data) { 
+    		  var rsImg = data.rsImg;
+    		  console.log(rsImg);
+    		  $("#Img").val(rsImg);
+    		 }
+    	 });
+      }
+      
+      document.addEventListener('DOMContentLoaded', function() {
+    	  var rsNo =  $("select[name=resource]").val();
+          var rcNo = ${c.rcNo};
+          console.log(rsNo);	
+          chImg(rsNo);
+          var calendarEl = document.getElementById('calendar');
+          var events = getEvent(rsNo,rcNo);
+          var calendar = new FullCalendar.Calendar(calendarEl, {
+            selectable: true,
+            plugins: [ 'interaction', 'timeGrid', 'list' ],
+            header: {
+              left: 'prev',
+              center: 'title',
+              right: 'today next'
+            },
+           defaultView : 'timeGridDay',
+            locale : "ko",
+            editable: false,
+            eventOverlap : false,
+            
+            events :events,
+            dateClick: function(info) {
+              var startTime = info.dateStr;
+              var str = startTime.substr(0,10);
+              var str2 = startTime.substr(11,5);
+              $("#date").val(str);
+              $("#startTime").val(str2);
+              $("#rcNo").val( rcNo );
+              $("#rsNo").val( rsNo );
+              $("#rMember").val("${loginUser.id}");
+              console.log(str2);
+              modal('reservation_modal');   
+               },
+           select: function(info) {
+               var startTime =info.startStr;	
+               var endTime = info.endStr;
+               var str = startTime.substr(0,10);
+             var str2 = startTime.substr(11,5);
+             var str3 = endTime.substr(11,5);
+             $("#date").val(str);
+             $("#startTime").val(str2);
+             $("#endTime").val(str3);
+             $("#rcNo").val( rcNo );
+             $("#rsNo").val( rsNo );
+             $("#rMember").val("${loginUser.id}");
+             console.log(str2);
+              modal('reservation_modal');   
+             }
+            
+          });
 
-		    calendar.render();
-		  });
-		
-		$(function() {
-			 
-			var rs =$("select[name=resource] option").size();
-			if(rs<1){
-				alert("예약할수있는 자원이 없습니다.");
-				document.location.href="myReservation.do";
-			}
-			
-		});
+          calendar.render();
+        });
+      
+      
+      $("select[name=resource]").change(function(){
+    	  $("#calendar").empty();
+         var calendarEl = document.getElementById('calendar');
+          var rsNo =  $("select[name=resource]").val();
+          var rcNo = ${c.rcNo};
+    	  chImg(rsNo);
+          var events = getEvent(rsNo,rcNo);
+          var calendar = new FullCalendar.Calendar(calendarEl, {
+            selectable: true,
+            plugins: [ 'interaction', 'timeGrid', 'list' ],
+            header: {
+              left: 'prev',
+              center: 'title',
+              right: 'today next'
+            },
+           defaultView : 'timeGridDay',
+            locale : "ko",
+            editable: true,
+            eventOverlap : false,
+            events :events,
+            
+            dateClick: function(info) {
+              var startTime = info.dateStr;
+              var str = startTime.substr(0,10);
+              var str2 = startTime.substr(11,5);
+              $("#date").val(str);
+              $("#startTime").val(str2);
+              $("#rcNo").val( rcNo );
+              $("#rsNo").val( rsNo );
+              $("#rMember").val("${loginUser.id}");
+              console.log(str2);
+                 modal('reservation_modal');   
+               },
+           select: function(info) {
+               var startTime =info.startStr;
+               var endTime = info.endStr;
+               var str = startTime.substr(0,10);
+             var str2 = startTime.substr(11,5);
+             var str3 = endTime.substr(11,5);
+             $("#date").val(str);
+             $("#startTime").val(str2);
+             $("#endTime").val(str3);
+             $("#rcNo").val( rcNo );
+             $("#rsNo").val( rsNo );
+             $("#rMember").val("${loginUser.id}");
+             console.log(str2);
+              modal('reservation_modal');   
+             }
+            
+          });
+          calendar.render();
+      });
+      
+      $(function() {
 
-	</script>
+         var rs =$("select[name=resource] option").size();
+         if(rs<1){
+            alert("예약할수있는 자원이 없습니다.");
+            document.location.href="myReservation.do";
+         }
+      });
+	 
+   </script>
 
 </body>
 </html>
