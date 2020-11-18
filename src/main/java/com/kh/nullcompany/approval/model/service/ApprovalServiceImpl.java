@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.nullcompany.approval.model.dao.ApprovalDao;
+import com.kh.nullcompany.approval.model.vo.Absence;
 import com.kh.nullcompany.approval.model.vo.Document;
+import com.kh.nullcompany.approval.model.vo.Leave;
+import com.kh.nullcompany.approval.model.vo.Resign;
 import com.kh.nullcompany.approval.model.vo.Step;
 import com.kh.nullcompany.board.model.vo.PageInfo;
 
@@ -44,5 +47,20 @@ public class ApprovalServiceImpl implements ApprovalService {
 	@Override
 	public Document approvalDetail(String docNo) {
 		return aDao.approvalDetail(docNo);
+	}
+
+	@Override
+	public Leave selectLeaveInfo(String docTempNo) {
+		return aDao.selectLeaveInfo(docTempNo);
+	}
+
+	@Override
+	public Absence selectAbsenceInfo(String docTempNo) {
+		return aDao.selectAbsenceInfo(docTempNo);
+	}
+
+	@Override
+	public Resign selectResignInfo(String docTempNo) {
+		return aDao.selectResignInfo(docTempNo);
 	}
 }
