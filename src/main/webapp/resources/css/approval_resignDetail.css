@@ -41,7 +41,7 @@
 
 .appr_detail_table{
     margin-top: 20px;
-    width:1300px;
+    width:100%;
     border-collapse: collapse;
     text-align: center;
     
@@ -99,7 +99,7 @@
 
 
 #tr3 td:nth-child(n+2){
-    height: 15px;
+    height: 30px;
     font-size: 10pt;
     padding:5px;
 }
@@ -109,18 +109,18 @@
 }
 
 #tr5 td:nth-child(n+1){
-    height: 15px;
+    height: 30px;
     font-size: 10pt;
     padding:5px;
 }
 
 #tr6 td:nth-child(n+1){
-    height: 15px;
+    height: 30px;
     font-size: 10pt;
     padding:5px;
 }
 #tr7 td:nth-child(n+2){
-    height: 15px;
+    height: 30px;
     font-size: 10pt;
     padding:5px;
 }
@@ -130,17 +130,17 @@
 }
 
 #tr9 td:nth-child(n+1){
-    height: 15px;
+    height: 30px;
     font-size: 10pt;
     padding:5px;
 }
 #tr10 td:nth-child(n+1){
-    height: 15px;
+    height: 30px;
     font-size: 10pt;
     padding:5px;
 }
 #tr11 td:nth-child(n+1){
-    height: 15px;
+    height: 30px;
     font-size: 10pt;
     padding:5px;
 }

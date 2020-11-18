@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
@@ -153,4 +155,21 @@ public class tnoticeController {
 		}
 		return renameFileName;
 	}
+	
+	// 팀 공지 메인에 띄우기
+	
+		@ResponseBody
+		@RequestMapping(value="tnoticeList.do",produces="application/json; charset=utf-8")
+		public String tnoticeList() throws JsonProcessingException {
+			ArrayList<tnotice> list = tService.tnoticeList();
+			
+			ObjectMapper mapper = new ObjectMapper();
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			mapper.setDateFormat(sdf);
+			
+			String jsonStr = mapper.writeValueAsString(list);
+			
+			return jsonStr;
+		}
 }

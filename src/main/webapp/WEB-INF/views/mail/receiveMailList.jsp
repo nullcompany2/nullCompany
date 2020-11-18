@@ -145,6 +145,7 @@
 						<c:url var="mailWriteId" value="mailWriteId.do">
 							<c:param name="memNo" value="${ma.memNo}" />
 						</c:url>
+							<td> <input type="hidden" value="${ma.mailNo}"></td>
 							<td>&nbsp;&nbsp;<input type="checkbox" onClick="event.cancelBubble=true" name="mail"></td>
 							<td align="left"><a id="idWrite" onClick="event.stopPropagation(); location.href='${mailWriteId}'">${ma.name} < ${ma.sender} > </a></td>
 							<td>${ ma.mTitle }</td>
@@ -251,7 +252,7 @@
 		   $('table tr').mouseout(function(){
 		      $(this).css("font-weight","normal");
 		   });
-
+		   
 		});
 
         $("#delMail").click(function(){

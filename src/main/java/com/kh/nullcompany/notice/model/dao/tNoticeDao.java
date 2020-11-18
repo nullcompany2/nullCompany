@@ -48,6 +48,10 @@ public class tNoticeDao {
 		return sqlSession.insert("noticeMapper.inserttNotice",t);
 	}
 
+	public ArrayList<tnotice> tnoticeList() {
+		return (ArrayList)sqlSession.selectList("noticeMapper.tnoticeList");
+	}
+
 
 
 
