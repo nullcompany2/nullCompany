@@ -77,10 +77,21 @@
 	margin-bottom : 10px;
 	padding-bottom : 10px;
 	border-bottom:  1px solid #ECECEC;
+	table-layout : fixed;
 	}
 	
 	#tb:last-child {
 	margin-bottom : 30px;
+	}
+	
+	#tb #idWrite {
+	overflow:hidden;
+	white-space : nowrap;
+	text-overflow: ellipsis;
+	}
+	
+	#tb #firstTd{
+	width : 35px;
 	}
 	
 	#select, #hide, select, #hide a, #countAll{
@@ -126,7 +137,7 @@
 						</span> 
 						
 						&nbsp;&nbsp;
-						<span id="hide" style="margin-right:40px;">  <span id="count"> </span> <a id="delMail">삭제 </a>  &nbsp; <a id="realdelMail"> 완전삭제 </a> </span>
+						<span id="hide" style="margin-right:10px;">  <a id="delMail">삭제 </a>  &nbsp; <a id="realdelMail"> 완전삭제 </a> </span>
 						<span id="countAll"> </span> <br><br>
 						
 						<div id="tableDiv"> 
@@ -134,7 +145,7 @@
 				    <c:when test="${!empty list }">
 				        <c:forEach var="ma" items="${list}">
 				        
-						 <table align="left" cellspacing="0" width="90%" id="tb">
+						 <table align="left" width="90%" id="tb">
 						 
 						 <c:url var="maildetailView" value="maildetailView.do">
 							<c:param name="mailNo" value="${ma.mailNo}" />
@@ -145,8 +156,7 @@
 						<c:url var="mailWriteId" value="mailWriteId.do">
 							<c:param name="memNo" value="${ma.memNo}" />
 						</c:url>
-							<td> <input type="hidden" value="${ma.mailNo}"></td>
-							<td>&nbsp;&nbsp;<input type="checkbox" onClick="event.cancelBubble=true" name="mail"></td>
+							<td id="firstTd">&nbsp;&nbsp;<input type="checkbox" onClick="event.cancelBubble=true" name="mail" value="${ma.mailNo}"></td>
 							<td align="left"><a id="idWrite" onClick="event.stopPropagation(); location.href='${mailWriteId}'">${ma.name} < ${ma.sender} > </a></td>
 							<td>${ ma.mTitle }</td>
 							<td align="right"> ${ma.sendDate }</td>
@@ -163,6 +173,12 @@
 			</div>
 			
 			<table style=" margin: 10px 0px 0px 80px; width: 80%; border-collapse: collapse">
+			<colgroup>
+                  <col width="5%" />
+                  <col width="20%" />
+                  <col width="45%" />
+                  <col width="30%" />
+            </colgroup>
 			<!-- 페이징처리 -->
 			<tr align="center" height="20">
 				<td colspan="6" align="center">
@@ -196,6 +212,7 @@
 				</td>
 			</tr>
 		</table>
+		
 		<br>
 			
 			<select id="category"> 
@@ -226,20 +243,44 @@
                 if($("#checkall").prop("checked")){
                     //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
                     $("input[name=mail]").prop("checked",true);
-                    $(".trMail").css("background","#ECECEC");
-                    $("#hide").show();
-                    $("#select").hide(); 
-                    
-                    var count = $("input:checkbox[name=mail]:checked").length;
-                   	$("#count").text(count);
+                    $("#select").hide();
+                    $("#hide").show(); 
                    	
                     //클릭이 안되있으면
-                }else{
+                }else {
                     //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
                     $("input[name=mail]").prop("checked",false);
-                    $(".trMail").css("background","white");
-                    $("#hide").hide();
-                    $("#select").show(); 
+                    $("#hide").hide(); 
+                    $("#select").show();  
+                  
+                }
+            })
+            
+              $("input[name=mail]").click(function(e){
+                //클릭되었으면
+                if($(e.target).prop("checked")){
+                    //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
+                    $(e.target).prop("checked",true);
+                    $("#select").hide();
+                    $("#hide").show(); 
+                   	
+                    //클릭이 안되있으면
+                }else {
+                    //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
+                    $(e.target).prop("checked",false);
+                    var j =0;
+                    for( var i =0; i<$("input[name=mail]").length;i++){
+	                    console.log($("input[name=mail]")[i].checked);
+                    	if($("input[name=mail]")[i].checked){
+                    		j++;
+                    	};
+                    }
+                    if(j == 0){
+	                    $("#hide").hide(); 
+	                    $("#select").show();  
+                    	$("#checkall").prop("checked",false);
+                    }
+                  
                 }
             })
         })
@@ -249,13 +290,10 @@
 		   $('table tr').mouseover(function(){
 		      $(this).css("cursor","pointer");
 		   });
-		   $('table tr').mouseout(function(){
-		      $(this).css("font-weight","normal");
-		   });
-		   
+		  
 		});
 
-        $("#delMail").click(function(){
+      /*   $("#delMail").click(function(){
 			 if (confirm("정말로 삭제하시겠습니까? 휴지통으로 이동합니다.") == true){    //확인
 
 				 document.location.href='allDelMail.do';
@@ -265,7 +303,7 @@
 		            return;
 		        }
 
-		});
+		}); */
         
         
         $("#realdelMail").click(function(){
@@ -314,6 +352,43 @@
         			document.location.href='searchRecieve.do?category='+category+'&search='+search;	
         	}
         	  }
+        
+        
+       	 var mailNoArr = new Array();
+       
+         
+         
+       	 $("#delMail").click(function(){
+        	 mailNoArr = new Array();
+
+             
+            var size = $('input:checkbox[name="mail"]').length;
+       	
+            for( var i =0;i<size;i++ ){
+               if($('input:checkbox[name="mail"]')[i].checked){
+            	   mailNoArr.push($('input:checkbox[name="mail"]')[i].value);
+            	   	console.log(mailNoArr);
+               }
+            }
+               
+        	});
+       	 
+       
+
+       	 
+       	 
+         /*       $("#delMail").click(function(){
+      			 if (confirm("정말로 삭제하시겠습니까? 휴지통으로 이동합니다.") == true){    //확인
+
+      				 document.location.href='allDelMail.do';
+
+      		        }else{   //취소
+
+      		            return;
+      		        }
+
+      		});
+             */
         
         </script>
 </body>

@@ -78,10 +78,21 @@
 	margin-bottom : 10px;
 	padding-bottom : 10px;
 	border-bottom:  1px solid #ECECEC;
+	table-layout : fixed;
 	}
 	
 	#tb:last-child {
 	margin-bottom : 30px;
+	}
+	
+	#tb #idWrite {
+	overflow:hidden;
+	white-space : nowrap;
+	text-overflow: ellipsis;
+	}
+	
+	#tb #firstTd{
+	width : 35px;
 	}
 	
 	#select, #hide, select, #hide a, #countAll{
@@ -126,7 +137,7 @@
 						</c:url>
 						
 						<tr class="trMail" onClick="location.href='${saveDetailView}'"> 
-							<td>&nbsp;&nbsp;<input type="checkbox" onClick="event.cancelBubble=true" name="mail"></td>
+							<td id="firstTd">&nbsp;&nbsp;<input type="checkbox" onClick="event.cancelBubble=true" name="mail"></td>
 							<td align="left"> ${ma.name} < ${ma.recipient} > </td>
 							<td>${ ma.mTitle }</td>
 							<td align="right"> ${ma.sendDate }</td>
