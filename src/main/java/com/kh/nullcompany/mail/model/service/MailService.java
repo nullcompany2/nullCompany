@@ -224,6 +224,7 @@ public interface MailService {
 
 
 	/**
+	 * 받은 편지함 
 	 * 제목 검색하기 
 	 * 
 	 * @param map
@@ -232,7 +233,8 @@ public interface MailService {
 	ArrayList<Mail> searchTitle(Map map);
 
 	/**
-	 *  보낸사람 검색하기 
+	 * 받은 편지함 
+	 * 보낸사람 검색하기 
 	 * @param map
 	 * @return
 	 */
@@ -240,6 +242,7 @@ public interface MailService {
 
 
 	/**
+	 *  받은 편지함 
 	 *  메일 내용 검색하기 
 	 * @param map
 	 * @return
@@ -247,10 +250,43 @@ public interface MailService {
 	ArrayList<Mail> searchMcontent(Map map);
 
 	/**
+	 * 받은 편지함 
 	 * 메일 제목 + 내용 검색하기 
 	 * @param map
 	 * @return
 	 */
 	ArrayList<Mail> searchMtitleContent(Map map);
+
+	/**
+	 * 보낸 편지함 
+	 * 제목 검색하기 
+	 * @param map
+	 * @return
+	 */
+	ArrayList<Mail> searchSendTitle(Map map);
+
+	/**
+	 * 보낸 편지함
+	 * 내용 검색하기 
+	 * @param map
+	 * @return
+	 */
+	ArrayList<Mail> searchSendMcontent(Map map);
+
+    /**
+     * 보낸 편지함
+     * 메일 제목 + 내용 검색하기 
+     * @param map
+     * @return
+     */
+	ArrayList<Mail> searchSendMtitleContent(Map map);
+
+	/**
+	 * 보낸 편지함
+	 * 보낸 사람 검색하기 
+	 * @param map
+	 * @return
+	 */
+	ArrayList<Mail> searchSender(Map map);
 	
 }

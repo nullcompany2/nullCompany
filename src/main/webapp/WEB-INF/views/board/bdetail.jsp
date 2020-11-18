@@ -360,21 +360,23 @@ tr>td {
 
                </tr>
                <tr>
-                  <td>첨부파일</td>
-                  <td colspan="5">
-                  <c:choose>
-                  <c:when test="${ !empty b.originalFileName }">
-                        <a
-                           href="${contextPath }/resources/buploadFiles/${b.renameFileName}"
-                           download="${ b.originalFileName }">${ b.originalFileName }</a>
-                     </c:when>
-                     <c:when test="${ empty n.originalFileName }">
-                        X
-                      </c:when>
-				 </c:choose>
-                  </td>
-               </tr>
-               <tr>
+                 <td>첨부 파일</td>
+						<td colspan="5">
+						<c:choose>
+							<c:when test="${ !empty b.originalFileName }">
+									<a href="${contextPath }/resources/buploadFiles/${b.renameFileName}"
+										download="${ n.originalFileName }">${ b.originalFileName }</a>
+                           <
+                    		 </c:when>
+								<c:when test="${ empty b.originalFileName }">
+                     			   없음
+                    		    </c:when>
+						</c:choose>
+						</td>
+
+					</tr>
+					<tr>
+
 
                   <td>내용</td>
                   

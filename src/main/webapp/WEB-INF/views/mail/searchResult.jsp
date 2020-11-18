@@ -41,8 +41,7 @@
 	}
 
 	#category {
-		position:relatived;
-		margin-left:35%;
+		position:absolute;
 		border : none;
 		padding : 3px;
 		font-size : 15px;
@@ -51,7 +50,7 @@
 	}
 	
 	#search {
-		position:relatived;
+		position:absolute;
 		border: 1px solid #3E4247;
 		border-radius : 3px;
 		padding : 3px;
@@ -120,6 +119,8 @@
 						<span id="countAll"> </span> <br><br>
 						
 						<div id="tableDiv"> 
+						<h3 style="margin-left : 20px;">  " ${search} "  검색 결과입니다. </h3>
+						<br>
 					<c:choose>
 				    <c:when test="${!empty list }">
 				        <c:forEach var="ma" items="${list}">
@@ -135,8 +136,7 @@
 						<c:url var="mailWriteId" value="mailWriteId.do">
 							<c:param name="memNo" value="${ma.memNo}" />
 						</c:url>
-						
-							<td>&nbsp;&nbsp;<input type="checkbox" onClick="event.cancelBubble=true" name="mail"></td>
+							<td> &nbsp;&nbsp;&nbsp; </td>
 							<td align="left"><a id="idWrite" onClick="event.stopPropagation(); location.href='${mailWriteId}'">${ma.name} < ${ma.sender} > </a></td>
 							<td>${ ma.mTitle }</td>
 							<td align="right"> ${ma.sendDate }</td>
@@ -146,24 +146,22 @@
 				    </c:when>
 				    
 				    <c:otherwise>
-				      <span> 검색된 메일이 없습니다. </span>
+				      <span style="margin-left : 30px;"> 검색된 메일이 없습니다. </span>
 				    </c:otherwise>
 				</c:choose>
 				</div>
 			</div>
 			
 		<br>
-			
 			<select id="category"> 
 				<option>-----</option>
-				<option value="보낸사람">보낸사람</option>
+				<option value="받는사람">받는사람</option>
 				<option value="제목">제목</option>
 				<option value="내용">내용</option>
 				<option value="제목내용">제목 + 내용</option>
 			</select>
 			<input  id="search" type="text" placeholder="메일 검색"> 
 			<button id="searchBtn" onclick="goSearch();" > 검색 </button> <br>
-			
         </div>
         
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.js"></script>
@@ -242,7 +240,7 @@
     	if(category =="-----"){
       	  alert("분류를 선택하지 않았습니다.");
     	}else if(search != ""){
-    			document.location.href='searchTitle.do?category='+category+'&search='+search;	
+    		document.location.href='searchRecieve.do?category='+category+'&search='+search;	
     	}
     	  }
         

@@ -47,6 +47,11 @@ public class boardServiceImpl implements boardService {
 		return bDao.insertbComment(c);
 	}
 
+	@Override
+	public int insertBoard(board b) {
+		return bDao.insertBoard(b);
+	}
+
 
 
 

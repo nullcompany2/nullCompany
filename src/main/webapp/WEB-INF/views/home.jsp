@@ -75,7 +75,7 @@
 
 		#clock {
 			position : absolute;
-			right : 80px;
+			right : 10%;
 			color : #3E4247;
 			font-family: 'Lato', sans-serif;
 			font-size:20px; 
@@ -89,11 +89,9 @@
 					background:#5C6369; color:white;padding:3 4 3 4px; border-radius:4px;
 					font-family: 'Lato', sans-serif; text-align:center; }
 		
-		
 		.pt2 .ch a, .pt2 .ch {
 		color : white;
 		}
-		
 		
 		#mail1, #mail2, #mail3,
 		#approval1, #approval2, #approval3
@@ -202,7 +200,7 @@
         </div>
         </div>
         
-  		<a href="#logo" id="tothetop">  ▲ <br>TOP</a>
+  	<a href="#logo" id="tothetop">  ▲ <br>TOP</a>
     
     <c:import url="common/footer.jsp"/>
     	<script>
@@ -244,7 +242,6 @@
 	  }
 	  return zero + num;
 }
-	
 	
 	// 메일 에이작스 - 신아라 
 	

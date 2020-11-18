@@ -92,9 +92,13 @@ public class noticeController {
 		}
 	}
 
-	@RequestMapping("writer.do")
+	@RequestMapping("nwrite.do")
 	public String insertNotice(notice n,HttpServletRequest request,
 			@RequestParam(name="uploadFile",required=false)MultipartFile file) {
+	
+		
+		System.out.println(n);
+		
 		if(!file.getOriginalFilename().equals("")) {
 			// 서버에 업로드 진행
 			// saveFile메소드 : 저장하고자하는 file과 request를 전달해서 서버에 업로드시키고 저장된 파일명을 반환해주는 메소드
@@ -163,7 +167,7 @@ public class noticeController {
 	}
 	
 	@RequestMapping("nupdate.do")
-	public ModelAndView boardUpdate(ModelAndView mv,notice n,
+	public ModelAndView nupdate(ModelAndView mv,notice n,
 					HttpServletRequest request, 
 					@RequestParam(value="reloadFile", required=false) MultipartFile  file) {
 		if(file != null && !file.isEmpty()) { // 새로 업로드된 파일이 있다면
@@ -179,7 +183,7 @@ public class noticeController {
 			}
 		}
 		
-		int result = nService.updateNotice(n);
+		int result = nService.nupdate(n);
 
 		if(result > 0) {
 			mv.addObject("nNo", n.getnNo()).setViewName("redirect:ndetail.do");

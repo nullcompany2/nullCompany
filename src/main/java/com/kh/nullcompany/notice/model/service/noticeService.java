@@ -42,13 +42,12 @@ public interface noticeService {
 
 	int insertNotice(notice n);
 
-	int inserttNotice(tnotice t);
-
 	notice selectUpdateNotice(int nNo);
 
 
-	int updateNotice(notice n);
 
 	int ndelete(int nNo);
+
+	int nupdate(notice n);
 
 }

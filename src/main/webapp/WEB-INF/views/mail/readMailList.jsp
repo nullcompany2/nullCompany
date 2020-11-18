@@ -120,9 +120,9 @@
 						&nbsp;&nbsp; <span style="color:#477A8F;" id="select"> 보기 : 
 						
 						<select name="listOption" id="listOption"> 
-							<option value="recieveMail.do"> 모두 </option>
-							<option selected > 읽은 메일  </option>
-							<option> 안읽은 메일  </option>
+							<option  value="모두"> 모두 </option>
+							<option selected value="읽은메일"> 읽은 메일  </option>
+							<option value="안읽은메일">  안읽은 메일  </option>
 						</select> &nbsp;
 						</span> 
 						
@@ -262,16 +262,17 @@
         	confirm("완전 삭제하시면 복구 할 수 없습니다. 정말로 삭제하시겠습니까?");
 		});
         
+        // 셀렉트 박스 선택시 읽은 메일 안 읽은 메일 
         $("#listOption").change(function() {
     		/* alert($(this).val());
     		alert($(this).children("option:selected").text()); */
     		
     		var val = $(this).val();
     		console.log(val);
-    		if( val.length == 5){
+    		if(val == "읽은메일" ){
     			// 읽은 메일 
     			document.location.href='readMail.do';
-    		}else if ( val.length == 6){
+    		}else if ( val == "안읽은메일"){
     			// 안읽은 메일  
     			document.location.href='unReadMail.do';
     		}else {
