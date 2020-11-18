@@ -66,6 +66,10 @@ public interface ScheduleService {
 
 	Calendar editDetailPublicCal(int calNo);
 
+	ArrayList<Schedule> Sche_name_Search(String text);
+
+	ArrayList<Schedule> Cal_name_Search(String text);
+
 
 
 

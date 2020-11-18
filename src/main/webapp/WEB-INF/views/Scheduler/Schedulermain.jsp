@@ -258,14 +258,15 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 
 						<form action=""
 							style="float: right; position: absolute; right: -130px; top: 10px;">
-							<select name="search"
+							<select name="search" id="search_option"
 								style="border-radius: 8px; border: #676767 solid 1px; margin-right: 3px;">
-								<option value="일정 제목">일정 제목</option>
-								<option value="캘린더 이름">캘린더 이름</option>
-							</select> <input type="text" name="" id="" class="search-emp"
-								placeholder="&nbsp; 일정검색"
+								<option id="Sche_name" value="Sche_name">일정 제목</option>
+								<option id="Cal_name" value="Cal_name">캘린더 이름</option>
+							</select> 
+								<input type="text" name="" id="search_text" class="search-emp" placeholder="&nbsp; 일정검색"
 								style="border-radius: 8px; border: #676767 solid 1px;">&nbsp;&nbsp;
-							<a href="SchedulerResearch.do" id="searchbtn"
+								
+							<a id="searchbtn"
 								class="search-btn cursor"
 								style="border: none; background: none;">검색</a>
 						</form>
@@ -1215,6 +1216,10 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 			 alert("시작 날짜를 지정해주세요.")
 			 return false;
 		 } 
+	     if (startdate > enddate) {
+	         alert('끝나는 날짜가 앞설 수 없습니다.');
+	         return false;
+	     }
 		 if(enddate == ''){
 			 alert("종료 날짜를 지정해주세요.")
 			 return false;
@@ -1301,6 +1306,16 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
          })
 		 
 	 });
+	
+	
+	 $("#searchbtn").on('click',function () {
+		var text = $("#search_text").val();
+		var select_option = $("#search_option option:selected").val();
+		document.location.href='SchedulerSearch.do?text='+text+'&select_option='+select_option;	
+		
+		 
+	 })
+	 
 	</script>
 	<script>
     // 내 캘린더 추가 

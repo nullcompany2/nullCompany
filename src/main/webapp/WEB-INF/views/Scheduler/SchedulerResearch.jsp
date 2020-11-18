@@ -107,14 +107,15 @@
                       </thead>
                  
                       <tbody>
+                      <c:forEach var="Sche_name_Search" items="${ Sche_name_Search }">
                         <tr style="height: 30px;">
                           <td class="ta" style="text-align: center;"><p style="font-size: 14px;">2020.10.06(화)</p></td>
-                          <td class="ta" style="background-color: #6f6df5;">
-                            &nbsp; <span>캘린더 이름</span>
+                          <td class="ta" style="background-color: ${ Sche_name_Search.color };">
+                            &nbsp; <span> ${Sche_name_Search.Sche_name } </span>
                             <span style="margin-left: 25px; font-size: 14px;">   오전 12:00 - 오전 13:00 &nbsp; 어쩌구저쩌구</span>
                          </td>
-                         
                         </tr>
+                       </c:forEach>
                       </tbody>
                     </table>
             
