@@ -132,6 +132,14 @@ public class ScheduleDao {
 		return sqlSession.selectOne("scheduleMapper.editDetailPublicCal",calNo);
 	}
 
+	public ArrayList<Schedule> Sche_name_Search(String text) {
+		return(ArrayList) sqlSession.selectList("scheduleMapper.Sche_name_Search",text);
+	}
+
+	public ArrayList<Schedule> Cal_name_Search(String text) {
+		return(ArrayList) sqlSession.selectList("scheduleMapper.Cal_name_Search",text);
+	}
+
 
 
 

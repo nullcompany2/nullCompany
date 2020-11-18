@@ -70,10 +70,29 @@ public class ScheduleController {
 
 		return mv;
 	}
-
-	@RequestMapping("SchedulerResearch.do")
-	public String SchedulerResearch(HttpServletResponse response) {
-		return "Scheduler/SchedulerResearch";
+	// 검색 결과
+	@RequestMapping("SchedulerSearch.do")
+	public ModelAndView SchedulerSearch(ModelAndView mv, String text, String select_option, HttpServletResponse response, HttpSession session) {
+	
+		if(select_option.equals("Sche_name")) {
+			System.out.println(text);
+			ArrayList<Schedule> Sche_name_Search = sService.Sche_name_Search(text);
+			System.out.println("스케쥴" + Sche_name_Search);
+			mv.addObject("Sche_name_Search", Sche_name_Search);
+			
+			mv.setViewName("Scheduler/SchedulerResearch");
+			
+			
+			return mv;
+		}else {
+			System.out.println(text);
+			ArrayList<Schedule> Cal_name_Search = sService.Cal_name_Search(text);
+			mv.addObject("Cal_name_Search", Cal_name_Search);
+			mv.setViewName("Scheduler/SchedulerResearch");
+			return mv;
+		}
+		
+		
 	}
 
 	// 공유 캘린더 인써트
@@ -283,5 +302,5 @@ public class ScheduleController {
 	
 	}
 	
-	
+
 }
