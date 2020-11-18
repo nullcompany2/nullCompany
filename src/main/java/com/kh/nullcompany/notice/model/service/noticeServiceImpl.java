@@ -71,5 +71,10 @@ public class noticeServiceImpl implements noticeService {
 		return nDao.nupdate(n);
 	}
 
+	@Override
+	public ArrayList<notice> noticeList() {
+		return nDao.noticeList();
+	}
+
 	
 }

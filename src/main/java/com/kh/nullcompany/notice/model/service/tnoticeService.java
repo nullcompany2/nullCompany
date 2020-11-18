@@ -20,4 +20,6 @@ public interface tnoticeService {
 
 	int inserttNotice(tnotice t);
 
+	ArrayList<tnotice> tnoticeList();
+
 }

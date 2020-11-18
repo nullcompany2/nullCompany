@@ -239,7 +239,8 @@ tr>td {
                   <c:forEach var="t" items="${list }">
                      <tr>
                         <td align="left">${t.tNo }</td>
-                        <td align="left"><c:if test="${!empty loginUser }">
+                        <td align="left">
+                        <c:if test="${!empty loginUser }">
                               <c:url var="tdetail" value="tdetail.do">
                                  <c:param name="tNo" value="${t.tNo }" />
                                  <c:param name="currentPage" value="${pi.currentPage }" />

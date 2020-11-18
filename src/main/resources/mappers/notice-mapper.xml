@@ -52,7 +52,8 @@
 		<result property="tncModifyDate" column="TNC_MODIFY_DATE" />
 		<result property="tncStatus" column="TNC_STATUS" />
 	</resultMap>
-
+	
+	
 
 	<!-- 리스트 카운트 가져오기 -->
 	<select id="getListCount" resultType="_int">
@@ -153,14 +154,14 @@
 		INSERT INTO TBL_NOTICE
 		VALUES(
 			SEQ_NNO.NEXTVAL,#{nTitle},#{nContent},#{nWriter},
-			#{originalFileName},#{renameFileName},DEFAULT,SYSDATE,SYSDATE,DEFAULT,DEFAULT,DEFAULT,5)
+			#{originalFileName},#{renameFileName},DEFAULT,SYSDATE,SYSDATE,DEFAULT,DEFAULT,DEFAULT,1)	
 	</insert>
 
 	<insert id="inserttNotice" parameterType="tnotice">
 		INSERT INTO TBL_TNOTICE
 		VALUES(
 			SEQ_TNO.NEXTVAL,#{tTitle},#{tContent},#{tWriter},
-			#{originalFileName},#{renameFileName},DEFAULT,SYSDATE,SYSDATE,DEFAULT,DEFAULT,DEFAULT,5)
+			#{originalFileName},#{renameFileName},DEFAULT,SYSDATE,SYSDATE,DEFAULT,DEFAULT,DEFAULT,0)
 	</insert>
 	
 	<update id="nupdate" parameterType="notice">
@@ -183,6 +184,30 @@
 		WHERE
 			NNO=#{nNo}
 	</update>
+	
+	<select id="noticeList" resultMap="noticeResultSet">
+		<![CDATA[
+		SELECT *
+		FROM (SELECT *
+			  FROM TBL_NOTICE
+			  WHERE N_STATUS='Y'
+			  ORDER BY NNO DESC)
+		WHERE ROWNUM <=5
+	
+		]]>
+	</select>
+	
+	<select id="tnoticeList" resultMap="tnoticeResultSet">
+		<![CDATA[
+		SELECT *
+		FROM (SELECT *
+			  FROM TBL_TNOTICE
+			  WHERE T_STATUS='Y'
+			  ORDER BY TNO DESC)
+		WHERE ROWNUM <=5
+	
+		]]>
+	</select>
 </mapper>
 
 

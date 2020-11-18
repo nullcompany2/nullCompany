@@ -61,6 +61,10 @@ public class noticeDao {
 	public int nupdate(notice n) {
 		return sqlSession.update("noticeMapper.nupdate", n);
 	}
+
+	public ArrayList<notice> noticeList() {
+		return (ArrayList)sqlSession.selectList("noticeMapper.noticeList");
+	}
 }
 
 
