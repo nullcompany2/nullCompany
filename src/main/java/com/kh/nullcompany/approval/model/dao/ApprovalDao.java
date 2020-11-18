@@ -7,7 +7,10 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.nullcompany.approval.model.vo.Absence;
 import com.kh.nullcompany.approval.model.vo.Document;
+import com.kh.nullcompany.approval.model.vo.Leave;
+import com.kh.nullcompany.approval.model.vo.Resign;
 import com.kh.nullcompany.approval.model.vo.Step;
 import com.kh.nullcompany.board.model.vo.PageInfo;
 
@@ -45,6 +48,18 @@ public class ApprovalDao {
 
 	public Document approvalDetail(String docNo) {
 		return sqlSession.selectOne("approvalMapper.approvalDetail",docNo);
+	}
+
+	public Leave selectLeaveInfo(String docTempNo) {
+		return sqlSession.selectOne("approvalMapper.selectLeaveInfo",docTempNo);
+	}
+
+	public Absence selectAbsenceInfo(String docTempNo) {
+		return sqlSession.selectOne("approvalMapper.selectAbsenceInfo",docTempNo);
+	}
+
+	public Resign selectResignInfo(String docTempNo) {
+		return sqlSession.selectOne("approvalMapper.selectResignInfo",docTempNo);
 	}
 
 }

@@ -53,4 +53,9 @@ public class tnoticeServiceImpl implements tnoticeService {
 		return tDao.inserttNoice(t);
 	}
 
+	@Override
+	public ArrayList<tnotice> tnoticeList() {
+		return tDao.tnoticeList();
+	}
+
 }

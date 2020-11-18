@@ -50,4 +50,6 @@ public interface noticeService {
 
 	int nupdate(notice n);
 
+	ArrayList<notice> noticeList();
+
 }

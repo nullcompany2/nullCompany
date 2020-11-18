@@ -256,14 +256,14 @@
     </select>
     
     <select id="Sche_name_Search" resultMap="ScheduleResultSet" parameterType="String">
-	 	SELECT * 
-	 	FROM SCHEDULE 
+	 	SELECT S.*, C.* FROM SCHEDULE S
+    	JOIN CALENDAR C ON C.CAL_NO = S.CAL_NO 
 		WHERE (SCHE_NAME LIKE  '%' || #{text} || '%')
 	</select>
 	
 	 <select id="Cal_name_Search" resultMap="ScheduleResultSet" parameterType="String">
-	 	SELECT * 
-	 	FROM SCHEDULE 
-		WHERE (CAL_NAME LIKE  '%' || #{text} || '%')
+	 	SELECT S.*, C.* FROM SCHEDULE S
+   		JOIN CALENDAR C ON C.CAL_NO = S.CAL_NO 
+		WHERE (C.CAL_NAME LIKE  '%' || #{text} || '%')
 	</select>
 </mapper>

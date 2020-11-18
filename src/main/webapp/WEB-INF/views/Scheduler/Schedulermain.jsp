@@ -1307,7 +1307,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 		 
 	 });
 	
-	
+	// 검색
 	 $("#searchbtn").on('click',function () {
 		var text = $("#search_text").val();
 		var select_option = $("#search_option option:selected").val();

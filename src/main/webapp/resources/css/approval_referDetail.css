@@ -92,7 +92,7 @@
 
 
 #tr3 td:nth-child(n+2){
-    height: 15px;
+    height: 30px;
     font-size: 10pt;
     padding:5px;
 }
@@ -102,7 +102,7 @@
 }
 
 #tr5 td:nth-child(n+1){
-    height: 15px;
+    height: 30px;
     font-size: 10pt;
     padding:5px;
 }

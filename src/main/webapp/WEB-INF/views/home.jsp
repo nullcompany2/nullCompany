@@ -10,6 +10,8 @@
 
 <html>
 <head>
+
+
 	<title>Main</title>
 	
 	
@@ -102,9 +104,45 @@
             padding:20px;
 		
 		 }
+		 #tb{
+		 border-right:1px;
+		 }
+		 
+		 table {
+
+
+		table-layout: fixed;
+}
+
+		td {
+		vertical-align: middle; 
+
+		overflow:hidden;
+
+		white-space : nowrap;
+
+		text-overflow: ellipsis;
+
+
+
+		}
+
+
+		 }
 		 
 		 #top {
 		 	height: 1035px; margin:auto;
+		 }
+		 
+		 #ttr {
+		 	text-align:center;
+		 }
+		 
+		 tr {
+		 	text-align:center;
+		 }
+		 
+		 th{
 		 }
 		
     </style>
@@ -131,8 +169,27 @@
                     <span> Notice</span> 
                     <a  style="margin-left:255px;" href="notice.do">more</a>
                     <hr>
-					동우오빠 <br>
-                    공지공지 
+					<table  cellspacing="13" width="100%" id="ntb">
+                   <colgroup>
+                  <col width="8%" />
+                  <col width="42%" />
+                  <col width="25%" />
+               </colgroup>
+		<thead>
+			<tr id="ntr">
+				<th>No</th>
+				<th>제목</th>
+				<th>작성일</th>
+			</tr>
+			
+			
+		</thead>
+		
+		<tbody>
+		
+		
+		</tbody>
+	</table> 
                 </div>
                 <div class="ch">
                     <span> Schedule</span> 
@@ -157,13 +214,34 @@
                 </div>                    
         </div> <br>
         <div class="pt" style="width: 1200px; height:310px;" >
-
             <div class="ch">
                 <span> Team Notice</span> 
                 <a style="margin-left:190px;" href="tnotice.do">more</a>
                     <hr>
-                   	동우오빠 <br>
-                   	팀 공지 ! 
+                    
+            <table  cellspacing="13" width="100%" id="tb">
+                   <colgroup>
+                  <col width="8%" />
+                  <col width="42%" />
+                  <col width="25%" />
+               </colgroup>
+		<thead>
+			<tr id="ttr">
+
+				<th>No</th>
+				<th>제목</th>
+				<th>작성일</th>
+			</tr>
+			
+			
+		</thead>
+		
+		<tbody>
+		
+		
+		</tbody>
+	</table> 
+	
             </div>
                 <div class="ch">
                     <span> Mail Box</span> 
@@ -287,6 +365,78 @@
             }
          });
       }
+      
+      // 팀 공지 리스트
+      $(function(){
+			tnoticeList();
+			
+		});
+		
+		function tnoticeList(){
+			$.ajax({
+				url:"tnoticeList.do",
+				dataType:"json",
+				success:function(data){
+					console.log(data);
+					
+					$tableBody = $("#tb tbody");
+					$tableBody.html("");
+					
+					for(var i in data){
+						var $tr = $("<tr>");
+						var $tNo = $("<td>").text(data[i].tNo);
+						var $tTitle= $("<td>").text(data[i].tTitle);
+						var $tCreateDate=$("<td>").text(data[i].tCreateDate);
+						
+						
+						$tr.append($tNo);
+						$tr.append($tTitle);
+						$tr.append($tCreateDate);
+						
+						$tableBody.append($tr);
+					}
+				},
+				error:function(request,status,error){
+					console.log("tnotice 오류");
+				}
+			});
+		}
+		
+	// 전사 공지 리스트
+	$(function(){
+			noticeList();
+			
+		});
+		
+		function noticeList(){
+			$.ajax({
+				url:"noticeList.do",
+				dataType:"json",
+				success:function(data){
+					console.log(data);
+					
+					$tableBody = $("#ntb tbody");
+					$tableBody.html("");
+					
+					for(var i in data){
+						var $tr = $("<tr>");
+						var $nNo = $("<td>").text(data[i].nNo);
+						var $nTitle= $("<td>").text(data[i].nTitle);
+						var $nCreateDate=$("<td>").text(data[i].nCreateDate);
+						
+						
+						$tr.append($nNo);
+						$tr.append($nTitle);
+						$tr.append($nCreateDate);
+						
+						$tableBody.append($tr);
+					}
+				},
+				error:function(request,status,error){
+					console.log("nnotice 오류");
+				}
+			});
+		}
 	
 </script>
     </body>
