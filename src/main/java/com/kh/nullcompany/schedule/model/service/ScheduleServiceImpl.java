@@ -193,6 +193,16 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return sDao.editDetailPublicCal(calNo);
 	}
 
+	@Override
+	public ArrayList<Schedule> Sche_name_Search(String text) {
+		return sDao.Sche_name_Search(text);
+	}
+	
+	@Override
+	public ArrayList<Schedule> Cal_name_Search(String text) {
+		return sDao.Cal_name_Search(text);
+	}
+
 
 
 }
