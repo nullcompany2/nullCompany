@@ -126,7 +126,10 @@
 			<div style="margin-left:40px;">
 			<!--여기다가 만들기 -->
 			<br> 
-						&nbsp;&nbsp;<input type="checkbox" id="checkall"> 
+						&nbsp;&nbsp;
+						<input type="checkbox" id="checkall"> 
+						&nbsp;&nbsp;
+						전체선택 &nbsp;&nbsp;
 						&nbsp;&nbsp; <span style="color:#477A8F;" id="select"> 보기 : 
 						
 						<select name="listOption" id="listOption"> 
@@ -292,30 +295,7 @@
 		   });
 		  
 		});
-
-      /*   $("#delMail").click(function(){
-			 if (confirm("정말로 삭제하시겠습니까? 휴지통으로 이동합니다.") == true){    //확인
-
-				 document.location.href='allDelMail.do';
-
-		        }else{   //취소
-
-		            return;
-		        }
-
-		}); */
         
-        
-        $("#realdelMail").click(function(){
-        	 if (confirm("완전 삭제하시면 복구 할 수 없습니다. 정말로 삭제하시겠습니까?") == true){ 
-
-				 document.location.href='allRealDelMail.do';
-
-		        }else{   //취소
-
-		            return;
-		        }
-		});
         
         // 셀렉트 박스 선택시 읽은 메일 안 읽은 메일 
         $("#listOption").change(function() {
@@ -354,42 +334,48 @@
         	  }
         
         
-       	 var mailNoArr = new Array();
-       
+       	 // 체크 박스 삭제 하기 
+         	 var mailNoArr = new Array();
          
-         
-       	 $("#delMail").click(function(){
-        	 mailNoArr = new Array();
-
-             
-            var size = $('input:checkbox[name="mail"]').length;
+         	 $("#delMail").click(function(){
+          	
+         		 if (confirm("정말로 삭제하시겠습니까? 휴지통으로 이동합니다.") == true){ 
+         		 mailNoArr = new Array();
+   		
+              var page = "받은메일";
+              var size = $('input:checkbox[name="mail"]').length;
+              for( var i =0;i<size;i++ ){
+                 if($('input:checkbox[name="mail"]')[i].checked){
+              	   mailNoArr.push($('input:checkbox[name="mail"]')[i].value);
+              	   	console.log(mailNoArr);
+              	   document.location.href='delMail.do?mailNoArr=' + mailNoArr + '&page=' + page;
+                 	}
+                }
+                
+              }
+                 
+          	});
        	
-            for( var i =0;i<size;i++ ){
-               if($('input:checkbox[name="mail"]')[i].checked){
-            	   mailNoArr.push($('input:checkbox[name="mail"]')[i].value);
-            	   	console.log(mailNoArr);
-               }
-            }
-               
-        	});
+       	 // 체크 박스 완전 삭제하기 
+         $("#realdelMail").click(function(){
+        	 if (confirm("완전 삭제하시면 복구 할 수 없습니다. 정말로 삭제하시겠습니까?") == true){ 
+        		 mailNoArr = new Array();
+        		
+        		 var page = "받은메일";
+                 var size = $('input:checkbox[name="mail"]').length;
+                 for( var i =0;i<size;i++ ){
+                    if($('input:checkbox[name="mail"]')[i].checked){
+                 	   mailNoArr.push($('input:checkbox[name="mail"]')[i].value);
+                 	   	console.log(mailNoArr);
+                 	   document.location.href='realDelMail.do?mailNoArr=' + mailNoArr + '&page=' + page;
+                    	}
+                   }
+                   
+                 }
+                    
+             	});
        	 
-       
-
-       	 
-       	 
-         /*       $("#delMail").click(function(){
-      			 if (confirm("정말로 삭제하시겠습니까? 휴지통으로 이동합니다.") == true){    //확인
-
-      				 document.location.href='allDelMail.do';
-
-      		        }else{   //취소
-
-      		            return;
-      		        }
-
-      		});
-             */
-        
+     
         </script>
 </body>
 </html>

@@ -19,6 +19,7 @@ public class MailDao {
 
 	@Autowired
 	private SqlSessionTemplate sqlSession;
+	private int result;
 	
 
 	// 이름 누르고 그 사람에게 메일 보내기 
@@ -102,9 +103,6 @@ public class MailDao {
 		return sqlSession.selectOne("mailMapper.saveMailDetailView",mailNo);
 	}
 
-	public int allDelMail(String memId) {
-		return sqlSession.update("mailMapper.deleteFromList",memId);
-	}
 	
 	public ArrayList<Mail> binMailList(PageInfo pi, String memId) {
 		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
@@ -205,6 +203,35 @@ public class MailDao {
 
 	public ArrayList<Mail> searchSender(Map map) {
 		return (ArrayList)sqlSession.selectList("mailMapper.searchSender",map);
+	}
+
+	public int delmail(String[] mailNon) {
+		
+		int result = 0;
+		
+		for(int i =0; i<mailNon.length; i++) {
+			result = sqlSession.update("mailMapper.delMail",mailNon[i]);
+			System.out.println(mailNon[i]);
+			if(result < 0) {
+				return result;
+			}
+		}
+		
+			return result;
+	}
+
+	public int realDelMail(String[] mailNon) {
+		int result = 0;
+		
+		for(int i =0; i<mailNon.length; i++) {
+			result = sqlSession.update("mailMapper.realDelMail",mailNon[i]);
+			System.out.println(mailNon[i]);
+			if(result < 0) {
+				return result;
+			}
+		}
+		
+			return result;
 	}
 	
 }
