@@ -42,5 +42,16 @@ public class Y_PersonnelManagementServiceImpl implements Y_PersonnelManagementSe
 		return yDao.aprrovalEmail(e);
 	}
 
+	@Override
+	public ArrayList<Department> deptList() {
+		return yDao.selectdeptList();
+	}
+
+	@Override
+	public ArrayList<Member> memList() {
+		return yDao.selectmemList();
+
+	}
+
 
 }

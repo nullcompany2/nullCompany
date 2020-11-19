@@ -48,4 +48,14 @@ public class tnoticeServiceImpl implements tnoticeService {
 		return tDao.inserttComment(c);
 	}
 
+	@Override
+	public int inserttNotice(tnotice t) {
+		return tDao.inserttNoice(t);
+	}
+
+	@Override
+	public ArrayList<tnotice> tnoticeList() {
+		return tDao.tnoticeList();
+	}
+
 }

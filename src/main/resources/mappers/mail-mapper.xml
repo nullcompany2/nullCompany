@@ -191,8 +191,9 @@
 	</select>
 	
 	<select id="binMailList" resultMap="mailResultSet">
-		SELECT *
-	     FROM MAIL 
+		SELECT ma.*, m.name
+	     FROM MAIL ma
+         join member m on (ma.sender = m.id)
 	     WHERE 
          (RECIPIENT = #{memId}
 	     OR SENDER = #{memId})
@@ -250,7 +251,7 @@
 	<update id="backOneMail" parameterType="Mail">
 		UPDATE MAIL
 		SET MDELETE_STATUS = 'N'
-		AND M_REALDEL_STATUS = 'N'
+		,M_REALDEL_STATUS = 'N'
 		WHERE MAIL_NO = #{mailNo}
 	</update>
 	

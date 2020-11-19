@@ -2,7 +2,10 @@ package com.kh.nullcompany.approval.model.service;
 
 import java.util.ArrayList;
 
+import com.kh.nullcompany.approval.model.vo.Absence;
 import com.kh.nullcompany.approval.model.vo.Document;
+import com.kh.nullcompany.approval.model.vo.Leave;
+import com.kh.nullcompany.approval.model.vo.Resign;
 import com.kh.nullcompany.approval.model.vo.Step;
 import com.kh.nullcompany.board.model.vo.PageInfo;
 
@@ -54,5 +57,26 @@ public interface ApprovalService {
 	 * @return
 	 */
 	Document approvalDetail(String docNo);
+
+	/**
+	 * 3_2 휴가 문서 정보 가져오기
+	 * @param docTempNo
+	 * @return
+	 */
+	Leave selectLeaveInfo(String docTempNo);
+
+	/**
+	 * 3_3 휴직 문서 정보 가져오기
+	 * @param docTempNo
+	 * @return
+	 */
+	Absence selectAbsenceInfo(String docTempNo);
+
+	/**
+	 * 3_4 사직서 정보 가져오기
+	 * @param docTempNo
+	 * @return
+	 */
+	Resign selectResignInfo(String docTempNo);
 
 }

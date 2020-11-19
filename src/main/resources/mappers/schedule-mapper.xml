@@ -63,9 +63,6 @@
 		<result property="Sche_content" column="SCHE_CONTENT" />
 		<result property="memcount" column="MEMCOUNT" />
 		<result property="cal_no" column="CAL_NO" />
-		
-		
-		<collection property="calendar" resultMap="Calendar"/>
 
 	</resultMap>
 	
@@ -257,4 +254,16 @@
     <select id="editDetailPublicCal" resultMap="CalendarResultSet" parameterType="Calendar">
    		SELECT * FROM CALENDAR WHERE CAL_TYPE=1 AND CAL_NO = #{calNo}
     </select>
+    
+    <select id="Sche_name_Search" resultMap="ScheduleResultSet" parameterType="String">
+	 	SELECT S.*, C.* FROM SCHEDULE S
+    	JOIN CALENDAR C ON C.CAL_NO = S.CAL_NO 
+		WHERE (SCHE_NAME LIKE  '%' || #{text} || '%')
+	</select>
+	
+	 <select id="Cal_name_Search" resultMap="ScheduleResultSet" parameterType="String">
+	 	SELECT S.*, C.* FROM SCHEDULE S
+   		JOIN CALENDAR C ON C.CAL_NO = S.CAL_NO 
+		WHERE (C.CAL_NAME LIKE  '%' || #{text} || '%')
+	</select>
 </mapper>

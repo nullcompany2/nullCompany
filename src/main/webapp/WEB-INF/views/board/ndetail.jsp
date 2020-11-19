@@ -371,7 +371,7 @@ tr>td {
                            <
                     		 </c:when>
 								<c:when test="${ empty n.originalFileName }">
-                     			   X
+                     			   없음
                     		    </c:when>
 						</c:choose>
 						</td>

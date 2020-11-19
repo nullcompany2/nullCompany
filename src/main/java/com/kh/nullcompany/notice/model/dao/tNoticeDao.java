@@ -16,6 +16,7 @@ public class tNoticeDao {
 
 	@Autowired
 	private SqlSession sqlSession;
+	public int inserttNoice;
 
 	public int getListCount() {
 		return sqlSession.selectOne("noticeMapper.gettListCount");
@@ -41,6 +42,14 @@ public class tNoticeDao {
 
 	public int inserttComment(tcomment c) {
 		return sqlSession.insert("noticeMapper.inserttComment",c);
+	}
+
+	public int inserttNoice(tnotice t) {
+		return sqlSession.insert("noticeMapper.inserttNotice",t);
+	}
+
+	public ArrayList<tnotice> tnoticeList() {
+		return (ArrayList)sqlSession.selectList("noticeMapper.tnoticeList");
 	}
 
 

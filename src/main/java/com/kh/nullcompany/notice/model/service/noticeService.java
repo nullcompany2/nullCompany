@@ -42,8 +42,6 @@ public interface noticeService {
 
 	int insertNotice(notice n);
 
-	int inserttNotice(tnotice t);
-
 	notice selectUpdateNotice(int nNo);
 
 
@@ -51,5 +49,7 @@ public interface noticeService {
 	int ndelete(int nNo);
 
 	int nupdate(notice n);
+
+	ArrayList<notice> noticeList();
 
 }

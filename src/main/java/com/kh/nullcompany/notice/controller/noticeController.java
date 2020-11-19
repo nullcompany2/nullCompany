@@ -17,14 +17,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.common.Pagination;
 import com.kh.nullcompany.notice.model.service.noticeService;
+import com.kh.nullcompany.notice.model.service.tnoticeService;
 import com.kh.nullcompany.notice.model.vo.ncomment;
 import com.kh.nullcompany.notice.model.vo.notice;
+import com.kh.nullcompany.notice.model.vo.tnotice;
 
 @Controller
 public class noticeController {
@@ -32,6 +36,7 @@ public class noticeController {
 
 	@Autowired
 	private noticeService nService;
+	private tnoticeService tService;
 
 	// 사내공지로 보내주는 컨트롤러 
 	@RequestMapping("notice.do")
@@ -92,7 +97,7 @@ public class noticeController {
 		}
 	}
 
-	@RequestMapping("writer.do")
+	@RequestMapping("nwrite.do")
 	public String insertNotice(notice n,HttpServletRequest request,
 			@RequestParam(name="uploadFile",required=false)MultipartFile file) {
 	
@@ -205,8 +210,22 @@ public class noticeController {
 			return "common/errorPage";
 		}
 	}
-
-
+	
+	@ResponseBody
+	@RequestMapping(value="noticeList.do",produces="application/json; charset=utf-8")
+	public String noticeList() throws JsonProcessingException {
+		ArrayList<notice> list = nService.noticeList();
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		mapper.setDateFormat(sdf);
+		
+		String jsonStr = mapper.writeValueAsString(list);
+		
+		return jsonStr;
+	}
+	
 
 
 

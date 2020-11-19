@@ -9,7 +9,7 @@
     <title>문서 상세보기</title>
 	<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
-	<link rel="stylesheet" href='<c:url value="/resources/css/approval_contactDetail.css"/>'>
+	<link rel="stylesheet" href='<c:url value="/resources/css/approval_absenceDetail.css"/>'>
 	<link rel="stylesheet" href='<c:url value="/resources/css/approval_subNavi.css"/>'>
 </head>
 <body>
@@ -93,13 +93,13 @@
         <div class="contents" style="top:110px">
 			<div class="contents-wrap drag-scrollbar">
 				<div class="top-btns">
-				<c:if test="${ d.completeDate == null }">
-					<c:if test="${ loginUser.memNo eq d.drafterNo }">
-							<span class="cb" id="cb1">내용 수정</span>
-	                        <span class="cb" id="cb2">기안 취소</span>
+					<c:if test="${ d.completeDate == null }">
+						<c:if test="${ loginUser.memNo eq d.drafterNo }">
+								<span class="cb" id="cb1">내용 수정</span>
+		                        <span class="cb" id="cb2">기안 취소</span>
+						</c:if>
+								<span class="cb" id="cb3">결재선 변경</span>
 					</c:if>
-							<span class="cb" id="cb3">결재선 변경</span>
-				</c:if>
 				</div>
 				<div class="c-ic">
 					<div class="doc_type">
@@ -551,15 +551,36 @@
 					<br>
 					<br>
 					<span id="doc_title">${ d.dTitle }</span>
+				    <table class="appr_detail_subtable">
+						<tr class="tr2" id="tr2-1">
+							<td>신청일</td>
+							<td colspan="3">${ d.draftDate }</td>
+						</tr>
+						<tr class="tr2" id="tr2-2">
+							<td>휴직자 성명</td>
+							<td colspan="3">${ d.drafterName }</td>
+						</tr>
+						<tr class="tr2" id="tr2-3">
+							<td>소속</td>
+							<td>${ d.drafterDeptName}부</td>
+							<td>직위</td>
+							<td>${ d.drafterRankName }</td>
+						</tr>
+						<tr class="tr2" id="tr2-4">
+							<td>휴직 사유</td>
+							<td>${ absenceInfo.reason }</td>
+							<td>일수</td>
+							<td>${ absenceInfo.totalDate }</td>
+						</tr>
+						<tr class="tr2" id="tr2-5">
+							<td>휴직 시작일</td>
+							<td>${ absenceInfo.startDate }</td>
+							<td>휴직 종료일</td>
+							<td>${ absenceInfo.endDate }</td>
+						</tr>
+					</table>
 					<br>
 					<br>
-					<br>
-				    <div id="doc_content">
-						<p>${ d.dContent }</p>
-					</div>
-					<br>
-					<br>
-					
 					<span style="color:#477A8F; font-weight:bold">첨부파일 : 
 						<c:if test="${ d.fileName != null }">
 							    <a href="${ contextPath }/resources/approvalUploadFiles/${d.fileName}"

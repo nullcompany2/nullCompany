@@ -18,4 +18,8 @@ public interface tnoticeService {
 
 	int inserttComment(tcomment c);
 
+	int inserttNotice(tnotice t);
+
+	ArrayList<tnotice> tnoticeList();
+
 }

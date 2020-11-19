@@ -80,4 +80,17 @@
 	 <insert id="aprrovalEmail" parameterType="Email">
  		INSERT INTO EMAIL VALUES(#{memNo},#{email_address})
  	</insert>
+ 	
+ 		<!-- 부서 셀렉트 리스트 -->
+	<select id="per_selectdeptList" resultMap="deptResultSet" parameterType="Department">
+		SELECT *
+		FROM DEPARTMENT
+		ORDER BY DEPT_NO
+	</select>
+
+	<!-- 사원 리스트 -->
+	<select id="per_selectmemList" resultMap="memberResultSet" parameterType="Member">
+		SELECT *
+		FROM MEMBER
+	</select>
 </mapper>

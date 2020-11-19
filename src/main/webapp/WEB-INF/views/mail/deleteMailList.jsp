@@ -57,10 +57,21 @@
 	margin-bottom : 10px;
 	padding-bottom : 10px;
 	border-bottom:  1px solid #ECECEC;
+	table-layout : fixed;
 	}
 	
 	#tb:last-child {
 	margin-bottom : 30px;
+	}
+	
+	#tb #idWrite {
+	overflow:hidden;
+	white-space : nowrap;
+	text-overflow: ellipsis;
+	}
+	
+	#tb #firstTd{
+	width : 35px;
 	}
 	
 	#hide,#hide a, #countAll{
@@ -118,7 +129,7 @@
 						
 						<tr class="trMail" onClick="location.href='${maildetailView}'"> 
 						
-							<td>&nbsp;&nbsp;<input type="checkbox" onClick="event.cancelBubble=true" name="mail"></td>
+							<td id="firstTd">&nbsp;&nbsp;<input type="checkbox" onClick="event.cancelBubble=true" name="mail"></td>
 							<td align="left">${ma.name} < ${ma.sender} ></td>
 							<td align="center">${ ma.mTitle }</td>
 							<td align="right"> ${ma.sendDate }</td>

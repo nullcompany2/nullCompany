@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.nullcompany.approval.model.service.ApprovalService;
+import com.kh.nullcompany.approval.model.vo.Absence;
 import com.kh.nullcompany.approval.model.vo.Document;
+import com.kh.nullcompany.approval.model.vo.Leave;
+import com.kh.nullcompany.approval.model.vo.Resign;
 import com.kh.nullcompany.approval.model.vo.Step;
 import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.common.Pagination;
@@ -675,21 +678,45 @@ public class ApprovalController {
 			}
 		}
 		
-		System.out.println("apprList : " + apprList);
-		System.out.println("checkList : " + checkList);
-		System.out.println("receiveList : " + receiveList);
-		
-		
 		mv.addObject("d",d);
-		mv.addObject("apprList",apprList);
-		mv.addObject("checkList",checkList);
-		mv.addObject("receiveList",receiveList);
 		
-		
-		
+		// 업무연락 문서일 때 
 		if(d.getFormNo() == 1) {
+			mv.addObject("apprList",apprList);
+			mv.addObject("checkList",checkList);
+			mv.addObject("receiveList",receiveList);
 			mv.setViewName("approval/businessDocumentDetail");
+		// 회람 문서일 때
+		}else if(d.getFormNo() == 2) {
+			mv.addObject("checkList",checkList);
+			mv.setViewName("approval/referDocumentDetail");
+	    // 휴가 신청서일 때
+		}else if(d.getFormNo() == 3) {
+			Leave leaveInfo = aService.selectLeaveInfo(d.getDocTempNo());
+			mv.addObject("apprList",apprList);
+			mv.addObject("checkList",checkList);
+			mv.addObject("receiveList",receiveList);
+			mv.addObject("leaveInfo",leaveInfo);
+			mv.setViewName("approval/leaveDocumentDetail");
+			System.out.println("휴가 정보 : " + leaveInfo);
+		// 휴직 신청서일 때
+		}else if(d.getFormNo() == 4) {
+			Absence absenceInfo = aService.selectAbsenceInfo(d.getDocTempNo());
+			mv.addObject("apprList",apprList);
+			mv.addObject("checkList",checkList);
+			mv.addObject("receiveList",receiveList);
+			mv.addObject("absenceInfo",absenceInfo);
+			mv.setViewName("approval/absenceDocumentDetail");
+		// 사직서일 때
+		}else {
+			Resign resignInfo = aService.selectResignInfo(d.getDocTempNo());
+			mv.addObject("apprList",apprList);
+			mv.addObject("checkList",checkList);
+			mv.addObject("receiveList",receiveList);
+			mv.addObject("resignInfo",resignInfo);
+			mv.setViewName("approval/resignDocumentDetail");
 		}
+		
 		
 		return mv;
 	}
