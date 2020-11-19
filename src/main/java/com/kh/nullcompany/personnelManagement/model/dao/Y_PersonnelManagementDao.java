@@ -38,6 +38,13 @@ public class Y_PersonnelManagementDao {
 		return sqlSession.insert("Y_personnelMapper.aprrovalEmail",e);
 	}
 
+	public ArrayList<Department> selectdeptList() {
+		return (ArrayList)sqlSession.selectList("Y_personnelMapper.per_selectdeptList");
+	}
+
+	public ArrayList<Member> selectmemList() {
+		return (ArrayList)sqlSession.selectList("Y_personnelMapper.per_selectmemList");
+	}
 
 
 
