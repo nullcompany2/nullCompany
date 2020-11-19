@@ -110,14 +110,14 @@ a:active {
 		<div class="drag-scrollbar">
 			<div class="H-personnel-subNavi underline">
 				<div class="H-personnel-subNavi Depth01-1">
-					<li class="subTitle" id="sub"><a href="myReservation.do">나의 예약 목록</a></li>
+					<li class="subTitle" id="sub"><a href="myReservation.do?rMember=${loginUser.id}">나의 예약 목록</a></li>
 				</div>
 			</div>
 			<c:if test="${loginUser.deptNo == 5}">
 			<div class="H-personnel-subNavi Depth01-1"
 				style="border-top: 1px solid black;">
 				<h2 style="text-align: center;">예약 관리</h2>
-				<div class="H-personnel-subNavi Depth01-1">
+				<div class="H-personnel-subNavi Depth01-1" >
 					<li class="subTitle"><a href="reservationList.do">예약 현황</a></li>
 					<li class="subTitle"><a href="returnList.do">반납 관리</a></li>
 					<li class="subTitle"><a href="categoryList.do">카테고리 관리</a></li>
@@ -129,9 +129,6 @@ a:active {
 	</div>
 	
 	<script>
-/*  	$(document).ready(function(){
-	console.log(${sessionScope.deptNo});
-	}) */
 	  $(function() {
 		$.ajax({
 			url:"subNavi2.do",
@@ -139,7 +136,6 @@ a:active {
 			success:function(data){
 				$div =$("#sub");
  				var add;
- 				
 				for(var i in data){
 				$add = $('<li class="subTitle"><a href="reservation.do?rcNo='+data[i].rcNo+'">'+data[i].rcTitle+'</a></li>');
 				$div.append($add);

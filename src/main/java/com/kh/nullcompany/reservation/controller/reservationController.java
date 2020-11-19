@@ -138,9 +138,14 @@ public class reservationController {
 	}
 	
 	@RequestMapping("myReservation.do")
-	public String myReservation(HttpServletResponse response) {
-		return "reservation/myReservation";
+	public ModelAndView myReservation(ModelAndView mv, String rMember) {
+		ArrayList<Reservation> list = rService.selectMyreservationList(rMember);
+		System.out.println(list);
+		mv.addObject("list",list);
+		mv.setViewName("reservation/myReservation");
+		return mv;
 	}
+	
 	@RequestMapping("reservationList.do")
 	public String reservationList(HttpServletResponse response) {
 		return "reservation/reservationList";

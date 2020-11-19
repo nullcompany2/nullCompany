@@ -92,27 +92,7 @@ tr>td {
 	right: 10px;
 }
 </style>
-<script>
-    // 메뉴 아이콘용 토글 
-    $(function () {
-      $("#menu").click(function () {
-        $("#menuToggle").toggle();
-      });
-    });
 
-
-    // 인포용 토글
-    $(function () {
-      $("#infoToggle").hide();
-      $("#infobtn").click(function () {
-        $("#infoToggle").toggle();
-      });
-    });
-
-    .close_btn{
-    	cursor: pointer;
-    	}
-  </script>
 <body>
 	<div class="contents">
 		<div class="contents-title">

@@ -99,25 +99,6 @@ tr>td {
 }
 </style>
 
-<script>
-    // 메뉴 아이콘용 토글 
-    $(function () {
-      $("#menu").click(function () {
-        $("#menuToggle").toggle();
-      });
-    });
-
-
-    // 인포용 토글
-    $(function () {
-      $("#infoToggle").hide();
-      $("#infobtn").click(function () {
-        $("#infoToggle").toggle();
-      });
-    });
-
-
-  </script>
 <body>
 
 	<div class="contents">

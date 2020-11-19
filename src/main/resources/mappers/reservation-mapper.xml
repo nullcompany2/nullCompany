@@ -31,6 +31,8 @@
 		<result property="end_time" column="END_TIME"/>
 		<result property="rReturn" column="R_RETURN"/>
 		<result property="rMemberName" column="NAME"/>
+		<result property="rcTitle" column="RC_TITLE"/>
+		<result property="rsTitle" column="RS_TITLE"/>
 	</resultMap>
 	
 	<insert id="insertCategory" parameterType="Category">
@@ -125,4 +127,14 @@
 	INSERT INTO RESERVATION
 	VALUES (SEQ_RNO.NEXTVAL,#{rcNo},#{rsNo},#{rMember},#{rDate},#{start_time},#{end_time},#{rContent},DEFAULT)
 	</insert>
+	
+	<select id="selectMyreservationList" parameterType="String" resultMap="reservationResultSet">
+	SELECT R.*,M.NAME,RC.RC_TITLE,RS.RS_TITLE
+	FROM RESERVATION R
+	JOIN MEMBER M ON (R.R_MEMBER = M.ID)
+    JOIN RCATEGORY RC ON (R.RC_NUM = RC.RC_NUM)
+    JOIN "RESOURCE" RS ON (R.RS_NUM = RS.RS_NUM)
+	WHERE R_MEMBER = #{rMember}
+	</select>
+	
 </mapper>

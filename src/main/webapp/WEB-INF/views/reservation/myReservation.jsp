@@ -116,25 +116,6 @@ tr>td {
 }
 </style>
 
-<script>
-    // 메뉴 아이콘용 토글 
-    $(function () {
-      $("#menu").click(function () {
-        $("#menuToggle").toggle();
-      });
-    });
-
-
-    // 인포용 토글
-    $(function () {
-      $("#infoToggle").hide();
-      $("#infobtn").click(function () {
-        $("#infoToggle").toggle();
-      });
-    });
-
-
-  </script>
 <body>
 
 	<div class="contents">
@@ -153,19 +134,25 @@ tr>td {
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td>회의실</td>
-						<td>회의실</td>
-						<td>2020-10-10 1800 ~ 2020-10-10 20:00</td>
-						<td><button class="rv_but" id="delete_btn">삭제</button> <span
-							style="color: #e4e4e4;">|</span>
-							<button class="rv_but" id="detail_btn">상세보기</button></td>
-					</tr>
+					<c:forEach items="${list}" var="list">
+						<tr>
+							<input type="hidden" id="rcTitle" name="rcTitle" value="${list.rcTitle}">
+							<input type="hidden" id="rsTitle" name="rsTitle" value="${list.rsTitle}">
+							<input type="hidden" id="rDate" name="rDate" value="${list.rDate}">
+							<input type="hidden" id="starttime" name="starttime" value="${list.start_time }">
+							<input type="hidden" id="endtime" name="endtime" value="${list.end_time}">
+							<input type="hidden" id="rContent" name="rContent" value="${list.rContent}">
+							<td>${list.rcTitle}</td>
+							<td>${list.rsTitle}</td>
+							<td>${list.rDate}일${list.start_time }~ ${list.end_time}</td>	
+							<td><button class="rv_but" id="delete_btn">삭제</button> <span
+								style="color: #e4e4e4;">|</span>
+								<button class="rv_but detail_btn" id="detail_btn" value="${list.rcNo}">상세보기</button></td>
+						</tr>
+					</c:forEach>
 				</tbody>
 			</table>
 		</div>
-	</div>
-
 	</div>
 
 	<div id="delete_modal" class="modal-dragscroll">
@@ -186,20 +173,35 @@ tr>td {
 				<dt style="float: left;">
 					<label>자원 이름</label>
 				</dt>
-				<dd style="margin-left: 150px;">회의실</dd>
+				<dd style="margin-left: 150px;">
+					<input type="text" id="rsTitle2" value="" readonly="readonly">
+				</dd>
+			</dl>
+			<dl>
+				<dt style="float: left;">
+					<label>예약 날짜</label>
+				</dt>
+				<dd style="margin-left: 150px;">
+					<input type="text" id="rDate2" value="" readonly="readonly">
+				</dd>
 			</dl>
 			<dl>
 				<dt style="float: left;">
 					<label>예약 시간</label>
 				</dt>
-				<dd style="margin-left: 150px;">2020-10-20 15:00 ~ 2020-10-20
-					15:30</dd>
+				<dd style="margin-left: 150px;">
+					<input type="time" name="startTime2" id="startTime2"
+						readonly="readonly"> ~ <input type="time" name="endTime2"
+						id='endTime2' readonly="readonly">
+				</dd>
 			</dl>
 			<dl>
 				<dt style="float: left;">
 					<label>사용 용도</label>
 				</dt>
-				<dd style="margin-left: 150px;">asd</dd>
+				<dd style="margin-left: 150px;">
+					<input type="text" id="rContent2" readonly="readonly" style="width: 260px; height: 150px;">
+				</dd>
 			</dl>
 		</div>
 		<div style="text-align: center; margin-top: 50px;">
@@ -209,59 +211,60 @@ tr>td {
 	</div>
 
 	<script>
-    function modal(id) {
-       var zIndex = 9999;
-       var modal = $('#' + id);
+		function modal(id) {
+			var zIndex = 9999;
+			var modal = $('#' + id);
 
-       // 모달 div 뒤에 희끄무레한 레이어
-       var bg = $('<div>')
-          .css({
-             position: 'fixed',
-             zIndex: zIndex,
-             left: '0px',
-             top: '0px',
-             width: '100%',
-             height: '100%',
-             overflow: 'auto',
-             // 레이어 색갈은 여기서 바꾸면 됨
-             backgroundColor: 'rgba(0,0,0,0.4)'
-          })
-          .appendTo('body');
+			// 모달 div 뒤에 희끄무레한 레이어
+			var bg = $('<div>').css({
+				position : 'fixed',
+				zIndex : zIndex,
+				left : '0px',
+				top : '0px',
+				width : '100%',
+				height : '100%',
+				overflow : 'auto',
+				// 레이어 색갈은 여기서 바꾸면 됨
+				backgroundColor : 'rgba(0,0,0,0.4)'
+			}).appendTo('body');
 
-       modal
-          .css({
-             position: 'fixed',
-             boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+			modal
+					.css(
+							{
+								position : 'fixed',
+								boxShadow : '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
 
-             // 시꺼먼 레이어 보다 한칸 위에 보이기
-             zIndex: zIndex + 1,
+								// 시꺼먼 레이어 보다 한칸 위에 보이기
+								zIndex : zIndex + 1,
 
-             // div center 정렬
-             top: '50%',
-             left: '50%',
-             transform: 'translate(-50%, -50%)',
-             msTransform: 'translate(-50%, -50%)',
-             webkitTransform: 'translate(-50%, -50%)'
-          })
-          .show()
-          // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
-          .find('.close_btn')
-          .on('click', function() {
-             bg.remove();
-             modal.hide();
-          });
-    }
+								// div center 정렬
+								top : '50%',
+								left : '50%',
+								transform : 'translate(-50%, -50%)',
+								msTransform : 'translate(-50%, -50%)',
+								webkitTransform : 'translate(-50%, -50%)'
+							}).show()
+					// 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
+					.find('.close_btn').on('click', function() {
+						bg.remove();
+						modal.hide();
+					});
+		}
 
-    $('#delete_btn').on('click', function() {
-       // 모달창 띄우기
-       modal('delete_modal');
-    });
+		$('#delete_btn').on('click', function() {
+			// 모달창 띄우기
+			modal('delete_modal');
+		});
+		
+		$(document).on('click', '.detail_btn', function(event){
 
-    $('#detail_btn').on('click', function() {
-       // 모달창 띄우기
-       modal('detail_modal');
-    });
-    
- </script>
+			 $("#rsTitle2").val($(event.target).parent().siblings()[1].value);
+			 $("#rContent2").val($(event.target).parent().siblings()[5].value);
+			 $("#rDate2").val($(event.target).parent().siblings()[2].value);
+			 $("#startTime2").val($(event.target).parent().siblings()[3].value);
+			 $("#endTime2").val($(event.target).parent().siblings()[4].value);
+			modal('detail_modal');
+		});
+	</script>
 </body>
 </html>
