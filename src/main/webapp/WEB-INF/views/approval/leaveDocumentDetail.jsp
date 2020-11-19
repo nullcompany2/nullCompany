@@ -305,15 +305,19 @@
 
 								    var size = ${apprList.size()};
 								    var size2 = ${checkList.size()};
-  									
+								   
 								    // 후결 버튼 생성
-								    for(var i = 0; i < size; i++){
-								    	for(var j = i+1; j < size-1; j++){
-								    		var tdText = (td.eq(j).text()).trim();
-								    		if(tdText == '결재 완료' || tdText == '반려'){
-								    			$(".appr_btn").text('후결');
-								    		}
-								    	}
+								    
+								    for(var i = 8; i > -1; i--){
+										tdText = (td.eq(i).text()).trim();
+										if(tdText == '결재 완료' || tdText == '반려'){
+											for(var j = i-1; j > -1; j--){ 
+												if(td.eq(j).find('.appr_btn').length){
+													td.eq(j).children().text("후결");
+												}
+											}
+												break;
+										}
 								    }
 								    
 								    // 결재선 완료 문구 글씨 색

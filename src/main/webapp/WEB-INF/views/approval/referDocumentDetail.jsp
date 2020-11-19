@@ -243,6 +243,23 @@
 									</c:if>
 								</td>
 							</tr>
+							<script>
+								$(function(){
+					
+									var td = $("#tr4").children();
+									
+								    var size = ${checkList.size()};
+								    
+								    // 참조선 완료 문구 글씨 색
+								    for(var i = 0; i < size; i++){
+								    	var tdText = td.eq(i);
+								    	if((tdText.text()).trim() == '확인 완료'){
+								    		tdText.css("color","#477A8F");
+								    		tdText.css("font-weight","bold");
+								    	}
+								    }
+								}); 
+							</script>
 							<tr id="tr5">
 								<td>${ checkList[0].staffName }</td>
 								<td>${ checkList[1].staffName }</td>

@@ -8,8 +8,10 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.nullcompany.approval.model.service.ApprovalService;
@@ -657,12 +659,13 @@ public class ApprovalController {
 	
 	// 문서 상세보기
 	@RequestMapping("approvalDetail.do")
-	public ModelAndView approvalDetail(ModelAndView mv, HttpServletResponse response, HttpSession session, String docNo, int formNo) {
+	public ModelAndView approvalDetail(ModelAndView mv, HttpServletResponse response, HttpSession session, String docNo) {
 		
+		System.out.println("docNo: " + docNo);
 		Document d = aService.approvalDetail(docNo);
-		System.out.println("문서 정보 : " + d);
 		
 		ArrayList<Step> sList = aService.selectStepList(d.getDocTempNo());
+		System.out.println("docTempNo" + d.getDocTempNo());
 		
 		ArrayList<Step> apprList = new ArrayList<Step>();
 		ArrayList<Step> checkList = new ArrayList<Step>();
@@ -698,7 +701,6 @@ public class ApprovalController {
 			mv.addObject("receiveList",receiveList);
 			mv.addObject("leaveInfo",leaveInfo);
 			mv.setViewName("approval/leaveDocumentDetail");
-			System.out.println("휴가 정보 : " + leaveInfo);
 		// 휴직 신청서일 때
 		}else if(d.getFormNo() == 4) {
 			Absence absenceInfo = aService.selectAbsenceInfo(d.getDocTempNo());
@@ -720,6 +722,60 @@ public class ApprovalController {
 		
 		return mv;
 	}
+	
+	// 결재하기
+	@RequestMapping("approvalSigning.do")
+	public String approvalSigning(Model model, HttpServletResponse response, HttpSession session, String docTempNo, String docNo) {
+		
+		int memNo = ((Member) session.getAttribute("loginUser")).getMemNo();
+		
+		Document d = aService.approvalDetail(docNo);
+		
+		
+		ArrayList<Step> sList = aService.selectStepList(docTempNo);
+		
+		// 결재자 수(결재자 수 == 최종 결재자 순번)
+		int stepListCount = sList.size();
+		
+		int result1 = 0;
+		int result2 = 0;
+		
+		for(Step s : sList) {
+			if(memNo == s.getStaffNo()) {
+				// 현재 사용자의 결재 순번이 결재자 수(최종 결재자 순번) 보다 낮을 때
+				if(stepListCount > s.getStepPriority()) {
+					
+					result1 = aService.stepSigning(docTempNo, memNo);
+					// 후결 버튼 클릭할 때 
+					if(d.getTurnNo() > s.getStepPriority()){
+						
+					// 결재 버튼 클릭할 때
+					}else {
+						result2 = aService.documentSigning(docTempNo, s.getStepPriority());
+					}
+				// 현재 사용자의 결재 순번이 결재자 수(최종 결재자 순번)과 같을때 --> 최종 결재자일 때
+				}else if(stepListCount == s.getStepPriority()) {
+					// 결재하기
+					result1 = aService.stepSigning(docTempNo, memNo);
+					result2 = aService.decisionSigning(docTempNo, s.getStepPriority());
+				}
+			}
+		}
+		
+		if(result1 > 0 && result2 > 0) {
+			
+			return "redirect:approvalDetail.do?docNo="+docNo;
+		}else {
+			model.addAttribute("msg", "결재 오류!");
+			return "common/errorPage";
+		}
+	}
+	
+//	@ResponseBody
+//	@RequestMapping("test.do")
+//	public void test(@RequestParam("docTempNo") String docTempNo) {
+//		
+//	}
 
 	@RequestMapping("approvalAllDList.do")
 	public String approvalAllDList(HttpServletResponse response) {

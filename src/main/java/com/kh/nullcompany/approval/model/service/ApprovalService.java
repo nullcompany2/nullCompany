@@ -79,4 +79,28 @@ public interface ApprovalService {
 	 */
 	Resign selectResignInfo(String docTempNo);
 
+	/**
+	 * 4_1 결재하기(스텝 상태값 변경)
+	 * @param docTempNo
+	 * @param memNo
+	 * @return
+	 */
+	int stepSigning(String docTempNo, int memNo);
+
+	/**
+	 * 4_2 결재하기(문서 상태값 변경)
+	 * @param docTempNo
+	 * @param stepPriority 
+	 * @return
+	 */
+	int documentSigning(String docTempNo, int stepPriority);
+
+	/**
+	 * 4_3 최종 결재하기(문서 상태값 변경)
+	 * @param docTempNo
+	 * @param stepPriority
+	 * @return
+	 */
+	int decisionSigning(String docTempNo, int stepPriority);
+
 }

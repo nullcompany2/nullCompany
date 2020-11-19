@@ -63,4 +63,19 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public Resign selectResignInfo(String docTempNo) {
 		return aDao.selectResignInfo(docTempNo);
 	}
+
+	@Override
+	public int stepSigning(String docTempNo, int memNo) {
+		return aDao.stepSigning(docTempNo, memNo);
+	}
+
+	@Override
+	public int documentSigning(String docTempNo, int stepPriority) {
+		return aDao.documentSigning(docTempNo, stepPriority);
+	}
+
+	@Override
+	public int decisionSigning(String docTempNo, int stepPriority) {
+		return aDao.decisionSigning(docTempNo, stepPriority);
+	}
 }
