@@ -448,4 +448,17 @@
 		ORDER BY MEM_NO
 		]]>
 	</select>
+	
+	<insert id="grantReward" parameterType="map">
+		INSERT INTO REWARD_LEAVE VALUES(REWARD_SEQ.nextval,#{memNo},#{days},SYSDATE)
+	</insert>
+	
+	<select id="setDiligenceStandard" resultMap="SetAttendanceResultSet">
+		SELECT *
+		FROM SET_ATTENDANCE_STANDARD
+	</select>
+	
+	<update id="updateAttendance">
+		UPDATE SET_ATTENDANCE_STANDARD SET DAY_AVAILABLE = #{dateStatus}, TIME_ATTENDANCE = #{sDate}, TIME_OFFWORK = #{eDate} WHERE DAY_WEEK = #{date}
+	</update>
 </mapper>

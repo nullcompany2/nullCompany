@@ -304,10 +304,23 @@ public class PersonnelManagementServiceImpl implements PersonnelManagementServic
 	}
 
 	@Override
-	public Object selectedMember(JsonObject obj) {
-		// TODO Auto-generated method stub
-		return null;
+	public int grantReward(Map cR) {
+		return pDao.grantReward(cR);
 	}
+
+	@Override
+	public ArrayList<SetAttendance> setDiligenceStandard() {
+		return pDao.setDiligenceStandard();
+	}
+
+	@Override
+	public int updateAttendance(Map setA) {
+		return pDao.updateAttendance(setA);
+	}
+
+	
+
+	
 
 	
 	
