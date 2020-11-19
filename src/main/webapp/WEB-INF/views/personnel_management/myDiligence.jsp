@@ -680,7 +680,7 @@
 							
 							$tr.append($td_date);
 							$tr.append($td_enterTime);
-							$tr.append($td_exitTime);
+							$tr.append($td_exitTime); 	
 							$tr.append($td_status);
 							$tr.append($td_reqMod);
 							$mdTbl.append($tr);

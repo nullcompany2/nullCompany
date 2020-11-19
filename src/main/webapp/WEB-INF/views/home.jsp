@@ -202,7 +202,7 @@
                     <div class="pt2"style="width: 400px; height:310px;">
                         <div class="ch" style="background: #477A8F;"> 
                              &nbsp; Reservation <br> <br><br>
-                         <a href="myReservation.do"> <span> →  바로가기 </span> </a> 
+                         <a href="myReservation.do?rMember=${loginUser.id}"> <span> →  바로가기 </span> </a> 
                        
                         </div>
                         <div class="ch" style="background: #5e9eba;">
@@ -442,4 +442,3 @@
     </body>
     
     </html>
-    

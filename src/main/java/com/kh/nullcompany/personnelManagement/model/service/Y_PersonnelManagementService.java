@@ -19,6 +19,10 @@ public interface Y_PersonnelManagementService {
 
 	int aprrovalEmail(Email e);
 
+	ArrayList<Department> deptList();
+
+	ArrayList<Member> memList();
+
 
 
 }

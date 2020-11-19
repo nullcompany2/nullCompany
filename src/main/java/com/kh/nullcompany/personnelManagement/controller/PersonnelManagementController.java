@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -793,8 +794,43 @@ public class PersonnelManagementController {
 
 	//근태관리 - 기본설정
 	@RequestMapping("setDiligenceStandard.do")
-	public String setDiligenceStandard(HttpServletResponse response) {
-		return "personnel_management/setDiligenceStandard";
+	public ModelAndView setDiligenceStandard(ModelAndView mv, HttpServletResponse response, String sDate, String eDate, String setDate) {
+		
+		System.out.println(sDate);
+		System.out.println(eDate);
+		System.out.println(setDate);
+		if(setDate != null) {
+			String date ="";
+			String[] setDateArr = setDate.split(",");
+			Map setA = new HashMap();
+			for(int i =0; i<7; i++) {
+				switch(i){
+				case 0: date = "SUN"; break;
+				case 1: date = "MON"; break;
+				case 2: date = "TUE"; break;
+				case 3: date = "WED"; break;
+				case 4: date = "THU"; break;
+				case 5: date = "FRI"; break;
+				case 6: date = "SAT"; break;
+				
+				}
+				setA.put("date", date);			
+				setA.put("dateStatus", setDateArr[i]);
+				setA.put("sDate",sDate);
+				setA.put("eDate",eDate);
+				int result = pService.updateAttendance(setA);
+				setA.clear();
+				
+			}
+			
+		}
+		ArrayList<SetAttendance> settingArr = pService.setDiligenceStandard();
+		
+		System.out.println(settingArr);
+		
+		mv.addObject("settingArr",settingArr);
+		mv.setViewName("personnel_management/setDiligenceStandard");
+		return mv;
 	}
 
 	//근태관리 -휴직자관리
@@ -802,7 +838,7 @@ public class PersonnelManagementController {
 	public String emAbsenceManagement(HttpServletResponse response) {
 		return "personnel_management/emAbsenceManagement";
 	}
-
+	
 	//근태관리 - 직원근태관리
 	@RequestMapping("emDiligenceManagement.do")
 	public String emDiligenceManagement(HttpServletResponse response) {
@@ -896,6 +932,7 @@ public class PersonnelManagementController {
 		gson.toJson(str,response.getWriter());
 	}
 	
+	// 포상휴가 부여1
 	@RequestMapping("selectTargetReward.do")
 	public void selectTargetReward(HttpServletResponse response, String eDate, String sDate, String inputword) throws JsonIOException, IOException {
 		response.setContentType("application/json; charset=utf-8");
@@ -913,6 +950,7 @@ public class PersonnelManagementController {
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(mList,response.getWriter());
 	}
+	// 포상휴가 부여2
 	@ResponseBody
 	@RequestMapping(value="grantReward.do")
 	public void grantReward(HttpServletResponse response, String listArr) throws JsonIOException, IOException {
@@ -925,21 +963,40 @@ public class PersonnelManagementController {
 		ArrayList<Member> selectedList = new ArrayList<Member>();
 		
 		for(int i =0; i<jsonArray.size(); i++) {
-			JsonObject object = (JsonObject)jsonArray.get(i);
-			System.out.println(object.toString());
-			System.out.println(selectedList);
-			String year = (object).getAsString();
-			System.out.println(year);
+			int object = jsonArray.get(i).getAsInt();
+			selectedList.add(pService.detailMemberInfo(object));
 		}
-		
-		
-		
-		
+		System.out.println(selectedList);
 		
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(selectedList,response.getWriter());
 		
+	}
+	// 포상휴가 부여3
+	@RequestMapping(value="grantReward1.do")
+	public String grantReward1(HttpServletResponse response, String cMemNoArr, String cDaysArr) {
+		response.setContentType("application/json; charset=utf-8");
+		System.out.println("포상휴가 컨트롤러 짜잔" + cMemNoArr+"/" + cDaysArr);
+		
+		
+		String[] cMem = (cMemNoArr.split(","));
+		String[] cDay = cDaysArr.split(",");
+		
+		int [] fda = Arrays.stream(cMem).mapToInt(Integer::parseInt).toArray();
+      	int [] fds = Arrays.stream(cDay).mapToInt(Integer::parseInt).toArray();
+		
+      	Map CR = new HashMap();
+		for(int i=0; i<fda.length; i++) {
+			CR.put("memNo", fda[i]);
+			CR.put("days", fds[i]);
+			
+			int insert = pService.grantReward(CR);
+			CR.clear();
+			System.out.println(insert);
+		}
+		
+		return "redirect:emLeaveManagement.do";
 		
 	}
-
+	
 }

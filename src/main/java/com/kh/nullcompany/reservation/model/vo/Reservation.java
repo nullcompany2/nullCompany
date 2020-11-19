@@ -13,12 +13,14 @@ public class Reservation {
 	private String end_time;
 	private String rReturn;
 	private String rMemberName;
+	private String rcTitle;
+	private String rsTitle;
 	public Reservation() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	public Reservation(int rNo, int rsNo, int rcNo, String rMember, String rDate, String rContent, String start_time,
-			String end_time, String rReturn, String rMemberName) {
+			String end_time, String rReturn, String rMemberName, String rcTitle, String rsTitle) {
 		super();
 		this.rNo = rNo;
 		this.rsNo = rsNo;
@@ -30,6 +32,8 @@ public class Reservation {
 		this.end_time = end_time;
 		this.rReturn = rReturn;
 		this.rMemberName = rMemberName;
+		this.rcTitle = rcTitle;
+		this.rsTitle = rsTitle;
 	}
 	public int getrNo() {
 		return rNo;
@@ -91,11 +95,23 @@ public class Reservation {
 	public void setrMemberName(String rMemberName) {
 		this.rMemberName = rMemberName;
 	}
+	public String getRcTitle() {
+		return rcTitle;
+	}
+	public void setRcTitle(String rcTitle) {
+		this.rcTitle = rcTitle;
+	}
+	public String getRsTitle() {
+		return rsTitle;
+	}
+	public void setRsTitle(String rsTitle) {
+		this.rsTitle = rsTitle;
+	}
 	@Override
 	public String toString() {
 		return "Reservation [rNo=" + rNo + ", rsNo=" + rsNo + ", rcNo=" + rcNo + ", rMember=" + rMember + ", rDate="
 				+ rDate + ", rContent=" + rContent + ", start_time=" + start_time + ", end_time=" + end_time
-				+ ", rReturn=" + rReturn + ", rMemberName=" + rMemberName + "]";
+				+ ", rReturn=" + rReturn + ", rMemberName=" + rMemberName + ", rcTitle=" + rcTitle + ", rsTitle="
+				+ rsTitle + "]";
 	}
-	
 }
