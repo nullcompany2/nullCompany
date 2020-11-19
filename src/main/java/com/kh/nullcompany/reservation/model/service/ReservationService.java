@@ -35,4 +35,6 @@ public interface ReservationService {
 
 	public int insertReservation(Reservation r);
 
+	public ArrayList<Reservation> selectMyreservationList(String rMember);
+
 }

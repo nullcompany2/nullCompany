@@ -161,14 +161,6 @@
         ORDER BY SEND_DATE DESC
 	 </select>
 	 
-	 <!--  받은 편지함에서 전체 삭제 / 업데이트   -->
-	 <update id="deleteFromList" parameterType="Mail">
-		 UPDATE MAIL
-	     SET MDELETE_STATUS = 'Y'
-	     WHERE RECIPIENT = #{memId}
-	     AND MDELETE_STATUS= 'N'
-	 </update>
-	 
 	 <!--  임시 보관함 리스트 -->
 	<select id="selectSaveList" resultMap="mailResultSet">
 		SELECT MA.*, M.NAME
@@ -177,6 +169,7 @@
 	    WHERE MA.SENDER = #{memId}
 	    AND MA.MSAVE_STATUS = 'Y'
 	    AND MA.MDELETE_STATUS = 'N'
+	    AND MA.M_REALDEL_STATUS = 'N'
 	    ORDER BY SEND_DATE DESC
 	</select>
 	
@@ -285,7 +278,8 @@
 	    FROM MAIL 
 	    WHERE SENDER = #{memId}
 	    AND MSAVE_STATUS = 'Y'
-	    AND MDELETE_STATUS = 'N') as SAVE_COUNT
+	    AND MDELETE_STATUS = 'N'
+	    AND M_REALDEL_STATUS = 'N') as SAVE_COUNT
         FROM DUAL
 	 </select>
 	 
@@ -382,5 +376,20 @@
        	AND (RECIPIENT LIKE '%' || #{search} || '%' OR M.NAME LIKE'%' || #{search} || '%')
         ORDER BY SEND_DATE DESC
 	 </select>
+	 
+	 <!--  체크 박스 선택 메일 삭제하기  -->
+	 <update id="delMail" parameterType="Mail" > 
+	 	 UPDATE MAIL
+	     SET MDELETE_STATUS = 'Y'
+	     WHERE MAIL_NO = #{mailNon}
+	     AND MDELETE_STATUS= 'N' 
+	 </update>
+	 <!--  체크 박스 선책 메일 완전 삭제하기  -->
+	 <update id="realDelMail" parameterType="Mail" > 
+	 	 UPDATE MAIL
+	     SET M_REALDEL_STATUS = 'Y'
+	     WHERE MAIL_NO = #{mailNon}
+	     AND M_REALDEL_STATUS = 'N'
+	 </update>
 	 
 </mapper>

@@ -188,10 +188,17 @@ public interface PersonnelManagementService {
 	ArrayList<RecordDiligence> recordDiligenceList(int memNo);
 	// 출근일 확인
 	ArrayList<SetAttendance> AttendanceDays();
-	//
+	
+	// 포상휴가 부여 검색용
 	ArrayList<Member> selectTargetReward(Map searchCondition);
+	// 포상휴가 부여
+	int grantReward(Map cR);
+	// 근태 설정값 가져오기
+	ArrayList<SetAttendance> setDiligenceStandard();
+	// 근태 설정 요일 및 출퇴근 시간설정
+	int updateAttendance(Map setA);
 
-	Object selectedMember(JsonObject obj);
+
 	
 	
 	

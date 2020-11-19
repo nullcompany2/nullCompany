@@ -280,5 +280,22 @@ public class PersonnelManagementDao {
 	}
 
 
+	public int grantReward(Map cR) {
+		return sqlSession.insert("personnelMapper.grantReward",cR);
+	}
+
+
+	public ArrayList<SetAttendance> setDiligenceStandard() {
+		return (ArrayList)sqlSession.selectList("personnelMapper.setDiligenceStandard");
+	}
+
+
+	public int updateAttendance(Map setA) {
+		return sqlSession.update("personnelMapper.updateAttendance",setA);
+	}
+
+
+	
+
 
 }

@@ -37,8 +37,22 @@ public class Y_PersonnelManagementController {
 
 	// 조직관리
 	@RequestMapping("OrganizationManagement.do")
-	public String OrganizationManage(HttpServletResponse response) {
-		return "personnel_management/OrganizationManagement";
+	public ModelAndView Schedulermain(ModelAndView mv,  HttpServletResponse response, HttpSession session) {
+		
+		// 총 부서 리스트
+		ArrayList<Department> deptList = yService.deptList();
+		// 총 사원 리스트
+		ArrayList<Member> memList = yService.memList();
+
+
+		mv.addObject("deptList", deptList);
+		mv.addObject("memList", memList);
+
+
+		mv.setViewName("personnel_management/OrganizationManagement");
+
+		return mv;
+	
 	}
 
 	// 사용자 관리

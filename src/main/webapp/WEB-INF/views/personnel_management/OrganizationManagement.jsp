@@ -59,65 +59,53 @@
 				<div class="contents-wrap drag-scrollbar">
 					<div id="dept_list1">
 						<ul class="tree">
-						   <li>
-							   <button class="edit_dept">기획부 (2)</button>
-							   <ul>
-								   <li class="emp-info"><label>신아라</label></li>
-								   <li class="emp-info"><label>이용희</label></li>
-							   </ul>
-						   </li>
-						   <li>
-							  <button class="edit_dept">뫄뫄부 (2)</button>
-							  <ul>
-								 <li class="emp-info"><label>한윤수</label></li>
-								 <li class="emp-info"><label>정택환</label></li>
-							  </ul>
-						  </li>
-						  <li>
-							  <button class="edit_dept">뫄뫄부 (2)</button>
-							  <ul>
-								 <li class="emp-info"><label>구승현</label></li>
-								 <li class="emp-info"><label>강동우</label></li>
-							  </ul>
-						  </li>
-					   </ul>
-					
-					  
-					   <div id="edit_dept_modal" class="modal-dragscroll">
-						<h4 style="color: #477A8F; margin-bottom: 5px;">부서 수정</h4>
-					 	<p style="color: #707070; margin-bottom: 5px; font-size: 14px;">부서명</p>
-							<input type="text" placeholder="영업부"/>
-						
-						<div style="text-align: center;margin-top: 30px;" >
-							<button style=" background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">수정</button>
-							<button id="delete_dept" style="padding: 5px 27px 6px;
-							color: #444;
-							letter-spacing: -1px;
-							border: 1px solid #dadada;
-							background: #dadada;">삭제</button>
-						</div>
-					
-						<a class="modal-close-btn cursor">X</a>
-					   </div>
+							<c:forEach var="deptList" items="${ deptList }" begin="1">
 
-					   <div id="add_dept_modal" class="modal-dragscroll">
-						<h4 style="color: #477A8F; margin-bottom: 5px;">부서 추가</h4>
-					 	<p style="color: #707070; margin-bottom: 5px; font-size: 14px;">부서명</p>
-							<input type="text" placeholder="영업부"/>
-						
-						<div style="text-align: center;margin-top: 30px;" >
-							<button id="add" style=" background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">추가</button>
-							<button style="    padding: 5px 27px 6px;
-							color: #444;
-							letter-spacing: -1px;
-							border: 1px solid #dadada;
-							background: #dadada;">취소</button>
+								<li>
+									<button>${ deptList.deptName }부</button>
+									<ul>
+										<c:forEach var="memList" items="${ memList }">
+											<c:if test='${deptList.deptNo eq memList.deptNo}'>
+												<li><label>${ memList.name }(${ memList.memNo })</label></li>
+											</c:if>
+										</c:forEach>
+									</ul>
+								</li>
+							</c:forEach>
+						</ul>
+
+
+						<div id="edit_dept_modal" class="modal-dragscroll">
+							<h4 style="color: #477A8F; margin-bottom: 5px;">부서 수정</h4>
+							<p style="color: #707070; margin-bottom: 5px; font-size: 14px;">부서명</p>
+							<input type="text" placeholder="영업부" />
+
+							<div style="text-align: center; margin-top: 30px;">
+								<button
+									style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">수정</button>
+								<button id="delete_dept"
+									style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">삭제</button>
+							</div>
+
+							<a class="modal-close-btn cursor">X</a>
 						</div>
-					
-						<a class="modal-close-btn cursor">X</a>
-					   </div>
-			
-					   <script>
+
+						<div id="add_dept_modal" class="modal-dragscroll">
+							<h4 style="color: #477A8F; margin-bottom: 5px;">부서 추가</h4>
+							<p style="color: #707070; margin-bottom: 5px; font-size: 14px;">부서명</p>
+							<input type="text" placeholder="영업부" />
+
+							<div style="text-align: center; margin-top: 30px;">
+								<button id="add"
+									style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">추가</button>
+								<button
+									style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">취소</button>
+							</div>
+
+							<a class="modal-close-btn cursor">X</a>
+						</div>
+
+						<script>
 						// 리스트 토글
 						$('.tree').each(function(){
 						var $this = $(this);
@@ -141,63 +129,64 @@
 					   });
 
 					</script>
-			
-					 </div>
-		
+
+					</div>
+
 					<div class="ic">
-			
+
 						<div>
-						<button id="dept_add"> 부서 추가</button>
-					
+							<button id="dept_add">부서 추가</button>
+
 						</div>
 						<table style="position: absolute; left: 15%;">
 							<th>
 								<div class=" dept-title ic-title">
-									<span class="deptname" style="font-size: 25px; margin-top:50px" >부서명</span>
+									<span class="deptname"
+										style="font-size: 25px; margin-top: 50px">부서명</span>
 								</div>
-								<tr>
-									<td>
-										<div class=" ic-emp-info cursor" >
-											<img src="" alt="" class="emp-img ">
-											<li><span class="emp-info" id="emp-name">이름</span></li> <br>
-											<li><span class="emp-info" id="emp-dept">부서</span></li> <br>
-											<li><span class="emp-info" id="emp-rank">직급</span></li>
-										</div>
-									</td>
-									<td>
-										<div class=" ic-emp-info cursor">
-											<img src="" alt="" class="emp-img">
-											<li><span class="emp-info" id="emp-name">이름</span></li> <br>
-											<li><span class="emp-info" id="emp-dept">부서</span></li> <br>
-											<li><span class="emp-info" id="emp-rank">직급</span></li>
-										</div>
-									</td>
-									<td>
-										<div class=" ic-emp-info cursor">
-											<img src="" alt="" class="emp-img ">
-											<li><span class="emp-info" id="emp-name">이름</span></li> <br>
-											<li><span class="emp-info" id="emp-dept">부서</span></li> <br>
-											<li><span class="emp-info" id="emp-rank">직급</span></li>
-										</div>
-									</td>
-									<td>
-										<div class=" ic-emp-info cursor">
-											<img src="" alt="" class="emp-img">
-											<li><span class="emp-info" id="emp-name">이름</span></li> <br>
-											<li><span class="emp-info" id="emp-dept">부서</span></li> <br>
-											<li><span class="emp-info" id="emp-rank">직급</span></li>
-										</div>
-									</td>
-									
-								</tr>							
+							<tr>
+								<td>
+									<div class=" ic-emp-info cursor">
+										<img src="" alt="" class="emp-img ">
+										<li><span class="emp-info" id="emp-name">이름</span></li> <br>
+										<li><span class="emp-info" id="emp-dept">부서</span></li> <br>
+										<li><span class="emp-info" id="emp-rank">직급</span></li>
+									</div>
+								</td>
+								<td>
+									<div class=" ic-emp-info cursor">
+										<img src="" alt="" class="emp-img">
+										<li><span class="emp-info" id="emp-name">이름</span></li> <br>
+										<li><span class="emp-info" id="emp-dept">부서</span></li> <br>
+										<li><span class="emp-info" id="emp-rank">직급</span></li>
+									</div>
+								</td>
+								<td>
+									<div class=" ic-emp-info cursor">
+										<img src="" alt="" class="emp-img ">
+										<li><span class="emp-info" id="emp-name">이름</span></li> <br>
+										<li><span class="emp-info" id="emp-dept">부서</span></li> <br>
+										<li><span class="emp-info" id="emp-rank">직급</span></li>
+									</div>
+								</td>
+								<td>
+									<div class=" ic-emp-info cursor">
+										<img src="" alt="" class="emp-img">
+										<li><span class="emp-info" id="emp-name">이름</span></li> <br>
+										<li><span class="emp-info" id="emp-dept">부서</span></li> <br>
+										<li><span class="emp-info" id="emp-rank">직급</span></li>
+									</div>
+								</td>
+
+							</tr>
 							</th>
-						
-							
+
+
 						</table>
 					</div>
-	
+
 				</div>
-				
+
 			</div>
 		</div>
 		

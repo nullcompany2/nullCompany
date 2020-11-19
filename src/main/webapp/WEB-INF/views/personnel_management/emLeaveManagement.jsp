@@ -114,7 +114,7 @@
                                             <h5 style="float: left; margin-bottom: 20px;">포상 휴가 일수를 입력한 후 '생성하기'를 클릭하세요.</h5>                                         
                                             <table class="re-l-list">
                                                 <tr class="re-l-list-il">
-                                                    <th class="re-l-list-ck-th" rowspan="2"><input type="checkbox" name="" id="All-"></th>
+                                                    <th class="re-l-list-ck-th" rowspan="2"><input type="checkbox" name="" id="All-chk"></th>
                                                     <th class="re-l-list-th" rowspan="2">이름</th>
                                                     <th class="re-l-list-th" rowspan="2">ID</th>
                                                     <th class="re-l-list-th" rowspan="2">부서</th>
@@ -124,22 +124,16 @@
                                                 </tr>
                                                 <tr class="re-l-list-il">
                                                     <th class="re-l-list-th sepa-line">현재</th>
-                                                    <th class="re-l-list-th">생성 후</th>
+                                                    <th class="re-l-list-th">생성 일</th>
                                                     
                                                 </tr>
+                                                <tbody id="selectedList">
                                                 <!-- 리스트 -->
-                                                <tr>
-                                                    <td class="re-l-list-ck-td"><input type="checkbox" name="chk" ></td>
-                                                    <td class="re-l-list-td">Han</td>
-                                                    <td class="re-l-list-td">ys211</td>
-                                                    <td class="re-l-list-td">인사</td>
-                                                    <td class="re-l-list-td">25일</td>
-                                                    <td class="re-l-list-td sepa-line">0일</td>
-                                                    <td class="re-l-list-td" ><input type="text" name="" id="" style="width: 40px;">일</td>
-                                                </tr>
+	                                                
+                                                </tbody>
                                             </table>
-                                            <div style="text-align: left;margin-top: 10px;">
-                                                <a href="#"id="delect-chk" class="cursor" style="color: #477A8F;">삭제</a>
+                                            <div style="text-align: left;margin-top: 10px; height: 30px;">
+                                                
                                             </div>                                               
                                         </td>                                    
                                     </tr>
@@ -147,7 +141,7 @@
                             </table>
                             
                             <div>
-                                <input type="button" value="생성하기" class="save-btn cursor">
+                                <input type="button" value="생성하기" class="save-btn cursor" onclick="createBtn()">
                             </div>
                         </form>
                     </div>
@@ -460,8 +454,8 @@
 	        			dataType : "json",
 	        			success : function(data){
 	        				console.log(data);
-        				
-	        				$("#md3_searchList tr").remove();
+
+		        			$("#md3_searchList tr").remove();
 	        				var $searchTbl =$("#md3_searchList");
 	        				var $tr;
 	        				var $checkBox;
@@ -505,6 +499,7 @@
         };
         
        	var listArr = new Array();
+       	
         function md3_saveBtn(){
         	listArr = new Array();
         	var size = $('input:checkbox[name="md-chk"]').length;
@@ -526,18 +521,98 @@
 	        		
 	        		success : function(data){
 	        			console.log(data);
+	        			
+        				$("#selectedList tr").remove();
+        				var $searchTbl =$("#selectedList");
+        				var $tr;
+        				var $checkBox;
+        				var $name;
+        				var $id;
+        				var $dept;
+        				var $annual;
+        				var $reward;
+        				var $createReward;
+        				var $inputCheckbox;
+        				var $inputText;
+        				
+        				
+        				for(var i in data){
+       					
+	        				$tr = $('<tr>').attr('id',data[i].memNo+"TR");
+	        				$checkBox = $('<td class="re-l-list-ck-td">');
+	        				$inputCheckbox = $('<input type="checkbox" name="chk" />').attr('id',data[i].memNo)
+	        				$name = $('<td class="re-l-list-td">').text(data[i].name);
+	        				$id = $('<td class="re-l-list-td">').text(data[i].id);
+	        				$dept = $('<td class="re-l-list-td">').text(data[i].deptName);
+	        				$annual = $('<td class="re-l-list-td">').text(data[i].annualLeave);
+	        				$reward = $('<td class="re-l-list-td sepa-line">').text(data[i].rewardLeave);
+	        				$createReward = $('<td class="re-l-list-td">');
+	        				$inputText = $('<input type="text" name="inputT" id="" style="width: 40px;" onkeypress="return digit_check(event)"> 일').attr('id',data[i].memNo+"C");
+	        				
+	        				$checkBox.append($inputCheckbox);
+	        				$createReward.append($inputText);
+	        				$tr.append($checkBox);
+	        				$tr.append($name);
+	        				$tr.append($id);
+	        				$tr.append($dept);
+	        				$tr.append($annual);
+	        				$tr.append($reward);
+	        				$tr.append($createReward);
+	        				$searchTbl.append($tr);
+	        			
+        						
+       					}
 	        		},
 	        		error : function(request,status,error){
 	        			console.log(request);
 	        			console.log(status);
 	        			console.log(error);
 	        		}
-	        	});        		
+	        	});
+	        	
         	}else{
         		alert("대상자를 선택하세요.");
         	}
         	
         	
+        }
+        
+
+        var cMemNoArr = new Array();
+        var cDaysArr = new Array();
+        
+        
+        function createBtn(){
+        	cMemNoArr = new Array();
+            cDaysArr = new Array();
+            var able = 0;
+            
+        	var size = $('input:checkbox[name="chk"]').length;
+        	console.log(size);
+        	for( var i =0; i<size;i++){
+	        	if($('input:checkbox[name="chk"]')[i].checked){
+	        		if($('input:text[name="inputT"]')[i].value == ""){
+	        			alert("생성일을 모두 입력해주세요.");
+	        			return;
+	        			able =0;
+	        		}else{
+	        			cMemNoArr.push($('input:checkbox[name="chk"]')[i].id);
+	        			cDaysArr.push($('input:text[name="inputT"]')[i].value);
+	        			able = 1;
+	        		}
+	        		
+	        	}
+        		
+        	}
+        	if(able == 1){
+        		location.href="grantReward1.do?cMemNoArr="+cMemNoArr+"&cDaysArr="+cDaysArr;
+        	}else{
+        		alert("대상선택후 생성하기를 눌러주세요");
+        	}
+        	console.log(cMemNoArr);
+        	console.log(cDaysArr);
+    		console.log(cMemNoArr.length);
+    		console.log(cDaysArr.length);
         }
         
         $(function(){
@@ -561,13 +636,22 @@
                     $("input[name=md-chk]").prop("checked",false);
                 }
             })
+            $("#All-chk").click(function(){
+                if($("#All-chk").prop("checked")){
+                    $("input[name=chk]").prop("checked",true);
+                }else{
+                    $("input[name=chk]").prop("checked",false);
+                }
+            })
         })
+        
         function digit_check(evt){
 		    var code = evt.which?evt.which:event.keyCode;
 		    if(code < 48 || code > 57){
 		        return false;
 		    }
 		}
+        
         
 
     </script>
@@ -843,7 +927,7 @@
             
         </table>
 		<div style="text-align: center; margin-top: 50px;">
-			<input type="button" class="md-btn cursor md-btn-save" onclick="md3_saveBtn()" value="저장">
+			<input type="button" class="md-btn cursor md-btn-save md-btn-close" onclick="md3_saveBtn()" value="저장">
 			<input type="button" class="md-btn cursor md-btn-close" style="margin-left: 50px;" value="닫기">
 		</div>
 

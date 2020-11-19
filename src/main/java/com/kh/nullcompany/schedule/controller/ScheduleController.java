@@ -75,23 +75,63 @@ public class ScheduleController {
 	public ModelAndView SchedulerSearch(ModelAndView mv, String text, String select_option, HttpServletResponse response, HttpSession session) {
 	
 		if(select_option.equals("Sche_name")) {
-			System.out.println(text);
+			int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();	
+		
 			ArrayList<Schedule> Sche_name_Search = sService.Sche_name_Search(text);
 			System.out.println("스케쥴" + Sche_name_Search);
 			mv.addObject("Sche_name_Search", Sche_name_Search);
 			
-			mv.setViewName("Scheduler/SchedulerResearch");
+			// 총 부서 리스트
+			ArrayList<Department> deptList = sService.deptList();
+			// 총 사원 리스트
+			ArrayList<Member> memList = sService.memList();
+			// 공유 캘린더 리스트
+			ArrayList<Calendar> publicCalList = sService.publicCalList(memNo);
+			// 내 캘린더 리스트
+			ArrayList<Calendar> IndividualCalList = sService.IndividualCalList(memNo);
+			ArrayList<Calendar> SelectpublicCalList = sService.SelectpublicCalList(memNo);
+			// 일정 리스트
+			ArrayList<Schedule> ScheduleList = sService.ScheduleList(memNo);
+
+			mv.addObject("deptList", deptList);
+			mv.addObject("memList", memList);
+			mv.addObject("publicCalList", publicCalList);
+			mv.addObject("IndividualCalList", IndividualCalList);
+			mv.addObject("SelectpublicCalList", SelectpublicCalList);
+			mv.addObject("ScheduleList", ScheduleList);
 			
+			mv.setViewName("Scheduler/SchedulerResearch");
 			
 			return mv;
 		}else {
-			System.out.println(text);
+			int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();	
+			
+			// 총 부서 리스트
+			ArrayList<Department> deptList = sService.deptList();
+			// 총 사원 리스트
+			ArrayList<Member> memList = sService.memList();
+			// 공유 캘린더 리스트
+			ArrayList<Calendar> publicCalList = sService.publicCalList(memNo);
+			// 내 캘린더 리스트
+			ArrayList<Calendar> IndividualCalList = sService.IndividualCalList(memNo);
+			ArrayList<Calendar> SelectpublicCalList = sService.SelectpublicCalList(memNo);
+			// 일정 리스트
+			ArrayList<Schedule> ScheduleList = sService.ScheduleList(memNo);
+
+			mv.addObject("deptList", deptList);
+			mv.addObject("memList", memList);
+			mv.addObject("publicCalList", publicCalList);
+			mv.addObject("IndividualCalList", IndividualCalList);
+			mv.addObject("SelectpublicCalList", SelectpublicCalList);
+			mv.addObject("ScheduleList", ScheduleList);
+			
 			ArrayList<Schedule> Cal_name_Search = sService.Cal_name_Search(text);
 			mv.addObject("Cal_name_Search", Cal_name_Search);
 			mv.setViewName("Scheduler/SchedulerResearch");
+			
 			return mv;
 		}
-		
+
 		
 	}
 

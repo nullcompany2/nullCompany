@@ -155,7 +155,7 @@
             <option value="${rs.rsNo }">${ rs.rsTitle }</option>
          </c:forEach> 
       </select>
-      
+      <input type="hidden" name="rsTitle" id="rsTitle">
       </div>
       
       <br>
@@ -183,7 +183,8 @@
             <dt style="float: left;">
                <label>자원 이름</label>
             </dt>
-            <dd style="margin-left: 150px;"><input type="text" id="rsTitle" value="회의실" readonly="readonly"></dd>
+            <dd style="margin-left: 150px;">
+            <input type="text" id="rsTitle2" value="" readonly="readonly"></dd>
          </dl>
          <dl>
             <dt style="float: left;">
@@ -210,7 +211,7 @@
             </dd>
          </dl>
       <div style="text-align: center; margin-top: 50px; margin-bottom: 30px;">
-         <button class="close_btn insert_btn" id="insert_btn" type="button"
+         <button class="close_btn insert_btn" id="insert_btn"
             style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">확인</button>
          <button class="close_btn" type="button"
             style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">취소</button>
@@ -222,6 +223,8 @@
    <script>
    	var end = [];
    	var start=[];
+   	var date = [];
+   	var rsTitle;
       function modal(id) {
          var zIndex = 9999;
          var modal = $('#' + id);
@@ -262,17 +265,6 @@
                   modal.hide();
                });
          
-         	  modal.find('.insert_btn').on('click', function() {
-         		 for(var i=0; i<end.length;i++){
-             	  	if($("#startTime").val() > end[i]){
-             	  		alert("이미 예약되어 있습니다.");
-             	  		break;
-             	  	} else if($("#endTime").val() < start[i]){
-             	  		alert("이미 예약되어 있습니다.");
-             	  		break;
-             	  	}
-         	  }
-      });
       }
        
       function getEvent(rsNo,rcNo){
@@ -288,24 +280,26 @@
                              // 결과 리턴이 undefined 이걸로 뜨거든요
                              // 그래서 데이터 다 받아오고 밑에있는 코드까지해서 동기로 처리하겠다고하는 
                              // 조건을 걸어줘야지 정상적으로 코드를 받아와요
-                             
+                             	
                success: function(data) { 
                    var sum = [];
 
                  for(var i in data) {
-                   var str = data[i].end_time;
+                   var str =  data[i].end_time;
                    var str2 = data[i].start_time;
+              	   var str3 = data[i].rDate;
                    var r = {
                        title: data[i].rMemberName,
                             start: data[i].rDate+'T'+data[i].start_time+':00',
                             end: data[i].rDate+'T'+data[i].end_time+':00',
                             constraint: data[i].rContent,
-                            color: 'red'
+                            color: '#89BBCF'
                    };
                    console.log(r)
                    sum.push(r);
                    end.push(str);
                    start.push(str2);
+                   date.push(str3);
                    console.log("sum : " + sum);
                  }
                  evt = sum;
@@ -324,8 +318,10 @@
     		 data : {rsNo : rsNo},
     		 success: function(data) { 
     		  var rsImg = data.rsImg;
+    		  rsTitle = data.rsTitle;
     		  console.log(rsImg);
     		  $("#Img").val(rsImg);
+    		  $("#rsTitle").val(rsTitle);
     		 }
     	 });
       }
@@ -355,6 +351,7 @@
               var startTime = info.dateStr;
               var str = startTime.substr(0,10);
               var str2 = startTime.substr(11,5);
+              $("#rsTitle2").val(rsTitle);
               $("#date").val(str);
               $("#startTime").val(str2);
               $("#rcNo").val( rcNo );
@@ -369,6 +366,7 @@
                var str = startTime.substr(0,10);
              var str2 = startTime.substr(11,5);
              var str3 = endTime.substr(11,5);
+             $("#rsTitle2").val(rsTitle);
              $("#date").val(str);
              $("#startTime").val(str2);
              $("#endTime").val(str3);
@@ -410,6 +408,7 @@
               var startTime = info.dateStr;
               var str = startTime.substr(0,10);
               var str2 = startTime.substr(11,5);
+              $("#rsTitle2").val(rsTitle);
               $("#date").val(str);
               $("#startTime").val(str2);
               $("#rcNo").val( rcNo );
@@ -424,6 +423,7 @@
                var str = startTime.substr(0,10);
              var str2 = startTime.substr(11,5);
              var str3 = endTime.substr(11,5);
+             $("#rsTitle2").val(rsTitle);
              $("#date").val(str);
              $("#startTime").val(str2);
              $("#endTime").val(str3);
@@ -437,6 +437,41 @@
           });
           calendar.render();
       });
+      $('.insert_btn').on('click', function() {
+    	  var sd = $("#date").val();
+    	  var sd2 = sd.split("-");
+    	  var sdt = $("#startTime").val();
+    	  var sdt2 = sdt.split(':'); 
+    	  var sd3 = new Date(sd2[0],sd2[1]-1,sd2[2],sdt2[0],sdt2[1]);
+    	  var sdt3 = $("#endTime").val();
+    	  var sdt4 = sdt3.split(":");
+    	  var sdt5 = new Date(sd2[0],sd2[1]-1,sd2[2],sdt4[0],sdt4[1]); //endtime
+    	  var sd4 = new Date(sd2[0],sd2[1]-1,sd2[2]);
+		  var result=1;
+
+ 	      for(var i=0; i<end.length;i++){
+		  var date2 = date[i].split('-');
+		  var end2 = end[i].split(':');
+		  var start2 = start[i].split(":");
+		  var end3 = new Date(date2[0],date2[1]-1,date2[2],end2[0],end2[1]); // 끝 시간
+		  var start3 = new Date(date2[0],date2[1]-1,date2[2],start2[0],start2[1]); //시작시간
+		  var date3 = new Date(date2[0],date2[1]-1,date2[2]);
+			if((sd4.getTime()-date3.getTime()) == 0 ){ // 날짜 비교 --> 같은날이면 비교
+	    	  if(start3 < sd3 && sd3 < end3){ //시작시간
+	    	  	alert("이미 예약되어 있습니다.");
+	    	  	return false;
+		      if(sdt5 < start3){ //끝시간
+	 		  }
+	    	}
+		  }
+ 	     }
+ 	     /*  if(result ==1){
+ 	    	  return false;
+ 	      }else{
+ 	    	  return true;
+ 	      } */
+
+	 });
       
       $(function() {
 

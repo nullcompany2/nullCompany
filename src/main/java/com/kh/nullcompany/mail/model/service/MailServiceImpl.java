@@ -100,12 +100,6 @@ public class MailServiceImpl implements MailService {
 		return maDao.saveDetailView(mailNo);
 	}
 
-	// 보낸 편지함 - 전체 삭제 
-	@Override
-	public int allDelMail(String memId) {
-		return maDao.allDelMail(memId);
-	}
-
 	@Override
 	public ArrayList<Mail> binMailList(PageInfo pi, String memId) {
 		return maDao.binMailList(pi,memId);
@@ -227,6 +221,18 @@ public class MailServiceImpl implements MailService {
 	@Override
 	public ArrayList<Mail> searchSender(Map map) {
 		return maDao.searchSender(map);
+	}
+
+	// 체크박스에서 삭제하기 
+	@Override
+	public int delmail(String[] mailNon) {
+		return maDao.delmail(mailNon);
+	}
+
+	// 체크박스에서 완전 삭제하기 
+	@Override
+	public int realDelMail(String[] mailNon) {
+		return maDao.realDelMail(mailNon);
 	}
 
 	

@@ -78,7 +78,7 @@ private ScheduleService sService;
 			mv.setViewName("mail/writeMail");
 			return mv;
 		}
-
+		
 		// 받은 메일함 리스트
 		@RequestMapping("recieveMail.do")
 		public ModelAndView reciveMailList(ModelAndView mv, HttpSession session,
@@ -324,9 +324,9 @@ private ScheduleService sService;
 		// 임시 보관함 메일 한개 보기
 		@RequestMapping("saveDetailView.do")
 		public ModelAndView saveDetailView( ModelAndView mv, int mailNo) {
-			System.out.println(mailNo);
+			
 			Mail ma = maService.saveDetailView(mailNo);
-			System.out.println(ma);
+
 			mv.addObject("ma",ma);
 			mv.setViewName("mail/saveDetailView");
 
@@ -390,20 +390,54 @@ private ScheduleService sService;
 			
 		}
 	
-		// 받은 메일함 리스트에서 삭제 버튼 눌렀을 때 전체삭제 
-		@RequestMapping("allDelMail.do")
-		public String allDelMail( HttpSession session, Model model){
-		
-			String memId = ((Member)session.getAttribute("loginUser")).getId();		
-
-			int result = maService.allDelMail(memId);
+		// 메일함 리스트에서 삭제 버튼 눌렀을 때 체크된 메일 삭제 
+		@RequestMapping("delMail.do")
+		public String allDelMail(Model model,String mailNoArr,String page){
 			
-			if(result > 0) {
-				return "redirect:recieveMail.do";			
+			System.out.println(page);
+			String [] mailNon = mailNoArr.split(",");
+			int result = maService.delmail(mailNon);
+			
+			
+			if(result > 0 ) {
+				if(page.equals("보낸메일")) {
+					System.out.println(page);
+					return "redirect:sendMailList.do";		
+				}if(page.equals("받은메일")) {
+					return "redirect:recieveMail.do";			
+				}if(page.equals("임시저장")) {
+					return "redirect:saveMailList.do";
+				}
 			}else {
 				model.addAttribute("msg", "모든 컬럼 삭제 실패~");
 				return "common/errorPage";
 			}
+			return page;
+		}
+		
+		// 메일함 리스트에서 삭제 버튼 눌렀을 때 체크된 메일 완전 삭제 
+		@RequestMapping("realDelMail.do")
+		public String allRealDelMail(Model model, String mailNoArr, String page){
+
+			String [] mailNon = mailNoArr.split(",");
+			int result = maService.realDelMail(mailNon);
+			
+			if(result > 0 ) {
+				if(page.equals("보낸메일")) {
+					System.out.println(page);
+					return "redirect:sendMailList.do";		
+				}if(page.equals("받은메일")) {
+					return "redirect:recieveMail.do";			
+				}if(page.equals("임시저장")) {
+					return "redirect:saveMailList.do";
+				}if(page.equals("휴지통")) {
+					return "redirect:binMailList.do";
+				}
+			}else {
+				model.addAttribute("msg", "모든 컬럼 삭제 실패~");
+				return "common/errorPage";
+			}
+			return page;
 		}
 		
 		// 휴지통 리스트 뽑기 
@@ -444,19 +478,7 @@ private ScheduleService sService;
 			}
 		}
 		
-		@RequestMapping("allRealDelMail.do")
-		public String allRealDelMail(Model model, HttpSession session) {
-			String memId = ((Member)session.getAttribute("loginUser")).getId();		
-
-			int result = maService.allRealDelMail(memId);
-			
-			if(result > 0) {
-				return "redirect:recieveMail.do";			
-			}else {
-				model.addAttribute("msg", "모든 컬럼 삭제 실패~");
-				return "common/errorPage";
-			}
-		}
+	
 		
 		@RequestMapping("deleteOneMail.do")
 		public String deleteOneMail(Model model, int mailNo) {
@@ -542,7 +564,6 @@ private ScheduleService sService;
 		map.put("search",search);
 		map.put("memId",memId);
 		
-		
 		if(category.equals("제목")) {
 		ArrayList<Mail> list = maService.searchTitle(map);
 		mv.addObject("list",list);
@@ -592,6 +613,7 @@ private ScheduleService sService;
 				mv.setViewName("mail/searchSendResult");
 				return mv;
 				}
+				
 }
 
 
