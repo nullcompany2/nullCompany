@@ -36,6 +36,7 @@ import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.common.Pagination;
 import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.personnelManagement.model.service.PersonnelManagementService;
+import com.kh.nullcompany.personnelManagement.model.vo.Absence;
 import com.kh.nullcompany.personnelManagement.model.vo.Department;
 import com.kh.nullcompany.personnelManagement.model.vo.ForEmLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.ForEmUsedLeave;
@@ -473,7 +474,10 @@ public class PersonnelManagementController {
 	// 휴가 관리 설정저장용
 	@ResponseBody
 	@RequestMapping(value="fixSetLeave.do")
-	public void fixSetLeave(String firstyear, String setAnnualLeave,  String newLeaveArr , HttpServletResponse response) throws JsonIOException, IOException{
+	public void fixSetLeave(
+							String firstyear, String setAnnualLeave,  String newLeaveArr , HttpServletResponse response,
+							String leaveTypeSet
+							) throws JsonIOException, IOException{
 		String str = "311aa";
 		System.out.println(setAnnualLeave);
 		System.out.println(newLeaveArr);
@@ -481,6 +485,7 @@ public class PersonnelManagementController {
 		Date today = new Date();
 		ArrayList<SetLeave> setLeave = new ArrayList<SetLeave>();
 		ArrayList<TypeLeave> newLeave = new ArrayList<TypeLeave>();
+		ArrayList<TypeLeave> LeaveTypeSetting = new ArrayList<TypeLeave>();
 
 		JsonParser jsonParser = new JsonParser();
 		JsonArray jsonArray = (JsonArray)jsonParser.parse(setAnnualLeave);
@@ -525,6 +530,29 @@ public class PersonnelManagementController {
 			
 			
 		}
+		jsonArray = (JsonArray)jsonParser.parse(leaveTypeSet);
+		for (int i = 0; i < jsonArray.size(); i++) {
+			JsonObject object = (JsonObject) jsonArray.get(i);
+		      
+		    int no = (object.get("no")).getAsInt();
+		    String useAnnual = (object.get("useAnnual")).getAsString();
+		    if(useAnnual.equals("false")) {
+		    	useAnnual = "N";
+		    }else {
+		    	useAnnual ="Y";
+		    }
+		    String able = (object.get("able")).getAsString();
+		    if( able.equals("able")) {
+		    	able = "Y";
+		    }else {
+		    	able = "N";
+		    }
+		    TypeLeave setL = new TypeLeave(no, null, useAnnual, able);
+		    LeaveTypeSetting.add(setL);
+		}
+		for(TypeLeave j : LeaveTypeSetting) {
+			System.out.println(j);
+		}
 	       
 	       
 	       
@@ -533,6 +561,8 @@ public class PersonnelManagementController {
 	       if(!newLeave.isEmpty()) {
 	    	   int insertLeaveType = pService.insertLeaveType(newLeave);	    	   
 	       }
+	       
+	       int updateLeaveTypeSetting = pService.updateLeaveType(LeaveTypeSetting);
 
 //		
 //		int result = pService.fixSetLeave(newLeaveArr,setAnnualLeave,firstyear);
@@ -835,16 +865,22 @@ public class PersonnelManagementController {
 
 	//근태관리 -휴직자관리
 	@RequestMapping("emAbsenceManagement.do")
-	public String emAbsenceManagement(HttpServletResponse response) {
-		return "personnel_management/emAbsenceManagement";
+	public ModelAndView emAbsenceManagement(ModelAndView mv ,HttpServletResponse response) {
+				
+		ArrayList<Absence> absenceList = pService.absenceList();
+		System.out.println(absenceList);
+		mv.addObject("absenceList",absenceList);
+		mv.setViewName("personnel_management/emAbsenceManagement");
+		return mv;
+	}
+	// 근태관리 -휴직자 복직
+	@RequestMapping("returnToWork.do")
+	public String returnToWork(HttpServletResponse response, int memNo) {
+		
+		int result = pService.returnToWork(memNo);
+		return "redirect:emAbsenceManagement.do";
 	}
 	
-	//근태관리 - 직원근태관리
-	@RequestMapping("emDiligenceManagement.do")
-	public String emDiligenceManagement(HttpServletResponse response) {
-		return "personnel_management/emDiligenceManagement";
-	}
-
 	// 근태 수정요청 페이지
 
 	@RequestMapping("reqDiligence.do")
@@ -998,5 +1034,30 @@ public class PersonnelManagementController {
 		return "redirect:emLeaveManagement.do";
 		
 	}
+	
+	//근태관리 - 직원근태관리
+		@RequestMapping("emDiligenceManagement.do")
+		public ModelAndView emDiligenceManagement(ModelAndView mv, HttpServletResponse response) {
+			SimpleDateFormat formatD = new SimpleDateFormat("yyyy-MM-dd");
+			// 올해 몇월인지(월평 지각수 계산용)
+			Date today = new Date();
+			int TMonth = today.getMonth()+1;
+			System.out.println(TMonth);
+			
+			// 모든 사원 정보 가져오기
+			ArrayList<Member> mList = pService.selectAllMember();
+			ArrayList<RecordDiligence> rD = new ArrayList<RecordDiligence>();
+			for(int i= 0; i<mList.size(); i++) {
+				int memNo = mList.get(i).getMemNo();
+				System.out.println("mList 배열 사번 : " + memNo);
+				rD.addAll(pService.recordDiligenceList(memNo));
+				System.out.println("rD 배열 확인 : " +rD);
+			}
+			mv.addObject("mList",mList);
+			mv.addObject("recordDiligenceList",rD);
+			mv.setViewName("personnel_management/emDiligenceManagement");
+			return mv;
+			
+		}
 	
 }

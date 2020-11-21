@@ -140,8 +140,29 @@
    		<result property="timeExit" column="TIME_EXIT"/>
    		<result property="statusDiligence" column="STATUS_DILIGENCE"/>
    	</resultMap>
+   	
+   	<resultMap type="PAbsence" id="AbsenceResultSet">
+   		<result property="memNo" column="MEM_NO"/>
+   		<result property="name" column="NAME"/>
+   		<result property="deptNo" column="DEPT_NO"/>
+   		<result property="lankNo" column="LANK_NO"/>
+   		<result property="deptName" column="DEPT_NAME"/>
+   		<result property="rankName" column="RANK_NAME"/>
+   		<result property="noAbsence" column="NO_ABSENCE"/>
+   		<result property="absenceDate" column="ABSENCE_DATE"/>
+   		<result property="reasonAbsence" column="REASON_ABSENCE"/>
+   		<result property="returnDate" column="RETURN_DATE"/>
+   		<result property="status" column="STATUS"/>
+   	</resultMap>
    	<!-- **************************************************************************************** -->
-   
+   	<!-- 전체사원 -->
+   	<select id="selectAllMember" resultMap="memberResultSet">
+   		SELECT *
+		FROM MEMBER
+		JOIN DEPARTMENT USING(DEPT_NO)
+		JOIN RANK USING(RANK_NO)
+		ORDER BY MEM_NO
+   	</select>
 	<!-- 휴가일수 계산 -->
 	<select id="leaveCalculdate" parameterType="string" resultType="_int" >
 		SELECT NVL(ANNUAL_LEAVE,0)
@@ -429,6 +450,7 @@
 		FROM RECORD_DILIGENCE
 		WHERE MEM_NO = #{memNo}
 		ORDER BY DATE_DILIGENCE
+		
 	</select>
 	
 	<select id="AttendanceDays" resultMap="SetAttendanceResultSet">
@@ -460,5 +482,21 @@
 	
 	<update id="updateAttendance">
 		UPDATE SET_ATTENDANCE_STANDARD SET DAY_AVAILABLE = #{dateStatus}, TIME_ATTENDANCE = #{sDate}, TIME_OFFWORK = #{eDate} WHERE DAY_WEEK = #{date}
+	</update>
+	
+	<update id="updateLeaveType">
+		UPDATE TYPE_LEAVE SET ANNUAL_USE = #{annualUse}, L_STATUS = #{status} WHERE NO_TYPE_LEAVE = #{noType}
+	</update>
+	
+	<select id="absenceList" resultMap="AbsenceResultSet">
+	 	SELECT *
+		FROM MEMBER
+		JOIN DEPARTMENT USING(DEPT_NO)
+		JOIN RANK USING(RANK_NO)
+        RIGHT JOIN ABSENCE USING(MEM_NO)
+	</select>
+	<!-- 복직 -->
+	<update id="returnToWork" parameterType="_int">
+		UPDATE ABSENCE SET STATUS = 'N' , RETURN_DATE = SYSDATE WHERE MEM_NO =#{memNo}
 	</update>
 </mapper>

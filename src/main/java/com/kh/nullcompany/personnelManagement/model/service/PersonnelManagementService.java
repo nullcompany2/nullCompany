@@ -6,6 +6,7 @@ import java.util.Map;
 import com.google.gson.JsonObject;
 import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.member.model.vo.Member;
+import com.kh.nullcompany.personnelManagement.model.vo.Absence;
 import com.kh.nullcompany.personnelManagement.model.vo.Department;
 import com.kh.nullcompany.personnelManagement.model.vo.ForEmLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.ForEmUsedLeave;
@@ -197,6 +198,15 @@ public interface PersonnelManagementService {
 	ArrayList<SetAttendance> setDiligenceStandard();
 	// 근태 설정 요일 및 출퇴근 시간설정
 	int updateAttendance(Map setA);
+	// 휴가 설정 업데이트
+	int updateLeaveType(ArrayList<TypeLeave> leaveTypeSetting);
+	// 휴직자 리스트
+	ArrayList<Absence> absenceList();
+	// 복직
+	int returnToWork(int memNo);
+	// 전제 사원 근태관리 -모든사원 리스트
+	ArrayList<Member> selectAllMember();
+	
 
 
 	

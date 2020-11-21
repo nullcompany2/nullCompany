@@ -178,36 +178,38 @@
 										
 									</tr>
 									<!-- 리스트 -->
+									<c:set var="i" value="0"/>
 									<c:forEach var="tl" items="${leaveList}">
 									<tr >
-										<td class="tp-l-list-td">${tl.nameType }</td>
+										<td class="tp-l-list-td" >${tl.nameType }</td>
 										<td class="tp-l-list-td">
 										<c:if test="${tl.status eq 'Y'}">
-											<select name="" id="availability ${ tl.noType }able">
-												<option value="L-use">사용</option>
-												<option value="L-n-use">사용안함</option>
+											<select name="" id="availability${ i }able">
+												<option value="able">사용</option>
+												<option value="notAble">사용안함</option>
 											</select>										
 										</c:if>
 										<c:if test="${tl.status ne 'Y'}">
-											<select name="" id="availability ${ tl.noType }able" >
-												<option value="L-n-use">사용안함</option>
-												<option value="L-use">사용</option>
+											<select name="" id="availability${ i }able" >
+												<option value="notAble">사용안함</option>
+												<option value="able">사용</option>
 											</select>										
 										</c:if>
 										</td>
 										<c:if test="${tl.annualUse eq 'Y' }">
 											<td class="tp-l-list-td" id="${tbl.noType }ann">
-												<input type="checkbox" name="" id="use-a${tl.noType }" checked>
+												<input type="checkbox" name="useAnnualCheck" id="${tl.noType }" checked>
 												연차사용여부
 											</td>
 										</c:if>
 										<c:if test="${tl.annualUse ne 'Y' }">
 											<td class="tp-l-list-td" id="${tbl.noType }ann">
-												<input type="checkbox" name="" id="use-a${tl.noType }">
+												<input type="checkbox" name="useAnnualCheck" id="${tl.noType }">
 												연차사용여부
 											</td>
 										</c:if>
 									</tr>
+									<c:set var ="i" value="${i+1 }"/>
 									</c:forEach>
 									
 									
@@ -226,6 +228,7 @@
     	
     	var newLeaveArr = new  Array();
     	var setAnnualLeave = new  Array();
+    	var leaveTypeSet = new Array();
     	var newLeaveCount = 1;
     	var firstyear;
     	
@@ -290,10 +293,33 @@
     			newLeaveArr.push(data);
     			
     		}
+    		
+    		for(var i =0; i<$('input:checkbox[name="useAnnualCheck"]').length; i++){
+    			
+    			var data = new Object();
+    			var name ;
+    			var able ;
+    			var useAnnual;
+    			
+    			
+    			data.no = ($('input:checkbox[name="useAnnualCheck"]')[i].id)
+    			data.useAnnual =($('input:checkbox[name="useAnnualCheck"]')[i].checked)
+    			data.able = ($("#availability"+i+"able option:selected").val());
+    			
+    			leaveTypeSet.push(data);
+    			console.log(data);
+    		}
+    		for(var j in leaveTypeSet){
+    			console.log(leaveTypeSet[j]);
+    		}
     		//newLeaveArr : newLeaveArr, setAnnualLeave : setAnnualLeave, firstyear : firstyear
     		$.ajax({
     			url: "fixSetLeave.do",
-    			data : {firstyear : firstyear,setAnnualLeave : JSON.stringify(setAnnualLeave),newLeaveArr :  JSON.stringify(newLeaveArr)},
+    			data : 
+    			{
+    				firstyear : firstyear,setAnnualLeave : JSON.stringify(setAnnualLeave),newLeaveArr :  JSON.stringify(newLeaveArr),
+    				leaveTypeSet : JSON.stringify(leaveTypeSet)
+    			},
     			type : "post",
     			
     			success:function(data){

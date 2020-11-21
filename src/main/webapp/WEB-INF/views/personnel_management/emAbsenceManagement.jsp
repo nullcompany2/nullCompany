@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,41 +39,38 @@
 				<div class="contents-wrap drag-scrollbar">
 					<div id="show-myleave" class="c-ic">
 						<h4 style="font-weight:normal;">
-							휴직자 관리에서 추가/수정/삭제한 내역은 실제 근태에 다음날부터 반영됩니다. <br>
-							※ 휴직 기간이 만료된 직원은 인사관리자가 수동으로 휴직자 목록에서 [삭제]해야 합니다. 휴직자목록에서 삭제 후 근태가 정상처리 됩니다.
+							<br>
+							※ 복직을 원하는 직원은 인사관리자가 수동으로 휴직자 목록에서 [복직]해야 합니다. 휴직자목록에서 복직 후 근태가 정상처리 됩니다.
 						</h4>
 	
 						<div style="margin-top: 50px; margin-bottom: 10px;">
-							<a href="#" class="cursor">+ 휴직자 추가</a>
+							
 						</div>
 						<table class="r-table" id="application-record">
 							<thead style="background: #e8ecee;">
 								<tr>
-									<th scope="col" rowspan="1" class="tr">이름</th>
-									<th scope="col" rowspan="2" class="tr">소속</th>
-									<th scope="col" rowspan="2" class="tr">사유</th>
-									<th scope="col" rowspan="2" class="tr">기간</th>
-									<th scope="col" rowspan="2" class="tr"></th>
+									<th scope="col"  class="ta">이름</th>
+									<th scope="col" class="ta">소속</th>
+									<th scope="col"  class="ta">사유</th>
+									<th scope="col" class="ta">휴직일</th>
+									<th scope="col" class="ta">복직</th>
 								</tr>
 							</thead>
 							<!-- 휴직자 추가시 리스트 -->
 							<tbody>
-								<tr>
-									<td class="ta"><input type="text" name="" id="" class="absence-in-t"></td>
-									<td class="ta"><span>소속자동입력</span></td>
-									<td class="ta"><input type="text" name="" id="" class="absence-in-t"></td>
+								<c:forEach var="list" items="${absenceList }">
+								<c:if test="${list.status eq 'Y' }">
+								<tr style="text-align:center">
+									<td class="ta">${list.name }</td>
+									<td class="ta">${list.deptName } </td>
+									<td class="ta">${list.reasonAbsence }</td>
+									<td class="ta">${list.absenceDate }</td>
 									<td class="ta">
-										<input type="date" name="" id="" >
-										부터
-										<input type="date" name="" id="" >
-										까지
-									</td>
-									<td>
-										<a href="#"id="delect-chk" class="cursor" style="color: #477A8F;">저장</a>
-										|
-										<a href="#"id="delect-chk" class="cursor" style="color: #477A8F;">취소</a>
+										<a href="#"id="${list.memNo }" class="cursor" onclick="retrunToWork(${list.memNo})" style="color: #477A8F;">복직</a>
 									</td>
 								</tr>
+								</c:if>
+								</c:forEach>
 							</tbody>
 						</table>
 						<div style="float: right; margin-top: 10px;">
@@ -85,6 +84,16 @@
 		
 		
 	</div>
+	<script>
+		function retrunToWork(memNo){
+			var result = confirm("사번 : "+memNo+" 사원을 복직시키시겠습니까.?");
+			if(result){
+				location.href="returnToWork.do?memNo="+memNo;
+			}
+			
+		};
+	</script>
+	
 	<!-- Modal -->
 
 	<script>
@@ -202,23 +211,27 @@
 		<h4 style="color: #477A8F; margin-bottom: 30px;">휴가 신청 상세</h4>
 		<table class="md-tbl" id="application-record">
             <thead style="background: #e8ecee;">
-                <tr>
-                    <th scope="col" rowspan="1" class="md-tr">이름</th>
-                    <th scope="col" rowspan="2" class="md-tr">아이디</th>
-                    <th scope="col" rowspan="2" class="md-tr">사유</th>
-                    <th scope="col" rowspan="2" class="md-tr">기간</th>
-                    <th scope="col" rowspan="2" class="md-tr">삭제일</th>
+                <tr style="text-align:center">
+                    <th scope="col"  class="md-ta">이름</th>
+                    <th scope="col"  class="md-ta">사번</th>
+                    <th scope="col"  class="md-ta">사유</th>
+                    <th scope="col" class="md-ta">휴직일</th>
+                    <th scope="col"  class="md-ta">복직일</th>
                 </tr>
             </thead>
             <!-- 휴직자 추가시 리스트 -->
             <tbody>
-                <tr>
-                    <td class="md-ta">Name</td>
-                    <td class="md-ta">ID</td>
-                    <td class="md-ta">Reason</td>
-                    <td class="md-ta">term</td>
-                    <td class="md-ta">deleteDate</td>
+            <c:forEach var="list" items="${absenceList }">
+            <c:if test="${list.status ne 'Y' }">
+                <tr style="text-align:center">
+                    <td class="md-ta">${list.name }</td>
+                    <td class="md-ta">${list.memNo }</td>
+                    <td class="md-ta">${list.reasonAbsence }</td>
+                    <td class="md-ta">${list.absenceDate }</td>
+                    <td class="md-ta">${list.returnDate }</td>
                 </tr>
+            </c:if>
+            </c:forEach>
             </tbody>
         </table>
 		<div style="text-align: center; margin-top: 50px;">
