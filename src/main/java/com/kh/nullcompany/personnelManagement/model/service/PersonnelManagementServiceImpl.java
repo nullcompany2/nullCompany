@@ -10,6 +10,7 @@ import com.google.gson.JsonObject;
 import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.personnelManagement.model.dao.PersonnelManagementDao;
+import com.kh.nullcompany.personnelManagement.model.vo.Absence;
 import com.kh.nullcompany.personnelManagement.model.vo.Department;
 import com.kh.nullcompany.personnelManagement.model.vo.ForEmLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.ForEmUsedLeave;
@@ -316,6 +317,26 @@ public class PersonnelManagementServiceImpl implements PersonnelManagementServic
 	@Override
 	public int updateAttendance(Map setA) {
 		return pDao.updateAttendance(setA);
+	}
+
+	@Override
+	public int updateLeaveType(ArrayList<TypeLeave> leaveTypeSetting) {
+		return pDao.updateLeaveType(leaveTypeSetting);
+	}
+
+	@Override
+	public ArrayList<Absence> absenceList() {
+		return pDao.absenceList();
+	}
+
+	@Override
+	public int returnToWork(int memNo) {
+		return pDao.returnToWork(memNo);
+	}
+
+	@Override
+	public ArrayList<Member> selectAllMember() {
+		return pDao.selectAllMember();
 	}
 
 	

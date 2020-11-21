@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.member.model.vo.Member;
+import com.kh.nullcompany.personnelManagement.model.vo.Absence;
 import com.kh.nullcompany.personnelManagement.model.vo.Department;
 import com.kh.nullcompany.personnelManagement.model.vo.ForEmLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.ForEmUsedLeave;
@@ -292,6 +293,31 @@ public class PersonnelManagementDao {
 
 	public int updateAttendance(Map setA) {
 		return sqlSession.update("personnelMapper.updateAttendance",setA);
+	}
+
+	// 휴가설정  - 휴가 사용여부 및 연차차감 설정 업데이트
+	public int updateLeaveType(ArrayList<TypeLeave> leaveTypeSetting) {
+		int re = 0;
+		for(TypeLeave i : leaveTypeSetting) {
+			re = sqlSession.update("personnelMapper.updateLeaveType",i);
+		}
+		
+		return re;
+	}
+
+
+	public ArrayList<Absence> absenceList() {
+		return (ArrayList)sqlSession.selectList("personnelMapper.absenceList");
+	}
+
+
+	public int returnToWork(int memNo) {
+		return sqlSession.update("personnelMapper.returnToWork",memNo);
+	}
+
+
+	public ArrayList<Member> selectAllMember() {
+		return (ArrayList)sqlSession.selectList("personnelMapper.selectAllMember");
 	}
 
 

@@ -83,16 +83,17 @@
 								<thead style="background: #e8ecee;">
 									<tr class="date_tbl_title">
 									</tr>                     
-									<tr class="date_tbl">										
+									<tr class="date_tbl">				
 									</tr>
 					
 								</thead>
 									
 								<tbody>
+									
 									<tr >
-										<td scope="col" rowspan="2" class="ta">Han</td>
-										<td scope="col" rowspan="2" class="ta">인사</td>
-										<td scope="col" rowspan="2" class="ta">0 / 3</td>
+										<td scope="col" rowspan="2" class="ta">${loginUser.name }</td>
+										<td scope="col" rowspan="2" class="ta">${loginUser.deptName }</td>
+										<td scope="col" rowspan="2" class="ta">${lateCount }/${noAttendanceCount }</td>
 										<td scope="col" rowspan="2" class="ta"><a href="#"id="detail-r-l" class="cursor" style="color: #477A8F;">상세</a></td>
 									</tr>
 									<tr class="date_tbl_output">
@@ -274,7 +275,7 @@
 			$th_title.append($th_tr);
 			var $th_tr =$('<th scope="col" rowspan="2" class="tr">').text("소속");
 			$th_title.append($th_tr);
-			var $th_tr =$('<th scope="col" rowspan="2" class="tr">').text("지각(미체크)");
+			var $th_tr =$('<th scope="col" rowspan="2" class="tr">').text("지각/결근");
 			$th_title.append($th_tr);
 			var $th_tr =$('<th scope="col" rowspan="2" class="tr">').text("상세");
 			$th_title.append($th_tr);
