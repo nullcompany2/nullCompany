@@ -108,10 +108,10 @@
 			<div style="margin-left:40px;">
 			<!--여기다가 만들기 -->
 			<br> 
-				&nbsp;&nbsp;<input type="checkbox" id="checkall"> 
 				&nbsp;&nbsp;
+				<input type="checkbox" id="checkall"> 
 				&nbsp;&nbsp;
-				
+				전체선택 &nbsp;&nbsp;
 				<span id="hide" style="margin-right:50px;"><span id="count"> </span>  &nbsp; <a id="realdelMail"> 완전삭제 </a> </span>
 				<span id="countAll"> </span> <br><br>
 				
@@ -128,8 +128,8 @@
 						</c:url>
 						
 						<tr class="trMail" onClick="location.href='${maildetailView}'"> 
-						
-							<td id="firstTd">&nbsp;&nbsp;<input type="checkbox" onClick="event.cancelBubble=true" name="mail"></td>
+
+							<td id="firstTd">&nbsp;&nbsp;<input type="checkbox" onClick="event.cancelBubble=true" name="mail" value="${ma.mailNo}"></td>						
 							<td align="left">${ma.name} < ${ma.sender} ></td>
 							<td align="center">${ ma.mTitle }</td>
 							<td align="right"> ${ma.sendDate }</td>
@@ -192,27 +192,51 @@
         	 //선택된 갯수
         	
         	
-            //최상단 체크박스 클릭
+ //최상단 체크박스 클릭
             
             $("#checkall").click(function(){
                 //클릭되었으면
                 if($("#checkall").prop("checked")){
                     //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
                     $("input[name=mail]").prop("checked",true);
-                    $(".trMail").css("background","#ECECEC");
-                    $("#hide").show();
-                    $("#select").hide(); 
-                    
-                    var count = $("input:checkbox[name=mail]:checked").length;
-                   	$("#count").text(count);
+                    $("#select").hide();
+                    $("#hide").show(); 
                    	
                     //클릭이 안되있으면
-                }else{
+                }else {
                     //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
                     $("input[name=mail]").prop("checked",false);
-                    $(".trMail").css("background","white");
-                    $("#hide").hide();
-                    $("#select").show(); 
+                    $("#hide").hide(); 
+                    $("#select").show();  
+                  
+                }
+            })
+            
+              $("input[name=mail]").click(function(e){
+                //클릭되었으면
+                if($(e.target).prop("checked")){
+                    //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
+                    $(e.target).prop("checked",true);
+                    $("#select").hide();
+                    $("#hide").show(); 
+                   	
+                    //클릭이 안되있으면
+                }else {
+                    //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
+                    $(e.target).prop("checked",false);
+                    var j =0;
+                    for( var i =0; i<$("input[name=mail]").length;i++){
+	                    console.log($("input[name=mail]")[i].checked);
+                    	if($("input[name=mail]")[i].checked){
+                    		j++;
+                    	};
+                    }
+                    if(j == 0){
+	                    $("#hide").hide(); 
+	                    $("#select").show();  
+                    	$("#checkall").prop("checked",false);
+                    }
+                  
                 }
             })
         })
@@ -225,10 +249,24 @@
 		});
 
         
+ 	 	 // 체크 박스 완전 삭제하기 
         $("#realdelMail").click(function(){
-        	confirm("완전 삭제하시면 복구 할 수 없습니다. 정말로 삭제하시겠습니까?");
-		});
-        
+       	 if (confirm("완전 삭제하시면 복구 할 수 없습니다. 정말로 삭제하시겠습니까?") == true){ 
+       		 mailNoArr = new Array();
+       			
+       		 	var page = "휴지통";
+                var size = $('input:checkbox[name="mail"]').length;
+                for( var i =0;i<size;i++ ){
+                   if($('input:checkbox[name="mail"]')[i].checked){
+                	   mailNoArr.push($('input:checkbox[name="mail"]')[i].value);
+                	   	console.log(mailNoArr);
+                	   document.location.href='realDelMail.do?mailNoArr=' + mailNoArr + '&page=' + page;
+                   	}
+                  }
+                  
+                }
+                   
+            	});
         
 
         </script>

@@ -100,13 +100,6 @@ public interface MailService {
 	 */
 	Mail saveDetailView(int mailNo);
 
-	/**
-	 * 
-	 * 받은 메일함에서 전체 삭제 
-	 * @param memId
-	 * @return
-	 */
-	int allDelMail(String memId);
 
 	/**
 	 * 휴지통 리스트 
@@ -288,5 +281,22 @@ public interface MailService {
 	 * @return
 	 */
 	ArrayList<Mail> searchSender(Map map);
+
+
+	/**
+	 * 
+	 * 리스트에서 체크박스 삭제 하기 
+	 * @param mailNon
+	 * @return
+	 */
+	int delmail(String[] mailNon);
+
+
+	/**
+	 *  리스트에서 체크박스 완전 삭제 하기 
+	 * @param mailNon
+	 * @return
+	 */
+	int realDelMail(String[] mailNon);
 	
 }

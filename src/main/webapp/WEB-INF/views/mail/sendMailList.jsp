@@ -127,10 +127,10 @@
 			<div style="margin-left:40px;">
 			<!--여기다가 만들기 -->
 			<br> 
-						&nbsp;&nbsp;<input type="checkbox" id="checkall"> 
-						&nbsp;&nbsp; 
-						
 						&nbsp;&nbsp;
+						<input type="checkbox" id="checkall"> 
+						&nbsp;&nbsp;
+						전체선택 &nbsp;&nbsp;
 						<span id="hide" style="margin-right:40px;">  <span id="count"> </span> <a id="delMail">삭제 </a>  &nbsp; <a id="realdelMail"> 완전삭제 </a> </span>
 						<span id="countAll"> </span> <br><br>
 						
@@ -150,7 +150,7 @@
 							<c:param name="memNo" value="${ma.memNo}" />
 						</c:url>
 						
-							<td id="firstTd">&nbsp;&nbsp;<input type="checkbox" onClick="event.cancelBubble=true" name="mail"></td>
+							<td id="firstTd">&nbsp;&nbsp;<input type="checkbox" onClick="event.cancelBubble=true" name="mail" value="${ma.mailNo}"></td>
 							<td align="left"><a id="idWrite" onClick="event.stopPropagation(); location.href='${mailWriteId}'">${ma.name} < ${ma.recipient} > </a></td>
 							<td>${ ma.mTitle }</td>
 							<td align="right"> ${ma.sendDate }</td>
@@ -212,7 +212,6 @@
 			<input  id="search" type="text" placeholder="메일 검색"> 
 			<button id="searchBtn" onclick="goSearch();" > 검색 </button> <br>
 			
-        </div>
         
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.js"></script>
         <script>
@@ -223,31 +222,54 @@
         	 //선택된 갯수
         	
         	
-            //최상단 체크박스 클릭
+ //최상단 체크박스 클릭
             
             $("#checkall").click(function(){
                 //클릭되었으면
                 if($("#checkall").prop("checked")){
                     //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
                     $("input[name=mail]").prop("checked",true);
-                    $(".trMail").css("background","#ECECEC");
-                    $("#hide").show();
-                    $("#select").hide(); 
-                    
-                    var count = $("input:checkbox[name=mail]:checked").length;
-                   	$("#count").text(count);
+                    $("#select").hide();
+                    $("#hide").show(); 
                    	
                     //클릭이 안되있으면
-                }else{
+                }else {
                     //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
                     $("input[name=mail]").prop("checked",false);
-                    $(".trMail").css("background","white");
-                    $("#hide").hide();
-                    $("#select").show(); 
+                    $("#hide").hide(); 
+                    $("#select").show();  
+                  
+                }
+            })
+            
+              $("input[name=mail]").click(function(e){
+                //클릭되었으면
+                if($(e.target).prop("checked")){
+                    //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
+                    $(e.target).prop("checked",true);
+                    $("#select").hide();
+                    $("#hide").show(); 
+                   	
+                    //클릭이 안되있으면
+                }else {
+                    //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
+                    $(e.target).prop("checked",false);
+                    var j =0;
+                    for( var i =0; i<$("input[name=mail]").length;i++){
+	                    console.log($("input[name=mail]")[i].checked);
+                    	if($("input[name=mail]")[i].checked){
+                    		j++;
+                    	};
+                    }
+                    if(j == 0){
+	                    $("#hide").hide(); 
+	                    $("#select").show();  
+                    	$("#checkall").prop("checked",false);
+                    }
+                  
                 }
             })
         })
-	
 	
         $(document).ready(function(){
 		   $('table tr').mouseover(function(){
@@ -258,23 +280,46 @@
 		   });
 		});
 
-        // 삭제 
-        $("#delMail").click(function(){
-			 if (confirm("정말로 삭제하시겠습니까? 휴지통으로 이동합니다.") == true){    //확인
-
-				 document.location.href='allDelMail.do';
-
-		        }else{   //취소
-
-		            return;
-		        }
-
-		});
-        
-        // 복원 
+     // 체크 박스 삭제 하기 
+      	 var mailNoArr = new Array();
+      
+      	 $("#delMail").click(function(){
+       	
+      		 if (confirm("정말로 삭제하시겠습니까? 휴지통으로 이동합니다.") == true){ 
+      		 mailNoArr = new Array();
+		
+           var page = "보낸메일";
+           var size = $('input:checkbox[name="mail"]').length;
+           for( var i =0;i<size;i++ ){
+              if($('input:checkbox[name="mail"]')[i].checked){
+           	   mailNoArr.push($('input:checkbox[name="mail"]')[i].value);
+           	   	console.log(mailNoArr);
+           	   document.location.href='delMail.do?mailNoArr=' + mailNoArr + '&page=' + page;
+              	}
+             }
+             
+           }
+              
+       	});
+      	 
+      	
+      	 // 체크 박스 완전 삭제하기 
         $("#realdelMail").click(function(){
-        	confirm("완전 삭제하시면 복구 할 수 없습니다. 정말로 삭제하시겠습니까?");
-		});
+       	 if (confirm("완전 삭제하시면 복구 할 수 없습니다. 정말로 삭제하시겠습니까?") == true){ 
+       		 mailNoArr = new Array();
+       			
+                var size = $('input:checkbox[name="mail"]').length;
+                for( var i =0;i<size;i++ ){
+                   if($('input:checkbox[name="mail"]')[i].checked){
+                	   mailNoArr.push($('input:checkbox[name="mail"]')[i].value);
+                	   	console.log(mailNoArr);
+                	   document.location.href='realDelMail.do?mailNoArr=' + mailNoArr;
+                   	}
+                  }
+                  
+                }
+                   
+            	});
         
         
      // 검색 카테고리 분류 
