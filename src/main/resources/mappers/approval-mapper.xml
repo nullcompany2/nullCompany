@@ -325,7 +325,32 @@
 			APPROVAL_DOCUMENT
 		SET
 			TURN_NO = #{stepPriority},
+			COMPLETE_DATE = SYSDATE
+		WHERE
+			DOC_TEMP_NO= #{docTempNo}
+	</update>
+	
+	<!-- 반려하기(스텝 상태값 변경) -->
+	<update id="stepRejecting" parameterType="map">
+		UPDATE 
+			APPROVAL_STEP 
+		SET
+			APPR_STATUS = 'Y',
+			APPR_DATE = SYSDATE,
+			R_STATUS = 'Y'
+		WHERE 
+			DOC_NO = #{docTempNo}
+		AND STAFF_NO = #{memNo}
+	</update>
+	
+	<!-- 최종 반려하기(문서 상태값 변경) -->
+	<update id="decisionRejecting" parameterType="map">
+		UPDATE 
+			APPROVAL_DOCUMENT
+		SET
+			TURN_NO = #{stepListCount},
 			COMPLETE_DATE = SYSDATE,
+			R_STATUS = 'Y'
 		WHERE
 			DOC_TEMP_NO= #{docTempNo}
 	</update>

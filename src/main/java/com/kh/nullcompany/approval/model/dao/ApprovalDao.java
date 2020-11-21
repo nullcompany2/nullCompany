@@ -94,4 +94,31 @@ public class ApprovalDao {
 		return sqlSession.update("approvalMapper.decisionSigning",map);
 	}
 
+	public int stepRejecting(String docTempNo, int memNo) {
+		Map map = new HashMap();
+		
+		map.put("docTempNo", docTempNo);
+		map.put("memNo",memNo);
+		
+		return sqlSession.update("approvalMapper.stepRejecting",map);
+	}
+
+	public int decisionRejecting(String docTempNo, int stepListCount) {
+		Map map = new HashMap();
+		
+		map.put("docTempNo", docTempNo);
+		map.put("stepListCount",stepListCount);
+		
+		return sqlSession.update("approvalMapper.decisionRejecting",map);
+	}
+
+	public int stepReference(String docTempNo, int memNo) {
+		Map map = new HashMap();
+		
+		map.put("docTempNo", docTempNo);
+		map.put("memNo",memNo);
+		
+		return sqlSession.update("approvalMapper.stepReference",map);
+	}
+
 }

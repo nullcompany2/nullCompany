@@ -133,10 +133,14 @@
 								<td>${ apprList[7].staffRankName }</td>
 								<td>${ apprList[8].staffRankName }</td>
 							</tr>
+							
 							<tr id="tr4">
 								<td>
 									<c:if test="${ !empty apprList[0]}">
 										<c:choose>
+											<c:when test = "${ d.completeDate != null && apprList[0].apprStatus eq 'N' && d.rStatus eq 'Y'}">
+												반려 처리
+											</c:when>
 											<c:when test = "${ d.completeDate != null && apprList[0].apprStatus eq 'N' }">
 												전결
 											</c:when>
@@ -155,6 +159,9 @@
 								<td>
 									<c:if test="${ !empty apprList[1]}">
 										<c:choose>
+											<c:when test = "${ d.completeDate != null && apprList[1].apprStatus eq 'N' && d.rStatus eq 'Y'}">
+												반려 처리
+											</c:when>
 											<c:when test = "${ d.completeDate != null && apprList[1].apprStatus eq 'N' }">
 												전결
 											</c:when>
@@ -173,6 +180,9 @@
 								<td>
 									<c:if test="${ !empty apprList[2]}">
 										<c:choose>
+											<c:when test = "${ d.completeDate != null && apprList[2].apprStatus eq 'N' && d.rStatus eq 'Y'}">
+												반려 처리
+											</c:when>
 											<c:when test = "${ d.completeDate != null && apprList[2].apprStatus eq 'N' }">
 												전결
 											</c:when>
@@ -191,6 +201,9 @@
 								<td>
 									<c:if test="${ !empty apprList[3]}">
 										<c:choose>
+											<c:when test = "${ d.completeDate != null && apprList[3].apprStatus eq 'N' && d.rStatus eq 'Y'}">
+												반려 처리
+											</c:when>
 											<c:when test = "${ d.completeDate != null && apprList[3].apprStatus eq 'N' }">
 												전결
 											</c:when>
@@ -209,6 +222,9 @@
 								<td>
 									<c:if test="${ !empty apprList[4]}">
 										<c:choose>
+											<c:when test = "${ d.completeDate != null && apprList[4].apprStatus eq 'N' && d.rStatus eq 'Y'}">
+												반려 처리
+											</c:when>
 											<c:when test = "${ d.completeDate != null && apprList[4].apprStatus eq 'N' }">
 												전결
 											</c:when>
@@ -227,6 +243,9 @@
 								<td>
 									<c:if test="${ !empty apprList[5]}">
 										<c:choose>
+											<c:when test = "${ d.completeDate != null && apprList[5].apprStatus eq 'N' && d.rStatus eq 'Y'}">
+												반려 처리
+											</c:when>
 											<c:when test = "${ d.completeDate != null && apprList[5].apprStatus eq 'N' }">
 												전결
 											</c:when>
@@ -245,6 +264,9 @@
 								<td>
 									<c:if test="${ !empty apprList[6]}">
 										<c:choose>
+											<c:when test = "${ d.completeDate != null && apprList[6].apprStatus eq 'N' && d.rStatus eq 'Y'}">
+												반려 처리
+											</c:when>
 											<c:when test = "${ d.completeDate != null && apprList[6].apprStatus eq 'N' }">
 												전결
 											</c:when>
@@ -263,6 +285,9 @@
 								<td>
 									<c:if test="${ !empty apprList[7]}">
 										<c:choose>
+											<c:when test = "${ d.completeDate != null && apprList[7].apprStatus eq 'N' && d.rStatus eq 'Y'}">
+												반려 처리
+											</c:when>
 											<c:when test = "${ d.completeDate != null && apprList[7].apprStatus eq 'N' }">
 												전결
 											</c:when>
@@ -281,6 +306,9 @@
 								<td>
 									<c:if test="${ !empty apprList[8]}">
 										<c:choose>
+											<c:when test = "${ d.completeDate != null && apprList[8].apprStatus eq 'N' && d.rStatus eq 'Y'}">
+												반려 처리
+											</c:when>
 											<c:when test = "${ d.completeDate != null && apprList[8].apprStatus eq 'N' }">
 												전결
 											</c:when>
