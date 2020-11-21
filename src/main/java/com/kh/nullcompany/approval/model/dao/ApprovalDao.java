@@ -121,4 +121,8 @@ public class ApprovalDao {
 		return sqlSession.update("approvalMapper.stepReference",map);
 	}
 
+	public int decisionReference(String docTempNo) {
+		return sqlSession.update("approvalMapper.decisionReference",docTempNo);
+	}
+
 }

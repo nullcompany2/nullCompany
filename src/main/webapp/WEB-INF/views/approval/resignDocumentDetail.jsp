@@ -403,7 +403,7 @@
 								    
 								    for(var i = 8; i > -1; i--){
 										tdText = (td.eq(i).text()).trim();
-										if(tdText == '결재 완료' || tdText == '반려'){
+										if(tdText == '결재 완료'){
 											for(var j = i-1; j > -1; j--){ 
 												if(td.eq(j).find('.appr_btn').length){
 													td.eq(j).children().text("후결");
@@ -437,8 +437,6 @@
 								    	}
 								    }
 								});
-								
-								
 							</script>
 							<tr id="tr5">
 								<td>${ apprList[0].apprDate }</td>
@@ -692,11 +690,11 @@
 	
 	<!-- 결재 버튼 모달 -->
        <div id="my_modal" class="modal-dragscroll">
-        <span style="font-size:20px; color: black; font-weight: bold;"> ${ loginUser.name } </span>님 
-        <br>
-        <br>
+	       <span style="font-size:20px; color: black; font-weight: bold;"> ${ loginUser.name } </span>님 
+	       <br>
+	       <br>
            <div class="n-emp-i">
-            <h4 style="color: #477A8F; margin-bottom: 5px; font-weight: bolder;">결재/반려 하시겠습니까? </h4> <br>
+            	<h4 style="color: #477A8F; margin-bottom: 5px; font-weight: bolder;">결재/반려 하시겠습니까? </h4> <br>
                 <div style="display: flex;">
 	                <c:url var="approvalSigning" value="approvalSigning.do">
 						<c:param name="docTempNo" value="${d.docTempNo}"/>
@@ -711,15 +709,15 @@
                     <button onclick="location.href='${approvalRejecting}'">반려</button>
                 </div>
            </div>
-           
-    <!-- 확인 버튼 모달 -->
-    <a class="modal-close-btn cursor">X</a>
+    	   <a class="modal-close-btn cursor">X</a>
         </div>
+        
+    <!-- 확인 버튼 모달 -->
         <div id="my_modal1" class="modal-dragscroll">
-        <br>
-        <span style="font-size:20px; color: black; font-weight: bold;"> ${ loginUser.name } </span>님
+	       <br>
+	       <span style="font-size:20px; color: black; font-weight: bold;"> ${ loginUser.name } </span>님
            <div class="n-emp-i">
-            <h4 style="color: #477A8F; margin-bottom: 5px; font-weight: bolder;">확인 하시겠습니까? </h4> <br>
+            	<h4 style="color: #477A8F; margin-bottom: 5px; font-weight: bolder;">확인 하시겠습니까? </h4> <br>
                 <div>
                     <c:url var="referSigning" value="referSigning.do">
 						<c:param name="docTempNo" value="${d.docTempNo}"/>
@@ -728,7 +726,7 @@
                     <button onclick="location.href='${referSigning}'">확인</button>
                 </div>
            </div>
-    <a class="modal-close-btn cursor">X</a>
+    	   <a class="modal-close-btn cursor">X</a>
         </div>
 
  <script>

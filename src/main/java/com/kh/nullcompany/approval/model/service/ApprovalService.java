@@ -127,4 +127,11 @@ public interface ApprovalService {
 	 */
 	int stepReference(String docTempNo, int memNo);
 
+	/**
+	 * 4_7 회람문서 최종 확인하기(문서 상태값 변경)
+	 * @param docTempNo
+	 * @return
+	 */
+	int decisionReference(String docTempNo);
+
 }

@@ -822,11 +822,12 @@ public class ApprovalController {
 		if(result1 > 0 && result2 > 0) {
 			return "redirect:approvalDetail.do?docNo="+docNo;
 		}else {
-			model.addAttribute("msg", "결재 오류!");
+			model.addAttribute("msg", "반려 오류!");
 			return "common/errorPage";
 		}
 	}
 	
+	// 확인하기
 	@RequestMapping("referSigning.do")
 	public String referSigning(Model model, HttpServletResponse response, HttpSession session, String docTempNo, String docNo) {
 		
@@ -872,18 +873,31 @@ public class ApprovalController {
 				if(memNo == s.getStaffNo()) {
 					// 현재 사용자가 마지막으로 확인처리를 할 때
 					if(completeStepCount == stepListCount-1) {
-						
+						result1 = aService.stepReference(docTempNo, memNo);
+						result2 = aService.decisionReference(docTempNo);
 					// 현재 사용자가 마지막이 아닐 때(미확인 참조자가 있을 때)
 					}else {
 						result1 = aService.stepReference(docTempNo, memNo);
 					}
 				}
 			}
+		// 회람 문서가 아닐 때
 		}else {
-			
+			for(Step s : checkList) {
+				if(memNo == s.getStaffNo()) {
+					result1 = aService.stepReference(docTempNo, memNo);
+				}
+			}
 		}
 		
-		return null;
+		if(result1 > 0 && result2 > 0) {
+			return "redirect:approvalDetail.do?docNo="+docNo;
+		}else if(result1 > 0) {
+			return "redirect:approvalDetail.do?docNo="+docNo;
+		}else {
+			model.addAttribute("msg", "확인 오류!");
+			return "common/errorPage";
+		}
 	}
 	
 //	@ResponseBody

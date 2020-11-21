@@ -93,4 +93,9 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public int stepReference(String docTempNo, int memNo) {
 		return aDao.stepReference(docTempNo, memNo);
 	}
+
+	@Override
+	public int decisionReference(String docTempNo) {
+		return aDao.decisionReference(docTempNo);
+	}
 }

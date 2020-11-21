@@ -289,7 +289,7 @@
 	</select>
 	
 	<!-- 사직서 정보 가져오기 -->
-	<select id="selectResignInfo" parameterType="String" resultMap="resignResultSet">
+	<select id="selectResignInfo"  resultMap="resignResultSet">
 		SELECT
 		 	*
 		FROM
@@ -351,6 +351,27 @@
 			TURN_NO = #{stepListCount},
 			COMPLETE_DATE = SYSDATE,
 			R_STATUS = 'Y'
+		WHERE
+			DOC_TEMP_NO= #{docTempNo}
+	</update>
+	
+	<!-- 확인하기(스텝 상태값 변경) -->
+	<update id="stepReference" parameterType="map">
+		UPDATE 
+			APPROVAL_STEP 
+		SET
+			APPR_STATUS = 'Y'
+		WHERE 
+			DOC_NO = #{docTempNo}
+		AND STAFF_NO = #{memNo}
+	</update>
+	
+	<!-- 회람문서 최종 확인하기(문서 상태값 변경) -->
+	<update id="decisionReference" parameterType="String">
+		UPDATE 
+			APPROVAL_DOCUMENT
+		SET
+			COMPLETE_DATE = SYSDATE
 		WHERE
 			DOC_TEMP_NO= #{docTempNo}
 	</update>
