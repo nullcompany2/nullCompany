@@ -1,6 +1,8 @@
 package com.kh.nullcompany.approval.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -60,6 +62,67 @@ public class ApprovalDao {
 
 	public Resign selectResignInfo(String docTempNo) {
 		return sqlSession.selectOne("approvalMapper.selectResignInfo",docTempNo);
+	}
+
+	public int stepSigning(String docTempNo, int memNo) {
+		
+		Map map = new HashMap();
+		
+		map.put("docTempNo", docTempNo);
+		map.put("memNo",memNo);
+		
+		return sqlSession.update("approvalMapper.stepSigning",map);
+	}
+
+	public int documentSigning(String docTempNo, int stepPriority) {
+		
+		Map map = new HashMap();
+		
+		map.put("docTempNo", docTempNo);
+		map.put("stepPriority",stepPriority);
+		
+		return sqlSession.update("approvalMapper.documentSigning",map);
+	}
+
+	public int decisionSigning(String docTempNo, int stepPriority) {
+		
+		Map map = new HashMap();
+		
+		map.put("docTempNo", docTempNo);
+		map.put("stepPriority",stepPriority);
+		
+		return sqlSession.update("approvalMapper.decisionSigning",map);
+	}
+
+	public int stepRejecting(String docTempNo, int memNo) {
+		Map map = new HashMap();
+		
+		map.put("docTempNo", docTempNo);
+		map.put("memNo",memNo);
+		
+		return sqlSession.update("approvalMapper.stepRejecting",map);
+	}
+
+	public int decisionRejecting(String docTempNo, int stepListCount) {
+		Map map = new HashMap();
+		
+		map.put("docTempNo", docTempNo);
+		map.put("stepListCount",stepListCount);
+		
+		return sqlSession.update("approvalMapper.decisionRejecting",map);
+	}
+
+	public int stepReference(String docTempNo, int memNo) {
+		Map map = new HashMap();
+		
+		map.put("docTempNo", docTempNo);
+		map.put("memNo",memNo);
+		
+		return sqlSession.update("approvalMapper.stepReference",map);
+	}
+
+	public int decisionReference(String docTempNo) {
+		return sqlSession.update("approvalMapper.decisionReference",docTempNo);
 	}
 
 }

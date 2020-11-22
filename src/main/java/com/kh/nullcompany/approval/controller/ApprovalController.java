@@ -8,8 +8,10 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.nullcompany.approval.model.service.ApprovalService;
@@ -657,10 +659,9 @@ public class ApprovalController {
 	
 	// 문서 상세보기
 	@RequestMapping("approvalDetail.do")
-	public ModelAndView approvalDetail(ModelAndView mv, HttpServletResponse response, HttpSession session, String docNo, int formNo) {
+	public ModelAndView approvalDetail(ModelAndView mv, HttpServletResponse response, HttpSession session, String docNo) {
 		
 		Document d = aService.approvalDetail(docNo);
-		System.out.println("문서 정보 : " + d);
 		
 		ArrayList<Step> sList = aService.selectStepList(d.getDocTempNo());
 		
@@ -698,7 +699,6 @@ public class ApprovalController {
 			mv.addObject("receiveList",receiveList);
 			mv.addObject("leaveInfo",leaveInfo);
 			mv.setViewName("approval/leaveDocumentDetail");
-			System.out.println("휴가 정보 : " + leaveInfo);
 		// 휴직 신청서일 때
 		}else if(d.getFormNo() == 4) {
 			Absence absenceInfo = aService.selectAbsenceInfo(d.getDocTempNo());
@@ -720,6 +720,191 @@ public class ApprovalController {
 		
 		return mv;
 	}
+	
+	// 결재하기
+	@RequestMapping("approvalSigning.do")
+	public String approvalSigning(Model model, HttpServletResponse response, HttpSession session, String docTempNo, String docNo) {
+		
+		int memNo = ((Member) session.getAttribute("loginUser")).getMemNo();
+		
+		Document d = aService.approvalDetail(docNo);
+		
+		
+		ArrayList<Step> sList = aService.selectStepList(docTempNo);
+		
+		ArrayList<Step> apprList = new ArrayList<Step>();
+		ArrayList<Step> checkList = new ArrayList<Step>();
+		ArrayList<Step> receiveList = new ArrayList<Step>();
+		
+		for(Step s : sList) {
+			if(s.getLineNo() == 1) {
+				apprList.add(s);
+			}else if(s.getLineNo() == 2) {
+				checkList.add(s);
+			}else {
+				receiveList.add(s);
+			}
+		}
+		
+		// 결재자 수(결재자 수 == 최종 결재자 순번)
+		int stepListCount = apprList.size();
+		
+		int result1 = 0;
+		int result2 = 0;
+		
+		for(Step s : apprList) {
+			if(memNo == s.getStaffNo()) {
+				// 현재 사용자의 결재 순번이 결재자 수(최종 결재자 순번) 보다 낮을 때
+				if(stepListCount > s.getStepPriority()) {
+					// 후결 버튼 클릭할 때(문서 순번은 바꾸지 않음)
+					if(d.getTurnNo() > s.getStepPriority()){
+						result1 = aService.stepSigning(docTempNo, memNo);
+					// 결재 버튼 클릭할 때(문서 순번을 사용자의 다음 스텝 순번으로 변경해줌)
+					}else {
+						result1 = aService.stepSigning(docTempNo, memNo);
+						result2 = aService.documentSigning(docTempNo, s.getStepPriority());
+					}
+				// 현재 사용자의 결재 순번이 결재자 수(최종 결재자 순번)과 같을때 --> 최종 결재자일 때
+				}else if(stepListCount == s.getStepPriority()) {
+					// 결재하기
+					result1 = aService.stepSigning(docTempNo, memNo);
+					result2 = aService.decisionSigning(docTempNo, s.getStepPriority());
+				}
+			}
+		}
+		
+		if(result1 > 0 && result2 > 0) {
+			return "redirect:approvalDetail.do?docNo="+docNo;
+		}else if(result1 > 0) {
+			return "redirect:approvalDetail.do?docNo="+docNo;
+		}else {
+			model.addAttribute("msg", "결재 오류!");
+			return "common/errorPage";
+		}
+	}
+	
+	// 반려하기
+	@RequestMapping("approvalRejecting.do")
+	public String approvalRejecting(Model model, HttpServletResponse response, HttpSession session, String docTempNo, String docNo) {
+		
+		int memNo = ((Member) session.getAttribute("loginUser")).getMemNo();		
+		
+		ArrayList<Step> sList = aService.selectStepList(docTempNo);
+		
+		ArrayList<Step> apprList = new ArrayList<Step>();
+		ArrayList<Step> checkList = new ArrayList<Step>();
+		ArrayList<Step> receiveList = new ArrayList<Step>();
+		
+		for(Step s : sList) {
+			if(s.getLineNo() == 1) {
+				apprList.add(s);
+			}else if(s.getLineNo() == 2) {
+				checkList.add(s);
+			}else {
+				receiveList.add(s);
+			}
+		}
+		
+		// 결재자 수(결재자 수 == 최종 결재자 순번)
+		int stepListCount = apprList.size();
+		
+		int result1 = 0;
+		int result2 = 0;
+
+		for(Step s : apprList) {
+			// 반려는 결재자 순번과 관계없이 문서 완료 처리를 한다.(상위 미 결재자는 반려처리) (최종 결재자 순번 == 결재자 수)의 식이 성립-->문서 순번을 최상위 순위로 올려서 처리함
+			if(memNo == s.getStaffNo()) {
+				result1 = aService.stepRejecting(docTempNo, memNo);
+				result2 = aService.decisionRejecting(docTempNo, stepListCount);
+			}
+		}
+		
+		if(result1 > 0 && result2 > 0) {
+			return "redirect:approvalDetail.do?docNo="+docNo;
+		}else {
+			model.addAttribute("msg", "반려 오류!");
+			return "common/errorPage";
+		}
+	}
+	
+	// 확인하기
+	@RequestMapping("referSigning.do")
+	public String referSigning(Model model, HttpServletResponse response, HttpSession session, String docTempNo, String docNo) {
+		
+		int memNo = ((Member) session.getAttribute("loginUser")).getMemNo();
+		
+		Document d = aService.approvalDetail(docNo);
+		
+		
+		ArrayList<Step> sList = aService.selectStepList(docTempNo);
+		
+		ArrayList<Step> apprList = new ArrayList<Step>();
+		ArrayList<Step> checkList = new ArrayList<Step>();
+		ArrayList<Step> receiveList = new ArrayList<Step>();
+		
+		for(Step s : sList) {
+			if(s.getLineNo() == 1) {
+				apprList.add(s);
+			}else if(s.getLineNo() == 2) {
+				checkList.add(s);
+			}else {
+				receiveList.add(s);
+			}
+		}
+		
+		// 회람 문서에서 확인완료한 스텝 수
+		int completeStepCount = 0;
+		
+		// 참조자 수
+		int stepListCount = checkList.size();
+		
+		int result1 = 0;
+		int result2 = 0;
+		
+		// 회람 문서일 때
+		if(d.getFormNo() == 2) {
+			// 확인 완료한 스텝 수 찾기
+			for(Step s : checkList) {
+				if(s.getApprStatus().equals("Y")) {
+					completeStepCount++;
+				}
+			}
+			for(Step s : checkList) {
+				if(memNo == s.getStaffNo()) {
+					// 현재 사용자가 마지막으로 확인처리를 할 때
+					if(completeStepCount == stepListCount-1) {
+						result1 = aService.stepReference(docTempNo, memNo);
+						result2 = aService.decisionReference(docTempNo);
+					// 현재 사용자가 마지막이 아닐 때(미확인 참조자가 있을 때)
+					}else {
+						result1 = aService.stepReference(docTempNo, memNo);
+					}
+				}
+			}
+		// 회람 문서가 아닐 때
+		}else {
+			for(Step s : checkList) {
+				if(memNo == s.getStaffNo()) {
+					result1 = aService.stepReference(docTempNo, memNo);
+				}
+			}
+		}
+		
+		if(result1 > 0 && result2 > 0) {
+			return "redirect:approvalDetail.do?docNo="+docNo;
+		}else if(result1 > 0) {
+			return "redirect:approvalDetail.do?docNo="+docNo;
+		}else {
+			model.addAttribute("msg", "확인 오류!");
+			return "common/errorPage";
+		}
+	}
+	
+//	@ResponseBody
+//	@RequestMapping("test.do")
+//	public void test(@RequestParam("docTempNo") String docTempNo) {
+//		
+//	}
 
 	@RequestMapping("approvalAllDList.do")
 	public String approvalAllDList(HttpServletResponse response) {
