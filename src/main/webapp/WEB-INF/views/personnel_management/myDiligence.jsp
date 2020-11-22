@@ -517,7 +517,7 @@
 			})
 		})
 		
-		function mdListPaged(currentPage){
+		function mdListPaged(currentPage ,memNo){
 			var year = $("#md_searchYear").val();
 			var month = $("#md_searchMonth").val();
 			
@@ -525,7 +525,7 @@
 			if(year !=0 && month !=0){
 				$.ajax({
 					url : "searchDiligenceYM.do",
-					data : {year : year , month : month , currentPage:currentPage},
+					data : {year : year , month : month , currentPage:currentPage, memNo : memNo},
 					datatype : "json",
 					success:function(data){
 						$("#totalListCount").text(data.dListCount);
@@ -584,7 +584,7 @@
 						}
 			        	
 						if(data.pi.currentPage != 1){
-							$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage -1) +')">').text("[이전]");
+							$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage -1)+","+memNo +')">').text("[이전]");
 				        	
 				        	$td.append($td0);
 						}    	
@@ -597,7 +597,7 @@
 				       			$td.append($td0);
 				       		}
 				       		if(p != data.pi.currentPage ){
-				       			$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage) +')">').text(p);
+				       			$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage)+","+memNo  +')">').text(p);
 				       			$td.append($td0);
 				       		}
 				       	
@@ -609,7 +609,7 @@
 				       	}
 			        	
 			        	if(data.pi.currentPage != data.pi.maxPage){
-			        		$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage + 1) +')">').text("[다음]");
+			        		$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage + 1)+","+memNo  +')">').text("[다음]");
 			        		$td.append($td0);
 			        	}
 			        	
@@ -629,7 +629,7 @@
 			}			
 		}
 		
-		function md_searchBtn(){
+		function md_searchBtn(memNo){
 			var year = $("#md_searchYear").val();
 			var month = $("#md_searchMonth").val();
 			
@@ -637,7 +637,7 @@
 			if(year !=0 && month !=0){
 				$.ajax({
 					url : "searchDiligenceYM.do",
-					data : {year : year , month : month},
+					data : {year : year , month : month , memNo : memNo},
 					datatype : "json",
 					success:function(data){
 						$("#totalListCount").text(data.dListCount);
@@ -696,7 +696,7 @@
 						}
 			        	
 						if(data.pi.currentPage != 1){
-							$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage -1) +')">').text("[이전]");
+							$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage -1)+","+memNo  +')">').text("[이전]");
 				        	
 				        	$td.append($td0);
 						}    	
@@ -709,7 +709,7 @@
 				       			$td.append($td0);
 				       		}
 				       		if(p != data.pi.currentPage ){
-				       			$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage) +')">').text(p);
+				       			$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage)+","+memNo  +')">').text(p);
 				       			$td.append($td0);
 				       		}
 				       	
@@ -721,7 +721,7 @@
 				       	}
 			        	
 			        	if(data.pi.currentPage != data.pi.maxPage){
-			        		$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage + 1) +')">').text("[다음]");
+			        		$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage + 1)+","+memNo  +')">').text("[다음]");
 			        		$td.append($td0);
 			        	}
 			        	
@@ -853,7 +853,7 @@
 						    height: 20px;
 						    border-radius: 3px;
 						    margin-left: 10px;
-						    cursor: pointer;" onclick="md_searchBtn()">
+						    cursor: pointer;" onclick="md_searchBtn(${loginUser.memNo})">
 		    	검색
 		    </button>
             <h4 style="float: right; font-weight: normal;">총<span id="totalListCount">N</span>건</h4>

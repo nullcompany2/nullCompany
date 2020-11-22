@@ -8,6 +8,7 @@ import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.personnelManagement.model.vo.Absence;
 import com.kh.nullcompany.personnelManagement.model.vo.Department;
+import com.kh.nullcompany.personnelManagement.model.vo.DiligenceCountAllMember;
 import com.kh.nullcompany.personnelManagement.model.vo.ForEmLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.ForEmUsedLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.MixForLeave;
@@ -206,6 +207,10 @@ public interface PersonnelManagementService {
 	int returnToWork(int memNo);
 	// 전제 사원 근태관리 -모든사원 리스트
 	ArrayList<Member> selectAllMember();
+	// 전체직원 근태 카운트
+	DiligenceCountAllMember DiligenceCountAllMember();
+	
+	
 	
 
 

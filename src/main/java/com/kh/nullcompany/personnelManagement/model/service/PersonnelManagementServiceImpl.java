@@ -6,12 +6,12 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.google.gson.JsonObject;
 import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.personnelManagement.model.dao.PersonnelManagementDao;
 import com.kh.nullcompany.personnelManagement.model.vo.Absence;
 import com.kh.nullcompany.personnelManagement.model.vo.Department;
+import com.kh.nullcompany.personnelManagement.model.vo.DiligenceCountAllMember;
 import com.kh.nullcompany.personnelManagement.model.vo.ForEmLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.ForEmUsedLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.MixForLeave;
@@ -339,6 +339,12 @@ public class PersonnelManagementServiceImpl implements PersonnelManagementServic
 		return pDao.selectAllMember();
 	}
 
+	@Override
+	public DiligenceCountAllMember DiligenceCountAllMember() {
+		return pDao.DiligenceCountAllMember();
+	}
+
+	
 	
 
 	

@@ -38,6 +38,7 @@ import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.personnelManagement.model.service.PersonnelManagementService;
 import com.kh.nullcompany.personnelManagement.model.vo.Absence;
 import com.kh.nullcompany.personnelManagement.model.vo.Department;
+import com.kh.nullcompany.personnelManagement.model.vo.DiligenceCountAllMember;
 import com.kh.nullcompany.personnelManagement.model.vo.ForEmLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.ForEmUsedLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.MixForLeave;
@@ -305,11 +306,12 @@ public class PersonnelManagementController {
 		
 		// 근무시간 설정값 가져오기
 		SetAttendance setAttendance = pService.setAttendance();
-		
 		// 지각횟수/ 월평균 지각횟수 계산
 		int lateCount = pService.lateCountY(memNo);
 		double avgLateCount = (Math.round(((double)lateCount / (double)TMonth)*100)/100.0);
 		System.out.println(avgLateCount);
+
+		
 		// 출퇴근 기록 미체크-(출근기록이없는날-결근) , 퇴근체크(비정상)-(출근은했지만 퇴근기록이없는상황)
 		int noAttendanceCount = pService.noAttendanceCount(memNo);
 		int noCheckOffwork = pService.noCheckOffwork(memNo);
@@ -339,10 +341,10 @@ public class PersonnelManagementController {
 	
 	//근태 현황 조회 년,월 (모달)-gson
 	@RequestMapping("searchDiligenceYM.do")
-	public void searchDiligenceYM(HttpSession session, HttpServletResponse response, int year,int month,
+	public void searchDiligenceYM(HttpSession session, HttpServletResponse response, int year,int month, int memNo,
 			@RequestParam(value="currentPage", required=false,defaultValue="1") int currentPage) throws JsonIOException, IOException {
 		response.setContentType("application/json; charset=utf-8");
-		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+		
 		Map forsearchYM = new HashMap();
 		forsearchYM.put("year",year);
 		forsearchYM.put("month",month);
@@ -1044,6 +1046,16 @@ public class PersonnelManagementController {
 			int TMonth = today.getMonth()+1;
 			System.out.println(TMonth);
 			
+			// 근무시간 설정값 가져오기
+			SetAttendance setAttendance = pService.setAttendance();
+
+			
+			// 전체직원 근태 카운트
+			
+			DiligenceCountAllMember DiligenceCount = pService.DiligenceCountAllMember();
+			System.out.println(DiligenceCount);
+			
+			
 			// 모든 사원 정보 가져오기
 			ArrayList<Member> mList = pService.selectAllMember();
 			ArrayList<RecordDiligence> rD = new ArrayList<RecordDiligence>();
@@ -1053,6 +1065,8 @@ public class PersonnelManagementController {
 				rD.addAll(pService.recordDiligenceList(memNo));
 				System.out.println("rD 배열 확인 : " +rD);
 			}
+			mv.addObject("diligenceCount",DiligenceCount);
+			mv.addObject("setAttendance",setAttendance);
 			mv.addObject("mList",mList);
 			mv.addObject("recordDiligenceList",rD);
 			mv.setViewName("personnel_management/emDiligenceManagement");
