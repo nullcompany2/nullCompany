@@ -29,7 +29,7 @@ public interface ApprovalService {
 	ArrayList<Document> selectProgressAllList(int memNo, PageInfo pi);
 
 	/**
-	 * 1_3. 진행 중인 문서 -----> 게시판 스텝 조회(리스트 상태값 뽑기)
+	 * 1_3. 게시판 스텝 조회(리스트 상태값 뽑기)
 	 * @param memNo
 	 * @param docTempNo
 	 * @return
@@ -102,5 +102,36 @@ public interface ApprovalService {
 	 * @return
 	 */
 	int decisionSigning(String docTempNo, int stepPriority);
+
+	/**
+	 * 4_4 반려하기(스텝 상태값 변경)
+	 * @param docTempNo
+	 * @param memNo
+	 * @return
+	 */
+	int stepRejecting(String docTempNo, int memNo);
+
+	/**
+	 * 4_5 최종 반려하기(문서 상태값 변경)
+	 * @param docTempNo
+	 * @param stepListCount
+	 * @return
+	 */
+	int decisionRejecting(String docTempNo, int stepListCount);
+
+	/**
+	 * 4_6 확인하기(스텝 상태값 변경)
+	 * @param docTempNo
+	 * @param memNo
+	 * @return
+	 */
+	int stepReference(String docTempNo, int memNo);
+
+	/**
+	 * 4_7 회람문서 최종 확인하기(문서 상태값 변경)
+	 * @param docTempNo
+	 * @return
+	 */
+	int decisionReference(String docTempNo);
 
 }

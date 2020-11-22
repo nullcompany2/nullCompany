@@ -78,4 +78,24 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public int decisionSigning(String docTempNo, int stepPriority) {
 		return aDao.decisionSigning(docTempNo, stepPriority);
 	}
+
+	@Override
+	public int stepRejecting(String docTempNo, int memNo) {
+		return aDao.stepRejecting(docTempNo, memNo);
+	}
+
+	@Override
+	public int decisionRejecting(String docTempNo, int stepListCount) {
+		return aDao.decisionRejecting(docTempNo, stepListCount);
+	}
+
+	@Override
+	public int stepReference(String docTempNo, int memNo) {
+		return aDao.stepReference(docTempNo, memNo);
+	}
+
+	@Override
+	public int decisionReference(String docTempNo) {
+		return aDao.decisionReference(docTempNo);
+	}
 }

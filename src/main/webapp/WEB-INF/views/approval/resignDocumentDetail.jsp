@@ -203,6 +203,9 @@
 								<td>
 									<c:if test="${ !empty apprList[0]}">
 										<c:choose>
+											<c:when test = "${ d.completeDate != null && apprList[0].apprStatus eq 'N' && d.rStatus eq 'Y'}">
+												반려 처리
+											</c:when>
 											<c:when test = "${ d.completeDate != null && apprList[0].apprStatus eq 'N' }">
 												전결
 											</c:when>
@@ -213,7 +216,7 @@
 												결재 완료
 											</c:when>
 											<c:when test = "${ apprList[0].apprStatus eq 'Y' && apprList[0].rStatus eq 'Y'}">
-												반려 완료
+												반려 
 											</c:when>
 										</c:choose>
 									</c:if>
@@ -221,6 +224,9 @@
 								<td>
 									<c:if test="${ !empty apprList[1]}">
 										<c:choose>
+											<c:when test = "${ d.completeDate != null && apprList[1].apprStatus eq 'N' && d.rStatus eq 'Y'}">
+												반려 처리
+											</c:when>
 											<c:when test = "${ d.completeDate != null && apprList[1].apprStatus eq 'N' }">
 												전결
 											</c:when>
@@ -239,6 +245,9 @@
 								<td>
 									<c:if test="${ !empty apprList[2]}">
 										<c:choose>
+											<c:when test = "${ d.completeDate != null && apprList[2].apprStatus eq 'N' && d.rStatus eq 'Y'}">
+												반려 처리
+											</c:when>
 											<c:when test = "${ d.completeDate != null && apprList[2].apprStatus eq 'N' }">
 												전결
 											</c:when>
@@ -257,6 +266,9 @@
 								<td>
 									<c:if test="${ !empty apprList[3]}">
 										<c:choose>
+											<c:when test = "${ d.completeDate != null && apprList[3].apprStatus eq 'N' && d.rStatus eq 'Y'}">
+												반려 처리
+											</c:when>
 											<c:when test = "${ d.completeDate != null && apprList[3].apprStatus eq 'N' }">
 												전결
 											</c:when>
@@ -275,6 +287,9 @@
 								<td>
 									<c:if test="${ !empty apprList[4]}">
 										<c:choose>
+											<c:when test = "${ d.completeDate != null && apprList[4].apprStatus eq 'N' && d.rStatus eq 'Y'}">
+												반려 처리
+											</c:when>
 											<c:when test = "${ d.completeDate != null && apprList[4].apprStatus eq 'N' }">
 												전결
 											</c:when>
@@ -293,6 +308,9 @@
 								<td>
 									<c:if test="${ !empty apprList[5]}">
 										<c:choose>
+											<c:when test = "${ d.completeDate != null && apprList[5].apprStatus eq 'N' && d.rStatus eq 'Y'}">
+												반려 처리
+											</c:when>
 											<c:when test = "${ d.completeDate != null && apprList[5].apprStatus eq 'N' }">
 												전결
 											</c:when>
@@ -311,6 +329,9 @@
 								<td>
 									<c:if test="${ !empty apprList[6]}">
 										<c:choose>
+											<c:when test = "${ d.completeDate != null && apprList[6].apprStatus eq 'N' && d.rStatus eq 'Y'}">
+												반려 처리
+											</c:when>
 											<c:when test = "${ d.completeDate != null && apprList[6].apprStatus eq 'N' }">
 												전결
 											</c:when>
@@ -329,6 +350,9 @@
 								<td>
 									<c:if test="${ !empty apprList[7]}">
 										<c:choose>
+											<c:when test = "${ d.completeDate != null && apprList[7].apprStatus eq 'N' && d.rStatus eq 'Y'}">
+												반려 처리
+											</c:when>
 											<c:when test = "${ d.completeDate != null && apprList[7].apprStatus eq 'N' }">
 												전결
 											</c:when>
@@ -347,6 +371,9 @@
 								<td>
 									<c:if test="${ !empty apprList[8]}">
 										<c:choose>
+											<c:when test = "${ d.completeDate != null && apprList[8].apprStatus eq 'N' && d.rStatus eq 'Y'}">
+												반려 처리
+											</c:when>
 											<c:when test = "${ d.completeDate != null && apprList[8].apprStatus eq 'N' }">
 												전결
 											</c:when>
@@ -376,7 +403,7 @@
 								    
 								    for(var i = 8; i > -1; i--){
 										tdText = (td.eq(i).text()).trim();
-										if(tdText == '결재 완료' || tdText == '반려'){
+										if(tdText == '결재 완료'){
 											for(var j = i-1; j > -1; j--){ 
 												if(td.eq(j).find('.appr_btn').length){
 													td.eq(j).children().text("후결");
@@ -389,7 +416,7 @@
 								    // 결재선 완료 문구 글씨 색
 								    for(var i = 0; i < size; i++){
 								    	var tdText = td.eq(i);
-								    	if((tdText.text()).trim() == '결재 완료' || (tdText.text()).trim() == '전결' ){
+								    	if((tdText.text()).trim() == '결재 완료' || (tdText.text()).trim() == '전결' || (tdText.text()).trim() == '반려 처리'){
 								    		tdText.css("color","#477A8F");
 								    		tdText.css("font-weight","bold");
 								    	}else{
@@ -410,8 +437,6 @@
 								    	}
 								    }
 								});
-								
-								
 							</script>
 							<tr id="tr5">
 								<td>${ apprList[0].apprDate }</td>
@@ -665,41 +690,43 @@
 	
 	<!-- 결재 버튼 모달 -->
        <div id="my_modal" class="modal-dragscroll">
-        <span style="font-size:20px; color: black; font-weight: bold;"> ${ loginUser.name } </span>님 
-        <br>
-        <br>
+	       <span style="font-size:20px; color: black; font-weight: bold;"> ${ loginUser.name } </span>님 
+	       <br>
+	       <br>
            <div class="n-emp-i">
-            <h4 style="color: #477A8F; margin-bottom: 5px; font-weight: bolder;">결재/반려 하시겠습니까? </h4> <br>
+            	<h4 style="color: #477A8F; margin-bottom: 5px; font-weight: bolder;">결재/반려 하시겠습니까? </h4> <br>
                 <div style="display: flex;">
 	                <c:url var="approvalSigning" value="approvalSigning.do">
 						<c:param name="docTempNo" value="${d.docTempNo}"/>
 						<c:param name="docNo" value="${ d.docNo }"/>
 					</c:url>
-					<c:url var="rejectSigning" value="rejectSigning.do">
+					<c:url var="approvalRejecting" value="approvalRejecting.do">
 						<c:param name="docTempNo" value="${d.docTempNo}"/>
+						<c:param name="docNo" value="${ d.docNo }"/>
 					</c:url>
                     <button onclick="location.href='${approvalSigning}'">결재</button>
                     
-                    <button onclick="location.href='${rejectSigning}'">반려</button>
+                    <button onclick="location.href='${approvalRejecting}'">반려</button>
                 </div>
            </div>
-           
-    <!-- 확인 버튼 모달 -->
-    <a class="modal-close-btn cursor">X</a>
+    	   <a class="modal-close-btn cursor">X</a>
         </div>
+        
+    <!-- 확인 버튼 모달 -->
         <div id="my_modal1" class="modal-dragscroll">
-        <br>
-        <span style="font-size:20px; color: black; font-weight: bold;"> ${ loginUser.name } </span>님
+	       <br>
+	       <span style="font-size:20px; color: black; font-weight: bold;"> ${ loginUser.name } </span>님
            <div class="n-emp-i">
-            <h4 style="color: #477A8F; margin-bottom: 5px; font-weight: bolder;">확인 하시겠습니까? </h4> <br>
+            	<h4 style="color: #477A8F; margin-bottom: 5px; font-weight: bolder;">확인 하시겠습니까? </h4> <br>
                 <div>
                     <c:url var="referSigning" value="referSigning.do">
 						<c:param name="docTempNo" value="${d.docTempNo}"/>
+						<c:param name="docNo" value="${ d.docNo }"/>
 					</c:url>
                     <button onclick="location.href='${referSigning}'">확인</button>
                 </div>
            </div>
-    <a class="modal-close-btn cursor">X</a>
+    	   <a class="modal-close-btn cursor">X</a>
         </div>
 
  <script>
