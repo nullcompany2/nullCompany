@@ -154,6 +154,20 @@
    		<result property="returnDate" column="RETURN_DATE"/>
    		<result property="status" column="STATUS"/>
    	</resultMap>
+   	
+   	<resultMap type="DiligenceCountAllMember" id="DiligenceCountAllMemberResultSet">
+   		
+		<result property="lateCountY" column="lateCount_Y"/>
+		<result property="lateMemberCountY" column="lateMemberCount_Y"/>
+		<result property="absenceCountY" column="absenceCount_Y"/>
+		<result property="absenceMemberCountY" column="absenceMemberCount_Y"/>
+		<result property="modificationCountY" column="modificationCount_Y"/>
+		<result property="lateCountM" column="lateCount_M"/>
+		<result property="lateMemberCountM" column="lateMemberCount_M"/>
+		<result property="absenceCountM" column="absenceCount_M"/>
+		<result property="absenceMemberCountM" column="absenceMemberCount_M"/>
+		<result property="modificationCountM" column="modificationCount_M"/>
+   	</resultMap>
    	<!-- **************************************************************************************** -->
    	<!-- 전체사원 -->
    	<select id="selectAllMember" resultMap="memberResultSet">
@@ -499,4 +513,66 @@
 	<update id="returnToWork" parameterType="_int">
 		UPDATE ABSENCE SET STATUS = 'N' , RETURN_DATE = SYSDATE WHERE MEM_NO =#{memNo}
 	</update>
+	
+	<select id="DiligenceCountAllMember" resultMap="DiligenceCountAllMemberResultSet">
+		select *
+		from (
+			SELECT NVL(COUNT(*),0) LATECOUNT_Y
+			FROM (SELECT *
+			    FROM RECORD_DILIGENCE
+			    WHERE EXTRACT(YEAR FROM DATE_DILIGENCE) = EXTRACT(YEAR FROM SYSDATE))
+			WHERE STATUS_DILIGENCE = '지각') LC ,
+	     (SELECT NVL(COUNT( DISTINCT MEM_NO),0) LATEMEMBERCOUNT_Y
+			FROM (SELECT *
+			    FROM RECORD_DILIGENCE
+			    WHERE EXTRACT(YEAR FROM DATE_DILIGENCE) = EXTRACT(YEAR FROM SYSDATE))
+			WHERE STATUS_DILIGENCE = '지각') LM ,
+	     (SELECT NVL(COUNT(*),0) ABSENCECOUNT_Y
+			FROM (SELECT *
+			    FROM RECORD_DILIGENCE
+			    WHERE EXTRACT(YEAR FROM DATE_DILIGENCE) = EXTRACT(YEAR FROM SYSDATE))
+			WHERE STATUS_DILIGENCE = '결근') AC ,
+	     (SELECT NVL(COUNT( DISTINCT MEM_NO),0) ABSENCEMEMBERCOUNT_Y
+			FROM (SELECT *
+			    FROM RECORD_DILIGENCE
+			    WHERE EXTRACT(YEAR FROM DATE_DILIGENCE) = EXTRACT(YEAR FROM SYSDATE))
+			WHERE STATUS_DILIGENCE = '결근') AM ,
+	     (SELECT NVL(COUNT(*),0) AS MODIFICTIONCOUNT_Y
+			FROM (SELECT *
+			    FROM RECORD_DILIGENCE
+			    WHERE EXTRACT(YEAR FROM DATE_DILIGENCE) = EXTRACT(YEAR FROM SYSDATE))
+			WHERE STATUS_DILIGENCE = '수정됨') MC ,
+	        
+	     (SELECT NVL(COUNT(*),0) LATECOUNT_M
+			FROM (SELECT *
+			    FROM RECORD_DILIGENCE
+			    WHERE EXTRACT(YEAR FROM DATE_DILIGENCE) = EXTRACT(YEAR FROM SYSDATE)
+	            AND EXTRACT (MONTH FROM DATE_DILIGENCE) = EXTRACT(MONTH FROM SYSDATE))
+			WHERE STATUS_DILIGENCE = '지각') LCM ,
+	     (SELECT NVL(COUNT( DISTINCT MEM_NO),0) LATEMEMBERCOUNT_M
+			FROM (SELECT *
+			    FROM RECORD_DILIGENCE
+			    WHERE EXTRACT(YEAR FROM DATE_DILIGENCE) = EXTRACT(YEAR FROM SYSDATE)
+	            AND EXTRACT (MONTH FROM DATE_DILIGENCE) = EXTRACT(MONTH FROM SYSDATE))
+			WHERE STATUS_DILIGENCE = '지각') LMM ,
+	     (SELECT NVL(COUNT(*),0) ABSENCECOUNT_M
+			FROM (SELECT *
+			    FROM RECORD_DILIGENCE
+			    WHERE EXTRACT(YEAR FROM DATE_DILIGENCE) = EXTRACT(YEAR FROM SYSDATE)
+	            AND EXTRACT (MONTH FROM DATE_DILIGENCE) = EXTRACT(MONTH FROM SYSDATE))
+			WHERE STATUS_DILIGENCE = '결근') ACM ,
+	     (SELECT NVL(COUNT( DISTINCT MEM_NO),0) ABSENCEMEMBERCOUNT_M
+			FROM (SELECT *
+			    FROM RECORD_DILIGENCE
+			    WHERE EXTRACT(YEAR FROM DATE_DILIGENCE) = EXTRACT(YEAR FROM SYSDATE)
+	            AND EXTRACT (MONTH FROM DATE_DILIGENCE) = EXTRACT(MONTH FROM SYSDATE))
+			WHERE STATUS_DILIGENCE = '결근') AMM ,
+	     (SELECT NVL(COUNT(*),0) AS MODIFICTIONCOUNT_M
+			FROM (SELECT *
+			    FROM RECORD_DILIGENCE
+			    WHERE EXTRACT(YEAR FROM DATE_DILIGENCE) = EXTRACT(YEAR FROM SYSDATE)
+	            AND EXTRACT (MONTH FROM DATE_DILIGENCE) = EXTRACT(MONTH FROM SYSDATE))
+			WHERE STATUS_DILIGENCE = '수정됨') MCM 
+	</select>
+	
 </mapper>

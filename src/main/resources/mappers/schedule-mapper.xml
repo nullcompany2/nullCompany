@@ -252,7 +252,10 @@
 	 
 	    <!-- 공유 캘린더 수정 전 정보 -->
     <select id="editDetailPublicCal" resultMap="CalendarResultSet" parameterType="Calendar">
-   		SELECT * FROM CALENDAR WHERE CAL_TYPE=1 AND CAL_NO = #{calNo}
+   		SELECT CM.*, C.*, M.NAME FROM CALENDAR C
+		JOIN CALENDAR_MEMBER CM ON CM.CAL_NO = C.CAL_NO
+		JOIN MEMBER M ON CM.CAL_MEM = M.MEM_NO
+		WHERE C.CAL_TYPE=1 AND C.CAL_NO = #{calNo}
     </select>
     
     <select id="Sche_name_Search" resultMap="ScheduleResultSet" parameterType="String">
@@ -266,4 +269,16 @@
    		JOIN CALENDAR C ON C.CAL_NO = S.CAL_NO 
 		WHERE (C.CAL_NAME LIKE  '%' || #{text} || '%')
 	</select>
+	
+	   <!-- 공유 캘린더 수정 캘린더 멤버 삭제 -->
+    <delete id="DeleteEditCommunityCalMember" parameterType="_int">
+     	DELETE FROM CALENDAR_MEMBER WHERE CAL_NO = #{calNo}
+    </delete>
+   
+   		<!-- 공유 캘린더 수정 -->
+    <update id="updateCommunity" parameterType="Schedule">
+		UPDATE CALENDAR
+		SET CAL_NAME = #{calName}, COLOR = #{color}
+		WHERE CAL_NO = #{calNo}
+	</update>
 </mapper>

@@ -14,6 +14,7 @@ import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.personnelManagement.model.vo.Absence;
 import com.kh.nullcompany.personnelManagement.model.vo.Department;
+import com.kh.nullcompany.personnelManagement.model.vo.DiligenceCountAllMember;
 import com.kh.nullcompany.personnelManagement.model.vo.ForEmLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.ForEmUsedLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.MixForLeave;
@@ -320,6 +321,13 @@ public class PersonnelManagementDao {
 		return (ArrayList)sqlSession.selectList("personnelMapper.selectAllMember");
 	}
 
+
+	public DiligenceCountAllMember DiligenceCountAllMember() {
+		return sqlSession.selectOne("personnelMapper.DiligenceCountAllMember");
+	}
+
+
+	
 
 	
 

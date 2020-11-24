@@ -189,7 +189,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 
 	@Override
-	public Calendar editDetailPublicCal(int calNo) {
+	public ArrayList<Calendar> editDetailPublicCal(int calNo) {
 		return sDao.editDetailPublicCal(calNo);
 	}
 
@@ -201,6 +201,17 @@ public class ScheduleServiceImpl implements ScheduleService {
 	@Override
 	public ArrayList<Schedule> Cal_name_Search(String text) {
 		return sDao.Cal_name_Search(text);
+	}
+
+	@Override
+	public int DeleteEditCommunityCalMember(int calNo) {
+		return sDao.DeleteEditCommunityCalMember(calNo);
+	}
+
+	@Override
+	public int updateCommunity(Calendar calendar) {
+		return sDao.updateCommunity(calendar);
+		
 	}
 
 
