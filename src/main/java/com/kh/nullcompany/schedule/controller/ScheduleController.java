@@ -230,6 +230,7 @@ public class ScheduleController {
 		
 		sche = sService.editDetailSchedule(Sche_no);
 		
+		System.out.println(sche);
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(sche,response.getWriter());
@@ -335,6 +336,7 @@ public class ScheduleController {
 	public void editDetailPublicCal(@Param("calNo") int calNo, HttpServletResponse response) throws JsonIOException, IOException{
 		ArrayList<Calendar> cal = sService.editDetailPublicCal(calNo);
 		
+		System.out.println(cal);
 		
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
