@@ -2,9 +2,6 @@
 .cursor {
     cursor: pointer;
 }
-html{
-    overflow: hidden;
-}
 .contents{
     position: relative;
     margin-left: 260px;
@@ -88,46 +85,8 @@ html{
     padding: 10px;
 }
 
-.save-btn{
-    margin-top: 30px;
-    width: 80px;
-    height:28px;
-    background: white;
-    border: solid 0.1px #477A8f;
-    border-radius: 3px;
-    font-size: 15px;
-    color: #477A8f;
-    background: white;
-}
-.save-btn:hover{
-    background: #477A8f;
-    color: white;
-}
-.secret-info{
-    margin-left: 20px;
-}
-.s-t{
-    color: #477A8F;
-}
-.filebox label {
-    display: inline-block; 
-    color: #999;
-    font-size: inherit; 
-    line-height: normal; 
-    vertical-align: middle; 
-    background-color: #fdfdfd;
-    cursor: pointer;
-} 
-.filebox input[type="file"] { /* 파일 필드 숨기기 */ 
-    position: absolute; 
-    width: 1px; 
-    height: 1px; 
-    padding: 0; 
-    margin: -1px;
-    overflow: hidden;
-    clip:rect(0,0,0,0);
-    border: 0; 
-}
 .ts>input{
     margin-bottom: 5px;
 }
+
+

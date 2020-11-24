@@ -78,7 +78,7 @@ public class Calendar {
 
 	@Override
 	public String toString() {
-		return "Calendar [사번" + memNo + ":" + cal_type_no + mem_name + calNo + ", calName=" + calName + ", color=" + color + ", enrollMember="
+		return "Calendar [사번:" + memNo + "멤버타입 : " + cal_type_no + mem_name + "캘린더 번호" + calNo + "캘린더 이름:" + calName + ", calName=" + calName + ", color=" + color + ", enrollMember="
 				+ enrollMember + ", lookMember=" + lookMember + "]";
 	}
 
@@ -98,13 +98,7 @@ public class Calendar {
 		this.mem_name = mem_name;
 	}
 
-	public int getMem_no() {
-		return mem_no;
-	}
 
-	public void setMem_no(int mem_no) {
-		this.mem_no = mem_no;
-	}
 
 	/**
 	 * @return the cal_type_no

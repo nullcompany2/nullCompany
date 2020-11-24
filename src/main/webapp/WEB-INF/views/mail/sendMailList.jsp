@@ -265,7 +265,7 @@
 	                    $("#hide").hide(); 
 	                    $("#select").show();  
                     	$("#checkall").prop("checked",false);
-                    }
+                    }  
                   
                 }
             })
