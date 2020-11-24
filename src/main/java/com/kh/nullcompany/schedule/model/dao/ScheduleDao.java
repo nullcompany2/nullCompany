@@ -128,8 +128,8 @@ public class ScheduleDao {
 		return(ArrayList) sqlSession.selectList("scheduleMapper.SearchMem_public",text);
 	}
 
-	public Calendar editDetailPublicCal(int calNo) {
-		return sqlSession.selectOne("scheduleMapper.editDetailPublicCal",calNo);
+	public ArrayList<Calendar> editDetailPublicCal(int calNo) {
+		return (ArrayList) sqlSession.selectList("scheduleMapper.editDetailPublicCal",calNo);
 	}
 
 	public ArrayList<Schedule> Sche_name_Search(String text) {
@@ -138,6 +138,14 @@ public class ScheduleDao {
 
 	public ArrayList<Schedule> Cal_name_Search(String text) {
 		return(ArrayList) sqlSession.selectList("scheduleMapper.Cal_name_Search",text);
+	}
+
+	public int DeleteEditCommunityCalMember(int calNo) {
+		return sqlSession.delete("scheduleMapper.DeleteEditCommunityCalMember",calNo);
+	}
+
+	public int updateCommunity(Calendar calendar) {
+		return sqlSession.update("scheduleMapper.updateCommunity",calendar);
 	}
 
 

@@ -64,11 +64,15 @@ public interface ScheduleService {
 
 	ArrayList<Member> SearchMem_public(String text);
 
-	Calendar editDetailPublicCal(int calNo);
+	ArrayList<Calendar> editDetailPublicCal(int calNo);
 
 	ArrayList<Schedule> Sche_name_Search(String text);
 
 	ArrayList<Schedule> Cal_name_Search(String text);
+
+	int DeleteEditCommunityCalMember(int calNo);
+
+	int updateCommunity(Calendar calendar);
 
 
 

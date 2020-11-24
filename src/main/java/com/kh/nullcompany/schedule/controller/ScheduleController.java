@@ -172,7 +172,7 @@ public class ScheduleController {
 	public void insertIndividual(@Param("Calendar") Calendar Calendar ) {
 		int result = sService.insertIndividual(Calendar);
 
-
+		
 		int IndEnrollMember = Integer.parseInt(Calendar.getEnrollMember());
 		int IndLookMember = Integer.parseInt(Calendar.getLookMember());
 		sService.IndEnrollMember(IndEnrollMember, Calendar.getCalNo());
@@ -332,14 +332,40 @@ public class ScheduleController {
 	
 	// 공유 캘린더 정보 가져오기
 	@RequestMapping("editDetailPublicCal.do" )
-	public void editDetailPublicCal(ModelAndView mv, int calNo, HttpServletResponse response) throws JsonIOException, IOException{
-		Calendar cal = sService.editDetailPublicCal(calNo);
+	public void editDetailPublicCal(@Param("calNo") int calNo, HttpServletResponse response) throws JsonIOException, IOException{
+		ArrayList<Calendar> cal = sService.editDetailPublicCal(calNo);
+		
 		
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(cal,response.getWriter());
 
 	
+	}
+	
+	// 공유 캘린더 수정 인써트
+
+	@RequestMapping("insertEditCommunityCal.do")
+
+	public void insertEditCommunityCal(@Param("Calendar") Calendar Calendar ) {		
+		// 일단 캘린더 멤버 삭제부터
+		int result = sService.DeleteEditCommunityCalMember(Calendar.getCalNo());
+
+		sService.updateCommunity(Calendar);
+		
+		int result2 = (sService.editIndiCal_Sche(Calendar.getCalNo()));
+		
+		// 등록권한 리스트
+		String[] enrollarray = Calendar.getEnrollMember().split(",");
+		int [] enrollmemno = Arrays.stream(enrollarray).mapToInt(Integer::parseInt).toArray();
+
+		sService.EnrollMember(enrollmemno, Calendar.getCalNo());
+		// 조회권한 리스트
+		String[] lookarray = Calendar.getLookMember().split(",");
+		int [] lookmemno = Arrays.stream(lookarray).mapToInt(Integer::parseInt).toArray();
+
+		sService.LookMember(lookmemno, Calendar.getCalNo());
+
 	}
 	
 
