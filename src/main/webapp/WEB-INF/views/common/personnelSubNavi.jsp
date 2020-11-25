@@ -79,6 +79,7 @@
 					<li><a href="setDiligenceStandard.do" id="">기본 설정</a></li>
 					<li><a href="emAbsenceManagement.do" id="">휴직자 관리</a></li>
 					<li><a href="emDiligenceManagement.do" id="">직원 근태 관리</a></li>
+					<li><a href="attendanceModificationRequests.do" id="">근태 수정요청 관리</a></li>
 				</ul>
 			</div>
 		</div>

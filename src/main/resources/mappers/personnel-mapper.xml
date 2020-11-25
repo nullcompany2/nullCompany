@@ -455,9 +455,9 @@
 		WHERE MEM_NO =#{memNo}
 	</select>
 	
-	<delete id="cancelMod">
-		DELETE MOD_DILIGENCE WHERE NO_MOD_D = #{noMod}
-	</delete>
+	<update id="cancelMod">
+		UPDATE MOD_DILIGENCE SET STATUS_MOD_D = '취소' WHERE NO_MOD_D = #{noMod}
+	</update>
 	
 	<select id="recordDiligenceList" resultMap="RecordDiligenceResultSet" parameterType="_int">
 		SELECT *
@@ -574,5 +574,20 @@
 	            AND EXTRACT (MONTH FROM DATE_DILIGENCE) = EXTRACT(MONTH FROM SYSDATE))
 			WHERE STATUS_DILIGENCE = '수정됨') MCM 
 	</select>
+	
+	<select id="modRequestList" resultMap="modificationDiligenceResultSet">
+		SELECT *
+		FROM MOD_DILIGENCE
+	</select>
+	
+	<update id="modificationAcknowledgment">
+		UPDATE MOD_DILIGENCE SET STATUS_MOD_D = '결재승인' WHERE NO_MOD_D = #{noMod}
+	</update>
+	<update id="updateRecordDiligence">
+		UPDATE RECORD_DILIGENCE SET STATUS_DILIGENCE = '수정됨' WHERE NO_DILIGENCE = #{noMod}
+	</update>
+	<update id="modificationCancel">
+		UPDATE MOD_DILIGENCE SET STATUS_MOD_D = '결재반려' WHERE NO_MOD_D = #{noMod}
+	</update>
 	
 </mapper>

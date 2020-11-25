@@ -101,6 +101,7 @@
 							정상(<span style="color:#477A8F">○</span>),
 							지각(<span style="color:#477A8F">△</span>),
 							결근(<span style="color:#477A8F">X</span>),
+							휴가(<span style="color:#477A8F">휴</span>),
 							수정됨(<span style="color:#477A8F">◇</span>)
 							
 							</h5>
@@ -362,15 +363,17 @@
 							status ="X";
 							$("#"+${memNo}+"Tr").find()
 							$("#"+${memNo}+"Tr "+"#"+day).text(status).attr("style","color:#477A8F");
-							ACM = ACM+1;
 						</c:when>
 						<c:when test="${list.statusDiligence eq '지각'}">
 							status ="△";
 							$("#"+${memNo}+"Tr "+"#"+day).text(status).attr("style","color:#477A8F");
-							LCM = CML+1;
 						</c:when>
 						<c:when test="${list.statusDiligence eq '정상'}">
 							status ="○";
+							$("#"+${memNo}+"Tr "+"#"+day).text(status).attr("style","color:#477A8F");
+						</c:when>
+						<c:when test="${list.statusDiligence eq '휴가'}">
+							status ="휴";
 							$("#"+${memNo}+"Tr "+"#"+day).text(status).attr("style","color:#477A8F");
 						</c:when>
 						<c:otherwise>
