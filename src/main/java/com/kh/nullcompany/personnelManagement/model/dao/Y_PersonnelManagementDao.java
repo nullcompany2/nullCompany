@@ -2,10 +2,12 @@ package com.kh.nullcompany.personnelManagement.model.dao;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.mail.model.vo.Email;
 import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.personnelManagement.model.vo.Department;
@@ -44,6 +46,16 @@ public class Y_PersonnelManagementDao {
 
 	public ArrayList<Member> selectmemList() {
 		return (ArrayList)sqlSession.selectList("Y_personnelMapper.per_selectmemList");
+	}
+
+	public int getMemListCount() {
+		return sqlSession.selectOne("Y_personnelMapper.getMemListCount");
+	}
+
+	public ArrayList<Member> selectPageMemList(PageInfo pi) {
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("Y_personnelMapper.per_selectmemList",rowBounds);
 	}
 
 

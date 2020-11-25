@@ -21,7 +21,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
+import com.kh.nullcompany.board.model.vo.PageInfo;
+import com.kh.nullcompany.common.Pagination;
 import com.kh.nullcompany.mail.model.vo.Email;
+import com.kh.nullcompany.mail.model.vo.Mail;
 import com.kh.nullcompany.member.controller.MemberController;
 import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.personnelManagement.model.service.Y_PersonnelManagementService;
@@ -57,8 +60,23 @@ public class Y_PersonnelManagementController {
 
 	// 사용자 관리
 	@RequestMapping("userManagement.do")
-	public String userManagement(HttpServletResponse response) {
-		return "personnel_management/userManagement";
+	
+	public ModelAndView userManagement(ModelAndView mv,HttpServletRequest request,
+			@RequestParam(value="currentPage",required=false,defaultValue="1") int currentPage){
+		// 총 사원 리스트
+
+		int listCount = yService.getMemListCount();
+		
+		PageInfo pi = Pagination.getPageInfo(currentPage,listCount);
+		
+		ArrayList<Member> list = yService.selectPageMemList(pi);
+		System.out.println(list);
+		mv.addObject("list",list);
+		mv.addObject("pi",pi);
+		mv.setViewName("personnel_management/userManagement");
+
+		return mv;
+
 	}
 
 	// 직위 관리
@@ -67,11 +85,7 @@ public class Y_PersonnelManagementController {
 		return "personnel_management/rankManagement";
 	}
 
-	// 사용자 승인 관리
-	//	@RequestMapping("userApprovalManagement.do")
-	//	public String userApprovalManagement(HttpServletResponse response) {
-	//		return "personnel_management/userApprovalManagement";
-	//	}
+
 
 	// 사용자 승인 관리 리스트
 
