@@ -290,8 +290,16 @@ public class PersonnelManagementController {
 	
 	// 휴가현황- 휴가캘린더
 	@RequestMapping("leaveCalendar.do")
-	public String leaveCalendar(HttpServletResponse response) {
-		return "personnel_management/leaveCalendar";
+	public ModelAndView leaveCalendar(ModelAndView mv,  HttpServletResponse response, HttpSession session) {
+			
+		// 총 휴가 리스트
+		ArrayList<RecordLeave> RecordLeaveList = pService.RecordLeaveList();
+		System.out.println(RecordLeaveList);
+		mv.addObject("RecordLeaveList", RecordLeaveList);
+		mv.setViewName("personnel_management/leaveCalendar");
+
+		return mv;
+	
 	}
 
 	// 근태현황

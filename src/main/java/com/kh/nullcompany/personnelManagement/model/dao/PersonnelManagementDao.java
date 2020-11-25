@@ -345,6 +345,11 @@ public class PersonnelManagementDao {
 	}
 
 
+	public ArrayList<RecordLeave> RecordLeaveList() {
+		return (ArrayList)sqlSession.selectList("personnelMapper.RecordLeaveList");
+	}
+
+
 	
 
 	
