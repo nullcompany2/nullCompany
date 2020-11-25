@@ -359,6 +359,12 @@ public class PersonnelManagementServiceImpl implements PersonnelManagementServic
 		return pDao.modificationCancel(noMod);
 	}
 
+	// 캘린더 휴가 리스트
+	@Override
+	public ArrayList<RecordLeave> RecordLeaveList() {
+		return pDao.RecordLeaveList();
+	}
+
 	
 	
 

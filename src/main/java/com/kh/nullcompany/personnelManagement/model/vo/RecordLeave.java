@@ -21,6 +21,7 @@ public class RecordLeave {
 	private String status;
 	private Date requestedDate;
 	private String reason;
+    private String Memname;
 	public RecordLeave() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -98,6 +99,7 @@ public class RecordLeave {
 				+ applyDate + ", useDays=" + useDays + ", attach=" + attach + ", status=" + status + ", requestedDate="
 				+ requestedDate + ", reason=" + reason + "]";
 	}
+
 	
 	
 	

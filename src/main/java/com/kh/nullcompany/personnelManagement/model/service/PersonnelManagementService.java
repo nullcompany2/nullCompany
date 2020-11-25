@@ -215,6 +215,8 @@ public interface PersonnelManagementService {
 	int modificationAcknowledgment(int noMod);
 	// 근태 수정요청 반려
 	int modificationCancel(int noMod);
+	// 캘린더 휴가 리스트
+	ArrayList<RecordLeave> RecordLeaveList();
 	
 	
 	

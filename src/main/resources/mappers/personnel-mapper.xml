@@ -590,4 +590,10 @@
 		UPDATE MOD_DILIGENCE SET STATUS_MOD_D = '결재반려' WHERE NO_MOD_D = #{noMod}
 	</update>
 	
+	<!-- 휴가 리스트 -->
+	<select id="RecordLeaveList" resultMap="RecordLeaveResultSet">
+		SELECT *
+		FROM RECORD_LEAVE
+	</select>
+	
 </mapper>
