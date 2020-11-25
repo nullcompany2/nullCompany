@@ -907,25 +907,48 @@ public class ApprovalController {
 
 	
 	@RequestMapping("selectFormView.do")
-	public String selectFormView(HttpSession session, int option) {
+	public ModelAndView selectFormView(ModelAndView mv, HttpSession session, int option) {
 		System.out.println("서식번호 : " + option);
 		
 		// 임시 문서
 		Document d = new Document();
 		d.setFormNo(option);
 		d.setDrafterNo(((Member) session.getAttribute("loginUser")).getMemNo());
+		d.setDrafterName(((Member) session.getAttribute("loginUser")).getName());
 		d.setDrafterDeptNo(((Member) session.getAttribute("loginUser")).getDeptNo());
+		d.setDrafterDeptName(((Member) session.getAttribute("loginUser")).getDeptName());
 		d.setDrafterRankNo(((Member) session.getAttribute("loginUser")).getLankNo());
+		d.setDrafterRankName(((Member) session.getAttribute("loginUser")).getRankName());
 		
+		// 임시 문서 생성하기(결재선 설정을 위한 선행작업)
 		int result = aService.insertTempDocument(d);
 		
 		if(result > 0) {
 			if(option == 1) {
-				
+				d.setFormName("업무연락");
+				mv.addObject("d", d);
+				mv.setViewName("approval/businessInsertForm");
+			}else if(option == 2) {
+				d.setFormName("회람");
+				mv.addObject("d", d);
+				mv.setViewName("approval/referInsertForm");
+			}else if(option == 3) {
+				d.setFormName("휴가");
+				mv.addObject("d", d);
+				mv.setViewName("approval/leaveInsertForm");
+			}else if(option == 4) {
+				d.setFormName("휴직");
+				mv.addObject("d", d);
+				mv.setViewName("approval/absenceInsertForm");
+			}else if(option == 5){
+				d.setFormName("사직");
+				mv.addObject("d", d);
+				mv.setViewName("approval/resignInsertForm");
 			}
+			
 		}
 		
-		return null;
+		return mv;
 	}
 	
 //	@ResponseBody
