@@ -74,5 +74,13 @@ public class ReservationDao {
 	public ArrayList<Reservation> selectMyreservationList(String rMember) {
 		return(ArrayList)sqlSession.selectList("reservationMapper.selectMyreservationList",rMember);
 	}
+
+	public int reservationReturn(int rNo) {
+		return sqlSession.update("reservationMapper.reservationReturn",rNo);
+	}
+
+	public ArrayList<Reservation> selectReservationList() {
+		return (ArrayList)sqlSession.selectList("reservationMapper.ReservationList");
+	}
 	
 }
