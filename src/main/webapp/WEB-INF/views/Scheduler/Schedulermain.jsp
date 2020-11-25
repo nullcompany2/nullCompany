@@ -658,7 +658,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 								<button id="edit_cal_sub"
 									style="background: #fff; color: #2c86dc; cursor: pointer;
 									 padding: 5px 27px 6px; border: 1px solid #c8c8c8">저장</button>
-								<button id="delect_publicCal"
+								<button id="Public_Cal_delete" onclick="Public_Cal_delete()"
 								style="position: absolute; left: 90px; top: 0px; cursor: pointer;  padding: 5px 27px 6px; color: #444;
 								 letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">삭제</button>
 							</div>
@@ -1859,10 +1859,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
         			 alert("캘린더 제목을 입력해주세요.")
         			 return false;
  	       		 } 
-                 if(color.length<1){
- 	       			 alert("캘린더 색상을 선택해주세요")
- 	       			 return false;
- 	       		 } 
+              
  	       		 if(enroll.length < 1){
  	       			 alert("등록 권한을 지정해주세요.")
  	       			 return false;
@@ -1906,6 +1903,31 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 
              })
              
+             
+           // 공유 캘린더 삭제 
+      function Public_Cal_delete () {
+	        		if(confirm('캘린더를 삭제하시겠습니까?')){
+	        			 var calNo =  $("#edit_public_calno").val();
+	        		     
+	        			 $.ajax({
+	        	             url: "DeleteIndiCal.do",
+	        	             type: "post",
+	        	             data: {"calNo" : calNo},
+	        	             success: function (data) {
+	        	                 console.log("삭제 성공임");
+	        	                 location.reload();
+	        	             },
+	        	             error: function (request,
+	        	                 status, error) {
+	        	            	 console.log("삭제 실패임");
+	       
+	        	            	 }
+						 });
+	        			
+	        		} else {
+	        			return false;
+	        		}
+	        	}
      
      $('#perimg').on('click', function() {
          // 캘린더 멤버 띄우기

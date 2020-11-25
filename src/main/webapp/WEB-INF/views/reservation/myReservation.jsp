@@ -130,24 +130,39 @@ tr>td {
 						<th>분류</th>
 						<th>자원명</th>
 						<th>예약시간</th>
+						<th>반납 현황</th>
 						<th>상태</th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach items="${list}" var="list">
 						<tr>
+						
 							<input type="hidden" id="rcTitle" name="rcTitle" value="${list.rcTitle}">
 							<input type="hidden" id="rsTitle" name="rsTitle" value="${list.rsTitle}">
 							<input type="hidden" id="rDate" name="rDate" value="${list.rDate}">
 							<input type="hidden" id="starttime" name="starttime" value="${list.start_time }">
 							<input type="hidden" id="endtime" name="endtime" value="${list.end_time}">
 							<input type="hidden" id="rContent" name="rContent" value="${list.rContent}">
+							<input type="hidden" id="rNo" name="rNo" value="${list.rNo}">
+							<input type="hidden" id="rReturn" name="rReturn" value="${list.rReturn}">
 							<td>${list.rcTitle}</td>
 							<td>${list.rsTitle}</td>
-							<td>${list.rDate}일${list.start_time }~ ${list.end_time}</td>	
+							<td>${list.rDate}일   ${list.start_time }~ ${list.end_time}</td>
+							<c:choose>
+								<c:when test="${list.rReturn eq 'N' }">
+								<td>미반납</td>
+								</c:when>
+								<c:when test="${list.rReturn eq 'Y' }">
+								<td>반납</td>
+								</c:when>
+								<c:otherwise>
+								<td>반납 불필요</td>
+								</c:otherwise>
+							</c:choose>
 							<td><button class="rv_but" id="delete_btn">삭제</button> <span
 								style="color: #e4e4e4;">|</span>
-								<button class="rv_but detail_btn" id="detail_btn" value="${list.rcNo}">상세보기</button></td>
+								<button class="rv_but detail_btn" id="detail_btn">상세보기</button></td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -205,6 +220,10 @@ tr>td {
 			</dl>
 		</div>
 		<div style="text-align: center; margin-top: 50px;">
+			<input type="hidden" id="rNo2" >
+			<input type="hidden" id="rReturn2" >
+			<button class="close_btn" id="returnbtn"
+				style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">반납</button>
 			<button class="close_btn"
 				style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">확인</button>
 		</div>
@@ -256,14 +275,25 @@ tr>td {
 			modal('delete_modal');
 		});
 		
-		$(document).on('click', '.detail_btn', function(event){
-
+		$(document).on('click', '#detail_btn', function(){
 			 $("#rsTitle2").val($(event.target).parent().siblings()[1].value);
-			 $("#rContent2").val($(event.target).parent().siblings()[5].value);
 			 $("#rDate2").val($(event.target).parent().siblings()[2].value);
 			 $("#startTime2").val($(event.target).parent().siblings()[3].value);
 			 $("#endTime2").val($(event.target).parent().siblings()[4].value);
+			 $("#rContent2").val($(event.target).parent().siblings()[5].value);
+			 $("#rNo2").val($(event.target).parent().siblings()[6].value);
+			 $("#rReturn2").val($(event.target).parent().siblings()[7].value);
 			modal('detail_modal');
+		});
+		
+		$("#returnbtn").on("click",function(){
+			var rReturn = $("#rReturn2").val();
+			if(rReturn =='N'){
+	    	 var rNo = $("#rNo2").val();
+	     	document.location.href="reservationReturn.do?rNo="+rNo+"&rMember=${loginUser.id}";
+			}else if(rReturn =='Y'){
+				alert("이미 반납되었습니다.");
+			}
 		});
 	</script>
 </body>

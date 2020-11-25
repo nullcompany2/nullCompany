@@ -446,29 +446,6 @@ a {
 	cursor: pointer;
 }
 
-#logo {
-	width: 250px;
-	height: 110px;
-	background-color: #3E4247;
-	float: left;
-}
-
-header #logo button {
-	border: none;
-	background: none;
-	color: #477A8F;
-	padding: 23px 0px 0px 50px;
-	font-size: 23px;
-	text-align: left;
-	font-family: 'Lato', sans-serif;
-	cursor: pointer;
-}
-
-header #logo span {
-	color: white;
-	font-size: 15px;
-	font-family: 'Lato', sans-serif;
-}
 
 .fc-toolbar h2 {
 	margin: 0;
@@ -1144,6 +1121,15 @@ background-color
 }
 
 #individualmodal {
+	width: 415px;
+	height: 210px;
+	padding: 10px 35px;
+	background-color: #fefefe;
+	border: 1px solid #888;
+	border-radius: 3px;
+}
+
+#individualmodal2 {
 	width: 415px;
 	height: 210px;
 	padding: 10px 35px;

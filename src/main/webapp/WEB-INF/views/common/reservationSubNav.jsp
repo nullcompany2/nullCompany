@@ -119,7 +119,6 @@ a:active {
 				<h2 style="text-align: center;">예약 관리</h2>
 				<div class="H-personnel-subNavi Depth01-1" >
 					<li class="subTitle"><a href="reservationList.do">예약 현황</a></li>
-					<li class="subTitle"><a href="returnList.do">반납 관리</a></li>
 					<li class="subTitle"><a href="categoryList.do">카테고리 관리</a></li>
 					<li class="subTitle"><a href="resourceList.do">자원 관리</a></li>
 				</div>

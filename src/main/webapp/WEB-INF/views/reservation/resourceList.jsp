@@ -103,7 +103,9 @@ tr>td {
 
 	<div class="contents">
 		<div class="contents-title">
-			<span class="ct1">자원 관리</span> <select name="category">
+			<span class="ct1">자원 관리</span> 
+			<select name="category" style="width:100px;height:30px; border:none;
+      font-size:16px;color:#477A8F;">
 				<c:forEach var ="c" items="${ c }">
 					<option value="${c.rcNo }">${ c.rcTitle }</option>
 				</c:forEach>

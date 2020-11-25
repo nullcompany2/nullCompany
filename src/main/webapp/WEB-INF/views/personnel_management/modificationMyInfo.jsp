@@ -40,7 +40,6 @@
     	text-align : left;
     }
     
-   
 
     #infobox input{
             border: none;
@@ -125,6 +124,11 @@
 		color:white;
 		transition: all ease 0.7s 0s;
 		}
+		
+		.contents {
+			overflow : scroll;
+		}
+		
 	</style>
 </head>
 

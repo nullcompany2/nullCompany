@@ -172,7 +172,7 @@ public class ScheduleController {
 	public void insertIndividual(@Param("Calendar") Calendar Calendar ) {
 		int result = sService.insertIndividual(Calendar);
 
-
+		
 		int IndEnrollMember = Integer.parseInt(Calendar.getEnrollMember());
 		int IndLookMember = Integer.parseInt(Calendar.getLookMember());
 		sService.IndEnrollMember(IndEnrollMember, Calendar.getCalNo());

@@ -134,4 +134,11 @@ public interface ApprovalService {
 	 */
 	int decisionReference(String docTempNo);
 
+	/**
+	 * 5_1 임시 문서 넣기(결재선 설정을 위한 작업)
+	 * @param d
+	 * @return
+	 */
+	int insertTempDocument(Document d);
+
 }

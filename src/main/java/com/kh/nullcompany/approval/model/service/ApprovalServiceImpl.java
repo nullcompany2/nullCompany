@@ -98,4 +98,9 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public int decisionReference(String docTempNo) {
 		return aDao.decisionReference(docTempNo);
 	}
+
+	@Override
+	public int insertTempDocument(Document d) {
+		return aDao.insertTempDocument(d);
+	}
 }

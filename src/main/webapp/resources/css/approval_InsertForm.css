@@ -82,7 +82,7 @@
 
 .appr_insert_table2{
     margin-top: 20px;
-    width:1300px;
+    width:100%;
     border-collapse: collapse;
     text-align: center;
 }
@@ -118,7 +118,7 @@
 
 /* 결재 */
 #tr2 td:nth-child(n+2){
-    height: 15px;
+    height: 30px;
     font-size: 10pt;
     padding:5px;
 }
@@ -128,20 +128,20 @@
 }
 
 #tr4 td{
-    height: 15px;
+    height: 30px;
     font-size: 10pt;
     padding:5px;
 }
 
 #tr5 td{
-    height: 15px;
+    height: 30px;
     font-size: 10pt;
     padding:5px;
 }
 
 /* 참조 */
 #tr6 td:nth-child(n+2){
-    height: 15px;
+    height: 30px;
     font-size: 10pt;
     padding:5px;
 }
@@ -151,19 +151,19 @@
 }
 
 #tr8 td{
-    height: 15px;
+    height: 30px;
     font-size: 10pt;
     padding:5px;
 }
 
 /* 수신 */
 #tr9 td:nth-child(n+2){
-    height: 15px;
+    height: 30px;
     font-size: 10pt;
     padding:5px;
 }
 #tr10 td{
-    height: 15px;
+    height: 30px;
     font-size: 10pt;
     padding:5px;
 }
@@ -269,4 +269,15 @@
     width: 800px;
     height: 30px;
     padding-left: 20px;
+}
+
+#selectFormBtn{
+	width: 50px;
+    height: 30px;
+    border: none;
+    border-radius: 3px;
+    background: #477A8F;
+    color:white;
+    cursor: pointer;
+    margin-left:20px;
 }

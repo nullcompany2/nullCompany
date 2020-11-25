@@ -9,7 +9,7 @@
     <title>문서 상세보기</title>
 	<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
-	<link rel="stylesheet" href='<c:url value="/resources/css/approval_leaveInsertForm.css"/>'>
+	<link rel="stylesheet" href='<c:url value="/resources/css/approval_InsertForm.css"/>'>
 	<link rel="stylesheet" href='<c:url value="/resources/css/approval_subNavi.css"/>'>
 </head>
 <body>
@@ -20,7 +20,7 @@
 				<div id="sub-navi-topinfo" class="H-personnel-subNavi underline">		
 					<h2 style="text-align: center;">전자결재</h2>
 					<li>
-						<button id="appr_insert_btn">작성하기</button>
+						<button id="appr_insert_btn" onclick="location.href='approvalInsertView.do'">작성하기</button>
 					</li>
 				</div>
 				<div id="sub-navi-deinfo" class="drag-scrollbar">
@@ -31,11 +31,11 @@
 							</li>
 						</div>
 						<ul id="Tab1" class="H-personnel-subNavi Depth02">
-							<li><a href="approvalProgressDList.do" id="">전체</a></li>
-							<li><a href="#" id="">대기</a></li>
-							<li><a href="#" id="">확인</a></li>
-							<li><a href="#" id="">예정</a></li>
-							<li><a href="#" id="">진행</a></li>
+							<li><a href="approvalProgressAllListView.do" id="">전체</a></li>
+							<li><a href="standByDocListView.do" id="">대기</a></li>
+							<li><a href="checkDocListView.do" id="">확인</a></li>
+							<li><a href="scheduledDocListView.do" id="">예정</a></li>
+							<li><a href="progressListView.do" id="">진행</a></li>
 						</ul>
 		
 						<div class="H-personnel-subNavi Depth01-2">
@@ -44,12 +44,12 @@
 							</li>
 						</div>
 						<ul id="Tab2" class="H-personnel-subNavi Depth02">
-							<li><a href="approvalCompleteDList.do" id="">전체</a></li>
-							<li><a href="#" id="">기안</a></li>
-							<li><a href="#" id="">결재</a></li>
-							<li><a href="#" id="">수신</a></li>
-							<li><a href="#" id="">회람</a></li>
-							<li><a href="#" id="">반려</a></li>
+							<li><a href="approvalCompleteAllListView.do" id="">전체</a></li>
+							<li><a href="draftListView.do" id="">기안</a></li>
+							<li><a href="approvalListView.do" id="">결재</a></li>
+							<li><a href="receiveListView.do" id="">수신</a></li>
+							<li><a href="referenceListView.do" id="">회람</a></li>
+							<li><a href="rejectListView.do" id="">반려</a></li>
 							<li><a href="#" id="">임시 저장</a></li>
 						</ul>
 						<div class="H-personnel-subNavi Depth01-3">
@@ -94,7 +94,6 @@
 			<div class="contents-wrap drag-scrollbar">
 				<div class="top-btns">
 						<span class="cb" id="cb1">기안하기</span>
-						<span class="cb" id="cb2">임시저장</span>
                 </div>
 				<div class="c-ic">
                     <span id="appr_set">기본 설정</span>
@@ -103,20 +102,29 @@
 							<tr id="tr1">
 								<td>문서 종류</td>
 								<td>
-                                    <select class="doc_type" id="doc_type">
+                                    <select class="doc_type" id="doc_type" style="height:30px;">
                                         <option value="">선택</option>
-                                        <option value="">업무 연락</option>
-                                        <option value="">회람</option>
-                                        <option value="">휴가</option>
-                                        <option value="">휴직</option>
-                                        <option value="">사직</option>
+                                        <option value="1">업무 연락</option>
+                                        <option value="2">회람</option>
+                                        <option value="3">휴가</option>
+                                        <option value="4">휴직</option>
+                                        <option value="5">사직</option>
                                     </select>
+                               
+                                    <button id="selectForm">선택</button>
                                 </td>
 								<td>기안자</td>
 								<td>현재 로그인 사용자 부서/직급/성명</td>
                             </tr>
                         </tbody>
                     </table>
+                    <script>
+                    	$(function(){
+                    		$('#selectForm').click(function(){
+								location.href='selectFormView.do?option='+$('#doc_type option:selected').val();
+							});
+                    	});
+                    </script>
                     <div class="appr_line" id="appr_line">
                         <span id="appr_set">결재선 설정</span>
                         <span class="cb" id="cb3">결재선 설정</span>
@@ -124,8 +132,8 @@
                     <table class="appr_insert_table2" >
                         <tbody>
 							<tr id="tr2">
-								<td rowspan="4">결재</td>
-								<td>결재자 직급</td>
+								<td rowspan="4"></td>
+								<td></td>
 								<td></td>
 								<td></td>
 								<td></td>
@@ -340,7 +348,7 @@
 					<br>
 					<br>
 					<label id="uploadFile">첨부파일(관련문서 첨부)&nbsp;&nbsp;&nbsp;</label>
-					<input type="file" name="uploadFile"></td>
+					<input type="file" name="uploadFile" multiple="multiple">
 					<br>
 					<br>
 					<br>
