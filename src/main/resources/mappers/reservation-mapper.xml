@@ -135,6 +135,23 @@
     JOIN RCATEGORY RC ON (R.RC_NUM = RC.RC_NUM)
     JOIN "RESOURCE" RS ON (R.RS_NUM = RS.RS_NUM)
 	WHERE R_MEMBER = #{rMember}
+	 ORDER BY R.R_DATE DESC , R.START_TIME
 	</select>
 	
+	<update id="reservationReturn"  parameterType="Reservation">
+	UPDATE RESERVATION
+	SET 
+		R_RETURN='Y'
+	WHERE 
+		R_NUM=#{rNo}
+	</update>
+	
+	<select id="ReservationList" parameterType="String" resultMap="reservationResultSet">
+	SELECT R.*,M.NAME,RC.RC_TITLE,RS.RS_TITLE
+	FROM RESERVATION R
+	JOIN MEMBER M ON (R.R_MEMBER = M.ID)
+    JOIN RCATEGORY RC ON (R.RC_NUM = RC.RC_NUM)
+    JOIN "RESOURCE" RS ON (R.RS_NUM = RS.RS_NUM)
+	ORDER BY R.R_DATE DESC , R.START_TIME
+	</select>
 </mapper>

@@ -12,7 +12,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 <head>
 <meta charset='utf-8' />
 
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
 <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR"
 	rel="stylesheet">
 
@@ -21,10 +21,8 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 
 
 <link href="<c:url value="/resources/css/core.css"/>" rel='stylesheet' />
-<link href="<c:url value="/resources/css/daygrid.css"/>"
-	rel='stylesheet' />
-<link href="<c:url value="/resources/css/timegrid.css"/>"
-	rel='stylesheet' />
+<link href="<c:url value="/resources/css/daygrid.css"/>"rel='stylesheet' />
+<link href="<c:url value="/resources/css/timegrid.css"/>"rel='stylesheet' />
 <link href="<c:url value="/resources/css/list.css"/>" rel='stylesheet' />
 <script src='<c:url value="/resources/js/core.js"/>'></script>
 <script src='<c:url value="/resources/js/interaction.js"/>'></script>
@@ -34,38 +32,18 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 
 <!-- 캘린더 -->
 <c:url value="" />
-<link href='<c:url value="/resources/css/fullcalendar.css"/>'
-	rel='stylesheet' />
-<link href='<c:url value="/resources/css/fullcalendar.print.css"/>'
-	rel='stylesheet' media='print' />
-<script src='<c:url value="/resources/js/jquery-1.10.2.js"/>'
-	type="text/javascript"></script>
-<script src='<c:url value="/resources/js/jquery-ui.custom.min.js"/>'
-	type="text/javascript"></script>
-<script src='<c:url value="/resources/js/fullcalendar.js"/>'
-	type="text/javascript"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src='<c:url value="/resources/js/jquery-1.10.2.js"/>'type="text/javascript"></script>
+<script src='<c:url value="/resources/js/jquery-ui.custom.min.js"/>'type="text/javascript"></script>
+<script src='<c:url value="/resources/js/moment.min.js"/>'type="text/javascript"></script>
+<link href='<c:url value="/resources/css/fullcalendar.css"/>'rel='stylesheet' />
+<link href='<c:url value="/resources/css/fullcalendar.print.css"/>'rel='stylesheet' media='print' />
+<script src='<c:url value="/resources/js/fullcalendar.js"/>'type="text/javascript"></script>
 
-<!-- 자동완성 -->
 
 
 <script>
-  // 메뉴 아이콘용 토글 
-/*   $(function () {
-    $("#menu").click(function () {
-      $("#menuToggle").toggle();
-    });
-  }); */
-
-
-  // 인포용 토글
-/*   $(function () {
-    $("#infoToggle").hide();
-    $("#infobtn").click(function () {
-      $("#infoToggle").toggle();
-    });
-  }); */
-
-  
+ 
 
 
   document.addEventListener('DOMContentLoaded', function() {
@@ -100,7 +78,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 	                end: '${ScheduleList.enddate}T${ScheduleList.endtime}:00',
 	                constraint: '${ScheduleList.sche_no}',
 	                color: '${ScheduleList.color}',
-	                groupId : '${ScheduleList.sche_no}'
+	                
 	            },
 	         
 	          </c:forEach>
@@ -201,14 +179,16 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 												    border-radius: 70px;
 												    background: ${ IndividualCalList.color } "></div>
 												<div>
-												<input type="checkbox" name="sche_cate" 
-												value="${ IndividualCalList.calNo }" id="${ IndividualCalList.calNo }"/>
+										
 												<label id="chela" for="${ IndividualCalList.calNo }">
-												<span>${ IndividualCalList.calName }</span>
+												<span style="width: 110px;
+											    white-space: nowrap;
+											    text-overflow: ellipsis;
+											    overflow: hidden;">${ IndividualCalList.calName }</span>
 												</label>
 												
 											<a id="${IndividualCalList.calNo}" class="editindiCal">
-											<input type="hidden" id="before_cal_name" value="${ IndividualCalList.calName}" />수정</a></div> 
+											<input type="hidden" id="before_cal_name" value="${ IndividualCalList.calName}" />수정</a></div>  <br>
 											</c:forEach>
 											<!-- </select> -->
 										</div></li>
@@ -229,12 +209,14 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 												    border-radius: 70px;
 												    background: ${ publicCalList.color } "></div>
 												<div>
-												<input type="checkbox" name="sche_cate" 
-												value="${ publicCalList.calNo }" id="${ publicCalList.calNo }">
+												
 												<label id="chela" for="${ publicCalList.calNo }">
-												<span>${ publicCalList.calName }</span>
+												<span style="width: 110px;
+											    white-space: nowrap;
+											    text-overflow: ellipsis;
+											    overflow: hidden;">${ publicCalList.calName }</span>
 												</label></input>
-											<a id="${publicCalList.calNo}" class="editpubCal">수정</a></div> 
+											<a id="${publicCalList.calNo}" class="editpubCal">수정</a></div> <br>
 											</c:forEach>
 											
 									
@@ -580,7 +562,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 						<div id="edit_communitymodal" class="modal-dragscroll">
 						<h4 style="color: #477A8F; margin-bottom: 15px; margin-top: 12px;">공유
 							캘린더 수정</h4>
-
+					    <button class="modal-close-btn cursor" >x</button>
 						<label for="" style="font-size: 14px;">캘린더 이름 </label>
 						&nbsp;&nbsp; <input type="text" id="edit_publiccal_name"> &nbsp;
 							<input type="hidden" id="edit_public_calno"/>
@@ -673,12 +655,12 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 
 
 							<div style="position: absolute; bottom: 40px; left: 220px;">
-								<button id="cal_sub"
+								<button id="edit_cal_sub"
 									style="background: #fff; color: #2c86dc; cursor: pointer;
 									 padding: 5px 27px 6px; border: 1px solid #c8c8c8">저장</button>
-								<button class="modal-close-btn cursor"
+								<button id="Public_Cal_delete" onclick="Public_Cal_delete()"
 								style="position: absolute; left: 90px; top: 0px; cursor: pointer;  padding: 5px 27px 6px; color: #444;
-								 letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">취소</button>
+								 letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">삭제</button>
 							</div>
 
 						</div>
@@ -1067,6 +1049,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
         	modal('detail_modal');
             console.log($(this).find('span:eq(1)').text());
             
+            
             var Sche_name = $(this).find('span:eq(1)').text();
             var Sche_color = document.getElementById("cal_color");
             $.ajax({
@@ -1281,15 +1264,16 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
                 	 if(data[i].cal_type_no == 1){
                 		 
                 		 $("#detailmodalCalname").val(data[i].calName);
+                		 
                 		 var Cal_color = document.getElementById("detailmodalCalColor");
                 		  
                 		 Cal_color.style.backgroundColor = data[i].color;
                 		              		console.log(data[i].color);
-                		 $("#enrollnameDetail").append("<span>" + data[i].mem_name + "<" + data[i].mem_no + ">" + "</span><br>");   
+                		 $("#enrollnameDetail").append("<span>" + data[i].mem_name + "(" + data[i].mem_no + ")" + "</span><br>");   
                 		 
                 	 }else if(data[i].cal_type_no == 2){
                 		
-                		 $("#looknameDetail").append("<span>" + data[i].mem_name + "<" + data[i].mem_no + ">" + "</span><br>");   
+                		 $("#looknameDetail").append("<span>" + data[i].mem_name + "(" + data[i].mem_no + ")" + "</span><br>");   
                 	 }
                      
                        }     
@@ -1806,6 +1790,9 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 
      $('.editpubCal').on('click', function() {
          // 공유 캘린더 수정 모달
+          $("#enrollname2").empty();
+          $("#lookname2").empty();
+                 
          var calNo = $(this).attr("id");
          var Sche_color = document.getElementById("colorselect3");
          
@@ -1815,14 +1802,35 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
          $.ajax({
              url: "editDetailPublicCal.do",
              type: "post",
+             dataType: "json",
              data: {
                  "calNo": calNo
              },
              success: function (data) {
-                 console.log("내 캘린더 수정"+ data);
-                 $("#edit_publiccal_name").val(data.calName);
-                 Sche_color.style.backgroundColor = data.color;
-                 $("#edit_public_calno").val(data.calNo);
+                 console.log("공유 캘린더 수정");
+                
+                 $("#enrollname2").empty();
+                 $("#lookname2").empty();
+                 
+                 for(var i=0 in data){
+                	 if(data[i].cal_type_no == 1){
+                		 console.log(data[i].calName);
+                		 $("#edit_publiccal_name").val(data[i].calName);
+                		 Sche_color.style.backgroundColor = data[i].color;
+                         $("#edit_public_calno").val(data[i].calNo);
+                		
+                		    console.log(data[i].calName);
+                		 $("#enrollname2").append('<span>' + data[i].mem_name + '(' + data[i].memNo + ')</span><span style="color:white">,</span><br>');   
+                		 
+                		 
+                	 }else if(data[i].cal_type_no == 2){
+                		
+                		 $("#lookname2").append('<span>' + data[i].mem_name + '(' + data[i].memNo + ')</span><span style="color:white">,</span><br>');      
+                	 }
+                     
+                       }   
+                 
+                 
              },
              error: function (request,
                  status, error) {
@@ -1832,6 +1840,94 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 
          })
      });
+     
+     // 공유 캘린더 수정 추가
+     $("#edit_cal_sub").off("click").on('click',
+             function () {
+     		   $("#search_mem2").empty();
+     	
+     			
+                 var calName = $('#edit_publiccal_name').val();
+                 var color = document.querySelector('#colorselect3').style.background;
+                 var enroll = $('#enrollname2').text();
+                 var enrollArray = enroll.split(',');
+                 var look = $('#lookname2').text();
+                 var lookArray = look.split(',');
+                 
+                
+                 if(calName.length < 1){
+        			 alert("캘린더 제목을 입력해주세요.")
+        			 return false;
+ 	       		 } 
+              
+ 	       		 if(enroll.length < 1){
+ 	       			 alert("등록 권한을 지정해주세요.")
+ 	       			 return false;
+ 	       		 } 
+ 	       		if(look.length < 1){
+ 	       			alert("조회 권한을 지정해주세요.")
+ 	       			 return false;}
+
+                 for (var i = 0; i < enrollArray.length; i++) {
+                     enrollArray[i] = enrollArray[i].substring(enrollArray[i].length - 5,enrollArray[i].length - 1);
+                 }
+
+                 for (var i = 0; i < lookArray.length; i++) {
+                     lookArray[i] = lookArray[i].substring(lookArray[i].length - 5,lookArray[i].length - 1);
+                 }
+
+                 $
+                     .ajax({
+                         url: "insertEditCommunityCal.do",
+                         type: "post",
+                         dataType: "json",
+                         traditional: true,
+                         data: {
+                             "calName": calName,
+                             "calNo": $('#edit_public_calno').val(),
+                             "color": document.querySelector('#colorselect3').style.background,
+                             "enrollMember": enrollArray,
+                             "lookMember": lookArray
+                         },
+                         success: function (data) {
+                             console.log("수정 성공"+ data);
+                             location.reload();
+                         },
+                         error: function (request,
+                             status, error) {
+                             console.log("수정 실패"+ request);
+                             location.reload();
+                         }
+
+                     })
+
+             })
+             
+             
+           // 공유 캘린더 삭제 
+      function Public_Cal_delete () {
+	        		if(confirm('캘린더를 삭제하시겠습니까?')){
+	        			 var calNo =  $("#edit_public_calno").val();
+	        		     
+	        			 $.ajax({
+	        	             url: "DeleteIndiCal.do",
+	        	             type: "post",
+	        	             data: {"calNo" : calNo},
+	        	             success: function (data) {
+	        	                 console.log("삭제 성공임");
+	        	                 location.reload();
+	        	             },
+	        	             error: function (request,
+	        	                 status, error) {
+	        	            	 console.log("삭제 실패임");
+	       
+	        	            	 }
+						 });
+	        			
+	        		} else {
+	        			return false;
+	        		}
+	        	}
      
      $('#perimg').on('click', function() {
          // 캘린더 멤버 띄우기
@@ -2182,8 +2278,10 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 
 				
 				</script>
+				
+			
 
-
+				
 
 			</div>
 		</div>

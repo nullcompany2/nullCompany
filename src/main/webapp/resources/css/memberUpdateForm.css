@@ -3,6 +3,7 @@ body {
             padding: 0px; margin: 0px;
             box-sizing:board-box;
             background:#EFEFEF;
+            overflow :scroll;
 		}
 		
 	#infobox {

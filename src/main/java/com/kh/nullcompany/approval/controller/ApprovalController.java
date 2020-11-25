@@ -900,6 +900,34 @@ public class ApprovalController {
 		}
 	}
 	
+	@RequestMapping("approvalInsertView.do")
+	public String approvalInsertView(HttpServletResponse response) {
+		return "approval/approvalSelectDocumentForm";
+	}
+
+	
+	@RequestMapping("selectFormView.do")
+	public String selectFormView(HttpSession session, int option) {
+		System.out.println("서식번호 : " + option);
+		
+		// 임시 문서
+		Document d = new Document();
+		d.setFormNo(option);
+		d.setDrafterNo(((Member) session.getAttribute("loginUser")).getMemNo());
+		d.setDrafterDeptNo(((Member) session.getAttribute("loginUser")).getDeptNo());
+		d.setDrafterRankNo(((Member) session.getAttribute("loginUser")).getLankNo());
+		
+		int result = aService.insertTempDocument(d);
+		
+		if(result > 0) {
+			if(option == 1) {
+				
+			}
+		}
+		
+		return null;
+	}
+	
 //	@ResponseBody
 //	@RequestMapping("test.do")
 //	public void test(@RequestParam("docTempNo") String docTempNo) {
@@ -916,34 +944,5 @@ public class ApprovalController {
 		return "approval/approvalDeleteDList";
 	}
 
-	@RequestMapping("contactDetail.do")
-	public String contactDetail(HttpServletResponse response) {
-		return "approval/approvalContactDetail";
-	}
-
-	@RequestMapping("referDetail.do")
-	public String referDetail(HttpServletResponse response) {
-		return "approval/approvalReferDetail";
-	}
-
-	@RequestMapping("leaveDetail.do")
-	public String leaveDetail(HttpServletResponse response) {
-		return "approval/approvalLeaveDetail";
-	}
-
-	@RequestMapping("absenceDetail.do")
-	public String absenceDetail(HttpServletResponse response) {
-		return "approval/approvalAbsenceDetail";
-	}
-
-	@RequestMapping("resignDetail.do")
-	public String resignDetail(HttpServletResponse response) {
-		return "approval/approvalResignDetail";
-	}
-
-	@RequestMapping("approvalInsertView.do")
-	public String approvalInsertView(HttpServletResponse response) {
-		return "approval/approvalInsertForm";
-	}
 
 }

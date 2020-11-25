@@ -375,4 +375,13 @@
 		WHERE
 			DOC_TEMP_NO= #{docTempNo}
 	</update>
+	
+	<!-- 임시 문서 저장하기 -->
+	<insert id="insertTempDocument" parameterType="Document">
+		<selectKey keyProperty="docTempNo" resultType="String" order="BEFORE">
+			SELECT TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS') FROM DUAL
+		</selectKey>
+		INSERT INTO APPROVAL_DOCUMENT VALUES(#{docTempNo},NULL,#{formNo}, #{drafterNo}, #{drafterDeptNo}, #{drafterRankNo}
+											,NULL,NULL,NULL,SYSDATE,NULL,DEFAULT,DEFAULT,DEFAULT)
+	</insert>
 </mapper>
