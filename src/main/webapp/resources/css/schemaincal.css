@@ -1152,6 +1152,15 @@ background-color
 	border-radius: 3px;
 }
 
+#individualmodal2 {
+	width: 415px;
+	height: 210px;
+	padding: 10px 35px;
+	background-color: #fefefe;
+	border: 1px solid #888;
+	border-radius: 3px;
+}
+
 #editindividualmodal .modal-close-btn {
 	top: 10px;
 	float: right;
