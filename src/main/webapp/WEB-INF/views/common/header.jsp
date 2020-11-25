@@ -56,7 +56,7 @@
     position: absolute;
     left: 10px;
     top: 70px;
-   	z-index: 500;
+   	z-index: 9000;
    	
   }
 
@@ -96,7 +96,6 @@
   #logo{
       width: 250px;
       height: 110px;
-      background-color: #3E4247;
       float: left;
   }
 
@@ -140,7 +139,7 @@
     right: 0px;
     top: 110px;
     display: inline-block;
-    z-index: 500;
+    z-index: 9000;
     
   }
 
@@ -234,30 +233,26 @@
 
 	}
 
-
-	a:active {
-		font-weight: bolder;
+	
+	a {
+	text-decoration: none;
 	}
 	
- 	header #logo button {
-		border:none;
-		background:none;
-		color : #477A8F;
-		padding : 23px 0px 0px 50px;
-		font-size : 23px;
-		text-align: left;
-		font-family: 'Lato', sans-serif;
+ 	header #logo button img {
+		padding : 17px 0px 0px 50px;
 		cursor :pointer;
+		background : #3E4247;
 	}
 	
-	header #logo span {
-		color : white;
-		font-size : 15px;
-		font-family: 'Lato', sans-serif;
+	header #logo button {
+	border : none;
+	background:none;
 	}
+	
 	
 	 ::-webkit-scrollbar { display: none; }
 
+	
 	
   </style>
 
@@ -337,7 +332,11 @@
 <body>
   <header>
       <div id="logo">
-        <button onclick="location.href='home.do'"> <span> \ </span>  Null <br> Company <span> \ </span> </button>
+      	
+      <!--   <button onclick="location.href='home.do'"> <span> \ </span>  Null <br> Company <span> \ </span> </button> -->
+        <button onclick="location.href='home.do'"> <img src="resources/images/LOGO_EX.png"/></button>
+        
+        
       </div>
 
       <a id="menu">오피스 홈 &nbsp; <img src="resources/images/dropbtn.png"></a>

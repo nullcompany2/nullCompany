@@ -91,6 +91,18 @@
 	<!-- 사원 리스트 -->
 	<select id="per_selectmemList" resultMap="memberResultSet" parameterType="Member">
 		SELECT *
-		FROM MEMBER
+		FROM MEMBER M
+        JOIN DEPARTMENT D ON M.DEPT_NO = D.DEPT_NO
+        JOIN RANK R ON R.RANK_NO = M.RANK_NO
 	</select>
+	
+	<!-- 사원 인원 수 -->
+	<select id="getMemListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER M
+        JOIN DEPARTMENT D ON M.DEPT_NO = D.DEPT_NO
+        JOIN RANK R ON R.RANK_NO = M.RANK_NO
+	</select>
+	
+
 </mapper>

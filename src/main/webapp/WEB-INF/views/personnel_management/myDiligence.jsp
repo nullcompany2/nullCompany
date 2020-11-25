@@ -109,6 +109,7 @@
 						정상(<span style="color:#477A8F">○</span>),
 						지각(<span style="color:#477A8F">△</span>),
 						결근(<span style="color:#477A8F">X</span>),
+						휴가(<span style="color:#477A8F">휴</span>),
 						수정됨(<span style="color:#477A8F">◇</span>)
 						
 						</h5>
@@ -402,7 +403,7 @@
 		}
 		
 		function cancelMod(noMod){
-			var result = confirm("NO_"+noMod+"휴가신청을 취소하시겠습니까?");
+			var result = confirm("NO_"+noMod+"근태수정을 취소하시겠습니까?");
 			
 			if(result){
 				$.ajax({
@@ -445,6 +446,10 @@
 						<c:when test="${list.statusDiligence eq '정상'}">
 							status ="○";
 							$("#"+day).text(status).attr("style","color:#477A8F");
+						</c:when>
+						<c:when test="${list.statusDiligence eq '휴가'}">
+							status ="휴";
+							$("#"+${memNo}+"Tr "+"#"+day).text(status).attr("style","color:#477A8F");
 						</c:when>
 						<c:otherwise>
 							status ="◇";
@@ -561,7 +566,7 @@
 							$td_status = $(' <td class="md-tbl-td" colspan="2">').text(data.dList[i].statusDiligence);
 							
 							
-							if(data.dList[i].statusDiligence == '정상'){
+							if(data.dList[i].statusDiligence == '정상' || data.dList[i].statusDiligence == '수정됨' ){
 								$td_reqMod = $(' <td class="md-tbl-td">').attr("id",data.dList[i].noDiligence);
 							}else{
 								$td_reqMod = $(' <td class="md-tbl-td">').attr("id",data.dList[i].noDiligence);
@@ -672,7 +677,7 @@
 							$td_exitTime = $(' <td class="md-tbl-td" colspan="2">').text(data.dList[i].timeExit);
 							$td_status = $(' <td class="md-tbl-td" colspan="2">').text(data.dList[i].statusDiligence);
 														
-							if(data.dList[i].statusDiligence == '정상'){
+							if(data.dList[i].statusDiligence == '정상' || data.dList[i].statusDiligence == '수정됨'){
 								$td_reqMod = $(' <td class="md-tbl-td">').attr("id",data.dList[i].noDiligence);
 							}else{
 								$td_reqMod = $(' <td class="md-tbl-td">').attr("id",data.dList[i].noDiligence);

@@ -255,7 +255,7 @@ public class PersonnelManagementDao {
 
 
 	public int cancelMod(int noMod) {
-		return sqlSession.delete("personnelMapper.cancelMod",noMod);
+		return sqlSession.update("personnelMapper.cancelMod",noMod);
 	}
 
 
@@ -324,6 +324,29 @@ public class PersonnelManagementDao {
 
 	public DiligenceCountAllMember DiligenceCountAllMember() {
 		return sqlSession.selectOne("personnelMapper.DiligenceCountAllMember");
+	}
+
+
+	public ArrayList<ModificationDiligence> modRequestList() {
+		return (ArrayList)sqlSession.selectList("personnelMapper.modRequestList");
+	}
+
+
+	public int modificationAcknowledgment(int noMod) {
+		int result=0;
+		result = sqlSession.update("personnelMapper.modificationAcknowledgment",noMod);
+		result = sqlSession.update("personnelMapper.updateRecordDiligence",noMod);
+		return result;
+	}
+
+
+	public int modificationCancel(int noMod) {
+		return sqlSession.update("personnelMapper.modificationCancel",noMod);
+	}
+
+
+	public ArrayList<RecordLeave> RecordLeaveList() {
+		return (ArrayList)sqlSession.selectList("personnelMapper.RecordLeaveList");
 	}
 
 

@@ -261,7 +261,7 @@
 	 
 	 <!--  메인에서 카운트 뿌리기  -->
 	 <select id="mailListCount" resultMap="mailListCountSet">
-	  SELECT 
+	  	SELECT 
         (SELECT COUNT(*)
         FROM MAIL 
         WHERE RECIPIENT = #{memId}

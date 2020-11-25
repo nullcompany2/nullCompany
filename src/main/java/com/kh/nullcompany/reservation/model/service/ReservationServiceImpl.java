@@ -87,4 +87,14 @@ public class ReservationServiceImpl implements ReservationService  {
 		return rDao.selectMyreservationList(rMember);
 	}
 
+	@Override
+	public int reservationReturn(int rNo) {
+		return rDao.reservationReturn(rNo);
+	}
+
+	@Override
+	public ArrayList<Reservation> selectReservationList() {
+		return rDao.selectReservationList();
+	}
+
 }
