@@ -8,4 +8,6 @@ public class PersonnelMember {
 	private String id;
 	private String deptName;
 	private String rankName;
+		
+	
 }

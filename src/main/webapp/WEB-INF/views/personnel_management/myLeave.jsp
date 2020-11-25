@@ -226,11 +226,6 @@
 			})
 		}
 		
-		$(document).ready(function(){
-			$(".md-btn-cancel").click(function(){
-				var result = confirm("휴가신청을 취소하시겠습니까?");
-			})
-		})
 	</script>
 		<style>
 			#my_modal {
@@ -340,8 +335,7 @@
 			</tr>
 		</table>
 		<div style="text-align: center; margin-top: 50px;">
-			<span class="md-btn cursor md-btn-cancel">휴가 신청 취소</span>
-			<span class="md-btn cursor md-btn-close" style="margin-left: 50px;">닫기</span>
+			<span class="md-btn cursor md-btn-close" >닫기</span>
 		</div>
 
 		<a class="modal-close-btn cursor md-btn-close">X</a>

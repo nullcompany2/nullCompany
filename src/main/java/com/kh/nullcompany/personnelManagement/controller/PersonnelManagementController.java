@@ -353,7 +353,6 @@ public class PersonnelManagementController {
 		
 		int dListCount = pService.dListCount(forsearchYM);
 		PageInfo pi = Pagination.getPageInfoForModal(currentPage, dListCount);
-		
 		ArrayList<RecordDiligence> dList = pService.searchDiligenceYM(forsearchYM,pi);
 		
 		Map list = new HashMap();
@@ -1072,6 +1071,30 @@ public class PersonnelManagementController {
 			mv.setViewName("personnel_management/emDiligenceManagement");
 			return mv;
 			
+		}
+		
+		//근태 수정요청 관리
+		@RequestMapping("attendanceModificationRequests.do")
+		public ModelAndView modificationRequest(ModelAndView mv, HttpServletResponse response) {
+			ArrayList<ModificationDiligence> modRequestList = pService.modRequestList();
+			System.out.println(modRequestList);
+			mv.addObject("modRequestList",modRequestList);
+			mv.setViewName("personnel_management/attendanceModificationRequests");
+			return mv;
+		}
+		// 근태수정요청 승인
+		@RequestMapping("modificationAcknowledgment.do")
+		public String modificationAcknowledgment(int noMod) {
+			int reulst = pService.modificationAcknowledgment(noMod);
+			
+			return "redirect:attendanceModificationRequests.do";
+		}
+		// 근태수정요청 반려
+		@RequestMapping("modificationCancel.do")
+		public String modificationCancel(int noMod) {
+			int reulst = pService.modificationCancel(noMod);
+			
+			return "redirect:attendanceModificationRequests.do";
 		}
 	
 }

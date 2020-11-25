@@ -209,6 +209,12 @@ public interface PersonnelManagementService {
 	ArrayList<Member> selectAllMember();
 	// 전체직원 근태 카운트
 	DiligenceCountAllMember DiligenceCountAllMember();
+	// 근태 수정요청 리스트
+	ArrayList<ModificationDiligence> modRequestList();
+	// 근태 수정요청 승인
+	int modificationAcknowledgment(int noMod);
+	// 근태 수정요청 반려
+	int modificationCancel(int noMod);
 	
 	
 	
