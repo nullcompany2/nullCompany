@@ -920,6 +920,8 @@ public class ApprovalController {
 		d.setDrafterRankNo(((Member) session.getAttribute("loginUser")).getLankNo());
 		d.setDrafterRankName(((Member) session.getAttribute("loginUser")).getRankName());
 		
+		
+		
 		// 임시 문서 생성하기(결재선 설정을 위한 선행작업)
 		int result = aService.insertTempDocument(d);
 		
