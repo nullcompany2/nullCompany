@@ -218,4 +218,18 @@ public class MemberController {
 	}
 }
 	
+	// 휴대폰 번호 중복 체크 
+	@ResponseBody
+	@RequestMapping("phoneCheck.do")
+	
+	public String phoneCheck(String phone) {
+		int result = mService.phoneCheck(phone);
+			
+			if(result > 0) {
+				return "fail";
+			}else {
+				return "ok";
+			}
+		}
+	
 }

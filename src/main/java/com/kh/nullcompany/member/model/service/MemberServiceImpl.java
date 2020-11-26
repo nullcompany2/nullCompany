@@ -48,5 +48,10 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.insertInfoMember(m);
 	}
 
+	@Override
+	public int phoneCheck(String phone) {
+		return mDao.phoneCheck(phone);
+	}
+
 	
 }

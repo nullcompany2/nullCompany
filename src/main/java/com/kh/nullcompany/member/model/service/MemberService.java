@@ -27,8 +27,18 @@ public interface MemberService {
 	 */
 	int deleteMember(String id);
 
+	/**
+	 *  회원 가입시 아이디 중복 체크 
+	 * @param id
+	 * @return
+	 */
 	int idCheck(String id);
 
+	/**
+	 *  회원 가입시 이메일 중복 체크 
+	 * @param email
+	 * @return
+	 */
 	int emailCheck(String email);
 
 	/**
@@ -37,5 +47,12 @@ public interface MemberService {
 	 * @return
 	 */
 	int insertInfoMember(Member m);
+
+	/**
+	 * 회원 가입시 휴대전화 중복 체크 
+	 * @param phone
+	 * @return
+	 */
+	int phoneCheck(String phone);
 	
 }
