@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%
@@ -83,14 +84,16 @@
 	   
 	      events: [
 	    	
-	    	  <c:forEach items="${RecordLeaveList}" var="RecordLeaveList">
-	             
-	    	       
+	    	  <c:forEach items="${RecordLeaveList}" var="list">
+	    	  <fmt:formatDate var="applyDate" value="${list.applyDate }" pattern="yyyy-MM-dd"/>
+	    	  
+	    	  <c:set var="endDate" value="${appliDateD + list.useDays}"/>
 	             {
 	            	
-	                title: '${RecordLeaveList.memNo}',
-	                start: '2020-11-02',
-	                color: '#ddd'
+	                title: '${list.memNo}',
+	                start: '${applyDate}',
+	                end :  '${list.endLeaveDate}',
+	                color: 'lightBlue'
 	        
 	                
 	            },
@@ -604,11 +607,7 @@
 						<div onclick="location.href='myLeave.do'" class="cate cursor" id="myleave">내 휴가</div>
 						<div onclick="location.href='leaveCalendar.do'" class="cate cursor" id="" style="color: #477A8F;">휴가 캘린더</div>
 					</div>
-							
-				<!-- 	<div id="show-calendar" class="c-ic" style="padding: 30px">
-                        
-                        <div id="calendar"></div>
-                    </div> -->
+				
                     
 					<div class="contents-wrap drag-scrollbar">
 						<div id="show-myleave" class="c-ic" style="">
@@ -686,11 +685,7 @@
 		       modal('off-work');
 		    });
 		
-		$(document).ready(function(){
-			$(".md-btn-cancel").click(function(){
-				var result = confirm("휴가신청을 취소하시겠습니까?");
-			})
-		})
+		
 	</script>
 <style>
 #off-work{
@@ -795,52 +790,7 @@
 	 		</div>
 	
 	<!-- Modal div -->
-	<div id="my_modal" class="modal-dragscroll">
-		<h4 style="color: #477A8F; margin-bottom: 30px;">휴가 신청 상세</h4>
-		<table class="md-tbl">
-			<tr class="md-tbl-il">
-				<th class="md-tbl-th">신청일시</th>
-				<td class="md-tbl-td">td</td>
-				<th class="md-tbl-th">상태</th>
-				<td class="md-tbl-td">td</td>
-			</tr>
-			<tr class="md-tbl-il">
-				<th class="md-tbl-th">사용자 이름</th>
-				<td class="md-tbl-td">td</td>
-				<th class="md-tbl-th">사용자 사번</th>
-				<td class="md-tbl-td">td</td>
-			</tr>
-			<tr class="md-tbl-il">
-				<th class="md-tbl-th">소속</th>
-				<td class="md-tbl-td" colspan="3">td</td>
-			</tr>
-			<tr class="md-tbl-il">
-				<th class="md-tbl-th">종류</th>
-				<td class="md-tbl-td">td</td>
-				<th class="md-tbl-th">일수</th>
-				<td class="md-tbl-td">td</td>
-			</tr>
-			<tr class="md-tbl-il">
-				<th class="md-tbl-th">기간</th>
-				<td class="md-tbl-td" colspan="3">td</td>
-			</tr>
-			<tr class="md-tbl-il">
-				<th class="md-tbl-th">사유</th>
-				<td class="md-tbl-td" colspan="3">td</td>
-			</tr>
-			<tr class="md-tbl-il">
-				<th class="md-tbl-th">의견</th>
-				<td class="md-tbl-td" colspan="3">td</td>
-				
-			</tr>
-		</table>
-		<div style="text-align: center; margin-top: 50px;">
-			<span class="md-btn cursor md-btn-cancel">휴가 신청 취소</span>
-			<span class="md-btn cursor md-btn-close" style="margin-left: 50px;">닫기</span>
-		</div>
-
-		<a class="modal-close-btn cursor md-btn-close">X</a>
-	</div>
+	
     
 </body>
 </html>

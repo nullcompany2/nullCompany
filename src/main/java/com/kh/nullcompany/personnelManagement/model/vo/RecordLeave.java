@@ -21,13 +21,13 @@ public class RecordLeave {
 	private String status;
 	private Date requestedDate;
 	private String reason;
-    private String Memname;
+	private String endLeaveDate;
 	public RecordLeave() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	public RecordLeave(int noRecord, int memNo, int typeLeave, Date applyDate, int useDays, String attach,
-			String status, Date requestedDate, String reason) {
+			String status, Date requestedDate, String reason, String endLeaveDate) {
 		super();
 		this.noRecord = noRecord;
 		this.memNo = memNo;
@@ -38,6 +38,7 @@ public class RecordLeave {
 		this.status = status;
 		this.requestedDate = requestedDate;
 		this.reason = reason;
+		this.endLeaveDate = endLeaveDate;
 	}
 	public int getNoRecord() {
 		return noRecord;
@@ -93,14 +94,18 @@ public class RecordLeave {
 	public void setReason(String reason) {
 		this.reason = reason;
 	}
+	public String getEndLeaveDate() {
+		return endLeaveDate;
+	}
+	public void setEndLeaveDate(String endLeaveDate) {
+		this.endLeaveDate = endLeaveDate;
+	}
 	@Override
 	public String toString() {
 		return "RecordLeave [noRecord=" + noRecord + ", memNo=" + memNo + ", typeLeave=" + typeLeave + ", applyDate="
 				+ applyDate + ", useDays=" + useDays + ", attach=" + attach + ", status=" + status + ", requestedDate="
-				+ requestedDate + ", reason=" + reason + "]";
+				+ requestedDate + ", reason=" + reason + ", endLeaveDate=" + endLeaveDate + "]";
 	}
-
-	
 	
 	
 }
