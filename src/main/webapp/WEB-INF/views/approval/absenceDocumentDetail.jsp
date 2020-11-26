@@ -678,17 +678,6 @@
 					</table>
 					<br>
 					<br>
-					<span style="color:#477A8F; font-weight:bold">첨부파일 : 
-						<c:if test="${ d.fileName != null }">
-							    <a href="${ contextPath }/resources/approvalUploadFiles/${d.fileName}"
-								  download="${ d.fileName }">${ d.fileName }</a>
-						</c:if>
-						<c:if test="${ d.fileName == null }">
-							없음
-						</c:if>
-					</span>
-					<br>
-					<br>
 					<br>
 					<hr>
 				</div>

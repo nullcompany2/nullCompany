@@ -219,106 +219,21 @@
                     </table>
                     <br>
                     <br>
-                    <span id="appr_set">휴가 설정</span>
+					<span id="appr_set">사직 상세 입력</span>
                     <table class="appr_insert_table3" >
                         <tbody>
-							<tr id="tr11">
-								<td>휴가 종류</td>
-								<td>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <span>휴가 종류&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</span>
-                                    <select class="leave_type" id="leave_type">
-                                        <option value="">선택</option>
-                                        <option value="">연차</option>
-                                        <option value="">경조사</option>
-                                        <option value="">병가</option>
-                                        <option value="">훈련</option>
-                                        <option value="">교육</option>
-                                    </select>
-                                    <span id="w1">* 종류가 다른 휴가는 별도 신청</span>
-                                </td>
-							</tr>
 							<tr id="tr12">
-								<td><span>휴가 기간</span></td>
+								<td><span>사직 정보</span></td>
 								<td>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <span>휴가 시작일&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</span>
-                                    <input type="date" id="start_date" name="startDate"/>
+                                    <span>사직일&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</span>
+                                    <input type="date" id="start_date"/>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <span>휴가 종료일&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</span>
-                                    <input type="date" id="end_date" name="endDate"/>
-                                    <button id="calc">일수 계산</button>
-                                    <span id="w2">* 휴가 기간은 규정 단위(일)로 선택 / 비연속 기간은 별도 신청</span>
-                                    <br><br>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <span>선택 일수&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</span>
-                                    <span id="period">0</span>
-                                    <span>일</span>
+                                    <span id="w2">* 사직일은 규정 단위(일)로 선택</span>
                                 </td>
-							</tr>
-							<tr id="tr13">
-								<td><span>사유</span></td>
-								<td><input type="text" id="reason" placeholder="휴가 사유를 입력하세요"/></td>
 							</tr>
 						</tbody>
 					</table>
-					<!-- 휴가/휴직 일수 계산 함수-->
-                    <script>
-                        $(function(){
-                            $("#calc").on("click",function(){
-                                var start = $("#start_date").val();
-                                var end = $("#end_date").val();
-                                
-                                if(start != "" && end != ""){
-                                    var sarr = start.split('-');
-                                    var earr = end.split('-');
-
-                                    var day1 = new Date(sarr[0],sarr[1]-1,sarr[2]);
-                                    var day2 = new Date(earr[0],earr[1]-1,earr[2]);
-
-                                    var calcDate = 0;
-
-									var startDate = day1;
-									var endDate = day2;
-
-                                    if(day1.getTime() > day2.getTime()){
-                                        alert("잘못 입력하셨습니다. 휴가 종료일을 확인하세요.");
-                                    }else{
-                                        while(true){
-
-                                            if(startDate.getTime() > endDate.getTime()){
-                                                if(calcDate == 0){
-                                                    alert("주말은 휴가 일수에 포함되지 않습니다.");
-                                                    $("#period").empty();
-                                                    $("#period").text(calcDate);
-                                                    break;
-                                                }else{
-                                                    $("#period").empty();
-                                                    $("#period").text(calcDate);
-                                                    break;
-                                                }
-                                            }else{
-                                                var tmpDay = startDate.getDay();
-
-                                                if(tmpDay != 0 && tmpDay != 6){
-                                                    calcDate++;
-                                                }
-                                            }
-                                            startDate.setDate(day1.getDate()+1);
-											
-                                        }
-                                    }
-
-                                }else if(start == "" && end == ""){
-                                    alert("휴가 기간을 입력하세요.");
-                                }else if(start == ""){
-                                    alert("휴가 시작일을 입력하세요.");
-                                }else{
-                                    alert("휴가 종료일을 입력하세요.");
-                                }
-                            });
-                        });
-                    </script>
 					<br>
 					<br>
 					<br>
