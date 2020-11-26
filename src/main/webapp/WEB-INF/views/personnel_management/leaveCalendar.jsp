@@ -90,7 +90,7 @@
 	    	  <c:set var="endDate" value="${appliDateD + list.useDays}"/>
 	             {
 	            	
-	                title: '${list.memNo}',
+	                title: '${list.name}'+'(${list.deptName} - ${list.rankName})',
 	                start: '${applyDate}',
 	                end :  '${list.endLeaveDate}',
 	                color: 'lightBlue'
