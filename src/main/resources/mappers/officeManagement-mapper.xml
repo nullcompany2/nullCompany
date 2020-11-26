@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="officeMapper">
+	<resultMap id="memberResultSet" type="OfficeMainContactInformation">
+    	<result property="memNo" column="MEM_NO"/>
+      	<result property="id" column="ID"/>
+		<result property="name" column="NAME"/>
+		<result property="phone" column="PHONE"/>
+		<result property="email" column="EMAIL"/>
+		<result property="deptName" column="DEPT_NAME"/>
+		<result property="rankName" column="RANK_NAME"/>
+		<result property="sAccess" column="S_ACCESS"/>
+   	</resultMap>
+   	
+   	<resultMap type="OfficeMainInformationCalculation" id="calculResultSet">
+   		
+		<result property="boardCount" column="boardCount"/>
+		<result property="latestNoticeDate" column="latestNoticeDate"/>
+		<result property="memberCount" column="memberCount"/>
+		<result property="deptCount" column="deptCount"/>
+		<result property="deptPersonnel" column="deptPersonnel"/>
+		<result property="rankCount" column="rankCount"/>
+		<result property="existDocumentCount" column="existDocumentCount"/>
+		<result property="deleteDocumentCount" column="deleteDocumentCount"/>
+   	</resultMap>
+<!--//////////////////////////////////////////////////////////////////////////////////////////////////////////////  -->
+	<select id="officeManager" resultMap="memberResultSet">
+		select *
+		from member
+		where s_access = 1
+		and m_status ='Y'
+	</select>
+	
+	<select id="contactInformation" resultMap="memberResultSet">
+	<![CDATA[ 
+		select *
+		from member
+		join rank using(rank_no)
+		where rank_no < 3
+		and rank_no != 0
+		and m_status = 'Y'
+		]]>
+	</select>
+	
+	<select id="informationCalculate" resultMap="calculResultSet">
+		SELECT (SELECT NVL(COUNT(*),0) FROM TBL_NOTICE) AS BOARDCOUNT,
+		       (SELECT N_CREATE_DATE FROM TBL_NOTICE WHERE ROWNUM =1) AS LATESTNOTICEDATE,
+		       (SELECT NVL(COUNT(*),0) FROM MEMBER) AS MEMBERCOUNT,
+		       (SELECT NVL(COUNT(*),0) FROM DEPARTMENT) AS DEPTCOUNT,
+		       (SELECT NVL(COUNT(*),0) FROM DEPARTMENT WHERE DEPT_NAME = '인사') AS DEPTPERSONNEL,
+		       (SELECT NVL(COUNT(*),0) FROM RANK) AS RANKCOUNT,
+		       (SELECT NVL(COUNT(*),0) FROM APPROVAL_DOCUMENT WHERE D_STATUS = 'N') AS EXISTDOCUMENTCOUNT,
+		       (SELECT NVL(COUNT(*),0) FROM APPROVAL_DOCUMENT WHERE D_STATUS = 'Y') AS DELETEDOCUMENTCOUNT
+		FROM DUAL
+	</select>
+	 	
+</mapper>

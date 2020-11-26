@@ -15,7 +15,6 @@
 		<result property="drafterRankName" column="DRAFTER_RANK_NAME"/>
 		<result property="dTitle" column="DTITLE"/>
 		<result property="dContent" column="DCONTENT"/>
-		<result property="fileName" column="FILENAME"/>
 		<result property="draftDate" column="DRAFT_DATE"/>
 		<result property="completeDate" column="COMPLETE_DATE"/>
 		<result property="formNo" column="FORM_NO"/>
@@ -76,7 +75,6 @@
 			       AF.FORM_CODE,
 			       AD.DTITLE,
 			       AD.DCONTENT,
-			       AD.FILENAME,
 			       AD.DRAFTER_NO,
 			       M.NAME AS DRAFTER_NAME,
 			       AD.DRAFTER_DEPT_NO,
@@ -112,7 +110,6 @@
 		       AF.FORM_CODE,
 		       AD.DTITLE,
 		       AD.DCONTENT,
-		       AD.FILENAME,
 		       AD.DRAFTER_NO,
 		       M.NAME AS DRAFTER_NAME,
 		       AD.DRAFTER_DEPT_NO,
@@ -173,7 +170,6 @@
 			       AF.FORM_CODE,
 			       AD.DTITLE,
 			       AD.DCONTENT,
-			       AD.FILENAME,
 			       AD.DRAFTER_NO,
 			       M.NAME AS DRAFTER_NAME,
 			       AD.DRAFTER_DEPT_NO,
@@ -209,7 +205,6 @@
 		       AF.FORM_CODE,
 		       AD.DTITLE,
 		       AD.DCONTENT,
-		       AD.FILENAME,
 		       AD.DRAFTER_NO,
 		       M.NAME AS DRAFTER_NAME,
 		       AD.DRAFTER_DEPT_NO,
@@ -245,7 +240,6 @@
 		       AF.FORM_CODE,
 		       AD.DTITLE,
 		       AD.DCONTENT,
-		       AD.FILENAME,
 		       AD.DRAFTER_NO,
 		       M.NAME AS DRAFTER_NAME,
 		       AD.DRAFTER_DEPT_NO,
@@ -382,6 +376,6 @@
 			SELECT TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS') FROM DUAL
 		</selectKey>
 		INSERT INTO APPROVAL_DOCUMENT VALUES(#{docTempNo},NULL,#{formNo}, #{drafterNo}, #{drafterDeptNo}, #{drafterRankNo}
-											,NULL,NULL,NULL,SYSDATE,NULL,DEFAULT,DEFAULT,DEFAULT)
+											,NULL,NULL,SYSDATE,NULL,DEFAULT,DEFAULT,DEFAULT)
 	</insert>
 </mapper>

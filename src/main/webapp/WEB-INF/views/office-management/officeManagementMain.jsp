@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -72,14 +73,16 @@
 						<tr >
 							<td class="top-vertical">
 								<div class="office-tbl-board-le">
-									<h4 class="underline">» 게시판 : 사용중 N 개 / 전체 N 개</h4>
-									<h4 class="underline">» 최근 게시물 이용 : DATE</h4>
+									<h4 class="underline">» 게시판 : 공지 ${mic.boardCount } 개 </h4>
+									<fmt:formatDate var="date" value="${mic.latestNoticeDate }" pattern="yyyy-MM-dd" />
+									<h4 class="underline">» 최근 게시물 이용 : ${date }</h4>
 								</div>
 							</td>
 							<td class="top-vertical">
 								<div class="office-tbl-board-ri">
-									<h4 class="underline">» 승인 사용자 : N 명 등록됨</h4>
-									<h4 class="underline">» 조직 : N 개 등록됨</h4>
+									<h4 class="underline">» 승인 사용자 : ${mic.memberCount } 명 등록됨</h4>
+									<h4 class="underline">» 부서 : ${mic.deptCount } 개 등록됨</h4>
+									<h4 class="underline">» 직위 : ${mic.rankCount } 개 등록됨</h4>
 	
 								</div>
 							</td>
@@ -91,17 +94,17 @@
 						<tr >
 							<td class="top-vertical">
 								<div class="office-tbl-board-le">
-									<h4 class="underline">» 사장 : Phone-Num</h4>
-									<h4 class="underline">» 부서장 : Phone-Num</h4>
-									<h4 class="underline">» 부서장 : Phone-Num</h4>
-									<h4 class="underline">» 부서장 : Phone-Num</h4>
-									<h4 class="underline">» 부서장 : Phone-Num</h4>
+									<c:forEach var="list" items="${mci }">
+									<h4 class="underline">» ${list.name} - ${list.rankName }  : ${list.phone }</h4>
+									</c:forEach>
+									
 								</div>
 							</td>
 							<td class="top-vertical">
 								<div class="office-tbl-board-ri">
-									<h4 class="underline">» 등록된문서 : N 건</h4>
-									<h4 class="underline">» 회사명 : NullCompany</h4>
+									<h4 class="underline">» 등록된문서 : ${mic.existDocumentCount } 건</h4>
+									<h4 class="underline">» 삭제된문서 : ${mic.deleteDocumentCount } 건</h4>
+									
 								</div>
 							</td>
 						</tr>
@@ -112,9 +115,10 @@
 							<td class="top-vertical">
 								<div class="office-tbl-board-lo">
 									<h4 class="underline">» 회사명 : NullCompany</h4>
-									<h4 class="underline">» 직위 : 11</h4>
-									<h4 class="underline">» 직무 : 4</h4>
-									<h4 class="underline">» 오피스관리자 : Han(ys211),구승현(qkdn0004)...</h4>
+									<h4 class="underline">» 오피스관리자 </h4>
+									<c:forEach var="list" items="${om }">
+									<h4 class="underline">» ${list.name }(${list.email })-${list.phone} </h4>
+									</c:forEach>
 								</div>
 							</td>
 	
