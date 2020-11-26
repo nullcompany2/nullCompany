@@ -217,6 +217,10 @@ public interface PersonnelManagementService {
 	int modificationCancel(int noMod);
 	// 캘린더 휴가 리스트
 	ArrayList<RecordLeave> RecordLeaveList();
+	// 직원 근태관리 사원검색 이름/부서
+	ArrayList<Member> searchMemberND(String searchKey);
+	// 직원 휴가관리 사원검색 이름/부서
+	ArrayList<ForEmLeave> searchMemberForEmLeaveND(String searchKey);
 	
 	
 	

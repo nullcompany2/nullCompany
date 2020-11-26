@@ -603,4 +603,30 @@
 		JOIN RANK R ON (A.RANK_NO = R.RANK_NO)
 	</select>
 	
+	<select id="searchMemberND" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER
+		JOIN DEPARTMENT USING(DEPT_NO)
+		JOIN RANK USING(RANK_NO)
+		WHERE DEPT_NAME LIKE '%' || #{searchKey} || '%'
+		OR NAME LIKE '%' || #{searchKey} || '%'
+		ORDER BY MEM_NO
+	</select>
+	
+	<select id="searchMemberForEmLeaveND" resultMap="forEmLeaveResultSet">
+		SELECT M1.NAME,M1.ENROLL_DATE,M1.MEM_NO, M1.ANNUAL_LEAVE AS REMAIN_ANNUAL, M1.REWARD_LEAVE AS REMAIN_REWARD,
+																(select NVL(sum(days_r_leave),0)
+		                                                        from reward_leave
+		                                                        WHERE MEM_NO = M1.MEM_NO
+		                                                        ) AS REWARD_LEAVE,
+		                                                        M1.WORKYEAR
+		FROM (SELECT M.*,'N'||(TRUNC((TO_DATE(SYSDATE, 'YYYY/MM/DD') - TO_DATE(M.ENROLL_DATE,'YYYY/MM/DD'))/365)+1) AS WORKYEAR
+		        FROM MEMBER M
+                JOIN DEPARTMENT D ON(D.DEPT_NO = M.DEPT_NO)
+                WHERE NAME LIKE '%' || #{searchKey} || '%'
+                OR DEPT_NAME LIKE '%' || #{searchKey} || '%'
+		        ) M1
+		ORDER BY M1.MEM_NO
+	</select>
+	
 </mapper>
