@@ -14,7 +14,7 @@ import com.kh.nullcompany.officeManagement.model.vo.OfficeMainInformationCalcula
 public class OfficeDao {
 	
 	@Autowired
-	SqlSessionTemplate sqlSession;
+	SqlSessionTemplate sqlSession; 
 	
 	public OfficeMainInformationCalculation informationCalculate() {
 		return sqlSession.selectOne("officeMapper.informationCalculate");
