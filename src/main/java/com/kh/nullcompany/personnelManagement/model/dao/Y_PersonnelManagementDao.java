@@ -55,7 +55,7 @@ public class Y_PersonnelManagementDao {
 	public ArrayList<Member> selectPageMemList(PageInfo pi) {
 		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
-		return (ArrayList)sqlSession.selectList("Y_personnelMapper.per_selectmemList",null,rowBounds);
+		return (ArrayList)sqlSession.selectList("Y_personnelMapper.per_selectmemList",rowBounds);
 	}
 
 
