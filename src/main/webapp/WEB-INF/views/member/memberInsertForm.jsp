@@ -423,6 +423,7 @@
             		var userPhone = $(this).val();
             		
             		 if(userPhone.length > 9){
+            			 // 번호 형식이 유효한지  검사 한번 해주고 
                       var phoneFormat = /^\d{3}-\d{3,4}-\d{4}$/;
                      	 if(!phoneFormat.test($("input[id='userPhone']").val())){
                     	  $(".phoneFormat").show();
@@ -433,7 +434,6 @@
                       	}
                      }
             		 if($("#phoneDuplicateCheck").val()== 0 && userPhone.length > 9){
-            			
             		$.ajax({
             			url:"phoneCheck.do",
             			data : {phone:userPhone},
