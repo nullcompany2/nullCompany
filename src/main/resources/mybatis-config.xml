@@ -24,6 +24,8 @@
       <typeAlias type="com.kh.nullcompany.personnelManagement.model.vo.ModificationDiligence" alias="ModificationDiligence"/>
       <typeAlias type="com.kh.nullcompany.personnelManagement.model.vo.Absence" alias="PAbsence"/>
       <typeAlias type="com.kh.nullcompany.personnelManagement.model.vo.DiligenceCountAllMember" alias="DiligenceCountAllMember"/>
+      <typeAlias type="com.kh.nullcompany.officeManagement.model.vo.OfficeMainContactInformation" alias="OfficeMainContactInformation"/>
+      <typeAlias type="com.kh.nullcompany.officeManagement.model.vo.OfficeMainInformationCalculation" alias="OfficeMainInformationCalculation"/>
       <typeAlias type="com.kh.nullcompany.board.model.vo.board" alias="board"/>
       <typeAlias type="com.kh.nullcompany.board.model.vo.bcomment" alias="bcomment"/>
       <typeAlias type="com.kh.nullcompany.notice.model.vo.notice" alias="notice"/>
@@ -59,5 +61,6 @@
       <mapper resource="mappers/schedule-mapper.xml"/>
       <mapper resource="mappers/reservation-mapper.xml"/>
       <mapper resource="mappers/approval-mapper.xml"/>
+      <mapper resource="mappers/officeManagement-mapper.xml"/>
    </mappers>
 </configuration>

@@ -31,11 +31,10 @@
                		 <div class="infoForm" align="center">
                        <table width="500" cellspacing="4" >
                        
-                       	<tr>
+                       	  <tr>
                               <th width="100">사번</th>
                              <td>
                              <input type="text" name="memNo" id="memNo" value="${ loginUser.memNo}" readonly>
-	                               
                              </td>
                           </tr>
                           <tr> 
@@ -117,9 +116,8 @@
                        	 </tr>
                          
                           <!-- jQuery와 Postcodify를 로딩한다. -->
-                          <script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
+                          <script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js">
                          
-                          <script>
                              $(function(){
                                 $("#postcodify_search_button").postcodifyPopUp();
                              });
@@ -200,7 +198,6 @@
             	reader.onload = function(event) { 
             		 $('#imagePreview').empty();
             	var img = document.createElement("img"); 
-            	var div = document.createElement("div"); 
             	img.setAttribute("src", event.target.result); 
             	document.querySelector("div#imagePreview").appendChild(img); 
             	};

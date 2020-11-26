@@ -96,6 +96,11 @@ a:active {
  overflow-y: scroll;
 }
 
+button[aria-label=Picture],
+button[aria-label=Video]{
+display:none;
+}
+
 </style>
 
 </head>

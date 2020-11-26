@@ -53,6 +53,10 @@
    		<result property="status" column="L_STATUS"/>
    		<result property="requestedDate" column="REQUESTED_DATE"/>
    		<result property="reason" column="REASON"/>
+   		<result property="endLeaveDate" column="END_DATE"/>
+   		<result property="name" column="NAME"/>
+   		<result property="deptName" column="DEPT_NAME"/>
+   		<result property="rankName" column="RANK_NAME"/>
    	</resultMap>
    	
    	<resultMap type="TypeLeave" id="typeLeaveResultSet">
@@ -592,8 +596,11 @@
 	
 	<!-- 휴가 리스트 -->
 	<select id="RecordLeaveList" resultMap="RecordLeaveResultSet">
-		SELECT *
-		FROM RECORD_LEAVE
+		SELECT E.* ,TO_CHAR(E.applydate_use_leave+E.days_use_leave,'yyyy-mm-dd')AS END_DATE, R.RANK_NAME, D.DEPT_NAME, A.NAME
+		FROM (SELECT * FROM RECORD_LEAVE) E
+		JOIN MEMBER A ON ( A.MEM_NO = E.MEM_NO)
+		JOIN DEPARTMENT D ON(A.DEPT_NO = D.DEPT_NO)
+		JOIN RANK R ON (A.RANK_NO = R.RANK_NO)
 	</select>
 	
 </mapper>

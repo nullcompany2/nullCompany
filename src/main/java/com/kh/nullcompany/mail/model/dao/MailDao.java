@@ -102,7 +102,6 @@ public class MailDao {
 	public Mail saveDetailView(int mailNo) {
 		return sqlSession.selectOne("mailMapper.saveMailDetailView",mailNo);
 	}
-
 	
 	public ArrayList<Mail> binMailList(PageInfo pi, String memId) {
 		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();

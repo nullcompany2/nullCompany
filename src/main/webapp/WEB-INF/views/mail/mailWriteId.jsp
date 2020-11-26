@@ -96,6 +96,12 @@ a:active {
  overflow-y: scroll;
 }
 
+button[aria-label=Picture],
+button[aria-label=Video]{
+	display:none;
+}
+
+	
 </style>
 
 </head>
@@ -167,7 +173,11 @@ a:active {
 	        focus: true, 
 	        lang : 'ko-KR'
 	  });
+	  
+	  
 	});
+	
+	
 
 	</script>
 
