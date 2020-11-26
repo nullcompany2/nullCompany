@@ -200,7 +200,6 @@
             	reader.onload = function(event) { 
             		 $('#imagePreview').empty();
             	var img = document.createElement("img"); 
-            	var div = document.createElement("div"); 
             	img.setAttribute("src", event.target.result); 
             	document.querySelector("div#imagePreview").appendChild(img); 
             	};
