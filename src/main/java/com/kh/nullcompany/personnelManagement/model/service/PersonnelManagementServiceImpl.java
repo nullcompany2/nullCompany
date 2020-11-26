@@ -343,6 +343,27 @@ public class PersonnelManagementServiceImpl implements PersonnelManagementServic
 	public DiligenceCountAllMember DiligenceCountAllMember() {
 		return pDao.DiligenceCountAllMember();
 	}
+	//근태수정요청 관리
+	@Override
+	public ArrayList<ModificationDiligence> modRequestList() {
+		return pDao.modRequestList();
+	}
+
+	@Override
+	public int modificationAcknowledgment(int noMod) {
+		return pDao.modificationAcknowledgment(noMod);
+	}
+
+	@Override
+	public int modificationCancel(int noMod) {
+		return pDao.modificationCancel(noMod);
+	}
+
+	// 캘린더 휴가 리스트
+	@Override
+	public ArrayList<RecordLeave> RecordLeaveList() {
+		return pDao.RecordLeaveList();
+	}
 
 	
 	

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%
@@ -20,14 +21,25 @@
 	<link rel="stylesheet" href="<c:url value="/resources/css/myLeave.css"/>">
 	<link rel="stylesheet" href="<c:url value="/resources/css/younsu-subNavi.css"/>">
 
-    <!-- 캘린더 -->
-    <c:url value=""/>
-    <link href='<c:url value="/resources/css/fullcalendar.css"/>' rel='stylesheet' />
-    <link href='<c:url value="/resources/css/fullcalendar.print.css"/>' rel='stylesheet' media='print' />
-    <script src='<c:url value="/resources/js/jquery-1.10.2.js"/>' type="text/javascript"></script>
-    <script src='<c:url value="/resources/js/jquery-ui.custom.min.js"/>' type="text/javascript"></script>
-    <script src='<c:url value="/resources/js/fullcalendar.js"/>' type="text/javascript"></script>
-    
+<link href="<c:url value="/resources/css/core.css"/>" rel='stylesheet' />
+<link href="<c:url value="/resources/css/daygrid.css"/>"rel='stylesheet' />
+<link href="<c:url value="/resources/css/timegrid.css"/>"rel='stylesheet' />
+<link href="<c:url value="/resources/css/list.css"/>" rel='stylesheet' />
+<script src='<c:url value="/resources/js/core.js"/>'></script>
+<script src='<c:url value="/resources/js/interaction.js"/>'></script>
+<script src='<c:url value="/resources/js/daygrid.js"/>'></script>
+<script src='<c:url value="/resources/js/timegrid.js"/>'></script>
+<script src='<c:url value="/resources/js/list.js"/>'></script>
+
+<!-- 캘린더 -->
+<c:url value="" />
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src='<c:url value="/resources/js/jquery-1.10.2.js"/>'type="text/javascript"></script>
+<script src='<c:url value="/resources/js/jquery-ui.custom.min.js"/>'type="text/javascript"></script>
+<script src='<c:url value="/resources/js/moment.min.js"/>'type="text/javascript"></script>
+<link href='<c:url value="/resources/css/fullcalendar.css"/>'rel='stylesheet' />
+<link href='<c:url value="/resources/css/fullcalendar.print.css"/>'rel='stylesheet' media='print' />
+<script src='<c:url value="/resources/js/fullcalendar.js"/>'type="text/javascript"></script>
 
 </head>
 <!-- 캘린더 & 헤더 스크립트 -->
@@ -47,162 +59,64 @@
 	    $("#infoToggle").toggle();
 	  });
 	});
+
+
 	
-	$(document).ready(function() {
-	    var date = new Date();
-		var d = date.getDate();
-		var m = date.getMonth();
-		var y = date.getFullYear();
+	document.addEventListener('DOMContentLoaded', function() {
+	    var calendarEl = document.getElementById('calendar');
+		
+	    var calendar = new FullCalendar.Calendar(calendarEl, {
+	      plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
+	      header: {
+	        left: 'prevYear,prev,next,nextYear today',
+	        center: 'title',
+	        right: 'dayGridMonth,listMonth'
+	      },
 
-		/*  className colors
+	      locale : "ko",
+	      navLinks: true, // can click day/week names to navigate views
+	      businessHours: false, // display business hours
+	      editable: true,
+	      eventOverlap : true,
+	      eventLimit: true,
+	      selectable: true,
+	      fixedWeekCount: false,
+	   
+	      events: [
+	    	
+	    	  <c:forEach items="${RecordLeaveList}" var="list">
+	    	  <fmt:formatDate var="applyDate" value="${list.applyDate }" pattern="yyyy-MM-dd"/>
+	    	  
+	    	  <c:set var="endDate" value="${appliDateD + list.useDays}"/>
+	             {
+	            	
+	                title: '${list.name}'+'(${list.deptName} - ${list.rankName})',
+	                start: '${applyDate}',
+	                end :  '${list.endLeaveDate}',
+	                color: 'lightBlue'
+	        
+	                
+	            },
+	         
+	          </c:forEach>
+	        
+	      ],
 
-		className: default(transparent), important(red), chill(pink), success(green), info(blue)
+	    });
+		
+	    
+	    calendar.render();
+	  });
+		
+  function getFormatDate(date){
+      var year = date.getFullYear();
+      var month = (1 + date.getMonth());
+      month = month >= 10 ? month : '0' + month;
+      var day = date.getDate();
+      day = day >= 10 ? day : '0' + day;
+      return year + '-' + month + '-' + day;
+  }
 
-		*/
-
-
-		/* initialize the external events
-		-----------------------------------------------------------------*/
-
-		$('#external-events div.external-event').each(function() {
-
-			// create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
-			// it doesn't need to have a start or end
-			var eventObject = {
-				title: $.trim($(this).text()) // use the element's text as the event title
-			};
-
-			// store the Event Object in the DOM element so we can get to it later
-			$(this).data('eventObject', eventObject);
-
-			// make the event draggable using jQuery UI
-			$(this).draggable({
-				zIndex: 999,
-				revert: true,      // will cause the event to go back to its
-				revertDuration: 0  //  original position after the drag
-			});
-
-		});
-
-
-		/* initialize the calendar
-		-----------------------------------------------------------------*/
-
-		var calendar =  $('#calendar').fullCalendar({
-			header: {
-				left: 'title',
-				center: 'agendaDay,agendaWeek,month',
-				right: 'prev,next today'
-			},
-			editable: true,
-			firstDay: 1, //  1(Monday) this can be changed to 0(Sunday) for the USA system
-			selectable: true,
-			defaultView: 'month',
-
-			axisFormat: 'h:mm',
-			columnFormat: {
-                month: 'ddd',    // Mon
-                week: 'ddd d', // Mon 7
-                day: 'dddd M/d',  // Monday 9/7
-                agendaDay: 'dddd d'
-            },
-            titleFormat: {
-                month: 'MMMM yyyy', // September 2009
-                week: "MMMM yyyy", // September 2009
-                day: 'MMMM yyyy'                  // Tuesday, Sep 8, 2009
-            },
-			allDaySlot: false,
-			selectHelper: true,
-			select: function(start, end, allDay) {
-				var title = prompt('Event Title:');
-				if (title) {
-					calendar.fullCalendar('renderEvent',
-						{
-							title: title,
-							start: start,
-							end: end,
-							allDay: allDay
-						},
-						true // make the event "stick"
-					);
-				}
-				calendar.fullCalendar('unselect');
-			},
-			droppable: true, // this allows things to be dropped onto the calendar !!!
-			drop: function(date, allDay) { // this function is called when something is dropped
-
-				// retrieve the dropped element's stored Event Object
-				var originalEventObject = $(this).data('eventObject');
-
-				// we need to copy it, so that multiple events don't have a reference to the same object
-				var copiedEventObject = $.extend({}, originalEventObject);
-
-				// assign it the date that was reported
-				copiedEventObject.start = date;
-				copiedEventObject.allDay = allDay;
-
-				// render the event on the calendar
-				// the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
-				$('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
-
-				// is the "remove after drop" checkbox checked?
-				if ($('#drop-remove').is(':checked')) {
-					// if so, remove the element from the "Draggable Events" list
-					$(this).remove();
-				}
-
-			},
-
-			events: [
-				{
-					title: 'All Day Event',
-					start: new Date(y, m, 1)
-				},
-				{
-					id: 999,
-					title: 'Repeating Event',
-					start: new Date(y, m, d-3, 16, 0),
-					allDay: false,
-					className: 'info'
-				},
-				{
-					id: 999,
-					title: 'Repeating Event',
-					start: new Date(y, m, d+4, 16, 0),
-					allDay: false,
-					className: 'info'
-				},
-				{
-					title: 'Meeting',
-					start: new Date(y, m, d, 10, 30),
-					allDay: false,
-					className: 'important'
-				},
-				{
-					title: 'Lunch',
-					start: new Date(y, m, d, 12, 0),
-					end: new Date(y, m, d, 14, 0),
-					allDay: false,
-					className: 'important'
-				},
-				{
-					title: 'Birthday Party',
-					start: new Date(y, m, d+1, 19, 0),
-					end: new Date(y, m, d+1, 22, 30),
-					allDay: false,
-				},
-				{
-					title: 'Click for Google',
-					start: new Date(y, m, 28),
-					end: new Date(y, m, 29),
-					url: 'http://google.com/',
-					className: 'success'
-				}
-			],
-		});
-
-
-	});
 
 </script>
 <!-- 캘린더 * 헤더 스타일 -->
@@ -242,17 +156,11 @@
 		}
 
 	#calendar {
-/* 		float: right; */
-        margin: 0 auto;
-		width: 900px;
-		background-color: #FFFFFF;
-		  border-radius: 6px;
-        box-shadow: 0 1px 2px #C3C3C3;
-		}
-		* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+    width: 1000px;
+    background-color: #FFFFFF;
+    border-radius: 6px;
+    box-shadow: 0 1px 2px #C3C3C3;
+    left: -10px;
   }
 	
    *:focus {outline:none;} 
@@ -699,12 +607,18 @@
 						<div onclick="location.href='myLeave.do'" class="cate cursor" id="myleave">내 휴가</div>
 						<div onclick="location.href='leaveCalendar.do'" class="cate cursor" id="" style="color: #477A8F;">휴가 캘린더</div>
 					</div>
-							
-					<div id="show-calendar" class="c-ic" style="padding: 30px">
-                        
-                        <div id="calendar"></div>
-                    </div>
+				
                     
+					<div class="contents-wrap drag-scrollbar">
+						<div id="show-myleave" class="c-ic" style="">
+							<div id="cal_size"
+								style="position: absolute; width: 100%; height: 500px; left: 100px;">
+								<div id='calendar'></div>
+							</div>
+						</div>
+
+						
+					</div>
 					
                 </div>
                 
@@ -771,11 +685,7 @@
 		       modal('off-work');
 		    });
 		
-		$(document).ready(function(){
-			$(".md-btn-cancel").click(function(){
-				var result = confirm("휴가신청을 취소하시겠습니까?");
-			})
-		})
+		
 	</script>
 <style>
 #off-work{
@@ -880,52 +790,7 @@
 	 		</div>
 	
 	<!-- Modal div -->
-	<div id="my_modal" class="modal-dragscroll">
-		<h4 style="color: #477A8F; margin-bottom: 30px;">휴가 신청 상세</h4>
-		<table class="md-tbl">
-			<tr class="md-tbl-il">
-				<th class="md-tbl-th">신청일시</th>
-				<td class="md-tbl-td">td</td>
-				<th class="md-tbl-th">상태</th>
-				<td class="md-tbl-td">td</td>
-			</tr>
-			<tr class="md-tbl-il">
-				<th class="md-tbl-th">사용자 이름</th>
-				<td class="md-tbl-td">td</td>
-				<th class="md-tbl-th">사용자 사번</th>
-				<td class="md-tbl-td">td</td>
-			</tr>
-			<tr class="md-tbl-il">
-				<th class="md-tbl-th">소속</th>
-				<td class="md-tbl-td" colspan="3">td</td>
-			</tr>
-			<tr class="md-tbl-il">
-				<th class="md-tbl-th">종류</th>
-				<td class="md-tbl-td">td</td>
-				<th class="md-tbl-th">일수</th>
-				<td class="md-tbl-td">td</td>
-			</tr>
-			<tr class="md-tbl-il">
-				<th class="md-tbl-th">기간</th>
-				<td class="md-tbl-td" colspan="3">td</td>
-			</tr>
-			<tr class="md-tbl-il">
-				<th class="md-tbl-th">사유</th>
-				<td class="md-tbl-td" colspan="3">td</td>
-			</tr>
-			<tr class="md-tbl-il">
-				<th class="md-tbl-th">의견</th>
-				<td class="md-tbl-td" colspan="3">td</td>
-				
-			</tr>
-		</table>
-		<div style="text-align: center; margin-top: 50px;">
-			<span class="md-btn cursor md-btn-cancel">휴가 신청 취소</span>
-			<span class="md-btn cursor md-btn-close" style="margin-left: 50px;">닫기</span>
-		</div>
-
-		<a class="modal-close-btn cursor md-btn-close">X</a>
-	</div>
+	
     
 </body>
 </html>

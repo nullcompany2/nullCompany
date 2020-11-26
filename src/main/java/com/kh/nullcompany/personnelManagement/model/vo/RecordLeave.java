@@ -14,6 +14,9 @@ public class RecordLeave {
 //	L_STATUS
 	private int noRecord;
 	private int memNo;
+	private String name;
+	private String rankName;
+	private String deptName;
 	private int typeLeave;
 	private Date applyDate;
 	private int useDays;
@@ -21,15 +24,20 @@ public class RecordLeave {
 	private String status;
 	private Date requestedDate;
 	private String reason;
+	private String endLeaveDate;
 	public RecordLeave() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public RecordLeave(int noRecord, int memNo, int typeLeave, Date applyDate, int useDays, String attach,
-			String status, Date requestedDate, String reason) {
+	public RecordLeave(int noRecord, int memNo, String name, String rankName, String deptName, int typeLeave,
+			Date applyDate, int useDays, String attach, String status, Date requestedDate, String reason,
+			String endLeaveDate) {
 		super();
 		this.noRecord = noRecord;
 		this.memNo = memNo;
+		this.name = name;
+		this.rankName = rankName;
+		this.deptName = deptName;
 		this.typeLeave = typeLeave;
 		this.applyDate = applyDate;
 		this.useDays = useDays;
@@ -37,6 +45,7 @@ public class RecordLeave {
 		this.status = status;
 		this.requestedDate = requestedDate;
 		this.reason = reason;
+		this.endLeaveDate = endLeaveDate;
 	}
 	public int getNoRecord() {
 		return noRecord;
@@ -49,6 +58,24 @@ public class RecordLeave {
 	}
 	public void setMemNo(int memNo) {
 		this.memNo = memNo;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getRankName() {
+		return rankName;
+	}
+	public void setRankName(String rankName) {
+		this.rankName = rankName;
+	}
+	public String getDeptName() {
+		return deptName;
+	}
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
 	}
 	public int getTypeLeave() {
 		return typeLeave;
@@ -92,13 +119,19 @@ public class RecordLeave {
 	public void setReason(String reason) {
 		this.reason = reason;
 	}
+	public String getEndLeaveDate() {
+		return endLeaveDate;
+	}
+	public void setEndLeaveDate(String endLeaveDate) {
+		this.endLeaveDate = endLeaveDate;
+	}
 	@Override
 	public String toString() {
-		return "RecordLeave [noRecord=" + noRecord + ", memNo=" + memNo + ", typeLeave=" + typeLeave + ", applyDate="
-				+ applyDate + ", useDays=" + useDays + ", attach=" + attach + ", status=" + status + ", requestedDate="
-				+ requestedDate + ", reason=" + reason + "]";
+		return "RecordLeave [noRecord=" + noRecord + ", memNo=" + memNo + ", name=" + name + ", rankName=" + rankName
+				+ ", deptName=" + deptName + ", typeLeave=" + typeLeave + ", applyDate=" + applyDate + ", useDays="
+				+ useDays + ", attach=" + attach + ", status=" + status + ", requestedDate=" + requestedDate
+				+ ", reason=" + reason + ", endLeaveDate=" + endLeaveDate + "]";
 	}
-	
 	
 	
 }

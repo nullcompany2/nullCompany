@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.mail.model.vo.Email;
 import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.personnelManagement.model.dao.Y_PersonnelManagementDao;
@@ -51,6 +52,16 @@ public class Y_PersonnelManagementServiceImpl implements Y_PersonnelManagementSe
 	public ArrayList<Member> memList() {
 		return yDao.selectmemList();
 
+	}
+
+	@Override
+	public int getMemListCount() {
+		return yDao.getMemListCount();
+	}
+
+	@Override
+	public ArrayList<Member> selectPageMemList(PageInfo pi) {
+		return yDao.selectPageMemList(pi);
 	}
 
 

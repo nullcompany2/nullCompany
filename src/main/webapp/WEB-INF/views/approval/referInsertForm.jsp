@@ -92,45 +92,81 @@
 		<!-- 내부 컨텐츠 -->
         <div class="contents" style="top:110px">
 			<div class="contents-wrap drag-scrollbar">
+				<div class="top-btns">
+						<span class="cb" id="cb1">기안하기</span>
+                </div>
 				<div class="c-ic">
                     <span id="appr_set">기본 설정</span>
-                    <br>
-                    <br>
-                    <span id="w1">* 문서 종류를 선택하고 결재선을 지정하세요.</span>
 					<table class="appr_insert_table1" >
 						<tbody>
 							<tr id="tr1">
 								<td>문서 종류</td>
-								<td>
-                                    <select class="doc_type" id="doc_type" style="height:30px;">
-                                        <option value="">선택</option>
-                                        <option value="1">업무 연락</option>
-                                        <option value="2">회람</option>
-                                        <option value="3">휴가</option>
-                                        <option value="4">휴직</option>
-                                        <option value="5">사직</option>
-                                    </select>
-                               
-                                    <button id="selectFormBtn">선택</button>
-                                </td>
+								<td>${ d.formName }</td>
 								<td>기안자</td>
-								<td>${loginUser.deptName}부 / ${loginUser.rankName} / ${ loginUser.name }</td>
+								<td>${d.drafterDeptName}부 / ${d.drafterRankName} / ${d.drafterName}</td>
                             </tr>
                         </tbody>
                     </table>
-                    <script>
-                    	$(function(){
-                    		$('#selectFormBtn').click(function(){
-                    			var option = $('#doc_type option:selected').val();
-                    			
-                    			if(!option == ""){
-									location.href='selectFormView.do?option='+option;
-                    			}else{
-                    				alert('문서 종류를 선택하세요');
-                    			}
-							});
-                    	});
-                    </script>
+                    <div class="appr_line" id="appr_line">
+                        <span id="appr_set">결재선 설정</span>
+                        <span class="cb" id="cb3">결재선 설정</span>
+                    </div>
+                    <table class="appr_insert_table2" >
+                        <tbody>
+							<tr id="tr6">
+								<td rowspan="3">참조</td>
+                                <td></td>
+                                <td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+                                <td></td>
+                                <td></td>
+							</tr>
+							<tr id="tr7">
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+							</tr>
+							<tr id="tr8">
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+							</tr>
+                        </tbody>
+                    </table>
+                    <br>
+					<br>
+					<span id="detail_set">상세 입력</span>
+					<br>
+					<br>
+					<br>
+                    <span style="color: #477A8F; font-weight: bolder;">제목</span>
+                    <input id="dTitle" type="text"/>
+                    <br>
+                    <br>
+                    <span style="color: #477A8F; font-weight: bolder;">내용</span>
+                    <br>
+                    <br>
+					<textarea id="dContent" name="dContent"></textarea>
+					<br>
+					<br>
+					<br>
+					<hr>
 				</div>
 			</div>
 		</div>

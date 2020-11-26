@@ -219,46 +219,30 @@
                     </table>
                     <br>
                     <br>
-                    <span id="appr_set">휴가 설정</span>
+                    <span id="appr_set">휴직 설정</span>
                     <table class="appr_insert_table3" >
                         <tbody>
-							<tr id="tr11">
-								<td>휴가 종류</td>
+							<tr id="tr12">   
+								<td><span>휴직 기간</span></td>
 								<td>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <span>휴가 종류&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</span>
-                                    <select class="leave_type" id="leave_type">
-                                        <option value="">선택</option>
-                                        <option value="">연차</option>
-                                        <option value="">경조사</option>
-                                        <option value="">병가</option>
-                                        <option value="">훈련</option>
-                                        <option value="">교육</option>
-                                    </select>
-                                    <span id="w1">* 종류가 다른 휴가는 별도 신청</span>
-                                </td>
-							</tr>
-							<tr id="tr12">
-								<td><span>휴가 기간</span></td>
-								<td>
+                                    <span>휴직 시작일&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</span>
+                                    <input type="date" id="start_date"/>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <span>휴가 시작일&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</span>
-                                    <input type="date" id="start_date" name="startDate"/>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <span>휴가 종료일&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</span>
-                                    <input type="date" id="end_date" name="endDate"/>
+                                    <span>휴직 종료일&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</span>
+                                    <input type="date" id="end_date"/>
                                     <button id="calc">일수 계산</button>
-                                    <span id="w2">* 휴가 기간은 규정 단위(일)로 선택 / 비연속 기간은 별도 신청</span>
+                                    <span id="w2">* 휴직 기간은 규정 단위(일)로 선택 / 비연속 기간은 별도 신청</span>
                                     <br><br>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <span>선택 일수&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;</span>
-                                    <span id="period">0</span>
-                                    <span>일</span>
+									<span id="period">0</span>
+									<span>일</span>
                                 </td>
 							</tr>
 							<tr id="tr13">
 								<td><span>사유</span></td>
-								<td><input type="text" id="reason" placeholder="휴가 사유를 입력하세요"/></td>
+								<td><input type="text" id="reason"/></td>
 							</tr>
 						</tbody>
 					</table>
