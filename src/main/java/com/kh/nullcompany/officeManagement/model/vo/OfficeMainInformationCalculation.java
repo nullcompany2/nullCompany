@@ -65,7 +65,7 @@ public class OfficeMainInformationCalculation {
 	}
 	public int getExistDocumentCount() {
 		return existDocumentCount;
-	}
+	} 
 	public void setExistDocumentCount(int existDocumentCount) {
 		this.existDocumentCount = existDocumentCount;
 	}

@@ -19,7 +19,7 @@ public class OfficeController {
 	@Autowired
 	private OfficeService oService;
 	
-	// 오피스 메인
+	// 오피스 메인 
 	@RequestMapping("officeMain.do")
 	public ModelAndView officeManagementMain(ModelAndView mv,HttpServletResponse response) {
 		

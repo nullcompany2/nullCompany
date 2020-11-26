@@ -6,7 +6,7 @@ public class OfficeMainContactInformation {
 	private int memNo;
 	private String name;
 	private String id;
-	private String phone;
+	private String phone; 
 	private String email;
 	private String deptName;
 	private String rankName;

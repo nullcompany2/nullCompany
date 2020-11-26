@@ -12,7 +12,7 @@ import com.kh.nullcompany.officeManagement.model.vo.OfficeMainInformationCalcula
 @Service("oService")
 public class OfficeServiceImpl implements OfficeService {
 	@Autowired
-	private OfficeDao oDao;
+	private OfficeDao oDao; 
 
 	@Override
 	public ArrayList<OfficeMainContactInformation> contactInformation() {

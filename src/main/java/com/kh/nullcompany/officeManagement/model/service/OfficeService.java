@@ -7,7 +7,7 @@ import com.kh.nullcompany.officeManagement.model.vo.OfficeMainContactInformation
 import com.kh.nullcompany.officeManagement.model.vo.OfficeMainInformationCalculation;
 
 
-public interface OfficeService { 
+public interface OfficeService {  
 
 	ArrayList<OfficeMainContactInformation> contactInformation();
 
