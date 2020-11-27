@@ -13,13 +13,10 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/younsu-subNavi.css"/>">
 
 	<style> 
-	body {
-		overflow : scroll;
-	}
 	
 	#infobox {
             margin: auto;
-            margin-top: 50px;
+            margin-top: 30px;
             margin-bottom:40px;
             text-align:center;
             background:white;
@@ -30,8 +27,8 @@
         
 
 	 #infoForm table {
-    	padding-top : 40px;
-    	padding-bottom: 40px;
+    	padding-left:20px;
+    	padding-bottom: 20px;
     }
     
     #infoForm table th ,
@@ -95,35 +92,32 @@
 		
 		
 		#emp-photo {
-		
 		height : 130px;
 		width : 130px;
 		border-radius : 80px;
 		cursor:pointer;
 		transition: all ease 0.7s 0s;
 		float : left;
-		margin-right : 70px;
+		margin-right : 30px;
+		margin-top : 50px;
+		margin-left : 30px;
+		margin-bottom:20px;
 		}
 		
 		#emp-photo:hover
 		{
 		filter: brightness(40%);
-		
-		}
-		
-		#imagePreview #addText {
-		position:absolute;
-		display:none;
-		top:20px;
-		left:40px;
-		color:red;
-		transition: all ease 0.7s 0s;
+		box-shadow: 0px 0px 20px #5C6369;
+
 		}
 		
 		.contents {
 		overflow : scroll;
 		
 		}
+		
+		#imagePreview{
+		float:left;}
 		
 	</style>
 </head>
@@ -153,9 +147,7 @@
 			<div class="form" id="infobox" style="overflow:scroll;">
 			 <form action="mupdateGo.do" method="post" id="infoForm" enctype="multipart/form-data">
                         <div id="imagePreview" > 
-                         <!--  <label id="imgLabel"> -->
-                          <img src="${ loginUser.photo }" id="emp-photo" class ="userPhoto"> 
-							<div id="addText" > 파일 선택 </div>
+                          <img src="${ loginUser.photo }" id="emp-photo" class ="userPhoto"> <br>
 						</div>
 						
 						<div class="filebox"> 
@@ -335,7 +327,7 @@
             	var reader = new FileReader(); 
            
             	reader.onload = function(event) { 
-            		 $('#imagePreview').empty();
+            	$('#emp-photo').remove();
 
             	var img = document.createElement("img"); 
             	img.id  = 'emp-photo';
