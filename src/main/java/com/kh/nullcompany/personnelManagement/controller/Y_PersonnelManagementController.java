@@ -30,6 +30,8 @@ import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.personnelManagement.model.service.Y_PersonnelManagementService;
 import com.kh.nullcompany.personnelManagement.model.vo.Department;
 import com.kh.nullcompany.personnelManagement.model.vo.Rank;
+import com.kh.nullcompany.schedule.model.vo.Calendar;
+import com.kh.nullcompany.schedule.model.vo.Schedule;
 
 @Controller
 public class Y_PersonnelManagementController {
@@ -70,14 +72,51 @@ public class Y_PersonnelManagementController {
 		PageInfo pi = Pagination.getPageInfo(currentPage,listCount);
 		
 		ArrayList<Member> list = yService.selectPageMemList(pi);
-		System.out.println(list);
+		
 		mv.addObject("list",list);
+		mv.addObject("listCount",listCount);
 		mv.addObject("pi",pi);
 		mv.setViewName("personnel_management/userManagement");
 
 		return mv;
 
 	}
+	
+	// 사용자 관리 검색
+		@RequestMapping("userManagermentSearch.do")
+		public ModelAndView SchedulerSearch(ModelAndView mv, String text, String select_option, HttpServletResponse response, HttpSession session,
+				@RequestParam(value="currentPage",required=false,defaultValue="1") int currentPage){
+		
+			if(select_option.equals("이름")) {
+				int listCount = yService.Name_SearchCount(text);
+				PageInfo pi = Pagination.getPageInfo(currentPage,listCount);
+				
+				ArrayList<Member> list = yService.Name_Search(pi,text);
+				System.out.println("검색" + list);
+				
+				mv.addObject("list", list);
+				mv.addObject("listCount",listCount);
+				mv.addObject("pi",pi);
+				
+				mv.setViewName("personnel_management/userManagermentSearch");
+				
+				return mv;
+			}else {
+				int listCount = yService.Name_SearchCount(text);
+				PageInfo pi = Pagination.getPageInfo(currentPage,listCount);
+				
+				ArrayList<Member> list = yService.Name_Search(pi,text);
+				System.out.println("검색" + list);
+				mv.addObject("list", list);
+				
+				mv.setViewName("personnel_management/userManagermentSearch");
+				
+				return mv;
+				
+			}
+
+			
+		}
 
 	// 직위 관리
 	@RequestMapping("rankManagement.do")
@@ -93,10 +132,13 @@ public class Y_PersonnelManagementController {
 	public ModelAndView ApprovalList(ModelAndView mv, 
 			@RequestParam(value="currentPage", required=false, defaultValue="1") int currentPage) {
 
-		System.out.println("페이지" + currentPage);
-
+		int userApprovalListCount = yService.userApprovalListCount();
+		
+		PageInfo pi = Pagination.getPageInfo(currentPage,userApprovalListCount);
+		
 		// 승인대기 리스트
-		ArrayList<Member> ApprovalList = yService.selectApprovalList();
+		ArrayList<Member> ApprovalList = yService.selectApprovalList(pi);
+		
 		// 부서 리스트 
 		ArrayList<Department> DeptList = yService.selectDeptList();		
 		// 직위 리스트

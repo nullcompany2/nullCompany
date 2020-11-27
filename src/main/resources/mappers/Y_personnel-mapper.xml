@@ -104,5 +104,26 @@
         JOIN RANK R ON R.RANK_NO = M.RANK_NO
 	</select>
 	
+	<!-- 승인 인원 수 -->
+	<select id="userApprovalListCount" resultType="_int">
+	    SELECT COUNT(*)
+		FROM MEMBER
+		WHERE JOIN_STATUS = 'N'
+	</select>
+	
+	<select id="Name_Search" resultMap="memberResultSet" parameterType="String">
+	 	SELECT *
+		FROM MEMBER M
+        JOIN DEPARTMENT D ON M.DEPT_NO = D.DEPT_NO
+        JOIN RANK R ON R.RANK_NO = M.RANK_NO
+        WHERE (NAME LIKE  '%' || #{text} || '%')
+	</select>
 
+	<select id="Name_SearchCount" resultType="_int">
+	    SELECT COUNT(*)
+		FROM MEMBER M
+        JOIN DEPARTMENT D ON M.DEPT_NO = D.DEPT_NO
+        JOIN RANK R ON R.RANK_NO = M.RANK_NO
+        WHERE (NAME LIKE  '%' || #{text} || '%')
+	</select>
 </mapper>

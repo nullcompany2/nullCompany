@@ -50,6 +50,7 @@
 	  <typeAlias type="com.kh.nullcompany.approval.model.vo.Leave" alias="Leave"/>
 	  <typeAlias type="com.kh.nullcompany.approval.model.vo.Absence" alias="Absence"/>
 	  <typeAlias type="com.kh.nullcompany.approval.model.vo.Resign" alias="Resign"/>
+	  <typeAlias type="com.kh.nullcompany.logo.model.vo.Logo" alias="Logo"/>
    </typeAliases>
    
    <mappers>
@@ -63,5 +64,6 @@
       <mapper resource="mappers/reservation-mapper.xml"/>
       <mapper resource="mappers/approval-mapper.xml"/>
       <mapper resource="mappers/officeManagement-mapper.xml"/>
+      <mapper resource="mappers/logo-mapper.xml"/>
    </mappers>
 </configuration>
