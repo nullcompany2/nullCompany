@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>memberjoin</title>
+<title>member join</title>
 </head>
 
  <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR" rel="stylesheet">
@@ -24,7 +24,7 @@
             margin-top: 50px;
             margin-bottom:40px;
             width: 680px;
-            height: 650px;
+            height: 670px;
             text-align:center;
             background:white;
             border-radius: 10px;
@@ -76,13 +76,29 @@
              
         }
         
-        span.guide{display:none; font-size:12px; top:12px; right:10px;}
-		span.ok{color: #477A8F;}
-		span.error{color:red;}
+        span.guide,span.guide1{display:none; font-size:12px; top:12px; right:10px;}
+		span.pwck{font-size:12px; top:12px; right:10px;}
+		span.ok,span.ok1,span.pwdOk,span.phoneOk{color: #477A8F;}
+		span.error,span.error1,span.pwdError,span.falsePWd,span.phoneError,span.phoneFormat{color:red;}
 		
-		span.guide1{display:none; font-size:12px; top:12px; right:10px;}
-		span.ok1{color: #477A8F;}
-		span.error1{color:red;}
+		 span.pwdlength, span.pwdImoji, span.pwdlengthMax{
+			background : #477A8F;
+			color :white;
+			border-radius : 5px;
+			padding : 3px;
+		}
+		
+		span.pwdlength{
+		margin-left: 20px;
+		}
+		
+		input[type="radio"] { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip:rect(0,0,0,0); border: 0; }
+		input[type="radio"] + label { display: inline-block; position: relative; padding-left: 30px; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; }
+	    input[type="radio"] + label:before { content: ''; position: absolute; left: 0; top: -4px; width: 18px; height: 18px; text-align: center; background: #fafafa; border: 1px solid #cacece; border-radius: 100%; box-shadow: 0px 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05); }
+        input[type="radio"] + label:active:before, input[type="radio"]:checked + label:active:before { box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1); }
+        input[type="radio"]:checked + label:before { background: #E9ECEE; border-color: #adb8c0; }
+        input[type="radio"]:checked + label:after { content: ''; position: absolute; top: 1px; left: 5px; width: 11px; height: 11px; background: #477A8F; border-radius: 100%; box-shadow: inset 0px 0px 10px rgba(0,0,0,0.3); }
+
 		
     </style>
     
@@ -114,26 +130,42 @@
                           </tr>
                           <tr>
                              <td>* 비밀번호</td>
-                             <td><input type="password" name="pwd"id="pwd" required></td>
+                             <td><input type="password" name="pwd"id="pwd" required>
+                              <span class="guide falsePWd">부적합한 비밀번호</span>
+                             </td>
                           </tr>
+                            <tr> <td> </td>
+                            <td> 
+                             	<span class="pwck pwdlength">6글자 이상</span>
+                             	<span class="pwck pwdlengthMax">10글자 이하</span>
+                                <span class="pwck pwdImoji">영문+숫자+특수문자</span>
+                                <input type="hidden" name="pwdCheck" id="pwdLengthCheck" value="0"/>
+                            </td>
+                            </tr>
                           <tr>
                              <td>* 비밀번호확인</td>
-                             <td><input type="password" name="pwd2" id="pwd2" required></td>
-           
+                             <td><input type="password" name="pwd2" id="pwd2" required>
+           					 <!--  ajax 적용  -->
+                                <span class="guide pwdOk">비밀번호 일치</span>
+                                <span class="guide pwdError">비밀번호 불일치</span>
+                                <input type="hidden" name="pwdCheck" id="pwdCheck" value="0"/>
+                             </td>
+                             
                           </tr>
+                          <tr></tr>
                           <tr>
                              <td>&nbsp;&nbsp; 성별</td>
                              <td>
-                                <input type="radio" name="gender" value="M">남
-                                <input type="radio" name="gender" value="F">여
+                                <input type="radio" name="gender" value="M" id="m"><label for="m">남자</label> 
+                                <input type="radio" name="gender" value="F" id="f"><label for="f">여자</label> 
                              </td>
                           </tr>
                           <tr>
-                             <td>*생년월일</td>
-                             <td><input type="text" name="birth" placeholder="- 제외,숫자 8글자로 입력"required ></td>            
+                             <td>* 생년월일</td>
+                             <td><input type="text" name="birth" id="userBirth" placeholder="- 제외,숫자 8글자로 입력"required ></td>            
                           </tr>
                           <tr>
-                             <td>*개인 이메일</td>
+                             <td>* 개인 이메일</td>
                              <td>
                              <input type="email" id="userEmail" name="email" placeholder="이메일 중복 확인" required>
                               <!--  ajax 적용  -->
@@ -144,14 +176,19 @@
                              </td>
                           </tr>
                           <tr>
-                             <td>*휴대전화</td>
-                             <td><input type="tel" name="phone" placeholder="- 포함해서 입력" required></td>
+                             <td>* 휴대전화</td>
+                             <td><input type="tel" name="phone" id="userPhone" placeholder="- 포함해서 입력" required>
+                              <span class="guide phoneOk"> 사용 가능 </span>
+                                <span class="guide phoneError"> 이미 존재하는 번호 </span>
+                                <span class="guide phoneFormat"> 잘못된 형식의 번호 </span>
+                                <input type="hidden" name="emailDuplicateCheck" id="phoneDuplicateCheck" value="0"/>
+                             </td>
                           </tr>
                           
                           <tr>
                              <td>&nbsp;&nbsp;자택 주소</td>
                              <td>
-                                <input type="text" name="post" class="postcodify_postcode5" size="6" placeholder="우편번호">
+                                <input type="text" name="post" class="postcodify_postcode5" size="8" placeholder="우편번호">
                                 <button type="button" id="postcodify_search_button" style="font-size: 15px; ">검색</button>
                              </td>
                           </tr>
@@ -188,16 +225,125 @@
         </div>
     
         <script> 
+        
+        
             function validate(){
                 // 아이디 중복 체크 여부 
                 if($("#idDuplicateCheck").val()==0){
                     alert("사용가능한 ID를 입력해주세요.");
                     $("#userId").focus();
                     return false;
-                }else {
+                    
+                 // 이메일 중복 체크 여부  
+                }else if($("#emailDuplicateCheck").val()==0){
+                	 alert("사용가능한 email을 입력해주세요.");
+                     $("#userEmail").focus();
+                     return false;
+                // 비밀번호 확인 체크 여부 
+                }else if($("#pwdCheck").val()==0){
+                	alert("비밀번호가 일치하지 않습니다. 다시 입력해주세요.");
+                	$("#pwd2").focus();
+                	return false;
+                // 전화번호 중복 체크 여부 
+                }else if($("#phoneDuplicateCheck").val()==0){
+                	alert("이미 존재하는 전화번호입니다. 다시 입력해주세요.");
+                	$("#userPhone").focus();
+                	return false;
+                // 전화번호가 유효하지 않은 형태이면 
+                }else if($("#phoneDuplicateCheck").val()==2){
+                	alert("유효하지않은 전화번호입니다. 다시 입력해주세요.");
+                	$("#userPhone").focus();
+                	return false;
+                // 비밀번호가 조건에 부합하는지 
+            	}else if($("#pwdLengthCheck").val() == 3){
                     return true;
                 }
+               
             }
+            
+            function chkPW(){
+
+            	 var pw = $("#pwd").val();
+            	 // 숫자 확인 
+            	 var num = pw.search(/[0-9]/g);
+            	 // 영어 확인 
+            	 var eng = pw.search(/[a-z]/ig);
+            	 // 특수문자 확인 
+            	 var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+
+            	 if(pw.length <= 10){
+            		 $(".pwdlengthMax").css('background','lightgrey');
+            		 $("#pwdLengthCheck").val(2);
+            		 
+            	 }else if(num != -1 && eng != -1 && spe != -1 ){
+            		 $(".pwdImoji").css('background','lightgrey');
+            		 $("#pwdLengthCheck").val(3);
+            	 
+            	 }
+            	 	if($("#pwdLengthCheck").val() == 3) {
+            		console.log("통과"); 
+            	    return true;
+            		
+            	 }
+
+            	}
+            
+            // 비밀번호에 길이가 맞으면 검사하러감  
+            $(function(){
+            	
+            	$("#pwd").on("keyup",function(){
+            		var pwd = $(this).val();
+            		
+            		if(pwd.length > 5) {
+            			$(".pwdlength").css('background','lightgrey');
+            			$("#pwdLengthCheck").val(1);
+            			}else {
+            				$(".pwdlength").css('background','#477A8F');
+            				$("#pwdLengthCheck").val(0);
+            		}
+            			if($("#pwdLengthCheck").val() == 1){
+            			chkPW();            		
+            			}
+            		
+            		
+            	})
+            	
+            });
+            
+            // 비밀번호 확인 과 비밀번호가 일치하는지 여부 
+            $(function(){
+            	
+        
+            	$("#pwd2").on("keyup",function(){
+            		
+            		var pwd2 = $(this).val();
+            		var pwd = $("#pwd").val();
+            		
+            		if($("#pwdLengthCheck").val() == 3){
+            			$(".falsePWd").hide();
+            		if(pwd2.length = pwd.length){
+            			if(pwd2 == pwd){
+            				
+            			    $(".pwdError").hide();
+                            $(".pwdOk").show();
+                            $("#pwdCheck").val(1);
+                            
+                        }else {
+                            $(".pwdOk").hide();
+                            $(".pwdError").show();
+                            $("#pwdCheck").val(0);
+                        }
+            	      }
+            		}else {
+            			$(".falsePWd").show();
+            			$("#pwd").focus();
+            			
+            		}
+            		
+            	})
+            	
+            	
+            });
             
             $(function(){
                 $("#userId").on("keyup",function(){
@@ -227,26 +373,15 @@
                             
                         },
                         error:function(request,status,errorData){
-                           alert("error code : " + request.status + "\n"
-                                 + "message: " + request.responseText
-                                 + "error : " + errorData);
-                            
+                        	 console.log("아이디 중복 체크 오류");
                         }
+                            
+                        
                     });
                 });
             });
             
-            function validate(){
-                // 이메일 중복 체크 여부 
-                if($("emailDuplicateCheck").val()==0){
-                    alert("사용가능한 email을 입력해주세요.");
-                    $("#userEmail").focus();
-                    return false;
-                }else {
-                    return true;
-                }
-            }
-            
+            // 이메일 중복 검사 
             $(function(){
                 $("#userEmail").on("keyup",function(){
                     var userEmail = $(this).val();
@@ -275,15 +410,54 @@
                             
                         },
                         error:function(request,status,errorData){
-                           alert("error code : " + request.status + "\n"
-                                 + "message: " + request.responseText
-                                 + "error : " + errorData);
-                            
+                         console.log("이메일 중복 체크 오류");
                         }
                     });
                 });
             });
             
+            // 전화번호 중복 체크 검사 
+            $(function(){
+            	
+            	$("#userPhone").on("keyup",function(){
+            		var userPhone = $(this).val();
+            		
+            		 if(userPhone.length > 9){
+            			 // 번호 형식이 유효한지  검사 한번 해주고 
+                      var phoneFormat = /^\d{3}-\d{3,4}-\d{4}$/;
+                     	 if(!phoneFormat.test($("input[id='userPhone']").val())){
+                    	  $(".phoneFormat").show();
+                    	  $("#phoneDuplicateCheck").val(2);
+                      }else{
+                    	  $(".phoneFormat").hide();
+                    	  $("#phoneDuplicateCheck").val(0);
+                      	}
+                     }
+            		 if($("#phoneDuplicateCheck").val()== 0 && userPhone.length > 9){
+            		$.ajax({
+            			url:"phoneCheck.do",
+            			data : {phone:userPhone},
+            			type : "post",
+            			success:function(data){
+            				if(data == "ok"){
+            					 $(".phoneFormat").hide();
+            					 $(".phoneError").hide();
+                                 $(".phoneOk").show();
+                                 $("#phoneDuplicateCheck").val(1);
+            					
+            				}else {
+                                $(".phoneOk").hide();
+                                $(".phoneError").show();
+                                $("#phoneDuplicateCheck").val(0);
+                            }
+            				
+                        },error:function(){
+                         console.log("번호 중복 체크 오류");
+                        }
+                    });
+            		 }
+                });
+            });
             
         </script>
 		</div>

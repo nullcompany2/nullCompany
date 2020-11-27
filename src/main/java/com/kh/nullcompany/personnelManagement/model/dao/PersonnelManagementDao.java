@@ -189,9 +189,7 @@ public class PersonnelManagementDao {
 			switch(j) {
 			case 0 : for(int i =0; i<newLeaveArr.size();i++) {
 						Object newLeave = newLeaveArr.indexOf(i);
-						System.out.println(newLeave);
 						re= sqlSession.insert("personnelMapper.newLeaveArr",newLeaveArr);
-						System.out.println(re);
 					}
 			case 1 : re= sqlSession.update("personnelMapper.setAnnualLeave",setAnnualLeave);
 			case 2 : re= sqlSession.update("personnelMapper.firstyear",firstyear);
@@ -276,7 +274,6 @@ public class PersonnelManagementDao {
 			searchCondition.put("sDate",sDate);
 			searchCondition.put("eDate", today);
 			
-			System.out.println(searchCondition.get("sDate"));
 		}
 		return (ArrayList)sqlSession.selectList("personnelMapper.selectTargetReward",searchCondition);
 	}
@@ -347,6 +344,16 @@ public class PersonnelManagementDao {
 
 	public ArrayList<RecordLeave> RecordLeaveList() {
 		return (ArrayList)sqlSession.selectList("personnelMapper.RecordLeaveList");
+	}
+
+
+	public ArrayList<Member> searchMemberND(String searchKey) {
+		return (ArrayList)sqlSession.selectList("personnelMapper.searchMemberND",searchKey);
+	}
+
+
+	public ArrayList<ForEmLeave> searchMemberForEmLeaveND(String searchKey) {
+		return (ArrayList)sqlSession.selectList("personnelMapper.searchMemberForEmLeaveND",searchKey);
 	}
 
 

@@ -41,22 +41,22 @@
 	}
 
 	#category {
-		position:absolute;
 		border : none;
 		padding : 3px;
 		font-size : 15px;
 		margin-bottom : 5px;
+		margin-left:35%;
 		
 	}
 	
 	#search {
-		position:absolute;
 		border: 1px solid #3E4247;
 		border-radius : 3px;
 		padding : 3px;
 		font-size : 15px;
 		margin-bottom : 5px;
 		margin-left:5px;
+		
 	
 	}
 	
@@ -100,6 +100,8 @@
 	#idWrite {
 	color : black;
 	}
+	
+	
 	
 </style>
 

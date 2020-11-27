@@ -52,10 +52,17 @@
 						<!-- 근태현황 -->
 						<div style="margin-top: 50px; margin-right: 50px; width: 100%;">
 							<h4 style="float: left; width: 80%;">근태 현황</h4>
-							<form action="" style="width: 20%; float: right; text-align: right;">
-								<a href="#"id="" class="cursor" style="color: #477A8F; font-size: 12px;">검색취소</a>
-								<input type="text" name="" id="" class="search-emp">
-								<button class="search-btn cursor">검색</button>
+							<form action="searchEmDiligence.do" style="width: 30%; float: right; text-align: right;">
+								<a href="emDiligenceManagement.do"id="" class="cursor" style="height:25px; color: #477A8F; font-size: 14px;">검색취소»
+								</a>  &nbsp;&nbsp;&nbsp;
+								<input type="text" name="searchKey" class="search-emp" 
+										placeholder="이름 또는 부서 입력" style="border-radius: 10px; border: solid 0.5px #477A8F;">
+								<button class="search-btn cursor" style="border-radius: 3px;
+																	    background: white;
+																	    color: #477A8F;
+																	    border: none;">
+						    		검색
+						    	</button>
 							</form>
 						</div>
 
@@ -78,22 +85,36 @@
 										</tr>
 						
 									</thead>
-										
+									<c:choose>
+									<c:when test="${!empty mList}">
 									<c:forEach var="mem" items="${mList}">
-									<tbody id="${mem.memNo }TB">
-										<tr >
-											<td scope="col" rowspan="2" class="ta">${mem.name }</td>
-											<td scope="col" rowspan="2" class="ta">${mem.deptName }</td>
-											<td scope="col" rowspan="2" class="ta" id="${mem.memNo }Count">0 / 3</td>
-											<td scope="col" rowspan="2" class="ta"><a href="#"  onclick="detail(${mem.memNo})" class="curso detail-r-l" style="color: #477A8F;">상세</a></td>
-										</tr>
-										<tr class="date_tbl_output" id="${mem.memNo }Tr">
-										
-										</tr>
-										
-										
-									</tbody>
+											<tbody id="${mem.memNo }TB">
+												<tr >
+													<td scope="col" rowspan="2" class="ta">${mem.name }</td>
+													<td scope="col" rowspan="2" class="ta">${mem.deptName }</td>
+													<td scope="col" rowspan="2" class="ta" id="${mem.memNo }Count">0 / 3</td>
+													<td scope="col" rowspan="2" class="ta"><a href="#"  onclick="detail(${mem.memNo})" class="curso detail-r-l" style="color: #477A8F;">상세</a></td>
+												</tr>
+												<tr class="date_tbl_output" id="${mem.memNo }Tr">
+												
+												</tr>
+												
+												
+											</tbody>
 									</c:forEach>
+									</c:when>
+									<c:otherwise>
+											<tbody id="">
+												<tr >
+													<td scope="col" rowspan="2" colspan="4" class="ta" style="color:#477A8F; font-size:20px;">검색정보가 없습니다.</td>
+												</tr>
+												<tr class="date_tbl_output" id="">
+												</tr>
+												
+												
+											</tbody>
+									</c:otherwise>
+									</c:choose>
 								</table>
 								
 							</div>

@@ -10,7 +10,7 @@ import com.kh.nullcompany.personnelManagement.model.vo.Rank;
 
 public interface Y_PersonnelManagementService {
 
-	ArrayList<Member> selectApprovalList();
+	ArrayList<Member> selectApprovalList(PageInfo pi);
 
 	ArrayList<Department> selectDeptList();
 
@@ -27,6 +27,8 @@ public interface Y_PersonnelManagementService {
 	int getMemListCount();
 
 	ArrayList<Member> selectPageMemList(PageInfo pi);
+
+	int userApprovalListCount();
 
 
 
