@@ -145,7 +145,7 @@
 						<input type="text" name="" id="search_text" class="search-emp"
 							placeholder="&nbsp; 이름, ID 검색"
 							style="border-radius: 8px; border: #676767 solid 1px;">&nbsp;&nbsp;
-						<a class="search-btn cursor" id="searchbtn"
+						<a id="searchbtn" class="search-btn cursor"
 							style="border: none; background: none;">검색</a>
 					</form>
 
@@ -167,10 +167,10 @@
 
 							</tr>
 						</thead>
-						
-						<c:if test="${!empty list}">
-							<c:forEach var="list" items="${ list }" varStatus="vs">
-								<tbody onclick='forMd(${list.memNo})'  >
+				<c:choose>
+				    <c:when test="${!empty list }">
+							<c:forEach var="list" items="${ list }">
+								<tbody onclick='forMd(${list.memNo})'>
 									<tr id="list_table_tr_input">
 										<td class="tg-0lax"><a>${ list.memNo }</a></td>
 										<td class="tg-0lax"><a>${ list.name }</a></td>
@@ -182,51 +182,67 @@
 									</tr>
 								</tbody>
 							</c:forEach>
-						</c:if>
+								</table>
 
-					</table>
-
-					<span style="font-size: 14px;">소속원 수 : <c:out value="${listCount}"/></span> 
-		
-		<div>
-			<table style="position: absolute;
-    top: 535px;
-    left: 535px;
-    font-size: 14px;">
-			<!-- 페이징처리 -->
-			<tr align="center" height="20">
-				<td colspan="6" align="center">
-					<!-- [이전] --> <c:if test="${ pi.currentPage eq 1 }">
+					<div>
+						<table
+							style="position: absolute; top: 535px; left: 535px; font-size: 14px;">
+							<!-- 페이징처리 -->
+							<tr align="center" height="20">
+								<td colspan="6" align="center">
+									<!-- [이전] --> <c:if test="${ pi.currentPage eq 1 }">
 						이전 &nbsp;
 					</c:if> <c:if test="${ pi.currentPage ne 1 }">
-						<c:url var="before" value="userManagement.do">
-							<c:param name="currentPage" value="${ pi.currentPage - 1 }" />
-						</c:url>
-						<a href="${ before }">이전</a> &nbsp;
+										<c:url var="before" value="userManagermentSearch.do">
+											<c:param name="currentPage" value="${ pi.currentPage - 1 }" />
+										</c:url>
+										<a href="${ before }">이전</a> &nbsp;
 					</c:if> <!-- 페이지 --> <c:forEach var="p" begin="${ pi.startPage }"
-						end="${ pi.endPage }">
-						<c:if test="${ p eq pi.currentPage }">
-							<font color="#477A8F" size="3"><b>${ p }</b> </font>
-						</c:if>
+										end="${ pi.endPage }">
+										<c:if test="${ p eq pi.currentPage }">
+											<font color="#477A8F" size="3"><b>${ p }</b> </font>
+										</c:if>
 
-						<c:if test="${ p ne pi.currentPage }">
-							<c:url var="pagination" value="userManagement.do">
-								<c:param name="currentPage" value="${ p }" />
-							</c:url>
-							<a href="${ pagination }">${ p }</a> &nbsp;
+										<c:if test="${ p ne pi.currentPage }">
+											<c:url var="pagination" value="userManagermentSearch.do">
+												<c:param name="currentPage" value="${ p }" />
+											</c:url>
+											<a href="${ pagination }">${ p }</a> &nbsp;
 						</c:if>
-					</c:forEach> <!-- [다음] --> <c:if test="${ pi.currentPage eq pi.maxPage }">
+									</c:forEach> <!-- [다음] --> <c:if test="${ pi.currentPage eq pi.maxPage }">
 						다음
 					</c:if> <c:if test="${ pi.currentPage ne pi.maxPage }">
-						<c:url var="after" value="userManagement.do">
-							<c:param name="currentPage" value="${ pi.currentPage + 1 }" />
-						</c:url>
-						<a href="${ after }">다음</a>
-					</c:if>
-					</td>
-			</tr>
-		</table>
-				</div>
+										<c:url var="after" value="userManagermentSearch.do">
+											<c:param name="currentPage" value="${ pi.currentPage + 1 }" />
+										</c:url>
+										<a href="${ after }">다음</a>
+									</c:if>
+								</td>
+							</tr>
+						</table>
+					</div>
+					   
+					  </c:when>
+						
+						
+						
+						
+						<c:when test="${empty list }">
+								<tr id="list_table_tr_input">
+									<td class="tg-0lax" colspan="7" style="text-align: center;"><p>검색 내용이 없습니다.</p></td>
+								<tr>
+						</c:when>
+						
+							
+					
+					    
+					   </c:choose>
+
+					
+
+					
+		
+		
 			</div>
 
 		</div>

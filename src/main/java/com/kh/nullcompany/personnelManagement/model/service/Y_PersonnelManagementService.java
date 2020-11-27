@@ -30,6 +30,10 @@ public interface Y_PersonnelManagementService {
 
 	int userApprovalListCount();
 
+	ArrayList<Member> Name_Search(PageInfo pi, String text);
+
+	int Name_SearchCount(String text);
+
 
 
 }
