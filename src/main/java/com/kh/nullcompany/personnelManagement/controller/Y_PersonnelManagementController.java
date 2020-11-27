@@ -70,8 +70,9 @@ public class Y_PersonnelManagementController {
 		PageInfo pi = Pagination.getPageInfo(currentPage,listCount);
 		
 		ArrayList<Member> list = yService.selectPageMemList(pi);
-		System.out.println(list);
+		
 		mv.addObject("list",list);
+		mv.addObject("listCount",listCount);
 		mv.addObject("pi",pi);
 		mv.setViewName("personnel_management/userManagement");
 
@@ -93,10 +94,13 @@ public class Y_PersonnelManagementController {
 	public ModelAndView ApprovalList(ModelAndView mv, 
 			@RequestParam(value="currentPage", required=false, defaultValue="1") int currentPage) {
 
-		System.out.println("페이지" + currentPage);
-
+		int userApprovalListCount = yService.userApprovalListCount();
+		
+		PageInfo pi = Pagination.getPageInfo(currentPage,userApprovalListCount);
+		
 		// 승인대기 리스트
-		ArrayList<Member> ApprovalList = yService.selectApprovalList();
+		ArrayList<Member> ApprovalList = yService.selectApprovalList(pi);
+		
 		// 부서 리스트 
 		ArrayList<Department> DeptList = yService.selectDeptList();		
 		// 직위 리스트

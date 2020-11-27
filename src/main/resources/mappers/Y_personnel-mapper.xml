@@ -104,5 +104,11 @@
         JOIN RANK R ON R.RANK_NO = M.RANK_NO
 	</select>
 	
+	<!-- 승인 인원 수 -->
+	<select id="userApprovalListCount" resultType="_int">
+	    SELECT COUNT(*)
+		FROM MEMBER
+		WHERE JOIN_STATUS = 'N'
+	</select>
 
 </mapper>

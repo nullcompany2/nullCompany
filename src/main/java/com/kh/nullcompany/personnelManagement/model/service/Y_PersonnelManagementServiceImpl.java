@@ -19,11 +19,6 @@ public class Y_PersonnelManagementServiceImpl implements Y_PersonnelManagementSe
 	private Y_PersonnelManagementDao yDao;
 	
 	@Override
-	public ArrayList<Member> selectApprovalList() {
-		return yDao.selectApprovalList();
-	}
-
-	@Override
 	public ArrayList<Department> selectDeptList() {
 		return yDao.selectDeptList();
 	}
@@ -62,6 +57,16 @@ public class Y_PersonnelManagementServiceImpl implements Y_PersonnelManagementSe
 	@Override
 	public ArrayList<Member> selectPageMemList(PageInfo pi) {
 		return yDao.selectPageMemList(pi);
+	}
+
+	@Override
+	public int userApprovalListCount() {
+		return yDao.userApprovalListCount();
+	}
+
+	@Override
+	public ArrayList<Member> selectApprovalList(PageInfo pi) {
+		return yDao.selectApprovalList(pi);
 	}
 
 

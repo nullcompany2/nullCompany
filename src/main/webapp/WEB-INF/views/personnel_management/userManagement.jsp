@@ -63,7 +63,7 @@
 								<th class="tg-0pky">사번</th>
 								<th class="tg-0lax">이름</th>
 								<th class="tg-0lax">ID</th>
-								<th class="tg-0lax">사내전화</th>
+								<th class="tg-0lax">이메일</th>
 								<th class="tg-0lax">휴대전화</th>
 								<th class="tg-0lax">부서</th>
 								<th class="tg-0lax">직위</th>
@@ -89,10 +89,13 @@
 
 					</table>
 
-					<span style="font-size: 14px;">소속원 수 : 10명</span> 
+					<span style="font-size: 14px;">소속원 수 : <c:out value="${listCount}"/></span> 
 		
 		<div>
-			<table style=" margin: 10px 0px 0px 80px; width: 80%; border-collapse: collapse">
+			<table style="position: absolute;
+    top: 535px;
+    left: 535px;
+    font-size: 14px;">
 			<!-- 페이징처리 -->
 			<tr align="center" height="20">
 				<td colspan="6" align="center">
@@ -197,124 +200,6 @@
 
 
 
-	<!-- user edit modal -->
-
-	<div id="edituser_modal" class="modal-dragscroll">
-		<h4
-			style="font-size: 23px; margin-bottom: 15px; margin-top: 30px; margin-left: 30px; color: #477A8f;">사원
-			정보 수정</h4>
-
-		<div style="margin-left: 30px; margin-bottom: 20px;">
-			<table style="width: 550px; height: 565px;">
-				<tr id="info-name">
-					<th class="tl">이름</th>
-					<td class="ts"><span>Han</span></td>
-				</tr>
-				<tr id="info-pwd">
-					<th class="tl">비밀번호</th>
-					<td class="ts"><input type="text" name="" id=""></td>
-				</tr>
-				<tr id="info-pwdcheck">
-					<th class="tl">비밀번호 확인</th>
-					<td class="ts"><input type="text" name="" id=""></td>
-				</tr>
-				<tr id="info-dept">
-					<th class="tl">부서</th>
-					<td class="ts"><select name="dept"
-						style="border: none; width: 100px;">
-							<option value="">부서 선택</option>
-							<option value="기획부">기획부</option>
-							<option value="ㅇㅇ부">ㅇㅇ부</option>
-							<option value="ㅁㅁ부">ㅁㅁ부</option>
-					</select></td>
-				</tr>
-				<tr id="info-rank">
-					<th class="tl">직급</th>
-					<td class="ts"><select name="rank"
-						style="border: none; width: 100px;">
-							<option value="">직급 선택</option>
-							<option value="사장">사장</option>
-							<option value="팀장">팀장</option>
-							<option value="사원">사원</option>
-							<option value="인턴">인턴</option>
-					</select></td>
-
-
-				</tr>
-				<tr id="info-phone">
-					<th class="tl"><img src="../../resources/images/lock-info.jpg"
-						alt="" style="width: 30px; position: absolute; left: 40px;">
-						휴대전화</th>
-					<td class="ts"><input type="text" name="" id=""> <input
-						type="checkbox" name="" id="s-phone" class="secret-info">
-						<label for="s-phone" class="s-t">비공개</label></td>
-
-				</tr>
-				<tr id="info-email">
-					<th class="tl">이메일</th>
-					<td class="ts"><input type="text" name="" id=""></td>
-				</tr>
-				<tr id="info-personal-email">
-					<th class="tl"><img src="../../resources/images/lock-info.jpg"
-						alt="" style="width: 30px; position: absolute; left: 40px;">
-						개인이메일</th>
-					<td class="ts"><input type="text" name="" id=""> <input
-						type="checkbox" name="" id="s-email" class="secret-info">
-						<label for="s-email" class="s-t">비공개</label></td>
-				</tr>
-				<tr id="info-mem-no">
-					<th class="tl">사번</th>
-					<td class="ts"><span>2</span></td>
-				</tr>
-				<tr id="info-enrolldate">
-					<th class="tl">입사일</th>
-					<td class="ts"><span>2019-12-28</span></td>
-				</tr>
-				<tr id="info-birth">
-					<th class="tl"><img src="../../resources/images/lock-info.jpg"
-						alt="" style="width: 30px; position: absolute; left: 40px;">
-						생년월일</th>
-					<td class="ts"><input type="date" name="" id=""> <input
-						type="checkbox" name="" id="s-birth" class="secret-info">
-						<label for="s-birth" class="s-t">비공개</label></td>
-				</tr>
-				<tr id="info-address">
-					<th class="tl"><img src="../../resources/images/lock-info.jpg"
-						alt="" style="width: 30px;"> 주소</th>
-
-					<td class="ts" id="zip">우편번호 : <input type="text" name="zip"
-						style="width: 80px; height: 20px;" /> <a class="save-btn"
-						onclick="openZipSearch()">검색</a> <br> 주소 : <input type="text"
-						name="addr1" style="width: 300px; height: 20px;" readonly /><br>
-						상세 : <input type="text" name="addr2"
-						style="width: 300px; height: 20px;" /> <input type="checkbox"
-						name="" id="s-address" class="secret-info"> <label
-						for="s-address" class="s-t">비공개</label>
-
-					</td>
-				</tr>
-				<tr>
-
-				</tr>
-			</table>
-			<!-- save btn -->
-
-		</div>
-
-
-
-
-		<div style="text-align: center; margin-top: -27px;">
-			<button id="edituser"
-				style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">수정</button>
-			<button
-				style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">취소</button>
-		</div>
-
-
-		<a class="modal-close-btn cursor">X</a>
-	</div>
-
 	<script>
 			
 		function modal(id) {
@@ -360,63 +245,15 @@
 				});
 		}
 
-		function modal2(id) {
-			var zIndex = 9999;
-			var modal = $('#' + id);
-			
-			var bg = $('<div>')
-			.css({
-				position: 'fixed',
-				zIndex: zIndex,
-				left: '0px',
-				top: '0px',
-				width: '100%',
-				height: '100%',
-				overflow: 'auto',
-				// 레이어 색갈은 여기서 바꾸면 됨
-				backgroundColor: 'rgba(0,0,0,0.0)'
-			})
-			.appendTo('body');
-	
-
-			modal
-				.css({
-					position: 'fixed',
-					boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
-
-					// 시꺼먼 레이어 보다 한칸 위에 보이기
-					zIndex: zIndex + 1,
-
-					// div center 정렬
-					top: '50%',
-					left: '50%',
-					transform: 'translate(-50%, -50%)',
-					msTransform: 'translate(-50%, -50%)',
-					webkitTransform: 'translate(-50%, -50%)'
-				})
-				.show()
-				// 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
-				.find('.modal-close-btn')
-				.on('click', function() {
-					bg.remove();
-					modal.hide();
-				});
-		}
 		
 
 		$('.tg-0lax a').on('click', function() {
 			// 모달창 띄우기
-			modal2('info_modal');
+			modal('info_modal');
 		
 		});
-	
-		$('.edituser').on('click', function() {
-			// 모달창 띄우기
-			modal2('edituser_modal');
-	
+
 			
-			
-		});
 		
 	
 
