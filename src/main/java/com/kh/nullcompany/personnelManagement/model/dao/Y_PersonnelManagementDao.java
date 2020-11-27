@@ -20,8 +20,10 @@ public class Y_PersonnelManagementDao {
 	private SqlSessionTemplate sqlSession;
 	public int updateUserApproval;
 
-	public ArrayList<Member> selectApprovalList() {
-		return (ArrayList)sqlSession.selectList("Y_personnelMapper.selectApprovalList");
+	public ArrayList<Member> selectApprovalList(PageInfo pi) {
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("Y_personnelMapper.selectApprovalList",null,rowBounds);
 	}
 
 	public ArrayList<Department> selectDeptList() {
@@ -55,8 +57,14 @@ public class Y_PersonnelManagementDao {
 	public ArrayList<Member> selectPageMemList(PageInfo pi) {
 		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
-		return (ArrayList)sqlSession.selectList("Y_personnelMapper.per_selectmemList",rowBounds);
+		return (ArrayList)sqlSession.selectList("Y_personnelMapper.per_selectmemList",null,rowBounds);
 	}
+
+	public int userApprovalListCount() {
+		return sqlSession.selectOne("Y_personnelMapper.userApprovalListCount");
+	}
+
+
 
 
 

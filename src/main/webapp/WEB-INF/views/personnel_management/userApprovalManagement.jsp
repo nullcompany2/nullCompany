@@ -87,9 +87,47 @@
 
 					<span
 						style="font-size: 14px; position: absolute; left: 10%; top: 540px;">승인 대기자
-						:  ${fn:length(ApprovalList)} 명</span> <span
-						style="font-size: 14px; position: absolute; left: 40%; top: 540px;">
-						[이전] 1 2 3 4 5 [다음]</span>
+						:  ${fn:length(ApprovalList)} 명</span> 
+						
+						<div>
+			<table style="position: absolute;
+    top: 535px;
+    left: 535px;
+    font-size: 14px;">
+			<!-- 페이징처리 -->
+			<tr align="center" height="20">
+				<td colspan="6" align="center">
+					<!-- [이전] --> <c:if test="${ pi.currentPage eq 1 }">
+						이전 &nbsp;
+					</c:if> <c:if test="${ pi.currentPage ne 1 }">
+						<c:url var="before" value="userApprovalManagement.do">
+							<c:param name="currentPage" value="${ pi.currentPage - 1 }" />
+						</c:url>
+						<a href="${ before }">이전</a> &nbsp;
+					</c:if> <!-- 페이지 --> <c:forEach var="p" begin="${ pi.startPage }"
+						end="${ pi.endPage }">
+						<c:if test="${ p eq pi.currentPage }">
+							<font color="#477A8F" size="3"><b>${ p }</b> </font>
+						</c:if>
+
+						<c:if test="${ p ne pi.currentPage }">
+							<c:url var="pagination" value="userApprovalManagement.do">
+								<c:param name="currentPage" value="${ p }" />
+							</c:url>
+							<a href="${ pagination }">${ p }</a> &nbsp;
+						</c:if>
+					</c:forEach> <!-- [다음] --> <c:if test="${ pi.currentPage eq pi.maxPage }">
+						다음
+					</c:if> <c:if test="${ pi.currentPage ne pi.maxPage }">
+						<c:url var="after" value="userApprovalManagement.do">
+							<c:param name="currentPage" value="${ pi.currentPage + 1 }" />
+						</c:url>
+						<a href="${ after }">다음</a>
+					</c:if>
+					</td>
+			</tr>
+		</table>
+				</div>
 				</div>
 			</div>
 
