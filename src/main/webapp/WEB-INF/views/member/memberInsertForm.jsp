@@ -162,7 +162,7 @@
                           </tr>
                           <tr>
                              <td>* 생년월일</td>
-                             <td><input type="text" name="birth" placeholder="- 제외,숫자 8글자로 입력"required ></td>            
+                             <td><input type="text" name="birth" id="userBirth" placeholder="- 제외,숫자 8글자로 입력"required ></td>            
                           </tr>
                           <tr>
                              <td>* 개인 이메일</td>
@@ -188,7 +188,7 @@
                           <tr>
                              <td>&nbsp;&nbsp;자택 주소</td>
                              <td>
-                                <input type="text" name="post" class="postcodify_postcode5" size="6" placeholder="우편번호">
+                                <input type="text" name="post" class="postcodify_postcode5" size="8" placeholder="우편번호">
                                 <button type="button" id="postcodify_search_button" style="font-size: 15px; ">검색</button>
                              </td>
                           </tr>

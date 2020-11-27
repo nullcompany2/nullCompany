@@ -88,8 +88,7 @@
 							<tr id="up-file" class="underline">
 								<th class="ch-tbl-cate" rowspan="2">파일올리기</th>
 								<td  class="ch-tbl-c">
-									<input type="button" value="파일선택" style="background: #e9e9e9; border-radius: 2px; width: 70px;">
-									<input type="text" name="" id="">
+									<input type="file" name="logo" id="InputLogo">
 									<div id="warning">
 										500KB 미만의 JPG,GIF,PNG,SWF(플래시) 형식만 등록 가능합니다. <br>
 
