@@ -215,10 +215,8 @@ public class PersonnelManagementController {
 			SetLeave firstyearLeave = pService.firstyearLeave();
 			if(firstyearLeave.getFirstyear() == 0) {
 				annualLeave = period.getMonths();
-				System.out.println(annualLeave + " 1년차 미만 휴가생성 월당 1 일경우");
 			}else {
 				annualLeave = firstyearLeave.getAnnualLeave();
-				System.out.println(annualLeave + " 1년차 미만 휴가생성 사용 미적용할시");
 			}
 			
 		}else {
@@ -294,7 +292,6 @@ public class PersonnelManagementController {
 			
 		// 총 휴가 리스트
 		ArrayList<RecordLeave> RecordLeaveList = pService.RecordLeaveList();
-		System.out.println(RecordLeaveList);
 		mv.addObject("RecordLeaveList", RecordLeaveList);
 		mv.setViewName("personnel_management/leaveCalendar");
 
@@ -310,14 +307,12 @@ public class PersonnelManagementController {
 		// 올해 몇월인지(월평 지각수 계산용)
 		Date today = new Date();
 		int TMonth = today.getMonth()+1;
-		System.out.println(TMonth);
 		
 		// 근무시간 설정값 가져오기
 		SetAttendance setAttendance = pService.setAttendance();
 		// 지각횟수/ 월평균 지각횟수 계산
 		int lateCount = pService.lateCountY(memNo);
 		double avgLateCount = (Math.round(((double)lateCount / (double)TMonth)*100)/100.0);
-		System.out.println(avgLateCount);
 
 		
 		// 출퇴근 기록 미체크-(출근기록이없는날-결근) , 퇴근체크(비정상)-(출근은했지만 퇴근기록이없는상황)
@@ -328,13 +323,11 @@ public class PersonnelManagementController {
 		ArrayList<RecordDiligence> recordDiligenceList = pService.recordDiligenceList(memNo);
 		
 		
-		System.out.println(recordDiligenceList);
 		
 		// 전체 휴가 사용날 / 사용일수 기록(for Calendar)
 		
 		// 근태 수정내역 보기 
 		ArrayList<ModificationDiligence> recordMod = pService.selectRecordModification(memNo);
-		System.out.println(recordMod);
 		
 		mv.addObject("recordDiligenceList",recordDiligenceList);
 		mv.addObject("recordMod",recordMod);
@@ -391,26 +384,21 @@ public class PersonnelManagementController {
 		
 		// 출퇴근 해당날자인지 체크
 		ArrayList<SetAttendance> ADay = pService.AttendanceDays();
-		System.out.println(ADay);
 		Calendar todayCalen = Calendar.getInstance();
 		int todayDate = todayCalen.get(Calendar.DAY_OF_WEEK)-1;
 		int checkADay = 0;
-		System.out.println(todayDate + "오늘 요일");
 		for(SetAttendance i : ADay) {
 			if(i.getDayAvailable().equals("Y")) {
-				System.out.println("확인"+i.getNoDay());
 				if(todayDate == i.getNoDay()) {
 					checkADay=1;
 					break;
 				}
 			}
 		}
-		System.out.println(checkADay +"오늘 출근여부");
 		// 출근 & 퇴근 기록 및 알림
 		if(checkADay ==1) {
 			if(or ==1) {
 				int RecordAB_A = pService.RecordAB_A(memNo);
-				System.out.println(RecordAB_A);
 				if(RecordAB_A == 0) {
 					if(setCTime < 1400) {
 						if(setCTime > setATime) {
@@ -471,10 +459,8 @@ public class PersonnelManagementController {
 	public ModelAndView setLeaveStandard(ModelAndView mv) {
 		
 		ArrayList<SetLeave> setLeave = pService.setLeaveStandard();
-		System.out.println(setLeave);
 		
 		ArrayList<TypeLeave> leaveList = pService.typeLeave();
-		System.out.println(leaveList);
 		mv.addObject("leaveList",leaveList);
 		mv.addObject("setLeave",setLeave);
 		mv.setViewName("personnel_management/setLeaveStandard");
@@ -488,9 +474,7 @@ public class PersonnelManagementController {
 							String leaveTypeSet
 							) throws JsonIOException, IOException{
 		String str = "311aa";
-		System.out.println(setAnnualLeave);
-		System.out.println(newLeaveArr);
-		System.out.println(firstyear);
+		
 		Date today = new Date();
 		ArrayList<SetLeave> setLeave = new ArrayList<SetLeave>();
 		ArrayList<TypeLeave> newLeave = new ArrayList<TypeLeave>();
@@ -512,7 +496,6 @@ public class PersonnelManagementController {
 			jsonArray = (JsonArray)jsonParser.parse(newLeaveArr);
 			for(int j=0; j<jsonArray.size(); j++) {
 				JsonObject object = (JsonObject) jsonArray.get(j);
-				System.out.println(object.toString());
 				   
 				String nameType = (object.get("name")).getAsString();
 				String annualUse = (object.get("useAnnual")).getAsString();
@@ -533,9 +516,7 @@ public class PersonnelManagementController {
 				
 				newLeave.add(newArr);
 			}
-			for(TypeLeave j : newLeave) {
-				System.out.println(j);
-			}
+			
 			
 			
 		}
@@ -559,9 +540,7 @@ public class PersonnelManagementController {
 		    TypeLeave setL = new TypeLeave(no, null, useAnnual, able);
 		    LeaveTypeSetting.add(setL);
 		}
-		for(TypeLeave j : LeaveTypeSetting) {
-			System.out.println(j);
-		}
+		
 	       
 	       
 	       
@@ -588,7 +567,6 @@ public class PersonnelManagementController {
 	public ModelAndView emLeaveManagement(ModelAndView mv, HttpServletResponse response, 
 									String changeMemNo,String changeAnnual, String changeReward, String reasonAnnual, String reasonReward) {
 		if(changeMemNo != null) {
-			System.out.println(changeMemNo);
 			Member changeMember = pService.detailMemberInfo(Integer.parseInt(changeMemNo));
 			Map changeAL = new HashMap();
 			Map changeRL = new HashMap();
@@ -630,7 +608,6 @@ public class PersonnelManagementController {
 		
 		
 		ArrayList<ForEmLeave> emList = pService.emAllMemeber();
-		System.out.println(emList + "길이 : " + emList.size());
 		
 		ArrayList<TypeLeave> leaveList = pService.typeLeave();
 		
@@ -769,10 +746,8 @@ public class PersonnelManagementController {
 			SetLeave firstyearLeave = pService.firstyearLeave();
 			if(firstyearLeave.getFirstyear() == 0) {
 				annualLeave = period.getMonths();
-				System.out.println(annualLeave + " 1년차 미만 휴가생성 월당 1 일경우");
 			}else {
 				annualLeave = firstyearLeave.getAnnualLeave();
-				System.out.println(annualLeave + " 1년차 미만 휴가생성 사용 미적용할시");
 			}
 			
 		}else {
@@ -835,9 +810,6 @@ public class PersonnelManagementController {
 	@RequestMapping("setDiligenceStandard.do")
 	public ModelAndView setDiligenceStandard(ModelAndView mv, HttpServletResponse response, String sDate, String eDate, String setDate) {
 		
-		System.out.println(sDate);
-		System.out.println(eDate);
-		System.out.println(setDate);
 		if(setDate != null) {
 			String date ="";
 			String[] setDateArr = setDate.split(",");
@@ -865,7 +837,6 @@ public class PersonnelManagementController {
 		}
 		ArrayList<SetAttendance> settingArr = pService.setDiligenceStandard();
 		
-		System.out.println(settingArr);
 		
 		mv.addObject("settingArr",settingArr);
 		mv.setViewName("personnel_management/setDiligenceStandard");
@@ -877,7 +848,6 @@ public class PersonnelManagementController {
 	public ModelAndView emAbsenceManagement(ModelAndView mv ,HttpServletResponse response) {
 				
 		ArrayList<Absence> absenceList = pService.absenceList();
-		System.out.println(absenceList);
 		mv.addObject("absenceList",absenceList);
 		mv.setViewName("personnel_management/emAbsenceManagement");
 		return mv;
@@ -894,9 +864,7 @@ public class PersonnelManagementController {
 
 	@RequestMapping("reqDiligence.do")
 	public ModelAndView reqDiligence(ModelAndView mv, HttpServletResponse response, int noDiligence) {
-		System.out.println(noDiligence);
 		RecordDiligence record = pService.recordDiligence(noDiligence);
-		System.out.println(record);
 		mv.addObject("record",record);
 		mv.setViewName("personnel_management/reqDiligence");
 		return mv;
@@ -919,7 +887,6 @@ public class PersonnelManagementController {
 			}
 		}
 		
-		System.out.println(mod);
 		int result = pService.modificationDiligence(mod);
 		return "redirect:myDiligence.do";
 	}
@@ -958,7 +925,6 @@ public class PersonnelManagementController {
 		try {
 			file.transferTo(new File(renamePath));	//전달받은 file이 rename명으로 이때 서버에 저장이된다.
 		}catch(Exception e) {
-			System.out.println("파일전송에러 : " + e.getMessage());
 		}
 		return renameFileName;
 	}
@@ -971,7 +937,6 @@ public class PersonnelManagementController {
 		String str ="";
 		if(result >0) {
 			str = "수정취소 완료.";
-			System.out.println(str);
 		}
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(str,response.getWriter());
@@ -986,11 +951,9 @@ public class PersonnelManagementController {
 		searchCondition.put("sDate",sDate);
 		searchCondition.put("eDate",eDate);
 		searchCondition.put("inputword",inputword);
-		System.out.println(searchCondition);
 		
 		ArrayList<Member> mList = pService.selectTargetReward(searchCondition);
 		
-		System.out.println(mList);
 		
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(mList,response.getWriter());
@@ -1000,18 +963,15 @@ public class PersonnelManagementController {
 	@RequestMapping(value="grantReward.do")
 	public void grantReward(HttpServletResponse response, String listArr) throws JsonIOException, IOException {
 		response.setContentType("application/json; charset=utf-8");
-		System.out.println("list 확인 : " + listArr);
 		
 		JsonParser jsonParser = new JsonParser();
 		JsonArray jsonArray = (JsonArray)jsonParser.parse(listArr);
-		System.out.println(jsonArray.get(0));
 		ArrayList<Member> selectedList = new ArrayList<Member>();
 		
 		for(int i =0; i<jsonArray.size(); i++) {
 			int object = jsonArray.get(i).getAsInt();
 			selectedList.add(pService.detailMemberInfo(object));
 		}
-		System.out.println(selectedList);
 		
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(selectedList,response.getWriter());
@@ -1021,7 +981,6 @@ public class PersonnelManagementController {
 	@RequestMapping(value="grantReward1.do")
 	public String grantReward1(HttpServletResponse response, String cMemNoArr, String cDaysArr) {
 		response.setContentType("application/json; charset=utf-8");
-		System.out.println("포상휴가 컨트롤러 짜잔" + cMemNoArr+"/" + cDaysArr);
 		
 		
 		String[] cMem = (cMemNoArr.split(","));
@@ -1037,7 +996,6 @@ public class PersonnelManagementController {
 			
 			int insert = pService.grantReward(CR);
 			CR.clear();
-			System.out.println(insert);
 		}
 		
 		return "redirect:emLeaveManagement.do";
@@ -1051,7 +1009,6 @@ public class PersonnelManagementController {
 			// 올해 몇월인지(월평 지각수 계산용)
 			Date today = new Date();
 			int TMonth = today.getMonth()+1;
-			System.out.println(TMonth);
 			
 			// 근무시간 설정값 가져오기
 			SetAttendance setAttendance = pService.setAttendance();
@@ -1060,7 +1017,6 @@ public class PersonnelManagementController {
 			// 전체직원 근태 카운트
 			
 			DiligenceCountAllMember DiligenceCount = pService.DiligenceCountAllMember();
-			System.out.println(DiligenceCount);
 			
 			
 			// 모든 사원 정보 가져오기
@@ -1068,9 +1024,7 @@ public class PersonnelManagementController {
 			ArrayList<RecordDiligence> rD = new ArrayList<RecordDiligence>();
 			for(int i= 0; i<mList.size(); i++) {
 				int memNo = mList.get(i).getMemNo();
-				System.out.println("mList 배열 사번 : " + memNo);
 				rD.addAll(pService.recordDiligenceList(memNo));
-				System.out.println("rD 배열 확인 : " +rD);
 			}
 			mv.addObject("diligenceCount",DiligenceCount);
 			mv.addObject("setAttendance",setAttendance);
@@ -1085,7 +1039,6 @@ public class PersonnelManagementController {
 		@RequestMapping("attendanceModificationRequests.do")
 		public ModelAndView modificationRequest(ModelAndView mv, HttpServletResponse response) {
 			ArrayList<ModificationDiligence> modRequestList = pService.modRequestList();
-			System.out.println(modRequestList);
 			mv.addObject("modRequestList",modRequestList);
 			mv.setViewName("personnel_management/attendanceModificationRequests");
 			return mv;
@@ -1103,6 +1056,141 @@ public class PersonnelManagementController {
 			int reulst = pService.modificationCancel(noMod);
 			
 			return "redirect:attendanceModificationRequests.do";
+		}
+		
+		// 직원 근태 현황 검색 출력
+		@RequestMapping("searchEmDiligence.do")
+		public ModelAndView searchEmDiligence(ModelAndView mv,
+											  @RequestParam(name="searchKey", required=false) String searchKey) {
+			System.out.println(searchKey);
+			SimpleDateFormat formatD = new SimpleDateFormat("yyyy-MM-dd");
+			// 올해 몇월인지(월평 지각수 계산용)
+			Date today = new Date();
+			int TMonth = today.getMonth()+1;
+			
+			// 근무시간 설정값 가져오기
+			SetAttendance setAttendance = pService.setAttendance();
+
+			
+			// 전체직원 근태 카운트
+			
+			DiligenceCountAllMember DiligenceCount = pService.DiligenceCountAllMember();
+			
+			
+			// 모든 사원 정보 가져오기
+			ArrayList<Member> mList = pService.searchMemberND(searchKey);
+			ArrayList<RecordDiligence> rD = new ArrayList<RecordDiligence>();
+			if(mList != null) {
+				for(int i= 0; i<mList.size(); i++) {
+					int memNo = mList.get(i).getMemNo();
+					rD.addAll(pService.recordDiligenceList(memNo));
+				}
+				
+			}
+			mv.addObject("diligenceCount",DiligenceCount);
+			mv.addObject("setAttendance",setAttendance);
+			mv.addObject("mList",mList);
+			mv.addObject("recordDiligenceList",rD);
+			mv.setViewName("personnel_management/emDiligenceManagement");
+			
+			
+			return mv;
+		}
+		
+		@RequestMapping("searchEmLeave.do")
+		public ModelAndView searchEmLeave(ModelAndView mv,HttpServletResponse response, 
+				String changeMemNo,String changeAnnual, String changeReward, String reasonAnnual, String reasonReward,
+				@RequestParam(value="searchKey", required=false) String searchKey) {
+			System.out.println(searchKey);
+			if(changeMemNo != null) {
+				Member changeMember = pService.detailMemberInfo(Integer.parseInt(changeMemNo));
+				Map changeAL = new HashMap();
+				Map changeRL = new HashMap();
+				changeAL.put("memNo",changeMember.getMemNo());
+				changeRL.put("memNo",changeMember.getMemNo());
+				if(changeMember.getAnnualLeave() != Integer.parseInt(changeAnnual)&& changeMember.getRewardLeave() != Integer.parseInt(changeReward)) {
+					// 포상 , 연차 둘다 변경
+					int reductionDaysAnnual = (changeMember.getAnnualLeave() - Integer.parseInt(changeAnnual));
+					changeAL.put("reductionDaysAnnual",reductionDaysAnnual);
+					changeAL.put("reasonAnnual",reasonAnnual);
+					
+					int reduceAnnualLeave = pService.reduceAnnualLeave(changeAL);
+					
+					int reductionDaysReward = (changeMember.getRewardLeave() - Integer.parseInt(changeReward));
+					changeRL.put("reductionDaysReward",reductionDaysReward);
+					changeRL.put("reasonReward",reasonReward);
+					
+					int reduceRewardLeave = pService.reduceRewardLeave(changeRL);
+					
+				}else if(changeMember.getAnnualLeave() != Integer.parseInt(changeAnnual)) {
+					// 연차만 변경
+					int reductionDaysAnnual = (changeMember.getAnnualLeave() - Integer.parseInt(changeAnnual));
+					changeAL.put("reductionDaysAnnual",reductionDaysAnnual);
+					changeAL.put("reasonAnnual",reasonAnnual);
+					
+					int reduceAnnualLeave = pService.reduceAnnualLeave(changeAL);
+					
+				}else {
+					// 포상만 변경
+					int reductionDaysReward = (changeMember.getRewardLeave() - Integer.parseInt(changeReward));
+					changeRL.put("reductionDaysReward",reductionDaysReward);
+					changeRL.put("reasonReward",reasonReward);
+					
+					int reduceRewardLeave = pService.reduceRewardLeave(changeRL);
+				}
+				
+			}
+			SimpleDateFormat formatD = new SimpleDateFormat("yyyy-MM-dd");
+			
+			
+			ArrayList<ForEmLeave> emList = pService.searchMemberForEmLeaveND(searchKey);
+			System.out.println(emList);
+			ArrayList<TypeLeave> leaveList = pService.typeLeave();
+			
+
+			
+			String workyear = "";
+			int annualLeave = 0;
+			
+			
+			ForEmLeave fel2 = new ForEmLeave();
+			
+			for(ForEmLeave fel : emList) {
+				fel2 = fel;
+				workyear = fel2.getWorkyear();
+				String enDate = formatD.format(fel2.getEnrollDate());
+				if(workyear.equals("N1")) {
+					SetLeave firstyearLeave = pService.firstyearLeave();
+					if(firstyearLeave.getFirstyear() == 0) {
+						
+						int w1 = Integer.parseInt(enDate.substring(0,4));
+						int w2 = Integer.parseInt(enDate.substring(5,7));
+						int w3 = Integer.parseInt(enDate.substring(8,10));
+
+						
+						LocalDate today = LocalDate.now();
+						
+						LocalDate hiredDate = LocalDate.of(w1,w2,w3);
+						// 입사일로부터 오늘까지의 날짜 차이 계산
+						Period period = hiredDate.until(today);
+						annualLeave = period.getMonths();
+						fel2.setAnnualLeave(annualLeave);
+					}else {
+						annualLeave = firstyearLeave.getAnnualLeave();
+						fel2.setAnnualLeave(annualLeave);
+					}
+				}else {
+					annualLeave = pService.leaveCalculate(workyear);
+					fel2.setAnnualLeave(annualLeave);
+				}
+				
+			}
+			
+			mv.addObject("leaveList",leaveList);
+			mv.addObject("emList",emList);
+			mv.setViewName("personnel_management/emLeaveManagement");
+			
+			return mv;
 		}
 	
 }

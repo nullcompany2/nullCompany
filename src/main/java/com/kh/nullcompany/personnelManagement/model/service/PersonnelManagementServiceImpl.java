@@ -365,6 +365,16 @@ public class PersonnelManagementServiceImpl implements PersonnelManagementServic
 		return pDao.RecordLeaveList();
 	}
 
+	@Override
+	public ArrayList<Member> searchMemberND(String searchKey) {
+		return pDao.searchMemberND(searchKey);
+	}
+
+	@Override
+	public ArrayList<ForEmLeave> searchMemberForEmLeaveND(String searchKey) {
+		return pDao.searchMemberForEmLeaveND(searchKey);
+	}
+
 	
 	
 

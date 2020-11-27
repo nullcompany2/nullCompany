@@ -77,7 +77,6 @@
 	margin-bottom : 10px;
 	padding-bottom : 10px;
 	border-bottom:  1px solid #ECECEC;
-	table-layout : fixed;
 	}
 	
 	#tb:last-child {

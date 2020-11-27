@@ -87,5 +87,11 @@
         join email e on (m.mem_no = e.mem_no)
         where (id LIKE  '%' || #{text} || '%'  or name LIKE'%' || #{text} || '%')
     </select>
+    
+    <select id="phoneCheck" parameterType="string" resultType="_int">
+	    SELECT COUNT(*)
+	  	FROM MEMBER 
+	   	WHERE PHONE = #{phone}
+     </select>
 	
 </mapper>

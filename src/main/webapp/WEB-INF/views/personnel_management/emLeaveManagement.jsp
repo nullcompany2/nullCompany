@@ -42,10 +42,15 @@
                         <div href="" class="cate cursor" id="leave-status">올해 휴가 현황조회</div>
                         <div href="" class="cate cursor" id="reward-leave">포상휴가 생성</div>
                     </div>
-    
+    				
                     <div id="show-leave-status" class="c-ic">
-                        <form action="" style="float: right;">
-                            <input type="text"  class="search-emp">
+                    <div style="margin-left: 100px; margin-top: 50px; color:#477A8F;">
+    					※ 휴가 잔여일은 해당직원이 로그인하여 휴가현황을 조회하여야 업데이트 됩니다.
+    				</div>
+                        <form action="searchEmLeave.do" style="float: right;">
+                        	<a href="emLeaveManagement.do"id="" class="cursor" style="height:25px; color: #477A8F; font-size: 14px;">검색취소»
+								</a>  &nbsp;&nbsp;&nbsp;
+                            <input type="text" name="searchKey"  class="search-emp">
                             <button class="search-btn cursor">검색</button>
                         </form>
                         <table class="l-table" id="leave-status-tbl">
@@ -70,30 +75,38 @@
                                 </tr>
                             </thead>
                             <tbody id="memList">
-                            	<c:forEach var="m" items="${emList}">
+                            	<c:choose>
+                            	<c:when test="${! empty emList }">
                             	
-                                <tr id="${m.memNo }_tr" style="    border-bottom: solid 1px #477A8F;">
-                                    <td class="ta">${m.name }</td>
-                                    <td class="ta"><fmt:formatDate value="${m.enrollDate}" pattern="yyyy.MM.dd"/></td>
-                                    <td class="ta">${m.annualLeave + m.rewardLeave }</td>
-                                    <td class="ta">${m.annualLeave }</td>
-                                    <td class="ta">${m.rewardLeave }</td>
-                                    <!-- 휴가 목록 리스트 맞춰서 -->
-                                    <c:forEach var="leaveL" items="${leaveList }">
-                                    <c:set var="i" value="${m.memNo }_${leaveL.noType }"/>
-                                    <c:set var="j" value="${usedL.num }"/>
-                                   	
-                                   		<td class="ta" id="${m.memNo}_${leaveL.noType}">0</td>
-                                    </c:forEach>
-                                    <!-- 여기까지 -->
-                                    <td class="ta">${ m.remainAnnual + m.remainReward }</td>
-                                    <td class="ta sepa-line">
-                                        <a href="#" class="cursor" style="color: #477A8F;" onclick="modfiy(${m.memNo})">수정</a> |
-                                        <a href="#" class="cursor" style="color: #477A8F;" onclick="detail(${m.memNo})">상세</a>
-                                    </td>
-                                </tr>
+                            	<c:forEach var="m" items="${emList}">
+	                           		<tr id="${m.memNo }_tr" style="    border-bottom: solid 1px #477A8F;">
+	                                    <td class="ta">${m.name }</td>
+	                                    <td class="ta"><fmt:formatDate value="${m.enrollDate}" pattern="yyyy.MM.dd"/></td>
+	                                    <td class="ta">${m.annualLeave + m.rewardLeave }</td>
+	                                    <td class="ta">${m.annualLeave }</td>
+	                                    <td class="ta">${m.rewardLeave }</td>
+	                                    <!-- 휴가 목록 리스트 맞춰서 -->
+	                                    <c:forEach var="leaveL" items="${leaveList }">
+	                                    <c:set var="i" value="${m.memNo }_${leaveL.noType }"/>
+	                                    <c:set var="j" value="${usedL.num }"/>
+	                                   	
+	                                   		<td class="ta" id="${m.memNo}_${leaveL.noType}">0</td>
+	                                    </c:forEach>
+	                                    <!-- 여기까지 -->
+	                                    <td class="ta">${ m.remainAnnual + m.remainReward }</td>
+	                                    <td class="ta sepa-line">
+	                                        <a href="#" class="cursor" style="color: #477A8F;" onclick="modfiy(${m.memNo})">수정</a> |
+	                                        <a href="#" class="cursor" style="color: #477A8F;" onclick="detail(${m.memNo})">상세</a>
+	                                    </td>
+	                                </tr>
                                 </c:forEach>
-                                                                
+                                </c:when>
+                                <c:otherwise>
+                                	<tr id="" style="    border-bottom: solid 1px #477A8F;">
+                                		<td class="ta" colspan="8">검색결과가 없습니다.</td>
+                               		</tr>
+                                </c:otherwise>
+                                </c:choose>                                
                             </tbody>
                         </table>
                     </div>	
