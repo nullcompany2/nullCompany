@@ -258,6 +258,7 @@
 	<select id="deptList" resultMap="deptResultSet">
 		SELECT *
 		FROM DEPARTMENT
+		ORDER BY DEPT_NO
 	</select>
 	<!-- 사원전체조회 (부서별) -->
 	<select id="deptAllMemberList" resultMap="memberResultSet" parameterType="Member">

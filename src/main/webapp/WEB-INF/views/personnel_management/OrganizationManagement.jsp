@@ -19,7 +19,12 @@
 	href="<c:url value="/resources/css/p_organization.css"/>">
 
 </head>
-
+<style>
+.deptlist {
+	border-bottom: solid 0.1px #cacaca;
+	height: 27px;
+}
+</style>
 <c:set var="codenum" value= '-1'/>
 <body>
 
@@ -59,20 +64,19 @@
 				<!-- ---- -->
 				<div class="contents-wrap drag-scrollbar">
 				<div>
-                     <button id="dept_add">부서 추가</button>
-
+                     <button id="dept_add">부서 추가</button>     
                   </div>
 					<div class="listbox" style="position: fixed">
 						<table>
 							<li>
-								<div class="H-personnel-organization cursor AllM" id="-1"
+								<div class="deptlist cursor AllM" id="-1"
 									onclick="choiceDept(-1)"  name="DL">
 									<label class="cursor">전체사원 </label>
 								</div>
 							</li>
 							<c:forEach var="dept" items="${ deptList }" begin="1">
 								<li>
-									<div class="H-personnel-organization cursor"
+									<div class="deptlist cursor"
 										id=${ dept.deptNo } onclick="choiceDept(${dept.deptNo})" name="DL">
 										<label class="cursor" style="margin-left: 10px">${ dept.deptName }</label>
 									</div>
@@ -80,6 +84,8 @@
 							</c:forEach>
 						</table>
 					</div>
+					
+				
 
 					<div class="ic" style="position: absolute; left: 200px;">
 					
@@ -89,7 +95,7 @@
 								<c:if test="${deptN.index == codenum || codenum == '-1'}">
 								<th>
 									<div class="ic-title" style="padding-top: 30px" >
-										<label class="H-personnel-organization">${ dept.deptName }</label>
+										<label class="H-personnel-organization" id="${ dept.deptName }"> ${ dept.deptName }</label>
 									</div>
 								</th>
 								<tr  name="${deptN.index }">
@@ -128,7 +134,62 @@
 		</div>
 		
 	</div>
-		<script>
+
+	<!-- 수정 모달 -->
+	<div id="edit_dept_modal" class="modal-dragscroll">
+		<h4 style="color: #477A8F;
+    margin-left: -25px;
+    margin-top: -7px;
+    margin-bottom: 11px;">부서 수정</h4>
+		
+		<span id="dept_name_edit" style="    margin-bottom: 5px;
+    font-size: 15px;
+    font-weight: bold;">dd</span>
+		<span style="color: #707070; margin-bottom: 5px; font-size: 14px;">부서를</span>
+		<input style="margin-top: 5px;"
+		id="editdeptnameInput" type="text" autofocus />
+		
+		<p style="color: #707070;
+    margin-top: 5px;
+    font-size: 14px;">위와 같이 변경하시겠습니까?</p>
+
+		<div style="text-align: center; margin-top: 25px;">
+			<button id="edit_dept_btn"
+				style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">수정</button>
+			<button id="delete_dept_btn"
+				style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">삭제</button>
+		</div>
+
+		<a class="modal-close-btn cursor">X</a>
+	</div>
+
+
+	<!-- 추가 모달 -->
+	<div id="add_dept_modal" class="modal-dragscroll">
+
+		<h4 style="color: #477A8F;
+    margin-left: -25px;
+    margin-top: -7px;
+    margin-bottom: 11px;">부서 추가</h4>
+		
+
+		<input style="margin-top: 5px;" id="adddeptnameInput" type="text" placeholder="부서명을 입력해주세요" />
+		
+		<p style="color: #707070;
+    margin-top: 5px;
+    font-size: 14px;">입력한 부서를 추가하시겠습니까?</p>
+
+		<div style="text-align: center; margin-top: 20px;">
+			<button id="add_dept_btn"
+				style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">추가</button>
+			<button id="delete_dept_btn"
+				style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">취소</button>
+		</div>
+	
+		<a class="modal-close-btn cursor">X</a>
+	</div>
+	
+	<script>
 		 function choiceDept(dNum){
 			 codeNum = dNum;
 			 
@@ -223,33 +284,68 @@
 					modal.hide();
 				});
 		}
-
+	
+		// 부서 추가모달
 		$('#dept_add').on('click', function() {
-			modal2('add_dept_modal');
+			modal('add_dept_modal');
+			 $("#adddeptnameInput").focus();
 		});
 		
+		// 인포 모달
 		$('.emp-info').on('click', function() {
 			// 모달창 띄우기
 			modal('info_modal');
 		});
 
+		// 삭제 모달
 		$('#delete_dept').on('click', function() {
 			// 모달창 띄우기
 			confirm("정말 삭제하시겠습니까?");
 		});
 
-		 $('#add').on('click', function() {
-		 	var html = '<li><button class="edit_dept">부서</button><span></span></li>';
-		 $('.tree').append(html);
-		 $('#add_dept_modal').hide();
-		 });
 
-		$('.edit_dept').on('click', function() {
-			// 모달창 띄우기
-			modal2('edit_dept_modal');
+		// 수정시 모달
+		$('.H-personnel-organization').click(function(){
+		    var dept_name = $(this).attr("id");
+		    modal('edit_dept_modal');
+		    $("#dept_name_edit").text(dept_name);
+		    $("#editdeptnameInput").val(dept_name);
+		    $("#editdeptnameInput").focus();
+		    
 		});
-
-	
+		
+		 //수정 버튼
+		 $('#edit_dept_btn').on('click', function() {
+			var deptName = $("#editdeptnameInput").val();
+			var deptName2 = $("#dept_name_edit").text();
+			
+			if(deptName == deptName2){
+				alert('수정 전 부서명과 같은 부서명은 사용할 수 없습니다.')
+			}
+		});
+		
+		 //부서 추가 버튼
+		 $('#add_dept_btn').on('click', function() {
+			var deptName = $("#adddeptnameInput").val();
+		
+			if(deptName == ""){
+				alert('부서명을 입력해주세요.')
+			}
+			
+			$.ajax({
+				url: "deptAdd.do",
+				data: {"deptName" : deptName},
+				success : function(data){
+					alert("추가 성공")
+					location.reload();
+				},
+				error :function(request,status,error){
+					console.log(error);  
+					location.reload();
+				}
+			});
+			
+		});
 		
 	</script>
 

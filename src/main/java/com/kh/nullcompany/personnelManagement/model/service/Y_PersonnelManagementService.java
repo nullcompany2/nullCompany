@@ -38,6 +38,10 @@ public interface Y_PersonnelManagementService {
 
 	ArrayList<Member> ID_Search(PageInfo pi, String text);
 
+	int deptAdd(String deptName);
+
+	Member detailMemberInfo(int memNo);
+
 
 
 }

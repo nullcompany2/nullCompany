@@ -61,6 +61,30 @@ public class Y_PersonnelManagementController {
 		return mv;
 	
 	}
+	
+	// 부서 추가
+	@RequestMapping("deptAdd.do")
+	public String deptAdd(Model model, String deptName) {
+		
+		int result = yService.deptAdd(deptName);
+		System.out.println("이메일" + deptName);
+
+		if(result > 0) {
+			return "redirect:OrganizationManagement.do";
+		}
+		return deptName;
+	}
+	
+	// 인사관리 사번으로 회원조회(모달) (Gson)
+	@RequestMapping("detailMemberInfo_y.do")
+	public void detailMemberInfo_y (int memNo, HttpServletResponse response) throws JsonIOException, IOException {
+		response.setContentType("application/json; charset=utf-8");
+		Member m = yService.detailMemberInfo(memNo);
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		gson.toJson(m,response.getWriter());
+		
+	}
+	
 
 	// 사용자 관리
 	@RequestMapping("userManagement.do")
@@ -124,6 +148,8 @@ public class Y_PersonnelManagementController {
 	@RequestMapping("rankManagement.do")
 	public String rankManagement(HttpServletResponse response) {
 		return "personnel_management/rankManagement";
+		
+		
 	}
 
 

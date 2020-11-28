@@ -89,5 +89,15 @@ public class Y_PersonnelManagementServiceImpl implements Y_PersonnelManagementSe
 		return yDao.ID_Search(pi,text);
 	}
 
+	@Override
+	public int deptAdd(String deptName) {
+		return yDao.deptAdd(deptName);
+	}
+
+	@Override
+	public Member detailMemberInfo(int memNo) {
+		return yDao.detailMemberInfo(memNo);
+	}
+
 
 }

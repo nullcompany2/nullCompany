@@ -244,12 +244,12 @@
 		function detailMemberInfo(){
 			$.ajax({
 				
-				url : "detailMemberInfo.do",
+				url : "detailMemberInfo_y.do",
 				data : {memNo : mdMemNo},
 				dataType: "json",
 				success : function(data){
 					console.log(data);
-					$("#md_memNo").html(data.memNo);
+			
 					$("#md_name").html(data.name);
 					$("#md_birth").html(data.birth);
 					$("#md_email").html(data.id + "@nullcompany.com");

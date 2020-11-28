@@ -85,6 +85,14 @@ public class Y_PersonnelManagementDao {
 		return (ArrayList)sqlSession.selectList("Y_personnelMapper.ID_Search",text,rowBounds);
 	}
 
+	public int deptAdd(String deptName) {
+		return sqlSession.insert("Y_personnelMapper.deptAdd",deptName);
+	}
+
+	public Member detailMemberInfo(int memNo) {
+		return sqlSession.selectOne("Y_personnelMapper.detailMemberInfo_y",memNo);
+	}
+
 
 
 

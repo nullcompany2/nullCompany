@@ -142,4 +142,19 @@
         JOIN RANK R ON R.RANK_NO = M.RANK_NO
         WHERE (ID LIKE  '%' || #{text} || '%')
 	</select>
+	
+	
+	<!-- 부서 추가 -->
+	 <insert id="deptAdd" parameterType="String">
+ 		INSERT INTO DEPARTMENT VALUES(dept_seq_y.NEXTVAL, #{deptName})
+ 	</insert>
+ 	
+ 		<!-- 회원상세정보 모달/ 사번으로조회 -->
+	<select id="detailMemberInfo_y" resultMap="memberResultSet" parameterType="Member">
+		SELECT *
+		FROM MEMBER
+		JOIN DEPARTMENT USING(DEPT_NO)
+		JOIN RANK USING(RANK_NO)
+		WHERE MEM_NO = #{memNo}
+	</select>
 </mapper>

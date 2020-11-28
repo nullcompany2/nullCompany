@@ -291,22 +291,23 @@ header {
 }
 
 #dept_add {
-	border: none;
-	font-size: 16px;
-	color: #477A8F;
-	background: none;
-	position: relative;
-	font-weight: bold;
-	left: 250px;
-	top: 10px;
-	z-index: 101091;
-		cursor:pointer;
+    border: none;
+    font-size: 15px;
+    color: #477A8F;
+    background: none;
+    position: relative;
+    font-weight: bold;
+    
+    left: 222px;
+    top: 2px;
+    z-index: 101091;
+    cursor: pointer;
 }
 
 #add_dept_modal {
 	display: none;
 	width: 320px;
-	height: 200px;
+	height: 175px;
 	padding: 20px 60px;
 	background-color: #fefefe;
 	border-radius: 3px;
@@ -403,4 +404,8 @@ header {
 	background-color: white;
 	border-radius: 15px;
 	box-shadow: white;
+}
+
+.H-personnel-organization{
+	cursor: pointer;
 }
