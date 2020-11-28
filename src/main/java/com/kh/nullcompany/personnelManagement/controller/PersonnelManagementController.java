@@ -1034,7 +1034,8 @@ public class PersonnelManagementController {
 				}
 				
 			}
-			System.out.println(mC);
+			
+			mv.addObject("memberDiligenceCount",mC);
 			mv.addObject("diligenceCount",DiligenceCount);
 			mv.addObject("setAttendance",setAttendance);
 			mv.addObject("mList",mList);
@@ -1098,7 +1099,6 @@ public class PersonnelManagementController {
 				}
 				
 			}
-			System.out.println(mC);
 			mv.addObject("memberDiligenceCount",mC);
 			mv.addObject("diligenceCount",DiligenceCount);
 			mv.addObject("setAttendance",setAttendance);
