@@ -3,7 +3,6 @@ package com.kh.nullcompany.personnelManagement.model.service;
 import java.util.ArrayList;
 import java.util.Map;
 
-import com.google.gson.JsonObject;
 import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.personnelManagement.model.vo.Absence;
@@ -16,6 +15,7 @@ import com.kh.nullcompany.personnelManagement.model.vo.ModificationDiligence;
 import com.kh.nullcompany.personnelManagement.model.vo.RecordDiligence;
 import com.kh.nullcompany.personnelManagement.model.vo.RecordLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.RewardLeave;
+import com.kh.nullcompany.personnelManagement.model.vo.SelectedMemberDiligenceCount;
 import com.kh.nullcompany.personnelManagement.model.vo.SetAttendance;
 import com.kh.nullcompany.personnelManagement.model.vo.SetLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.TypeLeave;
@@ -211,6 +211,8 @@ public interface PersonnelManagementService {
 	DiligenceCountAllMember DiligenceCountAllMember();
 	// 근태 수정요청 리스트
 	ArrayList<ModificationDiligence> modRequestList();
+	// 직원 근태현황 지각 결근 수 카운트
+	SelectedMemberDiligenceCount SelectedMemberDiligenceCount(int memNo);
 	// 근태 수정요청 승인
 	int modificationAcknowledgment(int noMod);
 	// 근태 수정요청 반려

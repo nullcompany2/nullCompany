@@ -94,7 +94,7 @@
 										<td scope="col" rowspan="2" class="ta">${loginUser.name }</td>
 										<td scope="col" rowspan="2" class="ta">${loginUser.deptName }</td>
 										<td scope="col" rowspan="2" class="ta">${lateCount }/${noAttendanceCount }</td>
-										<td scope="col" rowspan="2" class="ta"><a href="#"id="detail-r-l" class="cursor" style="color: #477A8F;">상세</a></td>
+										<td scope="col" rowspan="2" class="ta"><a href="javascript:void(0);"id="detail-r-l" class="cursor" style="color: #477A8F;">상세</a></td>
 									</tr>
 									<tr class="date_tbl_output">
 									
@@ -589,20 +589,20 @@
 						}
 			        	
 						if(data.pi.currentPage != 1){
-							$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage -1)+","+memNo +')">').text("[이전]");
+							$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage -1)+","+memNo +')">').text("[이전] ");
 				        	
 				        	$td.append($td0);
 						}    	
 			        	
 				       	
 				       	
-				       	for(var p = data.pi.startPage-1; p <  data.pi.endPage; p++){
-				       		if(p = data.pi.currentPage){
-				       			$td0 = $("<b style='color:red; font-size:4'>").text(p);
+				       	for(var p = data.pi.startPage; p <=  data.pi.endPage; p++){
+				       		if(p == data.pi.currentPage){
+				       			$td0 = $("<b style='color:red; font-size:4'>").text("  "+p+"  ");
 				       			$td.append($td0);
 				       		}
 				       		if(p != data.pi.currentPage ){
-				       			$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage)+","+memNo  +')">').text(p);
+				       			$td0 = $('<a onclick="mdListPaged('+ (p)+","+memNo +')">').text("  "+p+"  ");
 				       			$td.append($td0);
 				       		}
 				       	
@@ -614,7 +614,7 @@
 				       	}
 			        	
 			        	if(data.pi.currentPage != data.pi.maxPage){
-			        		$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage + 1)+","+memNo  +')">').text("[다음]");
+			        		$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage + 1)+","+memNo  +')">').text(" [다음]");
 			        		$td.append($td0);
 			        	}
 			        	
@@ -701,20 +701,20 @@
 						}
 			        	
 						if(data.pi.currentPage != 1){
-							$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage -1)+","+memNo  +')">').text("[이전]");
+							$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage -1)+","+memNo  +')">').text("[이전] ");
 				        	
 				        	$td.append($td0);
 						}    	
 			        	
 				       	
 				       	
-				       	for(var p = data.pi.startPage-1; p <  data.pi.endPage; p++){
-				       		if(p = data.pi.currentPage){
-				       			$td0 = $("<b style='color:red; font-size:4'>").text(p);
+				       	for(var p = (data.pi.startPage); p <=  data.pi.endPage; p++){
+				       		if(p == data.pi.currentPage){
+				       			$td0 = $("<b style='color:red; font-size:4'>").text("  "+p+"  ");
 				       			$td.append($td0);
 				       		}
 				       		if(p != data.pi.currentPage ){
-				       			$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage)+","+memNo  +')">').text(p);
+				       			$td0 = $('<a onclick="mdListPaged('+ (p)+","+memNo  +')">').text("  "+p+"  ");
 				       			$td.append($td0);
 				       		}
 				       	
@@ -726,7 +726,7 @@
 				       	}
 			        	
 			        	if(data.pi.currentPage != data.pi.maxPage){
-			        		$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage + 1)+","+memNo  +')">').text("[다음]");
+			        		$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage + 1)+","+memNo  +')">').text(" [다음]");
 			        		$td.append($td0);
 			        	}
 			        	

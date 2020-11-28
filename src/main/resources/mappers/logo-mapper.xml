@@ -7,5 +7,10 @@
 		<result property="dateLogo" column="DATE_LOGO"/>
 </resultMap>
 
+<insert id="logoUpload" parameterType="Logo">
+	INSERT INTO LOGO VALUES
+	(#{logoFileName},SYSDATE)
+</insert>
+
 
 </mapper>

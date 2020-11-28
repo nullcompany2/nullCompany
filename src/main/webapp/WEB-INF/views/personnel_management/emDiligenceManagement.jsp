@@ -413,6 +413,9 @@
 			
 		}
 		
+		$(function(){
+			
+		});
 	</script>
 	<!-- Modal -->
 	<script>
@@ -565,13 +568,13 @@
 			        	
 				       	
 				       	
-				       	for(var p = data.pi.startPage-1; p <  data.pi.endPage; p++){
-				       		if(p = data.pi.currentPage){
-				       			$td0 = $("<b style='color:red; font-size:4'>").text(p);
+				       	for(var p = data.pi.startPage; p <=  data.pi.endPage; p++){
+				       		if(p == data.pi.currentPage){
+				       			$td0 = $("<b style='color:red; font-size:4'>").text("  "+p+"  ");
 				       			$td.append($td0);
 				       		}
 				       		if(p != data.pi.currentPage ){
-				       			$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage)+","+memNo  +')">').text(p);
+				       			$td0 = $('<a onclick="mdListPaged('+ (p)+","+memNo  +')">').text("  "+p+"  ");
 				       			$td.append($td0);
 				       		}
 				       	
@@ -677,13 +680,13 @@
 			        	
 				       	
 				       	
-				       	for(var p = data.pi.startPage-1; p <  data.pi.endPage; p++){
-				       		if(p = data.pi.currentPage){
-				       			$td0 = $("<b style='color:red; font-size:4'>").text(p);
+				       	for(var p = data.pi.startPage; p <=  data.pi.endPage; p++){
+				       		if(p == data.pi.currentPage){
+				       			$td0 = $("<b style='color:red; font-size:4'>").text("  "+p+"  ");
 				       			$td.append($td0);
 				       		}
 				       		if(p != data.pi.currentPage ){
-				       			$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage)+","+memNo  +')">').text(p);
+				       			$td0 = $('<a onclick="mdListPaged('+ (p)+","+memNo  +')">').text("  "+p+"  ");
 				       			$td.append($td0);
 				       		}
 				       	
