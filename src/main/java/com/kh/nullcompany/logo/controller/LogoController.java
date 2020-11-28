@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.nullcompany.logo.model.service.LogoService;
+import com.kh.nullcompany.logo.model.vo.Logo;
 
 @Controller
 public class LogoController {
@@ -21,7 +22,7 @@ public class LogoController {
 		private LogoService lService;
 		
 		 @RequestMapping("logoUpload.do")
-		   public String insertBoard(HttpServletRequest request,Model model,
+		   public String insertBoard(HttpServletRequest request,Model model,Logo l,
 		         @RequestParam(name="logoFile",required=false) MultipartFile file) {
 		      if(!file.getOriginalFilename().equals("")) {
 		         // 서버에 업로드 진행
@@ -29,19 +30,20 @@ public class LogoController {
 		         String logoFileName = saveFile(file,request);
 		         
 		         if(logoFileName != null) { // 파일이 잘 저장된 경우
-		        	 int result = lService.logoUpload(logoFileName);
+		        	 l.setRenameLogo(logoFileName);
+		        	 l.setLogo(file.getOriginalFilename());
 		        
-		        	if( result > 0) {
+		         }
+		      }
+		      	int result = lService.logoUpload(l);
+		        	
+		      	if( result > 0) {
 		        	return "redirect:home.do";	
 		        	}else {
 		        	model.addAttribute("msg", "로고 등록 실패~");
 					return "common/errorPage";
+		        	
 		        	}
-		         }else {
-		        	return "redirect:home.do";
-		         }
-		      }
-			return "redirect:home.do";
 		   }
 		   
 		   public String saveFile(MultipartFile file, HttpServletRequest request) {
@@ -56,10 +58,9 @@ public class LogoController {
 		      }
 		      
 		      
-		      
 		      String originalFileName = file.getOriginalFilename(); // test.png
 		      
-		      SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		      SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		      //                      년월일시분초. 까지 
 		      String renameFileName = sdf.format(new java.sql.Date(System.currentTimeMillis())) + "."
 		      //                      년월일시분초.확장자명 까지
@@ -73,6 +74,6 @@ public class LogoController {
 		      }catch(Exception e) {
 		         System.out.println("파일 전송 에러 : " + e.getMessage());
 		      }
-		      return originalFileName;
+		      return "resources/logoUploadFiles/" + renameFileName;
 		   }
 }
