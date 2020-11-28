@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.nullcompany.approval.model.vo.Absence;
+import com.kh.nullcompany.approval.model.vo.DeptList;
 import com.kh.nullcompany.approval.model.vo.Document;
 import com.kh.nullcompany.approval.model.vo.Leave;
 import com.kh.nullcompany.approval.model.vo.Resign;
@@ -127,6 +128,10 @@ public class ApprovalDao {
 
 	public int insertTempDocument(Document d) {
 		return sqlSession.insert("approvalMapper.insertTempDocument", d);
+	}
+
+	public ArrayList<DeptList> selectAllDept() {
+		return (ArrayList)sqlSession.selectList("approvalMapper.selectAllDept");
 	}
 
 }

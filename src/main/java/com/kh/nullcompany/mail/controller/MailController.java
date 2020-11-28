@@ -42,7 +42,6 @@ private MailService maService;
 @Autowired
 private ScheduleService sService;
 
-
 		// 메인에서 그려주기 
 		@RequestMapping("mailBox.do")
 		public void mailBox(HttpServletResponse response, HttpSession session) 
