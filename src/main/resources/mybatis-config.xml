@@ -24,6 +24,7 @@
       <typeAlias type="com.kh.nullcompany.personnelManagement.model.vo.ModificationDiligence" alias="ModificationDiligence"/>
       <typeAlias type="com.kh.nullcompany.personnelManagement.model.vo.Absence" alias="PAbsence"/>
       <typeAlias type="com.kh.nullcompany.personnelManagement.model.vo.DiligenceCountAllMember" alias="DiligenceCountAllMember"/>
+      <typeAlias type="com.kh.nullcompany.personnelManagement.model.vo.SelectedMemberDiligenceCount" alias="SelectedMemberDiligenceCount"/>
       <typeAlias type="com.kh.nullcompany.officeManagement.model.vo.OfficeMainContactInformation" alias="OfficeMainContactInformation"/>
       <typeAlias type="com.kh.nullcompany.officeManagement.model.vo.OfficeMainInformationCalculation" alias="OfficeMainInformationCalculation"/>
       <typeAlias type="com.kh.nullcompany.board.model.vo.board" alias="board"/>

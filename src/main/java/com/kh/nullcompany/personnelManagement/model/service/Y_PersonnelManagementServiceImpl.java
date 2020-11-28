@@ -69,5 +69,15 @@ public class Y_PersonnelManagementServiceImpl implements Y_PersonnelManagementSe
 		return yDao.selectApprovalList(pi);
 	}
 
+	@Override
+	public int Name_SearchCount(String text) {
+		return yDao.Name_SearchCount(text);
+	}
+
+	@Override
+	public ArrayList<Member> Name_Search(PageInfo pi, String text) {
+		return yDao.Name_Search(pi,text);
+	}
+
 
 }

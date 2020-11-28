@@ -108,28 +108,18 @@
 		 border-right:1px;
 		 }
 		 
-		 table {
-
-
+		table {
 		table-layout: fixed;
-}
+		}
 
 		td {
 		vertical-align: middle; 
-
 		overflow:hidden;
-
 		white-space : nowrap;
-
 		text-overflow: ellipsis;
-
-
 
 		}
 
-
-		 }
-		 
 		 #top {
 		 	height: 1035px; margin:auto;
 		 }

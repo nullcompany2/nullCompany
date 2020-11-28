@@ -46,6 +46,7 @@ import com.kh.nullcompany.personnelManagement.model.vo.ModificationDiligence;
 import com.kh.nullcompany.personnelManagement.model.vo.RecordDiligence;
 import com.kh.nullcompany.personnelManagement.model.vo.RecordLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.RewardLeave;
+import com.kh.nullcompany.personnelManagement.model.vo.SelectedMemberDiligenceCount;
 import com.kh.nullcompany.personnelManagement.model.vo.SetAttendance;
 import com.kh.nullcompany.personnelManagement.model.vo.SetLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.TypeLeave;
@@ -355,6 +356,7 @@ public class PersonnelManagementController {
 		int dListCount = pService.dListCount(forsearchYM);
 		PageInfo pi = Pagination.getPageInfoForModal(currentPage, dListCount);
 		ArrayList<RecordDiligence> dList = pService.searchDiligenceYM(forsearchYM,pi);
+		
 		
 		Map list = new HashMap();
 		list.put("dList",dList);
@@ -1022,10 +1024,18 @@ public class PersonnelManagementController {
 			// 모든 사원 정보 가져오기
 			ArrayList<Member> mList = pService.selectAllMember();
 			ArrayList<RecordDiligence> rD = new ArrayList<RecordDiligence>();
-			for(int i= 0; i<mList.size(); i++) {
-				int memNo = mList.get(i).getMemNo();
-				rD.addAll(pService.recordDiligenceList(memNo));
+			ArrayList<SelectedMemberDiligenceCount> mC = new ArrayList<SelectedMemberDiligenceCount>();
+			if(mList != null) {
+				for(int i= 0; i<mList.size(); i++) {
+					int memNo = mList.get(i).getMemNo();
+					rD.addAll(pService.recordDiligenceList(memNo));
+					SelectedMemberDiligenceCount smdc = pService.SelectedMemberDiligenceCount(memNo);
+					mC.add(smdc);
+				}
+				
 			}
+			
+			mv.addObject("memberDiligenceCount",mC);
 			mv.addObject("diligenceCount",DiligenceCount);
 			mv.addObject("setAttendance",setAttendance);
 			mv.addObject("mList",mList);
@@ -1062,7 +1072,6 @@ public class PersonnelManagementController {
 		@RequestMapping("searchEmDiligence.do")
 		public ModelAndView searchEmDiligence(ModelAndView mv,
 											  @RequestParam(name="searchKey", required=false) String searchKey) {
-			System.out.println(searchKey);
 			SimpleDateFormat formatD = new SimpleDateFormat("yyyy-MM-dd");
 			// 올해 몇월인지(월평 지각수 계산용)
 			Date today = new Date();
@@ -1080,13 +1089,17 @@ public class PersonnelManagementController {
 			// 모든 사원 정보 가져오기
 			ArrayList<Member> mList = pService.searchMemberND(searchKey);
 			ArrayList<RecordDiligence> rD = new ArrayList<RecordDiligence>();
+			ArrayList<SelectedMemberDiligenceCount> mC = new ArrayList<SelectedMemberDiligenceCount>();
 			if(mList != null) {
 				for(int i= 0; i<mList.size(); i++) {
 					int memNo = mList.get(i).getMemNo();
 					rD.addAll(pService.recordDiligenceList(memNo));
+					SelectedMemberDiligenceCount smdc = pService.SelectedMemberDiligenceCount(memNo);
+					mC.add(smdc);
 				}
 				
 			}
+			mv.addObject("memberDiligenceCount",mC);
 			mv.addObject("diligenceCount",DiligenceCount);
 			mv.addObject("setAttendance",setAttendance);
 			mv.addObject("mList",mList);
@@ -1097,11 +1110,11 @@ public class PersonnelManagementController {
 			return mv;
 		}
 		
+		// 직원 근태보기 검색
 		@RequestMapping("searchEmLeave.do")
 		public ModelAndView searchEmLeave(ModelAndView mv,HttpServletResponse response, 
 				String changeMemNo,String changeAnnual, String changeReward, String reasonAnnual, String reasonReward,
 				@RequestParam(value="searchKey", required=false) String searchKey) {
-			System.out.println(searchKey);
 			if(changeMemNo != null) {
 				Member changeMember = pService.detailMemberInfo(Integer.parseInt(changeMemNo));
 				Map changeAL = new HashMap();
@@ -1144,7 +1157,6 @@ public class PersonnelManagementController {
 			
 			
 			ArrayList<ForEmLeave> emList = pService.searchMemberForEmLeaveND(searchKey);
-			System.out.println(emList);
 			ArrayList<TypeLeave> leaveList = pService.typeLeave();
 			
 

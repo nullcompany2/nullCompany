@@ -5,7 +5,21 @@
 <resultMap id="logoResultSet" type="Logo">
 		<result property="logo" column="LOGO"/>
 		<result property="dateLogo" column="DATE_LOGO"/>
+		<result property="renameLogo" column="RENAME_LOGO"/>
+		<result property="lNo" column="L_NO"/>
 </resultMap>
 
+<!--  로고 등록하기  -->
+<insert id="logoUpload" parameterType="Logo">
+	INSERT INTO LOGO VALUES
+	(#{logo},SYSDATE,#{renameLogo},SEQ_LOGO.NEXTVAL)
+</insert>
+
+<!--  메인에 로고 불러오기 -->
+<select id="logoSelect" resultMap="logoResultSet">
+	select *
+    from logo
+    where l_no= (SELECT max(l_no) FROM logo)
+</select>
 
 </mapper>

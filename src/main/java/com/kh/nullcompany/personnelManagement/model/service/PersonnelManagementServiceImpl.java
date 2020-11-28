@@ -19,6 +19,7 @@ import com.kh.nullcompany.personnelManagement.model.vo.ModificationDiligence;
 import com.kh.nullcompany.personnelManagement.model.vo.RecordDiligence;
 import com.kh.nullcompany.personnelManagement.model.vo.RecordLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.RewardLeave;
+import com.kh.nullcompany.personnelManagement.model.vo.SelectedMemberDiligenceCount;
 import com.kh.nullcompany.personnelManagement.model.vo.SetAttendance;
 import com.kh.nullcompany.personnelManagement.model.vo.SetLeave;
 import com.kh.nullcompany.personnelManagement.model.vo.TypeLeave;
@@ -373,6 +374,11 @@ public class PersonnelManagementServiceImpl implements PersonnelManagementServic
 	@Override
 	public ArrayList<ForEmLeave> searchMemberForEmLeaveND(String searchKey) {
 		return pDao.searchMemberForEmLeaveND(searchKey);
+	}
+
+	@Override
+	public SelectedMemberDiligenceCount SelectedMemberDiligenceCount(int memNo) {
+		return pDao.SelectedMemberDiligenceCount(memNo);
 	}
 
 	

@@ -3,9 +3,11 @@ package com.kh.nullcompany.member.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +23,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.nullcompany.logo.model.service.LogoService;
+import com.kh.nullcompany.logo.model.vo.Logo;
 import com.kh.nullcompany.member.model.service.MemberService;
 import com.kh.nullcompany.member.model.vo.Member;
 
@@ -31,15 +35,12 @@ public class MemberController {
 	@Autowired
 	private MemberService mService;
 	
-	
 	// 암호화 처리
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
 	// login
 	private Logger logger = LoggerFactory.getLogger(MemberController.class);
-	
-	
 	
 	// 로그아웃 컨트롤러 
 	@RequestMapping("logout.do")
@@ -60,7 +61,7 @@ public class MemberController {
 		
 		
 		if(logger.isDebugEnabled()) { 
-			logger.debug("memberLogin  호출됨 "  + m);
+			logger.debug("Login : " + m);
 		}
 		
 		// 로그인  처리

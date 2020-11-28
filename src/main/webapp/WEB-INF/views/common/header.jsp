@@ -242,6 +242,8 @@
 		padding : 17px 0px 0px 50px;
 		cursor :pointer;
 		background : #3E4247;
+		 width: 200px;
+   		height: 92px;
 	}
 	
 	header #logo button {
@@ -252,7 +254,6 @@
 	
 	 ::-webkit-scrollbar { display: none; }
 
-	
 	
   </style>
 
@@ -333,9 +334,8 @@
   <header>
       <div id="logo">
       	
-      <!--   <button onclick="location.href='home.do'"> <span> \ </span>  Null <br> Company <span> \ </span> </button> -->
-        <button onclick="location.href='home.do'"> <img src="resources/images/LOGO_EX.png"/></button>
-        
+        <button onclick="location.href='home.do'"> <img src= "${ logo.renameLogo }" alt="로고임" id="logoImg"/></button>
+        <!-- <button onclick="location.href='home.do'"> <img src="resources/images/LOGO_EX.png"/></button> -->
         
       </div>
 
