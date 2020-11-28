@@ -76,10 +76,11 @@
 							</tr>
 							<tr>
 								<td colspan="3">
-									<div id="searchList" class="listbox">
-										<input type="radio" name="af" id="2" value="Han"><label for="2" class="cursor">Han</label> <br>
-										<input type="radio" name="af" id="3" value="youn"><label for="3" class="cursor">youn</label> <br>
-										<input type="radio" name="af" id="4" value="su"><label for="4" class="cursor">su</label> <br>
+									<div id="searchList" class="listbox" style="overflow:scroll;">
+									<c:forEach var="list" items="${nomalMember }">
+										<input type="radio" name="managerList"  id="${list.memNo }" value="${list.memNo }">
+										<label for="${list.memNo }" class="cursor">${list.name}(${list.id })</label> <br>
+									</c:forEach>
 									</div>
 								</td>
 							</tr>
@@ -95,7 +96,10 @@
 							<tr>
 								<td colspan="3">
 									<div id="selectList" class="listbox">
-										<input type="radio" name="af" id="5" value="dongwon"><label for="5" class="cursor">dongwon</label> <br>
+										<c:forEach var="list" items="${managerMember }">
+										<input type="radio" name="managerList" id="${list.memNo }" value="dongwon">
+										<label for="${list.memNo }" class="cursor">${list.name}(${list.id })</label> <br>
+										</c:forEach>
 									</div>
 								</td>
 							</tr>
