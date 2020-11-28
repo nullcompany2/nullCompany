@@ -20,5 +20,9 @@ public interface OfficeService {
 	ArrayList<Member> notManagerMember();
 	// 오피스관리자
 	ArrayList<Member> ManagerMember();
+	// 오피스관리자 검색 아이디 / 이름
+	ArrayList<Member> searchMember(String key);
+	// 오피스관리자 업데이트
+	int updateOfficeManager(String[] managerList);
 
 }

@@ -1,6 +1,9 @@
 package com.kh.nullcompany.officeManagement.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -9,6 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
 import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.officeManagement.model.service.OfficeService;
 import com.kh.nullcompany.officeManagement.model.vo.OfficeMainContactInformation;
@@ -59,5 +65,31 @@ public class OfficeController {
 	@RequestMapping("officeLogo.do")
 	public String officeSettingLogo(HttpServletResponse response) {
 		return "office-management/officeSettingLogo";
+	}
+	
+	@RequestMapping("searchManagerList.do")
+	public void searchManagerList(String key, HttpServletResponse response) throws JsonIOException, IOException {
+		response.setContentType("application/json; charset=utf-8");
+		
+		System.out.println(key);
+		
+		ArrayList<Member> searchMember = oService.searchMember(key);
+		System.out.println(searchMember);
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		gson.toJson(searchMember,response.getWriter());
+	}
+	
+	@RequestMapping("updateOfficeManager.do")
+	public String updateOfficeManager (String list ) {
+		
+		String[] managerList = list.split(",");
+		
+		for(String str : managerList) {
+			System.out.println(str);
+		}
+		
+		int result = oService.updateOfficeManager(managerList);
+		
+		return "redirect:officeAdminAP.do";
 	}
 }

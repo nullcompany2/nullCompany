@@ -88,5 +88,20 @@
 	<select id="ManagerMember" resultMap="memberResultSet">
 		select * from member where m_status='Y' and s_access = 1
 	</select>
+	
+	<select id="searchMember" resultMap="memberResultSet">
+		SELECT * FROM MEMBER WHERE ID LIKE '%' || #{key} || '%' OR NAME LIKE '%' || #{key} || '%'
+	</select>
+	
+	<update id="updateOfficeManager">
+		UPDATE MEMBER SET S_ACCESS = '1' WHERE MEM_NO = #{str}
+	</update>
+	
+	<update id="updateNomalMember">
+		UPDATE MEMBER SET S_ACCESS ='0' WHERE MEM_NO NOT IN
+		<foreach collection="array" item="arr" open="(" close=")" separator=",">
+		 #{arr}
+		</foreach>
+	</update>
 	 	
 </mapper>

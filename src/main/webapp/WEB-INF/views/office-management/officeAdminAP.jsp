@@ -71,23 +71,23 @@
 						<table class="m-tbl">
 							<tr>
 								<th>이름/ 아이디 검색</th>
-								<th><input type="text" name="" id=""></th>
-								<th><input type="button" value="검색"></th>
+								<th><input type="text" id="searchKey"></th>
+								<th><input type="button" onclick="searchBtn()" value="검색"></th>
 							</tr>
 							<tr>
 								<td colspan="3">
 									<div id="searchList" class="listbox" style="overflow:scroll;">
 									<c:forEach var="list" items="${nomalMember }">
 										<input type="radio" name="managerList"  id="${list.memNo }" value="${list.memNo }">
-										<label for="${list.memNo }" class="cursor">${list.name}(${list.id })</label> <br>
+										<label for="${list.memNo }" id="${list.memNo }LB"  class="cursor">${list.name}(${list.id }) <br></label>
 									</c:forEach>
 									</div>
 								</td>
 							</tr>
 						</table>
 						<div class="btn-div">
-							<input type="button" value="추가" class="m-btn" id="ap-manager">
-							<input type="button" value="삭제" class="m-btn" id="de-manager">
+							<input type="button" value="추가" class="m-btn cursor" id="ap-manager">
+							<input type="button" value="삭제" class="m-btn cursor" id="de-manager">
 						</div>
 						<table class="m-tbl">
 							<tr>
@@ -97,14 +97,14 @@
 								<td colspan="3">
 									<div id="selectList" class="listbox">
 										<c:forEach var="list" items="${managerMember }">
-										<input type="radio" name="managerList" id="${list.memNo }" value="dongwon">
-										<label for="${list.memNo }" class="cursor">${list.name}(${list.id })</label> <br>
+										<input type="radio" name="managerList" id="${list.memNo }" value="${list.memNo }">
+										<label for="${list.memNo }" id="${list.memNo }RB" class="cursor">${list.name}(${list.id })<br></label> 
 										</c:forEach>
 									</div>
 								</td>
 							</tr>
 						</table>
-						<input type="button" value="저장" class="m-save-btn">
+						<input type="button" value="저장" class="m-save-btn cursor" onclick="saveManager()">
 					</div>
 				</div>
 			</div>
@@ -112,23 +112,102 @@
 		</div>
 		<script>
 			$("#ap-manager").click(function(){
-				var sv = $('input:radio[name=af]:checked').val();
-				var si = $('input:radio[name=af]:checked').attr('id');
-				console.log(sv);
-				console.log(si);
-
-				$("#selectList").append("<input type='radio' name='af' id='"+si+"'><label for='"+si+"' class='cursor'>"+sv+"</label> <br>")
-				$("#searchList").remove('#'+si);
+				var sv = $('input:radio[name=managerList]:checked').val();
+				if(sv != null){
+					var si = $('#'+sv+"LB").text();
+					console.log(sv);
+					console.log(si);
+	
+					$("#"+sv).remove();
+					$("#selectList").append("<input type='radio' name='managerList' id='"+sv+"' value='"+sv+"'><label for='"+sv+"' id='"+sv+"RB' class='cursor'>"+si+"  <br></label>")
+					$("#"+sv+"LB").remove();						
+				}else{
+					alert("추가할 대상을 선택해주세요.");
+				}
 
 			})
 			$("#de-manager").click(function(){
-				var st = $('input:radio[name=af]:checked').val();
-				var si = $('input:radio[name=af]:checked').attr('id');
-				console.log(st);
-
-				$("#searchList").append("<input type='radio' name='af' id='"+si+"'><label for='"+si+"' class='cursor'>"+sv+"</label> <br>")
-				$("#selectList").remove("<input type='radio' name='af' id='"+si+"'><label for='"+si+"' class='cursor'>"+sv+"</label> <br>")
+				var sv = $('input:radio[name=managerList]:checked').val();
+				if(sv != null){
+					var si = $('#'+sv+"RB").text();
+					console.log(sv);
+					console.log(si);
+	
+					$("#"+sv).remove();
+					$("#searchList").append("<input type='radio' name='managerList' id='"+sv+"' value='"+sv+"'><label for='"+sv+"' id='"+sv+"LB' class='cursor'>"+si+"  <br></label>")
+					$("#"+sv+"RB").remove();					
+				}else{
+					alert("삭제할 대상을 선택해주세요.");
+				}
 			})
+			
+			function searchBtn(){
+				var key = $("#searchKey").val();
+				console.log(key);
+				if(key == ""){
+					alert("검색어를 입력해주세요.");
+				}else{
+					$.ajax({
+						url : "searchManagerList.do",
+						data : { key : key },
+						dataType : "json",
+						success : function(data){
+							$("#searchList").empty();
+							var $searchDiv = $("#searchList");
+							var $input;
+							var $label;
+							var $br;
+							if(data.length == 0 ){
+								$searchDiv.append("검색된 데이터가 없습니다.");
+							}else{
+								for(var i in data){
+									if($("#"+data[i].memNo).val() == null){
+										$input =$("<input type='radio' name='managerList'>").attr("value",data[i].memNo).attr("id",data[i].memNo);
+										$label = $("<label class='cursor'>  <br></label>").attr("id",data[i].memNo+"LB").attr("for",data[i].memNo).text(data[i].name+"("+data[i].id+")");
+										$br = $("<br>");
+										$label.append($br);
+										$searchDiv.append($input);
+										$searchDiv.append($label);						
+									}else{
+										continue;
+									}
+									
+								}
+								
+							}
+						},
+						error :function(status,error, request){
+							console.log(status);
+							console.log(error);
+							console.log(request);
+						}						
+					});
+					
+				}
+			}
+			
+			
+			function saveManager(){
+				list = new Array();
+				var size = $("#selectList input").length;
+				
+				if(size >5){
+					alert("오피스관리자는 최대 5명입니다.");
+				}else if(size != 0){
+					for(var i=0; i<size; i++){
+						var manager = $("#selectList input")[i].value;
+						console.log(manager);
+						list.push(manager);
+						console.log(list);
+					}
+					
+					location.href = "updateOfficeManager.do?list="+list;
+					
+				}else{
+					alert("오피스관리자를 선택해주세요 최소 1명");
+				}
+				
+			}
 		</script>
 		
     </div>
