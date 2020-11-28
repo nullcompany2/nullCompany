@@ -21,6 +21,7 @@ public class LogoController {
 		@Autowired
 		private LogoService lService;
 		
+		// 로고 등록 메소드 
 		 @RequestMapping("logoUpload.do")
 		   public String insertBoard(HttpServletRequest request,Model model,Logo l,
 		         @RequestParam(name="logoFile",required=false) MultipartFile file) {
@@ -46,10 +47,11 @@ public class LogoController {
 		        	}
 		   }
 		   
+		 // 로고를 서버에 저장해주는 메소드 
 		   public String saveFile(MultipartFile file, HttpServletRequest request) {
 		      String root = request.getSession().getServletContext().getRealPath("resources");
 		      
-		      String savePath = root + File.separator+"logoUproadFiles";
+		      String savePath = root + File.separator+"logoUploadFiles";
 		      
 		      File folder = new File(savePath); // savePath의 폴더를 불러온다.
 		      

@@ -11,11 +11,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.nullcompany.approval.model.service.ApprovalService;
 import com.kh.nullcompany.approval.model.vo.Absence;
+import com.kh.nullcompany.approval.model.vo.DeptList;
 import com.kh.nullcompany.approval.model.vo.Document;
 import com.kh.nullcompany.approval.model.vo.Leave;
 import com.kh.nullcompany.approval.model.vo.Resign;
@@ -922,27 +922,39 @@ public class ApprovalController {
 		
 		// 임시 문서 생성하기(결재선 설정을 위한 선행작업)
 		int result = aService.insertTempDocument(d);
+		// 부서 정보 가져가기(결재선 설정을 위한 선행작업)
+		ArrayList<DeptList> dtList = aService.selectAllDept();
+		
+		for(DeptList dt : dtList) {
+			System.out.println("부서번호 : " + dt.getDeptNo());
+			System.out.println("부서명  : " + dt.getDeptName());
+		}
 		
 		if(result > 0) {
 			if(option == 1) {
 				d.setFormName("업무연락");
 				mv.addObject("d", d);
+				mv.addObject("dtList", dtList);
 				mv.setViewName("approval/businessInsertForm");
 			}else if(option == 2) {
 				d.setFormName("회람");
 				mv.addObject("d", d);
+				mv.addObject("dtList", dtList);
 				mv.setViewName("approval/referInsertForm");
 			}else if(option == 3) {
 				d.setFormName("휴가");
 				mv.addObject("d", d);
+				mv.addObject("dtList", dtList);
 				mv.setViewName("approval/leaveInsertForm");
 			}else if(option == 4) {
 				d.setFormName("휴직");
 				mv.addObject("d", d);
+				mv.addObject("dtList", dtList);
 				mv.setViewName("approval/absenceInsertForm");
 			}else if(option == 5){
 				d.setFormName("사직");
 				mv.addObject("d", d);
+				mv.addObject("dtList", dtList);
 				mv.setViewName("approval/resignInsertForm");
 			}
 			

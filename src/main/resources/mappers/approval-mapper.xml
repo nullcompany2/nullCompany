@@ -64,6 +64,12 @@
 		<result property="enrollDate" column="ENROLL_DATE"/>
 	</resultMap>
 	
+	<!-- 부서 정보 가져오기 -->
+	<resultMap id="deptResultSet" type="DeptList">
+		<id property="deptNo" column="DEPT_NO"/>
+		<result property="deptName" column="DEPT_NAME"/>
+	</resultMap>
+	
 	<!-- 진행중인 문서(전체) 게시글 갯수 -->
 	<select id="getProgressAllListCount" resultType="_int">
 		SELECT
@@ -378,4 +384,12 @@
 		INSERT INTO APPROVAL_DOCUMENT VALUES(#{docTempNo},NULL,#{formNo}, #{drafterNo}, #{drafterDeptNo}, #{drafterRankNo}
 											,NULL,NULL,SYSDATE,NULL,DEFAULT,DEFAULT,DEFAULT)
 	</insert>
+	
+	<!-- 모든 부서정보 가져오기 -->
+	<select id="selectAllDept" resultMap="deptResultSet">
+		SELECT
+			*
+		FROM
+			DEPARTMENT
+	</select>
 </mapper>
