@@ -47,12 +47,14 @@ public class Y_PersonnelManagementController {
 		// 총 부서 리스트
 		ArrayList<Department> deptList = yService.deptList();
 		// 총 사원 리스트
-		ArrayList<Member> memList = yService.memList();
+		ArrayList<Member> mList = yService.memList();
 
 
 		mv.addObject("deptList", deptList);
-		mv.addObject("memList", memList);
+		mv.addObject("mList", mList);
 
+		System.out.println(mList);
+		System.out.println(deptList);
 
 		mv.setViewName("personnel_management/OrganizationManagement");
 

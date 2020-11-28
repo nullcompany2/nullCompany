@@ -20,6 +20,7 @@
 
 </head>
 
+<c:set var="codenum" value= '-1'/>
 <body>
 
 	<div id='wrap'>
@@ -57,131 +58,67 @@
 				</div>
 				<!-- ---- -->
 				<div class="contents-wrap drag-scrollbar">
-					<div id="dept_list1">
-						<ul class="tree">
-							<c:forEach var="deptList" items="${ deptList }" begin="1">
+				<div>
+                     <button id="dept_add">부서 추가</button>
 
+                  </div>
+					<div class="listbox" style="position: fixed">
+						<table>
+							<li>
+								<div class="H-personnel-organization cursor AllM" id="-1"
+									onclick="choiceDept(-1)"  name="DL">
+									<label class="cursor">전체사원 </label>
+								</div>
+							</li>
+							<c:forEach var="dept" items="${ deptList }" begin="1">
 								<li>
-									<button>${ deptList.deptName }부</button>
-									<ul>
-										<c:forEach var="memList" items="${ memList }">
-											<c:if test='${deptList.deptNo eq memList.deptNo}'>
-												<li><label>${ memList.name }(${ memList.memNo })</label></li>
-											</c:if>
-										</c:forEach>
-									</ul>
+									<div class="H-personnel-organization cursor"
+										id=${ dept.deptNo } onclick="choiceDept(${dept.deptNo})" name="DL">
+										<label class="cursor" style="margin-left: 10px">${ dept.deptName }</label>
+									</div>
 								</li>
 							</c:forEach>
-						</ul>
-
-
-						<div id="edit_dept_modal" class="modal-dragscroll">
-							<h4 style="color: #477A8F; margin-bottom: 5px;">부서 수정</h4>
-							<p style="color: #707070; margin-bottom: 5px; font-size: 14px;">부서명</p>
-							<input type="text" placeholder="영업부" />
-
-							<div style="text-align: center; margin-top: 30px;">
-								<button
-									style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">수정</button>
-								<button id="delete_dept"
-									style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">삭제</button>
-							</div>
-
-							<a class="modal-close-btn cursor">X</a>
-						</div>
-
-						<div id="add_dept_modal" class="modal-dragscroll">
-							<h4 style="color: #477A8F; margin-bottom: 5px;">부서 추가</h4>
-							<p style="color: #707070; margin-bottom: 5px; font-size: 14px;">부서명</p>
-							<input type="text" placeholder="영업부" />
-
-							<div style="text-align: center; margin-top: 30px;">
-								<button id="add"
-									style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">추가</button>
-								<button
-									style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">취소</button>
-							</div>
-
-							<a class="modal-close-btn cursor">X</a>
-						</div>
-
-						<script>
-						// 리스트 토글
-						$('.tree').each(function(){
-						var $this = $(this);
-						$this.find('li').each(function(){   //li에
-							if(!$(this).children('ul').length){ //자식 ul 없으면
-								$(this).addClass('final');  //final 클래스 부여한다
-							}
-							if($(this).is(':last-child')){  //마지막 li이면
-								$(this).addClass('last');   //last 클래스 부여한다
-							}
-							$(this).append('<span></span>');
-						});
-						$this.find('li>span').on('click',function(){ //span 클릭하면
-							if($(this).parent('li').hasClass('unfold')){    //하위메뉴 열려 있을 경우
-								$(this).parent('li').removeClass('unfold'); //닫고
-							}
-							else {  //하위메뉴 닫혀 있을 경우
-								$(this).parent('li').addClass('unfold');    //연다
-							}
-						});
-					   });
-
-					</script>
-
+						</table>
 					</div>
 
-					<div class="ic">
-
-						<div>
-							<button id="dept_add">부서 추가</button>
-
-						</div>
-						<table style="position: absolute; left: 15%;">
-							<th>
-								<div class=" dept-title ic-title">
-									<span class="deptname"
-										style="font-size: 25px; margin-top: 50px">부서명</span>
-								</div>
-							<tr>
-								<td>
-									<div class=" ic-emp-info cursor">
-										<img src="" alt="" class="emp-img ">
-										<li><span class="emp-info" id="emp-name">이름</span></li> <br>
-										<li><span class="emp-info" id="emp-dept">부서</span></li> <br>
-										<li><span class="emp-info" id="emp-rank">직급</span></li>
+					<div class="ic" style="position: absolute; left: 200px;">
+					
+						<table id="memList_tbl">
+							<c:forEach var="dept" items="${ deptList }" varStatus="deptN" begin="1">
+							<tr name="${deptN.index }">
+								<c:if test="${deptN.index == codenum || codenum == '-1'}">
+								<th>
+									<div class="ic-title" style="padding-top: 30px" >
+										<label class="H-personnel-organization">${ dept.deptName }</label>
 									</div>
-								</td>
-								<td>
-									<div class=" ic-emp-info cursor">
-										<img src="" alt="" class="emp-img">
-										<li><span class="emp-info" id="emp-name">이름</span></li> <br>
-										<li><span class="emp-info" id="emp-dept">부서</span></li> <br>
-										<li><span class="emp-info" id="emp-rank">직급</span></li>
-									</div>
-								</td>
-								<td>
-									<div class=" ic-emp-info cursor">
-										<img src="" alt="" class="emp-img ">
-										<li><span class="emp-info" id="emp-name">이름</span></li> <br>
-										<li><span class="emp-info" id="emp-dept">부서</span></li> <br>
-										<li><span class="emp-info" id="emp-rank">직급</span></li>
-									</div>
-								</td>
-								<td>
-									<div class=" ic-emp-info cursor">
-										<img src="" alt="" class="emp-img">
-										<li><span class="emp-info" id="emp-name">이름</span></li> <br>
-										<li><span class="emp-info" id="emp-dept">부서</span></li> <br>
-										<li><span class="emp-info" id="emp-rank">직급</span></li>
-									</div>
-								</td>
-
+								</th>
+								<tr  name="${deptN.index }">
+									<c:set var="i" value="0" />
+									<c:set var="j" value="5" />
+									<c:forEach var="mlist" items="${ mList }" varStatus="vst">
+										<c:if test="${dept.deptNo eq mlist.deptNo}">
+											<c:if test="${i == j }">
+												<tr name="${deptN.index }">
+												<c:set var="i" value="0" />
+											</c:if>
+											<td>
+												<div class=" ic-emp-info cursor" onclick="forModal(${mlist.memNo})">
+													<img src="${ mlist.photo }" alt="" class="emp-img" style="border-radius:50px">
+													<div style="width: 180px;">
+														<span class="emp-info" id="mName">${ mlist.name }</span><br> 
+														<span class="emp-info">${ mlist.deptName }</span><br> 
+														<span class="emp-info">${ mlist.rankName }</span>
+													</div>
+												</div>
+											</td>
+											
+											<c:set var="i" value="${i+1}" />
+										</c:if>
+									</c:forEach>
+								</tr>
+								</c:if>
 							</tr>
-							</th>
-
-
+							</c:forEach>
 						</table>
 					</div>
 
@@ -191,10 +128,29 @@
 		</div>
 		
 	</div>
+		<script>
+		 function choiceDept(dNum){
+			 codeNum = dNum;
+			 
+			 if(codeNum == -1){
+				 location.href="OrganizationManagement.do";
+				 $("#memList_tbl tr").attr("style","display:block");
+			 }else{
+				 $("#memList_tbl tr").attr("style","display:none");
+				 $('div[name ="DL"]').attr("style","background:white");
+				 $('tr[name ='+codeNum+']').attr("style","display:block");
+				 $('div[id ='+codeNum+']').attr("style","background:#e8ecee");
+			 }
+		 }
+		 
+		 
+		
+	</script>
 	<!-- Modal -->
 
 	<script>
 			
+	
 		function modal(id) {
 			var zIndex = 9999;
 			var modal = $('#' + id);
