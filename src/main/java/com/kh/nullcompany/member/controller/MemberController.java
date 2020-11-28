@@ -73,6 +73,7 @@ public class MemberController {
 		Logo l = lService.logoSelect();
 		model.addAttribute("logo",l);
 		System.out.println("로고 : " + l);
+		
 		if(loginUser != null && bcryptPasswordEncoder.matches(m.getPwd(), loginUser.getPwd())) {
 			return "redirect:home.do";
 		}else {
