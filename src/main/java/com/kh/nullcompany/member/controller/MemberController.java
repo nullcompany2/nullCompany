@@ -28,15 +28,12 @@ import com.kh.nullcompany.logo.model.vo.Logo;
 import com.kh.nullcompany.member.model.service.MemberService;
 import com.kh.nullcompany.member.model.vo.Member;
 
-@SessionAttributes({"loginUser","logo"})
+@SessionAttributes("loginUser")
 @Controller
 public class MemberController {
 	
 	@Autowired
 	private MemberService mService;
-	
-	@Autowired
-	private LogoService lService;
 	
 	// 암호화 처리
 	@Autowired
@@ -70,9 +67,6 @@ public class MemberController {
 		// 로그인  처리
 		Member loginUser = mService.loginMember(m);
 		model.addAttribute("loginUser", loginUser);
-		Logo l = lService.logoSelect();
-		model.addAttribute("logo",l);
-		System.out.println("로고 : " + l);
 		
 		if(loginUser != null && bcryptPasswordEncoder.matches(m.getPwd(), loginUser.getPwd())) {
 			return "redirect:home.do";

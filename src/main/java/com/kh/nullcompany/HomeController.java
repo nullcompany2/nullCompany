@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.kh.nullcompany.logo.model.service.LogoService;
 import com.kh.nullcompany.logo.model.vo.Logo;
 
-@SessionAttributes({"loginUser","logo"})
+@SessionAttributes("logo")
 @Controller
 public class HomeController {
 	

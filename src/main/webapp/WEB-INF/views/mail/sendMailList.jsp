@@ -127,7 +127,7 @@
 			<div style="margin-left:40px;">
 			<!--여기다가 만들기 -->
 			<br> 
-						&nbsp;&nbsp;
+						&nbsp;
 						<input type="checkbox" id="checkall"> 
 						&nbsp;&nbsp;
 						전체선택 &nbsp;&nbsp;
