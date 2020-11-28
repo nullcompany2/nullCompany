@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.officeManagement.model.vo.OfficeMainContactInformation;
 import com.kh.nullcompany.officeManagement.model.vo.OfficeMainInformationCalculation;
 
@@ -26,6 +27,14 @@ public class OfficeDao {
 
 	public ArrayList<OfficeMainContactInformation> officeManager() {
 		return (ArrayList)sqlSession.selectList("officeMapper.officeManager");
+	}
+
+	public ArrayList<Member> notManagerMember() {
+		return (ArrayList)sqlSession.selectList("officeMapper.notManagerMember");
+	}
+
+	public ArrayList<Member> ManagerMember() {
+		return (ArrayList)sqlSession.selectList("officeMapper.ManagerMember");
 	}
 
 }
