@@ -162,7 +162,10 @@
 			showRecordDiligence(todayDate);
 			
 			
+			
 			build();
+			
+			
 		});
 		
 		function beforem(){
@@ -172,7 +175,6 @@
 			createDateTbl(lastDay);
 			
 			$("#pp").trigger("click");
-			console.log(today.getMonth()+1);
 			
 			var todayDate = today.getFullYear()+"/"+(today.getMonth()+1);	// showRecordDiligence를 위함.
 			showRecordDiligence(todayDate);
@@ -220,7 +222,6 @@
 		
 		// 일수 생성용 함수
 		function createDateTbl(lastDay){
-			console.log(lastDay);
 			$(".date_tbl th").remove();
 			$(".date_tbl_title th").remove();
 			$("#cellCalendar lable").remove();
@@ -347,9 +348,6 @@
 		// 주말 체크용
 		function daysLable(todayFW,lastDay){
 			var getday = new Date(todayFW).getDay();
-			console.log(todayFW);
-			console.log(lastDay);
-			console.log(getday);
 			
 			for(var i =1; i<=lastDay; i++){
 				if(getday == 6){
@@ -376,6 +374,7 @@
 				<fmt:formatDate var="dateD" value="${list.dateDiligence }" pattern="dd"/>
 				var date = ${dateY}+"/"+${dateM};// 근태기록 날짜
 				<c:set var="memNo" value="${list.memNo}"/>
+				
 				if(date == todayDate){
 					var day = ${dateD}+"R";
 					var status ="";
@@ -402,17 +401,27 @@
 							$("#"+${memNo}+"Tr "+"#"+day).text(status).attr("style","color:#477A8F");
 						</c:otherwise>
 					</c:choose>
-					console.log(status);
-					console.log(day);
 				}
-				console.log(todayDate);
-				console.log(date);
 				
 			</c:forEach>
 			
 			
 		}
 		
+		
+	</script>
+	<script type="text/javascript">
+		$(function(){
+			<c:forEach var="list" items="${memberDiligenceCount}" varStatus="status">
+				<c:set var="lateCount" value="${list.lateCount}" />
+				<c:set var="absenceCount" value="${list.absenceCount}" />
+				var DCountText = ${lateCount}+" / "+${absenceCount};
+				<c:set var="memNo" value="${list.memNo}"/>
+				console.log("11231dfa");
+				$("#"+${memNo}+"Count").text(DCountText);
+			
+			</c:forEach>
+		});
 	</script>
 	<!-- Modal -->
 	<script>
@@ -468,7 +477,6 @@
 				data : { memNo : memNo},
 				dataType : "json",
 				success : function(data){
-					console.log(data);
 					$("#md_id").text("("+data.id+")");
 					$("#md_name").text(data.name);
 					$("#md_memNo").text(data.memNo);
@@ -565,13 +573,13 @@
 			        	
 				       	
 				       	
-				       	for(var p = data.pi.startPage-1; p <  data.pi.endPage; p++){
-				       		if(p = data.pi.currentPage){
-				       			$td0 = $("<b style='color:red; font-size:4'>").text(p);
+				       	for(var p = data.pi.startPage; p <=  data.pi.endPage; p++){
+				       		if(p == data.pi.currentPage){
+				       			$td0 = $("<b style='color:red; font-size:4'>").text("  "+p+"  ");
 				       			$td.append($td0);
 				       		}
 				       		if(p != data.pi.currentPage ){
-				       			$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage)+","+memNo  +')">').text(p);
+				       			$td0 = $('<a onclick="mdListPaged('+ (p)+","+memNo  +')">').text("  "+p+"  ");
 				       			$td.append($td0);
 				       		}
 				       	
@@ -677,13 +685,13 @@
 			        	
 				       	
 				       	
-				       	for(var p = data.pi.startPage-1; p <  data.pi.endPage; p++){
-				       		if(p = data.pi.currentPage){
-				       			$td0 = $("<b style='color:red; font-size:4'>").text(p);
+				       	for(var p = data.pi.startPage; p <=  data.pi.endPage; p++){
+				       		if(p == data.pi.currentPage){
+				       			$td0 = $("<b style='color:red; font-size:4'>").text("  "+p+"  ");
 				       			$td.append($td0);
 				       		}
 				       		if(p != data.pi.currentPage ){
-				       			$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage)+","+memNo  +')">').text(p);
+				       			$td0 = $('<a onclick="mdListPaged('+ (p)+","+memNo  +')">').text("  "+p+"  ");
 				       			$td.append($td0);
 				       		}
 				       	
@@ -717,7 +725,6 @@
 		
 		$(function(){
 			var today = new Date().getFullYear();
-			console.log(today);
 			var $md_select = $("#md_searchYear");
 			var $yearOption;
 			for(var i =0; i<3; i++){

@@ -172,6 +172,12 @@
 		<result property="absenceMemberCountM" column="absenceMemberCount_M"/>
 		<result property="modificationCountM" column="modificationCount_M"/>
    	</resultMap>
+   	
+   	<resultMap type="SelectedMemberDiligenceCount" id="SelectedMemberDiligenceCountResultSet">
+   		<result property="memNo" column="mem_no"/>
+   		<result property="lateCount" column="lateCount"/>
+   		<result property="absenceCount" column="absenceCount"/>
+   	</resultMap>
    	<!-- **************************************************************************************** -->
    	<!-- 전체사원 -->
    	<select id="selectAllMember" resultMap="memberResultSet">
@@ -629,4 +635,19 @@
 		ORDER BY M1.MEM_NO
 	</select>
 	
+	<select id="SelectedMemberDiligenceCount" resultMap="SelectedMemberDiligenceCountResultSet" >
+		select mem_no ,
+            (select nvl(count(*),0)
+            from record_diligence
+            where status_diligence = '지각'
+            and extract(year from date_diligence) = extract(year from sysdate)
+            and mem_no = #{memNo}) as lateCount,
+            (select nvl(count(*),0)
+            from record_diligence
+            where status_diligence = '결근'
+            and extract(year from date_diligence) = extract(year from sysdate)
+            and mem_no = #{memNo})as absenceCount
+		from member
+		where mem_no = #{memNo}
+	</select>
 </mapper>
