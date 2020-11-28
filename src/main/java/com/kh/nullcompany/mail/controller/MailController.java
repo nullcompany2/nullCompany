@@ -213,7 +213,6 @@ private ScheduleService sService;
 		
 		int result = maService.sendMail(ma);
 		
-		
 		if(result > 0 ) {
 			Member m = maService.findIdName(recipient);
 			mv.addObject("m", m);

@@ -36,11 +36,10 @@ public class SelectedMemberDiligenceCount {
 	}
 	@Override
 	public String toString() {
-		return "PersonnelMember [memNo=" + memNo + ", lateCount=" + lateCount + ", absenceCount=" + absenceCount + "]";
+		return "SelectedMemberDiligenceCount [memNo=" + memNo + ", lateCount=" + lateCount + ", absenceCount="
+				+ absenceCount + "]";
 	}
 	
 	
-	
-		
 	
 }

@@ -333,8 +333,8 @@
   <header>
       <div id="logo">
       	
-      <!--   <button onclick="location.href='home.do'"> <span> \ </span>  Null <br> Company <span> \ </span> </button> -->
-        <button onclick="location.href='home.do'"> <img src="resources/images/LOGO_EX.png"/></button>
+        <button onclick="location.href='home.do'"> <img src= "${ logo.renameLogo }" alt="로고임"/></button>
+        <!-- <button onclick="location.href='home.do'"> <img src="resources/images/LOGO_EX.png"/></button> -->
         
         
       </div>

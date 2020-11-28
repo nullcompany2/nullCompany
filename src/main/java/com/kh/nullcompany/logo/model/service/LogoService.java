@@ -1,9 +1,13 @@
 package com.kh.nullcompany.logo.model.service;
 
-import org.springframework.web.multipart.MultipartFile;
+import com.kh.nullcompany.logo.model.vo.Logo;
 
 public interface LogoService {
 
-	int logoUpload(String logoFileName);
+	// 로고 등록하기 
+	int logoUpload(Logo l);
+
+	// 메인 불러올때 로고 가져오기 
+	Logo logoSelect();
 
 }
