@@ -79,5 +79,15 @@ public class Y_PersonnelManagementServiceImpl implements Y_PersonnelManagementSe
 		return yDao.Name_Search(pi,text);
 	}
 
+	@Override
+	public int ID_SearchCount(String text) {
+		return yDao.ID_SearchCount(text);
+	}
+
+	@Override
+	public ArrayList<Member> ID_Search(PageInfo pi, String text) {
+		return yDao.ID_Search(pi,text);
+	}
+
 
 }

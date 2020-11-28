@@ -126,4 +126,20 @@
         JOIN RANK R ON R.RANK_NO = M.RANK_NO
         WHERE (NAME LIKE  '%' || #{text} || '%')
 	</select>
+	
+	<select id="ID_SearchCount" resultType="_int">
+	 	SELECT COUNT(*)
+		FROM MEMBER M
+        JOIN DEPARTMENT D ON M.DEPT_NO = D.DEPT_NO
+        JOIN RANK R ON R.RANK_NO = M.RANK_NO
+        WHERE (ID LIKE  '%' || #{text} || '%')
+	</select>
+	
+	<select id="ID_Search" resultMap="memberResultSet" parameterType="String">
+	 	SELECT *
+		FROM MEMBER M
+        JOIN DEPARTMENT D ON M.DEPT_NO = D.DEPT_NO
+        JOIN RANK R ON R.RANK_NO = M.RANK_NO
+        WHERE (ID LIKE  '%' || #{text} || '%')
+	</select>
 </mapper>

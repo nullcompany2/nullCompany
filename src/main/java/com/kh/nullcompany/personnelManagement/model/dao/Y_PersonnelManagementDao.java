@@ -75,6 +75,16 @@ public class Y_PersonnelManagementDao {
 		return (ArrayList)sqlSession.selectList("Y_personnelMapper.Name_Search",text,rowBounds);
 	}
 
+	public int ID_SearchCount(String text) {
+		return sqlSession.selectOne("Y_personnelMapper.ID_SearchCount",text);
+	}
+
+	public ArrayList<Member> ID_Search(PageInfo pi, String text) {
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("Y_personnelMapper.ID_Search",text,rowBounds);
+	}
+
 
 
 

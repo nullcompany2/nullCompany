@@ -102,10 +102,10 @@ public class Y_PersonnelManagementController {
 				
 				return mv;
 			}else {
-				int listCount = yService.Name_SearchCount(text);
+				int listCount = yService.ID_SearchCount(text);
 				PageInfo pi = Pagination.getPageInfo(currentPage,listCount);
 				
-				ArrayList<Member> list = yService.Name_Search(pi,text);
+				ArrayList<Member> list = yService.ID_Search(pi,text);
 				System.out.println("검색" + list);
 				mv.addObject("list", list);
 				

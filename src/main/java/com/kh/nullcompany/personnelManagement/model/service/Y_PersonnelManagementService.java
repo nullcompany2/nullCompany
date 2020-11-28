@@ -34,6 +34,10 @@ public interface Y_PersonnelManagementService {
 
 	int Name_SearchCount(String text);
 
+	int ID_SearchCount(String text);
+
+	ArrayList<Member> ID_Search(PageInfo pi, String text);
+
 
 
 }
