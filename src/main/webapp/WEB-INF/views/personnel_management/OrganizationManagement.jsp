@@ -118,7 +118,7 @@
 												</div>
 											</td>
 											
-											<c:set var="i" value="${i+1}" />
+											<c:set var="i" value="${ dept.deptNo }" />
 										</c:if>
 									</c:forEach>
 								</tr>

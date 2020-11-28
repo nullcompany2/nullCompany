@@ -23,6 +23,51 @@
 
 <body>
 
+<script>
+
+
+function forMd(md_memNo){
+
+	mdMemNo = md_memNo;
+	console.log(mdMemNo);
+	modal('accept_modal');
+	detailMemberInfo();
+};
+
+function detailMemberInfo(){
+	$.ajax({
+		
+		url : "detailMemberInfo_y.do",
+		data : {memNo : mdMemNo},
+		dataType: "json",
+		success : function(data){
+			console.log('data');
+	
+			$("#md_memNo").html(data.memNo);
+			$("#md_name").html(data.name);
+			$("#md_birth").html(data.birth);
+			$("#md_email").html(data.id + "@nullcompany.com");
+			$("#md_enrollDate").html(data.enrollDate);
+			$("#md_phone").html(data.phone);
+			$("#md_address").html(data.address);
+			$("#md_rankName").val(data.rankName);
+			$("#md_deptName").val(data.deptName);
+			$("#md_myInfo").html(data.myInfo);
+			$("#md_indiemail").html(data.email);
+			
+			
+	
+			$("#md_photo").attr('src',data.photo);
+
+		
+		},error: function(request,status,error){
+			console.log(error);
+		
+		}
+
+		})
+	};
+</script>
 	<div id='wrap'>
 		<c:import url="../common/header.jsp" />
 
@@ -227,56 +272,9 @@
 					});
 		}
 
-		</script>
-
-	<script>
-		// 모달창 info
-		
-		function forMd(md_memNo){
-		
-			mdMemNo = md_memNo;
-			console.log(mdMemNo);
-			modal('accept_modal');
-			
-			detailMemberInfo();
-		};
-		
-		function detailMemberInfo(){
-			$.ajax({
-				
-				url : "detailMemberInfo_y.do",
-				data : {memNo : mdMemNo},
-				dataType: "json",
-				success : function(data){
-					console.log(data);
-			
-					$("#md_name").html(data.name);
-					$("#md_birth").html(data.birth);
-					$("#md_email").html(data.id + "@nullcompany.com");
-					$("#md_enrollDate").html(data.enrollDate);
-					$("#md_phone").html(data.phone);
-					$("#md_address").html(data.address);
-					$("#md_rankName").val(data.rankName);
-					$("#md_deptName").val(data.deptName);
-					$("#md_myInfo").html(data.myInfo);
-					$("#md_indiemail").html(data.email);
-					
-					
-			
-					$("#md_photo").attr('src',data.photo);
-	
-				
-				},error: function(request,status,error){
-					console.log(request);
-				
-				}
-
-				})
-			};
-		
-			
 
 		
+
 		
 	
 	</script>

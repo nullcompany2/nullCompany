@@ -153,8 +153,6 @@
 	<select id="detailMemberInfo_y" resultMap="memberResultSet" parameterType="Member">
 		SELECT *
 		FROM MEMBER
-		JOIN DEPARTMENT USING(DEPT_NO)
-		JOIN RANK USING(RANK_NO)
 		WHERE MEM_NO = #{memNo}
 	</select>
 </mapper>

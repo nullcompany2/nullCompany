@@ -78,10 +78,13 @@ public class Y_PersonnelManagementController {
 	// 인사관리 사번으로 회원조회(모달) (Gson)
 	@RequestMapping("detailMemberInfo_y.do")
 	public void detailMemberInfo_y (int memNo, HttpServletResponse response) throws JsonIOException, IOException {
+		System.out.println(memNo);
 		response.setContentType("application/json; charset=utf-8");
 		Member m = yService.detailMemberInfo(memNo);
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(m,response.getWriter());
+		
+		
 		
 	}
 	
