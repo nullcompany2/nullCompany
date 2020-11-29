@@ -159,11 +159,11 @@ td {
 }
 
 #ttr {
-	text-align: center;
+	text-align: left;
 }
 
 tr {
-	text-align: center;
+	text-align: left;
 }
 
 th {
@@ -209,14 +209,14 @@ li {
                     <hr>
 					<table  cellspacing="13" width="100%" id="ntb">
                    <colgroup>
-                  <col width="8%" />
                   <col width="42%" />
+                  <col width="10%" />
                   <col width="25%" />
                </colgroup>
 		<thead>
 			<tr id="ntr">
-				<th>No</th>
 				<th>제목</th>
+				<th>작성자</th>
 				<th>작성일</th>
 			</tr>
 			
@@ -303,16 +303,15 @@ li {
                     <hr>
                     
             <table  cellspacing="13" width="100%" id="tb">
-                   <colgroup>
-                  <col width="8%" />
+                  <colgroup>
                   <col width="42%" />
+                  <col width="10%" />
                   <col width="25%" />
                </colgroup>
 		<thead>
 			<tr id="ttr">
-
-				<th>No</th>
 				<th>제목</th>
+				<th>작성자</th>
 				<th>작성일</th>
 			</tr>
 			
@@ -467,13 +466,13 @@ li {
 					
 					for(var i in data){
 						var $tr = $("<tr>");
-						var $tNo = $("<td>").text(data[i].tNo);
 						var $tTitle= $("<td>").text(data[i].tTitle);
+						var $tWriter = $("<td>").text(data[i].tWriter);
 						var $tCreateDate=$("<td>").text(data[i].tCreateDate);
 						
 						
-						$tr.append($tNo);
 						$tr.append($tTitle);
+						$tr.append($tWriter);
 						$tr.append($tCreateDate);
 						
 						$tableBody.append($tr);
@@ -503,13 +502,13 @@ li {
 					
 					for(var i in data){
 						var $tr = $("<tr>");
-						var $nNo = $("<td>").text(data[i].nNo);
 						var $nTitle= $("<td>").text(data[i].nTitle);
+						var $nWriter = $("<td>").text(data[i].nWriter);
 						var $nCreateDate=$("<td>").text(data[i].nCreateDate);
 						
 						
-						$tr.append($nNo);
 						$tr.append($nTitle);
+						$tr.append($nWriter);
 						$tr.append($nCreateDate);
 						
 						$tableBody.append($tr);

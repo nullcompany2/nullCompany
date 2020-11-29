@@ -216,4 +216,21 @@ public class tnoticeController {
 				f.delete();
 			}
 		}
+		
+		@RequestMapping("tdelete.do")
+		public String tnoticeDelete(int tNo, HttpServletRequest request) {
+			tnotice t = tService.selectUpdatetNotice(tNo);
+			
+			if(t.getRenameFileName() != null) {
+				deleteFile(t.getRenameFileName(),request);
+			}
+			
+			int result = tService.deletetNotice(tNo);
+			
+			if(result > 0) {
+				return "redirect:tnotice.do";
+			}else {
+				return "common/errorPage";
+			}
+		}
 }

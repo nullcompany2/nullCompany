@@ -165,18 +165,7 @@ public class noticeController {
 	
 	
 	
-	@RequestMapping("ndelete.do")
-	public String ndelete(int nNo, Model model) {
-		
-		
-		int result = nService.ndelete(nNo);
-		
-		if(result > 0) {
-			return "redirect:notice.do";
-		}else {
-			return "common/errorPage";
-		}
-	}
+	
 	
 	@ResponseBody
 	@RequestMapping(value="noticeList.do",produces="application/json; charset=utf-8")
@@ -234,6 +223,23 @@ public class noticeController {
 		
 		if(f.exists()) {
 			f.delete();
+		}
+	}
+	
+	@RequestMapping("ndelete.do")
+	public String noticeDelete(int nNo, HttpServletRequest request) {
+		notice n = nService.selectUpdateNotice(nNo);
+		
+		if(n.getRenameFileName() != null) {
+			deleteFile(n.getRenameFileName(),request);
+		}
+		
+		int result = nService.deleteNotice(nNo);
+		
+		if(result > 0) {
+			return "redirect:notice.do";
+		}else {
+			return "common/errorPage";
 		}
 	}
 

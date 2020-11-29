@@ -325,10 +325,13 @@ tr>td {
                <c:url var="tupView" value="tupView.do">
 							<c:param name="tNo" value="${t.tNo}"/>
 						</c:url>
+						<c:url var="tdelete" value="tdelete.do">
+					<c:param name="tNo" value="${ t.tNo }"/>
+				</c:url>
 
                   <input id="subBtn" type="button" value="수정" 
                   style="margin-left: 15px" onclick="location.href='${tupView}'"  /> 
-                     <input  id="deltBoard" type="button" value="삭제" />  <input type="text"
+                     <input  id="tdelete" type="button" value="삭제" />  <input type="text"
                      id="ShareUrl" OnClick="javascript:CopyUrlToClipboard()"
                      style="position: absolute; top: 0; left: 0; width: 1px; height: 1px; margin: 0; padding: 0; border: 0;">
                   <button
@@ -419,9 +422,18 @@ tr>td {
       
       
    <script>
-   $("#deltBoard").click(function(){
-		confirm("정말로 삭제하시겠습니까? ");
-	});
+   var test = ${ t.tNo };
+   
+	$("#tdelete").click(function(){
+    	 if (confirm("정말로 삭제하시겠습니까? ") == true){ 
+
+    		document.location.href='tdelete.do?tNo='+ test;
+
+	        }else{   //취소
+
+	            return;
+	        }
+		});
 
       $(function(){
          gettCommentList();

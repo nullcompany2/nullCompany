@@ -53,13 +53,18 @@ public class boardServiceImpl implements boardService {
 	}
 
 	@Override
-	public Object selectUpdateBoard(int bNo) {
+	public board selectUpdateBoard(int bNo) {
 		return bDao.selectBoard(bNo);
 	}
 
 	@Override
 	public int updateBoard(board b) {
 		return bDao.updateBoard(b);
+	}
+
+	@Override
+	public int deleteBoard(int bNo) {
+		return bDao.deleteBoard(bNo);
 	}
 
 

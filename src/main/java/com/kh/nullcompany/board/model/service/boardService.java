@@ -20,9 +20,11 @@ public interface boardService {
 
 	int insertBoard(board b);
 
-	Object selectUpdateBoard(int bNo);
+	board selectUpdateBoard(int bNo);
 
 	int updateBoard(board b);
+
+	int deleteBoard(int bNo);
 
 
 

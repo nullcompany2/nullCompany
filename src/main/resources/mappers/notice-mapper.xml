@@ -189,12 +189,20 @@
 	</update>
 	
 	<!-- 글 삭제하기 -->
-	<update id="ndelete" parameterType="_int">
+	<update id="deleteNotice" parameterType="_int">
 		UPDATE TBL_NOTICE
 		SET 
 			N_STATUS='N'
 		WHERE
 			NNO=#{nNo}
+	</update>
+	
+	<update id="deletetNotice" parameterType="_int">
+		UPDATE TBL_TNOTICE
+		SET 
+			T_STATUS='N'
+		WHERE
+			TNO=#{tNo}
 	</update>
 	
 	<select id="noticeList" resultMap="noticeResultSet">

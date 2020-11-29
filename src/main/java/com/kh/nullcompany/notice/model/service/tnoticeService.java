@@ -22,8 +22,10 @@ public interface tnoticeService {
 
 	ArrayList<tnotice> tnoticeList();
 
-	Object selectUpdatetNotice(int tNo);
+	tnotice selectUpdatetNotice(int tNo);
 
 	int updatetNotice(tnotice t);
+
+	int deletetNotice(int tNo);
 
 }

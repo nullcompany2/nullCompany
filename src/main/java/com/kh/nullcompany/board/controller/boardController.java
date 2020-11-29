@@ -221,6 +221,22 @@ public class boardController {
 		}
 	}
 	
+	@RequestMapping("bdelete.do")
+	public String boardDelete(int bNo, HttpServletRequest request) {
+		board b = bService.selectUpdateBoard(bNo);
+		
+		if(b.getRenameFileName() != null) {
+			deleteFile(b.getRenameFileName(),request);
+		}
+		
+		int result = bService.deleteBoard(bNo);
+		
+		if(result > 0) {
+			return "redirect:board.do";
+		}else {
+			return "common/errorPage";
+		}
+	}
 	
 
 }

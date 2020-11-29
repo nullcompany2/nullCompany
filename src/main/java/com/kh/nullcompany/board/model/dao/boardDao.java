@@ -51,4 +51,8 @@ public class boardDao {
 	public int updateBoard(board b) {
 		return sqlSession.update("boardMapper.updateBoard", b);
 	}
+
+	public int deleteBoard(int bNo) {
+		return sqlSession.update("boardMapper.deleteBoard",bNo);
+	}
 }

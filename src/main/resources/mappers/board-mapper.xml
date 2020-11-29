@@ -85,4 +85,12 @@
 		    BNO=#{bNo}
 	</update>
 	
+	<update id="deleteBoard" parameterType="_int">
+		UPDATE TBL_BOARD
+		SET
+			B_STATUS='N'
+		WHERE
+			BNO=#{bNo}
+	</update>
+	
 </mapper>

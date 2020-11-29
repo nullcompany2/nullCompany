@@ -56,6 +56,10 @@ public class tNoticeDao {
 		return sqlSession.update("noticeMapper.updatetNotice", t);
 	}
 
+	public int deletetNotice(int tNo) {
+		return sqlSession.update("noticeMapper.deletetNotice",tNo);
+	}
+
 
 
 

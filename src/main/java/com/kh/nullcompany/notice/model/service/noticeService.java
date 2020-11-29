@@ -54,4 +54,6 @@ public interface noticeService {
 
 	int updateNotice(notice n);
 
+	int deleteNotice(int nNo);
+
 }
