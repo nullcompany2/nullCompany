@@ -24,10 +24,66 @@
 	border-bottom: solid 0.1px #cacaca;
 	height: 27px;
 }
+
+dd {
+    display: block;
+    margin-inline-start: 40px;
+    margin-bottom: 13px;
+    font-size: 14px;
+    margin-left: 130px;
+    color: #676767;
 </style>
+
+
 <c:set var="codenum" value= '-1'/>
 <body>
 
+<script>
+
+function forModal(md_memNo){
+	mdMemNo = md_memNo;
+	console.log(mdMemNo);
+	modal('info_modal');
+	
+	
+	
+	detailMemberInfo();
+}
+
+function detailMemberInfo(){
+	$.ajax({
+		
+		url : "detailMemberInfo.do",
+		data : {memNo : mdMemNo},
+		dataType: "json",
+		success : function(data){
+			console.log(data);
+			$("#md_memNo").html(data.memNo);
+			$("#md_name").html(data.name);
+			$("#md_birth").html(data.birth);
+			$("#md_email").html(data.id + "@nullcompany.com");
+			$("#md_enrollDate").html(data.enrollDate);
+			$("#md_phone").html(data.phone);
+			$("#md_address").html(data.address);
+			$("#md_rankName").html(data.rankName);
+			console.log(data.rankName);
+			$("#md_deptName").html(data.deptName + '부');
+			$("#md_myInfo").html(data.myInfo);
+			$("#md_indiemail").html(data.email);
+			
+			
+	
+			$("#md_photo").attr('src',data.photo);
+
+		
+		},error: function(request,status,error){
+			console.log(request);
+		
+		}
+
+		})
+	};
+</script>
 	<div id='wrap'>
 		<c:import url="../common/header.jsp" />
 
@@ -91,14 +147,14 @@
 					
 						<table id="memList_tbl">
 							<c:forEach var="dept" items="${ deptList }" varStatus="deptN" begin="1">
-							<tr name="${deptN.index }">
+							<tr name="${dept.deptNo}">
 								<c:if test="${deptN.index == codenum || codenum == '-1'}">
 								<th>
 									<div class="ic-title" style="padding-top: 30px" >
 										<label class="H-personnel-organization" id="${ dept.deptName }"> ${ dept.deptName }</label>
 									</div>
 								</th>
-								<tr  name="${deptN.index }">
+								<tr  name="${dept.deptNo }">
 									<c:set var="i" value="0" />
 									<c:set var="j" value="5" />
 									<c:forEach var="mlist" items="${ mList }" varStatus="vst">
@@ -291,11 +347,7 @@
 			 $("#adddeptnameInput").focus();
 		});
 		
-		// 인포 모달
-		$('.emp-info').on('click', function() {
-			// 모달창 띄우기
-			modal('info_modal');
-		});
+
 
 		// 삭제 모달
 		$('#delete_dept').on('click', function() {
@@ -346,73 +398,62 @@
 			});
 			
 		});
+		 
+			
 		
 	</script>
 
 	<!-- Modal div -->
 	<div id="info_modal" class="modal-dragscroll">
-		<h4 style="color: #477A8F;
-		margin-bottom: 20px;
-		font-size: 20px;">사원 정보</h4>
+		<h4 style="color: #477A8F; margin-bottom: 20px; font-size: 20px;">사원
+			정보</h4>
 		<div class="n-emp-i">
 			<div style="float: left;">
-				<img src="" alt="" style="width: 110px; height: 120px;">
+				<img id="md_photo" src="" alt=""
+					style="width: 110px; height: 120px;">
 			</div>
-			<div style=" margin-left:140px">
-				<li style="margin-bottom: 6px;">사원명<span class="emp-info" 
-				style="position: absolute; left: 265px;">이름</span></li> 
-				<li style="margin-bottom: 6px;">부서
-					<select name="rank" style="border: none; float: right;width: 100px; position: absolute;
-					right: 78px; margin-top: 3px;   ">
-						<option value="">부서 선택</option>
-						<option value="기획부">기획부</option>
-						<option value="ㅇㅇ부">ㅇㅇ부</option>
-						<option value="ㅁㅁ부">ㅁㅁ부</option>
-					</select>
-			     </li> 
-			
-				<li style="margin-bottom: 6px;">직급
-					<select name="rank" style="border: none; float: right;width: 100px; position: absolute;
-					right: 78px; margin-top: 3px; ">
-						<option value="">직급 선택</option>
-						<option value="사장">사장</option>
-						<option value="팀장">팀장</option>
-						<option value="사원">사원</option>
-						<option value="인턴">인턴</option>
-					</select>
-				</li> 
-				<li style="margin-bottom: 6px;">사번<span class="emp-info" 
-					style="position: absolute; left: 265px; font-size: 14px; margin-top:3px">1234</span></li> 
+
+		<div style="margin-left: 140px">
+				<li style="margin-bottom: 6px;">사원명<span id="md_name"
+					class="emp-info" style="position: absolute; left: 265px;">-</span></li>
+				<li style="margin-bottom: 6px;">직급<span id="md_rankName"
+					class="emp-info" style="position: absolute; left: 265px;">-</span></li>
+
+				<li style="margin-bottom: 6px;">부서<span id="md_deptName"
+					class="emp-info" style="position: absolute; left: 265px;">-</span></li>
+
+				<li style="margin-bottom: 6px;">사번<span id="md_memNo"
+					class="emp-info"
+					style="position: absolute; left: 265px; font-size: 14px; margin-top: 3px"><span></li>
 			</div>
-		</div>
-		<div style="word-break:break-all; margin-top:20px">
+		<div id="info_dl" style="word-break: break-all; margin-top: 40px">
 			<dl style="margin-top: -20px;">
 				<dt style="float: left;">휴대전화</dt>
-				<dd style="margin-left: 150px;">010-0000-0000</dd>
+				<dd style="margin-left: 150px;" id="md_phone">010-0000-0000</dd>
 				<dt style="float: left;">이메일</dt>
-				<dd style="margin-left: 150px;">00000000</dd>
+				<dd style="margin-left: 150px;" id="md_email">00000000</dd>
 				<dt style="float: left;">입사일</dt>
-				<dd style="margin-left: 150px;">00000000</dd>
+				<dd style="margin-left: 150px;" id="md_enrollDate">00000000</dd>
 				<dt style="float: left;">개인이메일</dt>
-				<dd style="margin-left: 150px;">00000000</dd>
+				<dd style="margin-left: 150px;" id="md_indiemail">00000000</dd>
 				<dt style="float: left;">생년월일</dt>
-				<dd style="margin-left: 150px;">00000000</dd>
+				<dd style="margin-left: 150px;" id="md_birth">00000000</dd>
 				<dt style="float: left;">주소</dt>
-				<dd style="margin-left: 150px;">00000000</dd>
-				
+				<dd style="margin-left: 150px;" id="md_address">00000000</dd>
+
 			</dl>
-			
+
 		</div>
 
-		
+
 		<div style="text-align: center; margin-top: 30px;">
-			<button id="accept"
-				style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">저장</button>
-			<button
+			<button id="accept" onclick="acceptemail();"
+				style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">수정</button>
+			<button  class="modal-close-btn cursor"
 				style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">취소</button>
 		</div>
 
-		<a class="modal-close-btn cursor">X</a>
+	</div>
 	</div>
     
 </body>

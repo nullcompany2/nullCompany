@@ -23,99 +23,6 @@
 
 <body>
 
-<script>
-			
-		function modal(id) {
-			var zIndex = 9999;
-			var modal = $('#' + id);
-
-			// 모달 div 뒤에 희끄무레한 레이어
-			var bg = $('<div>')
-				.css({
-					position: 'fixed',
-					zIndex: zIndex,
-					left: '0px',
-					top: '0px',
-					width: '100%',
-					height: '100%',
-					overflow: 'auto',
-					// 레이어 색갈은 여기서 바꾸면 됨
-					backgroundColor: 'rgba(0,0,0,0.4)'
-				})
-				.appendTo('body');
-
-			modal
-				.css({
-					position: 'fixed',
-					boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
-
-					// 시꺼먼 레이어 보다 한칸 위에 보이기
-					zIndex: zIndex + 1,
-
-					// div center 정렬
-					top: '50%',
-					left: '50%',
-					transform: 'translate(-50%, -50%)',
-					msTransform: 'translate(-50%, -50%)',
-					webkitTransform: 'translate(-50%, -50%)'
-				})
-				.show()
-				// 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
-				.find('.modal-close-btn')
-				.on('click', function() {
-					bg.remove();
-					modal.hide();
-				});
-		}
-
-
-		// 모달창 info
-		
-		function forMd(md_memNo){
-			mdMemNo = md_memNo;
-			console.log(mdMemNo);
-			modal('info_modal');
-			detailMemberInfo();
-		};
-		
-		function detailMemberInfo(){
-			$.ajax({
-				
-				url : "detailMemberInfo.do",
-				data : {memNo : mdMemNo},
-				dataType: "json",
-				success : function(data){
-					console.log(data);
-					$("#md_memNo").html(data.memNo);
-					$("#md_name").html(data.name);
-					$("#md_birth").html(data.birth);
-					$("#md_email").html(data.id + "@nullcompany.com");
-					$("#md_enrollDate").html(data.enrollDate);
-					$("#md_phone").html(data.phone);
-					$("#md_address").html(data.address);
-					$("#md_rankName").html(data.rankName);
-					console.log(data.rankName);
-					$("#md_deptName").html(data.deptName + '부');
-					$("#md_myInfo").html(data.myInfo);
-					$("#md_indiemail").html(data.email);
-					
-					
-			
-					$("#md_photo").attr('src',data.photo);
-	
-				
-				},error: function(request,status,error){
-					console.log(request);
-				
-				}
-
-				})
-			};
-	
-
-	
-		
-	</script>
 
 	<div id='wrap'>
 		<c:import url="../common/header.jsp" />
@@ -316,7 +223,7 @@ dd {
 
 
 		<div style="text-align: center; margin-top: 30px;">
-			<button id="accept" onclick="acceptemail();"
+			<button id="accept"
 				style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">수정</button>
 			<button  class="modal-close-btn cursor"
 				style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">취소</button>
@@ -326,6 +233,95 @@ dd {
 	</div>
 
 <script>
+function modal(id) {
+	var zIndex = 9999;
+	var modal = $('#' + id);
+
+	// 모달 div 뒤에 희끄무레한 레이어
+	var bg = $('<div>')
+		.css({
+			position: 'fixed',
+			zIndex: zIndex,
+			left: '0px',
+			top: '0px',
+			width: '100%',
+			height: '100%',
+			overflow: 'auto',
+			// 레이어 색갈은 여기서 바꾸면 됨
+			backgroundColor: 'rgba(0,0,0,0.4)'
+		})
+		.appendTo('body');
+
+	modal
+		.css({
+			position: 'fixed',
+			boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+
+			// 시꺼먼 레이어 보다 한칸 위에 보이기
+			zIndex: zIndex + 1,
+
+			// div center 정렬
+			top: '50%',
+			left: '50%',
+			transform: 'translate(-50%, -50%)',
+			msTransform: 'translate(-50%, -50%)',
+			webkitTransform: 'translate(-50%, -50%)'
+		})
+		.show()
+		// 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
+		.find('.modal-close-btn')
+		.on('click', function() {
+			bg.remove();
+			modal.hide();
+		});
+}
+
+
+//모달창 info
+
+function forMd(md_memNo){
+	mdMemNo = md_memNo;
+	console.log(mdMemNo);
+	modal('info_modal');
+	detailMemberInfo();
+};
+
+function detailMemberInfo(){
+	$.ajax({
+		
+		url : "detailMemberInfo.do",
+		data : {memNo : mdMemNo},
+		dataType: "json",
+		success : function(data){
+			console.log(data);
+			$("#md_memNo").html(data.memNo);
+			$("#md_name").html(data.name);
+			$("#md_birth").html(data.birth);
+			$("#md_email").html(data.id + "@nullcompany.com");
+			$("#md_enrollDate").html(data.enrollDate);
+			$("#md_phone").html(data.phone);
+			$("#md_address").html(data.address);
+			$("#md_rankName").html(data.rankName);
+			console.log(data.rankName);
+			$("#md_deptName").html(data.deptName + '부');
+			$("#md_myInfo").html(data.myInfo);
+			$("#md_indiemail").html(data.email);
+			
+			
+	
+			$("#md_photo").attr('src',data.photo);
+
+		
+		},error: function(request,status,error){
+			console.log(request);
+		
+		}
+
+		})
+	};
+
+
+	
 // 검색
 $("#searchbtn").on('click',function () {
 var text = $("#search_text").val();
