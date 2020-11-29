@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.kh.nullcompany.approval.model.vo.Absence;
 import com.kh.nullcompany.approval.model.vo.DeptList;
+import com.kh.nullcompany.approval.model.vo.DivDeptStaff;
 import com.kh.nullcompany.approval.model.vo.Document;
 import com.kh.nullcompany.approval.model.vo.Leave;
 import com.kh.nullcompany.approval.model.vo.Resign;
@@ -147,5 +148,13 @@ public interface ApprovalService {
 	 * @return
 	 */
 	ArrayList<DeptList> selectAllDept();
+
+	/**
+	 * 6_2 부서별 사원정보 가져오기
+	 * @param deptNo
+	 * @param docTempNo
+	 * @return
+	 */
+	ArrayList<DivDeptStaff> selectDeptStaff(int deptNo, String docTempNo);
 
 }

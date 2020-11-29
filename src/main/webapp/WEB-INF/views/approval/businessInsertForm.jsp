@@ -62,14 +62,18 @@
           margin-top: 20px;
           border-radius: 10px;
        }
-       #staffList{
-         position: absolute;
+       .staffList{
+          position: absolute;
           width: 400px;
           height: 430px;
           top: 100px;
           left: 300px;
           text-align: left;
+          padding:15px;
           
+       }
+       .staffList input{
+       	  margin-top:10px;
        }
        #selBtns{
           position: absolute;
@@ -385,7 +389,7 @@
          		</c:when>
          	</c:choose>
          </div>
-         <div id="staffList" style="border: 1px solid black;">
+         <div class="staffList" style="border: 1px solid black;">
          </div>
          <p id="lt" style="text-align: left; color: #477A8F; font-size: 10pt; margin: 0px;">&nbsp;<결재자 선택></p><br>
          <button class="staffInsert">등록</button>
@@ -414,7 +418,7 @@
          		</c:when>
          	</c:choose>
          </div>
-         <div id="staffList" style="border: 1px solid black;">
+         <div class="staffList" style="border: 1px solid black;">
          </div>
          <p id="lt" style="text-align: left; color: #477A8F; font-size: 10pt; margin: 0px;">&nbsp;<참조자 선택></p><br>
          <button class="staffInsert">등록</button>
@@ -443,7 +447,7 @@
          		</c:when>
          	</c:choose>
          </div>
-         <div id="staffList" style="border: 1px solid black;">
+         <div class="staffList" style="border: 1px solid black;">
          </div>
          <p id="lt" style="text-align: left; color: #477A8F; font-size: 10pt; margin: 0px;">&nbsp;<수신자 선택></p><br>
          <button class="staffInsert">등록</button>
@@ -455,6 +459,7 @@
     function modal(id) {
        var zIndex = 9999;
        var modal = $('#' + id);
+       var staffList = $('.staffList');
 
        // 모달 div 뒤에 희끄무레한 레이어
        var bg = $('<div>')
@@ -492,6 +497,7 @@
           .on('click', function() {
              bg.remove();
              modal.hide();
+             staffList.html("");
           });
     }
 
@@ -523,7 +529,17 @@
                     "docTempNo": docTempNo
                 },
                 success: function (data) {
-                    console.log("성공띠");
+                	
+                	$staffList = $(".staffList");
+                	$staffList.html("");
+                	var $staffs = "";
+                	
+                    for(var i in data){
+                    	$staffs += '<input type="checkbox" name="staff" value="'+data[i].memNo + '_' + data[i].rankNo 
+                    	          +'" onclick="doOpenCheck(this);">&nbsp;&nbsp;['
+                    	          +data[i].rankName+']&nbsp;&nbsp;&nbsp;&nbsp;'+data[i].name+'</input><br>';
+                    }
+                    $staffList.html($staffs);
                 },
                 error: function (request,
                     status, error) {
@@ -532,6 +548,16 @@
             });
     	});
     });
+    
+    function doOpenCheck(chk){
+    	var obj = document.getElementsByName("staff");
+    	for(var i=0; i<obj.length; i++){
+    		if(obj[i] != chk){
+    			obj[i].checked = false;
+    		}
+    	}
+    }
+    
  </script>
 	
 </body>
