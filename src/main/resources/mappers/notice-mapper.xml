@@ -228,6 +228,39 @@
 	
 		]]>
 	</select>
+	
+	<!-- 검색 -->
+	<select id="searchnTitle" resultMap="noticeResultSet" parameterType="map">
+	 	SELECT * 
+	 	FROM TBL_NOTICE
+	 	WHERE N_STATUS = 'Y'
+	 	AND NTITLE LIKE '%' || #{search} || '%'
+	 	ORDER BY NNO DESC
+	 </select>
+	 
+	 <select id="searchnWriter" resultMap="noticeResultSet" parameterType="map">
+		SELECT * 
+		FROM TBL_NOTICE 
+		WHERE N_STATUS = 'Y'
+		AND NWRITER LIKE '%' || #{search} || '%'
+		ORDER BY NNO DESC
+	 </select>
+	 
+	 <select id="searchnContent" resultMap="noticeResultSet" parameterType="map">
+	 	SELECT * 
+		FROM TBL_NOTICE 
+		WHERE N_STATUS = 'Y'
+		AND NCONTENT LIKE '%' || #{search} || '%'
+		ORDER BY NNO DESC
+	 </select>
+	 
+	 <select id="searchntitleContent" resultMap="noticeResultSet" parameterType="map"> 
+	 	SELECT * 
+	 	FROM TBL_NOTICE 
+	 	WHERE N_STATUS = 'Y'
+	 	AND (NTITLE LIKE '%' || #{search} || '%' OR NCONTENT LIKE '%' || #{search} || '%')
+	 	ORDER BY NNO DESC
+	 </select>
 </mapper>
 
 
