@@ -370,10 +370,10 @@ tr>td {
 						<c:choose>
 							<c:when test="${ !empty t.originalFileName }">
 									<a href="${contextPath }/resources/buploadFiles/${t.renameFileName}"
-										download="${ n.originalFileName }">${ n.originalFileName }</a>
+										download="${ t.originalFileName }">${ t.originalFileName }</a>
                            <
                     		 </c:when>
-								<c:when test="${ empty n.originalFileName }">
+								<c:when test="${ empty t.originalFileName }">
                      			   없음
                     		    </c:when>
 						</c:choose>

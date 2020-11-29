@@ -262,12 +262,11 @@ $(document).ready(function() {
 						&nbsp;제목&nbsp;&nbsp;
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<input type="text"
 							name="tTitle"  style="width: 60%;" value="${t.tTitle }" /> <br>
-						<br>&nbsp;<label id="uploadFile">
-							파일첨부&nbsp;&nbsp;&nbsp;</label> 
-							<input type="file" name="uploadFile" id="tfile"><br>
+						<br>&nbsp;<label id="uploadFile">파일첨부&nbsp;&nbsp;&nbsp;</label> 
+							<input type="file" name="reloadFile" ><br>
 							<c:if test="${ !empty t.originalFileName }">
 							<br>현재 업로드한 파일:
-							<a href="${ contextPath }/resources/buploadFiles/${ t.renameFileName}" download="${ n.originalFileName }">${ n.originalFileName }</a>
+							<a href="${ contextPath }/resources/buploadFiles/${ t.renameFileName}" download="${ t.originalFileName }">${ t.originalFileName }</a>
 					</c:if>
 						<br>
 						<textarea id="summernote" name="tContent">${t.tContent}</textarea>

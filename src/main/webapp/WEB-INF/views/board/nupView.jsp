@@ -262,9 +262,8 @@ $(document).ready(function() {
 						&nbsp;제목&nbsp;&nbsp;
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<input type="text"
 							name="nTitle"  style="width: 60%;" value="${n.nTitle }" /> <br>
-						<br>&nbsp;<label id="uploadFile">
-							파일첨부&nbsp;&nbsp;&nbsp;</label> 
-							<input type="file" name="uploadFile" id="nfile"><br>
+						<br>&nbsp;<label id="uploadFile">파일첨부&nbsp;&nbsp;&nbsp;</label> 
+							<input type="file" name="reloadFile" ><br>
 							<c:if test="${ !empty n.originalFileName }">
 							<br>현재 업로드한 파일:
 							<a href="${ contextPath }/resources/buploadFiles/${ n.renameFileName}" download="${ n.originalFileName }">${ n.originalFileName }</a>
