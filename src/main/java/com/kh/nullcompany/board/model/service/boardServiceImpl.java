@@ -31,7 +31,7 @@ public class boardServiceImpl implements boardService {
 		int result = bDao.updateCount(bNo);
 
 		if(result >0) {
-			return bDao.selectNotice(bNo);
+			return bDao.selectBoard(bNo);
 		}else {
 			return null;
 		}
@@ -50,6 +50,16 @@ public class boardServiceImpl implements boardService {
 	@Override
 	public int insertBoard(board b) {
 		return bDao.insertBoard(b);
+	}
+
+	@Override
+	public Object selectUpdateBoard(int bNo) {
+		return bDao.selectBoard(bNo);
+	}
+
+	@Override
+	public int updateBoard(board b) {
+		return bDao.updateBoard(b);
 	}
 
 

@@ -23,6 +23,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.kh.nullcompany.board.model.vo.PageInfo;
+import com.kh.nullcompany.board.model.vo.board;
 import com.kh.nullcompany.common.Pagination;
 import com.kh.nullcompany.notice.model.service.noticeService;
 import com.kh.nullcompany.notice.model.service.tnoticeService;
@@ -160,43 +161,9 @@ public class noticeController {
 		return renameFileName;
 	}
 
-	public void deleteFile(String fileName, HttpServletRequest request) {
-		String root = request.getSession().getServletContext().getRealPath("resources");
-		String savePath = root + "\\buploadFiles";
-		// D:\H_PM\springWorkspace\springProject\src\main\webapp\resources\buploadFiles\20201005160703.jpg
-		File f = new File(savePath + "\\" + fileName);
-		
-		if(f.exists()) {
-			f.delete();
-		}
-	}
 	
-	@RequestMapping("nupdate.do")
-	public ModelAndView nupdate(ModelAndView mv,notice n,
-					HttpServletRequest request, 
-					@RequestParam(value="reloadFile", required=false) MultipartFile  file) {
-		if(file != null && !file.isEmpty()) { // 새로 업로드된 파일이 있다면
-			if(n.getRenameFileName() != null) { // 기존의 파일이 존재했을 경우 기존 파일을 삭제해준다.
-				deleteFile(n.getRenameFileName(),request); 
-			}
-			
-			String renameFileName = saveFile(file,request);
-			
-			if(renameFileName != null) {
-				n.setOriginalFileName(file.getOriginalFilename());
-				n.setRenameFileName(renameFileName);
-			}
-		}
-		
-		int result = nService.nupdate(n);
-
-		if(result > 0) {
-			mv.addObject("nNo", n.getnNo()).setViewName("redirect:ndetail.do");
-		}else {
-			mv.addObject("msg","수정 실패").setViewName("common/errorPage");
-		}
-		return mv;
-	}
+	
+	
 	
 	@RequestMapping("ndelete.do")
 	public String ndelete(int nNo, Model model) {
@@ -226,7 +193,49 @@ public class noticeController {
 		return jsonStr;
 	}
 	
+	@RequestMapping("nupView.do")
+	public ModelAndView noticeDeatil(ModelAndView mv, int nNo) {
+		mv.addObject("n", nService.selectUpdateNotice(nNo)).setViewName("board/nupView");
+		return mv;
+	}
+			
+	@RequestMapping("nupdate.do")
+	public ModelAndView noticeUpdate(ModelAndView mv,notice n,
+					HttpServletRequest request, 
+					@RequestParam(value="reloadFile", required=false) MultipartFile  file) {
+		if(file != null && !file.isEmpty()) { // 새로 업로드된 파일이 있다면
+			if(n.getRenameFileName() != null) { // 기존의 파일이 존재했을 경우 기존 파일을 삭제해준다.
+				deleteFile(n.getRenameFileName(),request); 
+			}
+			
+			String renameFileName = saveFile(file,request);
+			
+			if(renameFileName != null) {
+				n.setOriginalFileName(file.getOriginalFilename());
+				n.setRenameFileName(renameFileName);
+			}
+		}
+		
+		int result = nService.updateNotice(n);
 
+		if(result > 0) {
+			mv.addObject("nNo", n.getnNo()).setViewName("redirect:ndetail.do");
+		}else {
+			mv.addObject("msg","수정 실패").setViewName("common/errorPage");
+		}
+		return mv;
+	}
+	
+	public void deleteFile(String fileName, HttpServletRequest request) {
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = root + "\\buploadFiles";
+		// D:\H_PM\springWorkspace\springProject\src\main\webapp\resources\buploadFiles\20201005160703.jpg
+		File f = new File(savePath + "\\" + fileName);
+		
+		if(f.exists()) {
+			f.delete();
+		}
+	}
 
 
 }

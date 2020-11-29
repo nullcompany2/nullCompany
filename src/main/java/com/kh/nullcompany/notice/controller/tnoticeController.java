@@ -172,4 +172,48 @@ public class tnoticeController {
 			
 			return jsonStr;
 		}
+		
+		@RequestMapping("tupView.do")
+		public ModelAndView tnoticeDeatil(ModelAndView mv, int tNo) {
+			mv.addObject("t", tService.selectUpdatetNotice(tNo)).setViewName("board/tupView");
+			return mv;
+		}
+				
+		@RequestMapping("tupdate.do")
+		public ModelAndView tnoticeUpdate(ModelAndView mv,tnotice t,
+						HttpServletRequest request, 
+						@RequestParam(value="reloadFile", required=false) MultipartFile  file) {
+			if(file != null && !file.isEmpty()) { // 새로 업로드된 파일이 있다면
+				if(t.getRenameFileName() != null) { // 기존의 파일이 존재했을 경우 기존 파일을 삭제해준다.
+					deleteFile(t.getRenameFileName(),request); 
+				}
+				
+				String renameFileName = saveFile(file,request);
+				
+				if(renameFileName != null) {
+					t.setOriginalFileName(file.getOriginalFilename());
+					t.setRenameFileName(renameFileName);
+				}
+			}
+			
+			int result = tService.updatetNotice(t);
+
+			if(result > 0) {
+				mv.addObject("tNo", t.gettNo()).setViewName("redirect:tdetail.do");
+			}else {
+				mv.addObject("msg","수정 실패").setViewName("common/errorPage");
+			}
+			return mv;
+		}
+		
+		public void deleteFile(String fileName, HttpServletRequest request) {
+			String root = request.getSession().getServletContext().getRealPath("resources");
+			String savePath = root + "\\buploadFiles";
+			// D:\H_PM\springWorkspace\springProject\src\main\webapp\resources\buploadFiles\20201005160703.jpg
+			File f = new File(savePath + "\\" + fileName);
+			
+			if(f.exists()) {
+				f.delete();
+			}
+		}
 }

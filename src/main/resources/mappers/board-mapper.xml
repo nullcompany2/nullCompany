@@ -73,4 +73,16 @@
 			#{originalFileName},#{renameFileName},DEFAULT,SYSDATE,SYSDATE,DEFAULT,DEFAULT,DEFAULT)
 	</insert>
 	
+	<update id="updateBoard" parameterType="board">
+		UPDATE TBL_BOARD
+		SET 
+			BTITLE=#{bTitle}
+		,	BCONTENT=#{bContent}
+		,	ORIGINAL_FILENAME=#{originalFileName}
+		,	RENAME_FILENAME=#{renameFileName}
+		,	B_MODIFY_DATE=SYSDATE
+		WHERE 
+		    BNO=#{bNo}
+	</update>
+	
 </mapper>

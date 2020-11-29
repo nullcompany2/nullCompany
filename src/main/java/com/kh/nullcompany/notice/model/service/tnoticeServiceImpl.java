@@ -58,4 +58,14 @@ public class tnoticeServiceImpl implements tnoticeService {
 		return tDao.tnoticeList();
 	}
 
+	@Override
+	public Object selectUpdatetNotice(int tNo) {
+		return tDao.selecttNotice(tNo);
+	}
+
+	@Override
+	public int updatetNotice(tnotice t) {
+		return tDao.updatetNotice(t);
+	}
+
 }

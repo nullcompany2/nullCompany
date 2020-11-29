@@ -52,6 +52,10 @@ public class tNoticeDao {
 		return (ArrayList)sqlSession.selectList("noticeMapper.tnoticeList");
 	}
 
+	public int updatetNotice(tnotice t) {
+		return sqlSession.update("noticeMapper.updatetNotice", t);
+	}
+
 
 
 

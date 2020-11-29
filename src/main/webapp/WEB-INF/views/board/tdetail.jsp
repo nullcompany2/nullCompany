@@ -24,289 +24,289 @@
 </head>
 <style>
 .icon.impt {
-   top: 0;
-   left: 0;
-   width: 16px;
-   height: 16px;
-   background: url(resources/images/sp_menu.png) 0 0 no-repeat;
-   background-position: -148px -311px;
+	top: 0;
+	left: 0;
+	width: 16px;
+	height: 16px;
+	background: url(resources/images/sp_menu.png) 0 0 no-repeat;
+	background-position: -148px -311px;
 }
 
 select {
-   -webkit-appearance: none; /* 네이티브 외형 감추기 */
-   -moz-appearance: none;
-   appearance: none; /* 화살표 모양의 이미지 */
-   width: 100px; /* 원하는 너비설정 */
-   padding: .5em .5em; /* 여백으로 높이 설정 */
-   font-family: inherit; /* 폰트 상속 */
-   background:
-      url(https://farm1.staticflickr.com/379/19928272501_4ef877c265_t.jpg)
-      no-repeat 95% 50%; /* 네이티브 화살표 대체 */
-   -moz-appearance: none;
-   border-radius: 0px;
+	-webkit-appearance: none; /* 네이티브 외형 감추기 */
+	-moz-appearance: none;
+	appearance: none; /* 화살표 모양의 이미지 */
+	width: 100px; /* 원하는 너비설정 */
+	padding: .5em .5em; /* 여백으로 높이 설정 */
+	font-family: inherit; /* 폰트 상속 */
+	background:
+		url(https://farm1.staticflickr.com/379/19928272501_4ef877c265_t.jpg)
+		no-repeat 95% 50%; /* 네이티브 화살표 대체 */
+	-moz-appearance: none;
+	border-radius: 0px;
 }
 
 form input[type=button] {
-   font-size: 18px;
-   margin: 7px 5px 7px 5px;
-   background: none;
-   border: none;
-   color: #477A8F;
+	font-size: 18px;
+	margin: 7px 5px 7px 5px;
+	background: none;
+	border: none;
+	color: #477A8F;
 }
 
 body {
-   font-family: "Noto Sans KR", sans-serif;
-   padding: 0px;
-   margin: 0px;
+	font-family: "Noto Sans KR", sans-serif;
+	padding: 0px;
+	margin: 0px;
 }
 
 .container {
-   position: relative;
-   border-radius: 10px;
-   background: #e8ecee;
-   color: #676767;
-   width: 250px;
-   height: 100%;
-   font-size: 1.15em;
-   float: left;
-   border-bottom: none;
-   padding-top: 2px;
+	position: relative;
+	border-radius: 10px;
+	background: #e8ecee;
+	color: #676767;
+	width: 250px;
+	height: 100%;
+	font-size: 1.15em;
+	float: left;
+	border-bottom: none;
+	padding-top: 2px;
 }
 
 .drag-scrollbar {
-   overflow: auto;
-   height: 600px;
+	overflow: auto;
+	height: 600px;
 }
 
 .H-personnel-subNavi {
-   margin-left: 15px;
-   margin-right: 15px;
+	margin-left: 15px;
+	margin-right: 15px;
 }
 
 li {
-   list-style: none;
-   margin-bottom: 10px;
-   font-size: 18px;
+	list-style: none;
+	margin-bottom: 10px;
+	font-size: 18px;
 }
 
 a {
-   text-decoration: none;
-   color: #676767;
+	text-decoration: none;
+	color: #676767;
 }
 
 .title {
-   font-size: 16px;
-   font-weight: bold;
-   margin-right: 50px;
+	font-size: 16px;
+	font-weight: bold;
+	margin-right: 50px;
 }
 
 .subTitle {
-   list-style: none;
+	list-style: none;
 }
 
 /* contents */
 .contents {
-   position: relative;
-   margin-left: 250px;
+	position: relative;
+	margin-left: 250px;
 }
 
 .contents-title {
-   padding-top: 10px;
-   height: 50px;
-   border-bottom: solid 0.1px #cacaca;
+	padding-top: 10px;
+	height: 50px;
+	border-bottom: solid 0.1px #cacaca;
 }
 
 .ct1 {
-   margin-left: 50px;
-   font-size: 20px;
-   font-weight: bolder;
+	margin-left: 50px;
+	font-size: 20px;
+	font-weight: bolder;
 }
 
 .del {
-   opacity: 0%;
+	opacity: 0%;
 }
 
 .del:hover {
-   opacity: 100%;
+	opacity: 100%;
 }
 
 a:active {
-   font-weight: bolder;
+	font-weight: bolder;
 }
 
 #search {
-   position: relatived;
-   margin-left: 37%;
+	position: relatived;
+	margin-left: 37%;
 }
 
 table tr:last-of-type {
-   padding-bottom: 50px;
+	padding-bottom: 50px;
 }
 
 #mrv_table {
-   margin: 10px 0px 0px 0px;
-   width: 100%;
-   border-top: 1px solid #cdcdcd;
-   border-bottom: 1px solid #cdcdcd;
-   border-collapse: collapse
+	margin: 10px 0px 0px 0px;
+	width: 100%;
+	border-top: 1px solid #cdcdcd;
+	border-bottom: 1px solid #cdcdcd;
+	border-collapse: collapse
 }
 
 input[type="submit"] {
-   -webkit-appearance: button; // 2
-   cursor: pointer;
-   //
-   3
+	-webkit-appearance: button; // 2
+	cursor: pointer;
+	//
+	3
 }
 
 #mrv_table>thead {
-   width: 8px;
-   border-radius: 8px;
-   background: #e1e1e1;
+	width: 8px;
+	border-radius: 8px;
+	background: #e1e1e1;
 }
 
 thead tr {
-   background: #e1e1e1;
+	background: #e1e1e1;
 }
 
 tr>th {
-   padding: 14px 10px 14px 15px;
-   text-align: left;
+	padding: 14px 10px 14px 15px;
+	text-align: left;
 }
 
 tr>td {
-   padding: 14px 10px 14px 15px;
-   text-align: left;
+	padding: 14px 10px 14px 15px;
+	text-align: left;
 }
 
 .rv_but {
-   border: 0 none;
-   background-color: transparent;
-   cursor: pointer;
-   color: #779ec0 !important;
+	border: 0 none;
+	background-color: transparent;
+	cursor: pointer;
+	color: #779ec0 !important;
 }
 
 .n-emp-i {
-   width: 100%;
-   height: 30%;
+	width: 100%;
+	height: 30%;
 }
 
 .modal-dragscroll>div>dl>dd {
-   margin-bottom: 15px;
+	margin-bottom: 15px;
 }
 
 .modal-dragscroll {
-   overflow: auto;
+	overflow: auto;
 }
 
 .modal-dragscroll::-webkit-scrollbar {
-   width: 10px;
+	width: 10px;
 }
 
 .modal-dragscroll::-webkit-scrollbar-thumb {
-   background-color: #e8ecee;
-   border-radius: 15px;
+	background-color: #e8ecee;
+	border-radius: 15px;
 }
 
 .modal-dragscroll::-webkit-scrollbar-track {
-   background-color: white;
-   border-radius: 15px;
-   box-shadow: white;
+	background-color: white;
+	border-radius: 15px;
+	box-shadow: white;
 }
 
 #delete_modal {
-   display: none;
-   padding: 10px 60px;
-   background-color: #fefefe;
-   border: 1px solid #888;
-   border-radius: 3px;
+	display: none;
+	padding: 10px 60px;
+	background-color: #fefefe;
+	border: 1px solid #888;
+	border-radius: 3px;
 }
 
 #delete_modal .modal-close-btn {
-   position: absolute;
-   top: 10px;
-   right: 10px;
+	position: absolute;
+	top: 10px;
+	right: 10px;
 }
 
 input:hover {
-   color: black;
-   cursor: pointer;
+	color: black;
+	cursor: pointer;
 }
 
 #mrv_table {
-   margin: 10px 0px 0px 0px;
-   width: 100%;
-   border-top: 1px solid #cdcdcd;
-   border-bottom: 1px solid #cdcdcd;
-   border-collapse: collapse
+	margin: 10px 0px 0px 0px;
+	width: 100%;
+	border-top: 1px solid #cdcdcd;
+	border-bottom: 1px solid #cdcdcd;
+	border-collapse: collapse
 }
 
 #mrv_table>thead {
-   width: 8px;
-   border-radius: 8px;
-   background: #e1e1e1;
+	width: 8px;
+	border-radius: 8px;
+	background: #e1e1e1;
 }
 
 thead tr {
-   background: #e1e1e1;
+	background: #e1e1e1;
 }
 
 tr>th {
-   padding: 14px 10px 14px 15px;
-   text-align: left;
+	padding: 14px 10px 14px 15px;
+	text-align: left;
 }
 
 tr>td {
-   padding: 14px 10px 14px 15px;
-   text-align: left;
+	padding: 14px 10px 14px 15px;
+	text-align: left;
 }
 
 .rv_but {
-   border: 0 none;
-   background-color: transparent;
-   cursor: pointer;
-   color: #779ec0 !important;
+	border: 0 none;
+	background-color: transparent;
+	cursor: pointer;
+	color: #779ec0 !important;
 }
 
 .n-emp-i {
-   width: 100%;
-   height: 30%;
+	width: 100%;
+	height: 30%;
 }
 
 .modal-dragscroll>div>dl>dd {
-   margin-bottom: 15px;
+	margin-bottom: 15px;
 }
 
 .modal-dragscroll {
-   overflow: auto;
+	overflow: auto;
 }
 
 .modal-dragscroll::-webkit-scrollbar {
-   width: 10px;
+	width: 10px;
 }
 
 .modal-dragscroll::-webkit-scrollbar-thumb {
-   background-color: #e8ecee;
-   border-radius: 15px;
+	background-color: #e8ecee;
+	border-radius: 15px;
 }
 
 .modal-dragscroll::-webkit-scrollbar-track {
-   background-color: white;
-   border-radius: 15px;
-   box-shadow: white;
+	background-color: white;
+	border-radius: 15px;
+	box-shadow: white;
 }
 
 #delete_modal {
-   display: none;
-   padding: 10px 60px;
-   background-color: #fefefe;
-   border: 1px solid #888;
-   border-radius: 3px;
+	display: none;
+	padding: 10px 60px;
+	background-color: #fefefe;
+	border: 1px solid #888;
+	border-radius: 3px;
 }
 
 #delete_modal .modal-close-btn {
-   position: absolute;
-   top: 10px;
-   right: 10px;
+	position: absolute;
+	top: 10px;
+	right: 10px;
 }
 </style>
 
@@ -321,8 +321,13 @@ tr>td {
          <div class="board_head">
             <div style="width: 90%; margin: auto;">
                <form method="post" action="">
+               
+               <c:url var="tupView" value="tupView.do">
+							<c:param name="tNo" value="${t.tNo}"/>
+						</c:url>
 
-                  <input id="subBtn" type="button" value="수정" style="margin-left: 15px" onclick="" /> 
+                  <input id="subBtn" type="button" value="수정" 
+                  style="margin-left: 15px" onclick="location.href='${tupView}'"  /> 
                      <input  id="deltBoard" type="button" value="삭제" />  <input type="text"
                      id="ShareUrl" OnClick="javascript:CopyUrlToClipboard()"
                      style="position: absolute; top: 0; left: 0; width: 1px; height: 1px; margin: 0; padding: 0; border: 0;">
@@ -415,7 +420,7 @@ tr>td {
       
    <script>
    $("#deltBoard").click(function(){
-		confirm("정말로 삭제하시겠습니까? 휴지통으로 이동합니다.");
+		confirm("정말로 삭제하시겠습니까? ");
 	});
 
       $(function(){

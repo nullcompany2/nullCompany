@@ -20,6 +20,10 @@ public interface boardService {
 
 	int insertBoard(board b);
 
+	Object selectUpdateBoard(int bNo);
+
+	int updateBoard(board b);
+
 
 
 
