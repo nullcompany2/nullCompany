@@ -378,9 +378,6 @@ public class ScheduleController {
 
 	      ArrayList<Schedule> ScheduleList = sService.ScheduleListForMain();
 	   
-	      System.out.println(ScheduleList);
-	         
-
 			
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();

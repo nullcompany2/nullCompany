@@ -66,8 +66,8 @@ function detailMemberInfo(){
 			$("#md_phone").html(data.phone);
 			$("#md_address").html(data.address);
 			$("#md_rankName").html(data.rankName);
-			console.log(data.rankName);
-			$("#md_deptName").html(data.deptName + '부');
+			$("#selectDept").val(data.deptNo).attr("selected","selected");
+			console.log(data.deptNo);
 			$("#md_myInfo").html(data.myInfo);
 			$("#md_indiemail").html(data.email);
 			
@@ -120,7 +120,7 @@ function detailMemberInfo(){
 				<!-- ---- -->
 				<div class="contents-wrap drag-scrollbar">
 				<div>
-                     <button id="dept_add">부서 추가</button>     
+                     <button id="dept_add">부서 추가</button>&nbsp;&nbsp;&nbsp;     
                   </div>
 					<div class="listbox" style="position: fixed">
 						<table>
@@ -151,10 +151,11 @@ function detailMemberInfo(){
 								<c:if test="${deptN.index == codenum || codenum == '-1'}">
 								<th>
 									<div class="ic-title" style="padding-top: 30px" >
-										<label class="H-personnel-organization" id="${ dept.deptName }"> ${ dept.deptName }</label>
+										<label class="H-personnel-organization" id="${ dept.deptName }">${ dept.deptName }</label>
+										<button id="${ dept.deptName }" class="dept_delete">부서 삭제</button>
 									</div>
 								</th>
-								<tr  name="${dept.deptNo }">
+								<tr name="${dept.deptNo}">
 									<c:set var="i" value="0" />
 									<c:set var="j" value="5" />
 									<c:forEach var="mlist" items="${ mList }" varStatus="vst">
@@ -174,7 +175,7 @@ function detailMemberInfo(){
 												</div>
 											</td>
 											
-											<c:set var="i" value="${ dept.deptNo }" />
+											<c:set var="i" value="${i+1}" />
 										</c:if>
 									</c:forEach>
 								</tr>
@@ -212,11 +213,13 @@ function detailMemberInfo(){
 		<div style="text-align: center; margin-top: 25px;">
 			<button id="edit_dept_btn"
 				style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">수정</button>
-			<button id="delete_dept_btn"
-				style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">삭제</button>
+			<button class="modal-close-btn cursor" 
+				style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">취소</button>
 		</div>
 
-		<a class="modal-close-btn cursor">X</a>
+		<a style="	position: absolute;
+	top: 10px;
+	right: 10px;" class="modal-close-btn cursor">X</a>
 	</div>
 
 
@@ -238,11 +241,57 @@ function detailMemberInfo(){
 		<div style="text-align: center; margin-top: 20px;">
 			<button id="add_dept_btn"
 				style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">추가</button>
-			<button id="delete_dept_btn"
+			<button class="modal-close-btn cursor" 
 				style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">취소</button>
 		</div>
 	
-		<a class="modal-close-btn cursor">X</a>
+		<a style="position: absolute;
+	top: 10px;
+	right: 10px;" class="modal-close-btn cursor">X</a>
+	</div>
+	
+	<!-- 삭제 모달 -->
+	<div id="delete_dept_modal" style="	width: 421px; height: 385px" class="modal-dragscroll">
+	<h4 style="color: #477A8F;
+    margin-left: -25px;
+    margin-top: -7px;
+    margin-bottom: 11px;">부서 삭제</h4>
+		<div style="margin-bottom: 20px;"><span id="dept_name_delete" style="    margin-bottom: 5px;
+    font-size: 15px;
+    font-weight: bold;">dd</span>
+		<span style="color: #707070; margin-bottom: 5px; font-size: 14px;">부서에 소속되어 있는 사용자</span></div>
+		
+			
+			<ul id="dept_mem">
+ 			
+			</ul>
+			<table  style=" width: 100%; border-collapse: collapse;" id="md_page_tbl">
+	            
+			</table>
+		
+	<div style="margin-top:20px">
+		<span style="color: #707070;
+		    margin-top: 5px;
+		    font-size: 14px;">이와 같이 변경하고</span>
+    	<span id="dept_name_delete2" style="    margin-bottom: 5px;
+		    font-size: 15px;
+		    font-weight: bold;">dd</span>
+   		<span style="color: #707070;
+		    margin-top: 5px;
+		    font-size: 14px;">부서를 삭제하시겠습니까?</span>
+    </div>
+    
+
+		<div style="text-align: center; margin-top: 25px;">
+			<button id="edit_dept_btn"
+				style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">수정</button>
+			<button class="modal-close-btn cursor" 
+				style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">취소</button>
+		</div>
+
+		<a style="	position: absolute;
+	top: 10px;
+	right: 10px;" class="modal-close-btn cursor">X</a>
 	</div>
 	
 	<script>
@@ -347,13 +396,132 @@ function detailMemberInfo(){
 			 $("#adddeptnameInput").focus();
 		});
 		
-
+		
 
 		// 삭제 모달
-		$('#delete_dept').on('click', function() {
-			// 모달창 띄우기
-			confirm("정말 삭제하시겠습니까?");
+		$('.dept_delete').on('click', function() {
+			var deptName = $(this).attr("id");
+			$("#dept_name_delete").text(deptName);
+			$("#dept_name_delete2").text(deptName);
+		
+			mdListPaged();
+			
+			modal('delete_dept_modal');
+		
 		});
+		
+		function mdListPaged(currentPage){
+			var deptName = $("#dept_name_delete").text();
+			
+			 $.ajax({
+		            url: "deptTypeMemlist.do",
+		            datatype : "json",
+		            data: {"deptName" : deptName,
+		            	currentPage:currentPage},
+		            success : function(data){
+		               console.log("성공");
+		               $("#dListPaging").remove();
+		               $('.dept_memList').remove();
+		               
+		               var $pageTbl = $('#md_page_tbl');
+		               
+		            	var td0;
+		            	var td1;
+		            	var td2;
+		            	var td3;
+		            	var td1_1;
+		            	var td1_1_1;
+		            	var td2_1;
+		            	var td2_1_1;
+		            	var td2_2;
+		            	
+		            	var li;
+		            	var name;
+		            	var liend;
+		            	var select;
+		            	var selectend;
+		            	
+		            	var $dept_mem = $("#dept_mem");
+		            	
+		            	for(var i in data.mlist){
+		            		
+		            		console.log(data.mlist[i]);
+		            		$li = $("<li style='width:230px; margin-bottom: 5px;font-size: 15px;'  class='dept_memList' id='li" + data.mlist[i].memNo +"'>");
+		            		$name = data.mlist[i].name;
+		            		$liend = $("</li>");
+		            		$select = $("<select style='float:right; width:100px; margin-right:20px' class='dept_list_select' id='" + data.mlist[i].memNo +"' >");
+		            		$selectend = $("</select>");
+		            		$li.append($name);
+							$li.append($select);
+							$li.append($selectend);
+							$li.append($liend);
+							$dept_mem.append($li);
+								
+		            	
+		            	}
+		            	
+		            	for(var i in data.deptListmodal){      
+		            		if(data.deptListmodal[i].deptName != deptName){
+		            			var option = $("<option value="+ data.deptListmodal[i].deptNo+">"+data.deptListmodal[i].deptName +"</option>");
+			                    $('.dept_list_select').append(option);
+		            		
+		            		}
+		            	
+		                    
+		                }
+
+
+		            	$tr = $('<tr align="center" height="20" id="dListPaging">'); 
+						$td = $('<td colspan="6">');
+						if(data.pi.currentPage == 1){
+							
+							$td0 = "[이전]";
+							$td.append($td0);
+						}
+			        	
+						if(data.pi.currentPage != 1){
+							$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage -1) + ')">').text("[이전] ");
+				        	
+				        	$td.append($td0);
+						}    	
+			        	
+				       	
+				       	
+				       	for(var p = data.pi.startPage; p <=  data.pi.endPage; p++){
+				       		if(p == data.pi.currentPage){
+				       			$td0 = $("<b style='color:red; font-size:4'>").text("  "+p+"  ");
+				       			$td.append($td0);
+				       		}
+				       		if(p != data.pi.currentPage ){
+				       			$td0 = $('<a onclick="mdListPaged('+ (p)+')">').text("  "+p+"  ");
+				       			$td.append($td0);
+				       		}
+				       	
+				       	}
+			        	
+				       	if(data.pi.currentPage == data.pi.maxPage ){
+				       		$td0 = "[다음]";
+				       		$td.append($td0);
+				       	}
+			        	
+			        	if(data.pi.currentPage != data.pi.maxPage){
+			        		$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage + 1)+')">').text(" [다음]");
+			        		$td.append($td0);
+			        	}
+			        	
+		            	$tr.append($td);
+						
+		            	$pageTbl.append($tr);
+	 
+					},
+		            error :function(request,status,error){
+		               console.log(error);  
+		            
+		            }
+		         });
+			
+		
+		}
 
 
 		// 수정시 모달
@@ -361,6 +529,7 @@ function detailMemberInfo(){
 		    var dept_name = $(this).attr("id");
 		    modal('edit_dept_modal');
 		    $("#dept_name_edit").text(dept_name);
+		    console.log(dept_name);
 		    $("#editdeptnameInput").val(dept_name);
 		    $("#editdeptnameInput").focus();
 		    
@@ -372,8 +541,10 @@ function detailMemberInfo(){
 			var deptName2 = $("#dept_name_edit").text();
 			
 			if(deptName == deptName2){
-				alert('수정 전 부서명과 같은 부서명은 사용할 수 없습니다.')
-			}
+				alert('수정 전 부서명과 같은 부서명은 사용할 수 없습니다.');
+				return false;
+				
+			} 
 		});
 		
 		 //부서 추가 버튼
@@ -389,6 +560,33 @@ function detailMemberInfo(){
 				data: {"deptName" : deptName},
 				success : function(data){
 					alert("추가 성공")
+					location.reload();
+				},
+				error :function(request,status,error){
+					console.log(error);  
+					location.reload();
+				}
+			});
+			
+		});
+		 
+		 //부서 수정 버튼
+		 $('#edit_dept_btn').on('click', function() {
+			var text = $("#editdeptnameInput").val();
+			var deptName = $("#dept_name_edit").text();
+		
+			if(text == ""){
+				alert('부서명을 입력해주세요.')
+			}
+			
+			$.ajax({
+				url: "deptEdit.do",
+				data: {"deptName" : deptName,
+						"text":text	
+					},
+				
+				success : function(data){
+					console.log("수정성공임");  
 					location.reload();
 				},
 				error :function(request,status,error){
@@ -419,8 +617,22 @@ function detailMemberInfo(){
 				<li style="margin-bottom: 6px;">직급<span id="md_rankName"
 					class="emp-info" style="position: absolute; left: 265px;">-</span></li>
 
-				<li style="margin-bottom: 6px;">부서<span id="md_deptName"
-					class="emp-info" style="position: absolute; left: 265px;">-</span></li>
+				<li style="margin-bottom: 6px;">부서
+				<select name="dept" id="selectDept"
+					style="border: none;
+					    float: right;
+					    width: 110px;
+					    position: absolute;
+					    right: 67px;
+					    font-size: 15px;
+					    margin-right: 3px;
+					">
+						<c:forEach var="deptList" items="${ deptList }" varStatus="vs">
+							<option class="selectDept" value="${ deptList.deptNo }">${ deptList.deptName }부</option>
+						</c:forEach>
+
+				</select>
+				</li>
 
 				<li style="margin-bottom: 6px;">사번<span id="md_memNo"
 					class="emp-info"

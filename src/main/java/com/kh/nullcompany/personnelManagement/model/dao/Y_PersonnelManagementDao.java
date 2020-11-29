@@ -1,6 +1,7 @@
 package com.kh.nullcompany.personnelManagement.model.dao;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -92,6 +93,23 @@ public class Y_PersonnelManagementDao {
 	public Member detailMemberInfo(int memNo) {
 		return sqlSession.selectOne("Y_personnelMapper.detailMemberInfo_y",memNo);
 	}
+
+	public int deptEdit(Map map) {
+		System.out.println(map.toString());
+		return sqlSession.update("Y_personnelMapper.deptEdit",map);
+
+	}
+
+	public int deptTypeMemlistCount(String deptName) {
+		return sqlSession.selectOne("Y_personnelMapper.deptTypeMemlistCount",deptName);
+	}
+
+	public ArrayList<Member> deptTypeMemlist(PageInfo pi, String deptName) {
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("Y_personnelMapper.deptTypeMemlist",deptName,rowBounds);
+	}
+
 
 
 

@@ -1,6 +1,7 @@
 package com.kh.nullcompany.personnelManagement.model.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -97,6 +98,21 @@ public class Y_PersonnelManagementServiceImpl implements Y_PersonnelManagementSe
 	@Override
 	public Member detailMemberInfo(int memNo) {
 		return yDao.detailMemberInfo(memNo);
+	}
+
+	@Override
+	public int deptEdit(Map map) {
+		return yDao.deptEdit(map);
+	}
+
+	@Override
+	public int deptTypeMemlistCount(String deptName) {
+		return yDao.deptTypeMemlistCount(deptName);
+	}
+
+	@Override
+	public ArrayList<Member> deptTypeMemlist(PageInfo pi, String deptName) {
+		return yDao.deptTypeMemlist(pi,deptName);
 	}
 
 

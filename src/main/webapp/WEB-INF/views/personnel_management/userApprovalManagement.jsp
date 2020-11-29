@@ -294,7 +294,7 @@ function detailMemberInfo(){
 				<li style="margin-bottom: 6px;">부서 <select name="dept"  id="selectDept"
 					style="border: none; float: right; width: 100px; position: absolute; right: 78px; margin-top: 4px; margin-right: 10px;">
 
-						<c:forEach var="deptselectlist" items="${ DeptList }"
+						<c:forEach var="deptselectlist" items="${ DeptList }" 
 							varStatus="vs">
 							<option class="selectDept" value="${ deptselectlist.deptNo }">${ deptselectlist.deptName }</option>
 						</c:forEach>
@@ -341,11 +341,13 @@ function detailMemberInfo(){
 		<div style="text-align: center; margin-top: 30px;">
 			<button id="accept" onclick="acceptemail();"
 				style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">승인</button>
-			<button
+			<button class="modal-close-btn cursor"
 				style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">취소</button>
 		</div>
 
-		<a class="modal-close-btn cursor">X</a>
+		<a style="position: absolute;
+	top: 10px;
+	right: 10px;" class="modal-close-btn cursor">X</a>
 	</div>
 	
 	<script>
@@ -415,11 +417,6 @@ function detailMemberInfo(){
 	border-radius: 3px;
 }
 
-#accept_modal .modal-close-btn {
-	position: absolute;
-	top: 10px;
-	right: 10px;
-}
 
 .n-emp-i {
 	width: 100%;

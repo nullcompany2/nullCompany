@@ -314,11 +314,6 @@ header {
 	z-index: 10201;
 }
 
-#add_dept_modal .modal-close-btn {
-	position: absolute;
-	top: 10px;
-	right: 10px;
-}
 
 #edit_dept_modal {
 	display: none;
@@ -330,11 +325,6 @@ header {
 	z-index: 10201;
 }
 
-#edit_dept_modal .modal-close-btn {
-	position: absolute;
-	top: 10px;
-	right: 10px;
-}
 
 .modal-dragscroll {
 	overflow: auto;
@@ -363,7 +353,7 @@ header {
 #info_modal {
 	display: none;
 	width: 450px;
-	height: 500px;
+	height: 510px;
 	padding: 20px 60px;
 	background-color: #fefefe;
 	border-radius: 3px;
@@ -403,4 +393,30 @@ header {
 
 .H-personnel-organization{
 	cursor: pointer;
+}
+
+.dept_delete{
+    border: none;
+    font-size: 14px;
+    color: #676767;
+    background: none;
+    position: relative;
+    left: 856px;
+    top: 20px;
+    z-index: 101091;
+    cursor: pointer;
+}
+
+.dept_delete:hover{
+	font-weight: bold;
+}
+
+#delete_dept_modal {
+	display: none;
+	width: 420px;
+	height: 400px;
+	padding: 20px 60px;
+	background-color: #fefefe;
+	border-radius: 3px;
+	z-index: 10201;
 }

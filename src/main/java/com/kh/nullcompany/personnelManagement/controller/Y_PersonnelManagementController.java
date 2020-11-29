@@ -3,6 +3,8 @@ package com.kh.nullcompany.personnelManagement.controller;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,7 +44,7 @@ public class Y_PersonnelManagementController {
 
 	// 조직관리
 	@RequestMapping("OrganizationManagement.do")
-	public ModelAndView Schedulermain(ModelAndView mv,  HttpServletResponse response, HttpSession session) {
+	public ModelAndView OrganizationManagement(ModelAndView mv,  HttpServletResponse response, HttpSession session) {
 		
 		// 총 부서 리스트
 		ArrayList<Department> deptList = yService.deptList();
@@ -52,9 +54,6 @@ public class Y_PersonnelManagementController {
 
 		mv.addObject("deptList", deptList);
 		mv.addObject("mList", mList);
-
-		System.out.println(mList);
-		System.out.println(deptList);
 
 		mv.setViewName("personnel_management/OrganizationManagement");
 
@@ -67,13 +66,59 @@ public class Y_PersonnelManagementController {
 	public String deptAdd(Model model, String deptName) {
 		
 		int result = yService.deptAdd(deptName);
-		System.out.println("이메일" + deptName);
 
 		if(result > 0) {
 			return "redirect:OrganizationManagement.do";
 		}
 		return deptName;
 	}
+	
+	// 부서 수정
+		@RequestMapping("deptEdit.do")
+		public String deptEdit(Model model, String deptName, String text) {
+			
+		
+			Map map = new HashMap();
+			map.put("text", text);
+			map.put("deptName", deptName);
+			System.out.println(map);
+			int result = yService.deptEdit(map);
+			
+
+			if(result > 0) {
+				return "redirect:OrganizationManagement.do";
+			}
+			return deptName;
+		}
+		
+		
+		// 부서 삭제 전 부서별 리스트 뽑기
+		@RequestMapping("deptTypeMemlist.do")
+		public void deptTypeMemlist(ModelAndView mv, String deptName,HttpServletResponse response, HttpSession session, 
+				@RequestParam(value="currentPage",required=false,defaultValue="1") int currentPage) throws JsonIOException, IOException{
+			response.setContentType("application/json; charset=utf-8");
+			// 총 사원 리스트
+
+			int listCount = yService.deptTypeMemlistCount(deptName);
+			
+			PageInfo pi = Pagination.getPageInfoForModal(currentPage,listCount);
+			
+			ArrayList<Member> mlist = yService.deptTypeMemlist(pi, deptName);
+			
+			ArrayList<Department> deptListmodal = yService.deptList();
+			
+			Map list = new HashMap();
+			list.put("mlist",mlist);
+			list.put("pi",pi);
+			list.put("listCount",listCount);
+			list.put("deptListmodal",deptListmodal);
+			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+			gson.toJson(list,response.getWriter());
+			
+			System.out.println(list);
+
+		
+		}
 	
 	// 인사관리 사번으로 회원조회(모달) (Gson)
 	@RequestMapping("detailMemberInfo_y.do")

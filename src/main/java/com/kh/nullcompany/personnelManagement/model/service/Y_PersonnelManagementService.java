@@ -1,6 +1,7 @@
 package com.kh.nullcompany.personnelManagement.model.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.mail.model.vo.Email;
@@ -41,6 +42,12 @@ public interface Y_PersonnelManagementService {
 	int deptAdd(String deptName);
 
 	Member detailMemberInfo(int memNo);
+
+	int deptEdit(Map map);
+
+	int deptTypeMemlistCount(String deptName);
+
+	ArrayList<Member> deptTypeMemlist(PageInfo pi, String deptName);
 
 
 
