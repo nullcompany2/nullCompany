@@ -69,14 +69,14 @@
 						</form>
 						<table id="memList_tbl">
 							<c:forEach var="dept" items="${ deptList }" varStatus="deptN" begin="1">
-							<tr name="${deptN.index }">
+							<tr name="${dept.deptNo}">
 								<c:if test="${deptN.index == codenum || codenum == '-1'}">
 								<th>
 									<div class="ic-title" style="padding-top: 30px" >
 										<label class="H-personnel-organization">${ dept.deptName }</label>
 									</div>
 								</th>
-								<tr  name="${deptN.index }">
+								<tr name="${dept.deptNo}">
 									<c:set var="i" value="0" />
 									<c:set var="j" value="5" />
 									<c:forEach var="mlist" items="${ mList }" varStatus="vst">

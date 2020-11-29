@@ -37,4 +37,17 @@ public class OfficeDao {
 		return (ArrayList)sqlSession.selectList("officeMapper.ManagerMember");
 	}
 
+	public ArrayList<Member> searchMember(String key) {
+		return (ArrayList)sqlSession.selectList("officeMapper.searchMember",key);
+	}
+
+	public int updateOfficeManager(String[] managerList) {
+		int result =0;
+		for(String str : managerList) {
+			result = sqlSession.update("officeMapper.updateOfficeManager",str);			
+		}
+		result = sqlSession.update("officeMapper.updateNomalMember",managerList);
+		return result;
+	}
+
 }

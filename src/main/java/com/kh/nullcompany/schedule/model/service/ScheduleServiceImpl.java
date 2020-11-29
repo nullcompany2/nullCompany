@@ -214,6 +214,11 @@ public class ScheduleServiceImpl implements ScheduleService {
 		
 	}
 
+	@Override
+	public ArrayList<Schedule> ScheduleListForMain() {
+		return sDao.ScheduleListForMain();
+	}
+
 
 
 }

@@ -281,4 +281,10 @@
 		SET CAL_NAME = #{calName}, COLOR = #{color}
 		WHERE CAL_NO = #{calNo}
 	</update>
+	
+	 <select id="ScheduleListForMain" resultMap="ScheduleResultSet">
+	 	SELECT * FROM schedule S
+        JOIN CALENDAR C ON C.CAL_NO = S.CAL_NO 
+        where S.startdate = to_char(sysdate, 'yyyy-mm-dd')
+	</select>
 </mapper>

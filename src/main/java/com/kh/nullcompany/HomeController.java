@@ -1,6 +1,7 @@
 package com.kh.nullcompany;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.kh.nullcompany.logo.model.service.LogoService;
 import com.kh.nullcompany.logo.model.vo.Logo;
+import com.kh.nullcompany.schedule.model.service.ScheduleService;
+import com.kh.nullcompany.schedule.model.vo.Schedule;
 
 @SessionAttributes("logo")
 @Controller
@@ -24,6 +27,7 @@ public class HomeController {
 	
 	@Autowired
 	private LogoService lService;
+
 	
 	@RequestMapping(value = "home.do", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
@@ -36,6 +40,7 @@ public class HomeController {
 		Logo l = lService.logoSelect();
 		model.addAttribute("logo",l);
 		model.addAttribute("serverTime", formattedDate );
+		
 		
 		return "home";
 	}

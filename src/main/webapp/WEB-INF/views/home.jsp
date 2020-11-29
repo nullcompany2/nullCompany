@@ -7,7 +7,7 @@
 <%
 	Date nowTime = new Date();
 %>
-
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <html>
 <head>
 
@@ -17,125 +17,173 @@
 	
 </head>
 <style>
+body {
+	padding: 0px;
+	margin: 0px;
+	box-sizing: board-box;
+	background: #EFEFEF;
+}
+
+hr {
+	margin-right: 15px;
+	border-top: 3px double #477A8F;
+}
+
+.pt {
+	display: flex;
+	margin: auto;
+}
+
+.pt2 {
+	display: flex;
+	flex-direction: column
+}
+
+.ch {
+	flex: 1;
+	border-right: 1px solid #EFEFEF;
+}
+
+.ch>:first-child {
+	font-size: 25px;
+	font-style: bold;
+	margin-left: 7px;
+}
+
+.ch>:nth-child(2) {
+	color: #9E9D9B;
+	margin-left: 130px;
+}
+
+.pt2>.ch>span, .pt2>.ch>a {
+	font-size: 15px;
+	margin-left: 75%;
+	transition: all 1s;
+}
+
+.pt2>.ch>span:hover, .pt2>.ch>a:hover {
+	cursor: pointer;
+	margin-left: 70%;
+	font-size: 20px;
+	transition: all 1s;
+}
+
+.jb-box {
+	width: 100%;
+	height: 260px;
+	overflow: hidden;
+	margin: 0px auto;
+	position: relative;
+	border-radius: 10px;
+}
+
+video {
+	width: 100%;
+}
+
+.jb-text {
+	position: absolute;
+	top: 50%;
+	width: 100%;
+	font-family: 'Lato', sans-serif;
+}
+
+.jb-text p {
+	margin-top: -24px;
+	text-align: center;
+	font-size: 30px;
+	color: black;
+	opacity: 0.7;
+}
+
+.jb-text span {
+	font-size: 45px;
+	color: #477A8F;
+	opacity: 2;
+}
+
+#clock {
+	position: absolute;
+	right: 10%;
+	color: #3E4247;
+	font-family: 'Lato', sans-serif;
+	font-size: 20px;
+}
+
+.jb-box, #tothetop {
+	box-shadow: 0px 0px 20px #B1BBC5;
+}
+
+#tothetop {
+	position: fixed;
+	bottom: 1rem;
+	right: 1rem;
+	cursor: pointer;
+	background: #5C6369;
+	color: white;
+	padding: 3 4 3 4px;
+	border-radius: 4px;
+	font-family: 'Lato', sans-serif;
+	text-align: center;
+}
+
+.pt2 .ch a, .pt2 .ch {
+	color: white;
+}
+
+#mail1, #mail2, #mail3, #approval1, #approval2, #approval3 {
+	border: 1px solid #C8CACC;
+	border-radius: 4px;
+	margin: 15 15 15 5px;
+	padding: 20px;
+}
+
+#tb {
+	border-right: 1px;
+}
+
+table {
+	table-layout: fixed;
+}
+
+td {
+	vertical-align: middle;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+#top {
+	height: 1035px;
+	margin: auto;
+}
+
+#ttr {
+	text-align: center;
+}
+
+tr {
+	text-align: center;
+}
+
+th {
 	
-	body {
-            padding: 0px; margin: 0px;
-            box-sizing:board-box;
-            background: #EFEFEF;
-		}
-        hr {
-           
-            margin-right: 15px;
-            border-top: 3px double #477A8F;
-        }
+}
 
-        .pt {
-            display: flex;
-            margin: auto;
-        }
-        .pt2 {
-            display: flex;
-            flex-direction: column
-        }
-        .ch {
-            flex: 1;
-            border-right: 1px solid #EFEFEF;
-          
-        }
+ul {
+	list-style: none;
+}
 
-        .ch>:first-child {
-            font-size: 25px;
-            font-style: bold;
-            margin-left: 7px;
-            
-        }
-
-        .ch>:nth-child(2){
-            color: #9E9D9B;
-            margin-left: 130px;
-        }
-        
-       .pt2>.ch>span,.pt2>.ch>a {
-      		font-size : 15px;
-      		margin-left : 75%;
-      		transition:  all 1s;
-      
-       }
-       
-       .pt2>.ch>span:hover,.pt2>.ch>a:hover{
-       		cursor : pointer;
-       		margin-left : 70%;
-       		font-size:20px;
-       		transition:  all 1s;
-       }
-       
-	  .jb-box { width: 100%; height: 260px; overflow:hidden;margin: 0px auto; position: relative; border-radius: 10px; }
-       video { width: 100%; }
-      .jb-text { position: absolute; top: 50%; width: 100%; font-family: 'Lato', sans-serif;}
-      .jb-text p { margin-top: -24px; text-align: center; font-size: 30px; color: black; opacity: 0.7;}
-	  .jb-text span { font-size:45px; color:#477A8F; opacity: 2;}
-
-		#clock {
-			position : absolute;
-			right : 10%;
-			color : #3E4247;
-			font-family: 'Lato', sans-serif;
-			font-size:20px; 
-			
-		}
-
-		 .jb-box, #tothetop {
-		 box-shadow: 0px 0px 20px #B1BBC5; }
-		 
-		#tothetop { position: fixed; bottom: 1rem; right: 1rem; cursor: pointer;
-					background:#5C6369; color:white;padding:3 4 3 4px; border-radius:4px;
-					font-family: 'Lato', sans-serif; text-align:center; }
-		
-		.pt2 .ch a, .pt2 .ch {
-		color : white;
-		}
-		
-		#mail1, #mail2, #mail3,
-		#approval1, #approval2, #approval3
-		 { 
-			border:1px solid #C8CACC; 
-			border-radius:4px;
-            margin : 15 15 15 5px; 
-            padding:20px;
-		
-		 }
-		 #tb{
-		 border-right:1px;
-		 }
-		 
-		table {
-		table-layout: fixed;
-		}
-
-		td {
-		vertical-align: middle; 
-		overflow:hidden;
-		white-space : nowrap;
-		text-overflow: ellipsis;
-
-		}
-
-		 #top {
-		 	height: 1035px; margin:auto;
-		 }
-		 
-		 #ttr {
-		 	text-align:center;
-		 }
-		 
-		 tr {
-		 	text-align:center;
-		 }
-		 
-		 th{
-		 }
-		
-    </style>
+li {
+    border-radius: 7px;
+    width: 350px;
+    margin-bottom: 5px;
+    font-size: 16px;
+    height: 26px;
+    padding-top: 3px;
+    margin-left: 20px;
+}
+</style>
 </head> 
 
 <body  onload="printClock()">
@@ -181,13 +229,56 @@
 		</tbody>
 	</table> 
                 </div>
+                
                 <div class="ch">
                     <span> Schedule</span> 
-                    <a  style="margin-left:223px;" href="">more</a>
+                    <a  style="margin-left:223px;" href="Schedulermain.do">more</a>
                     <hr>
-					리용이 <br>
-                    오늘의 일정 : 
+				
+					<div style="margin-bottom: 15px;"><img src="resources/images/cal_main.png" style="margin-top: 15px;
+				    margin-left: 15px;
+				    margin-right: 10px;">
+                   <span style="position: relative; top: -5px;">오늘의 일정  </span> </div>
+                   
+				<div>
+					<ul id="add_li">
+					
+					</ul>
+				</div>
                 </div>
+                
+                <!-- 리룡히 전용 스크립트임 -->
+                <script>
+        	
+                 
+                 $(function(){
+                		$.ajax({
+             				url:"ScheduleListForMain.do",
+             				dataType:"json",
+             				success:function(data){
+             					
+             					for(var i=0 in data){
+             						console.log(data[i]);
+             					   var date = data[i].startdate+" "+data[i].starttime;
+                                   var date2 = (moment(date).format('LT'));
+                                   console.log(date);
+                                   $("#add_li").append('<li style = "background:' + data[i].color + '";>&nbsp;' + date2 + '&nbsp;&nbsp;&nbsp;&nbsp;' + data[i].Sche_name +'</li>');   
+             					  }
+             			
+             					},
+             					error : function() {
+             	        			console.log("전송실패");
+             	        				} 
+             			
+             				
+             			})
+           
+         		});
+         		
+                </script>
+                
+                
+                
  				<div class="ch" >  
                     <div class="pt2"style="width: 400px; height:310px;">
                         <div class="ch" style="background: #477A8F;"> 
@@ -199,9 +290,11 @@
                               &nbsp; Write Mail <br> <br><br>
                             <a href="mailWrite.do"> <span> →  바로가기 </span></a>
                         </div>
-                    </div>  
+                    </div>
 
-                </div>                    
+
+			</div>         
+			           
         </div> <br>
         <div class="pt" style="width: 1200px; height:310px;" >
             <div class="ch">

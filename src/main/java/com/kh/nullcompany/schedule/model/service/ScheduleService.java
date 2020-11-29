@@ -74,6 +74,8 @@ public interface ScheduleService {
 
 	int updateCommunity(Calendar calendar);
 
+	ArrayList<Schedule> ScheduleListForMain();
+
 
 
 

@@ -148,6 +148,10 @@ public class ScheduleDao {
 		return sqlSession.update("scheduleMapper.updateCommunity",calendar);
 	}
 
+	public ArrayList<Schedule> ScheduleListForMain() {
+		return(ArrayList) sqlSession.selectList("scheduleMapper.ScheduleListForMain");
+	}
+
 
 
 
