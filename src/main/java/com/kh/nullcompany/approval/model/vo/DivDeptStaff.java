@@ -5,17 +5,19 @@ public class DivDeptStaff {
 	private int memNo;
 	private String name;
 	private int rankNo;
+	private String rankName;
 	
 	public DivDeptStaff() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public DivDeptStaff(int memNo, String name, int rankNo) {
+	public DivDeptStaff(int memNo, String name, int rankNo, String rankName) {
 		super();
 		this.memNo = memNo;
 		this.name = name;
 		this.rankNo = rankNo;
+		this.rankName = rankName;
 	}
 
 	public int getMemNo() {
@@ -42,10 +44,20 @@ public class DivDeptStaff {
 		this.rankNo = rankNo;
 	}
 
+	public String getRankName() {
+		return rankName;
+	}
+
+	public void setRankName(String rankName) {
+		this.rankName = rankName;
+	}
+
 	@Override
 	public String toString() {
-		return "divDeptStaff [memNo=" + memNo + ", name=" + name + ", rankNo=" + rankNo + "]";
+		return "DivDeptStaff [memNo=" + memNo + ", name=" + name + ", rankNo=" + rankNo + ", rankName=" + rankName
+				+ "]";
 	}
+	
 	
 	
 }
