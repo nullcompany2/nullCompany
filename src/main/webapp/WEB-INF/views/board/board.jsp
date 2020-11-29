@@ -22,19 +22,38 @@
 
 </head>
 <style>
-select {
-   -webkit-appearance: none; /* 네이티브 외형 감추기 */
-   -moz-appearance: none;
-   appearance: none; /* 화살표 모양의 이미지 */
-   width: 100px; /* 원하는 너비설정 */
-   padding: .5em .5em; /* 여백으로 높이 설정 */
-   font-family: inherit; /* 폰트 상속 */
-   background:
-      url(https://farm1.staticflickr.com/379/19928272501_4ef877c265_t.jpg)
-      no-repeat 95% 50%; /* 네이티브 화살표 대체 */
-   -moz-appearance: none;
-   border-radius: 0px;
-}
+#category {
+		position:relatived;
+		margin-left:35%;
+		border : none;
+		padding : 3px;
+		font-size : 15px;
+		margin-bottom : 5px;
+		
+	}
+	
+	#search {
+		position:relatived;
+		border: 1px solid #3E4247;
+		border-radius : 3px;
+		padding : 3px;
+		font-size : 15px;
+		margin-bottom : 5px;
+		margin-left:5px;
+	
+	}
+	
+	#searchBtn {
+	
+	background:#477A8F;
+	padding:5px 10px;
+	border-radius:3px;
+	border:none;
+	color:white;
+	margin-bottom :5px;
+	cursor :pointer;
+		
+	}
 
 body {
    font-family: "Noto Sans KR", sans-serif;
@@ -116,10 +135,7 @@ a:active {
    font-weight: bolder;
 }
 
-#search {
-   position: relatived;
-   margin-left: 37%;
-}
+
 
 table tr:last-of-type {
    padding-bottom: 50px;
@@ -295,16 +311,15 @@ tr>td {
       </table>
       <br>
 
-      <div class="searchArea" align="center">
-         <select id="searchCondition" name="searchCondition">
-            <option>---</option>
-            <option value="title">제목</option>
-            <option value="content">내용</option>
-            <option value="writer">작성자</option>
-         </select> <input type="search" style="padding: .5em .5em;">
-         <button type="submit" style="padding: .5em .5em;">검색하기</button>
-
-      </div>
+      <select id="category"> 
+				<option>-----</option>
+				<option value="받는사람">제목</option>
+				<option value="제목">글쓴이</option>
+				<option value="내용">내용</option>
+				<option value="제목내용">제목 + 내용</option>
+			</select>
+			<input  id="search" type="text" placeholder="게시물 검색"> 
+			<button id="searchBtn" onclick="goSearch();" > 검색 </button> <br>
    </div>
 
 

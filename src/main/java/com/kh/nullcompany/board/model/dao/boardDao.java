@@ -32,7 +32,7 @@ public class boardDao {
 		return sqlSession.update("boardMapper.updateCount",bNo);
 	}
 
-	public board selectNotice(int bNo) {
+	public board selectBoard(int bNo) {
 		return sqlSession.selectOne("boardMapper.selectBoard",bNo);
 	}
 
@@ -46,5 +46,13 @@ public class boardDao {
 
 	public int insertBoard(board b) {
 		return sqlSession.insert("boardMapper.insertBoard",b);
+	}
+
+	public int updateBoard(board b) {
+		return sqlSession.update("boardMapper.updateBoard", b);
+	}
+
+	public int deleteBoard(int bNo) {
+		return sqlSession.update("boardMapper.deleteBoard",bNo);
 	}
 }

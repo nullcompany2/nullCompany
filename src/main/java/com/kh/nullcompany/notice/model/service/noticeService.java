@@ -48,8 +48,12 @@ public interface noticeService {
 
 	int ndelete(int nNo);
 
-	int nupdate(notice n);
 
 	ArrayList<notice> noticeList();
+
+
+	int updateNotice(notice n);
+
+	int deleteNotice(int nNo);
 
 }
