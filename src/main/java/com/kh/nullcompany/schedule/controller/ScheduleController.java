@@ -330,6 +330,8 @@ public class ScheduleController {
 	
 	}
 	
+
+	
 	
 	// 공유 캘린더 정보 가져오기
 	@RequestMapping("editDetailPublicCal.do" )
@@ -369,6 +371,24 @@ public class ScheduleController {
 		sService.LookMember(lookmemno, Calendar.getCalNo());
 
 	}
+	
+	   // 메인에 뿌리기
+	   @RequestMapping("ScheduleListForMain.do" )
+	   public void ScheduleListForMain(ModelAndView mv, HttpServletRequest request, HttpServletResponse response) throws JsonIOException, IOException{
+
+	      ArrayList<Schedule> ScheduleList = sService.ScheduleListForMain();
+	   
+	      System.out.println(ScheduleList);
+	         
+
+			
+		response.setContentType("application/json; charset=UTF-8");
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		gson.toJson(ScheduleList,response.getWriter());
+			
+	     
+	   
+	   }
 	
 
 }

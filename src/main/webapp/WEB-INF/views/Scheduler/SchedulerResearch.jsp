@@ -9,6 +9,7 @@
 <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR"
 	rel="stylesheet">
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <link rel="stylesheet"
 	href="<c:url value="/resources/css/schemaincal.css"/>">
 	
@@ -158,7 +159,7 @@
                  
                       <tbody>
                       <c:forEach var="Sche_name_Search" items="${ Sche_name_Search }">
-                        <tr style="height: 30px;">
+                        <tr style="height: 30px;" id="${ Sche_name_Search.sche_no }">
                           <td class="ta" style="text-align: center;"><p style="font-size: 14px;">${ Sche_name_Search.startdate }</p></td>
                           <td class="ta" style="    border-collapse: collapse;
 							    overflow: hidden;
@@ -169,14 +170,22 @@
 							    border-collapse:collapse;">
                             &nbsp; <span> ${Sche_name_Search.sche_name } </span>
                           </td>
-                          <td class="ta" style="display:table-cell; background-color: ${ Sche_name_Search.color };width: 75px;">
-                            <span style="margin-left: 25px; font-size: 14px;"> ${ Sche_name_Search.starttime }시</span>
+                          <td class="ta" style="display:table-cell; background-color: ${ Sche_name_Search.color };width: 100px;">
+                            <span id="startinfo${ Sche_name_Search.sche_no }" style="margin-left: 25px; font-size: 14px;"> </span>
                          </td>
                          <td class="ta" style="display:table-cell; background-color: ${ Sche_name_Search.color };border-collapse:collapse;">
                             <span style="margin-left: 25px; font-size: 14px;"> ${ Sche_name_Search.sche_content }</span>
                          </td>
                         </tr>
+                        
+                        <script>
+						var startinfo = document.getElementById('startinfo${ Sche_name_Search.sche_no }');
+						var date2 = '${Sche_name_Search.startdate} ${Sche_name_Search.starttime}';
+						document.getElementById('startinfo${ Sche_name_Search.sche_no }').innerHTML = (moment(date2).format('LT'));
+						</script>
+						
                        </c:forEach>
+                       
                        <c:forEach var="Cal_name_Search" items="${ Cal_name_Search }">
                         <tr style="height: 30px;">
                           <td class="ta" style="text-align: center;"><p style="font-size: 14px;">${ Cal_name_Search.startdate }</p></td>
