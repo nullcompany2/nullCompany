@@ -11,6 +11,121 @@
     <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 	<link rel="stylesheet" href='<c:url value="/resources/css/approval_InsertForm.css"/>'>
 	<link rel="stylesheet" href='<c:url value="/resources/css/approval_subNavi.css"/>'>
+	<style>  
+       body {
+                font-family: "Noto Sans KR", sans-serif;
+                padding: 0px; margin: 0px;
+                box-sizing:board-box;
+            }
+ 
+      .modal-dragscroll{
+      	  display: none;
+          width: 750px;
+          height: 600px;
+          padding: 10px 10px;
+          background-color: #fefefe;
+          border: 1px solid #888;
+          border-radius: 3px;
+          text-align: center;
+          color:rgb(65, 65, 66);
+         overflow: auto;
+      }
+       .modal-dragscroll .modal-close-btn {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+       }
+       
+       button:hover{
+           cursor: pointer;
+       }
+
+       .modal-close-btn{
+          cursor: pointer;
+       }
+
+       #deptList{
+          position: absolute;
+          width: 200px;
+          height: 430px;
+          top: 100px;
+          left: 50px;
+       }
+
+       .depts{
+          border:none;
+          color: white;
+          background: #477A8F;
+          width: 80px;
+          height: 30px;
+          margin: 10px;
+          margin-top: 20px;
+          border-radius: 10px;
+       }
+       #staffList{
+         position: absolute;
+          width: 400px;
+          height: 430px;
+          top: 100px;
+          left: 300px;
+          text-align: left;
+          
+       }
+       #selBtns{
+          position: absolute;
+          width: 50px;
+          height: 430px;
+          top: 100px;
+          left: 490px;
+          padding: 10px;
+       }
+
+       #selBtns img{
+          cursor: pointer;
+       }
+       
+
+
+
+       #d1{
+          position: absolute;
+          top: 50px;
+          left: 50px;
+       }
+
+       #d2{
+          position: absolute;
+          top: 50px;
+          left: 300px;
+       }
+
+       .staffInsert{
+          position: absolute;
+          width: 80px;
+          height: 30px;
+          top: 560px;
+          left: 335px;
+          border: none;
+          background: #477A8F;
+          color: white;
+          border-radius: 10px;
+       }
+       #lt{
+         position: absolute;
+         top: 80px;
+         left: 300px;
+       }
+    </style>
+    <script>
+    	$(document).ready(function(){
+    		var checkload = true;
+    		
+    		
+	    	$(window).on('beforeunload', function(){
+	    		return '...';
+	    	});
+    	});
+    </script>
 </head>
 <body>
 	<div id='wrap'>
@@ -102,14 +217,22 @@
 							<tr id="tr1">
 								<td>문서 종류</td>
 								<td>${ d.formName }</td>
+								<td>기안부서</td>
+								<td>${d.drafterDeptName}부</td>
+                            </tr>
+                            <tr id="tr1">
+								<td>임시 번호</td>
+								<td>${ d.docTempNo }</td>
 								<td>기안자</td>
-								<td>${d.drafterDeptName}부 / ${d.drafterRankName} / ${d.drafterName}</td>
+								<td>${d.drafterRankName} / ${d.drafterName}</td>
                             </tr>
                         </tbody>
                     </table>
                     <div class="appr_line" id="appr_line">
                         <span id="appr_set">결재선 설정</span>
-                        <span class="cb" id="cb3">결재선 설정</span>
+                        <span class="cb" id="cb2">결재자 설정</span>
+                        <span class="cb" id="cb3">참조자 설정</span>
+                        <span class="cb" id="cb4">수신자 설정</span>
                     </div>
                     <table class="appr_insert_table2" >
                         <tbody>
@@ -239,5 +362,177 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- 결재자 선택 모달 -->
+     <div id="apprSet" class="modal-dragscroll">
+         <span style="float: left; color: #477A8F; font-weight: bolder;">결재선 설정</span>
+
+         <span id="d1"style="color: #477A8F;">부서 선택</span>
+         <span id="d2"style="color: #477A8F;">사원 목록</span>
+         <div id="deptList" style="border: 1px solid black;">
+         	<c:choose>
+         		<c:when test="${ !empty dtList }">
+         			<c:forEach var="dt" items="${ dtList }">
+	         			<c:choose>
+	         				<c:when test="${ dt.deptName eq '부서 선택' }">
+	         					<button class="depts" id="${ dt.deptNo }">미등록</button>
+	         				</c:when>
+	         				<c:otherwise>         				
+	         					<button class="depts" id="${ dt.deptNo }">${ dt.deptName }부</button>
+	         				</c:otherwise>
+	         			</c:choose>
+         			</c:forEach>
+         		</c:when>
+         	</c:choose>
+         </div>
+         <div id="staffList" style="border: 1px solid black;">
+         </div>
+         <p id="lt" style="text-align: left; color: #477A8F; font-size: 10pt; margin: 0px;">&nbsp;<결재자 선택></p><br>
+         <button class="staffInsert">등록</button>
+         <a class="modal-close-btn cursor">X</a>
+      </div>
+      
+      <!-- 참조자 선택 모달 -->
+      <div id="checkSet" class="modal-dragscroll">
+         <span style="float: left; color: #477A8F; font-weight: bolder;">결재선 설정</span>
+
+         <span id="d1"style="color: #477A8F;">부서 선택</span>
+         <span id="d2"style="color: #477A8F;">사원 목록</span>
+         <div id="deptList" style="border: 1px solid black;">
+         	<c:choose>
+         		<c:when test="${ !empty dtList }">
+         			<c:forEach var="dt" items="${ dtList }">
+	         			<c:choose>
+	         				<c:when test="${ dt.deptName eq '부서 선택' }">
+	         					<button class="depts" id="${ dt.deptNo }">미등록</button>
+	         				</c:when>
+	         				<c:otherwise>         				
+	         					<button class="depts" id="${ dt.deptNo }">${ dt.deptName }부</button>
+	         				</c:otherwise>
+	         			</c:choose>
+         			</c:forEach>
+         		</c:when>
+         	</c:choose>
+         </div>
+         <div id="staffList" style="border: 1px solid black;">
+         </div>
+         <p id="lt" style="text-align: left; color: #477A8F; font-size: 10pt; margin: 0px;">&nbsp;<참조자 선택></p><br>
+         <button class="staffInsert">등록</button>
+         <a class="modal-close-btn cursor">X</a>
+      </div>
+      
+      <!-- 수신자 선택 모달 -->
+      <div id="receiveSet" class="modal-dragscroll">
+         <span style="float: left; color: #477A8F; font-weight: bolder;">결재선 설정</span>
+
+         <span id="d1"style="color: #477A8F;">부서 선택</span>
+         <span id="d2"style="color: #477A8F;">사원 목록</span>
+         <div id="deptList" style="border: 1px solid black;">
+         	<c:choose>
+         		<c:when test="${ !empty dtList }">
+         			<c:forEach var="dt" items="${ dtList }">
+	         			<c:choose>
+	         				<c:when test="${ dt.deptName eq '부서 선택' }">
+	         					<button class="depts" id="${ dt.deptNo }">미등록</button>
+	         				</c:when>
+	         				<c:otherwise>         				
+	         					<button class="depts" id="${ dt.deptNo }">${ dt.deptName }부</button>
+	         				</c:otherwise>
+	         			</c:choose>
+         			</c:forEach>
+         		</c:when>
+         	</c:choose>
+         </div>
+         <div id="staffList" style="border: 1px solid black;">
+         </div>
+         <p id="lt" style="text-align: left; color: #477A8F; font-size: 10pt; margin: 0px;">&nbsp;<수신자 선택></p><br>
+         <button class="staffInsert">등록</button>
+         <a class="modal-close-btn cursor">X</a>
+      </div>
+      <!-- 현재 임시문서번호 -->
+      <input type="hidden" id="docTempNo" value="${ d.docTempNo }"/>
+ <script>
+    function modal(id) {
+       var zIndex = 9999;
+       var modal = $('#' + id);
+
+       // 모달 div 뒤에 희끄무레한 레이어
+       var bg = $('<div>')
+          .css({
+             position: 'fixed',
+             zIndex: zIndex,
+             left: '0px',
+             top: '0px',
+             width: '100%',
+             height: '100%',
+             overflow: 'auto',
+             // 레이어 색갈은 여기서 바꾸면 됨
+             backgroundColor: 'rgba(0,0,0,0.4)'
+          })
+          .appendTo('body');
+
+       modal
+          .css({
+             position: 'fixed',
+             boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+
+             // 시꺼먼 레이어 보다 한칸 위에 보이기
+             zIndex: zIndex + 1,
+
+             // div center 정렬
+             top: '50%',
+             left: '50%',
+             transform: 'translate(-50%, -50%)',
+             msTransform: 'translate(-50%, -50%)',
+             webkitTransform: 'translate(-50%, -50%)'
+          })
+          .show()
+          // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
+          .find('.modal-close-btn')
+          .on('click', function() {
+             bg.remove();
+             modal.hide();
+          });
+    }
+
+    $('#cb2').on('click', function() {
+       // 결재자 설정 모달
+       modal('apprSet');
+    });
+    
+    $('#cb3').on('click', function() {
+        // 결재자 설정 모달
+        modal('checkSet');
+     });
+    
+    $('#cb4').on('click', function() {
+        // 결재자 설정 모달
+        modal('receiveSet');
+     });
+    
+    $(function(){
+    	$('.depts').on('click',function(){
+    		var deptNo = $(this).attr('id');
+    		var docTempNo = $('#docTempNo').val();
+    		$.ajax({
+                url: "selectDeptStaff.do",
+                type: "post",
+             
+                data: {
+                    "deptNo": deptNo,
+                    "docTempNo": docTempNo
+                },
+                success: function (data) {
+                    console.log("성공띠");
+                },
+                error: function (request,
+                    status, error) {
+                    console.log("에이작스 오류");   
+                }
+            });
+    	});
+    });
+ </script>
+	
 </body>
 </html>

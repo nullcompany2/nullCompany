@@ -925,10 +925,6 @@ public class ApprovalController {
 		// 부서 정보 가져가기(결재선 설정을 위한 선행작업)
 		ArrayList<DeptList> dtList = aService.selectAllDept();
 		
-		for(DeptList dt : dtList) {
-			System.out.println("부서번호 : " + dt.getDeptNo());
-			System.out.println("부서명  : " + dt.getDeptName());
-		}
 		
 		if(result > 0) {
 			if(option == 1) {
@@ -968,6 +964,13 @@ public class ApprovalController {
 //	public void test(@RequestParam("docTempNo") String docTempNo) {
 //		
 //	}
+	
+	@RequestMapping("selectDeptStaff.do")
+	public void selectDeptStaff(HttpSession session, HttpServletResponse response, int deptNo, String docTempNo) {
+		response.setContentType("application/json; charset=utf-8");
+		System.out.println("부서번호 : " + deptNo);
+		System.out.println("임시번호 : " + docTempNo);
+	}
 
 	@RequestMapping("approvalAllDList.do")
 	public String approvalAllDList(HttpServletResponse response) {

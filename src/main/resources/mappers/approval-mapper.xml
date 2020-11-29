@@ -391,5 +391,6 @@
 			*
 		FROM
 			DEPARTMENT
+		ORDER BY DEPT_NO
 	</select>
 </mapper>
