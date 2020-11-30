@@ -177,4 +177,11 @@
         JOIN DEPARTMENT D ON M.DEPT_NO = D.DEPT_NO
 		WHERE DEPT_NAME = #{deptName}
 	</select>
+	
+	<!-- 인포 부서만 업데이트 -->
+	<update id="updateMemDept" parameterType="_int">
+		UPDATE MEMBER 
+        SET DEPT_NO = #{deptNo}
+		WHERE MEM_NO = #{memNo}
+	</update>
 </mapper>

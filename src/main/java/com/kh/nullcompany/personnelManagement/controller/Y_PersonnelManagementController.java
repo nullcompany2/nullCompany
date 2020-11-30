@@ -81,7 +81,7 @@ public class Y_PersonnelManagementController {
 			Map map = new HashMap();
 			map.put("text", text);
 			map.put("deptName", deptName);
-			System.out.println(map);
+
 			int result = yService.deptEdit(map);
 			
 
@@ -115,9 +115,27 @@ public class Y_PersonnelManagementController {
 			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 			gson.toJson(list,response.getWriter());
 			
-			System.out.println(list);
 
 		
+		}
+		
+		
+		// 사용자 승인 업데이트
+		@RequestMapping("updateMemDept.do")
+		public ModelAndView updateMemDept(ModelAndView mv, Member m,
+				HttpServletRequest request){
+
+			int result = yService.updateMemDept(m);
+
+			System.out.println("업데이트용" + m);
+
+			if(result>0) {
+				mv.setViewName("personnel_management/OrganizationManagement");
+			}else {
+				mv.addObject("msg","수정실패").setViewName("common/errorPage");
+			}
+			return mv;
+
 		}
 	
 	// 인사관리 사번으로 회원조회(모달) (Gson)

@@ -115,5 +115,10 @@ public class Y_PersonnelManagementServiceImpl implements Y_PersonnelManagementSe
 		return yDao.deptTypeMemlist(pi,deptName);
 	}
 
+	@Override
+	public int updateMemDept(Member m) {
+		return yDao.updateMemDept(m);
+	}
+
 
 }
