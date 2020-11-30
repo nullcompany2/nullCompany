@@ -129,7 +129,7 @@ a:active {
 	right : 312px;
 	top : 143px;
 	font-size : 12px;
-	padding : 3.5px 6px 3.5px 3.5px;
+	padding : 3.7px 6px 3.7px 3.5px;
 	display : none;
 	border-radius : 0px 6px 6px 0px;
 
@@ -137,7 +137,7 @@ a:active {
 
 #communitymodal {
 	display: none;
-	width: 590px;
+	width: 880px;
 	height: 420px;
 	padding: 10px 40px;
 	background-color: #fefefe;
@@ -196,7 +196,7 @@ a:active {
 }
 
 #dept_list {
-	width: 180px;
+	width: 190px;
 	height: 250px;
 	border: #888 solid 1px;
 	overflow-y: auto;
@@ -205,7 +205,7 @@ a:active {
 }
 
 #name_list {
-	width: 125px;
+	width: 270px;
 	height: 250px;
 	border: #888 solid 1px;
 	float: left;
@@ -216,8 +216,8 @@ a:active {
 }
 
 #enrollauthority {
-	height: 120px;
-	width: 120px;
+	height: 215px;
+	width: 280px;
 	border: #888 solid 1px;
 	position: absolute;
 	top: 135px;
@@ -350,7 +350,7 @@ a:active {
 	backgroung-color: red;
 }
 
-//
+
 #enrollname input[type="checkbox"] ~ #lb:before {
 	content: ' ';
 	display: inline-block;
@@ -484,7 +484,7 @@ a:active {
 			border-radius: 3px; margin-left: 180px; cursor: pointer; font-size:15px;" />
 	</div>
 	
-	<!-- 공유 캘린더 모달 -->
+
 					<!-- 멤버 리스트 모달임!!  -->
 					<div id="communitymodal" class="modal-dragscroll">
 						<h3 style="color: #477A8F; margin-bottom: 15px; margin-top: 12px;">
@@ -503,7 +503,7 @@ a:active {
 													<c:forEach var="memList" items="${ memList }">
 														<c:if test='${deptList.deptNo eq memList.deptNo}'>
 															<li><label><input type="checkbox" id="name"
-																	value="${ memList.name } < ${ memList.emailAddress } >" />${ memList.name }(${ memList.id })</label>
+																	value="${ memList.name } < ${ memList.emailAddress } >" /> &nbsp; ${ memList.name }(${ memList.id })</label>
 																	<input type="hidden" value="${memList.name } < ${ memList.emailAddress } >">
 																	</li>
 														</c:if>
@@ -519,27 +519,28 @@ a:active {
 								</div>
 							</div>
 
-							<div style="position: absolute; right: 165px; top: 160px;">
+							<div style="position: absolute; right: 330px; top: 160px;">
 								<img src="resources/images/right.png" id="enrolladd"><br>
 								<img src="resources/images/left.png" id="enrollsub">
 							</div>
 
 
 							<p
-								style="font-size: 13px; position: absolute; position: absolute; right: 90px; top: 115px;">
+							style="font-size:13px;
+							position: absolute;
+							right: 240px; top: 115px;">
 								<받는 사람>
 							</p>
 							<div id="enrollauthority">
 
 								<p id="enrollname"
-									style="width: 100px; font-size: 12px; position: absolute; text-align: left; top: 5px; margin-left: 5px;">
-
+									style="width: 250px; font-size: 12px; position: absolute; text-align: left; top: 5px; margin-left: 5px;">
 								</p>
 
 
 							</div>
 
-							<div style="position: absolute; bottom: 20px; left: 210px;">
+							<div style="position: absolute; bottom: 20px; left: 350px;">
 								<button id="email_sub"
 									style="background:#477A8F; color:white; padding: 5px 27px 6px; border: 1px solid #477A8F;">저장</button>
 								<button class="modal-close-btn cursor"
@@ -769,7 +770,7 @@ a:active {
                      
                        $.each(inputArray, function (index, item) {
                            
-                         tmp +='<label for="'+inputArray.eq(index).val()+'2"><input type="checkbox"" name="checkname" id="' +inputArray.eq(index).val()+ '2" class="checklist" value="'+ inputArray.eq(index).val() + '">' + inputArray.eq(index).val() +'</input><label><br>';
+                         tmp +='<label for="'+inputArray.eq(index).val()+'2"><input type="checkbox"" name="checkname" id="' +inputArray.eq(index).val()+ '2" class="checklist" value="'+ inputArray.eq(index).val() + '">&nbsp;' + inputArray.eq(index).val() +'</input><label><br>';
                        });
                         document.getElementById("result").innerHTML= tmp
                
