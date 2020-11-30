@@ -457,21 +457,13 @@
          var end3 = new Date(date2[0],date2[1]-1,date2[2],end2[0],end2[1]); // 끝 시간
          var start3 = new Date(date2[0],date2[1]-1,date2[2],start2[0],start2[1]); //시작시간
          var date3 = new Date(date2[0],date2[1]-1,date2[2]);
-          /* if((sd4.getTime()-date3.getTime()) == 0 ){ // 날짜 비교 --> 같은날이면 비교
-             if(start3 < sd3){ //시작시간
-                alert("이미 예약되어 있습니다.");
-                return false;
-             if(sdt5 < start3){ //끝시간
-                return false;
-                alert("이미 예약되어 있습니다.");
-             }
-           }
-         } */
+        if((sd4.getTime()-date3.getTime()) == 0 ){ // 날짜 비교 --> 같은날이면 비교
+         if (!(start3 >= sdt5 || end3 <= sd3)) {
+             alert("이미예약이되있습니다.");
+             return false;
+          } 
+         } 
          
-         if((start3 >= sd3 || sdt5 <= start3)){
-             alert("이미 예약되어 있습니다.");
-            return false;
-           }
           }     
      });
       
