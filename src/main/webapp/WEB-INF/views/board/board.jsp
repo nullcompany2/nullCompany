@@ -311,20 +311,31 @@ tr>td {
       </table>
       <br>
 
-      <select id="category"> 
+    <select id="category"> 
 				<option>-----</option>
 				<option value="제목">제목</option>
 				<option value="글쓴이">글쓴이</option>
 				<option value="내용">내용</option>
 				<option value="제목내용">제목 + 내용</option>
 			</select>
-			<input  id="search" type="text" placeholder="게시물 검색"> 
+			<input id="search" type="text" placeholder="게시물 검색"> 
 			<button id="searchBtn" onclick="goSearch();" > 검색 </button> <br>
-   </div>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.js"></script>
+<script>
+function goSearch(){
+   	
+	var category=  $("#category").children("option:selected").val();
+	var search = $("#search").val();
+	
+	if(category =="-----"){
+  	  alert("분류를 선택하지 않았습니다.");
+	}else if(search != ""){
+			document.location.href='searchBoard.do?category='+category+'&search='+search;	
+	}
+	  }
 
 
-
-   <script>
       function modal(id) {
          var zIndex = 9999;
          var modal = $('#' + id);

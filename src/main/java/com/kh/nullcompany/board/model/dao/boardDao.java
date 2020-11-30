@@ -1,6 +1,7 @@
 package com.kh.nullcompany.board.model.dao;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -54,5 +55,21 @@ public class boardDao {
 
 	public int deleteBoard(int bNo) {
 		return sqlSession.update("boardMapper.deleteBoard",bNo);
+	}
+
+	public ArrayList<board> searchbTitle(Map map) {
+		return (ArrayList)sqlSession.selectList("boardMapper.searchbTitle",map);
+	}
+
+	public ArrayList<board> searchbWriter(Map map) {
+		return (ArrayList)sqlSession.selectList("boardMapper.searchbWriter",map);
+	}
+
+	public ArrayList<board> searchbContent(Map map) {
+		return (ArrayList)sqlSession.selectList("boardMapper.searchbContent",map);
+	}
+
+	public ArrayList<board> searchbtitleContent(Map map) {
+		return (ArrayList)sqlSession.selectList("boardMapper.searchbtitleContent",map);
 	}
 }

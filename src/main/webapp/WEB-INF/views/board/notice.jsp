@@ -339,7 +339,7 @@ function goSearch(){
 	}else if(search != ""){
 			document.location.href='searchNotice.do?category='+category+'&search='+search;	
 	}
-	  }''
+	  }
       function modal(id) {
          var zIndex = 9999;
          var modal = $('#' + id);

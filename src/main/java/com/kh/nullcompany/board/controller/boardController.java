@@ -4,9 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +28,7 @@ import com.kh.nullcompany.board.model.vo.bcomment;
 import com.kh.nullcompany.board.model.vo.board;
 import com.kh.nullcompany.board.model.vo.bcomment;
 import com.kh.nullcompany.common.Pagination;
+import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.notice.model.vo.ncomment;
 import com.kh.nullcompany.notice.model.vo.notice;
 
@@ -237,6 +241,36 @@ public class boardController {
 			return "common/errorPage";
 		}
 	}
+	
+	// 검색하기 
+		@RequestMapping("searchBoard.do")
+		public ModelAndView searchBoard(ModelAndView mv, String category, String search,HttpSession session) {
+		
+			String memId = ((Member)session.getAttribute("loginUser")).getId();
+		
+		Map map = new HashMap();
+		
+		map.put("search",search);
+		map.put("memId",memId);
+		
+		if(category.equals("제목")) {
+		ArrayList<board> list = bService.searchbTitle(map);
+		mv.addObject("list",list);
+		}else if(category.equals("글쓴이")){
+		ArrayList<board> list = bService.searchbWriter(map);
+		mv.addObject("list",list);
+		}else if(category.equals("내용")) {
+			ArrayList<board> list = bService.searchbContent(map);
+			mv.addObject("list",list);
+		}else if(category.equals("제목내용")) {
+			ArrayList<board> list = bService.searchbtitleContent(map);
+			mv.addObject("list",list);
+		}
+		
+		mv.addObject("search",search);
+		mv.setViewName("board/searchBoard");
+		return mv;
+		}
 	
 
 }

@@ -274,7 +274,7 @@ public class noticeController {
 	}
 	
 	mv.addObject("search",search);
-	mv.setViewName("board/serchNotice");
+	mv.setViewName("board/searchNotice");
 	return mv;
 	}
 

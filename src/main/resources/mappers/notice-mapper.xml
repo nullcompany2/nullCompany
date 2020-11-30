@@ -261,6 +261,42 @@
 	 	AND (NTITLE LIKE '%' || #{search} || '%' OR NCONTENT LIKE '%' || #{search} || '%')
 	 	ORDER BY NNO DESC
 	 </select>
+	 
+	 
+	<!-- 검색 -->
+	<select id="searchtTitle" resultMap="tnoticeResultSet" parameterType="map">
+	 	SELECT * 
+	 	FROM TBL_TNOTICE
+	 	WHERE T_STATUS = 'Y'
+	 	AND TTITLE LIKE '%' || #{search} || '%'
+	 	ORDER BY TNO DESC
+	 </select>
+	 
+	 <select id="searchtWriter" resultMap="tnoticeResultSet" parameterType="map">
+		SELECT * 
+		FROM TBL_TNOTICE 
+		WHERE T_STATUS = 'Y'
+		AND TWRITER LIKE '%' || #{search} || '%'
+		ORDER BY TNO DESC
+	 </select>
+	 
+	 <select id="searchtContent" resultMap="tnoticeResultSet" parameterType="map">
+	 	SELECT * 
+		FROM TBL_TNOTICE 
+		WHERE T_STATUS = 'Y'
+		AND TCONTENT LIKE '%' || #{search} || '%'
+		ORDER BY TNO DESC
+	 </select>
+	 
+	 <select id="searchttitleContent" resultMap="tnoticeResultSet" parameterType="map"> 
+	 	SELECT * 
+	 	FROM TBL_TNOTICE 
+	 	WHERE T_STATUS = 'Y'
+	 	AND (TTITLE LIKE '%' || #{search} || '%' OR TCONTENT LIKE '%' || #{search} || '%')
+	 	ORDER BY TNO DESC
+	 </select>
+	 
+	 
 </mapper>
 
 
