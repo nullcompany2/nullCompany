@@ -36,6 +36,7 @@
   	<resultMap id="rankResultSet" type="Rank">
 		<result property="rankNo" column="RANK_NO" />
 		<result property="rankName" column="RANK_NAME" />
+		<result property="orderByRank" column="ORDERRANK" />
 	</resultMap>  
 	
   	<resultMap id="EmailResultSet" type="Email">
@@ -188,5 +189,55 @@
 	<!-- 부서 삭제 -->
 	<delete id="deptDelete">
      	DELETE FROM DEPARTMENT WHERE DEPT_NAME = #{deptName}
+    </delete>
+    
+    <!-- 직위 정렬 -->
+	<select id="selectOrderByRankList" resultMap="rankResultSet" parameterType="Rank">
+		SELECT RANK_NO, RANK_NAME,
+		RANK() OVER (ORDER BY RANK_NO ASC) ORDERRANK
+		FROM rank
+		WHERE RANK_NO != 0
+	</select> 
+	
+	<!-- 직위 업데이트 -->
+	<update id="rankEdit" parameterType="map">
+		UPDATE RANK
+		SET RANK_NAME = #{text}
+		WHERE RANK_NAME = #{rankName}
+	</update>
+	
+	<!-- 직위 추가 -->
+	 <insert id="rankAdd" parameterType="String">
+		INSERT INTO RANK VALUES(RANK_NO_SEQ.NEXTVAL,#{rankName})
+ 	</insert>
+ 	
+ 		<!-- 직위별 인원 수 -->
+	<select id="rankTypeMemlistCount" resultType="_int">
+	    SELECT COUNT(*)
+		FROM MEMBER M
+        JOIN RANK R ON M.RANK_NO = R.RANK_NO
+		WHERE RANK_NAME = #{rankName}
+	</select>
+	
+		<!-- 직위별 검색-->
+	<select id="rankTypeMemlist" resultMap="memberResultSet" parameterType="Member">      
+		SELECT *
+		FROM MEMBER M
+        JOIN RANK R ON M.RANK_NO = R.RANK_NO
+		WHERE RANK_NAME = #{rankName}
+	</select>
+	
+	
+	<!-- 인포 직위만 업데이트 -->
+	<update id="updateMemRank" parameterType="_int">
+		UPDATE MEMBER 
+        SET RANK_NO = #{lankNo}
+		WHERE MEM_NO = #{memNo}
+	</update>
+	
+	
+	<!-- 직위 삭제 -->
+	<delete id="rankDelete">
+     	DELETE FROM RANK WHERE RANK_NAME = #{rankName}
     </delete>
 </mapper>
