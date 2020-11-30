@@ -4,9 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +28,7 @@ import com.kh.nullcompany.board.model.vo.bcomment;
 import com.kh.nullcompany.board.model.vo.board;
 import com.kh.nullcompany.board.model.vo.bcomment;
 import com.kh.nullcompany.common.Pagination;
+import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.notice.model.vo.ncomment;
 import com.kh.nullcompany.notice.model.vo.notice;
 
@@ -176,5 +180,97 @@ public class boardController {
 		}
 		return renameFileName;
 	}
+	
+	@RequestMapping("bupView.do")
+	public ModelAndView boardDetail(ModelAndView mv, int bNo) {
+		mv.addObject("b", bService.selectUpdateBoard(bNo)).setViewName("board/bupView");
+		return mv;
+	}
+			
+	@RequestMapping("bupdate.do")
+	public ModelAndView boardUpdate(ModelAndView mv,board b,
+					HttpServletRequest request, 
+					@RequestParam(value="reloadFile", required=false) MultipartFile  file) {
+		if(file != null && !file.isEmpty()) { // 새로 업로드된 파일이 있다면
+			if(b.getRenameFileName() != null) { // 기존의 파일이 존재했을 경우 기존 파일을 삭제해준다.
+				deleteFile(b.getRenameFileName(),request); 
+			}
+			
+			String renameFileName = saveFile(file,request);
+			
+			if(renameFileName != null) {
+				b.setOriginalFileName(file.getOriginalFilename());
+				b.setRenameFileName(renameFileName);
+			}
+		}
+		
+		int result = bService.updateBoard(b);
+
+		if(result > 0) {
+			mv.addObject("bNo", b.getbNo()).setViewName("redirect:bdetail.do");
+		}else {
+			mv.addObject("msg","수정 실패").setViewName("common/errorPage");
+		}
+		return mv;
+	}
+	
+	public void deleteFile(String fileName, HttpServletRequest request) {
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = root + "\\buploadFiles";
+		// D:\H_PM\springWorkspace\springProject\src\main\webapp\resources\buploadFiles\20201005160703.jpg
+		File f = new File(savePath + "\\" + fileName);
+		
+		if(f.exists()) {
+			f.delete();
+		}
+	}
+	
+	@RequestMapping("bdelete.do")
+	public String boardDelete(int bNo, HttpServletRequest request) {
+		board b = bService.selectUpdateBoard(bNo);
+		
+		if(b.getRenameFileName() != null) {
+			deleteFile(b.getRenameFileName(),request);
+		}
+		
+		int result = bService.deleteBoard(bNo);
+		
+		if(result > 0) {
+			return "redirect:board.do";
+		}else {
+			return "common/errorPage";
+		}
+	}
+	
+	// 검색하기 
+		@RequestMapping("searchBoard.do")
+		public ModelAndView searchBoard(ModelAndView mv, String category, String search,HttpSession session) {
+		
+			String memId = ((Member)session.getAttribute("loginUser")).getId();
+		
+		Map map = new HashMap();
+		
+		map.put("search",search);
+		map.put("memId",memId);
+		
+		if(category.equals("제목")) {
+		ArrayList<board> list = bService.searchbTitle(map);
+		mv.addObject("list",list);
+		}else if(category.equals("글쓴이")){
+		ArrayList<board> list = bService.searchbWriter(map);
+		mv.addObject("list",list);
+		}else if(category.equals("내용")) {
+			ArrayList<board> list = bService.searchbContent(map);
+			mv.addObject("list",list);
+		}else if(category.equals("제목내용")) {
+			ArrayList<board> list = bService.searchbtitleContent(map);
+			mv.addObject("list",list);
+		}
+		
+		mv.addObject("search",search);
+		mv.setViewName("board/searchBoard");
+		return mv;
+		}
+	
 
 }

@@ -1,6 +1,7 @@
 package com.kh.nullcompany.notice.model.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.notice.model.vo.tcomment;
@@ -21,5 +22,19 @@ public interface tnoticeService {
 	int inserttNotice(tnotice t);
 
 	ArrayList<tnotice> tnoticeList();
+
+	tnotice selectUpdatetNotice(int tNo);
+
+	int updatetNotice(tnotice t);
+
+	int deletetNotice(int tNo);
+
+	ArrayList<tnotice> searchtTitle(Map map);
+
+	ArrayList<tnotice> searchtWriter(Map map);
+
+	ArrayList<tnotice> searchtContent(Map map);
+
+	ArrayList<tnotice> searchttitleContent(Map map);
 
 }

@@ -1,6 +1,7 @@
 package com.kh.nullcompany.notice.model.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -66,14 +67,42 @@ public class noticeServiceImpl implements noticeService {
 		return nDao.ndelete(nNo);
 	}
 
-	@Override
-	public int nupdate(notice n) {
-		return nDao.nupdate(n);
-	}
+	
 
 	@Override
 	public ArrayList<notice> noticeList() {
 		return nDao.noticeList();
+	}
+
+
+	@Override
+	public int updateNotice(notice n) {
+		return nDao.updateNotice(n);
+	}
+
+	@Override
+	public int deleteNotice(int nNo) {
+		return nDao.deleteNotice(nNo);
+	}
+
+	@Override
+	public ArrayList<notice> searchnTitle(Map map) {
+		return nDao.searchnTitle(map);
+	}
+
+	@Override
+	public ArrayList<notice> searchnWriter(Map map) {
+		return  nDao.searchnWriter(map);
+	}
+
+	@Override
+	public ArrayList<notice> searchnContent(Map map) {
+		return  nDao.searchnContent(map);
+	}
+
+	@Override
+	public ArrayList<notice> searchntitleContent(Map map) {
+		return  nDao.searchntitleContent(map);
 	}
 
 	

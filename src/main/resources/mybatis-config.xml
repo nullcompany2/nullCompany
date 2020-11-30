@@ -51,6 +51,7 @@
 	  <typeAlias type="com.kh.nullcompany.approval.model.vo.Absence" alias="Absence"/>
 	  <typeAlias type="com.kh.nullcompany.approval.model.vo.Resign" alias="Resign"/>
 	  <typeAlias type="com.kh.nullcompany.approval.model.vo.DeptList" alias="DeptList"/>
+	  <typeAlias type="com.kh.nullcompany.approval.model.vo.DivDeptStaff" alias="DivDeptStaff"/>
 	  <typeAlias type="com.kh.nullcompany.logo.model.vo.Logo" alias="Logo"/>
    </typeAliases>
    

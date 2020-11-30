@@ -73,4 +73,57 @@
 			#{originalFileName},#{renameFileName},DEFAULT,SYSDATE,SYSDATE,DEFAULT,DEFAULT,DEFAULT)
 	</insert>
 	
+	<update id="updateBoard" parameterType="board">
+		UPDATE TBL_BOARD
+		SET 
+			BTITLE=#{bTitle}
+		,	BCONTENT=#{bContent}
+		,	ORIGINAL_FILENAME=#{originalFileName}
+		,	RENAME_FILENAME=#{renameFileName}
+		,	B_MODIFY_DATE=SYSDATE
+		WHERE 
+		    BNO=#{bNo}
+	</update>
+	
+	<update id="deleteBoard" parameterType="_int">
+		UPDATE TBL_BOARD
+		SET
+			B_STATUS='N'
+		WHERE
+			BNO=#{bNo}
+	</update>
+	
+	<!-- 검색 -->
+	<select id="searchbTitle" resultMap="boardResultSet" parameterType="map">
+	 	SELECT * 
+	 	FROM TBL_BOARD
+	 	WHERE B_STATUS = 'Y'
+	 	AND BTITLE LIKE '%' || #{search} || '%'
+	 	ORDER BY BNO DESC
+	 </select>
+	 
+	 <select id="searchbWriter" resultMap="boardResultSet" parameterType="map">
+		SELECT * 
+		FROM TBL_BOARD 
+		WHERE B_STATUS = 'Y'
+		AND BWRITER LIKE '%' || #{search} || '%'
+		ORDER BY BNO DESC
+	 </select>
+	 
+	 <select id="searchbContent" resultMap="boardResultSet" parameterType="map">
+	 	SELECT * 
+		FROM TBL_BOARD 
+		WHERE B_STATUS = 'Y'
+		AND BCONTENT LIKE '%' || #{search} || '%'
+		ORDER BY BNO DESC
+	 </select>
+	 
+	 <select id="searchbtitleContent" resultMap="boardResultSet" parameterType="map"> 
+	 	SELECT * 
+	 	FROM TBL_BOARD 
+	 	WHERE B_STATUS = 'Y'
+	 	AND (BTITLE LIKE '%' || #{search} || '%' OR BCONTENT LIKE '%' || #{search} || '%')
+	 	ORDER BY BNO DESC
+	 </select>
+	
 </mapper>

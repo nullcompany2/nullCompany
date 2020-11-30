@@ -10,15 +10,18 @@
 
 <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR"
    rel="stylesheet">
-      <!-- 합쳐지고 최소화된 최신 CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<!-- 합쳐지고 최소화된 최신 CSS -->
+<link rel="stylesheet"
+   href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
 <!-- 부가적인 테마 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<link rel="stylesheet"
+   href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 
 <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<title>팀내공지</title>
+<script
+   src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<title>사내공지</title>
 
 </head>
 <style>
@@ -54,6 +57,8 @@
 	cursor :pointer;
 		
 	}
+	
+
 body {
    font-family: "Noto Sans KR", sans-serif;
    padding: 0px;
@@ -217,6 +222,7 @@ tr>td {
    right: 10px;
 }
 </style>
+
 <body>
 
    <div id='wrap'>
@@ -224,17 +230,17 @@ tr>td {
       <c:import url="../common/boardSubNav.jsp" />
       <div class="contents">
          <div class="contents-title">
-            <span class="ct1" style="margin-right: 77%;"> ${loginUser.deptName}팀공지</span>
-            
+            <span class="ct1" style="margin-right: 77%;">사내공지</span>
          </div>
-         <br>
-         <div style="margin-left:40px;">
-			총 게시글 갯수 : ${ pi.listCount }
+		<br>
+		<div style="margin-left:40px;">
+			" ${search} "  검색 결과입니다.
 		</div>
+		
          <div style="padding: 0px 30px 0px 30px;">
 
-               <table id="mrv_table" class=" table-striped  table-hover">
-             <colgroup>
+            <table id="mrv_table" class=" table-striped  table-hover" >
+               <colgroup>
                   <col width="10%" />
                   <col width="40%" />
                   <col width="15%" />
@@ -251,22 +257,21 @@ tr>td {
                   </tr>
                </thead>
                <tbody>
-                  <c:forEach var="t" items="${list }">
+                  <c:forEach var="n" items="${list }">
                      <tr>
-                        <td align="left">${t.tNo }</td>
-                        <td align="left">
-                        <c:if test="${!empty loginUser }">
-                              <c:url var="tdetail" value="tdetail.do">
-                                 <c:param name="tNo" value="${t.tNo }" />
+                        <td align="left">${n.nNo }</td>
+                        <td align="left"><c:if test="${!empty loginUser }">
+                              <c:url var="ndetail" value="ndetail.do">
+                                 <c:param name="nNo" value="${n.nNo }" />
                                  <c:param name="currentPage" value="${pi.currentPage }" />
                               </c:url>
-                              <a href="${tdetail }">${t.tTitle }</a>
+                              <a href="${ndetail }">${n.nTitle }</a>
                            </c:if> <c:if test="${empty loginUser }">
-                              ${t.tTitle }
+                              ${n.nTitle }
                            </c:if></td>
-                        <td align="left">${t.tWriter }</td>
-                        <td align="left">${t.tCount }</td>
-                        <td align="left">${t.tCreateDate }</td>
+                        <td align="left">${n.nWriter }</td>
+                        <td align="left">${n.nCount }</td>
+                        <td align="left">${n.nCreateDate }</td>
                      </tr>
                   </c:forEach>
             </table>
@@ -274,52 +279,20 @@ tr>td {
 
          </div>
       </div>
-      <table
-         style="margin: 10px 0px 0px 0px; width: 80%; border-collapse: collapse">
-         <!-- 페이징처리 -->
-			<tr align="center" height="20">
-				<td colspan="6" align="center">
-					<!-- [이전] --> <c:if test="${ pi.currentPage eq 1 }">
-						이전 &nbsp;
-					</c:if> <c:if test="${ pi.currentPage ne 1 }">
-						<c:url var="before" value="tnotice.do">
-							<c:param name="currentPage" value="${ pi.currentPage - 1 }" />
-						</c:url>
-						<a href="${ before }">이전</a> &nbsp;
-					</c:if> <!-- 페이지 --> <c:forEach var="p" begin="${ pi.startPage }"
-						end="${ pi.endPage }">
-						<c:if test="${ p eq pi.currentPage }">
-							<font color="#477A8F" size="3"><b>${ p }</b> </font>
-						</c:if>
-
-						<c:if test="${ p ne pi.currentPage }">
-							<c:url var="pagination" value="tnotice.do">
-								<c:param name="currentPage" value="${ p }" />
-							</c:url>
-							<a href="${ pagination }">${ p }</a> &nbsp;
-						</c:if>
-					</c:forEach> <!-- [다음] --> &nbsp;<c:if test="${ pi.currentPage eq pi.maxPage }">
-						다음
-					</c:if> <c:if test="${ pi.currentPage ne pi.maxPage }">
-						<c:url var="after" value="tnotice.do">
-							<c:param name="currentPage" value="${ pi.currentPage + 1 }" />
-						</c:url>
-						<a href="${ after }">다음</a>
-					</c:if>
-				</td>
-			</tr>
-      </table>
+      
       <br>
-<select id="category"> 
+
+   <select id="category"> 
 				<option>-----</option>
 				<option value="제목">제목</option>
 				<option value="글쓴이">글쓴이</option>
 				<option value="내용">내용</option>
 				<option value="제목내용">제목 + 내용</option>
 			</select>
-			<input id="search" type="text" placeholder="게시물 검색"> 
+			<input  id="search" type="text" placeholder="게시물 검색"> 
 			<button id="searchBtn" onclick="goSearch();" > 검색 </button> <br>
-
+			
+			
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.js"></script>
 <script>
 
@@ -331,59 +304,54 @@ function goSearch(){
 	if(category =="-----"){
   	  alert("분류를 선택하지 않았습니다.");
 	}else if(search != ""){
-			document.location.href='searchtNotice.do?category='+category+'&search='+search;	
+			document.location.href='searchNotice.do?category='+category+'&search='+search;	
 	}
 	  }
+      function modal(id) {
+         var zIndex = 9999;
+         var modal = $('#' + id);
 
-    function modal(id) {
-       var zIndex = 9999;
-       var modal = $('#' + id);
+         // 모달 div 뒤에 희끄무레한 레이어
+         var bg = $('<div>').css({
+            position : 'fixed',
+            zIndex : zIndex,
+            left : '0px',
+            top : '0px',
+            width : '100%',
+            height : '100%',
+            overflow : 'auto',
+            // 레이어 색갈은 여기서 바꾸면 됨
+            backgroundColor : 'rgba(0,0,0,0.4)'
+         }).appendTo('body');
 
-       // 모달 div 뒤에 희끄무레한 레이어
-       var bg = $('<div>')
-          .css({
-             position: 'fixed',
-             zIndex: zIndex,
-             left: '0px',
-             top: '0px',
-             width: '100%',
-             height: '100%',
-             overflow: 'auto',
-             // 레이어 색갈은 여기서 바꾸면 됨
-             backgroundColor: 'rgba(0,0,0,0.4)'
-          })
-          .appendTo('body');
+         modal
+               .css(
+                     {
+                        position : 'fixed',
+                        boxShadow : '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
 
-       modal
-          .css({
-             position: 'fixed',
-             boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+                        // 시꺼먼 레이어 보다 한칸 위에 보이기
+                        zIndex : zIndex + 1,
 
-             // 시꺼먼 레이어 보다 한칸 위에 보이기
-             zIndex: zIndex + 1,
+                        // div center 정렬
+                        top : '50%',
+                        left : '50%',
+                        transform : 'translate(-50%, -50%)',
+                        msTransform : 'translate(-50%, -50%)',
+                        webkitTransform : 'translate(-50%, -50%)'
+                     }).show()
+               // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
+               .find('.close_btn').on('click', function() {
+                  bg.remove();
+                  modal.hide();
+               });
+      }
 
-             // div center 정렬
-             top: '50%',
-             left: '50%',
-             transform: 'translate(-50%, -50%)',
-             msTransform: 'translate(-50%, -50%)',
-             webkitTransform: 'translate(-50%, -50%)'
-          })
-          .show()
-          // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
-          .find('.close_btn')
-          .on('click', function() {
-             bg.remove();
-             modal.hide();
-          });
-    }
-
-    $('#delete_btn').on('click', function() {
-       // 모달창 띄우기
-       modal('delete_modal');
-    });
-    
- </script>
+      $('#delete_btn').on('click', function() {
+         // 모달창 띄우기
+         modal('delete_modal');
+      });
+   </script>
 
 </body>
 </html>

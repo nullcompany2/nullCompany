@@ -321,10 +321,19 @@ tr>td {
          <div class="board_head">
             <div style="width: 90%; margin: auto;">
                <form method="post" action="">
-
+               
+						 <c:url var="bupView" value="bupView.do">
+							<c:param name="bNo" value="${b.bNo}"/>
+						</c:url>
+						<c:url var="bdelete" value="bdelete.do">
+					<c:param name="bNo" value="${ b.bNo }"/>
+				</c:url>
+						
+						
                   <input id="subBtn" type="button" value="수정"
-                     style="margin-left: 15px" onclick="" />
-                      <input  id="delBoard" type="button" value="삭제" /><input type="text"
+                     style="margin-left: 15px" onClick="location.href='${bupView}'" />
+                      <input  id="bdelete" type="button" value="삭제" />
+                      <input type="text"
                      id="ShareUrl" OnClick="javascript:CopyUrlToClipboard()"
                      style="position: absolute; top: 0; left: 0; width: 1px; height: 1px; margin: 0; padding: 0; border: 0;">
                   <button
@@ -414,9 +423,18 @@ tr>td {
       
       
    <script>
-   $("#delBoard").click(function(){
-		confirm("정말로 삭제하시겠습니까? 휴지통으로 이동합니다.");
-	});
+   var test = ${ b.bNo };
+   
+	$("#bdelete").click(function(){
+    	 if (confirm("정말로 삭제하시겠습니까? ") == true){ 
+
+    		document.location.href='bdelete.do?bNo='+ test;
+
+	        }else{   //취소
+
+	            return;
+	        }
+		});
       $(function(){
          getbCommentList();
          

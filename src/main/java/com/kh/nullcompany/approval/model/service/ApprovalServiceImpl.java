@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.kh.nullcompany.approval.model.dao.ApprovalDao;
 import com.kh.nullcompany.approval.model.vo.Absence;
 import com.kh.nullcompany.approval.model.vo.DeptList;
+import com.kh.nullcompany.approval.model.vo.DivDeptStaff;
 import com.kh.nullcompany.approval.model.vo.Document;
 import com.kh.nullcompany.approval.model.vo.Leave;
 import com.kh.nullcompany.approval.model.vo.Resign;
@@ -108,5 +109,10 @@ public class ApprovalServiceImpl implements ApprovalService {
 	@Override
 	public ArrayList<DeptList> selectAllDept() {
 		return aDao.selectAllDept();
+	}
+
+	@Override
+	public ArrayList<DivDeptStaff> selectDeptStaff(int deptNo, String docTempNo) {
+		return aDao.selectDeptStaff(deptNo, docTempNo);
 	}
 }

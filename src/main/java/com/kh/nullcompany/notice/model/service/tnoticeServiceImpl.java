@@ -1,12 +1,12 @@
 package com.kh.nullcompany.notice.model.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.nullcompany.board.model.vo.PageInfo;
-import com.kh.nullcompany.notice.model.dao.noticeDao;
 import com.kh.nullcompany.notice.model.dao.tNoticeDao;
 import com.kh.nullcompany.notice.model.vo.tcomment;
 import com.kh.nullcompany.notice.model.vo.tnotice;
@@ -57,5 +57,42 @@ public class tnoticeServiceImpl implements tnoticeService {
 	public ArrayList<tnotice> tnoticeList() {
 		return tDao.tnoticeList();
 	}
+
+	@Override
+	public tnotice selectUpdatetNotice(int tNo) {
+		return tDao.selecttNotice(tNo);
+	}
+
+	@Override
+	public int updatetNotice(tnotice t) {
+		return tDao.updatetNotice(t);
+	}
+
+	@Override
+	public int deletetNotice(int tNo) {
+		return tDao.deletetNotice(tNo);
+	}
+
+	@Override
+	public ArrayList<tnotice> searchtTitle(Map map) {
+		return tDao.searchtTitle(map);
+	}
+
+	@Override
+	public ArrayList<tnotice> searchtWriter(Map map) {
+		return tDao.searchtWriter(map);
+	}
+
+	@Override
+	public ArrayList<tnotice> searchtContent(Map map) {
+		return tDao.searchtContent(map);
+	}
+
+	@Override
+	public ArrayList<tnotice> searchttitleContent(Map map) {
+		return tDao.searchttitleContent(map);
+	}
+
+	
 
 }

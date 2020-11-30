@@ -154,4 +154,9 @@
     JOIN "RESOURCE" RS ON (R.RS_NUM = RS.RS_NUM)
 	ORDER BY R.R_DATE DESC , R.START_TIME
 	</select>
+	
+	<delete id="reservationDelete" parameterType="Reservation">
+	DELETE FROM RESERVATION
+	WHERE R_NUM=#{rNo}
+	</delete>
 </mapper>

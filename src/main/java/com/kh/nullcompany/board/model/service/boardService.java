@@ -1,6 +1,7 @@
 package com.kh.nullcompany.board.model.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.board.model.vo.bcomment;
@@ -19,6 +20,20 @@ public interface boardService {
 	int insertbComment(bcomment c);
 
 	int insertBoard(board b);
+
+	board selectUpdateBoard(int bNo);
+
+	int updateBoard(board b);
+
+	int deleteBoard(int bNo);
+
+	ArrayList<board> searchbTitle(Map map);
+
+	ArrayList<board> searchbWriter(Map map);
+
+	ArrayList<board> searchbContent(Map map);
+
+	ArrayList<board> searchbtitleContent(Map map);
 
 
 

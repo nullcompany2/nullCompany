@@ -1,6 +1,7 @@
 package com.kh.nullcompany.notice.model.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.notice.model.vo.ncomment;
@@ -48,8 +49,20 @@ public interface noticeService {
 
 	int ndelete(int nNo);
 
-	int nupdate(notice n);
 
 	ArrayList<notice> noticeList();
+
+
+	int updateNotice(notice n);
+
+	int deleteNotice(int nNo);
+
+	ArrayList<notice> searchnTitle(Map map);
+
+	ArrayList<notice> searchnWriter(Map map);
+
+	ArrayList<notice> searchnContent(Map map);
+
+	ArrayList<notice> searchntitleContent(Map map);
 
 }

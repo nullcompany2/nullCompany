@@ -70,6 +70,14 @@
 		<result property="deptName" column="DEPT_NAME"/>
 	</resultMap>
 	
+	<!-- 부서별 사원 정보 가져오기 -->
+	<resultMap id="deptStaffResultSet" type="DivDeptStaff">
+		<id property="memNo" column="MEM_NO"/>
+		<result property="name" column="NAME"/>
+		<result property="rankNo" column="RANK_NO"/>
+		<result property="rankName" column="RANK_NAME"/>
+	</resultMap>
+	
 	<!-- 진행중인 문서(전체) 게시글 갯수 -->
 	<select id="getProgressAllListCount" resultType="_int">
 		SELECT
@@ -391,5 +399,37 @@
 			*
 		FROM
 			DEPARTMENT
+		ORDER BY DEPT_NO
+	</select>
+	
+	<!-- 부서별 사원정보 가져오기(기안자,이미 올라간 스텝 제외) -->
+	<select id="selectDeptStaff" parameterType="map" resultMap="deptStaffResultSet">
+		SELECT
+		    MEM_NO
+		,   NAME
+		,   M.RANK_NO AS RANK_NO
+		,   R.RANK_NAME AS RANK_NAME
+		FROM
+    		MEMBER M
+		JOIN RANK R ON(M.RANK_NO = R.RANK_NO)
+		WHERE
+		    MEM_NO != (SELECT 
+		                DRAFTER_NO
+		              FROM
+		                APPROVAL_DOCUMENT
+		              WHERE 
+		                DOC_TEMP_NO = #{docTempNo})
+		AND
+		    MEM_NO NOT IN (SELECT
+		                 STAFF_NO
+		               FROM
+		                 APPROVAL_STEP
+		               WHERE
+		                 DOC_NO = #{docTempNo})
+		AND
+   			M_STATUS = 'Y'
+		AND
+		    DEPT_NO = #{deptNo}
+		ORDER BY RANK_NO
 	</select>
 </mapper>
