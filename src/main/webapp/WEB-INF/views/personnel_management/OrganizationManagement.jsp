@@ -251,16 +251,26 @@ function detailMemberInfo(){
 	</div>
 	
 	<!-- 삭제 모달 -->
-	<div id="delete_dept_modal" style="	width: 421px; height: 385px" class="modal-dragscroll">
+	<div id="delete_dept_modal" style="width: 450px;
+    height: 430px;" class="modal-dragscroll">
 	<h4 style="color: #477A8F;
     margin-left: -25px;
     margin-top: -7px;
     margin-bottom: 11px;">부서 삭제</h4>
-		<div style="margin-bottom: 20px;"><span id="dept_name_delete" style="    margin-bottom: 5px;
-    font-size: 15px;
-    font-weight: bold;">dd</span>
-		<span style="color: #707070; margin-bottom: 5px; font-size: 14px;">부서에 소속되어 있는 사용자</span></div>
-		
+		<div style="margin-bottom: 20px;">
+			<span style="color: #707070; margin-bottom: 5px; font-size: 14px;">부서 삭제는 해당 부서에 소속되어 있는 사용자가</span><br>
+			<span style="color: #707070; margin-bottom: 5px; font-size: 14px;">0명일 때 가능합니다.</span><br>
+			<span style="color: #707070; margin-bottom: 5px; font-size: 14px;">현재 </span>
+			<span id="dept_name_delete" style="    margin-bottom: 5px;
+				    font-size: 15px;
+				    font-weight: bold;">dd</span>
+			<span style="color: #707070; margin-bottom: 5px; font-size: 14px;">부서에 소속되어 있는 사용자는</span>
+			<span id="dept_name_delete_Count" style="    margin-bottom: 5px;
+				    font-size: 15px;
+				    font-weight: bold;">5</span>
+	    	<span style="color: #707070; margin-bottom: 5px; font-size: 14px;">명 입니다. </span>
+		</div>
+	
 			
 			<ul id="dept_mem">
  			
@@ -283,8 +293,8 @@ function detailMemberInfo(){
     
 
 		<div style="text-align: center; margin-top: 25px;">
-			<button id="edit_dept_btn"
-				style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">수정</button>
+			<button id="delete_dept_btn"
+				style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">삭제</button>
 			<button class="modal-close-btn cursor" 
 				style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">취소</button>
 		</div>
@@ -410,6 +420,13 @@ function detailMemberInfo(){
 		
 		});
 		
+		// 삭제 버튼 클릭 시 정보 뜨는거
+		$('#delete_dept_btn').on('click', function() {
+
+			  
+
+		});
+		
 		function mdListPaged(currentPage){
 			var deptName = $("#dept_name_delete").text();
 			
@@ -449,26 +466,14 @@ function detailMemberInfo(){
 		            		$li = $("<li style='width:230px; margin-bottom: 5px;font-size: 15px;'  class='dept_memList' id='li" + data.mlist[i].memNo +"'>");
 		            		$name = data.mlist[i].name;
 		            		$liend = $("</li>");
-		            		$select = $("<select style='float:right; width:100px; margin-right:20px' class='dept_list_select' id='" + data.mlist[i].memNo +"' >");
-		            		$selectend = $("</select>");
 		            		$li.append($name);
-							$li.append($select);
-							$li.append($selectend);
 							$li.append($liend);
 							$dept_mem.append($li);
 								
 		            	
 		            	}
 		            	
-		            	for(var i in data.deptListmodal){      
-		            		if(data.deptListmodal[i].deptName != deptName){
-		            			var option = $("<option value="+ data.deptListmodal[i].deptNo+">"+data.deptListmodal[i].deptName +"</option>");
-			                    $('.dept_list_select').append(option);
-		            		
-		            		}
 		            	
-		                    
-		                }
 
 
 		            	$tr = $('<tr align="center" height="20" id="dListPaging">'); 
