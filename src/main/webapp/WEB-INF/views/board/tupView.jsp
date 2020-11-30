@@ -23,6 +23,93 @@
 <title>글 수정 </title>
 
 <style>
+form input[type=button] {
+	font-size: 18px;
+	margin: 20px 5px 7px 5px;
+	background: none;
+	border: none;
+	color: #477A8F;
+	cursor: pointer;
+}
+
+select {
+	-webkit-appearance: none; /* 네이티브 외형 감추기 */
+	-moz-appearance: none;
+	appearance: none; /* 화살표 모양의 이미지 */
+	width: 120px; /* 원하는 너비설정 */
+	padding: .3em .5em; /* 여백으로 높이 설정 */
+	font-family: inherit; /* 폰트 상속 */
+	background:
+		url(https://farm1.staticflickr.com/379/19928272501_4ef877c265_t.jpg)
+		no-repeat 95% 50%; /* 네이티브 화살표 대체 */
+	-moz-appearance: none;
+	border-radius: 0px;
+}
+
+body {
+	font-family: "Noto Sans KR", sans-serif;
+	padding: 0px;
+	margin: 0px;
+}
+
+.container {
+	position: relative;
+	border-radius: 10px;
+	background: #e8ecee;
+	color: #676767;
+	width: 250px;
+	height: 100%;
+	font-size: 1.15em;
+	float: left;
+	border-bottom: none;
+	padding-top: 2px;
+}
+
+.drag-scrollbar {
+	overflow: auto;
+	height: 600px;
+}
+
+.drag-scrollbar::-webkit-scrollbar {
+	width: 10px;
+}
+
+.drag-scrollbar::-webkit-scrollbar-thumb {
+	background-color: #676767;
+	border-radius: 15px;
+}
+
+.drag-scrollbar::-webkit-scrollbar-track {
+	background-color: #e8ecee;
+	border-radius: 15px;
+	box-shadow: #e8ecee;
+}
+
+.H-personnel-subNavi {
+	margin-left: 15px;
+	margin-right: 15px;
+}
+
+li {
+	list-style: none;
+	margin-bottom: 10px;
+	font-size: 18px;
+}
+
+a {
+	text-decoration: none;
+	color: #676767;
+}
+
+.title {
+	font-size: 16px;
+	font-weight: bold;
+	margin-right: 50px;
+}
+
+.subTitle {
+	list-style: none;
+}
 
 /* contents */
 .contents {
@@ -42,28 +129,31 @@
 	font-weight: bolder;
 }
 
-form input[type=submit],form input[type=button] 
-	{
+.del {
+	opacity: 0%;
+}
+
+.del:hover {
+	opacity: 100%;
+}
+
+form input[type=button] {
 	font-size: 18px;
-	margin: 20px 5px 7px 5px;
+	margin: 7px 5px 7px 5px;
 	background: none;
 	border: none;
 	color: #477A8F;
-	cursor:pointer;
-} 
+}
 
-form input[type=text] {
+form>input[type=text] {
 	margin: 5px 0px 5px 0px;
 	border: none;
 	background: #F3F3F3;
 	height: 30px;
-	padding:0px 13px;
-	
 }
 
-form input[type=button]:focus,
- form>input[type=text]:focus, 
- li:focus, a:focus {
+form input[type=button]:focus, form>input[type=text]:focus, li:focus, a:focus
+	{
 	outline: none;
 }
 
@@ -75,75 +165,111 @@ a:active {
 	display: none;
 	width: 600px;
 	height: 650px;
-	padding: 40px 35px;
+	padding: 20px 30px;
 	background-color: #fefefe;
 	border: 1px solid #888;
 	border-radius: 3px;
 	text-align: left;
 	color: rgb(65, 65, 66);
-	
-} 
-
-.n-emp-i2 {
-	margin-top : 30px;
-
 }
-
- #mailTitle {
-	padding-top:0px; padding-bottom:10px;
-	margin-top:0px;
-
-}  
 
 #my_modal2 #modalContent {
- border-bottom: 1px solid #F4F4F4; 
- height: 350px;
- margin-bottom: 25px;
- overflow-y: scroll;
+	border-bottom: 1px solid #F4F4F4;
+	height: 350px;
+	margin-bottom: 25px;
+	overflow-y: scroll;
 }
 
+.n-emp-i2 :last-child {
+	height: 350px;
+	border-bottom: 1px solid #F4F4F4;
+	margin-bottom: 25px;
+	overflow: scroll;
+	
+	
+}
+
+form input[type=submit],form input[type=button] 
+	{
+	font-size: 18px;
+	margin: 20px 5px 7px 5px;
+	background: none;
+	border: none;
+	color: #477A8F;
+	cursor:pointer;
+} 
 </style>
 
 </head>
 <body>
+	<script type="text/javaScript">
+$(document).ready(function() {
+	
+	  $('#summernote').summernote({
+		  	
+ 	    	placeholder: '내용을 작성해주세요.',
+	        minHeight: 370,
+	        maxHeight: null,
+	        focus: true, 
+	        lang : 'ko-KR',
+	        toolbar: [
+			    // [groupName, [list of button]]
+			    ['fontname', ['fontname']],
+			    ['fontsize', ['fontsize']],
+			    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+			    ['color', ['forecolor','color']],
+			    ['table', ['table']],
+			    ['para', ['ul', 'ol', 'paragraph']],
+			    ['height', ['height']],
+			    ['insert',['picture','link','video']],
+			    ['view', ['fullscreen', 'help']]
+			  ],
+			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋음체','바탕체'],
+			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
+	  	
+	  });
+	  $("button[aria-label=Picture]").css('display','none');	  
+	  $("button[aria-label=Video]").css('display','none');	  
+	
+	});
+	
+
+</script>
 		<c:import url="../common/boardSubNav.jsp"/>
 
 		<div class="contents">
 			<div class="contents-title">
-				<span class="ct1">게시물 쓰기</span>
+				<span class="ct1">게시물 수정</span>
 			</div>
 
 			<div>
 				<div style="width: 90%; margin: auto;">
-				<form action="nupdate.do" method="post" enctype="multipart/form-data">
-						<input type="hidden" name="nNo" value="${ n.nNo }">
-						<input type="hidden" name="originalFileName" value="${ n.originalFileName }">
-						<input type="hidden" name="renameFileName" value="${ n.renameFileName }">	
-						<input type="submit" value="확인" id="update"/>
+				<form action="tupdate.do" method="post" enctype="multipart/form-data">
+						<input type="hidden" name="tNo" value="${ t.tNo }">
+						<input type="hidden" name="originalFileName" value="${ t.originalFileName }">
+						<input type="hidden" name="renameFileName" value="${ t.renameFileName }">	
+						
+						<input type="submit" value="확인" />
 						<input class="go2" type="button" value="미리보기" />
 						<a href="javascript:history.go(-1);"> 
 						<input type="button" value="이전으로" /></a> <br>
 						<br> &nbsp;게시판 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <select
 							id="category" name="category">
-							<option value="notice">사내공지</option>
 							<option value="tnotice">팀내공지</option>
-							<option disabled>--------------</option>
-							<option value="board">자유게시판</option>
 						</select><br> <br> 
 						&nbsp;작성자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="text" name="nWriter" style="width: 60%;" value= "  ${n.nWriter}" readonly/> <br> <br>
+						<input type="text" name="tWriter" style="width: 60%;" value= "  ${t.tWriter}" readonly/> <br> <br>
 						&nbsp;제목&nbsp;&nbsp;
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<input type="text"
-							name="nTitle"  style="width: 60%;" value="${n.nTitle }" /> <br>
-						<br>&nbsp;<label id="uploadFile">
-							파일첨부&nbsp;&nbsp;&nbsp;</label> 
-							<input type="file" name="uploadFile" id="bfile"><br>
-							<c:if test="${ !empty n.originalFileName }">
+							name="tTitle"  style="width: 60%;" value="${t.tTitle }" /> <br>
+						<br>&nbsp;<label id="uploadFile">파일첨부&nbsp;&nbsp;&nbsp;</label> 
+							<input type="file" name="reloadFile" ><br>
+							<c:if test="${ !empty t.originalFileName }">
 							<br>현재 업로드한 파일:
-							<a href="${ contextPath }/resources/buploadFiles/${ n.renameFileName}" download="${ n.originalFileName }">${ n.originalFileName }</a>
+							<a href="${ contextPath }/resources/buploadFiles/${ t.renameFileName}" download="${ t.originalFileName }">${ t.originalFileName }</a>
 					</c:if>
 						<br>
-						<textarea id="summernote" name="nContent">${n.nContent}</textarea>
+						<textarea id="summernote" name="tContent">${t.tContent}</textarea>
 
 					</form>
 

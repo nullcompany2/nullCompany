@@ -320,12 +320,20 @@ tr>td {
 
 		<c:import url="../common/boardSubNav.jsp" />
 		<!-- 게시판 -->
-		<div class="nupdate">
+		<div class="ndetail">
 			<div class="board_head">
 				<div style="width: 90%; margin: auto;">
 					<form method="post" action="">
-						<input name="nupdate" id="nupdate" type="button" value="수정"
-							style="margin-left: 15px" onclick="" />
+					<c:url var="nupView" value="nupView.do">
+							<c:param name="nNo" value="${n.nNo}"/>
+						</c:url>
+						<c:url var="ndelete" value="ndelete.do">
+					<c:param name="nNo" value="${ n.nNo }"/>
+				</c:url>
+						
+						<input id="subBtn" type="button" value="수정"
+							style="margin-left: 15px" onClick="location.href='${nupView}'"  />
+							
 						<input id="ndelete" type="button" value="삭제" />
 						<input type="text" id="ShareUrl" OnClick="javascript:CopyUrlToClipboard()"
 							style="position: absolute; top: 0; left: 0; width: 1px; height: 1px; margin: 0; padding: 0; border: 0;">
@@ -333,10 +341,7 @@ tr>td {
 							OnClick="javascript:CopyUrlToClipboard()">주소 복사</button>
 						<a href="javascript:history.go(-1);"> <input id=""
 							type="button" value="이전으로" /></a>
-				<c:if test="${ loginUser.id eq n.nWriter }">
-					<a href="${ nupview }">수정</a>
-					<a href="${ ndelete }">삭제</a>
-				</c:if>
+			
 					</form>
 				</div>
 
@@ -417,18 +422,18 @@ tr>td {
 
 
 			<script>
-   $("#ndelete").click(function(){
-		if(confirm("정말로 삭제하시겠습니까?") == true){
-			
-			document.location.href='ndelete.do?nNo';
-		
-   }else{
-	   
-	   return;
+			var test = ${ n.nNo };
    
-		}
-	});
-   
+			$("#ndelete").click(function(){
+		     	 if (confirm("정말로 삭제하시겠습니까? ") == true){ 
+
+		     		document.location.href='ndelete.do?nNo='+ test;
+
+			        }else{   //취소
+
+			            return;
+			        }
+				});
    
       $(function(){
          getnCommentList();

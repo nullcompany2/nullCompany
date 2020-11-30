@@ -4,9 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +26,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.common.Pagination;
+import com.kh.nullcompany.member.model.vo.Member;
 import com.kh.nullcompany.notice.model.service.tnoticeService;
 import com.kh.nullcompany.notice.model.vo.notice;
 import com.kh.nullcompany.notice.model.vo.tcomment;
@@ -172,4 +176,96 @@ public class tnoticeController {
 			
 			return jsonStr;
 		}
+		
+		@RequestMapping("tupView.do")
+		public ModelAndView tnoticeDeatil(ModelAndView mv, int tNo) {
+			mv.addObject("t", tService.selectUpdatetNotice(tNo)).setViewName("board/tupView");
+			return mv;
+		}
+				
+		@RequestMapping("tupdate.do")
+		public ModelAndView tnoticeUpdate(ModelAndView mv,tnotice t,
+						HttpServletRequest request, 
+						@RequestParam(value="reloadFile", required=false) MultipartFile  file) {
+			if(file != null && !file.isEmpty()) { // 새로 업로드된 파일이 있다면
+				if(t.getRenameFileName() != null) { // 기존의 파일이 존재했을 경우 기존 파일을 삭제해준다.
+					deleteFile(t.getRenameFileName(),request); 
+				}
+				
+				String renameFileName = saveFile(file,request);
+				
+				if(renameFileName != null) {
+					t.setOriginalFileName(file.getOriginalFilename());
+					t.setRenameFileName(renameFileName);
+				}
+			}
+			
+			int result = tService.updatetNotice(t);
+
+			if(result > 0) {
+				mv.addObject("tNo", t.gettNo()).setViewName("redirect:tdetail.do");
+			}else {
+				mv.addObject("msg","수정 실패").setViewName("common/errorPage");
+			}
+			return mv;
+		}
+		
+		public void deleteFile(String fileName, HttpServletRequest request) {
+			String root = request.getSession().getServletContext().getRealPath("resources");
+			String savePath = root + "\\buploadFiles";
+			// D:\H_PM\springWorkspace\springProject\src\main\webapp\resources\buploadFiles\20201005160703.jpg
+			File f = new File(savePath + "\\" + fileName);
+			
+			if(f.exists()) {
+				f.delete();
+			}
+		}
+		
+		@RequestMapping("tdelete.do")
+		public String tnoticeDelete(int tNo, HttpServletRequest request) {
+			tnotice t = tService.selectUpdatetNotice(tNo);
+			
+			if(t.getRenameFileName() != null) {
+				deleteFile(t.getRenameFileName(),request);
+			}
+			
+			int result = tService.deletetNotice(tNo);
+			
+			if(result > 0) {
+				return "redirect:tnotice.do";
+			}else {
+				return "common/errorPage";
+			}
+		}
+		
+		// 검색하기 
+		@RequestMapping("searchtNotice.do")
+		public ModelAndView searchtNotice(ModelAndView mv, String category, String search,HttpSession session) {
+		
+			String memId = ((Member)session.getAttribute("loginUser")).getId();
+		
+		Map map = new HashMap();
+		
+		map.put("search",search);
+		map.put("memId",memId);
+		
+		if(category.equals("제목")) {
+		ArrayList<tnotice> list = tService.searchtTitle(map);
+		mv.addObject("list",list);
+		}else if(category.equals("글쓴이")){
+		ArrayList<tnotice> list = tService.searchtWriter(map);
+		mv.addObject("list",list);
+		}else if(category.equals("내용")) {
+			ArrayList<tnotice> list = tService.searchtContent(map);
+			mv.addObject("list",list);
+		}else if(category.equals("제목내용")) {
+			ArrayList<tnotice> list = tService.searchttitleContent(map);
+			mv.addObject("list",list);
+		}
+		
+		mv.addObject("search",search);
+		mv.setViewName("board/searchtNotice");
+		return mv;
+		}
+
 }

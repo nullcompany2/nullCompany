@@ -126,4 +126,55 @@
         JOIN RANK R ON R.RANK_NO = M.RANK_NO
         WHERE (NAME LIKE  '%' || #{text} || '%')
 	</select>
+	
+	<select id="ID_SearchCount" resultType="_int">
+	 	SELECT COUNT(*)
+		FROM MEMBER M
+        JOIN DEPARTMENT D ON M.DEPT_NO = D.DEPT_NO
+        JOIN RANK R ON R.RANK_NO = M.RANK_NO
+        WHERE (ID LIKE  '%' || #{text} || '%')
+	</select>
+	
+	<select id="ID_Search" resultMap="memberResultSet" parameterType="String">
+	 	SELECT *
+		FROM MEMBER M
+        JOIN DEPARTMENT D ON M.DEPT_NO = D.DEPT_NO
+        JOIN RANK R ON R.RANK_NO = M.RANK_NO
+        WHERE (ID LIKE  '%' || #{text} || '%')
+	</select>
+	
+	<!-- 부서 추가 -->
+	 <insert id="deptAdd" parameterType="String">
+ 		INSERT INTO DEPARTMENT VALUES(dept_seq_y.NEXTVAL, #{deptName})
+ 	</insert>
+ 	
+ 		<!-- 회원상세정보 모달/ 사번으로조회 -->
+	<select id="detailMemberInfo_y" resultMap="memberResultSet" parameterType="Member">
+		SELECT *
+		FROM MEMBER
+		WHERE MEM_NO = #{memNo}
+	</select>
+	
+	<!-- 부서 업데이트 -->
+	<update id="deptEdit" parameterType="map">
+		UPDATE DEPARTMENT
+		SET DEPT_NAME = #{text}
+		WHERE DEPT_NAME = #{deptName}
+	</update>
+	
+	<!-- 부서별 인원 수 -->
+	<select id="deptTypeMemlistCount" resultType="_int">
+	     SELECT COUNT(*)
+		FROM MEMBER M
+        JOIN DEPARTMENT D ON M.DEPT_NO = D.DEPT_NO
+		WHERE DEPT_NAME = #{deptName}
+	</select>
+	
+	<!-- 부서별 검색-->
+	<select id="deptTypeMemlist" resultMap="memberResultSet" parameterType="Member">      
+		SELECT *
+		FROM MEMBER M
+        JOIN DEPARTMENT D ON M.DEPT_NO = D.DEPT_NO
+		WHERE DEPT_NAME = #{deptName}
+	</select>
 </mapper>

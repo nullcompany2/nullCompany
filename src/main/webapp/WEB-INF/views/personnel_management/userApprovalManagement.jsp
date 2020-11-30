@@ -23,6 +23,51 @@
 
 <body>
 
+<script>
+
+
+function forMd(md_memNo){
+
+	mdMemNo = md_memNo;
+	console.log(mdMemNo);
+	modal('accept_modal');
+	detailMemberInfo();
+};
+
+function detailMemberInfo(){
+	$.ajax({
+		
+		url : "detailMemberInfo_y.do",
+		data : {memNo : mdMemNo},
+		dataType: "json",
+		success : function(data){
+			console.log('data');
+	
+			$("#md_memNo").html(data.memNo);
+			$("#md_name").html(data.name);
+			$("#md_birth").html(data.birth);
+			$("#md_email").html(data.id + "@nullcompany.com");
+			$("#md_enrollDate").html(data.enrollDate);
+			$("#md_phone").html(data.phone);
+			$("#md_address").html(data.address);
+			$("#md_rankName").val(data.rankName);
+			$("#md_deptName").val(data.deptName);
+			$("#md_myInfo").html(data.myInfo);
+			$("#md_indiemail").html(data.email);
+			
+			
+	
+			$("#md_photo").attr('src',data.photo);
+
+		
+		},error: function(request,status,error){
+			console.log(error);
+		
+		}
+
+		})
+	};
+</script>
 	<div id='wrap'>
 		<c:import url="../common/header.jsp" />
 
@@ -227,56 +272,9 @@
 					});
 		}
 
-		</script>
-
-	<script>
-		// 모달창 info
-		
-		function forMd(md_memNo){
-		
-			mdMemNo = md_memNo;
-			console.log(mdMemNo);
-			modal('accept_modal');
-			
-			detailMemberInfo();
-		};
-		
-		function detailMemberInfo(){
-			$.ajax({
-				
-				url : "detailMemberInfo.do",
-				data : {memNo : mdMemNo},
-				dataType: "json",
-				success : function(data){
-					console.log(data);
-					$("#md_memNo").html(data.memNo);
-					$("#md_name").html(data.name);
-					$("#md_birth").html(data.birth);
-					$("#md_email").html(data.id + "@nullcompany.com");
-					$("#md_enrollDate").html(data.enrollDate);
-					$("#md_phone").html(data.phone);
-					$("#md_address").html(data.address);
-					$("#md_rankName").val(data.rankName);
-					$("#md_deptName").val(data.deptName);
-					$("#md_myInfo").html(data.myInfo);
-					$("#md_indiemail").html(data.email);
-					
-					
-			
-					$("#md_photo").attr('src',data.photo);
-	
-				
-				},error: function(request,status,error){
-					console.log(request);
-				
-				}
-
-				})
-			};
-		
-			
 
 		
+
 		
 	
 	</script>
@@ -296,7 +294,7 @@
 				<li style="margin-bottom: 6px;">부서 <select name="dept"  id="selectDept"
 					style="border: none; float: right; width: 100px; position: absolute; right: 78px; margin-top: 4px; margin-right: 10px;">
 
-						<c:forEach var="deptselectlist" items="${ DeptList }"
+						<c:forEach var="deptselectlist" items="${ DeptList }" 
 							varStatus="vs">
 							<option class="selectDept" value="${ deptselectlist.deptNo }">${ deptselectlist.deptName }</option>
 						</c:forEach>
@@ -343,11 +341,13 @@
 		<div style="text-align: center; margin-top: 30px;">
 			<button id="accept" onclick="acceptemail();"
 				style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">승인</button>
-			<button
+			<button class="modal-close-btn cursor"
 				style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">취소</button>
 		</div>
 
-		<a class="modal-close-btn cursor">X</a>
+		<a style="position: absolute;
+	top: 10px;
+	right: 10px;" class="modal-close-btn cursor">X</a>
 	</div>
 	
 	<script>
@@ -417,11 +417,6 @@
 	border-radius: 3px;
 }
 
-#accept_modal .modal-close-btn {
-	position: absolute;
-	top: 10px;
-	right: 10px;
-}
 
 .n-emp-i {
 	width: 100%;

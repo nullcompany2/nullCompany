@@ -1,6 +1,7 @@
 package com.kh.nullcompany.board.model.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,7 @@ public class boardServiceImpl implements boardService {
 		int result = bDao.updateCount(bNo);
 
 		if(result >0) {
-			return bDao.selectNotice(bNo);
+			return bDao.selectBoard(bNo);
 		}else {
 			return null;
 		}
@@ -50,6 +51,41 @@ public class boardServiceImpl implements boardService {
 	@Override
 	public int insertBoard(board b) {
 		return bDao.insertBoard(b);
+	}
+
+	@Override
+	public board selectUpdateBoard(int bNo) {
+		return bDao.selectBoard(bNo);
+	}
+
+	@Override
+	public int updateBoard(board b) {
+		return bDao.updateBoard(b);
+	}
+
+	@Override
+	public int deleteBoard(int bNo) {
+		return bDao.deleteBoard(bNo);
+	}
+
+	@Override
+	public ArrayList<board> searchbTitle(Map map) {
+		return bDao.searchbTitle(map);
+	}
+
+	@Override
+	public ArrayList<board> searchbWriter(Map map) {
+		return bDao.searchbWriter(map);
+	}
+
+	@Override
+	public ArrayList<board> searchbContent(Map map) {
+		return bDao.searchbContent(map);
+	}
+
+	@Override
+	public ArrayList<board> searchbtitleContent(Map map) {
+		return bDao.searchbtitleContent(map);
 	}
 
 

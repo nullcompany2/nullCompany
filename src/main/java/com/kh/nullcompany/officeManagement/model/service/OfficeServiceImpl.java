@@ -40,4 +40,14 @@ public class OfficeServiceImpl implements OfficeService {
 		return oDao.ManagerMember();
 	}
 
+	@Override
+	public ArrayList<Member> searchMember(String key) {
+		return oDao.searchMember(key);
+	}
+
+	@Override
+	public int updateOfficeManager(String[] managerList) {
+		return oDao.updateOfficeManager(managerList);
+	}
+
 }

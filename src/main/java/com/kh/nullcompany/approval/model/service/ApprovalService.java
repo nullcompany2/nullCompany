@@ -3,6 +3,8 @@ package com.kh.nullcompany.approval.model.service;
 import java.util.ArrayList;
 
 import com.kh.nullcompany.approval.model.vo.Absence;
+import com.kh.nullcompany.approval.model.vo.DeptList;
+import com.kh.nullcompany.approval.model.vo.DivDeptStaff;
 import com.kh.nullcompany.approval.model.vo.Document;
 import com.kh.nullcompany.approval.model.vo.Leave;
 import com.kh.nullcompany.approval.model.vo.Resign;
@@ -140,5 +142,19 @@ public interface ApprovalService {
 	 * @return
 	 */
 	int insertTempDocument(Document d);
+
+	/**
+	 * 6_1 결재선 모든 부서정보 가져오기
+	 * @return
+	 */
+	ArrayList<DeptList> selectAllDept();
+
+	/**
+	 * 6_2 부서별 사원정보 가져오기
+	 * @param deptNo
+	 * @param docTempNo
+	 * @return
+	 */
+	ArrayList<DivDeptStaff> selectDeptStaff(int deptNo, String docTempNo);
 
 }
