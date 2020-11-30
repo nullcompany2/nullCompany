@@ -135,6 +135,270 @@ a:active {
 
 }
 
+#communitymodal {
+	display: none;
+	width: 590px;
+	height: 420px;
+	padding: 10px 40px;
+	background-color: #fefefe;
+	border: 1px solid #888;
+	border-radius: 3px;
+}
+
+#communitymodal .modal-close-btn {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+
+#my_modal .modal-close-btn {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+
+.n-emp-i {
+	width: 100%;
+	height: 30%;
+}
+
+.modal-dragscroll>div>dl>dd {
+	margin-bottom: 15px;
+}
+
+.modal-dragscroll {
+	overflow: auto;
+}
+
+.modal-dragscroll::-webkit-scrollbar {
+	width: 10px;
+}
+
+.modal-dragscroll::-webkit-scrollbar-thumb {
+	background-color: #e8ecee;
+	border-radius: 15px;
+}
+
+.modal-dragscroll::-webkit-scrollbar-track {
+	background-color: white;
+	border-radius: 15px;
+	box-shadow: white;
+}
+
+.box {
+	width: 295px;
+	height: 30px;
+}
+
+
+.active {
+	outline: 1px solid black;
+}
+
+#dept_list {
+	width: 180px;
+	height: 250px;
+	border: #888 solid 1px;
+	overflow-y: auto;
+	position: absolute;
+	top: 100px;
+}
+
+#name_list {
+	width: 125px;
+	height: 250px;
+	border: #888 solid 1px;
+	float: left;
+	position: absolute;
+	top: 100px;
+	left: 240px;
+	overflow-y: auto;
+}
+
+#enrollauthority {
+	height: 120px;
+	width: 120px;
+	border: #888 solid 1px;
+	position: absolute;
+	top: 135px;
+	right: 40px;
+	overflow-y: auto;
+}
+
+
+.tree {
+	display: block;
+	list-style-type: disc;
+	margin-block-start: 1em;
+	margin-block-end: 1em;
+	margin-inline-start: 0px;
+	margin-inline-end: 0px;
+	padding-inline-start: 20px;
+}
+
+.tree button {
+	margin-left: -30px;
+	background: transparent;
+	border: 0;
+	font-size: 14px;
+	cursor: pointer;
+}
+
+.tree ul {
+	display: none;
+	padding-left: 17px;
+	list-style: none;
+}
+
+.tree li.unfold>ul {
+	display: block;
+}
+
+.tree li {
+	position: relative;
+	padding-left: 10px;
+	border-left: 1px solid #ccc;
+	min-height: 23px;
+	line-height: 23px;
+	list-style: none;
+}
+
+.tree li::before, .tree li::after {
+	content: '';
+	position: absolute;
+}
+
+.tree li::before {
+	top: 10px;
+	left: 0;
+	width: 17px;
+	height: 0;
+	border-bottom: 1px solid #ccc;
+}
+
+.tree>li:first-child::after {
+	top: 0;
+	left: -1px;
+	width: 1px;
+	height: 10px;
+	background: #fff;
+}
+
+.tree li.last::after {
+	top: 11px;
+	left: -1px;
+	width: 1px;
+	height: 100%;
+	background: #fff;
+}
+
+.tree li span {
+	position: absolute;
+	top: 4px;
+	left: 17px;
+	width: 17px;
+	height: 17px;
+	font-size: 14px;
+}
+
+.tree li.final span {
+	cursor: default;
+}
+
+.tree li span::before {
+	content: '+';
+	font-size: 20px;
+	font-weight: bold;
+	position: absolute;
+	top: -3px;
+}
+
+.tree li.unfold>span::before {
+	content: '-';
+	font-size: 20px;
+	font-weight: bold;
+	position: absolute;
+	top: -3px;
+}
+
+.tree li.final span::before {
+	content: ' ';
+	font-size: 20px;
+	font-weight: bold;
+	position: absolute;
+	top: -3px;
+}
+
+.tree li ul li {
+	font-size: 12px;
+	text-align: left;
+	padding-left: 23px;
+}
+
+#enrollname input[type="checkbox"] {
+	display: none;
+}
+
+#enrollname input[type="checkbox"]+label {
+	display: inline-block;
+	position: relative;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	backgroung-color: red;
+}
+
+//
+#enrollname input[type="checkbox"] ~ #lb:before {
+	content: ' ';
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	line-height: 18px;
+	margin: -2px 8px 0 0;
+	text-align: center;
+	vertical-align: middle;
+	background: #fafafa;
+	border: 1px solid #cacece;
+	border-radius: 3px;
+}
+
+#enrollname input[type="checkbox"]:checked ~ #lb:before {
+	content: '\2713';
+	color: #314ca2;
+	border-color: #adb8c0;
+}
+
+#cc {
+	color: white
+}
+
+#lookname input[type="checkbox"] {
+	display: none;
+}
+
+#lookname input[type="checkbox"] ~ #lb:before {
+	content: ' ';
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	line-height: 18px;
+	margin: -2px 8px 0 0;
+	text-align: center;
+	vertical-align: middle;
+	background: #fafafa;
+	border: 1px solid #cacece;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+#lookname input[type="checkbox"]:checked ~ #lb:before {
+	content: '\2713';
+	color: #314ca2;
+	border-color: #adb8c0;
+}
 
 
 </style>
@@ -220,7 +484,76 @@ a:active {
 			border-radius: 3px; margin-left: 180px; cursor: pointer; font-size:15px;" />
 	</div>
 	
+	<!-- 공유 캘린더 모달 -->
+					<!-- 멤버 리스트 모달임!!  -->
+					<div id="communitymodal" class="modal-dragscroll">
+						<h3 style="color: #477A8F; margin-bottom: 15px; margin-top: 12px;">
+							 메일 주소록 </h3>
+
+						<div style="position: absolute; top: 57px; font-size: 14px;">
+							사원 이름 &nbsp; <input type="text" id="testText"
+								style="margin-left: 19px;"> &nbsp;
+							<btn style="font-size: 14px; color: #477A8F;">검색</btn>
+						</div>
+
+
+						<div style="text-align: center;">
+							<div>
+								<div id="dept_list">
+									<ul class="tree">
+										<c:forEach var="deptList" items="${ deptList }" begin="1">
+
+											<li>
+												<button>${ deptList.deptName }부</button>
+												<ul>
+													<c:forEach var="memList" items="${ memList }">
+														<c:if test='${deptList.deptNo eq memList.deptNo}'>
+															<li><label><input type="checkbox" id="name"
+																	value="${ memList.name }(${ memList.id })" />${ memList.name }(${ memList.id })</label></li>
+														</c:if>
+													</c:forEach>
+												</ul>
+											</li>
+										</c:forEach>
+									</ul>
+								</div>
+								<div id="name_list">
+									<div id='result'
+										style="margin-left: 10px; margin-top: 10px; text-align: left; font-size: 12px;"></div>
+								</div>
+							</div>
+
+							<div style="position: absolute; right: 165px; top: 160px;">
+								<img src="resources/images/right.png" id="enrolladd"><br>
+								<img src="resources/images/left.png" id="enrollsub">
+							</div>
+
+
+							<p
+								style="font-size: 13px; position: absolute; position: absolute; right: 90px; top: 115px;">
+								<받는 사람>
+							</p>
+							<div id="enrollauthority">
+
+								<p id="enrollname"
+									style="width: 100px; font-size: 12px; position: absolute; text-align: left; top: 5px; margin-left: 5px;">
+
+								</p>
+
+
+							</div>
+
+							<div style="position: absolute; bottom: 20px; left: 210px;">
+								<button id="cal_sub"
+									style="background:#477A8F; color:white; padding: 5px 27px 6px; border: 1px solid #477A8F;">저장</button>
+								<button class="modal-close-btn cursor"
+								style="position: absolute; left: 90px; top: 0px; padding: 5px 27px 6px; color: #444;
+								 letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">취소</button>
+							</div>
+
+						</div>
 		
+					</div>
 	
 	
 	<script type="text/javaScript">
@@ -228,11 +561,6 @@ a:active {
 	$(document).ready(function() {
 		
 	
-	/*   $('#community').on('click', function() {
-	         // 공유 캘린더 모달창 띄우기
-	         modal('communitymodal');
-	      }); */
-		
 	  $('#summernote').summernote({
  	    	placeholder: '내용을 작성해주세요.',
 	        minHeight: 370,
@@ -321,6 +649,16 @@ a:active {
        modal('my_modal2');
        	
     });
+   
+   
+       $('#searchPop').on('click', function() {
+    // 조직도 모달 띄우기 
+    $("#result").empty();
+        $("#lookname").empty();
+        $("#enrollname").empty();
+        $("input:checkbox[id='name']").prop("checked", false);
+    modal('communitymodal');
+ 	}); 
     
     // 메일 전송 버튼 
     $("#sendMail").click(function () {
@@ -404,6 +742,121 @@ a:active {
           $('#searchAddress').css('display','none');
           })
           
+          
+    /*        $('#searchPop').on('click', function() {
+        // 공유 캘린더 모달창 띄우기
+        var Cal_color = document.getElementById("colorselect");
+        $("#cal_name").val('');
+        $("#search_mem").val('');
+        Cal_color.style.backgroundColor = 'white';
+        $("#result").empty();
+        $("#lookname").empty();
+        $("#enrollname").empty();
+        $("input:checkbox[id='name']").prop("checked", false);
+
+        modal('communitymodal');
+     });
+	
+           */
+           
+           // 리스트 토글
+           $('.tree').each(function(){
+           var $this = $(this);
+           $this.find('li').each(function(){   //li에
+               if(!$(this).children('ul').length){ //자식 ul 없으면
+                   $(this).addClass('final');  //final 클래스 부여한다
+               }
+               if($(this).is(':last-child')){  //마지막 li이면
+                   $(this).addClass('last');   //last 클래스 부여한다
+               }
+               $(this).append('<span></span>');
+           });
+           $this.find('li>button').on('click',function(){ //span 클릭하면
+               if($(this).parent('li').hasClass('unfold')){    //하위메뉴 열려 있을 경우
+                   $(this).parent('li').removeClass('unfold'); //닫고
+               }
+               else {  //하위메뉴 닫혀 있을 경우
+                   $(this).parent('li').addClass('unfold');    //연다
+               }
+           });
+          });
+
+          // 클릭시 이름 뜨게
+          $(document).ready(function () {
+                   // input객체에 이벤트 발생시
+                   $('input').change(function () {
+                       // input 중 checked인것들 다 모으기
+                       var inputArray = $('input[id="name"]:checked');
+                       var tmp = '';
+                     
+                       $.each(inputArray, function (index, item) {
+                           // tmp+=item.value+' ';
+                           
+                         //   tmp +='<option value="'+ inputArray.eq(index).val() + '">' + inputArray.eq(index).val() +'</option>';
+                         tmp +='<label for="'+inputArray.eq(index).val()+'2"><input type="checkbox"" name="checkname" id="' +inputArray.eq(index).val()+ '2" class="checklist" value="'+ inputArray.eq(index).val() + '">' + inputArray.eq(index).val() +'</input><label><br>';
+                       });
+                      //   $('#result').text(tmp)
+                        document.getElementById("result").innerHTML= tmp
+                   
+               
+                   })
+               })
+               
+                   // 등록 권한 추가 
+        $('#enrolladd').click(function(){
+        	 var arraybox = "";
+        
+        	$("#enrollname:last-child").empty();
+          $('[name="checkname"]:checked').each(function(i){ //i는 체크수를 알수있음
+           arraybox = $(this).val();
+          
+       	  $('#enrollname').append('<p><input type="checkbox" name="finalname" id="' + arraybox + '" class="finallist" value="'+ arraybox + '"/><label id="lb" for="'+ arraybox+'">' + arraybox +'</label><span style="color:white">,</span><br></p>');
+           console.log("중복없을때" + arraybox); 
+      });
+       }); 
+
+    // 공유 캘린더 수정용 등록 권한 수정
+    $('#enrolladd2').click(function(){
+   	 var arraybox = "";
+   
+   	$("#enrollname2:last-child").empty();
+     $('[name="checkname2"]:checked').each(function(i){ //i는 체크수를 알수있음
+      arraybox = $(this).val();
+     
+  	  $('#enrollname2').append('<p><input type="checkbox" name="finalname2" id="' + arraybox + '2" class="finallist2" value="'+ arraybox + '2"/><label id="lb" for="'+ arraybox+'2">' + arraybox +'</label><span style="color:white">,</span><br></p>');
+      console.log("중복없을때" + arraybox); 
+ 		});
+  }); 
+    
+       // 등록 권한 빼기 
+     $('#enrollsub').on('click', function() {
+ 
+       $('[name="finalname"]:checked').parent('p').remove(); 
+     });
+       
+       
+     // 조회 권한 추가 
+     var arraybox = "";
+
+ 	
+     $('#lookadd').click(function(){
+     	$("#lookname:last-child").empty();
+       $('[name="checkname"]:checked').each(function(i){ //i는 체크수를 알수있음
+        arraybox = $(this).val();
+       
+    	  $('#lookname').append('<p><input type="checkbox" name="finallookname" id="' + arraybox + '3" class="finallist" value="'+ arraybox + '"/><label id="lb" for="'+ arraybox+'3">' + arraybox +'</label><span style="color:white">,</span><br></p>');
+        console.log("중복없을때" + arraybox); 
+   });
+    }); 
+     
+     
+ 
+ 	$('#cal_sub').click(function(){
+ 		
+ 	});
+   
+  
+      
           
  </script>
  
