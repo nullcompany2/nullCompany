@@ -401,6 +401,7 @@ tr>td {
 
 
 <!-- Ajax를 이용해서 댓글 등록 -->
+				
    <table  style="text-align:center; width=800;"  cellspacing="0">
       <tr>
          <td><textarea class="form-control" style="resize: none;" cols="80" rows="3" id="bcContent"></textarea></td>
@@ -419,6 +420,9 @@ tr>td {
       <tbody>
       </tbody>
    </table>
+      <c:url var="bcDelete" value="bcDelete.do">
+			<c:param name="bcNo" value="${ bc.bcNo }"/>
+	 </c:url>
    
       
       
@@ -435,6 +439,7 @@ tr>td {
 	            return;
 	        }
 		});
+	
       $(function(){
          getbCommentList();
          
@@ -469,6 +474,8 @@ tr>td {
          });
          
       });
+      
+     
    
       function getbCommentList(){
          var bNo = ${ b.bNo };
@@ -487,14 +494,28 @@ tr>td {
                var $bcContent;
                var $bcCreateDate;
                
-               $("#bcCount").text("댓글 (" + data.length +")"); // 댓글(0)
+               
+               
+               $("#bcCount").text("댓글 (" + data.length +")");
+             		// 댓글(0)
                if(data.length > 0){ // 해당 게시글 댓글이 존재할 경우
                   for(var i in data){
-                     $tr = $("<tr text-align:'center'>");
-                     $bcWriter = $("<td width='100'>").text(data[i].bcWriter);
-                     $bcContent=$("<td>").text(data[i].bcContent);
-                     $bcCreateDate=$("<td width='200'>").text(data[i].bcCreateDate);
-                     $bcDelete=$("<td><button class='btn btn-default btn-xs' id='btnDelete'>삭제</button></td>")
+                     $tr = $("<tr>");
+                     $bcWriter = $("<td width='150'>").text(data[i].bcWriter);
+                     $bcContent=$("<td width='500'>").text(data[i].bcContent);
+                     $bcCreateDate=$("<td width='100'>").text(data[i].bcCreateDate);
+                     $bcDelete=$("<td><input type='button' id='bcDelete' value='삭제'/></td>")
+                     
+                     $("#bcDelete").click(function(){
+     					 if (confirm("정말로 삭제하시겠습니까? ") == true){ 
+
+     						document.location.href='bcDelete.do?bcNo='+ test1;
+
+ 	      				  }else{   //취소
+
+ 	       			     return;
+ 	       			 }
+ 						});
                      
                      $tr.append($bcWriter);
                      $tr.append($bcContent);
@@ -518,6 +539,12 @@ tr>td {
             }
          });
       }
+      
+     
+ 	
+      
+      
+      
       function CopyUrlToClipboard()
       {
          var obShareUrl = document.getElementById("ShareUrl");
