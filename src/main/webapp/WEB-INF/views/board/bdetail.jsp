@@ -409,7 +409,7 @@ tr>td {
          </td>
       </tr>
    </table>
-   <table class="table-bordered" align="center" width="800"  cellspacing="0" id="rtb">
+   <table  align="center" width="800"  cellspacing="0" id="rtb">
       <thead>
          <tr>
             <td colspan="5"><b id="bcCount"></b></td>
@@ -494,13 +494,11 @@ tr>td {
                      $bcWriter = $("<td width='100'>").text(data[i].bcWriter);
                      $bcContent=$("<td>").text(data[i].bcContent);
                      $bcCreateDate=$("<td width='200'>").text(data[i].bcCreateDate);
-                     $bcUpdate=$("<td><button class='btn btn-default btn-xs' id='cUpdate'>수정</button></td>")
                      $bcDelete=$("<td><button class='btn btn-default btn-xs' id='btnDelete'>삭제</button></td>")
                      
                      $tr.append($bcWriter);
                      $tr.append($bcContent);
                      $tr.append($bcCreateDate);
-                     $tr.append($bcUpdate)
                      $tr.append($bcDelete)
                      $tableBody.append($tr);
                      
