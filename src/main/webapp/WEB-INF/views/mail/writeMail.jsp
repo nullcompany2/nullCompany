@@ -347,7 +347,7 @@ a:active {
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
-	backgroung-color: red;
+	background-color: red;
 }
 
 

@@ -12,6 +12,14 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/office-setting-logo.css"/>">
 	<link rel="stylesheet" href="<c:url value="/resources/css/office-subNavi.css"/>">
 
+<style>
+#logoImg{
+	width: 200px;
+   	height: 92px;
+   	background : #3E4247;
+	padding : 17px 0px 0px 50px;
+}
+</style>
 </head>
 
 <body>
@@ -80,16 +88,16 @@
 								</td>
 							</tr>
 							<tr class="underline">
-								<th class="ch-tbl-cate">현재이미지</th>
-								<td  class="ch-tbl-c">
-									이미지경로
+								<th class="ch-tbl-cate" id="fileStatus">현재 로고</th>
+								<td  class="ch-tbl-c" id="imgTd">
+								<img  id= "logoImg" alt="" src="${ logo.renameLogo }">
 								</td>
 							</tr>
 							<form method="post" action="logoUpload.do" enctype="multipart/form-data"> 
 							<tr id="up-file" class="underline">
 								<th class="ch-tbl-cate" rowspan="2">파일올리기</th>
 								<td  class="ch-tbl-c">
-									<input type="file" name="logoFile" id="InputLogo">
+									<input type="file" name="logoFile" id="InputLogo" onchange="changeImageFile(event);">
 									<div id="warning">
 										500KB 미만의 JPG,GIF,PNG,SWF(플래시) 형식만 등록 가능합니다. <br>
 										새로운 이미지를 등록하면, 기존에 저장되어 있던 서버에 이력을 남겨둡니다. <br>
@@ -109,8 +117,10 @@
 									$('input[type=radio][name=s-btn]').click(function(){
 										var chkLogo = $('input[type=radio][name=s-btn]:checked').val();
 										if(chkLogo=='1'){
-											$("#up-file").css('visibility','hidden');
-											$("#upBtn").css('visibility','hidden');
+											/* $("#up-file").css('visibility','hidden');
+											$("#upBtn").css('visibility','hidden'); */
+											// 페이지를 리로드해서 이전에 등록했던 로고로 
+											document.location.href='officeLogo.do';
 										}else if(chkLogo =='2'){
 											$("#up-file").css('visibility','visible');
 											$("#upBtn").css('visibility','visible');
@@ -118,7 +128,23 @@
 					
 									})
 								})
-							</script>
+								
+				function changeImageFile(event) { 
+            	var reader = new FileReader(); 
+           
+            	reader.onload = function(event) { 
+            	$('#imgTd').empty();
+
+            	var img = document.createElement("img"); 
+            	img.id  = 'logoImg';
+            	
+            	img.setAttribute("src", event.target.result); 
+            	document.querySelector("#imgTd").appendChild(img); 
+            	};
+            	reader.readAsDataURL(event.target.files[0]); 
+            	$("#fileStatus").text("업로드할 로고");
+            	};
+        </script>
 						</table>
 					</div>
 				</div>
