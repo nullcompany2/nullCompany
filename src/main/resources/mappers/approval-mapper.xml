@@ -491,4 +491,14 @@
 		WHERE 
 			DOC_TEMP_NO = #{docTempNo}
 	</update>
+	
+	<!-- 페이지 나갈 때 스텝 삭제 -->
+	<delete id="deleteTempStep" parameterType="String">
+		DELETE FROM APPROVAL_STEP WHERE DOC_NO = #{docTempNo}
+	</delete>
+	
+	<!-- 페이지 나갈 때 문서 삭제 -->
+	<delete id="deleteTempDocument" parameterType="String">
+		DELETE FROM APPROVAL_DOCUMENT WHERE DOC_TEMP_NO = #{docTempNo}
+	</delete>
 </mapper>

@@ -200,4 +200,18 @@ public interface ApprovalService {
 	 */
 	int insertDocument(Document d);
 
+	/**
+	 * 7_2 페이지 나갈 때 스텝 삭제
+	 * @param docTempNo
+	 * @return
+	 */
+	int deleteTempStep(String docTempNo);
+
+	/**
+	 * 7_3 페이지 나갈 때 문서 삭제
+	 * @param docTempNo
+	 * @return
+	 */
+	int deleteTempDocument(String docTempNo);
+
 }

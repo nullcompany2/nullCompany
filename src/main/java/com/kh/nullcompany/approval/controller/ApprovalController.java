@@ -43,7 +43,6 @@ public class ApprovalController {
 			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
 		// 로그인 세션 사용자 사번 가져오기
 		int memNo = ((Member) session.getAttribute("loginUser")).getMemNo();
-		System.out.println("사용자 사번 : " + memNo);
 
 		// 로그인 사용자가 기안자이거나 결재 스탭에 포함되어 있는 문서의 갯수 조회
 		int listCount = aService.getProgressAllListCount(memNo);
@@ -105,7 +104,6 @@ public class ApprovalController {
 			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
 		// 로그인 세션 사용자 사번 가져오기
 		int memNo = ((Member) session.getAttribute("loginUser")).getMemNo();
-		System.out.println("사용자 사번 : " + memNo);
 
 		// 로그인 사용자가 기안자이거나 결재 스탭에 포함되어 있는 문서의 갯수 조회
 		int listCount = aService.getProgressAllListCount(memNo);
@@ -169,7 +167,6 @@ public class ApprovalController {
 			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
 		// 로그인 세션 사용자 사번 가져오기
 		int memNo = ((Member) session.getAttribute("loginUser")).getMemNo();
-		System.out.println("사용자 사번 : " + memNo);
 
 		// 로그인 사용자가 기안자이거나 결재 스탭에 포함되어 있는 문서의 갯수 조회
 		int listCount = aService.getProgressAllListCount(memNo);
@@ -232,7 +229,6 @@ public class ApprovalController {
 			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
 		// 로그인 세션 사용자 사번 가져오기
 		int memNo = ((Member) session.getAttribute("loginUser")).getMemNo();
-		System.out.println("사용자 사번 : " + memNo);
 
 		// 로그인 사용자가 기안자이거나 결재 스탭에 포함되어 있는 문서의 갯수 조회
 		int listCount = aService.getProgressAllListCount(memNo);
@@ -295,7 +291,6 @@ public class ApprovalController {
 			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
 		// 로그인 세션 사용자 사번 가져오기
 		int memNo = ((Member) session.getAttribute("loginUser")).getMemNo();
-		System.out.println("사용자 사번 : " + memNo);
 
 		// 로그인 사용자가 기안자이거나 결재 스탭에 포함되어 있는 문서의 갯수 조회
 		int listCount = aService.getProgressAllListCount(memNo);
@@ -359,7 +354,6 @@ public class ApprovalController {
 			
 			// 로그인 세션 사용자 사번 가져오기
 			int memNo = ((Member) session.getAttribute("loginUser")).getMemNo();
-			System.out.println("사용자 사번 : " + memNo);
 
 			// 로그인 사용자가 기안자이거나 결재 스탭에 포함되어 있는 문서의 갯수 조회
 			int listCount = aService.getCompleteAllListCount(memNo);
@@ -407,7 +401,6 @@ public class ApprovalController {
 			
 			// 로그인 세션 사용자 사번 가져오기
 			int memNo = ((Member) session.getAttribute("loginUser")).getMemNo();
-			System.out.println("사용자 사번 : " + memNo);
 
 			// 로그인 사용자가 기안자이거나 결재 스탭에 포함되어 있는 문서의 갯수 조회
 			int listCount = aService.getCompleteAllListCount(memNo);
@@ -460,7 +453,6 @@ public class ApprovalController {
 			
 			// 로그인 세션 사용자 사번 가져오기
 			int memNo = ((Member) session.getAttribute("loginUser")).getMemNo();
-			System.out.println("사용자 사번 : " + memNo);
 
 			// 로그인 사용자가 기안자이거나 결재 스탭에 포함되어 있는 문서의 갯수 조회
 			int listCount = aService.getCompleteAllListCount(memNo);
@@ -512,7 +504,6 @@ public class ApprovalController {
 			
 			// 로그인 세션 사용자 사번 가져오기
 			int memNo = ((Member) session.getAttribute("loginUser")).getMemNo();
-			System.out.println("사용자 사번 : " + memNo);
 
 			// 로그인 사용자가 기안자이거나 결재 스탭에 포함되어 있는 문서의 갯수 조회
 			int listCount = aService.getCompleteAllListCount(memNo);
@@ -565,7 +556,6 @@ public class ApprovalController {
 			
 			// 로그인 세션 사용자 사번 가져오기
 			int memNo = ((Member) session.getAttribute("loginUser")).getMemNo();
-			System.out.println("사용자 사번 : " + memNo);
 
 			// 로그인 사용자가 기안자이거나 결재 스탭에 포함되어 있는 문서의 갯수 조회
 			int listCount = aService.getCompleteAllListCount(memNo);
@@ -618,7 +608,6 @@ public class ApprovalController {
 			
 			// 로그인 세션 사용자 사번 가져오기
 			int memNo = ((Member) session.getAttribute("loginUser")).getMemNo();
-			System.out.println("사용자 사번 : " + memNo);
 
 			// 로그인 사용자가 기안자이거나 결재 스탭에 포함되어 있는 문서의 갯수 조회
 			int listCount = aService.getCompleteAllListCount(memNo);
@@ -971,8 +960,6 @@ public class ApprovalController {
 	@RequestMapping("selectDeptStaff.do")
 	public void selectDeptStaff(HttpServletResponse response, int deptNo, String docTempNo) throws JsonIOException, IOException {
 		response.setContentType("application/json; charset=utf-8");
-		System.out.println("부서번호 : " + deptNo);
-		System.out.println("임시번호 : " + docTempNo);
 		
 		ArrayList<DivDeptStaff> dsList = aService.selectDeptStaff(deptNo, docTempNo);
 		
@@ -986,9 +973,6 @@ public class ApprovalController {
 	public void insertStep(HttpServletResponse response, Step s) throws JsonIOException, IOException {
 		response.setContentType("application/json; charset=utf-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-		
-		System.out.println("결재자 모든 정보 : " + s);
-		System.out.println("결재 타입 : " + s.getLineNo());
 		
 		// 결재자 일 때
 		if(s.getLineNo() == 1) {
@@ -1052,6 +1036,27 @@ public class ApprovalController {
 		}
 	}
 	
+	// 인서트 페이지 나갈 때 문서 정보 삭제
+	@RequestMapping("deleteTempInfo.do")
+	public void deleteTempInfo(HttpServletResponse response, String docTempNo) throws JsonIOException, IOException {
+		
+		response.setContentType("application/json; charset=utf-8");
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		
+		// 스텝 삭제
+		aService.deleteTempStep(docTempNo);
+		// 문서 삭제
+		int result2 = aService.deleteTempDocument(docTempNo);
+		
+		String word = "";
+		
+		if(result2 > 0) {
+			word = "문서 삭제 성공!";
+			gson.toJson(word,response.getWriter());
+		}
+		
+	}
+	
 	// 업무 연락 문서 기안하기(임시 문서 업데이트)
 	@RequestMapping("insertBusinessDocumet.do")
 	public String insertDocument(Model model, HttpServletResponse response, HttpSession session,
@@ -1072,6 +1077,7 @@ public class ApprovalController {
 			return "common/errorPage";
 		}
 	}
+	
 
 	@RequestMapping("approvalAllDList.do")
 	public String approvalAllDList(HttpServletResponse response) {

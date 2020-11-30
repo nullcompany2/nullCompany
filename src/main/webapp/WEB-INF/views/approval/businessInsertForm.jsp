@@ -202,8 +202,25 @@
     		
 	    	$(window).on('beforeunload', function(){
 	    		
-	    		if(warning){	
-	    			return '...';
+	    		if(warning){
+	    			// 페이지 나갈 때 현재 문서 정보 삭제
+		    		var docTempNo = $('#docTempNo').val();
+	    			$.ajax({
+	                    url: "deleteTempInfo.do",
+	                    type: "post",
+	                    data: {
+	                        "docTempNo": docTempNo
+	                    },
+	                    success: function (data) {
+							console.log("성공");
+	                    },
+	                    error: function (request,
+	                        status, error) {
+	                        console.log("에이작스 오류");   
+	                    }
+	                });
+	    		}else{
+	    			
 	    		}
 	    	});
     	});
@@ -299,14 +316,8 @@
 							<tr id="tr1">
 								<td>문서 종류</td>
 								<td>${ d.formName }</td>
-								<td>기안부서</td>
-								<td>${d.drafterDeptName}부</td>
-                            </tr>
-                            <tr id="tr1">
-								<td>임시 번호</td>
-								<td>${ d.docTempNo }</td>
 								<td>기안자</td>
-								<td>${d.drafterRankName} / ${d.drafterName}</td>
+								<td>${d.drafterDeptName}부 / ${d.drafterRankName} / ${d.drafterName}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -462,6 +473,7 @@
       
       <!-- 현재 임시문서번호 -->
       <input type="hidden" id="docTempNo" value="${ d.docTempNo }"/>
+
  <script>
     function modal(id) {
        var zIndex = 9999;

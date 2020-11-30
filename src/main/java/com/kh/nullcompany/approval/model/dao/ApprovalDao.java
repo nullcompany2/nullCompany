@@ -173,4 +173,12 @@ public class ApprovalDao {
 		return sqlSession.update("approvalMapper.insertDocument", d);
 	}
 
+	public int deleteTempStep(String docTempNo) {
+		return sqlSession.delete("approvalMapper.deleteTempStep", docTempNo);
+	}
+
+	public int deleteTempDocument(String docTempNo) {
+		return sqlSession.delete("approvalMapper.deleteTempDocument", docTempNo);
+	}
+
 }

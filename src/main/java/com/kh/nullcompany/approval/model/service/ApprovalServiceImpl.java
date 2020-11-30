@@ -145,4 +145,14 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public int insertDocument(Document d) {
 		return aDao.insertDocument(d);
 	}
+
+	@Override
+	public int deleteTempStep(String docTempNo) {
+		return aDao.deleteTempStep(docTempNo);
+	}
+
+	@Override
+	public int deleteTempDocument(String docTempNo) {
+		return aDao.deleteTempDocument(docTempNo);
+	}
 }
