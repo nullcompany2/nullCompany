@@ -97,7 +97,7 @@
 							<tr id="up-file" class="underline">
 								<th class="ch-tbl-cate" rowspan="2">파일올리기</th>
 								<td  class="ch-tbl-c">
-									<input type="file" name="logoFile" id="InputLogo" onchange="changeImageFile(event);">
+									<input type="file" name="logoFile" id="InputLogo" onchange="changeLogoFile(event);">
 									<div id="warning">
 										500KB 미만의 JPG,GIF,PNG,SWF(플래시) 형식만 등록 가능합니다. <br>
 										새로운 이미지를 등록하면, 기존에 저장되어 있던 서버에 이력을 남겨둡니다. <br>
@@ -129,18 +129,23 @@
 									})
 								})
 								
-				function changeImageFile(event) { 
+				function changeLogoFile(event) { 
             	var reader = new FileReader(); 
            
             	reader.onload = function(event) { 
+            	// 해당 td 의 이미지 지우고 
             	$('#imgTd').empty();
 
+            	// Img 를 만들어주고 
             	var img = document.createElement("img"); 
+            	// 아이디를 부여해준다. css 먹어야하니까 
             	img.id  = 'logoImg';
             	
+            	// 만든 태그에 src 를 변경 
             	img.setAttribute("src", event.target.result); 
             	document.querySelector("#imgTd").appendChild(img); 
             	};
+            	// 로고를 새로 선택하면, 미리보기 썸네일 및 해당 td 의 텍스트 변경 
             	reader.readAsDataURL(event.target.files[0]); 
             	$("#fileStatus").text("업로드할 로고");
             	};
