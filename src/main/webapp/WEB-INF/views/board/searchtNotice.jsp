@@ -286,7 +286,7 @@ tr>td {
 			<input  id="search" type="text" placeholder="게시물 검색"> 
 			<button id="searchBtn" onclick="goSearch();" > 검색 </button> <br>
 			
-			
+			     
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.js"></script>
 <script>
  
