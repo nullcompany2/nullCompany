@@ -32,6 +32,10 @@ dd {
     font-size: 14px;
     margin-left: 130px;
     color: #676767;
+    
+.dept_memList{
+	cursor:pointer;
+}
 </style>
 
 
@@ -70,6 +74,7 @@ function detailMemberInfo(){
 			console.log(data.deptNo);
 			$("#md_myInfo").html(data.myInfo);
 			$("#md_indiemail").html(data.email);
+			 $("#dept_no").val(data.deptNo);
 			
 			
 	
@@ -83,6 +88,9 @@ function detailMemberInfo(){
 
 		})
 	};
+	
+	
+	
 </script>
 	<div id='wrap'>
 		<c:import url="../common/header.jsp" />
@@ -251,18 +259,28 @@ function detailMemberInfo(){
 	</div>
 	
 	<!-- 삭제 모달 -->
-	<div id="delete_dept_modal" style="	width: 421px; height: 385px" class="modal-dragscroll">
+	<div id="delete_dept_modal" style="width: 450px;
+    height: 445px;" class="modal-dragscroll">
 	<h4 style="color: #477A8F;
     margin-left: -25px;
     margin-top: -7px;
     margin-bottom: 11px;">부서 삭제</h4>
-		<div style="margin-bottom: 20px;"><span id="dept_name_delete" style="    margin-bottom: 5px;
-    font-size: 15px;
-    font-weight: bold;">dd</span>
-		<span style="color: #707070; margin-bottom: 5px; font-size: 14px;">부서에 소속되어 있는 사용자</span></div>
-		
-			
-			<ul id="dept_mem">
+		<div style="margin-bottom: 20px;">
+			<span style="color: #707070; margin-bottom: 5px; font-size: 14px;">부서 삭제는 해당 부서에 소속되어 있는 사용자가 0명 일 때에만 가능합니다.</span><br>
+			<span style="color: #707070; margin-bottom: 5px; font-size: 14px;">현재 </span>
+			<span id="dept_name_delete" style="    margin-bottom: 5px;
+				    font-size: 15px;
+				    font-weight: bold;">dd</span>
+			<span style="color: #707070; margin-bottom: 5px; font-size: 14px;">부서에 소속되어 있는 사용자는</span>
+			<span id="dept_name_delete_Count" style="    margin-bottom: 5px;
+				    font-size: 15px;
+				    font-weight: bold;">5</span>
+	    	<span style="color: #707070; margin-bottom: 5px; font-size: 14px;">명 입니다. </span><br>
+	    				<span style="color: #707070; margin-bottom: 5px; font-size: 14px;">아래에 보이는 사용자의 부서를 변경해주세요.</span><br>
+		</div>
+	
+			<input id="dept_no" type="hidden"/> 
+			<ul id="dept_mem" style="margin-left: 60px;">
  			
 			</ul>
 			<table  style=" width: 100%; border-collapse: collapse;" id="md_page_tbl">
@@ -272,7 +290,7 @@ function detailMemberInfo(){
 	<div style="margin-top:20px">
 		<span style="color: #707070;
 		    margin-top: 5px;
-		    font-size: 14px;">이와 같이 변경하고</span>
+		    font-size: 14px;">위와 같이 변경하고</span>
     	<span id="dept_name_delete2" style="    margin-bottom: 5px;
 		    font-size: 15px;
 		    font-weight: bold;">dd</span>
@@ -283,8 +301,8 @@ function detailMemberInfo(){
     
 
 		<div style="text-align: center; margin-top: 25px;">
-			<button id="edit_dept_btn"
-				style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">수정</button>
+			<button id="delete_dept_btn"
+				style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">삭제</button>
 			<button class="modal-close-btn cursor" 
 				style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">취소</button>
 		</div>
@@ -396,6 +414,30 @@ function detailMemberInfo(){
 			 $("#adddeptnameInput").focus();
 		});
 		
+
+		 
+		 //사원 인포 수정 버튼
+
+		$(document).on("click", "#edit_info", function(){
+			var sel_dept = $("#selectDept option:selected").val();
+			var md_memNo = $("#md_memNo").text(); 
+			
+			$.ajax({
+				url:"updateMemDept.do",
+				type:"post",
+				data:{
+	           	deptNo : sel_dept,
+	           	memNo : md_memNo,
+				},
+				success:function(data){
+					console.log(data);
+					location.reload();
+				},error: function(request,status,error){
+					console.log(request);
+			}
+				})
+		
+		});
 		
 
 		// 삭제 모달
@@ -410,6 +452,36 @@ function detailMemberInfo(){
 		
 		});
 		
+		// 삭제 모달에서 삭제 버튼 클릭 시~!
+		$('#delete_dept_btn').on('click', function() {
+			var count = $("#dept_name_delete_Count").text();
+			var deptName = $("#dept_name_delete").text();
+			
+			if(count>0){
+				alert("해당 부서에 속해 있는 모든 사용자의 부서를 변경해주세요.");
+				return false;
+			}
+			
+			$.ajax({
+				url:"deptDelete.do",
+				type:"post",
+				data:{
+					deptName : deptName,
+				},
+				success:function(data){
+					console.log(data);
+					alert("부서가 삭제 되었습니다.");
+					location.reload();
+				},error: function(request,status,error){
+					console.log(request);
+			}
+				})
+			
+			
+			  
+
+		});
+		
 		function mdListPaged(currentPage){
 			var deptName = $("#dept_name_delete").text();
 			
@@ -422,6 +494,10 @@ function detailMemberInfo(){
 		               console.log("성공");
 		               $("#dListPaging").remove();
 		               $('.dept_memList').remove();
+		               $('#dept_mem').empty;
+		               $("#dept_name_delete_Count").text(data.listCount);
+		            
+		               
 		               
 		               var $pageTbl = $('#md_page_tbl');
 		               
@@ -443,75 +519,77 @@ function detailMemberInfo(){
 		            	
 		            	var $dept_mem = $("#dept_mem");
 		            	
-		            	for(var i in data.mlist){
+		            	if(data.mlist.length > 0 ){
+		            		for(var i in data.mlist){
+			            		
+			            		console.log(data.mlist[i]);
+			            $li = $("<li style='width:230px; margin-bottom: 5px;font-size: 15px;'  class='dept_memList' onclick='forModal("+ data.mlist[i].memNo +")'>");
+			            $name = data.mlist[i].name;
+			            $liend = $("</li>");
+			            $li.append($name);
+						$li.append($liend);
+						$dept_mem.append($li);
+									
+			            	
+			            	}
 		            		
-		            		console.log(data.mlist[i]);
-		            		$li = $("<li style='width:230px; margin-bottom: 5px;font-size: 15px;'  class='dept_memList' id='li" + data.mlist[i].memNo +"'>");
-		            		$name = data.mlist[i].name;
-		            		$liend = $("</li>");
-		            		$select = $("<select style='float:right; width:100px; margin-right:20px' class='dept_list_select' id='" + data.mlist[i].memNo +"' >");
-		            		$selectend = $("</select>");
-		            		$li.append($name);
-							$li.append($select);
-							$li.append($selectend);
-							$li.append($liend);
-							$dept_mem.append($li);
+
+			            	$tr = $('<tr align="center" height="20" id="dListPaging">'); 
+							$td = $('<td colspan="6">');
+							if(data.pi.currentPage == 1){
 								
-		            	
-		            	}
-		            	
-		            	for(var i in data.deptListmodal){      
-		            		if(data.deptListmodal[i].deptName != deptName){
-		            			var option = $("<option value="+ data.deptListmodal[i].deptNo+">"+data.deptListmodal[i].deptName +"</option>");
-			                    $('.dept_list_select').append(option);
-		            		
-		            		}
-		            	
-		                    
-		                }
-
-
-		            	$tr = $('<tr align="center" height="20" id="dListPaging">'); 
-						$td = $('<td colspan="6">');
-						if(data.pi.currentPage == 1){
-							
-							$td0 = "[이전]";
-							$td.append($td0);
-						}
-			        	
-						if(data.pi.currentPage != 1){
-							$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage -1) + ')">').text("[이전] ");
+								$td0 = "[이전]";
+								$td.append($td0);
+							}
 				        	
-				        	$td.append($td0);
-						}    	
-			        	
-				       	
-				       	
-				       	for(var p = data.pi.startPage; p <=  data.pi.endPage; p++){
-				       		if(p == data.pi.currentPage){
-				       			$td0 = $("<b style='color:red; font-size:4'>").text("  "+p+"  ");
-				       			$td.append($td0);
-				       		}
-				       		if(p != data.pi.currentPage ){
-				       			$td0 = $('<a onclick="mdListPaged('+ (p)+')">').text("  "+p+"  ");
-				       			$td.append($td0);
-				       		}
-				       	
-				       	}
-			        	
-				       	if(data.pi.currentPage == data.pi.maxPage ){
-				       		$td0 = "[다음]";
-				       		$td.append($td0);
-				       	}
-			        	
-			        	if(data.pi.currentPage != data.pi.maxPage){
-			        		$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage + 1)+')">').text(" [다음]");
-			        		$td.append($td0);
-			        	}
-			        	
-		            	$tr.append($td);
-						
-		            	$pageTbl.append($tr);
+							if(data.pi.currentPage != 1){
+								$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage -1) + ')">').text("[이전] ");
+					        	
+					        	$td.append($td0);
+							}    	
+				        	
+					       	
+					       	
+					       	for(var p = data.pi.startPage; p <=  data.pi.endPage; p++){
+					       		if(p == data.pi.currentPage){
+					       			$td0 = $("<b style='color:red; font-size:4'>").text("  "+p+"  ");
+					       			$td.append($td0);
+					       		}
+					       		if(p != data.pi.currentPage ){
+					       			$td0 = $('<a onclick="mdListPaged('+ (p)+')">').text("  "+p+"  ");
+					       			$td.append($td0);
+					       		}
+					       	
+					       	}
+				        	
+					       	if(data.pi.currentPage == data.pi.maxPage ){
+					       		$td0 = "[다음]";
+					       		$td.append($td0);
+					       	}
+				        	
+				        	if(data.pi.currentPage != data.pi.maxPage){
+				        		$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage + 1)+')">').text(" [다음]");
+				        		$td.append($td0);
+				        	}
+				        	
+			            	$tr.append($td);
+							
+			            	$pageTbl.append($tr);
+			            	
+		            	}else{
+		            		
+		            		 $li = $("<li style=' height: 150px; width:230px; margin-bottom: 5px;font-size: 15px;' >");
+					            $name = '해당 부서는 삭제가 가능합니다.'
+					            $liend = $("</li>");
+					            $li.append($name);
+								$li.append($liend);
+								$dept_mem.append($li);
+		            	}
+
+		            	
+		            	
+
+
 	 
 					},
 		            error :function(request,status,error){
@@ -546,6 +624,9 @@ function detailMemberInfo(){
 				
 			} 
 		});
+		 
+	
+
 		
 		 //부서 추가 버튼
 		 $('#add_dept_btn').on('click', function() {
@@ -559,7 +640,6 @@ function detailMemberInfo(){
 				url: "deptAdd.do",
 				data: {"deptName" : deptName},
 				success : function(data){
-					alert("추가 성공")
 					location.reload();
 				},
 				error :function(request,status,error){
@@ -659,8 +739,8 @@ function detailMemberInfo(){
 
 
 		<div style="text-align: center; margin-top: 30px;">
-			<button id="accept" onclick="acceptemail();"
-				style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">수정</button>
+			<button id="edit_info"
+				style="background: #fff; cursor:pointer; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">수정</button>
 			<button  class="modal-close-btn cursor"
 				style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">취소</button>
 		</div>

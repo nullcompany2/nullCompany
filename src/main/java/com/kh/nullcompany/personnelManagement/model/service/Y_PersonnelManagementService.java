@@ -49,6 +49,10 @@ public interface Y_PersonnelManagementService {
 
 	ArrayList<Member> deptTypeMemlist(PageInfo pi, String deptName);
 
+	int updateMemDept(Member m);
+
+	int deptDelete(String deptName);
+
 
 
 }

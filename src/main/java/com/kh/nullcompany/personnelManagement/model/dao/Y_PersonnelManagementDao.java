@@ -110,6 +110,14 @@ public class Y_PersonnelManagementDao {
 		return (ArrayList)sqlSession.selectList("Y_personnelMapper.deptTypeMemlist",deptName,rowBounds);
 	}
 
+	public int updateMemDept(Member m) {
+		return sqlSession.update("Y_personnelMapper.updateMemDept",m);
+	}
+
+	public int deptDelete(String deptName) {
+		return sqlSession.delete("Y_personnelMapper.deptDelete",deptName);
+	}
+
 
 
 
