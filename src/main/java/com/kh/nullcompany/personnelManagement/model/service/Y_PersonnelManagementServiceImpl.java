@@ -115,5 +115,50 @@ public class Y_PersonnelManagementServiceImpl implements Y_PersonnelManagementSe
 		return yDao.deptTypeMemlist(pi,deptName);
 	}
 
+	@Override
+	public int updateMemDept(Member m) {
+		return yDao.updateMemDept(m);
+	}
+
+	@Override
+	public int deptDelete(String deptName) {
+		return yDao.deptDelete(deptName);
+	}
+
+	@Override
+	public ArrayList<Rank> selectOrderByRankList() {
+		return yDao.selectOrderByRankList();
+	}
+
+	@Override
+	public int rankEdit(Map map) {
+		return yDao.rankEdit(map);
+	}
+
+	@Override
+	public int rankAdd(String rankName) {
+		return yDao.rankAdd(rankName);
+	}
+
+	@Override
+	public int rankTypeMemlistCount(String rankName) {
+		return yDao.rankTypeMemlistCount(rankName);
+	}
+
+	@Override
+	public ArrayList<Member> rankTypeMemlist(PageInfo pi, String rankName) {
+		return yDao.rankTypeMemlist(pi,rankName);
+	}
+
+	@Override
+	public int updateMemRank(Member m) {
+		return yDao.updateMemRank(m);
+	}
+
+	@Override
+	public int rankDelete(String rankName) {
+		return yDao.rankDelete(rankName);
+	}
+
 
 }

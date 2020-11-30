@@ -1,6 +1,7 @@
 package com.kh.nullcompany.mail.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +20,7 @@ public class MailDao {
 
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-	private int result;
+	private ArrayList<Member> result;
 	
 
 	// 이름 누르고 그 사람에게 메일 보내기 
@@ -232,5 +233,8 @@ public class MailDao {
 		
 			return result;
 	}
+
 	
-}
+		
+	}
+	

@@ -93,4 +93,37 @@
 			BNO=#{bNo}
 	</update>
 	
+	<!-- 검색 -->
+	<select id="searchbTitle" resultMap="boardResultSet" parameterType="map">
+	 	SELECT * 
+	 	FROM TBL_BOARD
+	 	WHERE B_STATUS = 'Y'
+	 	AND BTITLE LIKE '%' || #{search} || '%'
+	 	ORDER BY BNO DESC
+	 </select>
+	 
+	 <select id="searchbWriter" resultMap="boardResultSet" parameterType="map">
+		SELECT * 
+		FROM TBL_BOARD 
+		WHERE B_STATUS = 'Y'
+		AND BWRITER LIKE '%' || #{search} || '%'
+		ORDER BY BNO DESC
+	 </select>
+	 
+	 <select id="searchbContent" resultMap="boardResultSet" parameterType="map">
+	 	SELECT * 
+		FROM TBL_BOARD 
+		WHERE B_STATUS = 'Y'
+		AND BCONTENT LIKE '%' || #{search} || '%'
+		ORDER BY BNO DESC
+	 </select>
+	 
+	 <select id="searchbtitleContent" resultMap="boardResultSet" parameterType="map"> 
+	 	SELECT * 
+	 	FROM TBL_BOARD 
+	 	WHERE B_STATUS = 'Y'
+	 	AND (BTITLE LIKE '%' || #{search} || '%' OR BCONTENT LIKE '%' || #{search} || '%')
+	 	ORDER BY BNO DESC
+	 </select>
+	
 </mapper>

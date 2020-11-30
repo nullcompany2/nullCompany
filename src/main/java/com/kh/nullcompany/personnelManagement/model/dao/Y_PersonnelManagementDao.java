@@ -110,6 +110,44 @@ public class Y_PersonnelManagementDao {
 		return (ArrayList)sqlSession.selectList("Y_personnelMapper.deptTypeMemlist",deptName,rowBounds);
 	}
 
+	public int updateMemDept(Member m) {
+		return sqlSession.update("Y_personnelMapper.updateMemDept",m);
+	}
+
+	public int deptDelete(String deptName) {
+		return sqlSession.delete("Y_personnelMapper.deptDelete",deptName);
+	}
+
+	public ArrayList<Rank> selectOrderByRankList() {
+		return (ArrayList)sqlSession.selectList("Y_personnelMapper.selectOrderByRankList");
+	}
+
+	public int rankEdit(Map map) {
+		return sqlSession.update("Y_personnelMapper.rankEdit",map);
+	}
+
+	public int rankAdd(String rankName) {
+		return sqlSession.insert("Y_personnelMapper.rankAdd",rankName);
+	}
+
+	public int rankTypeMemlistCount(String rankName) {
+		return sqlSession.selectOne("Y_personnelMapper.rankTypeMemlistCount",rankName);
+	}
+
+	public ArrayList<Member> rankTypeMemlist(PageInfo pi, String rankName) {
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("Y_personnelMapper.rankTypeMemlist",rankName,rowBounds);
+	}
+
+	public int updateMemRank(Member m) {
+		return sqlSession.update("Y_personnelMapper.updateMemRank",m);
+	}
+
+	public int rankDelete(String rankName) {
+		return sqlSession.delete("Y_personnelMapper.rankDelete",rankName);
+	}
+
 
 
 

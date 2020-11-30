@@ -19,12 +19,15 @@ public class Mail {
 	private String email;
 	private String rName;
 	private int count;
+	private String emailAddress;
 	
 	public Mail() {}
 
+	
+
 	public Mail(int mailNo, int memNo, String sender, String recipient, String mTitle, String mFileName,
 			String mContent, String sendDate, String mDeleteStatus, String mRealDelStatus, String mSaveStatus,
-			int readCount, String name, String email, String rName) {
+			int readCount, String name, String email, String rName, int count, String emailAddress) {
 		super();
 		this.mailNo = mailNo;
 		this.memNo = memNo;
@@ -41,7 +44,11 @@ public class Mail {
 		this.name = name;
 		this.email = email;
 		this.rName = rName;
+		this.count = count;
+		this.emailAddress = emailAddress;
 	}
+
+
 
 	public int getMailNo() {
 		return mailNo;
@@ -162,6 +169,32 @@ public class Mail {
 	public void setrName(String rName) {
 		this.rName = rName;
 	}
+	
+	
+
+	public int getCount() {
+		return count;
+	}
+
+
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
+
+
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+
+
+
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+	}
+
+
 
 	@Override
 	public String toString() {
@@ -169,7 +202,11 @@ public class Mail {
 				+ ", mTitle=" + mTitle + ", mFileName=" + mFileName + ", mContent=" + mContent + ", sendDate="
 				+ sendDate + ", mDeleteStatus=" + mDeleteStatus + ", mRealDelStatus=" + mRealDelStatus
 				+ ", mSaveStatus=" + mSaveStatus + ", readCount=" + readCount + ", name=" + name + ", email=" + email
-				+ ", rName=" + rName + "]";
+				+ ", rName=" + rName + ", count=" + count + ", emailAddress=" + emailAddress + "]";
 	}
+
+
+
+	
 	
 }

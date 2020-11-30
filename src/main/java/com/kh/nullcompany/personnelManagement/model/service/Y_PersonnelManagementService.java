@@ -49,6 +49,24 @@ public interface Y_PersonnelManagementService {
 
 	ArrayList<Member> deptTypeMemlist(PageInfo pi, String deptName);
 
+	int updateMemDept(Member m);
+
+	int deptDelete(String deptName);
+
+	ArrayList<Rank> selectOrderByRankList();
+
+	int rankEdit(Map map);
+
+	int rankAdd(String rankName);
+
+	int rankTypeMemlistCount(String rankName);
+
+	ArrayList<Member> rankTypeMemlist(PageInfo pi, String rankName);
+
+	int updateMemRank(Member m);
+
+	int rankDelete(String rankName);
+
 
 
 }

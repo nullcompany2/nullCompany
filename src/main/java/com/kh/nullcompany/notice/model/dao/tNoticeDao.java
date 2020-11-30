@@ -1,6 +1,7 @@
 package com.kh.nullcompany.notice.model.dao;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -58,6 +59,23 @@ public class tNoticeDao {
 
 	public int deletetNotice(int tNo) {
 		return sqlSession.update("noticeMapper.deletetNotice",tNo);
+	}
+
+	public ArrayList<tnotice> searchtTitle(Map map) {
+		return (ArrayList)sqlSession.selectList("noticeMapper.searchtTitle",map);
+	}
+
+	public ArrayList<tnotice> searchtWriter(Map map) {
+		return (ArrayList)sqlSession.selectList("noticeMapper.searchtWriter",map);
+	}
+
+	public ArrayList<tnotice> searchtContent(Map map) {
+		return (ArrayList)sqlSession.selectList("noticeMapper.searchtContent",map);
+	}
+
+	public ArrayList<tnotice> searchttitleContent(Map map) {
+		return (ArrayList)sqlSession.selectList("noticeMapper.searchttitleContent",map);
+		
 	}
 
 

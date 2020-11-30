@@ -318,23 +318,74 @@ tr>td {
 
    <select id="category"> 
 				<option>-----</option>
-				<option value="받는사람">제목</option>
-				<option value="제목">글쓴이</option>
+				<option value="제목">제목</option>
+				<option value="글쓴이">글쓴이</option>
 				<option value="내용">내용</option>
 				<option value="제목내용">제목 + 내용</option>
 			</select>
-			<input  id="search" type="text" placeholder="게시물 검색"> 
+			<input id="search" type="text" placeholder="게시물 검색"> 
 			<button id="searchBtn" onclick="goSearch();" > 검색 </button> <br>
 
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.js"></script>
-        <script>
-        $(document).ready(function(){
-        	
-        	var countAll = $("#tb tr").length;
-        	$("#countAll").text("편지수 : " + countAll);
+<script>
 
+function goSearch(){
+   	
+	var category=  $("#category").children("option:selected").val();
+	var search = $("#search").val();
+	
+	if(category =="-----"){
+  	  alert("분류를 선택하지 않았습니다.");
+	}else if(search != ""){
+			document.location.href='searchNotice.do?category='+category+'&search='+search;	
+	}
+	  }
+      function modal(id) {
+         var zIndex = 9999;
+         var modal = $('#' + id);
 
-        	 </script>
+         // 모달 div 뒤에 희끄무레한 레이어
+         var bg = $('<div>').css({
+            position : 'fixed',
+            zIndex : zIndex,
+            left : '0px',
+            top : '0px',
+            width : '100%',
+            height : '100%',
+            overflow : 'auto',
+            // 레이어 색갈은 여기서 바꾸면 됨
+            backgroundColor : 'rgba(0,0,0,0.4)'
+         }).appendTo('body');
+
+         modal
+               .css(
+                     {
+                        position : 'fixed',
+                        boxShadow : '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+
+                        // 시꺼먼 레이어 보다 한칸 위에 보이기
+                        zIndex : zIndex + 1,
+
+                        // div center 정렬
+                        top : '50%',
+                        left : '50%',
+                        transform : 'translate(-50%, -50%)',
+                        msTransform : 'translate(-50%, -50%)',
+                        webkitTransform : 'translate(-50%, -50%)'
+                     }).show()
+               // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
+               .find('.close_btn').on('click', function() {
+                  bg.remove();
+                  modal.hide();
+               });
+      }
+
+      $('#delete_btn').on('click', function() {
+         // 모달창 띄우기
+         modal('delete_modal');
+      });
+   </script>
+
 
 </body>
 </html>
