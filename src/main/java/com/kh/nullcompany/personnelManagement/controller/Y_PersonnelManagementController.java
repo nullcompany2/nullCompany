@@ -136,7 +136,7 @@ public class Y_PersonnelManagementController {
 		}
 		
 		
-		// 사용자 승인 업데이트
+		// 부서 업데이트
 		@RequestMapping("updateMemDept.do")
 		public ModelAndView updateMemDept(ModelAndView mv, Member m,
 				HttpServletRequest request){
@@ -228,14 +228,116 @@ public class Y_PersonnelManagementController {
 		}
 
 	// 직위 관리
+	
 	@RequestMapping("rankManagement.do")
-	public String rankManagement(HttpServletResponse response) {
-		return "personnel_management/rankManagement";
-		
-		
+	public ModelAndView rankManagement(ModelAndView mv,HttpServletRequest request){
+
+		// 총 직위 리스트
+		ArrayList<Rank> rankList = yService.selectOrderByRankList();
+		// 총 사원 리스트
+		ArrayList<Member> mList = yService.memList();
+
+
+		mv.addObject("mList", mList);
+		mv.addObject("rankList", rankList);
+
+		mv.setViewName("personnel_management/rankManagement");
+
+		return mv;
+
 	}
+	
+	
+	// 직위 수정
+	@RequestMapping("rankEdit.do")
+	public String rankEdit(Model model, String rankName, String text) {
+		
+	
+		Map map = new HashMap();
+		map.put("text", text);
+		map.put("rankName", rankName);
 
+		int result = yService.rankEdit(map);
 
+		if(result > 0) {
+			return "redirect:rankManagement.do";
+		}
+		return rankName;
+	}
+	
+	// 직위 추가
+	@RequestMapping("rankAdd.do")
+	public String rankAdd(Model model, String rankName) {
+		
+		int result = yService.rankAdd(rankName);
+
+		if(result > 0) {
+			return "redirect:rankManagement.do";
+		}
+		return rankName;
+	}
+	
+	// 직위 삭제 전 부서별 리스트 뽑기
+			@RequestMapping("rankTypeMemlist.do")
+			public void rankTypeMemlist(ModelAndView mv, String rankName, HttpServletResponse response, HttpSession session, 
+					@RequestParam(value="currentPage",required=false,defaultValue="1") int currentPage) throws JsonIOException, IOException{
+				response.setContentType("application/json; charset=utf-8");
+				// 총 사원 리스트
+
+				int listCount = yService.rankTypeMemlistCount(rankName);
+				
+				PageInfo pi = Pagination.getPageInfoForModal(currentPage,listCount);
+				
+				ArrayList<Member> mlist = yService.rankTypeMemlist(pi, rankName);
+				
+				ArrayList<Rank> rankListmodal = yService.selectRankList();
+				
+				Map list = new HashMap();
+				list.put("mlist",mlist);
+				list.put("pi",pi);
+				list.put("listCount",listCount);
+				list.put("rankListmodal",rankListmodal);
+				Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+				gson.toJson(list,response.getWriter());
+				
+
+			
+			}
+
+			// 직위 업데이트
+			@RequestMapping("updateMemRank.do")
+			public ModelAndView updateMemRank(ModelAndView mv, Member m,
+					HttpServletRequest request){
+
+				int result = yService.updateMemRank(m);
+
+				System.out.println("업데이트용" + m);
+
+				if(result>0) {
+					mv.setViewName("personnel_management/rankManagement");
+				}else {
+					mv.addObject("msg","수정실패").setViewName("common/errorPage");
+				}
+				return mv;
+
+			}
+			
+			
+			// 직위 삭제
+			@RequestMapping("rankDelete.do")
+			public ModelAndView rankDelete(ModelAndView mv, String rankName,HttpServletRequest request){
+
+				int result = yService.rankDelete(rankName);
+
+				if(result>0) {
+					mv.setViewName("personnel_management/rankManagement");
+				}else {
+					mv.addObject("msg","삭제실패").setViewName("common/errorPage");
+				}
+				return mv;
+			}
+			
+			
 
 	// 사용자 승인 관리 리스트
 
