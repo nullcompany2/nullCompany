@@ -92,6 +92,8 @@ public class Y_PersonnelManagementController {
 		}
 		
 		
+		
+		
 		// 부서 삭제 전 부서별 리스트 뽑기
 		@RequestMapping("deptTypeMemlist.do")
 		public void deptTypeMemlist(ModelAndView mv, String deptName,HttpServletResponse response, HttpSession session, 
@@ -117,6 +119,20 @@ public class Y_PersonnelManagementController {
 			
 
 		
+		}
+		
+		// 부서 삭제
+		@RequestMapping("deptDelete.do")
+		public ModelAndView deptDelete(ModelAndView mv, String deptName,HttpServletRequest request){
+
+			int result = yService.deptDelete(deptName);
+
+			if(result>0) {
+				mv.setViewName("personnel_management/OrganizationManagement");
+			}else {
+				mv.addObject("msg","삭제실패").setViewName("common/errorPage");
+			}
+			return mv;
 		}
 		
 		

@@ -51,6 +51,8 @@ public interface Y_PersonnelManagementService {
 
 	int updateMemDept(Member m);
 
+	int deptDelete(String deptName);
+
 
 
 }

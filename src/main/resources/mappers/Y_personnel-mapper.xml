@@ -184,4 +184,9 @@
         SET DEPT_NO = #{deptNo}
 		WHERE MEM_NO = #{memNo}
 	</update>
+	
+	<!-- 부서 삭제 -->
+	<delete id="deptDelete">
+     	DELETE FROM DEPARTMENT WHERE DEPT_NAME = #{deptName}
+    </delete>
 </mapper>

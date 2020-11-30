@@ -114,6 +114,10 @@ public class Y_PersonnelManagementDao {
 		return sqlSession.update("Y_personnelMapper.updateMemDept",m);
 	}
 
+	public int deptDelete(String deptName) {
+		return sqlSession.delete("Y_personnelMapper.deptDelete",deptName);
+	}
+
 
 
 

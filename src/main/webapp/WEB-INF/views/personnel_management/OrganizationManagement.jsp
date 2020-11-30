@@ -74,6 +74,7 @@ function detailMemberInfo(){
 			console.log(data.deptNo);
 			$("#md_myInfo").html(data.myInfo);
 			$("#md_indiemail").html(data.email);
+			 $("#dept_no").val(data.deptNo);
 			
 			
 	
@@ -278,7 +279,7 @@ function detailMemberInfo(){
 	    				<span style="color: #707070; margin-bottom: 5px; font-size: 14px;">아래에 보이는 사용자의 부서를 변경해주세요.</span><br>
 		</div>
 	
-			
+			<input id="dept_no" type="hidden"/> 
 			<ul id="dept_mem" style="margin-left: 60px;">
  			
 			</ul>
@@ -451,13 +452,32 @@ function detailMemberInfo(){
 		
 		});
 		
-		// 삭제 버튼 클릭 시 정보 뜨는거
+		// 삭제 모달에서 삭제 버튼 클릭 시~!
 		$('#delete_dept_btn').on('click', function() {
 			var count = $("#dept_name_delete_Count").text();
+			var deptName = $("#dept_name_delete").text();
 			
-			if(count>=0){
-				alert("모든 사용자의 부서를 변경해주세요.")
+			if(count>0){
+				alert("해당 부서에 속해 있는 모든 사용자의 부서를 변경해주세요.");
+				return false;
 			}
+			
+			$.ajax({
+				url:"deptDelete.do",
+				type:"post",
+				data:{
+					deptName : deptName,
+				},
+				success:function(data){
+					console.log(data);
+					alert("부서가 삭제 되었습니다.");
+					location.reload();
+				},error: function(request,status,error){
+					console.log(request);
+			}
+				})
+			
+			
 			  
 
 		});
@@ -474,7 +494,9 @@ function detailMemberInfo(){
 		               console.log("성공");
 		               $("#dListPaging").remove();
 		               $('.dept_memList').remove();
+		               $('#dept_mem').empty;
 		               $("#dept_name_delete_Count").text(data.listCount);
+		            
 		               
 		               
 		               var $pageTbl = $('#md_page_tbl');
@@ -497,63 +519,77 @@ function detailMemberInfo(){
 		            	
 		            	var $dept_mem = $("#dept_mem");
 		            	
-		            	for(var i in data.mlist){
+		            	if(data.mlist.length > 0 ){
+		            		for(var i in data.mlist){
+			            		
+			            		console.log(data.mlist[i]);
+			            $li = $("<li style='width:230px; margin-bottom: 5px;font-size: 15px;'  class='dept_memList' onclick='forModal("+ data.mlist[i].memNo +")'>");
+			            $name = data.mlist[i].name;
+			            $liend = $("</li>");
+			            $li.append($name);
+						$li.append($liend);
+						$dept_mem.append($li);
+									
+			            	
+			            	}
 		            		
-		            		console.log(data.mlist[i]);
-		            $li = $("<li style='width:230px; margin-bottom: 5px;font-size: 15px;'  class='dept_memList' onclick='forModal("+ data.mlist[i].memNo +")'>");
-		            $name = data.mlist[i].name;
-		            $liend = $("</li>");
-		            $li.append($name);
-					$li.append($liend);
-					$dept_mem.append($li);
+
+			            	$tr = $('<tr align="center" height="20" id="dListPaging">'); 
+							$td = $('<td colspan="6">');
+							if(data.pi.currentPage == 1){
 								
-		            	
-		            	}
-		            	
-		            	
-
-
-		            	$tr = $('<tr align="center" height="20" id="dListPaging">'); 
-						$td = $('<td colspan="6">');
-						if(data.pi.currentPage == 1){
-							
-							$td0 = "[이전]";
-							$td.append($td0);
-						}
-			        	
-						if(data.pi.currentPage != 1){
-							$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage -1) + ')">').text("[이전] ");
+								$td0 = "[이전]";
+								$td.append($td0);
+							}
 				        	
-				        	$td.append($td0);
-						}    	
-			        	
-				       	
-				       	
-				       	for(var p = data.pi.startPage; p <=  data.pi.endPage; p++){
-				       		if(p == data.pi.currentPage){
-				       			$td0 = $("<b style='color:red; font-size:4'>").text("  "+p+"  ");
-				       			$td.append($td0);
-				       		}
-				       		if(p != data.pi.currentPage ){
-				       			$td0 = $('<a onclick="mdListPaged('+ (p)+')">').text("  "+p+"  ");
-				       			$td.append($td0);
-				       		}
-				       	
-				       	}
-			        	
-				       	if(data.pi.currentPage == data.pi.maxPage ){
-				       		$td0 = "[다음]";
-				       		$td.append($td0);
-				       	}
-			        	
-			        	if(data.pi.currentPage != data.pi.maxPage){
-			        		$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage + 1)+')">').text(" [다음]");
-			        		$td.append($td0);
-			        	}
-			        	
-		            	$tr.append($td);
-						
-		            	$pageTbl.append($tr);
+							if(data.pi.currentPage != 1){
+								$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage -1) + ')">').text("[이전] ");
+					        	
+					        	$td.append($td0);
+							}    	
+				        	
+					       	
+					       	
+					       	for(var p = data.pi.startPage; p <=  data.pi.endPage; p++){
+					       		if(p == data.pi.currentPage){
+					       			$td0 = $("<b style='color:red; font-size:4'>").text("  "+p+"  ");
+					       			$td.append($td0);
+					       		}
+					       		if(p != data.pi.currentPage ){
+					       			$td0 = $('<a onclick="mdListPaged('+ (p)+')">').text("  "+p+"  ");
+					       			$td.append($td0);
+					       		}
+					       	
+					       	}
+				        	
+					       	if(data.pi.currentPage == data.pi.maxPage ){
+					       		$td0 = "[다음]";
+					       		$td.append($td0);
+					       	}
+				        	
+				        	if(data.pi.currentPage != data.pi.maxPage){
+				        		$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage + 1)+')">').text(" [다음]");
+				        		$td.append($td0);
+				        	}
+				        	
+			            	$tr.append($td);
+							
+			            	$pageTbl.append($tr);
+			            	
+		            	}else{
+		            		
+		            		 $li = $("<li style=' height: 150px; width:230px; margin-bottom: 5px;font-size: 15px;' >");
+					            $name = '해당 부서는 삭제가 가능합니다.'
+					            $liend = $("</li>");
+					            $li.append($name);
+								$li.append($liend);
+								$dept_mem.append($li);
+		            	}
+
+		            	
+		            	
+
+
 	 
 					},
 		            error :function(request,status,error){
@@ -604,7 +640,6 @@ function detailMemberInfo(){
 				url: "deptAdd.do",
 				data: {"deptName" : deptName},
 				success : function(data){
-					alert("추가 성공")
 					location.reload();
 				},
 				error :function(request,status,error){
