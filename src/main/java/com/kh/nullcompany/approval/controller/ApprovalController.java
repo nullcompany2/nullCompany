@@ -3,6 +3,7 @@ package com.kh.nullcompany.approval.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
@@ -905,12 +907,13 @@ public class ApprovalController {
 		}
 	}
 	
+	// 서식 선택 화면
 	@RequestMapping("approvalInsertView.do")
 	public String approvalInsertView(HttpServletResponse response) {
 		return "approval/approvalSelectDocumentForm";
 	}
 
-	
+	// 문서 작성하기 화면
 	@RequestMapping("selectFormView.do")
 	public ModelAndView selectFormView(ModelAndView mv, HttpSession session, int option) {
 		System.out.println("서식번호 : " + option);
@@ -964,30 +967,110 @@ public class ApprovalController {
 		return mv;
 	}
 	
-//	@ResponseBody
-//	@RequestMapping("test.do")
-//	public void test(@RequestParam("docTempNo") String docTempNo) {
-//		
-//	}
-	
+	// 부서별 사원 정보 가져오기
 	@RequestMapping("selectDeptStaff.do")
-	public void selectDeptStaff(HttpSession session, HttpServletResponse response, int deptNo, String docTempNo) throws JsonIOException, IOException {
+	public void selectDeptStaff(HttpServletResponse response, int deptNo, String docTempNo) throws JsonIOException, IOException {
 		response.setContentType("application/json; charset=utf-8");
 		System.out.println("부서번호 : " + deptNo);
 		System.out.println("임시번호 : " + docTempNo);
 		
 		ArrayList<DivDeptStaff> dsList = aService.selectDeptStaff(deptNo, docTempNo);
 		
-//		for(DivDeptStaff ds : dsList) {
-//			System.out.println("사번 : " + ds.getMemNo());
-//			System.out.println("이름 : " + ds.getName());
-//			System.out.println("직급번호 : " + ds.getRankNo());
-//			System.out.println("직급명 : " + ds.getRankName());
-//		}
-		
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		
 		gson.toJson(dsList,response.getWriter());
+	}
+	
+	// 결재 스텝 등록하기
+	@RequestMapping("insertStep.do")
+	public void insertStep(HttpServletResponse response, Step s) throws JsonIOException, IOException {
+		response.setContentType("application/json; charset=utf-8");
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		
+		System.out.println("결재자 모든 정보 : " + s);
+		System.out.println("결재 타입 : " + s.getLineNo());
+		
+		// 결재자 일 때
+		if(s.getLineNo() == 1) {
+			// 결재 순번 정하기
+			int stepCount = aService.apprStepListCount(s);
+			s.setStepPriority(stepCount+1);
+			
+			// 결재자 등록하기
+			int result = aService.apprStepInsert(s);
+			
+			// 등록한 결재자 정보 가져오기 
+			if(result > 0) {
+				Step st = aService.currentStepInfo(s);
+				gson.toJson(st,response.getWriter());
+			}
+		// 참조자, 수신자일 때
+		}else {
+			// 참조자, 수신자 등록하기
+			int result = aService.notApprStepInsert(s);
+			
+			if(result > 0) {
+				// 등록한 참조자, 수신자 정보 가져오기 
+				Step st = aService.currentStepInfo(s);
+				
+				gson.toJson(st,response.getWriter());
+			}
+		}
+	}
+	@RequestMapping("deleteStep.do")
+	public void deleteStep(HttpServletResponse response,
+			               @RequestParam(value="docTempNo", required=false) String docTempNo,
+			               @RequestParam(value="staffNoArray", required=false) List<String> staffNoArray) throws JsonIOException, IOException {
+		
+		response.setContentType("application/json; charset=utf-8");
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		
+		
+		// 파싱할 정수형 리스트
+		List<Integer> staffNoList = new ArrayList<Integer>();
+		
+		// 정수형 파싱
+		for(int i = 0; i < staffNoArray.size(); i++) {
+			staffNoList.add(Integer.parseInt(staffNoArray.get(i)));
+		}
+		
+		// 보낼 리스트
+		ArrayList<Step> sList = new ArrayList<Step>();
+		int result = 0;
+		
+		for(int staffNo : staffNoList) {
+			result = aService.deleteStep(docTempNo, staffNo);
+			
+			Step s = new Step();
+			s.setStaffNo(staffNo);
+			// 보낼 리스트에 담기
+			sList.add(s);
+		}
+		
+		if(result > 0) {
+			gson.toJson(sList,response.getWriter());
+		}
+	}
+	
+	// 업무 연락 문서 기안하기(임시 문서 업데이트)
+	@RequestMapping("insertBusinessDocumet.do")
+	public String insertDocument(Model model, HttpServletResponse response, HttpSession session,
+								 @RequestParam(value="docTempNo", required=false) String docTempNo,
+								 @RequestParam(value="dTitle", required=false) String dTitle,
+								 @RequestParam(value="dContent", required=false) String dContent) {
+		
+		Document d = new Document();
+		d.setDocTempNo(docTempNo);
+		d.setdTitle(dTitle);
+		d.setdContent(dContent);
+		
+		int result = aService.insertDocument(d);
+		if(result > 0) {			
+			return "redirect:approvalProgressAllListView.do";
+		}else {
+			model.addAttribute("msg", "문서 기안 실패!");
+			return "common/errorPage";
+		}
 	}
 
 	@RequestMapping("approvalAllDList.do")

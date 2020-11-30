@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>문서 상세보기</title>
+    <title>업무연락 문서 작성하기</title>
 	<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 	<link rel="stylesheet" href='<c:url value="/resources/css/approval_InsertForm.css"/>'>
@@ -72,24 +72,52 @@
           padding:15px;
           
        }
+       
        .staffList input{
        	  margin-top:10px;
        }
-       #selBtns{
+       
+       #apprdList{
+       	  padding:3px;
           position: absolute;
-          width: 50px;
+          width: 170px;
           height: 430px;
           top: 100px;
-          left: 490px;
-          padding: 10px;
-       }
-
-       #selBtns img{
-          cursor: pointer;
+          left: 60px;
+          text-align: left;
        }
        
+       #apprdList input{
+       	  margin-top:10px;
+       }
 
+       #checkdList{
+          padding:3px;
+          position: absolute;
+          width: 170px;
+          height: 430px;
+          top: 100px;
+          left: 290px;
+          text-align: left;
+       }
+       
+       #checkdList input{
+       	  margin-top:10px;
+       }
 
+       #receivedList{
+          padding:3px;
+          position: absolute;
+          width: 170px;
+          height: 430px;
+          top: 100px;
+          left: 520px;
+          text-align: left;
+       }
+       
+       #receivedList input{
+       	  margin-top:10px;
+       }
 
        #d1{
           position: absolute;
@@ -101,6 +129,24 @@
           position: absolute;
           top: 50px;
           left: 300px;
+       }
+       
+       #d3{
+          position: absolute;
+          top: 50px;
+          left: 60px;
+       }
+
+       #d4{
+          position: absolute;
+          top: 50px;
+          left: 290px;
+       }
+       
+       #d5{
+          position: absolute;
+          top: 50px;
+          left: 520px;
        }
 
        .staffInsert{
@@ -114,19 +160,51 @@
           color: white;
           border-radius: 10px;
        }
+       
+       #staffDelete{
+          position: absolute;
+          width: 80px;
+          height: 30px;
+          top: 560px;
+          left: 335px;
+          border: none;
+          background: #477A8F;
+          color: white;
+          border-radius: 10px;
+       }
+       
        #lt{
          position: absolute;
          top: 80px;
          left: 300px;
        }
+       
+       .tdStaff{
+       		margin-left:20px;
+       }
     </style>
     <script>
-    	$(document).ready(function(){
-    		var checkload = true;
+    	$(function(){
+    		var warning = true;
     		
+    		// 문서 기안하기
+   	    	$('#cb1').on('click',function(){
+   	    		
+   	            warning = false;
+   	            
+   	    		var docTempNo = $('#docTempNo').val();
+   	    		var dTitle = $('#dTitle').val();
+   	            var dContent = $("#dContent").val();
+   	            
+   	            location.href = "insertBusinessDocumet.do?docTempNo="+docTempNo+"&dTitle="+dTitle+"&dContent="+dContent;
+   	            
+   	    	});
     		
 	    	$(window).on('beforeunload', function(){
-	    		return '...';
+	    		
+	    		if(warning){	
+	    			return '...';
+	    		}
 	    	});
     	});
     </script>
@@ -237,111 +315,22 @@
                         <span class="cb" id="cb2">결재자 설정</span>
                         <span class="cb" id="cb3">참조자 설정</span>
                         <span class="cb" id="cb4">수신자 설정</span>
+                        <span class="cb" id="cb5">결재선 미리보기</span>
                     </div>
                     <table class="appr_insert_table2" >
                         <tbody>
 							<tr id="tr2">
-								<td rowspan="4">결재</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-							<tr id="tr3">
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-							<tr id="tr4">
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-							<tr id="tr5">
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
+								<td>결재</td>
+								<td style="text-align: left;"></td>
 							</tr>
 							<tr id="tr6">
-								<td rowspan="3">참조</td>
-                                <td></td>
-                                <td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-                                <td></td>
-                                <td></td>
-							</tr>
-							<tr id="tr7">
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-							</tr>
-							<tr id="tr8">
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+								<td>참조</td>
+                                <td style="text-align: left;"></td>
 							</tr>
 							<tr id="tr9">
-								<td rowspan="2">수신</td>
-                                <td></td>
-                                <td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-                                <td></td>
-                                <td></td>
+								<td>수신</td>
+                                <td style="text-align: left;"></td>
 							</tr>
-							<tr id="tr10">
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
                         </tbody>
                     </table>
                     <br>
@@ -392,7 +381,7 @@
          <div class="staffList" style="border: 1px solid black;">
          </div>
          <p id="lt" style="text-align: left; color: #477A8F; font-size: 10pt; margin: 0px;">&nbsp;<결재자 선택></p><br>
-         <button class="staffInsert">등록</button>
+         <button class="staffInsert" id="apprStaffInsert">등록</button>
          <a class="modal-close-btn cursor">X</a>
       </div>
       
@@ -421,7 +410,7 @@
          <div class="staffList" style="border: 1px solid black;">
          </div>
          <p id="lt" style="text-align: left; color: #477A8F; font-size: 10pt; margin: 0px;">&nbsp;<참조자 선택></p><br>
-         <button class="staffInsert">등록</button>
+         <button class="staffInsert" id="checkStaffInsert">등록</button>
          <a class="modal-close-btn cursor">X</a>
       </div>
       
@@ -450,9 +439,27 @@
          <div class="staffList" style="border: 1px solid black;">
          </div>
          <p id="lt" style="text-align: left; color: #477A8F; font-size: 10pt; margin: 0px;">&nbsp;<수신자 선택></p><br>
-         <button class="staffInsert">등록</button>
+         <button class="staffInsert" id="receiveStaffInsert">등록</button>
          <a class="modal-close-btn cursor">X</a>
       </div>
+      
+      <!-- 결재선 미리보기 모달 -->
+      <div id="previewSet" class="modal-dragscroll">
+         <span style="float: left; color: #477A8F; font-weight: bolder;">결재선 미리보기</span>
+
+         <span id="d3"style="color: #477A8F;"><결재자 목록></span>
+         <span id="d4"style="color: #477A8F;"><참조자 목록></span>
+         <span id="d5"style="color: #477A8F;"><수신자 목록></span>
+         <div id="apprdList" style="border: 1px solid black;">
+         </div>
+         <div id="checkdList" style="border: 1px solid black;">
+         </div>
+         <div id="receivedList" style="border: 1px solid black;">
+        </div>
+         <button id="staffDelete">삭제</button>
+         <a class="modal-close-btn cursor">X</a>  
+      </div>
+      
       <!-- 현재 임시문서번호 -->
       <input type="hidden" id="docTempNo" value="${ d.docTempNo }"/>
  <script>
@@ -493,7 +500,7 @@
           })
           .show()
           // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
-          .find('.modal-close-btn')
+          .find('.modal-close-btn, .staffInsert, #staffDelete')
           .on('click', function() {
              bg.remove();
              modal.hide();
@@ -516,6 +523,12 @@
         modal('receiveSet');
      });
     
+    $('#cb5').on('click',function(){
+    	// 결재선 미리보기 모달
+    	modal('previewSet');
+    });
+    
+    // 부서별 사원정보 가져오기
     $(function(){
     	$('.depts').on('click',function(){
     		var deptNo = $(this).attr('id');
@@ -532,12 +545,12 @@
                 	
                 	$staffList = $(".staffList");
                 	$staffList.html("");
-                	var $staffs = "";
+                    $staffs = "";
                 	
                     for(var i in data){
-                    	$staffs += '<input type="checkbox" name="staff" value="'+data[i].memNo + '_' + data[i].rankNo 
-                    	          +'" onclick="doOpenCheck(this);">&nbsp;&nbsp;['
-                    	          +data[i].rankName+']&nbsp;&nbsp;&nbsp;&nbsp;'+data[i].name+'</input><br>';
+                    	$staffs += '<input id="step" type="checkbox" name="staff" value="'+data[i].memNo + '_' + data[i].rankNo 
+                    	          +'" onclick="doOpenCheck(this);"/><label for="staff">&nbsp;&nbsp;['
+                    	          +data[i].rankName+']&nbsp;&nbsp;&nbsp;&nbsp;'+data[i].name+'</label><br>';
                     }
                     $staffList.html($staffs);
                 },
@@ -547,8 +560,129 @@
                 }
             });
     	});
+    	
+    	$('.staffInsert').on('click',function(){
+    		var chkMem = $('.staffList input[name="staff"]:checked').val();
+    		var docTempNo = $('#docTempNo').val();
+    		
+    		var valSplit = chkMem.split('_');
+    		
+    		var staffNo = valSplit[0];
+    		var staffRankNo = valSplit[1];
+    		var lineNo = 0;
+    		
+    		var btnId = $(this).attr('id');
+    		
+    		if(btnId == 'apprStaffInsert'){
+    			lineNo = 1;
+    		}else if(btnId == 'checkStaffInsert'){
+    			lineNo = 2;
+    		}else{
+    			lineNo = 3;
+    		}
+
+    		$.ajax({
+                url: "insertStep.do",
+                type: "post",
+                traditional : true,
+                data: {
+                    "docTempNo": docTempNo,
+                    "staffNo" : staffNo,
+                    "staffRankNo" : staffRankNo,
+                    "lineNo" : lineNo
+                },
+                success: function (data) {
+                	if(data.lineNo == 1){
+                		$apprTd = $('#tr2 td').eq(1);
+                		$staff1 = "";
+                		$apprdList = $('#apprdList');
+                		$staff2 = "";
+                		
+						$staff1 = '<span class="tdStaff" id="'+ data.staffNo +'"/>'+data.staffRankName+'&nbsp;&nbsp;/&nbsp;&nbsp;'
+						        + data.staffName + '</label>';
+                		
+                		$staff2 = '<input id = "'+ data.staffNo + '" type="checkbox" name="step" value="'+data.staffNo
+                				+'"/><label id="'+data.staffNo+'" for="'+ data.staffNo +'">&nbsp;&nbsp;['
+			          	        +data.staffRankName+']&nbsp;&nbsp;&nbsp;&nbsp;'+data.staffName+'</label><br>';
+			          	
+	          	        $apprTd.append($staff1);
+                		$apprdList.append($staff2);
+                		
+                	}else if(data.lineNo == 2){
+                		$checkTd = $('#tr6 td').eq(1);
+                		$staff1 = "";
+                		$checkdList = $('#checkdList');
+                		$staff2 = "";
+                		
+                		$staff1 = '<span class="tdStaff" id="'+ data.staffNo +'"/>'+data.staffRankName+'&nbsp;&nbsp;/&nbsp;&nbsp;'
+				        		+ data.staffName + '</label>';
+        		
+        				$staff2 = '<input id = "'+ data.staffNo + '" type="checkbox" name="step" value="'+data.staffNo
+		        				+'"/><label id="'+data.staffNo+'" for="'+ data.staffNo +'">&nbsp;&nbsp;['
+			          	        +data.staffRankName+']&nbsp;&nbsp;&nbsp;&nbsp;'+data.staffName+'</label><br>';
+			          	        
+			          	$checkTd.append($staff1);
+			          	$checkdList.append($staff2);
+			          	
+                	}else{
+                		$receiveTd = $("#tr9 td").eq(1);
+                		$staff1 = "";
+                		$receivedList = $("#receivedList");
+                		$staff2 = "";
+                		
+                		$staff1 = '<span class="tdStaff" id="'+ data.staffNo +'"/>'+data.staffRankName+'&nbsp;&nbsp;/&nbsp;&nbsp;'
+		        				+ data.staffName + '</label>';
+		
+						$staff2 = '<input id = "'+ data.staffNo + '" type="checkbox" name="step" value="'+data.staffNo
+		        				+'"/><label id="'+data.staffNo+'" for="'+ data.staffNo +'">&nbsp;&nbsp;['
+			          	        +data.staffRankName+']&nbsp;&nbsp;&nbsp;&nbsp;'+data.staffName+'</label><br>';
+			          	
+			          	$receiveTd.append($staff1);
+			          	$receivedList.append($staff2);
+                	}
+                	
+                },
+                error: function (request,
+                    status, error) {
+                    console.log("에이작스 오류");   
+                }
+            });
+    	});
+    	// 결재선 미리보기 --> 스텝 삭제
+    	$('#staffDelete').on('click',function(){
+    		var staffNoArray = [];
+    		$('#previewSet input[name="step"]:checked').each(function(i){
+    			staffNoArray.push($(this).val());
+    		});
+    		
+    		var docTempNo = $('#docTempNo').val();
+    		
+    		console.log(docTempNo);
+    		console.log(staffNoArray);
+    		
+    		$.ajax({
+    			url :"deleteStep.do",
+    			type : "post",
+    			dataType : "json",
+                traditional : true,
+                data : { "docTempNo" : docTempNo, "staffNoArray" : staffNoArray },
+                success: function (data) {
+                	for(var i in data){
+                		$('span').remove('#' + data[i].staffNo);
+                		$('input').remove('#' + data[i].staffNo);
+                		$('label').remove('#' + data[i].staffNo);
+                	}
+                	
+                },
+                error: function (request,
+                    status, error) {
+                    console.log("에이작스 오류");   
+                }
+    		});
+    	});
     });
     
+    // 사원 선택 시 하나만 체크 되도록
     function doOpenCheck(chk){
     	var obj = document.getElementsByName("staff");
     	for(var i=0; i<obj.length; i++){
@@ -557,6 +691,8 @@
     		}
     	}
     }
+    
+    
     
  </script>
 	

@@ -141,7 +141,36 @@ public class ApprovalDao {
 		map.put("deptNo", deptNo);
 		map.put("docTempNo", docTempNo);
 		
-		return (ArrayList)sqlSession.selectList("approvalMapper.selectDeptStaff",map);
+		return (ArrayList)sqlSession.selectList("approvalMapper.selectDeptStaff", map);
+	}
+
+	public int apprStepListCount(Step s) {
+		return sqlSession.selectOne("approvalMapper.apprStepListCount", s);
+	}
+
+	public int apprStepInsert(Step s) {
+		return sqlSession.insert("approvalMapper.apprStepInsert", s);
+	}
+
+	public Step currentStepInfo(Step s) {
+		return sqlSession.selectOne("approvalMapper.currentStepInfo", s);
+	}
+
+	public int notApprStepInsert(Step s) {
+		return sqlSession.insert("approvalMapper.notApprStepInsert", s);
+	}
+
+	public int deleteStep(String docTempNo, int staffNo) {
+		
+		Map map = new HashMap();
+		map.put("docTempNo", docTempNo);
+		map.put("staffNo", staffNo);
+		
+		return sqlSession.delete("approvalMapper.deleteStep", map);
+	}
+
+	public int insertDocument(Document d) {
+		return sqlSession.update("approvalMapper.insertDocument", d);
 	}
 
 }

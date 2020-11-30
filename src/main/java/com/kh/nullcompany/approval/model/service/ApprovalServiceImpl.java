@@ -115,4 +115,34 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public ArrayList<DivDeptStaff> selectDeptStaff(int deptNo, String docTempNo) {
 		return aDao.selectDeptStaff(deptNo, docTempNo);
 	}
+
+	@Override
+	public int apprStepListCount(Step s) {
+		return aDao.apprStepListCount(s);
+	}
+
+	@Override
+	public int apprStepInsert(Step s) {
+		return aDao.apprStepInsert(s);
+	}
+
+	@Override
+	public Step currentStepInfo(Step s) {
+		return aDao.currentStepInfo(s);
+	}
+
+	@Override
+	public int notApprStepInsert(Step s) {
+		return aDao.notApprStepInsert(s);
+	}
+
+	@Override
+	public int deleteStep(String docTempNo, int staffNo) {
+		return aDao.deleteStep(docTempNo, staffNo);
+	}
+
+	@Override
+	public int insertDocument(Document d) {
+		return aDao.insertDocument(d);
+	}
 }
