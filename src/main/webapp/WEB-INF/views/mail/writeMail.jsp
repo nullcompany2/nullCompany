@@ -648,8 +648,8 @@ a:active {
     });
    
    
-       $('#searchPop').on('click', function() {
     // 조직도 모달 띄우기 
+       $('#searchPop').on('click', function() {
     $("#result").empty();
         $("#enrollname").empty();
         $("input:checkbox[id='name']").prop("checked", false);
@@ -669,7 +669,6 @@ a:active {
         
 	 });
     
-  
     // 메일 임시 저장 버튼 
  	 $("#saveMail").click(function () {
  		if ($('#summernote').summernote('isEmpty')) {
@@ -789,7 +788,7 @@ a:active {
       });
        }); 
 
-       // 등록 권한 빼기 
+       // 보내는 사람 빼기 
      $('#enrollsub').on('click', function() {
  
        $('[name="finalname"]:checked').parent('p').remove(); 
