@@ -174,7 +174,8 @@ tr>td {
 		<h4 style="color: #477A8F; margin-bottom: 25px;">예약 취소</h4>
 		<div class="n-emp-i">예약 삭제 하시겠습니까?</div>
 		<div style="text-align: center; margin-top: 30px;">
-			<button class="close_btn"
+			<input type="hidden" id="rNo2" >
+			<button class="close_btn" id="modal_delete_btn"
 				style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">확인</button>
 			<button class="close_btn"
 				style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">취소</button>
@@ -271,7 +272,7 @@ tr>td {
 		}
 
 		$('#delete_btn').on('click', function() {
-			// 모달창 띄우기
+			$("#rNo2").val($(event.target).parent().siblings()[6].value);
 			modal('delete_modal');
 		});
 		
@@ -294,6 +295,11 @@ tr>td {
 			}else if(rReturn =='Y'){
 				alert("이미 반납되었습니다.");
 			}
+		});
+		
+		$("#modal_delete_btn").on("click",function(){
+			var rNo = $("#rNo2").val();
+			location.href="reservationDelete.do?rNo="+rNo+"&rMember=${loginUser.id}";
 		});
 	</script>
 </body>

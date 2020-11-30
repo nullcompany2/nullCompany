@@ -72,7 +72,18 @@ public class reservationController {
 			return "common/errorPage";
 		}
 	}
-
+	
+	@RequestMapping("reservationDelete.do")
+	public String reservationDelete(HttpServletResponse response,HttpServletRequest request, int rNo,String rMember) {
+		int result = rService.deleteReservation(rNo);
+		String referer = request.getHeader("Referer");
+		if(result>0) {
+			return "redirect:"+referer;
+		}else {
+			return "common/errorPage";
+		}
+	}
+	
 	@RequestMapping("subNavi2.do")
 	public void subNavi(HttpServletResponse response) throws JsonIOException, IOException {
 		response.setContentType("application/json; charset=utf-8");

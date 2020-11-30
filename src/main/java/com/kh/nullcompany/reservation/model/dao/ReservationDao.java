@@ -82,5 +82,9 @@ public class ReservationDao {
 	public ArrayList<Reservation> selectReservationList() {
 		return (ArrayList)sqlSession.selectList("reservationMapper.ReservationList");
 	}
+
+	public int reservationDelete(int rNo) {
+		return sqlSession.delete("reservationMapper.reservationDelete",rNo);
+	}
 	
 }

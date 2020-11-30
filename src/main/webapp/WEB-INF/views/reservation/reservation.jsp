@@ -437,41 +437,43 @@
           });
           calendar.render();
       });
-      $('.insert_btn').on('click', function() {
-    	  var sd = $("#date").val();
-    	  var sd2 = sd.split("-");
-    	  var sdt = $("#startTime").val();
-    	  var sdt2 = sdt.split(':'); 
-    	  var sd3 = new Date(sd2[0],sd2[1]-1,sd2[2],sdt2[0],sdt2[1]);
-    	  var sdt3 = $("#endTime").val();
-    	  var sdt4 = sdt3.split(":");
-    	  var sdt5 = new Date(sd2[0],sd2[1]-1,sd2[2],sdt4[0],sdt4[1]); //endtime
-    	  var sd4 = new Date(sd2[0],sd2[1]-1,sd2[2]);
-		  var result=1;
+      
+      $('.insert_btn').on('click', function(event) {
+          var sd = $("#date").val();
+          var sd2 = sd.split("-");
+          var sdt = $("#startTime").val();
+          var sdt2 = sdt.split(':'); 
+          var sd3 = new Date(sd2[0],sd2[1]-1,sd2[2],sdt2[0],sdt2[1]);
+          var sdt3 = $("#endTime").val();
+          var sdt4 = sdt3.split(":");
+          var sdt5 = new Date(sd2[0],sd2[1]-1,sd2[2],sdt4[0],sdt4[1]); //endtime
+          var sd4 = new Date(sd2[0],sd2[1]-1,sd2[2]);
+         var result=1;
 
- 	      for(var i=0; i<end.length;i++){
-		  var date2 = date[i].split('-');
-		  var end2 = end[i].split(':');
-		  var start2 = start[i].split(":");
-		  var end3 = new Date(date2[0],date2[1]-1,date2[2],end2[0],end2[1]); // 끝 시간
-		  var start3 = new Date(date2[0],date2[1]-1,date2[2],start2[0],start2[1]); //시작시간
-		  var date3 = new Date(date2[0],date2[1]-1,date2[2]);
-			if((sd4.getTime()-date3.getTime()) == 0 ){ // 날짜 비교 --> 같은날이면 비교
-	    	  if(start3 < sd3 && sd3 < end3){ //시작시간
-	    	  	alert("이미 예약되어 있습니다.");
-	    	  	return false;
-		      if(sdt5 < start3){ //끝시간
-	 		  }
-	    	}
-		  }
- 	     }
- 	     /*  if(result ==1){
- 	    	  return false;
- 	      }else{
- 	    	  return true;
- 	      } */
-
-	 });
+         for(var i=0; i<end.length;i++){
+         var date2 = date[i].split('-');
+         var end2 = end[i].split(':');
+         var start2 = start[i].split(":");
+         var end3 = new Date(date2[0],date2[1]-1,date2[2],end2[0],end2[1]); // 끝 시간
+         var start3 = new Date(date2[0],date2[1]-1,date2[2],start2[0],start2[1]); //시작시간
+         var date3 = new Date(date2[0],date2[1]-1,date2[2]);
+          /* if((sd4.getTime()-date3.getTime()) == 0 ){ // 날짜 비교 --> 같은날이면 비교
+             if(start3 < sd3){ //시작시간
+                alert("이미 예약되어 있습니다.");
+                return false;
+             if(sdt5 < start3){ //끝시간
+                return false;
+                alert("이미 예약되어 있습니다.");
+             }
+           }
+         } */
+         
+         if((start3 >= sd3 || sdt5 <= start3)){
+             alert("이미 예약되어 있습니다.");
+            return false;
+           }
+          }     
+     });
       
       $(function() {
 

@@ -41,4 +41,6 @@ public interface ReservationService {
 
 	public ArrayList<Reservation> selectReservationList();
 
+	public int deleteReservation(int rNo);
+
 }
