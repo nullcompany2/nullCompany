@@ -155,4 +155,14 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public int deleteTempDocument(String docTempNo) {
 		return aDao.deleteTempDocument(docTempNo);
 	}
+
+	@Override
+	public int insertLeaveInfo(Leave l) {
+		return aDao.insertLeaveInfo(l);
+	}
+
+	@Override
+	public int recodingLeave(int drafterNo, int typeNo, String startDate, int totalDate, String reason, String docTempNo) {
+		return aDao.recodingLeave(drafterNo, typeNo, startDate, totalDate, reason, docTempNo);
+	}
 }
