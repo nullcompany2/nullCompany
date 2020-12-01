@@ -111,18 +111,9 @@ function detailMemberInfo(){
 				<div class="contents-title">
 					<span class="ct1">조직 관리</span>
 					
-						<form action=""
-						style="float: right; position: absolute; right: 100px; top: 10px;">
-						<select name="search"
-							style="border-radius: 8px; border: #676767 solid 1px; margin-right: 3px;">
-							<option value="이름">이름</option>
-							<option value="부서">부서</option>
-						</select> <input type="text" name="" id="" class="search-emp"
-							placeholder="&nbsp; 이름, 부서 검색"
-							style="border-radius: 8px; border: #676767 solid 1px;">&nbsp;&nbsp;
-						<button class="search-btn cursor"
-							style="border: none; background: none;">검색</button>
-					</form>
+		
+						
+				
 					
 				</div>
 				<!-- ---- -->
@@ -152,13 +143,18 @@ function detailMemberInfo(){
 				
 
 					<div class="ic" style="position: absolute; left: 200px;">
-					
+						<form action="OrganizationManagement.do" 
+							  style="float: right; margin-right: 300px;
+							  method="post">
+							<input type="text" name="searchText" id="searchMember" class="search-emp">
+							<button class="search-btn cursor" id="searchBtn">검색</button>
+						</form>
 						<table id="memList_tbl">
 							<c:forEach var="dept" items="${ deptList }" varStatus="deptN" begin="1">
 							<tr name="${dept.deptNo}">
 								<c:if test="${deptN.index == codenum || codenum == '-1'}">
 								<th>
-									<div class="ic-title" style="padding-top: 30px" >
+									<div class="ic-title" style="margin-top: 20px; padding-top:0px" >
 										<label class="H-personnel-organization" id="${ dept.deptName }">${ dept.deptName }</label>
 										<button id="${ dept.deptName }" class="dept_delete">부서 삭제</button>
 									</div>
@@ -302,13 +298,13 @@ function detailMemberInfo(){
 
 		<div style="text-align: center; margin-top: 25px;">
 			<button id="delete_dept_btn"
-				style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">삭제</button>
+				style="background: #fff; cursor:pointer ;color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">삭제</button>
 			<button class="modal-close-btn cursor" 
-				style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">취소</button>
+				style="padding: 5px 27px 6px; color: #444; cursor:pointer; letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">취소</button>
 		</div>
 
 		<a style="	position: absolute;
-	top: 10px;
+	top: 10px;cursor:pointer;
 	right: 10px;" class="modal-close-btn cursor">X</a>
 	</div>
 	
@@ -741,8 +737,8 @@ function detailMemberInfo(){
 		<div style="text-align: center; margin-top: 30px;">
 			<button id="edit_info"
 				style="background: #fff; cursor:pointer; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">수정</button>
-			<button  class="modal-close-btn cursor"
-				style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">취소</button>
+			<button  class="modal-close-btn cursor" 
+				style="padding: 5px 27px 6px; cursor:pointer; color: #444; letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">취소</button>
 		</div>
 
 	</div>

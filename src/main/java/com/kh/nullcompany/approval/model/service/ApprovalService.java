@@ -214,4 +214,23 @@ public interface ApprovalService {
 	 */
 	int deleteTempDocument(String docTempNo);
 
+	/**
+	 * 7_4 휴가 정보 기록하기(디테일에서 보여줄 내용)
+	 * @param l
+	 * @return
+	 */
+	int insertLeaveInfo(Leave l);
+
+	/**
+	 * 7_5 휴가 관리용 데이터 입력하기
+	 * @param drafterNo
+	 * @param typeNo
+	 * @param startDate
+	 * @param totalDate
+	 * @param docTempNo
+	 * @return
+	 */
+	int recodingLeave(int drafterNo, int typeNo, String startDate, int totalDate, String reason, String docTempNo);
+
+
 }

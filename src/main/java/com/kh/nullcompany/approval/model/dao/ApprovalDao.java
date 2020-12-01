@@ -181,4 +181,21 @@ public class ApprovalDao {
 		return sqlSession.delete("approvalMapper.deleteTempDocument", docTempNo);
 	}
 
+	public int insertLeaveInfo(Leave l) {
+		return sqlSession.insert("approvalMapper.insertLeaveInfo", l);
+	}
+
+	public int recodingLeave(int drafterNo, int typeNo, String startDate, int totalDate,String reason, String docTempNo) {
+		
+		Map map = new HashMap();
+		map.put("drafterNo", drafterNo);
+		map.put("typeNo", typeNo);
+		map.put("startDate", startDate);
+		map.put("totalDate", totalDate);
+		map.put("reason", reason);
+		map.put("docTempNo", docTempNo);
+		
+		return sqlSession.insert("approvalMapper.recodingLeave", map);
+	}
+
 }

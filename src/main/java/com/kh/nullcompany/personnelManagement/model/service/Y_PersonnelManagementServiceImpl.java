@@ -160,5 +160,10 @@ public class Y_PersonnelManagementServiceImpl implements Y_PersonnelManagementSe
 		return yDao.rankDelete(rankName);
 	}
 
+	@Override
+	public ArrayList<Member> searchMemberById(String searchText) {
+		return yDao.searchMemById(searchText);
+	}
+
 
 }
