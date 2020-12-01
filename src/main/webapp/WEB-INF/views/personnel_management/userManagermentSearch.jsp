@@ -93,9 +93,8 @@
 					$("#md_enrollDate").html(data.enrollDate);
 					$("#md_phone").html(data.phone);
 					$("#md_address").html(data.address);
-					$("#md_rankName").html(data.rankName);
-					console.log(data.rankName);
-					$("#md_deptName").html(data.deptName + '부');
+					$("#selectDept").val(data.deptNo).attr("selected","selected");
+					$("#selectRank").val(data.lankNo).attr("selected","selected");
 					$("#md_myInfo").html(data.myInfo);
 					$("#md_indiemail").html(data.email);
 					
@@ -301,11 +300,38 @@ dd {
 		<div style="margin-left: 140px">
 				<li style="margin-bottom: 6px;">사원명<span id="md_name"
 					class="emp-info" style="position: absolute; left: 265px;">-</span></li>
-				<li style="margin-bottom: 6px;">직급<span id="md_rankName"
-					class="emp-info" style="position: absolute; left: 265px;">-</span></li>
+					
+				<li style="margin-bottom: 6px;">직급
+					<select name="rank" id="selectRank"
+					style="border: none;
+					    float: right;
+					    width: 110px;
+					    position: relative;
+					    font-size: 15px;
+					    margin-right: 39px;
+					    margin-top: 5px;">
+						<c:forEach var="rankList" items="${ rankList }" begin="1" varStatus="vs">
+							<option class="selectRank" value="${ rankList.rankNo }">${ rankList.rankName }</option>
+						</c:forEach>
 
-				<li style="margin-bottom: 6px;">부서<span id="md_deptName"
-					class="emp-info" style="position: absolute; left: 265px;">-</span></li>
+					</select>
+				</li>
+
+				<li style="margin-bottom: 6px;">부서
+					<select name="dept" id="selectDept"
+					style="border: none;
+					    float: right;
+					    width: 110px;
+					    position: relative;
+					    font-size: 15px;
+					    margin-right: 39px;
+					    margin-top: 5px;">
+						<c:forEach var="deptList" items="${ deptList }" begin="1" varStatus="vs">
+							<option class="selectDept" value="${ deptList.deptNo }">${ deptList.deptName }부</option>
+						</c:forEach>
+
+					</select>
+				</li>
 
 				<li style="margin-bottom: 6px;">사번<span id="md_memNo"
 					class="emp-info"
@@ -332,8 +358,8 @@ dd {
 
 
 		<div style="text-align: center; margin-top: 30px;">
-			<button id="accept" onclick="acceptemail();"
-				style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">수정</button>
+			<button id="accept" 
+				style="background: #fff; cursor:pointer; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">수정</button>
 			<button  class="modal-close-btn cursor"
 				style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">취소</button>
 		</div>
@@ -355,6 +381,41 @@ document.location.href='userManagermentSearch.do?text='+text+'&select_option='+s
 
 
 })
+
+
+$(document).on("click", "#accept", function(event){
+		var sel_rank = $("#selectRank option:selected").val();
+		var sel_dept = $("#selectDept option:selected").val();
+		var md_memNo = $("#md_memNo").text();
+		
+	    if(sel_rank== 0){
+        	alert("회원 승인 시 직급 선택은 필수 입니다.");
+        	 return false;
+        }
+	    
+	    if(sel_dept== 0){
+        	alert("회원 승인 시 부서 선택은 필수 입니다.");
+        	 return false;
+        }
+		
+		$.ajax({
+			url:"updateacceptMember.do",
+			type:"post",
+			data:{
+				lankNo : sel_rank,
+            	deptNo : sel_dept,
+            	memNo : md_memNo,
+			},
+			success:function(data){
+				console.log(data);
+				location.reload();
+			},error: function(request,status,error){
+				console.log(request);
+		}
+			})
+		});
+		
+		
 </script>
 
 	

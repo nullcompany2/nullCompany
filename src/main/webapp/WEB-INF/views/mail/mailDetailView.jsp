@@ -106,7 +106,7 @@
 				<div id="viewmailContent"> 
 
 				 <c:if test="${ !empty ma.mFileName }">
-				첨부파일 : <a href="${contextPath }/resources/mailuploadFiles/${ma.mFileName}"
+				첨부파일 : <a href="${ma.mFileName}"
 							download="${ ma.mFileName }">${ ma.mFileName }</a> <br> <br>
 				</c:if> 
 				${ma.mContent}
@@ -116,6 +116,7 @@
 		</div>
 
 	<script>
+	
 	 var test = ${ ma.mailNo };
 	 
 	 $("#delMail").click(function(){

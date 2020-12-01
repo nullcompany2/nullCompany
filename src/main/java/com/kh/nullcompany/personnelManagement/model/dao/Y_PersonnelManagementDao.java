@@ -148,6 +148,10 @@ public class Y_PersonnelManagementDao {
 		return sqlSession.delete("Y_personnelMapper.rankDelete",rankName);
 	}
 
+	public ArrayList<Member> searchMemById(String searchText) {
+		return (ArrayList)sqlSession.selectList("Y_personnelMapper.searchMemById", searchText);
+	}
+
 
 
 

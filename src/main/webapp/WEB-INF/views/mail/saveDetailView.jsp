@@ -441,8 +441,17 @@ span#fileName{
 						
 						<div id="auto"> 
 						&nbsp;받는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<c:choose>
+						<c:when test="${ !ma.recipient eq '없음' }  ">
 						<input type="text" name="recipient" id="address" style="width: 60%;"
 							placeholder="이름 혹은 메일 주소를 입력해주세요." value="${ma.recipient }"/>
+						</c:when>
+						<c:otherwise>
+						<input type="text" name="recipient" id="address" style="width: 60%;"
+							placeholder="이름 혹은 메일 주소를 입력해주세요." value=""/>
+						</c:otherwise>
+						
+						</c:choose>
 							
 							<span  id="searchPop"
 							 style="font-size: 17px; 
@@ -457,14 +466,19 @@ span#fileName{
 							</div>
 						
 						 &nbsp;&nbsp;제목
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						&nbsp;<input type="text" name="mTitle" style="width: 60%;"
-							placeholder="제목 없음" value="${ma.mTitle}"/> <br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						
-							&nbsp;파일첨부&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="file" name="uploadPhoto" /><br> <br> 
+						<input type="text" name="mTitle" style="width: 60%;"
+						placeholder="제목 없음" value="${ma.mTitle}"/> <br>
 						
+						&nbsp;파일첨부
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="file" name="uploadPhoto" id="ex_file" style="display:none;" onchange="changeFile(event)"/>
+						<span id="fileUp">파일 선택하기</span> <span id="fileName"></span>
+						<br> <br>
 						
+						<!--  썸머노트  -->
 						<textarea id="summernote" name="mContent">
 						${ma.mContent}
 						
@@ -517,7 +531,7 @@ span#fileName{
 															<li><label><input type="checkbox" id="name"
 																	value="${ memList.name } < ${ memList.emailAddress } >" /> &nbsp; ${ memList.name }(${ memList.id })</label>
 																	<input type="hidden" value="${memList.name } < ${ memList.emailAddress } >">
-																	</li>
+															</li>
 														</c:if>
 													</c:forEach>
 												</ul>
@@ -593,7 +607,7 @@ span#fileName{
        var modal = $('#' + id);
 
        // 모달 div 뒤에 희끄무레한 레이어
-       var bg = $('<div>')
+    /*    var bg = $('<div>')
           .css({
              position: 'fixed',
              zIndex: zIndex,
@@ -606,7 +620,7 @@ span#fileName{
              backgroundColor: 'rgba(0,0,0,0.4)'
           })
           .appendTo('body');
-
+ */
        modal
           .css({
              position: 'fixed',
@@ -626,7 +640,7 @@ span#fileName{
           // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
           .find('.modal-close-btn')
           .on('click', function() {
-             bg.remove();
+           /*   bg.remove(); */
              modal.hide();
           });
     }
@@ -648,6 +662,14 @@ span#fileName{
        modal('my_modal2');
        	
     });
+    
+    // 조직도 모달 띄우기 
+    $('#searchPop').on('click', function() {
+ $("#result").empty();
+     $("#enrollname").empty();
+     $("input:checkbox[id='name']").prop("checked", false);
+ 	modal('communitymodal');
+	}); 
     
     
     $("#sendMail").click(function () {
@@ -826,8 +848,6 @@ function changeFile(event) {
 	
 	};
 	
-     
-
  </script>
  
 </body>

@@ -144,6 +144,15 @@
         WHERE (ID LIKE  '%' || #{text} || '%')
 	</select>
 	
+	<select id="searchMemById" resultMap="memberResultSet" parameterType="Member">
+		SELECT *
+		FROM MEMBER M
+        JOIN DEPARTMENT D ON M.DEPT_NO = D.DEPT_NO
+        JOIN RANK R ON R.RANK_NO = M.RANK_NO
+		WHERE M.NAME LIKE '%'|| #{searchText} ||'%'
+		OR M.ID LIKE '%'|| #{searchText} ||'%'
+	</select>
+	
 	<!-- 부서 추가 -->
 	 <insert id="deptAdd" parameterType="String">
  		INSERT INTO DEPARTMENT VALUES(dept_seq_y.NEXTVAL, #{deptName})

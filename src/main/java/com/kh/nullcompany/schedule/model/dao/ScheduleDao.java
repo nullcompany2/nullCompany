@@ -148,8 +148,23 @@ public class ScheduleDao {
 		return sqlSession.update("scheduleMapper.updateCommunity",calendar);
 	}
 
-	public ArrayList<Schedule> ScheduleListForMain() {
-		return(ArrayList) sqlSession.selectList("scheduleMapper.ScheduleListForMain");
+
+	public int getCalmemCount_num(String sche_no) {
+		return sqlSession.selectOne("scheduleMapper.getCalmemCount_num",sche_no);
+	}
+
+	public int updateCalCountMember_num(Map map) {
+		System.out.println(map.toString());
+		return sqlSession.update("scheduleMapper.updateCalCountMember_num",map);
+		
+	}
+
+	public Schedule detailSchedule_num(String sche_no) {
+		return sqlSession.selectOne("scheduleMapper.detailSchedule_num",sche_no);
+	}
+
+	public ArrayList<Schedule> ScheduleListForMain(int memNo) {
+		return(ArrayList) sqlSession.selectList("scheduleMapper.ScheduleListForMain", memNo);
 	}
 
 

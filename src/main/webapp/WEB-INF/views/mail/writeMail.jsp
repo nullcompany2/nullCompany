@@ -508,7 +508,6 @@ span#fileName{
 						<h3 style="color: #477A8F; margin-bottom: 15px; margin-top: 12px;">
 							 메일 주소록 </h3>
 
-
 						<div style="text-align: center;">
 							<div>
 								<div id="dept_list">
@@ -541,7 +540,6 @@ span#fileName{
 								<img src="resources/images/right.png" id="enrolladd"><br>
 								<img src="resources/images/left.png" id="enrollsub">
 							</div>
-
 
 							<p
 							style="font-size:13px;
