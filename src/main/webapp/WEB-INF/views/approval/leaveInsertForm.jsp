@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>문서 상세보기</title>
+    <title>휴가 신청서 작성하기</title>
 	<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 	<link rel="stylesheet" href='<c:url value="/resources/css/approval_InsertForm.css"/>'>
@@ -34,6 +34,40 @@
           position: absolute;
           top: 10px;
           right: 10px;
+       }
+       
+       #drafterCheck{
+       	  display: none;
+          width: 350px;
+          height: 200px;
+          padding: 20px 60px;
+          background-color: #fefefe;
+          border: 1px solid #888;
+          border-radius: 3px;
+          text-align: center;
+          color:rgb(65, 65, 66);
+       }
+       
+       #drafterCheck .modal-close-btn{
+       	  position: absolute;
+          top: 10px;
+          right: 10px;
+       }
+       
+       .n-emp-i{
+          width: 100%;
+          height: 30%;
+       }
+
+       .n-emp-i button {
+           width: 180px;
+           height: 40px;
+           background: #477A8F;
+           color:white;
+           border: none;
+           border-radius: 3px;
+           font-size: 15px;
+           margin: 20px;
        }
        
        button:hover{
@@ -188,14 +222,8 @@
     		var warning = true;
     		
     		// 문서 기안하기
-   	    	$('#cb1').on('click',function(){
+   	    	$('#draftBtn').on('click',function(){
    	    		
-   	    		var apprExist = $("#tr2").children();
-   	    		var chkExist = $("#tr6").children();
-   	    		var recExist = $("#tr9").children();
-   	    		
-   	    		if(apprExist.eq(1).find('.tdStaff').length || chkExist.eq(1).find('.tdStaff').length || recExist.eq(1).find('.tdStaff').length){
-   	    			
 	   	            warning = false;
 	   	            
 	   	    		var docTempNo = $('#docTempNo').val();
@@ -224,10 +252,6 @@
 		            
 	   	            location.href = "insertLeaveDocumet.do?docTempNo="+docTempNo+"&startDate="+startDate
 	   	            		      + "&endDate="+endDate+"&typeNo="+typeNo+"&type="+type+"&totalDate="+totalDate+"&reason="+reason;
-   	    		}else{
-   	    			alert('결재선을 지정하세요');
-   	    		}
-   	    		
    	    	});
     		
 	    	$(window).on('beforeunload', function(){
@@ -596,6 +620,18 @@
          <a class="modal-close-btn cursor">X</a>  
       </div>
       
+      <!-- 기안 모달창 -->
+      <div id="drafterCheck">
+        <span style="font-size:20px; color: black; font-weight: bold;">${ loginUser.name }</span>님 
+           <div class="n-emp-i">
+                <h4 style="color: #477A8F; margin-bottom: 5px; font-weight: bolder;">문서를 기안 하시겠습니까? </h4> <br>
+                <div>
+                    <button id="draftBtn">기안</button>
+                </div>
+            </div>
+            <a class="modal-close-btn cursor">X</a>
+        </div>
+      
       <!-- 현재 임시문서번호 -->
       <input type="hidden" id="docTempNo" value="${ d.docTempNo }"/>
 
@@ -663,6 +699,20 @@
     $('#cb5').on('click',function(){
     	// 결재선 미리보기 모달
     	modal('previewSet');
+    });
+    
+    $('#cb1').on('click',function(){
+    	// 기안 시 보이는 모달
+    	var apprExist = $("#tr2").children();
+   		var chkExist = $("#tr6").children();
+   		var recExist = $("#tr9").children();
+   		
+   		// 결재선이 존재할 때
+   		if(apprExist.eq(1).find('.tdStaff').length || chkExist.eq(1).find('.tdStaff').length || recExist.eq(1).find('.tdStaff').length){
+	    	modal('drafterCheck');
+   		}else{
+   			alert("결재선을 지정하세요");
+   		}
     });
     
     // 부서별 사원정보 가져오기

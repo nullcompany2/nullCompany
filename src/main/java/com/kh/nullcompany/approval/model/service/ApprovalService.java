@@ -230,7 +230,39 @@ public interface ApprovalService {
 	 * @param docTempNo
 	 * @return
 	 */
-	int recodingLeave(int drafterNo, int typeNo, String startDate, int totalDate, String reason, String docTempNo);
+	int recordingLeave(int drafterNo, int typeNo, String startDate, int totalDate, String reason, String docTempNo);
+
+	/**
+	 * 7_6 휴가 관리용 데이터 업데이트(결재완료)
+	 * @param docTempNo
+	 * @return
+	 */
+	int completeRecordingLeave(String docTempNo);
+
+	/**
+	 * 7_7 휴가 관리용 데이터 업데이트(반려)
+	 * @param docTempNo
+	 * @return
+	 */
+	int rejectRecodingLeave(String docTempNo);
+
+	/**
+	 * 7_8 휴직 정보 기록하기(디테일에서 보여줄 내용) 
+	 * @param a
+	 * @return
+	 */
+	int insertAbsenceInfo(Absence a);
+
+	/**
+	 * 7_9 휴직 관리용 데이터 입력하기
+	 * @param drafterNo
+	 * @param startDate
+	 * @param reason
+	 * @return
+	 */
+	int recordingAbsence(int drafterNo, String startDate, String reason);
+
+
 
 
 }
