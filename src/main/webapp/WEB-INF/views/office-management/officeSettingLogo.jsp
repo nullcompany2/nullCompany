@@ -6,18 +6,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>logo modification</title>
 	<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
     <link rel="stylesheet" href="<c:url value="/resources/css/office-setting-logo.css"/>">
 	<link rel="stylesheet" href="<c:url value="/resources/css/office-subNavi.css"/>">
 
 <style>
-#logoImg{
-	width: 200px;
-   	height: 92px;
+#imgTd #logoImg{
+	width: 170px;
+   	height: 75px;
    	background : #3E4247;
-	padding : 17px 0px 0px 50px;
+	margin : 5px;
 }
 </style>
 </head>
@@ -29,7 +29,6 @@
 		
 		<div class="office-container" >
 			
-
 			<!-- 오피스 세부 네비 시작 -->
 			<div id="office-sub-navigation">
 				<div class="blackline"></div>
@@ -75,7 +74,7 @@
 				<!-- ---- -->
 				<div class="contents-wrap drag-scrollbar c-ic">
 					<div id="logo-explain">
-						<h5>회사 로고를 등록하면, 로그인 페이지와 사용자 화면에 동시에 적용됩니다.</h5>
+						<h5>회사 로고를 등록하면, 사용자 화면에 바로 적용됩니다.</h5>
 					</div>
 
 					<div >
@@ -99,9 +98,9 @@
 								<td  class="ch-tbl-c">
 									<input type="file" name="logoFile" id="InputLogo" onchange="changeLogoFile(event);">
 									<div id="warning">
-										500KB 미만의 JPG,GIF,PNG,SWF(플래시) 형식만 등록 가능합니다. <br>
+										500KB 미만의 JPG,GIF,PNG 형식만 등록 가능합니다. <br>
 										새로운 이미지를 등록하면, 기존에 저장되어 있던 서버에 이력을 남겨둡니다. <br>
-										최적 사이즈 150*75px로 이미지를 업로드하시면 메인 상단에 자동 적용됩니다. <br>
+										최적 사이즈 170*75px로 이미지를 업로드하시면 메인 상단과 하단 푸터 영역에 자동 적용됩니다. <br>
 										또한, 기타 사이즈로 업로드한 경우에도 업로드하신 이미지의 비율에 맞게 축소되어 각 영역에 자동 적용됩니다.
 									</div>
 								</td>

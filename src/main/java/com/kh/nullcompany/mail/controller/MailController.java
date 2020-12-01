@@ -205,6 +205,8 @@ private ScheduleService sService;
 			// 보내는 사람 넣고 
 			ma.setSender(senderArr4[1]);
 			
+			ArrayList<Member> arrMem = new ArrayList<>();
+			
 			// 여러명일 경우 받는 사람 파싱 
 			String [] reArr = ma.getRecipient().split(",");
 			for (int i = 0; i < reArr.length; i++) {
@@ -216,26 +218,20 @@ private ScheduleService sService;
 				
 				// 받는 사람 한명 씩 담고 
 				ma.setRecipient(recipientArr4[1]);
-				String recipient = recipientArr4[1];
-//				// 받는 사람을 담아서 맵을 만들고 
-//				Map reci = new HashMap();
-//				reci.put("recipient",recipientArr4[1]);
-//				
+				String recipient = recipientArr4[1];		
 			
 				// 메일 보내기 인서트 반복 
 				int result = maService.sendMail(ma);
 				Member m = maService.findIdName(recipient);
-				mv.addObject("m",m);
+				arrMem.add(m);
 			}
-				mv.setViewName("mail/sendMail");	
-		
-//		mv.addObject("m", m);
-		
-		
-//		}else {
-//			mv.addObject("msg", "인서트 실패~ ");
-//			mv.setViewName("common/errorPage");	
+			for(Member m1 : arrMem) {
+				System.out.println(m1);
+				
+			}
 			
+			mv.addObject("m",arrMem);
+				mv.setViewName("mail/sendMail");	
 		
 		 return mv;
 		}

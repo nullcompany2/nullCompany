@@ -90,10 +90,17 @@
 	<br>
 	 메일이 정상적으로 발송되었습니다. 
 	 <br><br>
-	<table align="left" cellspacing="0" width="40%" id="tb"> 
+	<table align="left" cellspacing="0" width="80%" id="tb"> 
 	<tr> 	
 	<th> 받는 사람 </th>
-	<td> ${m.name} < ${m.id} >   </td>
+	<td> 
+	 <c:forEach var="m" items="${m}" varStatus="i">
+	 <c:choose>
+	<c:when test="${i.last}"> ${m.name } < ${m.id} > </c:when>
+	<c:otherwise>${m.name } < ${m.id} > ,</c:otherwise>
+	 </c:choose>
+	</c:forEach>
+	</td>
 	</tr>
 	</table>
 	 <br><br>
