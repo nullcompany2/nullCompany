@@ -32,7 +32,7 @@ form p {
 		<div class="contents-title">
 			<span class="ct1">자원 추가하기</span>
 		</div>
-		<form action="resourceInsert.do" method="POST">
+		<form action="resourceInsert.do" method="POST" enctype="multipart/form-data">
 		<input type="hidden" name ="rcNo" id ="rcNo" value="${ rcNo }">
 			<ul>
 				<li>
@@ -43,14 +43,14 @@ form p {
 						style="resize: none;"></textarea>
 				</li>
 				<li>
-					<p>사진</p> <input type="file" name="rsImg" id="rsImg">
+					<p>사진</p> <input type="file" name="uploadFile" id="rsImg">
 				</li>
 				<li>
 					<p>반납여부</p> <input type="radio" name="return" value="Y"> 반납
 					필요 &nbsp; <input type="radio" name="return" value="N"> 반납
 					불필요
 				</li>
-				<input type="hidden" id="rsReturn" name="rsReturn" value=""/>
+				<input type="hidden" id="rsReturn" name="rsReturn"/>
 			</ul>
 			<button id="submit"
 				style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">저
