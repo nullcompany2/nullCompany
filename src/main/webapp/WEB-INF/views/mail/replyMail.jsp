@@ -101,6 +101,25 @@ button[aria-label=Video]{
 display:none;
 }
 
+span#fileUp{
+	font-size : 13px;
+	color:grey;
+	background:#F3F3F3;
+	padding:5px;
+	border-radius:3px;
+	cursor:pointer;
+}
+
+span#fileUp:hover{
+	color:#5C6369;
+	cursor:pointer;
+}
+
+span#fileName{
+	font-size:15px;
+	color:grey;
+}
+
 </style>
 
 </head>
@@ -120,18 +139,26 @@ display:none;
 						<input class="go2" type="button" value="미리보기"/> 
 						<input type="submit" id="saveMail"  value="저장하기"/>
 						<input type="button" value="이전으로" onClick="location.href='javascript:history.go(-1);'" /> <br>
+						
 						&nbsp;보내는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 						<input type="text" name="sender" style="width: 60%;" value= "${loginUser.name} < ${loginUser.id}@nullcompany.com > "readonly/> <br>
 						&nbsp;받는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<input type="text" name="recipient" style="width: 60%;" value= "${ma.name} < ${ma.email} >" readonly/>
-							  <span style="font-size: 17px; background: #477A8F; color: white; padding: 0px 8px 0px 8px;">+</span>
+						
 						<br> &nbsp;&nbsp;제목
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						&nbsp;<input type="text" name="mTitle" style="width: 60%;"
-							placeholder="제목 없음" value="RE: ${ma.mTitle}"/> <br>
-						&nbsp;파일첨부&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="file" name="uploadPhoto" />
-						<br> <br> 
+						&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;
+						
+						<input type="text" name="mTitle" style="width: 60%;"placeholder="제목 없음" value="RE: ${ma.mTitle}"/> <br>
+						&nbsp;파일첨부
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="file" name="uploadPhoto" id="ex_file" style="display:none;" onchange="changeFile(event)"/>
+						<span id="fileUp">파일 선택하기</span> <span id="fileName"></span>
+						<br> <br>
+						
+						
 						<textarea id="summernote" name="mContent">
 						----------- 원본 메일 ----------- <br>
 						<b> 보낸 사람 : </b> ${ma.name}<${ma.sender}>  <br>
@@ -243,14 +270,31 @@ display:none;
        	
     });
     
+    // 전송하기 
     $("#sendMail").click(function () {
         $("form").attr("action","sendMail.do");
         
 	 });
-  
+  	// 저장하기 
  	 $("#saveMail").click(function () {
         $("form").attr("action","gosaveMail.do");
  	}); 
+ 	 
+  	
+ 	 $('#fileUp').click(()=>{
+       	$('#ex_file').click();
+       	
+       });
+ 	 
+ 	  // 파일 첨부시 파일명을 구해서 span에 더해주기 
+     function changeFile(event) { 
+     	
+     	var fileValue = $("#ex_file").val().split("\\");
+     	var fileNa = fileValue[fileValue.length-1]; // 파일명
+     	
+     	$("#fileName").text(fileNa);
+     	
+     	};
 
  </script>
  

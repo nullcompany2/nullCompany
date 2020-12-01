@@ -466,14 +466,19 @@ span#fileName{
 							</div>
 						
 						 &nbsp;&nbsp;제목
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						&nbsp;<input type="text" name="mTitle" style="width: 60%;"
-							placeholder="제목 없음" value="${ma.mTitle}"/> <br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						
-							&nbsp;파일첨부&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="file" name="uploadPhoto" /><br> <br> 
+						<input type="text" name="mTitle" style="width: 60%;"
+						placeholder="제목 없음" value="${ma.mTitle}"/> <br>
 						
+						&nbsp;파일첨부
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="file" name="uploadPhoto" id="ex_file" style="display:none;" onchange="changeFile(event)"/>
+						<span id="fileUp">파일 선택하기</span> <span id="fileName"></span>
+						<br> <br>
 						
+						<!--  썸머노트  -->
 						<textarea id="summernote" name="mContent">
 						${ma.mContent}
 						
@@ -657,6 +662,14 @@ span#fileName{
        modal('my_modal2');
        	
     });
+    
+    // 조직도 모달 띄우기 
+    $('#searchPop').on('click', function() {
+ $("#result").empty();
+     $("#enrollname").empty();
+     $("input:checkbox[id='name']").prop("checked", false);
+ 	modal('communitymodal');
+	}); 
     
     
     $("#sendMail").click(function () {
