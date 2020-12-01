@@ -67,6 +67,8 @@ public interface Y_PersonnelManagementService {
 
 	int rankDelete(String rankName);
 
+	ArrayList<Member> searchMemberById(String searchText);
+
 
 
 }

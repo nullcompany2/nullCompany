@@ -191,7 +191,7 @@ public class ScheduleController {
 
 	}
 	
-	// 일정 디테일
+	// 일정 디테일 이름으로 
 	@RequestMapping("detailSchedule.do" )
 	public void detailSchedule(@Param("Sche_name") String Sche_name, Model model , HttpServletResponse response) throws JsonIOException, IOException {
 		Schedule sche = new Schedule();
@@ -205,6 +205,21 @@ public class ScheduleController {
 		
 		sche = sService.detailSchedule(Sche_name);
 		
+		response.setContentType("application/json; charset=UTF-8");
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		gson.toJson(sche,response.getWriter());
+	
+	}
+	
+	
+	// 일정 디테일 번호로 찾는 버전
+	@RequestMapping("detailSchedule_num.do" )
+	public void detailSchedule_num(@Param("Sche_no") String Sche_no, Model model , HttpServletResponse response) throws JsonIOException, IOException {
+		Schedule sche = new Schedule();
+		System.out.println("검색 : " + Sche_no);
+		sche = sService.detailSchedule_num(Sche_no);
+		
+		System.out.println("검색 : " + sche);
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(sche,response.getWriter());
@@ -374,10 +389,17 @@ public class ScheduleController {
 	
 	   // 메인에 뿌리기
 	   @RequestMapping("ScheduleListForMain.do" )
-	   public void ScheduleListForMain(ModelAndView mv, HttpServletRequest request, HttpServletResponse response) throws JsonIOException, IOException{
-
-	      ArrayList<Schedule> ScheduleList = sService.ScheduleListForMain();
-	   
+	   public void ScheduleListForMain(ModelAndView mv, HttpServletRequest request, HttpSession session, HttpServletResponse response) throws JsonIOException, IOException{
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemNo();		
+	     ArrayList<Schedule> ScheduleList = sService.ScheduleListForMain(memNo);
+	     
+	     System.out.println(memNo);
+	     
+	 	if(ScheduleList != null) {
+			mv.setViewName("Scheduler/Schedulermain");
+		}else {
+			mv.addObject("msg","등록된 일정 없음!").setViewName("Scheduler/Schedulermain");
+		}
 			
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();

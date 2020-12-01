@@ -74,7 +74,15 @@ public interface ScheduleService {
 
 	int updateCommunity(Calendar calendar);
 
-	ArrayList<Schedule> ScheduleListForMain();
+
+
+	int getCalmemCount_num(String sche_no);
+
+	int updateCalCountMember_num(Map map);
+
+	Schedule detailSchedule_num(String sche_no);
+
+	ArrayList<Schedule> ScheduleListForMain(int memNo);
 
 
 

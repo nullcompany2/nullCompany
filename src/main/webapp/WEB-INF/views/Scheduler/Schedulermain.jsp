@@ -1456,11 +1456,20 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
  		});
     $(document).on("click", "#ulAuto li", function(){
     	var a = $(this).text();
+    	var tmp = '';
     	$('input:checkbox[id="name"]').each(function(){
     	     if(this.value ==  a){
     	        this.checked = true;
+
     	     }
+
     	});
+    	
+    	  tmp +='<label for="'+a+'2"><input type="checkbox"" name="checkname" id="' + a + '2" class="checklist" value="'+ a + '">' + a +'</input><label><br>';
+	/*      	document.getElementById("result").innerHTML= tmp
+	     	console.log("dd" + tmp); */
+	     	$("#result").append(tmp);
+    	
     	
     	$("#autoAddress").mouseenter(function() {
     	       $("#ulAuto").show();

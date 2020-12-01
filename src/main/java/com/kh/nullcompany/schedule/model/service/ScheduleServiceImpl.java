@@ -214,9 +214,28 @@ public class ScheduleServiceImpl implements ScheduleService {
 		
 	}
 
+
+
 	@Override
-	public ArrayList<Schedule> ScheduleListForMain() {
-		return sDao.ScheduleListForMain();
+	public int getCalmemCount_num(String sche_no) {
+		return sDao.getCalmemCount_num(sche_no);
+	}
+
+	@Override
+	public int updateCalCountMember_num(Map map) {
+		return sDao.updateCalCountMember_num(map);
+	}
+
+	@Override
+	public Schedule detailSchedule_num(String sche_no) {
+		return sDao.detailSchedule_num(sche_no);
+	}
+
+
+
+	@Override
+	public ArrayList<Schedule> ScheduleListForMain(int memNo) {
+		return sDao.ScheduleListForMain(memNo);
 	}
 
 
