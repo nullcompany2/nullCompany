@@ -51,7 +51,10 @@
 					<li><a href="myDiligence.do" id="">근태 현황</a></li>
 				</ul>
 			</div>
-
+			<!-- 인사과만 접근가능  -->
+			<c:set var="allowAccess" value="${loginUser.deptName }" />
+			<c:if test="${allowAccess eq '인사' }">
+			
 			<div class="H-personnel-subNavi ">
 				<div class="H-personnel-subNavi Depth01-3">
 					<li class="subTitle"><a href="#">인사 관리</a></li>
@@ -81,6 +84,7 @@
 					<li><a href="attendanceModificationRequests.do" id="">근태 수정요청 관리</a></li>
 				</ul>
 			</div>
+			</c:if>
 		</div>
 		<script>
 			$(function(){
