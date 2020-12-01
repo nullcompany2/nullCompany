@@ -378,26 +378,21 @@
 		font-weight: bolder;
 	}
 	
- 	header #logo button {
-		border:none;
-		background:none;
-		color : #477A8F;
-		padding : 23px 0px 0px 50px;
-		font-size : 23px;
-		text-align: left;
-		font-family: 'Lato', sans-serif;
-		cursor :pointer;
-	}
-	
-	header #logo span {
-		color : white;
-		font-size : 15px;
-		font-family: 'Lato', sans-serif;
-	}
-	
+ 	
 	 ::-webkit-scrollbar { display: none; }
 
+	header #logo button img {
+		padding : 17px 0px 0px 50px;
+		cursor :pointer;
+		background : #3E4247;
+		 width: 200px;
+   		height: 92px;
+	}
 	
+	header #logo button {
+	border : none;
+	background:none;
+	}
 
 </style>
 
@@ -407,8 +402,11 @@
 		<!-- 헤더 -->
 		<header>
 	      <div id="logo">
-	        <button onclick="location.href='home.do'"> <span> \ </span>  Null <br> Company <span> \ </span> </button>
-	      </div>
+      	
+        <button onclick="location.href='home.do'"> <img src= "${ logo.renameLogo }" alt="로고임" id="logoImg"/></button>
+        <!-- <button onclick="location.href='home.do'"> <img src="resources/images/LOGO_EX.png"/></button> -->
+        
+      </div>
 	
 	      <a id="menu">오피스 홈 &nbsp; <img src="resources/images/dropbtn.png"></a>
 	      <div id="menuToggle" style="display: none; background-image: url(resources/images/menu.png);">
