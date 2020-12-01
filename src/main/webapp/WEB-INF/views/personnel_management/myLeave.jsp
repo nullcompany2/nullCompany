@@ -22,11 +22,13 @@
 
 </head>
 
+
 <body>
 
     <div id='wrap'>
 		<!-- 헤더 -->
 		<c:import url="../common/header.jsp"/>
+		
 		
 		<!-- container -->
 		<div class="container">
