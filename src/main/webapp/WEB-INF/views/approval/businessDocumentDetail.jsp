@@ -164,7 +164,6 @@
 							<span class="cb" id="cb1">내용 수정</span>
 	                        <span class="cb" id="cb2">기안 취소</span>
 					</c:if>
-							<span class="cb" id="cb3">결재선 변경</span>
 				</c:if>
 				</div>
 				<div class="c-ic">

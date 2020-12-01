@@ -501,4 +501,15 @@
 	<delete id="deleteTempDocument" parameterType="String">
 		DELETE FROM APPROVAL_DOCUMENT WHERE DOC_TEMP_NO = #{docTempNo}
 	</delete>
+	
+	<!-- 휴가 정보 기록하기(디테일용) -->
+	<insert id="insertLeaveInfo" parameterType="Leave">
+		INSERT INTO APPROVAL_LEAVE VALUES( #{docTempNo}, #{type}, #{reason}, #{startDate}, #{endDate}, #{totalDate})
+	</insert>
+	
+	<insert id="recodingLeave" parameterType="map">
+		INSERT INTO RECORD_LEAVE VALUES
+			(LEAVE_RECORD_SEQ.NEXTVAL,#{drafterNo},#{typeNo},#{startDate},#{totalDate},NULL,'결재중',SYSDATE,#{reason},#{docTempNo})
+	</insert>
+	
 </mapper>

@@ -74,7 +74,7 @@
 				<!-- ---- -->
 				<div class="contents-wrap drag-scrollbar c-ic">
 					<div id="logo-explain">
-						<h5>회사 로고를 등록하면, 로그인 페이지와 사용자 화면에 동시에 적용됩니다.</h5>
+						<h5>회사 로고를 등록하면, 사용자 화면에 바로 적용됩니다.</h5>
 					</div>
 
 					<div >

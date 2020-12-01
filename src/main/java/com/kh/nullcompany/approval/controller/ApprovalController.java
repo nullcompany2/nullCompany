@@ -1059,7 +1059,7 @@ public class ApprovalController {
 	
 	// 업무 연락 문서 기안하기(임시 문서 업데이트)
 	@RequestMapping("insertBusinessDocumet.do")
-	public String insertDocument(Model model, HttpServletResponse response, HttpSession session,
+	public String insertDocument(Model model, HttpServletResponse response,
 								 @RequestParam(value="docTempNo", required=false) String docTempNo,
 								 @RequestParam(value="dTitle", required=false) String dTitle,
 								 @RequestParam(value="dContent", required=false) String dContent) {
@@ -1071,6 +1071,56 @@ public class ApprovalController {
 		
 		int result = aService.insertDocument(d);
 		if(result > 0) {			
+			return "redirect:approvalProgressAllListView.do";
+		}else {
+			model.addAttribute("msg", "문서 기안 실패!");
+			return "common/errorPage";
+		}
+	}
+	
+	
+	// 회람 문서 기안하기
+	
+	
+	// 휴가 문서 기안하기
+	@RequestMapping("insertLeaveDocumet.do")
+	public String insertLeaveDocument(Model model, HttpServletResponse response, HttpSession session,
+									 @RequestParam(value="docTempNo", required=false) String docTempNo,
+									 @RequestParam(value="startDate", required=false) String startDate,
+									 @RequestParam(value="endDate", required=false) String endDate,
+									 @RequestParam(value="typeNo", required=false) int typeNo,
+									 @RequestParam(value="type", required=false) String type,
+									 @RequestParam(value="totalDate", required=false) int totalDate,
+									 @RequestParam(value="reason", required=false) String reason) {
+		
+		Document d = new Document();
+		
+		int drafterNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+		String drafterDeptName = ((Member)session.getAttribute("loginUser")).getDeptName();
+		String drafterRankName = ((Member)session.getAttribute("loginUser")).getRankName();
+		String drafterName = ((Member)session.getAttribute("loginUser")).getName();
+		
+		d.setDocTempNo(docTempNo);
+		d.setdTitle("[" + type + "]"+startDate+"("+totalDate+"일)_"+drafterDeptName+"부 / "+drafterRankName+" / "+drafterName);
+		d.setdContent(reason);
+		
+		Leave l = new Leave();
+		
+		l.setDocTempNo(docTempNo);
+		l.setType(type);
+		l.setStartDate(startDate);
+		l.setEndDate(endDate);
+		l.setTotalDate(totalDate);
+		l.setReason(reason);
+		
+		// 문서 기안하기
+		int result1 = aService.insertDocument(d);
+		// 휴가 정보 입력하기
+		int result2 = aService.insertLeaveInfo(l);
+		// 휴가 관리용 데이터 입력하기
+		int result3 = aService.recodingLeave(drafterNo, typeNo, startDate, totalDate, reason, docTempNo);
+		
+		if(result1 > 0 && result2 > 0 && result3 > 0 ) {
 			return "redirect:approvalProgressAllListView.do";
 		}else {
 			model.addAttribute("msg", "문서 기안 실패!");
