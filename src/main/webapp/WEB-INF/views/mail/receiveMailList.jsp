@@ -42,7 +42,7 @@
 
 	#category {
 		position:relatived;
-		margin-left:35%;
+		margin-left:50%;
 		border : none;
 		padding : 3px;
 		font-size : 15px;
@@ -52,12 +52,13 @@
 	
 	#search {
 		position:relatived;
-		border: 1px solid #3E4247;
+		border:1px solid grey;
 		border-radius : 3px;
 		padding : 3px;
 		font-size : 15px;
 		margin-bottom : 5px;
 		margin-left:5px;
+		padding-left:10px;
 	
 	}
 	
@@ -119,6 +120,15 @@
         <div class="contents">
             <div class="contents-title">
                 <span class="ct1">받은 편지함</span>
+                <select id="category"> 
+				<option>-----</option>
+				<option value="보낸사람">보낸 사람</option>
+				<option value="제목">제목</option>
+				<option value="내용">내용</option>
+				<option value="제목내용">제목 + 내용</option>
+			</select>
+			<input  id="search" type="text" placeholder="메일 검색"> 
+			<button id="searchBtn" onclick="goSearch();" > 검색 </button>
 			</div>
 			
 			<div style="margin-left:40px;">
@@ -216,16 +226,6 @@
 		</table>
 		
 		<br>
-			
-			<select id="category"> 
-				<option>-----</option>
-				<option value="보낸사람">보낸사람</option>
-				<option value="제목">제목</option>
-				<option value="내용">내용</option>
-				<option value="제목내용">제목 + 내용</option>
-			</select>
-			<input  id="search" type="text" placeholder="메일 검색"> 
-			<button id="searchBtn" onclick="goSearch();" > 검색 </button> <br>
 			
         </div>
         

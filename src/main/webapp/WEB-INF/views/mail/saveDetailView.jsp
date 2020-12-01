@@ -531,7 +531,7 @@ span#fileName{
 															<li><label><input type="checkbox" id="name"
 																	value="${ memList.name } < ${ memList.emailAddress } >" /> &nbsp; ${ memList.name }(${ memList.id })</label>
 																	<input type="hidden" value="${memList.name } < ${ memList.emailAddress } >">
-																	</li>
+															</li>
 														</c:if>
 													</c:forEach>
 												</ul>
