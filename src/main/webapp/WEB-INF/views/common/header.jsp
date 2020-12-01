@@ -239,18 +239,17 @@
 	}
 	
  	header #logo button img {
-		padding : 17px 0px 0px 50px;
+		margin : 14px 0px 0px 20px;
 		cursor :pointer;
 		background : #3E4247;
-		 width: 200px;
-   		height: 92px;
+		width: 170px;
+   		height: 75px;
 	}
 	
 	header #logo button {
 	border : none;
 	background:none;
 	}
-	
 	
 	 ::-webkit-scrollbar { display: none; }
 

@@ -119,7 +119,7 @@ body {
 		#imagePreview #addText {
 		position:absolute;
 		display:none;
-		top:42%;
+		top:40%;
 		left:48%;
 		color:white;
 		transition: all ease 0.7s 0s;
