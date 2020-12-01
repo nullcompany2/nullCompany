@@ -298,5 +298,8 @@ public interface MailService {
 	 * @return
 	 */
 	int realDelMail(String[] mailNon);
+
+
+	
 	
 }

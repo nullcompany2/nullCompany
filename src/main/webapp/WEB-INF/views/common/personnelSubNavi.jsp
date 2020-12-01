@@ -61,7 +61,6 @@
 					<li><a href="userManagement.do" id="">사용자 관리</a></li>
 					<li><a href="rankManagement.do" id="">직위 관리</a></li>
 					<li><a href="userApprovalManagement.do" id="">사용자 승인 관리</a></li>
-					<li><a href="assignManager.do" id="">관리자 지정</a></li>
 				</ul>
 				<div class="H-personnel-subNavi Depth01-4">
 					<li class="subTitle"><a href="#">휴가 관리</a></li>

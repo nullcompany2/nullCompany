@@ -10,7 +10,7 @@
 
 
 <!-- include libraries(jQuery, bootstrap) -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
@@ -129,7 +129,7 @@ a:active {
 	right : 312px;
 	top : 143px;
 	font-size : 12px;
-	padding : 3.5px 6px 3.5px 3.5px;
+	padding : 3.7px 6px 3.7px 3.5px;
 	display : none;
 	border-radius : 0px 6px 6px 0px;
 
@@ -137,7 +137,7 @@ a:active {
 
 #communitymodal {
 	display: none;
-	width: 590px;
+	width: 880px;
 	height: 420px;
 	padding: 10px 40px;
 	background-color: #fefefe;
@@ -196,7 +196,7 @@ a:active {
 }
 
 #dept_list {
-	width: 180px;
+	width: 190px;
 	height: 250px;
 	border: #888 solid 1px;
 	overflow-y: auto;
@@ -205,7 +205,7 @@ a:active {
 }
 
 #name_list {
-	width: 125px;
+	width: 270px;
 	height: 250px;
 	border: #888 solid 1px;
 	float: left;
@@ -216,8 +216,8 @@ a:active {
 }
 
 #enrollauthority {
-	height: 120px;
-	width: 120px;
+	height: 215px;
+	width: 280px;
 	border: #888 solid 1px;
 	position: absolute;
 	top: 135px;
@@ -347,10 +347,10 @@ a:active {
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
-	backgroung-color: red;
+	background-color: red;
 }
 
-//
+
 #enrollname input[type="checkbox"] ~ #lb:before {
 	content: ' ';
 	display: inline-block;
@@ -484,17 +484,11 @@ a:active {
 			border-radius: 3px; margin-left: 180px; cursor: pointer; font-size:15px;" />
 	</div>
 	
-	<!-- 공유 캘린더 모달 -->
+
 					<!-- 멤버 리스트 모달임!!  -->
 					<div id="communitymodal" class="modal-dragscroll">
 						<h3 style="color: #477A8F; margin-bottom: 15px; margin-top: 12px;">
 							 메일 주소록 </h3>
-
-						<div style="position: absolute; top: 57px; font-size: 14px;">
-							사원 이름 &nbsp; <input type="text" id="testText"
-								style="margin-left: 19px;"> &nbsp;
-							<btn style="font-size: 14px; color: #477A8F;">검색</btn>
-						</div>
 
 
 						<div style="text-align: center;">
@@ -509,7 +503,9 @@ a:active {
 													<c:forEach var="memList" items="${ memList }">
 														<c:if test='${deptList.deptNo eq memList.deptNo}'>
 															<li><label><input type="checkbox" id="name"
-																	value="${ memList.name }(${ memList.id })" />${ memList.name }(${ memList.id })</label></li>
+																	value="${ memList.name } < ${ memList.emailAddress } >" /> &nbsp; ${ memList.name }(${ memList.id })</label>
+																	<input type="hidden" value="${memList.name } < ${ memList.emailAddress } >">
+																	</li>
 														</c:if>
 													</c:forEach>
 												</ul>
@@ -523,28 +519,29 @@ a:active {
 								</div>
 							</div>
 
-							<div style="position: absolute; right: 165px; top: 160px;">
+							<div style="position: absolute; right: 330px; top: 160px;">
 								<img src="resources/images/right.png" id="enrolladd"><br>
 								<img src="resources/images/left.png" id="enrollsub">
 							</div>
 
 
 							<p
-								style="font-size: 13px; position: absolute; position: absolute; right: 90px; top: 115px;">
+							style="font-size:13px;
+							position: absolute;
+							right: 240px; top: 115px;">
 								<받는 사람>
 							</p>
 							<div id="enrollauthority">
 
 								<p id="enrollname"
-									style="width: 100px; font-size: 12px; position: absolute; text-align: left; top: 5px; margin-left: 5px;">
-
+									style="width: 250px; font-size: 12px; position: absolute; text-align: left; top: 5px; margin-left: 5px;">
 								</p>
 
 
 							</div>
 
-							<div style="position: absolute; bottom: 20px; left: 210px;">
-								<button id="cal_sub"
+							<div style="position: absolute; bottom: 20px; left: 350px;">
+								<button id="email_sub"
 									style="background:#477A8F; color:white; padding: 5px 27px 6px; border: 1px solid #477A8F;">저장</button>
 								<button class="modal-close-btn cursor"
 								style="position: absolute; left: 90px; top: 0px; padding: 5px 27px 6px; color: #444;
@@ -592,7 +589,7 @@ a:active {
        var modal = $('#' + id);
 
        // 모달 div 뒤에 희끄무레한 레이어
-       var bg = $('<div>')
+     /*   var bg = $('<div>')
           .css({
              position: 'fixed',
              zIndex: zIndex,
@@ -604,7 +601,8 @@ a:active {
              // 레이어 색갈은 여기서 바꾸면 됨
              backgroundColor: 'rgba(0,0,0,0.4)'
           })
-          .appendTo('body');
+          .appendTo('body'); */
+       
 
        modal
           .css({
@@ -625,12 +623,12 @@ a:active {
           // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
           .find('.modal-close-btn')
           .on('click', function() {
-             bg.remove();
+            /*  bg.remove(); */
              modal.hide();
           });
+       	
     }
 
-    
    // 미리보기 모달 
     $('.go2').on('click', function() {
     	
@@ -651,13 +649,12 @@ a:active {
     });
    
    
-       $('#searchPop').on('click', function() {
     // 조직도 모달 띄우기 
+       $('#searchPop').on('click', function() {
     $("#result").empty();
-        $("#lookname").empty();
         $("#enrollname").empty();
         $("input:checkbox[id='name']").prop("checked", false);
-    modal('communitymodal');
+    	modal('communitymodal');
  	}); 
     
     // 메일 전송 버튼 
@@ -673,7 +670,6 @@ a:active {
         
 	 });
     
-  
     // 메일 임시 저장 버튼 
  	 $("#saveMail").click(function () {
  		if ($('#summernote').summernote('isEmpty')) {
@@ -742,23 +738,6 @@ a:active {
           $('#searchAddress').css('display','none');
           })
           
-          
-    /*        $('#searchPop').on('click', function() {
-        // 공유 캘린더 모달창 띄우기
-        var Cal_color = document.getElementById("colorselect");
-        $("#cal_name").val('');
-        $("#search_mem").val('');
-        Cal_color.style.backgroundColor = 'white';
-        $("#result").empty();
-        $("#lookname").empty();
-        $("#enrollname").empty();
-        $("input:checkbox[id='name']").prop("checked", false);
-
-        modal('communitymodal');
-     });
-	
-           */
-           
            // 리스트 토글
            $('.tree').each(function(){
            var $this = $(this);
@@ -790,74 +769,43 @@ a:active {
                        var tmp = '';
                      
                        $.each(inputArray, function (index, item) {
-                           // tmp+=item.value+' ';
                            
-                         //   tmp +='<option value="'+ inputArray.eq(index).val() + '">' + inputArray.eq(index).val() +'</option>';
-                         tmp +='<label for="'+inputArray.eq(index).val()+'2"><input type="checkbox"" name="checkname" id="' +inputArray.eq(index).val()+ '2" class="checklist" value="'+ inputArray.eq(index).val() + '">' + inputArray.eq(index).val() +'</input><label><br>';
+                         tmp +='<label for="'+inputArray.eq(index).val()+'2"><input type="checkbox"" name="checkname" id="' +inputArray.eq(index).val()+ '2" class="checklist" value="'+ inputArray.eq(index).val() + '">&nbsp;' + inputArray.eq(index).val() +'</input><label><br>';
                        });
-                      //   $('#result').text(tmp)
                         document.getElementById("result").innerHTML= tmp
-                   
                
                    })
                })
                
-                   // 등록 권한 추가 
+        // 받는 사람 추가 
         $('#enrolladd').click(function(){
         	 var arraybox = "";
         
         	$("#enrollname:last-child").empty();
-          $('[name="checkname"]:checked').each(function(i){ //i는 체크수를 알수있음
+          $('[name="checkname"]:checked').each(function(i){ //i는 체크수 가져오기 
            arraybox = $(this).val();
           
        	  $('#enrollname').append('<p><input type="checkbox" name="finalname" id="' + arraybox + '" class="finallist" value="'+ arraybox + '"/><label id="lb" for="'+ arraybox+'">' + arraybox +'</label><span style="color:white">,</span><br></p>');
-           console.log("중복없을때" + arraybox); 
       });
        }); 
 
-    // 공유 캘린더 수정용 등록 권한 수정
-    $('#enrolladd2').click(function(){
-   	 var arraybox = "";
-   
-   	$("#enrollname2:last-child").empty();
-     $('[name="checkname2"]:checked').each(function(i){ //i는 체크수를 알수있음
-      arraybox = $(this).val();
-     
-  	  $('#enrollname2').append('<p><input type="checkbox" name="finalname2" id="' + arraybox + '2" class="finallist2" value="'+ arraybox + '2"/><label id="lb" for="'+ arraybox+'2">' + arraybox +'</label><span style="color:white">,</span><br></p>');
-      console.log("중복없을때" + arraybox); 
- 		});
-  }); 
-    
-       // 등록 권한 빼기 
+       // 보내는 사람 빼기 
      $('#enrollsub').on('click', function() {
  
        $('[name="finalname"]:checked').parent('p').remove(); 
      });
        
-       
-     // 조회 권한 추가 
-     var arraybox = "";
-
- 	
-     $('#lookadd').click(function(){
-     	$("#lookname:last-child").empty();
-       $('[name="checkname"]:checked').each(function(i){ //i는 체크수를 알수있음
-        arraybox = $(this).val();
-       
-    	  $('#lookname').append('<p><input type="checkbox" name="finallookname" id="' + arraybox + '3" class="finallist" value="'+ arraybox + '"/><label id="lb" for="'+ arraybox+'3">' + arraybox +'</label><span style="color:white">,</span><br></p>');
-        console.log("중복없을때" + arraybox); 
-   });
-    }); 
-     
-     
- 
- 	$('#cal_sub').click(function(){
- 		
- 	});
-   
   
-      
-          
+       // 버튼 누르기 
+     $("#email_sub").click(function(){
+    	 
+    	        var inputArray = $('input[name="finalname"]:checked');
+                 var enroll = $('#enrollname').text();
+
+                 $("input[name=recipient]").val(enroll.slice(0,-1));
+                 $("#communitymodal").hide();
+             })
+   
  </script>
  
 </body>

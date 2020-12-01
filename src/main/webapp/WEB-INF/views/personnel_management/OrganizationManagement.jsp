@@ -494,7 +494,8 @@ function detailMemberInfo(){
 		               console.log("성공");
 		               $("#dListPaging").remove();
 		               $('.dept_memList').remove();
-		               $('#dept_mem').empty;
+		               $('#dept_mem').empty
+		               
 		               $("#dept_name_delete_Count").text(data.listCount);
 		            
 		               
@@ -613,17 +614,6 @@ function detailMemberInfo(){
 		    
 		});
 		
-		 //수정 버튼
-		 $('#edit_dept_btn').on('click', function() {
-			var deptName = $("#editdeptnameInput").val();
-			var deptName2 = $("#dept_name_edit").text();
-			
-			if(deptName == deptName2){
-				alert('수정 전 부서명과 같은 부서명은 사용할 수 없습니다.');
-				return false;
-				
-			} 
-		});
 		 
 	
 
@@ -634,6 +624,7 @@ function detailMemberInfo(){
 		
 			if(deptName == ""){
 				alert('부서명을 입력해주세요.')
+				return false;
 			}
 			
 			$.ajax({
@@ -652,11 +643,20 @@ function detailMemberInfo(){
 		 
 		 //부서 수정 버튼
 		 $('#edit_dept_btn').on('click', function() {
+	
+				 
 			var text = $("#editdeptnameInput").val();
 			var deptName = $("#dept_name_edit").text();
 		
 			if(text == ""){
-				alert('부서명을 입력해주세요.')
+				alert('부서명을 입력해주세요.');
+				return false;
+			}
+			
+			if(text == deptName){
+				alert('수정 전 부서명과 같은 부서명은 사용할 수 없습니다.');
+				return false;
+				
 			}
 			
 			$.ajax({

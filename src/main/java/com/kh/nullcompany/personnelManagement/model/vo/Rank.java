@@ -3,6 +3,14 @@ package com.kh.nullcompany.personnelManagement.model.vo;
 public class Rank {
 	private int rankNo;
 	private String rankName;
+	private int orderByRank;
+	
+	public int getOrderByRank() {
+		return orderByRank;
+	}
+	public void setOrderByRank(int orderByRank) {
+		this.orderByRank = orderByRank;
+	}
 	public Rank() {
 		super();
 		// TODO Auto-generated constructor stub

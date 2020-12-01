@@ -188,39 +188,55 @@ private ScheduleService sService;
 			return mv;
 			
 		}else {
-		String [] recipientArr = ma.getRecipient().split("<");
-		String [] recipientArr2 = recipientArr[1].split(">");
-		String [] recipientArr3 = recipientArr2[0].split("@");
-		String [] recipientArr4 = recipientArr3[0].split(" ");
-		
-		String [] senderArr = ma.getSender().split("<");
-		String [] senderArr2 = senderArr[1].split(">");
-		String [] senderArr3 = senderArr2[0].split("@");
-		String [] senderArr4 = senderArr3[0].split(" ");
-		
-		ma.setRecipient(recipientArr4[1]);
-		ma.setSender(senderArr4[1]);
-		String recipient = recipientArr4[1];
-		
-		if(!file.getOriginalFilename().equals("")) {
-         String mailFile = saveMailFile(file,request);
-         
-         if(mailFile != null) { 
-            ma.setmFileName(mailFile);
-          }
-		}
-		
-		int result = maService.sendMail(ma);
-		
-		if(result > 0 ) {
-			Member m = maService.findIdName(recipient);
-			mv.addObject("m", m);
-			mv.setViewName("mail/sendMail");	
-		}else {
-			mv.addObject("msg", "인서트 실패~ ");
-			mv.setViewName("common/errorPage");	
+			// 파일 처리 
+			if(!file.getOriginalFilename().equals("")) {
+		         String mailFile = saveMailFile(file,request);
+		         
+		         if(mailFile != null) { 
+		            ma.setmFileName(mailFile);
+		          }
+				}
 			
-		}
+			// 보내는 사람 파싱 
+			String [] senderArr = ma.getSender().split("<");
+			String [] senderArr2 = senderArr[1].split(">");
+			String [] senderArr3 = senderArr2[0].split("@");
+			String [] senderArr4 = senderArr3[0].split(" ");
+			// 보내는 사람 넣고 
+			ma.setSender(senderArr4[1]);
+			
+			// 여러명일 경우 받는 사람 파싱 
+			String [] reArr = ma.getRecipient().split(",");
+			for (int i = 0; i < reArr.length; i++) {
+				
+				String [] recipientArr = reArr[i].split("<");
+				String [] recipientArr2 = recipientArr[1].split(">");
+				String [] recipientArr3 = recipientArr2[0].split("@");
+				String [] recipientArr4 = recipientArr3[0].split(" ");
+				
+				// 받는 사람 한명 씩 담고 
+				ma.setRecipient(recipientArr4[1]);
+				String recipient = recipientArr4[1];
+//				// 받는 사람을 담아서 맵을 만들고 
+//				Map reci = new HashMap();
+//				reci.put("recipient",recipientArr4[1]);
+//				
+			
+				// 메일 보내기 인서트 반복 
+				int result = maService.sendMail(ma);
+				Member m = maService.findIdName(recipient);
+				mv.addObject("m",m);
+			}
+				mv.setViewName("mail/sendMail");	
+		
+//		mv.addObject("m", m);
+		
+		
+//		}else {
+//			mv.addObject("msg", "인서트 실패~ ");
+//			mv.setViewName("common/errorPage");	
+			
+		
 		 return mv;
 		}
 	}
@@ -525,6 +541,7 @@ private ScheduleService sService;
 			gson.toJson(m,response.getWriter());
 		}
 		
+	
 		// 쓰레기통에서 복원하기 
 		@RequestMapping("backMail.do")
 		public String backMail(Model model, int mailNo) {
@@ -613,5 +630,3 @@ private ScheduleService sService;
 				}
 				
 }
-
-

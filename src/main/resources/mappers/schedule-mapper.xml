@@ -26,6 +26,7 @@
 		<result property="deptName" column="DEPT_NAME" />
 		<result property="rankName" column="RANK_NAME" />
 		<result property="sAccess" column="S_ACCESS" />
+		<result property="emailAddress" column="EMAIL_ADDRESS"/>
 	</resultMap>
 
 
@@ -78,8 +79,9 @@
 	<!-- 사원 리스트 -->
 	<select id="selectmemList" resultMap="memberResultSet"
 		parameterType="Member">
-		SELECT *
-		FROM MEMBER
+		SELECT m.*, e.email_address
+    	FROM MEMBER m
+    	join EMAIL E on (m.mem_no = e.mem_no)
 	</select>
 
 	<!-- 공유 캘린더 인써트 -->
