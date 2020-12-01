@@ -114,107 +114,17 @@
                     <table class="appr_insert_table2" >
                         <tbody>
 							<tr id="tr2">
-								<td rowspan="4">결재</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-							<tr id="tr3">
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-							<tr id="tr4">
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-							<tr id="tr5">
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
+								<td>결재</td>
 								<td></td>
 							</tr>
 							<tr id="tr6">
-								<td rowspan="3">참조</td>
-                                <td></td>
-                                <td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-                                <td></td>
-                                <td></td>
-							</tr>
-							<tr id="tr7">
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-							</tr>
-							<tr id="tr8">
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-                                <td></td>
-                                <td></td>
+								<td>참조</td>
                                 <td></td>
 							</tr>
 							<tr id="tr9">
-								<td rowspan="2">수신</td>
-                                <td></td>
-                                <td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-                                <td></td>
+								<td>수신</td>
                                 <td></td>
 							</tr>
-							<tr id="tr10">
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
                         </tbody>
                     </table>
                     <br>

@@ -432,4 +432,73 @@
 		    DEPT_NO = #{deptNo}
 		ORDER BY RANK_NO
 	</select>
+	
+	<!-- 문서에 포함된 결재자 수 가져오기 -->
+	<select id="apprStepListCount" parameterType="Step" resultType="_int">
+		SELECT
+		    COUNT(*)
+		FROM
+		    (SELECT
+		        *
+		     FROM
+		         APPROVAL_STEP
+		     WHERE
+		         DOC_NO = #{docTempNo}
+		     AND LINE_NO = 1)
+	</select>
+	
+	<!-- 결재자 등록하기 -->
+	<insert id="apprStepInsert" parameterType="Step">
+		INSERT INTO APPROVAL_STEP VALUES(#{docTempNo},#{lineNo},#{staffNo},#{staffRankNo},#{stepPriority},DEFAULT,NULL,DEFAULT)
+	</insert>
+	
+	<!-- 등록한 결재자 정보 가져오기 -->
+	<select id="currentStepInfo" parameterType="Step" resultMap="stepResultSet">
+		SELECT 
+		    STAFF_NO
+		,   LINE_NO
+		,   STAFF_RANK_NO
+		,   M.NAME AS STAFF_NAME
+		,   R.RANK_NAME AS STAFF_RANK_NAME
+		FROM
+		    APPROVAL_STEP A
+		JOIN MEMBER M ON(A.STAFF_NO = M.MEM_NO)
+		JOIN RANK R ON(A.STAFF_RANK_NO = R.RANK_NO)
+		WHERE
+		    DOC_NO = #{docTempNo}
+		AND STAFF_NO = #{staffNo}
+	</select>
+	
+	<!-- 참조자,수신자 등록하기 -->
+	<insert id="notApprStepInsert" parameterType="Step">
+		INSERT INTO APPROVAL_STEP VALUES(#{docTempNo},#{lineNo},#{staffNo},#{staffRankNo},NULL,DEFAULT,NULL,DEFAULT)
+	</insert>
+	
+	<!-- 스텝 삭제하기 -->
+	<delete id="deleteStep" parameterType="map">
+		DELETE FROM APPROVAL_STEP WHERE DOC_NO = #{docTempNo} AND STAFF_NO = #{staffNo}
+	</delete>
+	
+	<!-- 문서 기안하기 -->
+	<update id="insertDocument" parameterType="Document">
+		UPDATE 
+			APPROVAL_DOCUMENT 
+		SET 
+			DOC_NO = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+		,	DTITLE = #{dTitle}
+		,	DCONTENT = #{dContent}
+		,   TURN_NO = 1 
+		WHERE 
+			DOC_TEMP_NO = #{docTempNo}
+	</update>
+	
+	<!-- 페이지 나갈 때 스텝 삭제 -->
+	<delete id="deleteTempStep" parameterType="String">
+		DELETE FROM APPROVAL_STEP WHERE DOC_NO = #{docTempNo}
+	</delete>
+	
+	<!-- 페이지 나갈 때 문서 삭제 -->
+	<delete id="deleteTempDocument" parameterType="String">
+		DELETE FROM APPROVAL_DOCUMENT WHERE DOC_TEMP_NO = #{docTempNo}
+	</delete>
 </mapper>

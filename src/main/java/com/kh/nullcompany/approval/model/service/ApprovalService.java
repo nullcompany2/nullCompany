@@ -157,4 +157,61 @@ public interface ApprovalService {
 	 */
 	ArrayList<DivDeptStaff> selectDeptStaff(int deptNo, String docTempNo);
 
+	/**
+	 * 6_3 문서 하나의 포함된 결재자 수 가져오기
+	 * @param s
+	 * @return
+	 */
+	int apprStepListCount(Step s);
+
+	/**
+	 * 6_4 결재자 등록하기
+	 * @param s
+	 * @return
+	 */
+	int apprStepInsert(Step s);
+
+	/**
+	 * 6_5 등록한 사원 정보 가져오기
+	 * @param s
+	 * @return
+	 */
+	Step currentStepInfo(Step s);
+
+	/**
+	 * 6_6 참조자,수신자 등록하기
+	 * @param s
+	 * @return
+	 */
+	int notApprStepInsert(Step s);
+
+	/**
+	 * 6_7 스텝 삭제하기
+	 * @param docTempNo
+	 * @param staffNo
+	 * @return
+	 */
+	int deleteStep(String docTempNo, int staffNo);
+
+	/**
+	 * 7_1 문서 기안하기
+	 * @param d
+	 * @return
+	 */
+	int insertDocument(Document d);
+
+	/**
+	 * 7_2 페이지 나갈 때 스텝 삭제
+	 * @param docTempNo
+	 * @return
+	 */
+	int deleteTempStep(String docTempNo);
+
+	/**
+	 * 7_3 페이지 나갈 때 문서 삭제
+	 * @param docTempNo
+	 * @return
+	 */
+	int deleteTempDocument(String docTempNo);
+
 }

@@ -101,23 +101,18 @@
 .appr_insert_table2 #tr2 td:nth-child(1){
     color: #477A8F;
     background: #cacaca;
-}
-
-.appr_insert_table2 #tr2 td{
-    width: 130px;
-}
-
-.appr_insert_table2 #tr6 td{
-    width: 130px;
+    width:15%
 }
 
 .appr_insert_table2 #tr6 td:nth-child(1){
     color: #477A8F;
     background: #cacaca;
+    width:15%
 }
 .appr_insert_table2 #tr9 td:nth-child(1){
     color: #477A8F;
     background: #cacaca;
+    width:15%
 }
 
 
