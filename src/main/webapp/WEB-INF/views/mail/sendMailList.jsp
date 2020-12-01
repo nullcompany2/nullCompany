@@ -89,6 +89,7 @@
 	overflow:hidden;
 	white-space : nowrap;
 	text-overflow: ellipsis;
+	color : black;
 	}
 	
 	#tb #firstTd{
@@ -110,9 +111,6 @@
 	right : 115px;
 	}
 	
-	#idWrite {
-	color : black;
-	}
 	
 </style>
 
@@ -146,14 +144,11 @@
 						
 						<tr class="trMail" onClick="location.href='${maildetailView}'"> 
 						
-						<c:url var="mailWriteId" value="mailWriteId.do">
-							<c:param name="memNo" value="${ma.memNo}" />
-						</c:url>
-						
 							<td id="firstTd">&nbsp;&nbsp;<input type="checkbox" onClick="event.cancelBubble=true" name="mail" value="${ma.mailNo}"></td>
-							<td align="left"><a id="idWrite" onClick="event.stopPropagation(); location.href='${mailWriteId}'">${ma.name} < ${ma.recipient} > </a></td>
+							<td align="left"><a id="idWrite">${ma.name} < ${ma.recipient} > </a></td>
 							<td>${ ma.mTitle }</td>
 							<td align="right"> ${ma.sendDate }</td>
+						
 						</tr>
 						</table>
 						

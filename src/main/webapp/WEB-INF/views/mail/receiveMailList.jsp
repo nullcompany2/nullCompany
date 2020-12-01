@@ -88,6 +88,7 @@
 	overflow:hidden;
 	white-space : nowrap;
 	text-overflow: ellipsis;
+	color : black;
 	}
 	
 	#tb #firstTd{
@@ -109,9 +110,6 @@
 	right : 115px;
 	}
 	
-	#idWrite {
-	color : black;
-	}
 	
 </style>
 
@@ -159,6 +157,7 @@
 						<c:url var="mailWriteId" value="mailWriteId.do">
 							<c:param name="memNo" value="${ma.memNo}" />
 						</c:url>
+						
 							<td id="firstTd">&nbsp;&nbsp;<input type="checkbox" onClick="event.cancelBubble=true" name="mail" value="${ma.mailNo}"></td>
 							<td align="left"><a id="idWrite" onClick="event.stopPropagation(); location.href='${mailWriteId}'">${ma.name} < ${ma.sender} > </a></td>
 							<td>${ ma.mTitle }</td>

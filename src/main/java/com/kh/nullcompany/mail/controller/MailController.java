@@ -182,6 +182,7 @@ private ScheduleService sService;
 	@RequestMapping("sendMail.do")
 	public ModelAndView sendMail(ModelAndView mv, Mail ma,HttpServletRequest request,
 			@RequestParam(value="uploadPhoto",required=false)MultipartFile file) {
+		
 		if (ma.getRecipient().equals("없음 < 없음@nullcompany.com >")) {
 			
 			mv.setViewName("mail/failMail");	
@@ -230,8 +231,9 @@ private ScheduleService sService;
 				
 			}
 			
+			
 			mv.addObject("m",arrMem);
-				mv.setViewName("mail/sendMail");	
+			mv.setViewName("mail/sendMail");	
 		
 		 return mv;
 		}
@@ -317,12 +319,21 @@ private ScheduleService sService;
 		
 		// 리스트 - 아이디 누르고 메일 쓰기 
 		@RequestMapping("mailWriteId.do")
-		public ModelAndView mailWriteId(ModelAndView mv,
-				int memNo){
+		public ModelAndView mailWriteId(ModelAndView mv,int memNo){
 			
 			Member m = maService.mailWriteId(memNo);
 			System.out.println(m);
 			System.out.println(memNo);
+			
+			// 조직도 모달을 위한 정보가져오기 
+			// 총 부서 리스트
+			ArrayList<Department> deptList = sService.deptList();
+			// 총 사원 리스트
+			ArrayList<Member> memList = sService.memList();
+									
+			mv.addObject("deptList", deptList);
+			mv.addObject("memList", memList);
+									
 			
 			mv.addObject("m",m);
 			mv.setViewName("mail/mailWriteId");
@@ -407,7 +418,6 @@ private ScheduleService sService;
 			System.out.println(page);
 			String [] mailNon = mailNoArr.split(",");
 			int result = maService.delmail(mailNon);
-			
 			
 			if(result > 0 ) {
 				if(page.equals("보낸메일")) {
@@ -558,6 +568,15 @@ private ScheduleService sService;
 
 			Mail ma = maService.mailReply(mailNo);
 			
+			// 조직도 모달을 위한 정보가져오기 
+			// 총 부서 리스트
+			ArrayList<Department> deptList = sService.deptList();
+			// 총 사원 리스트
+			ArrayList<Member> memList = sService.memList();
+						
+			mv.addObject("deptList", deptList);
+			mv.addObject("memList", memList);
+						
 			mv.addObject("ma",ma);
 			mv.setViewName("mail/forwardMail");
 			

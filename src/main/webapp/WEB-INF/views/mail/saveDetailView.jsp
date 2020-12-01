@@ -441,8 +441,17 @@ span#fileName{
 						
 						<div id="auto"> 
 						&nbsp;받는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<c:choose>
+						<c:when test="${ !ma.recipient eq '없음' }  ">
 						<input type="text" name="recipient" id="address" style="width: 60%;"
 							placeholder="이름 혹은 메일 주소를 입력해주세요." value="${ma.recipient }"/>
+						</c:when>
+						<c:otherwise>
+						<input type="text" name="recipient" id="address" style="width: 60%;"
+							placeholder="이름 혹은 메일 주소를 입력해주세요." value=""/>
+						</c:otherwise>
+						
+						</c:choose>
 							
 							<span  id="searchPop"
 							 style="font-size: 17px; 
@@ -593,7 +602,7 @@ span#fileName{
        var modal = $('#' + id);
 
        // 모달 div 뒤에 희끄무레한 레이어
-       var bg = $('<div>')
+    /*    var bg = $('<div>')
           .css({
              position: 'fixed',
              zIndex: zIndex,
@@ -606,7 +615,7 @@ span#fileName{
              backgroundColor: 'rgba(0,0,0,0.4)'
           })
           .appendTo('body');
-
+ */
        modal
           .css({
              position: 'fixed',
@@ -626,7 +635,7 @@ span#fileName{
           // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
           .find('.modal-close-btn')
           .on('click', function() {
-             bg.remove();
+           /*   bg.remove(); */
              modal.hide();
           });
     }
@@ -826,8 +835,6 @@ function changeFile(event) {
 	
 	};
 	
-     
-
  </script>
  
 </body>
