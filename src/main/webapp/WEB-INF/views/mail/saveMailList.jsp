@@ -110,6 +110,14 @@
 	right : 115px;
 	}
 	
+	#tb #idWrite {
+	overflow:hidden;
+	white-space : nowrap;
+	text-overflow: ellipsis;
+	color : black;
+	}
+	
+	
 </style>
 
 <body>
@@ -123,7 +131,7 @@
 			<div style="margin-left:40px;">
 			<!--여기다가 만들기 -->
 			<br> 
-						&nbsp;&nbsp;
+						&nbsp;
 						<input type="checkbox" id="checkall"> 
 						&nbsp;&nbsp;
 						전체선택 &nbsp;&nbsp;
@@ -140,7 +148,18 @@
 						
 						<tr class="trMail" onClick="location.href='${saveDetailView}'"> 
 							<td id="firstTd">&nbsp;&nbsp;<input type="checkbox" onClick="event.cancelBubble=true" name="mail" value="${ma.mailNo}"></td>
+							
+							
+							<c:choose>
+							<c:when test="${ma.name eq '없음'}">
+							<td align="left"> 지정안함 </td>
+							</c:when>
+							<c:otherwise>
 							<td align="left"> ${ma.name} < ${ma.recipient} > </td>
+							</c:otherwise>
+							
+							</c:choose>
+							
 							<td>${ ma.mTitle }</td>
 							<td align="right"> ${ma.sendDate }</td>
 						</tr>

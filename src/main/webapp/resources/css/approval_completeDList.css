@@ -75,7 +75,7 @@
     height: 100%;
 }
 .appr_list th:nth-child(3){
-    width:30%;
+    width:35%;
     height: 100%;
 }
 .appr_list th:nth-child(5){
@@ -91,11 +91,11 @@
     height: 100%;
 }
 .appr_list th:nth-child(11){
-    width:10%;
+    width:8%;
     height: 100%;
 }
 .appr_list th:nth-child(13){
-	width:10%;
+	width:7%;
 	height:100%;
 }
 

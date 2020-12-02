@@ -13,12 +13,7 @@
 	<link rel="stylesheet" href="<c:url value="/resources/css/office-subNavi.css"/>">
 
 <style>
-#imgTd #logoImg{
-	width: 170px;
-   	height: 75px;
-   	background : #3E4247;
-	margin : 5px;
-}
+
 </style>
 </head>
 
@@ -69,12 +64,12 @@
 			<div class="contents">
 				<!-- 컨텐츠 타이틀명 -->
 				<div class="contents-title underline">
-					<h4>로고 설정</h4>
+					<h3>로고 설정</h3>
 				</div>
 				<!-- ---- -->
 				<div class="contents-wrap drag-scrollbar c-ic">
 					<div id="logo-explain">
-						<h5>회사 로고를 등록하면, 로그인 페이지와 사용자 화면에 동시에 적용됩니다.</h5>
+						<h5>회사 로고를 등록하면, 사용자 화면에 바로 적용됩니다.</h5>
 					</div>
 
 					<div >
@@ -96,8 +91,12 @@
 							<tr id="up-file" class="underline">
 								<th class="ch-tbl-cate" rowspan="2">파일올리기</th>
 								<td  class="ch-tbl-c">
+									
 									<input type="file" name="logoFile" id="InputLogo" onchange="changeLogoFile(event);">
+									<span id="fileUp">파일 선택하기</span> <span id="fileName"></span>
+									
 									<div id="warning">
+									<br>
 										500KB 미만의 JPG,GIF,PNG 형식만 등록 가능합니다. <br>
 										새로운 이미지를 등록하면, 기존에 저장되어 있던 서버에 이력을 남겨둡니다. <br>
 										최적 사이즈 170*75px로 이미지를 업로드하시면 메인 상단과 하단 푸터 영역에 자동 적용됩니다. <br>
@@ -111,6 +110,16 @@
 								</td>
 							</tr>
 							</form>
+						</table>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+
+		
+    </div>
+   
 							<script>
 								$(function(){
 									$('input[type=radio][name=s-btn]').click(function(){
@@ -127,6 +136,11 @@
 					
 									})
 								})
+								
+		$('#fileUp').click(()=>{
+      	$('#InputLogo').click();
+      	
+     	 });
 								
 				function changeLogoFile(event) { 
             	var reader = new FileReader(); 
@@ -147,18 +161,15 @@
             	// 로고를 새로 선택하면, 미리보기 썸네일 및 해당 td 의 텍스트 변경 
             	reader.readAsDataURL(event.target.files[0]); 
             	$("#fileStatus").text("업로드할 로고");
+            	// 파일 업로드 버튼 옆에 파일 명 붙여주기 
+            	var fileValue = $("#InputLogo").val().split("\\");
+             	var fileNa = fileValue[fileValue.length-1]; // 파일명
+             	
+             	$("#fileName").text(fileNa);
+             	
             	};
+            	
         </script>
-						</table>
-					</div>
-				</div>
-				
-			</div>
-		</div>
-
-		
-    </div>
-   
 		
     
 </body>

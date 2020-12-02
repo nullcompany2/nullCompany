@@ -44,13 +44,19 @@ public class Y_PersonnelManagementController {
 
 	// 조직관리
 	@RequestMapping("OrganizationManagement.do")
-	public ModelAndView OrganizationManagement(ModelAndView mv,  HttpServletResponse response, HttpSession session) {
+	public ModelAndView OrganizationManagement(ModelAndView mv, String searchText, HttpServletResponse response, HttpSession session) {
 		
 		// 총 부서 리스트
 		ArrayList<Department> deptList = yService.deptList();
 		// 총 사원 리스트
 		ArrayList<Member> mList = yService.memList();
-
+		
+		if(searchText == null || searchText == "") {
+			mList = yService.memList();
+			
+		}else {
+			mList = yService.searchMemberById(searchText);
+		}
 
 		mv.addObject("deptList", deptList);
 		mv.addObject("mList", mList);
@@ -182,9 +188,16 @@ public class Y_PersonnelManagementController {
 		
 		ArrayList<Member> list = yService.selectPageMemList(pi);
 		
+		// 부서 리스트 
+		ArrayList<Department> deptList = yService.selectDeptList();		
+		// 직위 리스트
+		ArrayList<Rank> rankList = yService.selectRankList();
+		
 		mv.addObject("list",list);
 		mv.addObject("listCount",listCount);
 		mv.addObject("pi",pi);
+		mv.addObject("deptList",deptList);
+		mv.addObject("rankList",rankList);
 		mv.setViewName("personnel_management/userManagement");
 
 		return mv;
@@ -202,11 +215,16 @@ public class Y_PersonnelManagementController {
 				
 				ArrayList<Member> list = yService.Name_Search(pi,text);
 				System.out.println("검색" + list);
+				// 부서 리스트 
+				ArrayList<Department> deptList = yService.selectDeptList();		
+				// 직위 리스트
+				ArrayList<Rank> rankList = yService.selectRankList();
 				
 				mv.addObject("list", list);
 				mv.addObject("listCount",listCount);
 				mv.addObject("pi",pi);
-				
+				mv.addObject("deptList",deptList);
+				mv.addObject("rankList",rankList);
 				mv.setViewName("personnel_management/userManagermentSearch");
 				
 				return mv;
@@ -216,8 +234,13 @@ public class Y_PersonnelManagementController {
 				
 				ArrayList<Member> list = yService.ID_Search(pi,text);
 				System.out.println("검색" + list);
+				// 부서 리스트 
+				ArrayList<Department> deptList = yService.selectDeptList();		
+				// 직위 리스트
+				ArrayList<Rank> rankList = yService.selectRankList();
 				mv.addObject("list", list);
-				
+				mv.addObject("deptList",deptList);
+				mv.addObject("rankList",rankList);
 				mv.setViewName("personnel_management/userManagermentSearch");
 				
 				return mv;

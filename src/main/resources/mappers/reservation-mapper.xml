@@ -16,7 +16,8 @@
 		<result property="rsTitle" column="RS_TITLE"/>
 		<result property="rsContent" column="RS_CONTENT"/>
 		<result property="rsReturn" column="RS_RETURN"/>
-		<result property="rsImg" column="RS_IMG"/>
+		<result property="originalFileName" column="ORIGINAL_FILENAME"/>
+		<result property="renameFileName" column="RENAME_FILENAME"/>
 		<result property="rsStatus" column="RS_STATUS"/>
 	</resultMap>
 	
@@ -37,7 +38,7 @@
 	
 	<insert id="insertCategory" parameterType="Category">
 	INSERT INTO RCATEGORY
-	VALUES (SEQ_RCNO.NEXTVAL,#{rcTitle},#{rcContent},DEFAULT,DEFAULT)
+	VALUES (SEQ_RCNO.NEXTVAL,#{rcTitle},#{rcContent},DEFAULT)
 	</insert>
 	
 	<select id="selectCategory" parameterType="_int" resultMap="categoryResultSet">
@@ -88,7 +89,7 @@
 	
 	<insert id="insertResource" parameterType="Resource">
 	INSERT INTO "RESOURCE"
-	VALUES (SEQ_RSNO.NEXTVAL,#{rcNo},#{rsTitle},#{rsContent},#{rsReturn},#{rsImg},DEFAULT)
+	VALUES (SEQ_RSNO.NEXTVAL,#{rcNo},#{rsTitle},#{rsContent},#{rsReturn},#{renameFileName},#{originalFileName},DEFAULT)
 	</insert>
 	
 	<update id="DeleteResouce" parameterType="Resource">
@@ -104,7 +105,8 @@
 		RS_TITLE=#{rsTitle},
 		RS_CONTENT=#{rsContent},
 		RS_RETURN=#{rsReturn},
-		RS_IMG=#{rsImg}
+		ORIGINAL_FILENAME=#{originalFileName},
+		RENAME_FILENAME=#{renameFileName}
 	WHERE
 		RS_NUM = #{rsNo}
 	</update>

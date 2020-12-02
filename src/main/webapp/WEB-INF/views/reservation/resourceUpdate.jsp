@@ -32,7 +32,7 @@ form p {
 		<div class="contents-title">
 			<span class="ct1">자원 수정하기</span>
 		</div>
-		<form action="resourceUpdate.do" method="POST">
+		<form action="resourceUpdate.do" method="POST" enctype="multipart/form-data" >
 			<ul>
 				<li>
 					<p>자원 이름</p> <input type="text" name = "rsTitle" value="${ r.rsTitle }"> <br>
@@ -42,7 +42,7 @@ form p {
 						style="resize: none;">${r.rsContent }</textarea>
 				</li>
 				<li>
-					<p>사진</p> <input type="file" name="rsImg" id="" value = "${r.rsImg }">
+					<p>사진</p> <input type="file" name="reloadFile" id="rsImg" value = "${ r.renameFileName }">
 				</li>
 				<li>
 				<c:choose>

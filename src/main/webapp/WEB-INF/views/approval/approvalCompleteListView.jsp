@@ -101,7 +101,7 @@
 				<div class="c-ic">
 				<c:choose>
 					<c:when test="${ !empty dList }">
-						<table class="appr_list" >
+					<table class="appr_list" >
 						<thead>
 							<tr>
 								<th>문서 번호</th>
@@ -110,9 +110,9 @@
 								<th style="color: #999;">|</th>
 								<th>기안자</th>
 								<th style="color: #999;">|</th>
-								<th>기안일&nbsp;&nbsp;<label class="appr_date_desc" id="insert_date">▼</label></th>
+								<th>기안일</th>
 								<th style="color: #999;">|</th>
-								<th>완료일&nbsp;&nbsp;<label class="appr_date_desc" id="complete_date">▼</label></th>
+								<th>완료일</th>
 								<th style="color: #999;">|</th>
 								<th>문서 종류</th>
 								<th style="color: #999;">|</th>

@@ -42,3 +42,10 @@
     float: right;
     margin-right: 25px;
 }
+
+.contents-title{
+    padding-top: 15px;
+    height: 50px;
+    width : 90%;
+    border-bottom: solid 0.1px #cacaca;
+}

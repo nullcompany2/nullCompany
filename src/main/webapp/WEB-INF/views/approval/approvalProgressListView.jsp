@@ -109,7 +109,7 @@
 												<th style="color: #999;">|</th>
 												<th>기안자</th>
 												<th style="color: #999;">|</th>
-												<th>기안일&nbsp;&nbsp;<label class="appr_date_desc" id="insert_date">▼</label></th>
+												<th>기안일</th>
 												<th style="color: #999;">|</th>
 												<th>문서 종류</th>
 												<th style="color: #999;">|</th>

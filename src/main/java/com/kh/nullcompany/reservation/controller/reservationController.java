@@ -1,6 +1,8 @@
 package com.kh.nullcompany.reservation.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
@@ -204,7 +208,16 @@ public class reservationController {
 	}
 
 	@RequestMapping("resourceInsert.do")
-	public String resourceInsert(Resource r, HttpServletRequest request) {
+	public String resourceInsert(Resource r, HttpServletRequest request,
+			@RequestParam(name="uploadFile", required = false)MultipartFile file) {
+		
+		if(!file.getOriginalFilename().equals("")) {
+			String renameFileName = saveFile(file,request);
+		       if(renameFileName != null) {
+		            r.setOriginalFileName(file.getOriginalFilename());
+		            r.setRenameFileName(renameFileName);
+		         }
+		      }
 		int result = rService.insertResource(r);
 		System.out.println(result);
 		if(result>0) {
@@ -214,8 +227,23 @@ public class reservationController {
 		}
 	}
 	@RequestMapping("resourceUpdate.do")
-	public ModelAndView resourceUpdate(ModelAndView mv,HttpServletRequest request, Resource r) {
-		System.out.println(r);
+	public ModelAndView resourceUpdate(ModelAndView mv,HttpServletRequest request, Resource r,
+			@RequestParam(value = "reloadFile", required = false) MultipartFile file) {
+		
+		if(file != null && !file.isEmpty()) { 
+			if(r.getRenameFileName() != null) { 
+				deleteFile(r.getRenameFileName(),request);
+			}
+			
+			String renameFileName = saveFile(file,request);
+			System.out.println(renameFileName);
+			if(renameFileName != null) {
+				r.setOriginalFileName(file.getOriginalFilename());
+				r.setRenameFileName(renameFileName);
+				
+			}
+		}
+		
 		int result = rService.updateResouce(r);
 
 		System.out.println(result);
@@ -235,6 +263,10 @@ public class reservationController {
 	}
 	@RequestMapping("resourceDelete.do")
 	public String deleteResource(int rsNo,HttpServletRequest requset) {
+		Resource r = rService.selectUpdateResource(rsNo);
+		if(r.getRenameFileName() != null) {
+			deleteFile(r.getRenameFileName(),requset);
+		}
 		int result = rService.deleteResource(rsNo);
 		if(result>0) {
 			return "redirect:resourceList.do";
@@ -242,7 +274,42 @@ public class reservationController {
 			return "common/errorPage";
 		}
 	}
-
+	
+	public String saveFile(MultipartFile file,HttpServletRequest request) {
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = root + "\\reservationFile";
+		File folder = new File(savePath); 
+		if(!folder.exists()) {
+			folder.mkdirs();
+		}
+		String originalFileName = file.getOriginalFilename();
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		String renameFileName = sdf.format(new java.sql.Date(System.currentTimeMillis()))+"."
+								+originalFileName.substring(originalFileName.lastIndexOf(".")+1);
+		
+		String renamePath = folder + "\\" + renameFileName; 
+		
+		try {
+			file.transferTo(new File(renamePath));
+		}catch (Exception e) {
+			System.out.println("파일전송 에러 : " + e.getMessage());
+		}
+		
+		return renameFileName;
+	}
+	
+	public void deleteFile(String fileName,HttpServletRequest request) {
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = root + "\\reservationFile";
+		
+		File f = new File(savePath + "\\" + fileName);
+		
+		if(f.exists()) {
+			f.delete();
+		}
+	}
+	
 	@RequestMapping("returnList.do")
 	public String returnList(HttpServletResponse response) {
 		return "reservation/returnList";
@@ -258,4 +325,5 @@ public class reservationController {
 			return "common/errorPage";
 		}
 	}
+	
 }
