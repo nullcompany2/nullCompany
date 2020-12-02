@@ -200,7 +200,7 @@
 						list.push(manager);
 						console.log(list);
 					}
-					
+					alert("관리자 변경완료.");
 					location.href = "updateOfficeManager.do?list="+list;
 					
 				}else{
