@@ -13,7 +13,8 @@
 	<link rel="stylesheet" href="<c:url value="/resources/css/office-subNavi.css"/>">
 
 <style>
-
+.basicLogo{
+display:none;}
 </style>
 </head>
 
@@ -77,17 +78,26 @@
 							<tr class="underline" style="border-top: 0.1px solid;">
 								<th class="ch-tbl-cate">로고변경</th>
 								<td class="ch-tbl-c">
-									<input type="radio" name="s-btn" id="logo-p" value="1" checked><label for="logo-p">기본로고</label>
+									<input type="radio" name="s-btn" id="logo-p" value="1" checked><label for="logo-p">현재로고</label>
+									<input type="radio" name="s-btn" id="logo-b" value="3"><label for="logo-b">기본로고</label>
 									<input type="radio" name="s-btn" id="logo-n" value="2"><label for="logo-n">로고변경</label>
 								</td>
 							</tr>
-							<tr class="underline">
+							<tr class="underline" id="nowLogo">
 								<th class="ch-tbl-cate" id="fileStatus">현재 로고</th>
 								<td  class="ch-tbl-c" id="imgTd">
 								<img  id= "logoImg" alt="" src="${ logo.renameLogo }">
 								</td>
 							</tr>
-							<form method="post" action="logoUpload.do" enctype="multipart/form-data"> 
+							<tr class="basicLogo">
+								<th class="ch-tbl-cate" id="fileStatus">기본 로고</th>
+								<td  class="ch-tbl-c" id="basicLogoTd">
+								<img  id= "basicLogoImg" alt="" src="resources/logoUploadFiles/20201128202837.png">
+								<br>
+							 	<span id="basicLogoBtn"> 기본 로고 적용 </span>
+								</td>
+							</tr>
+							<form method="post" enctype="multipart/form-data"> 
 							<tr id="up-file" class="underline">
 								<th class="ch-tbl-cate" rowspan="2">파일올리기</th>
 								<td  class="ch-tbl-c">
@@ -130,8 +140,16 @@
 											// 페이지를 리로드해서 이전에 등록했던 로고로 
 											document.location.href='officeLogo.do';
 										}else if(chkLogo =='2'){
-											$("#up-file").css('visibility','visible');
-											$("#upBtn").css('visibility','visible');
+											$("#up-file").show();
+											$("#upBtn").show();
+											$(".basicLogo").hide();
+											$("#nowLogo").show();
+											
+										}else{
+											$("#up-file").hide();
+											$("#upBtn").hide();
+											$(".basicLogo").show();
+											$("#nowLogo").hide();
 										}
 					
 									})
@@ -141,6 +159,14 @@
       	$('#InputLogo').click();
       	
      	 });
+				$("#basicLogoBtn").click(function () {
+					 document.location.href='logoUpload.do?basic='+ "basic";
+				}); 
+				
+				 // 메일 임시 저장 버튼 
+			 	 $("#logoBtn").click(function () {
+			        $("form").attr("action","logoUpload.do?basic="+ "안녕");
+			 	}); 
 								
 				function changeLogoFile(event) { 
             	var reader = new FileReader(); 
@@ -168,6 +194,8 @@
              	$("#fileName").text(fileNa);
              	
             	};
+            	
+            	
             	
         </script>
 		
