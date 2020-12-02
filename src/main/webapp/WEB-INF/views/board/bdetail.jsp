@@ -94,6 +94,12 @@ a {
    color: #676767;
 }
 
+.ct1 {
+	margin-left: 16px;
+	font-size: 20px;
+	font-weight: bolder;
+}
+
 .title {
    font-size: 16px;
    font-weight: bold;
@@ -116,11 +122,7 @@ a {
    border-bottom: solid 0.1px #cacaca;
 }
 
-.ct1 {
-   margin-left: 50px;
-   font-size: 20px;
-   font-weight: bolder;
-}
+
 
 .del {
    opacity: 0%;
@@ -318,6 +320,7 @@ tr>td {
       <c:import url="../common/boardSubNav.jsp" />
       <!-- 게시판 -->
       <div class="bdeatil">
+      <span class="ct1" style="margin-right: 10%;"> 자유게시판</span>
          <div class="board_head">
             <div style="width: 90%; margin: auto;">
                <form method="post" action="">
@@ -328,18 +331,14 @@ tr>td {
 						<c:url var="bdelete" value="bdelete.do">
 					<c:param name="bNo" value="${ b.bNo }"/>
 				</c:url>
-						
-						
-                  <input id="subBtn" type="button" value="수정"
-                     style="margin-left: 15px" onClick="location.href='${bupView}'" />
+                 	  <input id="subBtn" type="button" value="수정"  style="margin-left: 15px" onClick="location.href='${bupView}'" />
                       <input  id="bdelete" type="button" value="삭제" />
-                      <input type="text"
-                     id="ShareUrl" OnClick="javascript:CopyUrlToClipboard()"
+                      <input type="text" id="ShareUrl" OnClick="javascript:CopyUrlToClipboard()"
                      style="position: absolute; top: 0; left: 0; width: 1px; height: 1px; margin: 0; padding: 0; border: 0;">
                   <button
                      style="font-size: 18px; margin: 7px 5px 7px 5px; background: none; border: none; color: #477A8F; cursor: pointer;"
                      OnClick="javascript:CopyUrlToClipboard()">주소 복사</button>
-                  <a href="javascript:history.go(-1);"> <input id=""
+                  <a href="board.do"> <input id=""
                      type="button" value="이전으로" /></a>
                  
                </form>
@@ -375,7 +374,7 @@ tr>td {
 							<c:when test="${ !empty b.originalFileName }">
 									<a href="${contextPath }/resources/buploadFiles/${b.renameFileName}"
 										download="${ n.originalFileName }">${ b.originalFileName }</a>
-                           <
+                           
                     		 </c:when>
 								<c:when test="${ empty b.originalFileName }">
                      			   없음
