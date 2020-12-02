@@ -100,12 +100,6 @@ a:active {
 	<div class="container">
 		<h2 style="text-align: center;">예약</h2>
 		<div class="H-personnel-subNavi underline">
-			<li>
-				<div>
-					<button
-						style="border: none; border-radius: 3px; background: #477A8F; color: white; font-size: 20px; width: 90%; height: 50px; margin-left: 12px;">
-						예약 하기</button>
-				</div>
 		</div>
 		<div class="drag-scrollbar">
 			<div class="H-personnel-subNavi underline">

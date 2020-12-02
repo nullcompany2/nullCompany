@@ -58,13 +58,19 @@
 		SELECT *
 		FROM CMT_BOARD
 		WHERE BCEF_BNO=#{bNo}
-		ORDER BY BCNO ASC
+		ORDER BY BCNO DESC
 	</select>
 	
 	<insert id="insertbComment" parameterType="bcomment">
 		INSERT INTO CMT_BOARD VALUES
 		(SEQ_BCNO.NEXTVAL, #{bcContent},#{bcefBno},#{bcWriter},SYSDATE,SYSDATE,DEFAULT)
 	</insert>
+	
+	<delete id="deletebComment" parameterType="bcomment">
+		DELETE *
+		FROM CMT_BOARD	
+		WHERE BCNO=#{bcNo}
+	</delete>
 	
 	<insert id="insertBoard" parameterType="board">
 		INSERT INTO TBL_BOARD

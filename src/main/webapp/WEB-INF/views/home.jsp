@@ -209,8 +209,8 @@ li {
                     <hr>
 					<table  cellspacing="13" width="100%" id="ntb">
                    <colgroup>
-                  <col width="42%" />
-                  <col width="10%" />
+                  <col width="45%" />
+                  <col width="15%" />
                   <col width="25%" />
                </colgroup>
 		<thead>
@@ -311,9 +311,9 @@ li {
                     <hr>
                     
             <table  cellspacing="13" width="100%" id="tb">
-                  <colgroup>
-                  <col width="42%" />
-                  <col width="10%" />
+                 <colgroup>
+                  <col width="45%" />
+                  <col width="15%" />
                   <col width="25%" />
                </colgroup>
 		<thead>
