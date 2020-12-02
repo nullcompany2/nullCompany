@@ -8,7 +8,7 @@
 
 <c:import url="../common/header.jsp"/>
 
-<title>받은 편지함 </title>
+<title>받은 편지함</title>
 
 	</head>
 	

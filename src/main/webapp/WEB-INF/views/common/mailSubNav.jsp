@@ -59,6 +59,16 @@ a {
 .subTitle {
 	list-style: none;
 }
+
+#gobin {
+margin-left : 113px;
+
+}
+#gobin img {
+	width: 22px;
+	height: 22px;
+	padding-top :1px;
+}
 	
 </style>
 </head>
@@ -90,7 +100,8 @@ a {
 						</li>
 						<li class="subTitle">
 							<a class="bin" href="binMailList.do">휴지통 </a>
-							<a id="gobin" href="#"><span class="del" style="color: red; font-size: 13px; margin-left:65px;">비우기</span></a>
+							<a id="gobin"><img alt="" src="resources/images/trash.png"></a> 
+<!-- 							<a id="gobin"><span class="del" style="color: red; font-size: 13px; margin-left:65px;">비우기</span></a> -->
 						</li>
 					</div>
 				</div>
