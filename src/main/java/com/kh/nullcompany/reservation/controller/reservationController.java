@@ -21,6 +21,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.kh.nullcompany.board.model.service.boardService;
+import com.kh.nullcompany.board.model.vo.PageInfo;
+import com.kh.nullcompany.common.Pagination;
 import com.kh.nullcompany.reservation.model.service.ReservationService;
 import com.kh.nullcompany.reservation.model.vo.Category;
 import com.kh.nullcompany.reservation.model.vo.Reservation;
@@ -171,9 +173,20 @@ public class reservationController {
 		return mv;
 	}
 	@RequestMapping("reservationList2.do")
-	public void reservationList2(HttpServletResponse response) throws JsonIOException, IOException {
+	public void reservationList2(HttpServletResponse response,
+			@RequestParam(value="currentPage",required=false,defaultValue="1") int currentPage,int rcNo) throws JsonIOException, IOException {
 		response.setContentType("application/json; charset=utf-8");
-		ArrayList<Reservation> list = rService.selectReservationList();
+		int listCount = rService.getListCount(rcNo);
+		
+		PageInfo pi = Pagination.getPageInfo(currentPage,listCount);
+		
+		ArrayList<Reservation> rlist = rService.selectReservationList2(pi,rcNo);
+		
+		Map list = new HashMap();
+		list.put("rlist",rlist);
+		list.put("pi",pi);
+		list.put("listCount",listCount);
+		
 		Gson gson = new GsonBuilder().create();
 		gson.toJson(list,response.getWriter());
 	}

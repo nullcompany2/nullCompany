@@ -3,10 +3,12 @@ package com.kh.nullcompany.reservation.model.dao;
 import java.util.ArrayList;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.reservation.model.vo.Category;
 import com.kh.nullcompany.reservation.model.vo.Reservation;
 import com.kh.nullcompany.reservation.model.vo.Resource;
@@ -85,6 +87,20 @@ public class ReservationDao {
 
 	public int reservationDelete(int rNo) {
 		return sqlSession.delete("reservationMapper.reservationDelete",rNo);
+	}
+
+	public int getListCount() {
+		return sqlSession.selectOne("reservationMapper.getListCount");
+	}
+
+	public ArrayList<Reservation> selectReservationList2(PageInfo pi,int rcNo) {
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("reservationMapper.ReservationList",rcNo,rowBounds);
+	}
+
+	public int getListCount(int rcNo) {
+		return sqlSession.selectOne("reservationMapper.getListCount2",rcNo);
 	}
 	
 }
