@@ -107,8 +107,6 @@
 		#emp-photo:hover
 		{
 		filter: brightness(40%);
-		box-shadow: 0px 0px 20px #5C6369;
-
 		}
 		
 		.contents {
@@ -185,7 +183,7 @@
                           <tr>
                           	 <th>부서</th>
                              <td>
-                             <input type="text" name="deptName" id="deptName" value="${ loginUser.deptName }부" readonly>
+                             <input type="text" name="deptName" id="deptName" value="${ loginUser.deptName }" readonly>
                              </td>
                           </tr>
                           <tr>
@@ -221,7 +219,7 @@
                              <td><input type="tel" name="phone" value="${ loginUser.phone }" required></td>
                           </tr>
                           
-                          <tr>
+                          <tr class="adrress">
                              <th>자택주소</th>
                              <td>
                                 <input type="text" name="post" class="postcodify_postcode5" size="8" placeholder="우편번호" >

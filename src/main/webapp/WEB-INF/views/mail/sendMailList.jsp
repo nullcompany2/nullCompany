@@ -40,27 +40,27 @@
 	a:active {
 		font-weight: bolder;
 	}
-
-	#category {
-		position:relatived;
-		margin-left:50%;
+#category {
 		border : none;
 		padding : 3px;
 		font-size : 15px;
 		margin-bottom : 5px;
+		left:750px;
 		
 	}
 	
 	#search {
-		position:relatived;
-		border:1px solid grey;
+		
+		border: 1px solid #3E4247;
 		border-radius : 3px;
 		padding : 3px;
 		font-size : 15px;
-		margin-bottom : 5px;
-		margin-left:5px;
-		padding-left:10px;
+		left:860px;				
 	
+	}
+	
+	#category,#search,#searchBtn{
+	position : absolute;
 	}
 	
 	#searchBtn {
@@ -70,10 +70,11 @@
 	border-radius:3px;
 	border:none;
 	color:white;
-	margin-bottom :5px;
 	cursor :pointer;
+	left:1040px;		
 		
 	}
+	
 	
 	#tb {
 	margin-bottom : 10px;
@@ -177,12 +178,12 @@
 			<tr align="center" height="20">
 				<td colspan="6" align="center">
 					<!-- [이전] --> <c:if test="${ pi.currentPage eq 1 }">
-						이전 &nbsp;
+						이전 
 					</c:if> <c:if test="${ pi.currentPage ne 1 }">
 						<c:url var="before" value="sendMailList.do">
 							<c:param name="currentPage" value="${ pi.currentPage - 1 }" />
 						</c:url>
-						<a href="${ before }">이전</a> &nbsp;
+						<a href="${ before }">이전</a> 
 					</c:if> <!-- 페이지 --> <c:forEach var="p" begin="${ pi.startPage }"
 						end="${ pi.endPage }">
 						<c:if test="${ p eq pi.currentPage }">
@@ -193,7 +194,7 @@
 							<c:url var="pagination" value="sendMailList.do">
 								<c:param name="currentPage" value="${ p }" />
 							</c:url>
-							<a href="${ pagination }">${ p }</a> &nbsp;
+							<a href="${ pagination }">${ p }</a>
 						</c:if>
 					</c:forEach> <!-- [다음] --> <c:if test="${ pi.currentPage eq pi.maxPage }">
 						다음

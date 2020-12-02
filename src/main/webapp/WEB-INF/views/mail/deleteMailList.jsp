@@ -15,7 +15,7 @@
 	<style>
 	body {
 		padding: 0px; margin: 0px;
-	}
+	} 
 
 	/* contents */
 	.contents{
@@ -131,7 +131,7 @@
 
 							<td id="firstTd">&nbsp;&nbsp;<input type="checkbox" onClick="event.cancelBubble=true" name="mail" value="${ma.mailNo}"></td>						
 							<td align="left">${ma.name} < ${ma.sender} ></td>
-							<td align="center">${ ma.mTitle }</td>
+							<td>${ ma.mTitle }</td>
 							<td align="right"> ${ma.sendDate }</td>
 						</tr>
 						</table>
@@ -150,12 +150,12 @@
 			<tr align="center" height="20">
 				<td colspan="6" align="center">
 					<!-- [이전] --> <c:if test="${ pi.currentPage eq 1 }">
-						이전 &nbsp;
+						이전 
 					</c:if> <c:if test="${ pi.currentPage ne 1 }">
-						<c:url var="before" value="rbinMailList.do">
+						<c:url var="before" value="binMailList.do">
 							<c:param name="currentPage" value="${ pi.currentPage - 1 }" />
 						</c:url>
-						<a href="${ before }">이전</a> &nbsp;
+						<a href="${ before }">이전</a> 
 					</c:if> <!-- 페이지 --> <c:forEach var="p" begin="${ pi.startPage }"
 						end="${ pi.endPage }">
 						<c:if test="${ p eq pi.currentPage }">
@@ -166,7 +166,7 @@
 							<c:url var="pagination" value="binMailList.do">
 								<c:param name="currentPage" value="${ p }" />
 							</c:url>
-							<a href="${ pagination }">${ p }</a> &nbsp;
+							<a href="${ pagination }">${ p }</a> 
 						</c:if>
 					</c:forEach> <!-- [다음] --> <c:if test="${ pi.currentPage eq pi.maxPage }">
 						다음

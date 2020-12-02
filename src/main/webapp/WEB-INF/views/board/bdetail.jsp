@@ -94,6 +94,12 @@ a {
    color: #676767;
 }
 
+.ct1 {
+	margin-left: 16px;
+	font-size: 20px;
+	font-weight: bolder;
+}
+
 .title {
    font-size: 16px;
    font-weight: bold;
@@ -116,11 +122,7 @@ a {
    border-bottom: solid 0.1px #cacaca;
 }
 
-.ct1 {
-   margin-left: 50px;
-   font-size: 20px;
-   font-weight: bolder;
-}
+
 
 .del {
    opacity: 0%;
@@ -318,6 +320,7 @@ tr>td {
       <c:import url="../common/boardSubNav.jsp" />
       <!-- 게시판 -->
       <div class="bdeatil">
+      <span class="ct1" style="margin-right: 10%;"> 자유게시판</span>
          <div class="board_head">
             <div style="width: 90%; margin: auto;">
                <form method="post" action="">
@@ -328,18 +331,14 @@ tr>td {
 						<c:url var="bdelete" value="bdelete.do">
 					<c:param name="bNo" value="${ b.bNo }"/>
 				</c:url>
-						
-						
-                  <input id="subBtn" type="button" value="수정"
-                     style="margin-left: 15px" onClick="location.href='${bupView}'" />
+                 	  <input id="subBtn" type="button" value="수정"  style="margin-left: 15px" onClick="location.href='${bupView}'" />
                       <input  id="bdelete" type="button" value="삭제" />
-                      <input type="text"
-                     id="ShareUrl" OnClick="javascript:CopyUrlToClipboard()"
+                      <input type="text" id="ShareUrl" OnClick="javascript:CopyUrlToClipboard()"
                      style="position: absolute; top: 0; left: 0; width: 1px; height: 1px; margin: 0; padding: 0; border: 0;">
                   <button
                      style="font-size: 18px; margin: 7px 5px 7px 5px; background: none; border: none; color: #477A8F; cursor: pointer;"
                      OnClick="javascript:CopyUrlToClipboard()">주소 복사</button>
-                  <a href="javascript:history.go(-1);"> <input id=""
+                  <a href="board.do"> <input id=""
                      type="button" value="이전으로" /></a>
                  
                </form>
@@ -375,7 +374,7 @@ tr>td {
 							<c:when test="${ !empty b.originalFileName }">
 									<a href="${contextPath }/resources/buploadFiles/${b.renameFileName}"
 										download="${ n.originalFileName }">${ b.originalFileName }</a>
-                           <
+                           
                     		 </c:when>
 								<c:when test="${ empty b.originalFileName }">
                      			   없음
@@ -401,6 +400,7 @@ tr>td {
 
 
 <!-- Ajax를 이용해서 댓글 등록 -->
+				
    <table  style="text-align:center; width=800;"  cellspacing="0">
       <tr>
          <td><textarea class="form-control" style="resize: none;" cols="80" rows="3" id="bcContent"></textarea></td>
@@ -409,7 +409,7 @@ tr>td {
          </td>
       </tr>
    </table>
-   <table class="table-bordered" align="center" width="800"  cellspacing="0" id="rtb">
+   <table  align="center" width="800"  cellspacing="0" id="rtb">
       <thead>
          <tr>
             <td colspan="5"><b id="bcCount"></b></td>
@@ -419,6 +419,9 @@ tr>td {
       <tbody>
       </tbody>
    </table>
+      <c:url var="bcDelete" value="bcDelete.do">
+			<c:param name="bcNo" value="${ bc.bcNo }"/>
+	 </c:url>
    
       
       
@@ -435,6 +438,7 @@ tr>td {
 	            return;
 	        }
 		});
+	
       $(function(){
          getbCommentList();
          
@@ -469,6 +473,8 @@ tr>td {
          });
          
       });
+      
+     
    
       function getbCommentList(){
          var bNo = ${ b.bNo };
@@ -487,20 +493,32 @@ tr>td {
                var $bcContent;
                var $bcCreateDate;
                
-               $("#bcCount").text("댓글 (" + data.length +")"); // 댓글(0)
+               
+               
+               $("#bcCount").text("댓글 (" + data.length +")");
+             		// 댓글(0)
                if(data.length > 0){ // 해당 게시글 댓글이 존재할 경우
                   for(var i in data){
-                     $tr = $("<tr text-align:'center'>");
-                     $bcWriter = $("<td width='100'>").text(data[i].bcWriter);
-                     $bcContent=$("<td>").text(data[i].bcContent);
-                     $bcCreateDate=$("<td width='200'>").text(data[i].bcCreateDate);
-                     $bcUpdate=$("<td><button class='btn btn-default btn-xs' id='cUpdate'>수정</button></td>")
-                     $bcDelete=$("<td><button class='btn btn-default btn-xs' id='btnDelete'>삭제</button></td>")
+                     $tr = $("<tr>");
+                     $bcWriter = $("<td width='150'>").text(data[i].bcWriter);
+                     $bcContent=$("<td width='500'>").text(data[i].bcContent);
+                     $bcCreateDate=$("<td width='100'>").text(data[i].bcCreateDate);
+                     $bcDelete=$("<td><input type='button' id='bcDelete' value='삭제'/></td>")
+                     
+                     $("#bcDelete").click(function(){
+     					 if (confirm("정말로 삭제하시겠습니까? ") == true){ 
+
+     						document.location.href='bcDelete.do?bcNo='+ test1;
+
+ 	      				  }else{   //취소
+
+ 	       			     return;
+ 	       			 }
+ 						});
                      
                      $tr.append($bcWriter);
                      $tr.append($bcContent);
                      $tr.append($bcCreateDate);
-                     $tr.append($bcUpdate)
                      $tr.append($bcDelete)
                      $tableBody.append($tr);
                      
@@ -520,6 +538,12 @@ tr>td {
             }
          });
       }
+      
+     
+ 	
+      
+      
+      
       function CopyUrlToClipboard()
       {
          var obShareUrl = document.getElementById("ShareUrl");

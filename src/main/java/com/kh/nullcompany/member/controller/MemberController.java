@@ -126,13 +126,13 @@ public class MemberController {
 	// 내정보 업데이트 컨트롤러 
 			 @RequestMapping("mupdateGo.do")
 			   public String insertMemberInfo(Member m,Model model, HttpServletRequest request,
-			         @RequestParam(value="uploadPhoto",required=false)MultipartFile file,
+			         @RequestParam(value="uploadPhoto",required=false)MultipartFile file, HttpSession session,
 			         @RequestParam("post") String post,
 					 @RequestParam("address1") String addr1,
 					 @RequestParam("address2") String addr2) {
 			      
 				  System.out.println("멤버 조회 : " +m );
-				  System.out.println("file : " + file);
+				  
 				 	if(!file.getOriginalFilename().equals("")) {
 
 				 		// saveFile메소드 : 저장하고자하는 file과 request를 전달해서 서버에 업로드시키고 저장된 파일명을 반환해주는 메소드
@@ -145,6 +145,15 @@ public class MemberController {
 			 		 if(!post.equals("")) {
 						m.setAddress(post+","+addr1+","+addr2);
 			 		 }
+				 	}else {
+				 		String originalPhoto = ((Member)session.getAttribute("loginUser")).getPhoto();
+				 		m.setPhoto(originalPhoto);
+				 		if(!post.equals("")) {
+							m.setAddress(post+","+addr1+","+addr2);
+				 		 }else {
+				 			 m.setAddress("주소 미등록");
+				 		 }
+				 		
 				 	}
 				 	 
 			 		 int result = mService.insertInfoMember(m);
@@ -158,7 +167,6 @@ public class MemberController {
 			      }
 			   }
 			
-			   
 			
 			 public String saveFile(MultipartFile file, HttpServletRequest request) {
 			     

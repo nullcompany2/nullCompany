@@ -100,17 +100,13 @@ a:active {
 	<div class="container">
 		<h2 style="text-align: center;">예약</h2>
 		<div class="H-personnel-subNavi underline">
-			<li>
-				<div>
-					<button
-						style="border: none; border-radius: 3px; background: #477A8F; color: white; font-size: 20px; width: 90%; height: 50px; margin-left: 12px;">
-						예약 하기</button>
-				</div>
 		</div>
 		<div class="drag-scrollbar">
 			<div class="H-personnel-subNavi underline">
 				<div class="H-personnel-subNavi Depth01-1">
-					<li class="subTitle" id="sub"><a href="myReservation.do?rMember=${loginUser.id}">나의 예약 목록</a></li>
+					<li class="subTitle" ><a href="myReservation.do?rMember=${loginUser.id}">나의 예약 목록</a></li>
+					<li id="sub">
+					</li>
 				</div>
 			</div>
 			<c:if test="${loginUser.deptNo == 5}">
@@ -136,7 +132,7 @@ a:active {
 				$div =$("#sub");
  				var add;
 				for(var i in data){
-				$add = $('<li class="subTitle"><a href="reservation.do?rcNo='+data[i].rcNo+'">'+data[i].rcTitle+'</a></li>');
+				$add = $('<li class="subTitle" id="sub"><a href="reservation.do?rcNo='+data[i].rcNo+'">'+data[i].rcTitle+'</a></li>');
 				$div.append($add);
 				}
 				

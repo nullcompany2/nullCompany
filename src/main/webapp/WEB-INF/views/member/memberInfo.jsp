@@ -50,7 +50,7 @@
                           </tr>
                           <tr>
                            	 <th> 부서 </th>
-                             <td>${ loginUser.deptName }부</td>
+                             <td>${ loginUser.deptName }</td>
                           </tr>
                           <tr>
                              <th> 직급 </th>

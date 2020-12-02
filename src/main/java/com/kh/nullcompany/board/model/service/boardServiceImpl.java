@@ -88,6 +88,12 @@ public class boardServiceImpl implements boardService {
 		return bDao.searchbtitleContent(map);
 	}
 
+	@Override
+	public int deletebComment(bcomment c) {
+		return bDao.deletebComment(c);
+	}
+
+
 
 
 

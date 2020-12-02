@@ -259,17 +259,20 @@ $(document).ready(function() {
 						
 						&nbsp;게시판 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 						<select id="category" name="category">
+						<c:set var="allowAccess" value="${loginUser.deptName }" />
+							<c:if test="${allowAccess eq '인사' }">
 							<option value="사내공지">사내공지</option>
+							</c:if>
 							<option value="팀내공지">팀내공지</option>
 							<option value="없음">---------</option>
 							<option value="자유게시판">자유게시판</option>
 						</select><br> <br> 
 						
 						&nbsp;작성자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="text" id="writer" style="width: 3%;" value= " ${loginUser.name}" readonly/>  <br>
+						<input type="text" id="writer" style="width: 5%;" value= " ${loginUser.name}" readonly/>  <br>
 						
 						&nbsp;제목&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
-						<input type="text" id="title" style="width: 60%;" placeholder="제목을 입력해주세요." /> <br>
+						<input type="text" id="title" style="width: 40%;" placeholder=" 제목을 입력해주세요." /> <br>
 						
 						<br>&nbsp;<label id="uploadFile">파일첨부&nbsp;&nbsp;&nbsp;</label> 
 							<input type="file" name="uploadFile" id="bfile"><br>
@@ -311,6 +314,18 @@ $(document).ready(function() {
 </body>
 
 <script>
+
+//작성 전송 버튼 
+$("#write").click(function () {
+
+  	if ($("input[id=title]").val().length < 1 ){
+  	  alert('제목을 입력해주세요.');
+  	  rollback;
+	}if ($('#summernote').summernote('isEmpty')) {
+ 		  alert('내용을 입력하지 않으셨습니다.');
+ 		  rollback;
+	}
+ });
 
     function modal(id) {
        var zIndex = 9999;
@@ -376,7 +391,7 @@ $(document).ready(function() {
     });
     
     
-    // 메일 임시 저장 버튼 
+    // 게시판 카테고리 변경
 	 $("#write").click(function () {
 		 var ca = $("#category").children("option:selected").val();
 	

@@ -72,4 +72,8 @@ public class boardDao {
 	public ArrayList<board> searchbtitleContent(Map map) {
 		return (ArrayList)sqlSession.selectList("boardMapper.searchbtitleContent",map);
 	}
+
+	public int deletebComment(bcomment c) {
+		return sqlSession.delete("boardMapper.deletebComment",c);
+	}
 }
