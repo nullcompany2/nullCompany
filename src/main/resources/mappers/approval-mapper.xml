@@ -531,4 +531,9 @@
 	<insert id="recordingAbsence" parameterType="map">
 		INSERT INTO ABSENCE VALUES (ABSENCE_SEQ.NEXTVAL,#{drafterNo},#{startDate},#{reason},'Y',NULL)
 	</insert>
+	
+	<!-- 사직 정보 기록하기(디테일용) -->
+	<insert id="insertResignInfo" parameterType="Resign">
+		INSERT INTO APPROVAL_RESIGN VALUES( #{docTempNo}, #{enrollDate})
+	</insert>
 </mapper>

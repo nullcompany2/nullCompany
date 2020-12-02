@@ -185,4 +185,9 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public int recordingAbsence(int drafterNo, String startDate, String reason) {
 		return aDao.recordingAbsence(drafterNo, startDate, reason);
 	}
+
+	@Override
+	public int insertResignInfo(Resign r) {
+		return aDao.insertResignInfo(r);
+	}
 }

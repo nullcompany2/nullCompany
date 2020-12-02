@@ -262,6 +262,13 @@ public interface ApprovalService {
 	 */
 	int recordingAbsence(int drafterNo, String startDate, String reason);
 
+	/**
+	 * 7_10 사직 정보 기록하기(디테일에서 보여줄 내용)
+	 * @param r
+	 * @return
+	 */
+	int insertResignInfo(Resign r);
+
 
 
 

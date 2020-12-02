@@ -207,7 +207,7 @@ public class ApprovalDao {
 	}
 
 	public int insertAbsenceInfo(Absence a) {
-		return sqlSession.insert("approvalMapper.insertAbsenceInfo",a);
+		return sqlSession.insert("approvalMapper.insertAbsenceInfo", a);
 	}
 
 	public int recordingAbsence(int drafterNo, String startDate, String reason) {
@@ -217,7 +217,11 @@ public class ApprovalDao {
 		map.put("startDate", startDate);
 		map.put("reason", reason);
 		
-		return sqlSession.insert("approvalMapper.recordingAbsence",map);
+		return sqlSession.insert("approvalMapper.recordingAbsence", map);
+	}
+
+	public int insertResignInfo(Resign r) {
+		return sqlSession.insert("approvalMapper.insertResignInfo", r);
 	}
 
 }

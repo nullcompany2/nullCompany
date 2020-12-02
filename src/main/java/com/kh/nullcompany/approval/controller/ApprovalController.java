@@ -1079,7 +1079,26 @@ public class ApprovalController {
 	
 	
 	// 회람 문서 기안하기
-	
+	@RequestMapping("insertReferDocumet.do")
+	public String insertReferDocumet(Model model, HttpServletResponse response,
+			 @RequestParam(value="docTempNo", required=false) String docTempNo,
+			 @RequestParam(value="dTitle", required=false) String dTitle,
+			 @RequestParam(value="dContent", required=false) String dContent) {
+
+		Document d = new Document();
+		d.setDocTempNo(docTempNo);
+		d.setdTitle(dTitle);
+		d.setdContent(dContent);
+		
+		int result = aService.insertDocument(d);
+		
+		if(result > 0) {			
+			return "redirect:approvalProgressAllListView.do";
+		}else {
+			model.addAttribute("msg", "문서 기안 실패!");
+			return "common/errorPage";
+		}
+	}
 	
 	// 휴가 문서 기안하기
 	@RequestMapping("insertLeaveDocumet.do")
@@ -1166,7 +1185,44 @@ public class ApprovalController {
 			return "common/errorPage";
 		}
 	}
-
+	
+	// 사직 문서 기안하기
+	@RequestMapping("insertResignDocumet.do")
+	public String insertResignDocumet(Model model, HttpServletResponse response, HttpSession session,
+									  @RequestParam(value="docTempNo", required=false) String docTempNo,
+									  @RequestParam(value="enrollDate", required=false) String enrollDate) {
+		
+		Document d = new Document();
+		
+		String drafterDeptName = ((Member)session.getAttribute("loginUser")).getDeptName();
+		String drafterRankName = ((Member)session.getAttribute("loginUser")).getRankName();
+		String drafterName = ((Member)session.getAttribute("loginUser")).getName();
+		
+		d.setDocTempNo(docTempNo);
+		d.setdTitle("[사직서]"+enrollDate+"_"+drafterDeptName+"부 / "+drafterRankName+" / "+drafterName);
+		d.setdContent("내용없음");
+		
+		Resign r = new Resign();
+		
+		r.setDocTempNo(docTempNo);
+		r.setEnrollDate(enrollDate);
+		
+		// 문서 기안하기
+		int result1 = aService.insertDocument(d);
+		// 사직 정보 입력하기
+		int result2 = aService.insertResignInfo(r);
+		
+		
+		if(result1 > 0 && result2 > 0) {
+			return "redirect:approvalProgressAllListView.do";
+		}else {
+			model.addAttribute("msg", "문서 기안 실패!");
+			return "common/errorPage";
+		}
+	}
+									  
+	
+	
 	@RequestMapping("approvalAllDList.do")
 	public String approvalAllDList(HttpServletResponse response) {
 		return "approval/approvalAllDList";
