@@ -45,14 +45,6 @@
 		color: #676767;
 	}
 	
-	.del {
-		opacity: 0%;
-	}
-
-	.del:hover {
-		opacity: 100%;
-	}
-	
 	li {
 	list-style: none;
 	margin-bottom: 10px;

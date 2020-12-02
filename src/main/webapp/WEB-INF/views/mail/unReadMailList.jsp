@@ -42,24 +42,26 @@
 	}
 
 	#category {
-		position:relatived;
-		margin-left:35%;
 		border : none;
 		padding : 3px;
 		font-size : 15px;
 		margin-bottom : 5px;
+		left:750px;
 		
 	}
 	
 	#search {
-		position:relatived;
+		
 		border: 1px solid #3E4247;
 		border-radius : 3px;
 		padding : 3px;
 		font-size : 15px;
-		margin-bottom : 5px;
-		margin-left:5px;
+		left:860px;				
 	
+	}
+	
+	#category,#search,#searchBtn{
+	position : absolute;
 	}
 	
 	#searchBtn {
@@ -69,10 +71,11 @@
 	border-radius:3px;
 	border:none;
 	color:white;
-	margin-bottom :5px;
 	cursor :pointer;
+	left:1040px;		
 		
 	}
+	
 	
 	#tb {
 	margin-bottom : 10px;
@@ -122,6 +125,14 @@
         <div class="contents">
             <div class="contents-title">
                 <span class="ct1">받은 편지함</span>
+                <select id="category"> 
+				<option> ----- </option>
+				<option> 보낸사람 </option>
+				<option> 제목 </option>
+				<option> 내용 </option>
+			</select>
+			<input  id="search" type="text" placeholder="메일 검색"> 
+			<button id="searchBtn" > 검색 </button>
 			</div>
 			
 			<div style="margin-left:40px;">
@@ -211,14 +222,7 @@
 		</table>
 		<br>
 			
-			<select id="category"> 
-				<option> ----- </option>
-				<option> 보낸사람 </option>
-				<option> 제목 </option>
-				<option> 내용 </option>
-			</select>
-			<input  id="search" type="text" placeholder="메일 검색"> 
-			<button id="searchBtn" > 검색 </button> <br>
+			
 			
         </div>
         
