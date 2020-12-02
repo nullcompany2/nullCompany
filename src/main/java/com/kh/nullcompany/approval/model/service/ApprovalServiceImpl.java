@@ -30,6 +30,11 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public ArrayList<Document> selectProgressAllList(int memNo,PageInfo pi) {
 		return aDao.selectProgressAllList(memNo, pi);
 	}
+	
+	@Override
+	public ArrayList<Document> selectProgressAllList(int memNo) {
+		return aDao.selectProgressAllList(memNo);
+	}
 
 	@Override
 	public ArrayList<Step> selectStepList(String docTempNo) {
@@ -44,6 +49,11 @@ public class ApprovalServiceImpl implements ApprovalService {
 	@Override
 	public ArrayList<Document> selectCompleteAllList(int memNo, PageInfo pi) {
 		return aDao.selectCompleteAllList(memNo, pi);
+	}
+	
+	@Override
+	public ArrayList<Document> selectCompleteAllList(int memNo) {
+		return aDao.selectCompleteAllList(memNo);
 	}
 
 	@Override
@@ -190,4 +200,5 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public int insertResignInfo(Resign r) {
 		return aDao.insertResignInfo(r);
 	}
+
 }

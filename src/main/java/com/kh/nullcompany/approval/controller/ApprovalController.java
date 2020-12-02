@@ -91,6 +91,7 @@ public class ApprovalController {
 		String catagory = "전체";
 		
 		mv.addObject("dList", dList);
+		mv.addObject("listCount",listCount);
 		mv.addObject("pi", pi);
 		mv.addObject("catagory", catagory);
 		mv.setViewName("approval/approvalProgressListView");
@@ -105,14 +106,8 @@ public class ApprovalController {
 		// 로그인 세션 사용자 사번 가져오기
 		int memNo = ((Member) session.getAttribute("loginUser")).getMemNo();
 
-		// 로그인 사용자가 기안자이거나 결재 스탭에 포함되어 있는 문서의 갯수 조회
-		int listCount = aService.getProgressAllListCount(memNo);
-
-		// 페이징
-		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
-
-		// 로그인 사용자가 기안자이거나 결재라인에 있는 문서리스트 조회(10개씩)
-		ArrayList<Document> dList = aService.selectProgressAllList(memNo, pi);
+		// 로그인 사용자가 기안자이거나 결재라인에 있는 문서리스트 조회(전체 문서)
+		ArrayList<Document> dList = aService.selectProgressAllList(memNo);
 
 		ArrayList<Document> dList2 = new ArrayList<Document>();
 		
@@ -153,8 +148,10 @@ public class ApprovalController {
 		}
 		
 		String catagory = "대기";
+		int listCount = dList2.size();
+		
 		mv.addObject("dList", dList2);
-		mv.addObject("pi", pi);
+		mv.addObject("listCount",listCount);
 		mv.addObject("catagory",catagory);
 		mv.setViewName("approval/approvalProgressListView");
 		
@@ -168,14 +165,9 @@ public class ApprovalController {
 		// 로그인 세션 사용자 사번 가져오기
 		int memNo = ((Member) session.getAttribute("loginUser")).getMemNo();
 
-		// 로그인 사용자가 기안자이거나 결재 스탭에 포함되어 있는 문서의 갯수 조회
-		int listCount = aService.getProgressAllListCount(memNo);
 
-		// 페이징
-		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
-
-		// 로그인 사용자가 기안자이거나 결재라인에 있는 문서리스트 조회(10개씩)
-		ArrayList<Document> dList = aService.selectProgressAllList(memNo, pi);
+		// 로그인 사용자가 기안자이거나 결재라인에 있는 문서리스트 조회(전체 문서)
+		ArrayList<Document> dList = aService.selectProgressAllList(memNo);
 
 		ArrayList<Document> dList2 = new ArrayList<Document>();
 		
@@ -215,8 +207,10 @@ public class ApprovalController {
 		}
 			
 		String catagory = "확인";
+		int listCount = dList2.size();
+		
 		mv.addObject("dList", dList2);
-		mv.addObject("pi", pi);
+		mv.addObject("listCount",listCount);
 		mv.addObject("catagory",catagory);
 		mv.setViewName("approval/approvalProgressListView");
 		
@@ -230,14 +224,9 @@ public class ApprovalController {
 		// 로그인 세션 사용자 사번 가져오기
 		int memNo = ((Member) session.getAttribute("loginUser")).getMemNo();
 
-		// 로그인 사용자가 기안자이거나 결재 스탭에 포함되어 있는 문서의 갯수 조회
-		int listCount = aService.getProgressAllListCount(memNo);
 
-		// 페이징
-		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
-
-		// 로그인 사용자가 기안자이거나 결재라인에 있는 문서리스트 조회(10개씩)
-		ArrayList<Document> dList = aService.selectProgressAllList(memNo, pi);
+		// 로그인 사용자가 기안자이거나 결재라인에 있는 문서리스트 조회(전체 문서)
+		ArrayList<Document> dList = aService.selectProgressAllList(memNo);
 
 		ArrayList<Document> dList2 = new ArrayList<Document>();
 		
@@ -277,8 +266,10 @@ public class ApprovalController {
 		}
 			
 		String catagory = "예정";
+		int listCount = dList2.size();
+		
 		mv.addObject("dList", dList2);
-		mv.addObject("pi", pi);
+		mv.addObject("listCount",listCount);
 		mv.addObject("catagory",catagory);
 		mv.setViewName("approval/approvalProgressListView");
 		
@@ -292,14 +283,8 @@ public class ApprovalController {
 		// 로그인 세션 사용자 사번 가져오기
 		int memNo = ((Member) session.getAttribute("loginUser")).getMemNo();
 
-		// 로그인 사용자가 기안자이거나 결재 스탭에 포함되어 있는 문서의 갯수 조회
-		int listCount = aService.getProgressAllListCount(memNo);
-
-		// 페이징
-		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
-
-		// 로그인 사용자가 기안자이거나 결재라인에 있는 문서리스트 조회(10개씩)
-		ArrayList<Document> dList = aService.selectProgressAllList(memNo, pi);
+		// 로그인 사용자가 기안자이거나 결재라인에 있는 문서리스트 조회(전체 문서)
+		ArrayList<Document> dList = aService.selectProgressAllList(memNo);
 
 		ArrayList<Document> dList2 = new ArrayList<Document>();
 		
@@ -339,8 +324,10 @@ public class ApprovalController {
 		}
 			
 		String catagory = "진행";
+		int listCount = dList2.size();
+		
 		mv.addObject("dList", dList2);
-		mv.addObject("pi", pi);
+		mv.addObject("listCount",listCount);
 		mv.addObject("catagory",catagory);
 		mv.setViewName("approval/approvalProgressListView");
 		
@@ -387,7 +374,9 @@ public class ApprovalController {
 				}
 			}
 		String catagory="전체";
+		
 		mv.addObject("dList",dList);
+		mv.addObject("listCount",listCount);
 		mv.addObject("pi",pi);
 		mv.addObject("catagory",catagory);
 		mv.setViewName("approval/approvalCompleteListView");
@@ -402,14 +391,8 @@ public class ApprovalController {
 			// 로그인 세션 사용자 사번 가져오기
 			int memNo = ((Member) session.getAttribute("loginUser")).getMemNo();
 
-			// 로그인 사용자가 기안자이거나 결재 스탭에 포함되어 있는 문서의 갯수 조회
-			int listCount = aService.getCompleteAllListCount(memNo);
-
-			// 페이징
-			PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
-
-			// 로그인 사용자가 기안자이거나 결재라인에 있는 문서리스트 조회(10개씩)
-			ArrayList<Document> dList = aService.selectCompleteAllList(memNo, pi);
+			// 로그인 사용자가 기안자이거나 결재라인에 있는 문서리스트 조회(전체 문서)
+			ArrayList<Document> dList = aService.selectCompleteAllList(memNo);
 			
 			ArrayList<Document> dList2 = new ArrayList<Document>();
 		
@@ -434,13 +417,17 @@ public class ApprovalController {
 						}
 					}
 				}
+				
 				if(d.getsStatus().equals("기안")) {
 					dList2.add(d);
 				}
 			}
+			
 		String catagory="기안";
+		int listCount = dList2.size();
+		
 		mv.addObject("dList",dList2);
-		mv.addObject("pi",pi);
+		mv.addObject("listCount",listCount);
 		mv.addObject("catagory",catagory);
 		mv.setViewName("approval/approvalCompleteListView");
 		return mv;
@@ -454,14 +441,8 @@ public class ApprovalController {
 			// 로그인 세션 사용자 사번 가져오기
 			int memNo = ((Member) session.getAttribute("loginUser")).getMemNo();
 
-			// 로그인 사용자가 기안자이거나 결재 스탭에 포함되어 있는 문서의 갯수 조회
-			int listCount = aService.getCompleteAllListCount(memNo);
-
-			// 페이징
-			PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
-
-			// 로그인 사용자가 기안자이거나 결재라인에 있는 문서리스트 조회(10개씩)
-			ArrayList<Document> dList = aService.selectCompleteAllList(memNo, pi);
+			// 로그인 사용자가 기안자이거나 결재라인에 있는 문서리스트 조회(전체 문서)
+			ArrayList<Document> dList = aService.selectCompleteAllList(memNo);
 			
 			ArrayList<Document> dList2 = new ArrayList<Document>();
 		
@@ -491,8 +472,10 @@ public class ApprovalController {
 				}
 			}
 		String catagory="결재";
+		int listCount = dList2.size();
+		
 		mv.addObject("dList",dList2);
-		mv.addObject("pi",pi);
+		mv.addObject("listCount",listCount);
 		mv.addObject("catagory",catagory);
 		mv.setViewName("approval/approvalCompleteListView");
 		return mv;
@@ -505,14 +488,8 @@ public class ApprovalController {
 			// 로그인 세션 사용자 사번 가져오기
 			int memNo = ((Member) session.getAttribute("loginUser")).getMemNo();
 
-			// 로그인 사용자가 기안자이거나 결재 스탭에 포함되어 있는 문서의 갯수 조회
-			int listCount = aService.getCompleteAllListCount(memNo);
-
-			// 페이징
-			PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
-
-			// 로그인 사용자가 기안자이거나 결재라인에 있는 문서리스트 조회(10개씩)
-			ArrayList<Document> dList = aService.selectCompleteAllList(memNo, pi);
+			// 로그인 사용자가 기안자이거나 결재라인에 있는 문서리스트 조회(전체 문서)
+			ArrayList<Document> dList = aService.selectCompleteAllList(memNo);
 			
 			ArrayList<Document> dList2 = new ArrayList<Document>();
 		
@@ -542,8 +519,10 @@ public class ApprovalController {
 				}
 			}
 		String catagory="수신";
+		int listCount = dList2.size();
+		
 		mv.addObject("dList",dList2);
-		mv.addObject("pi",pi);
+		mv.addObject("listCount",listCount);
 		mv.addObject("catagory",catagory);
 		mv.setViewName("approval/approvalCompleteListView");
 		return mv;
@@ -557,14 +536,8 @@ public class ApprovalController {
 			// 로그인 세션 사용자 사번 가져오기
 			int memNo = ((Member) session.getAttribute("loginUser")).getMemNo();
 
-			// 로그인 사용자가 기안자이거나 결재 스탭에 포함되어 있는 문서의 갯수 조회
-			int listCount = aService.getCompleteAllListCount(memNo);
-
-			// 페이징
-			PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
-
-			// 로그인 사용자가 기안자이거나 결재라인에 있는 문서리스트 조회(10개씩)
-			ArrayList<Document> dList = aService.selectCompleteAllList(memNo, pi);
+			// 로그인 사용자가 기안자이거나 결재라인에 있는 문서리스트 조회(전체 문서)
+			ArrayList<Document> dList = aService.selectCompleteAllList(memNo);
 			
 			ArrayList<Document> dList2 = new ArrayList<Document>();
 		
@@ -594,8 +567,10 @@ public class ApprovalController {
 				}
 			}
 		String catagory="회람";
+		int listCount = dList2.size();
+		
 		mv.addObject("dList",dList2);
-		mv.addObject("pi",pi);
+		mv.addObject("listCount",listCount);
 		mv.addObject("catagory",catagory);
 		mv.setViewName("approval/approvalCompleteListView");
 		return mv;
@@ -609,14 +584,8 @@ public class ApprovalController {
 			// 로그인 세션 사용자 사번 가져오기
 			int memNo = ((Member) session.getAttribute("loginUser")).getMemNo();
 
-			// 로그인 사용자가 기안자이거나 결재 스탭에 포함되어 있는 문서의 갯수 조회
-			int listCount = aService.getCompleteAllListCount(memNo);
-
-			// 페이징
-			PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
-
-			// 로그인 사용자가 기안자이거나 결재라인에 있는 문서리스트 조회(10개씩)
-			ArrayList<Document> dList = aService.selectCompleteAllList(memNo, pi);
+			// 로그인 사용자가 기안자이거나 결재라인에 있는 문서리스트 조회(전체 문서)
+			ArrayList<Document> dList = aService.selectCompleteAllList(memNo);
 			
 			ArrayList<Document> dList2 = new ArrayList<Document>();
 		
@@ -646,8 +615,10 @@ public class ApprovalController {
 				}
 			}
 		String catagory="반려";
+		int listCount = dList2.size();
+		
 		mv.addObject("dList",dList2);
-		mv.addObject("pi",pi);
+		mv.addObject("listCount",listCount);
 		mv.addObject("catagory",catagory);
 		mv.setViewName("approval/approvalCompleteListView");
 		return mv;
@@ -1223,12 +1194,12 @@ public class ApprovalController {
 									  
 	
 	
-	@RequestMapping("approvalAllDList.do")
+	@RequestMapping("adminAllList.do")
 	public String approvalAllDList(HttpServletResponse response) {
 		return "approval/approvalAllDList";
 	}
 
-	@RequestMapping("approvalDeleteDList.do")
+	@RequestMapping("adminDeleteList.do")
 	public String approvalDeleteDList(HttpServletResponse response) {
 		return "approval/approvalDeleteDList";
 	}

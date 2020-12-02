@@ -35,6 +35,10 @@ public class ApprovalDao {
 		
 		return (ArrayList)sqlSession.selectList("approvalMapper.selectProgressAllList", memNo, rowBounds);
 	}
+	
+	public ArrayList<Document> selectProgressAllList(int memNo) {
+		return (ArrayList)sqlSession.selectList("approvalMapper.selectProgressAllList", memNo);
+	}
 
 	public ArrayList<Step> selectStepList(String docTempNo) {
 		return (ArrayList)sqlSession.selectList("approvalMapper.selectStepList", docTempNo);
@@ -48,6 +52,10 @@ public class ApprovalDao {
 		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
 		return (ArrayList)sqlSession.selectList("approvalMapper.selectCompleteAllList", memNo, rowBounds);
+	}
+	
+	public ArrayList<Document> selectCompleteAllList(int memNo) {
+		return (ArrayList)sqlSession.selectList("approvalMapper.selectCompleteAllList", memNo);
 	}
 
 	public Document approvalDetail(String docNo) {
