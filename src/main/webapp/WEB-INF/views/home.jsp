@@ -104,7 +104,7 @@ video {
 
 #clock {
 	position: absolute;
-	right: 10%;
+	right: 100px;
 	color: #3E4247;
 	font-family: 'Lato', sans-serif;
 	font-size: 20px;

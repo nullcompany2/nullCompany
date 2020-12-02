@@ -453,7 +453,6 @@ span#fileName{
 							 color: white; 
 							 padding: 0px 8px 0px 8px;">+</span>
 							 	
-							 <span id="searchAddress"> 주소 검색 </span>
 							 	<div id="autoAddress"> 
 							 	 <!--  자동 완성 검색 결과  -->
 							 	</div>

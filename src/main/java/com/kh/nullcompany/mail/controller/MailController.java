@@ -174,7 +174,7 @@ private ScheduleService sService;
 		      }catch(Exception e) {
 		    	  System.out.println("파일 전송 에러 : " + e.getMessage());
 		      }
-		      return "resources/mailUploadFiles/" + mailFile;
+		      return  mailFile;
 
 		   }	
 		
@@ -506,8 +506,6 @@ private ScheduleService sService;
 				return "common/errorPage";
 			}
 		}
-		
-	
 		
 		@RequestMapping("deleteOneMail.do")
 		public String deleteOneMail(Model model, int mailNo) {
