@@ -148,12 +148,13 @@
 		R_NUM=#{rNo}
 	</update>
 	
-	<select id="ReservationList" parameterType="String" resultMap="reservationResultSet">
+	<select id="ReservationList" parameterType="_int" resultMap="reservationResultSet">
 	SELECT R.*,M.NAME,RC.RC_TITLE,RS.RS_TITLE
 	FROM RESERVATION R
 	JOIN MEMBER M ON (R.R_MEMBER = M.ID)
     JOIN RCATEGORY RC ON (R.RC_NUM = RC.RC_NUM)
     JOIN "RESOURCE" RS ON (R.RS_NUM = RS.RS_NUM)
+    WHERE R.RC_NUM = #{rcNo}
 	ORDER BY R.R_DATE DESC , R.START_TIME
 	</select>
 	
@@ -161,4 +162,15 @@
 	DELETE FROM RESERVATION
 	WHERE R_NUM=#{rNo}
 	</delete>
+
+	<select id="getListCount" resultType="_int">
+	SELECT COUNT(*)
+	FROM RESERVATION
+	</select>
+	
+	<select id="getListCount2" resultType="_int">
+	SELECT COUNT(*)
+	FROM RESERVATION
+	WHERE RC_NUM = #{rcNo}
+	</select>
 </mapper>

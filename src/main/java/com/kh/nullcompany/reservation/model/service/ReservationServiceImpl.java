@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.reservation.model.dao.ReservationDao;
 import com.kh.nullcompany.reservation.model.vo.Category;
 import com.kh.nullcompany.reservation.model.vo.Reservation;
@@ -93,13 +94,23 @@ public class ReservationServiceImpl implements ReservationService  {
 	}
 
 	@Override
-	public ArrayList<Reservation> selectReservationList() {
-		return rDao.selectReservationList();
+	public ArrayList<Reservation> selectReservationList2(PageInfo pi,int rcNo) {
+		return rDao.selectReservationList2(pi,rcNo);
 	}
 
 	@Override
 	public int deleteReservation(int rNo) {
 		return rDao.reservationDelete(rNo);
+	}
+
+	@Override
+	public int getListCount() {
+		return rDao.getListCount();
+	}
+
+	@Override
+	public int getListCount(int rcNo) {
+		return rDao.getListCount(rcNo);
 	}
 
 }

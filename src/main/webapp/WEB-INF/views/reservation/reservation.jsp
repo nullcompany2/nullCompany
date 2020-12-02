@@ -166,7 +166,7 @@
       </div>
           <div id="cal_size"
                         style="position: absolute;  width: 70%; height: 500px; left: 15%; ">
-                      <div id='calendar'></div>
+                      <div id='calendar' style="margin-bottom: 50px"></div>
             </div>
 
     </div>

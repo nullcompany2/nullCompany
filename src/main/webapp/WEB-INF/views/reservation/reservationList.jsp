@@ -140,7 +140,10 @@ tr>td {
 		<h4 style="color: #477A8F; margin-bottom: 25px;">예약 취소</h4>
 		<div class="n-emp-i">예약 삭제 하시겠습니까?</div>
 		<div style="text-align: center; margin-top: 30px;">
-			<input type="hidden" id="rNo2" >
+			<input type="hidden" id="rNo3" >
+			<input type="hidden" id="rReturn3" >
+			<input type="hidden" id="rDate3" >
+			<input type="hidden" id="startTime3" >
 			<button class="close_btn" id="modal_delete_btn"
 				style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">확인</button>
 			<button class="close_btn"
@@ -246,13 +249,27 @@ tr>td {
 		}
 
 		$(document).on('click', '#delete_btn', function() {
-			 $("#rNo2").val($(event.target).parent().siblings()[7].value);
+			 $("#rNo3").val($(event.target).parent().siblings()[7].value);
+			 $("#rReturn3").val($(event.target).parent().siblings()[6].value);
+			 $("#rDate3").val($(event.target).parent().siblings()[2].value);
+			 $("#startTime3").val($(event.target).parent().siblings()[3].value);
 			modal('delete_modal');
 		});
 		
 		$("#modal_delete_btn").on("click",function(){
-			var rNo = $("#rNo2").val();
+			var rNo = $("#rNo3").val();
+			var rReturn = $("#rReturn3").val();
+	        var sd = $("#rDate3").val();
+	        var sd2 = sd.split("-");
+	        var sdt = $("#startTime3").val();
+	        var sdt2 = sdt.split(':'); 
+	        var sd3 = new Date(sd2[0],sd2[1]-1,sd2[2],sdt2[0],sdt2[1]);
+	        var date = new Date();
+			if(sd3 <= date ){
+				alert("대여하기 전에만 삭제가 가능합니다.");
+			}else {				
 			location.href="reservationDelete.do?rNo="+rNo+"&rMember=${loginUser.id}";
+			}
 		});
 		
 		$(document).on('click', '#detail_btn', function() {
@@ -270,12 +287,18 @@ tr>td {
 		$(function() {
 			reservationList();
 		});
-
-		function reservationList() {
-			$
-					.ajax({
+		
+	    $("select[name=category]").change(function() {
+	    	reservationList();
+	    });
+	    
+		function reservationList(currentPage) {
+			var rcNo = $("select[name=category]").val();
+			$.ajax({
 						url : "reservationList2.do",
 						type : "post",
+						data : {currentPage : currentPage,
+								rcNo : rcNo},
 						success : function(data) {
 							console.log(data);
 							$tableBody = $("tbody");
@@ -289,6 +312,7 @@ tr>td {
 							var rReturn;
 							var rReturn2;
 							var $btn;
+							var $td;
 							
 							var data1;
 							var data2;
@@ -299,25 +323,25 @@ tr>td {
 							var data7;
 							var data8;
 							
-							for ( var i in data) {
-								rReturn2 =data[i].rReturn
+							for ( var i in data.rlist) {
+								rReturn2 =data.rlist[i].rReturn
 								
 								$tr = $("<tr>");
-								$data1 =  $('<input type="hidden" id = "rsTitle" value="'+data[i].rsTitle+'">');
-								$data2 =  $('<input type="hidden" id = "rMember" value="'+data[i].rMemberName+'">');
-								$data3 =  $('<input type="hidden" id = "rDate" value="'+data[i].rDate+'">');
-								$data4 =  $('<input type="hidden" id = "start_time" value="'+data[i].start_time+'">');
-								$data5 =  $('<input type="hidden" id = "end_time" value="'+data[i].end_time+'">');
-								$data6 =  $('<input type="hidden" id = "rContent" value="'+data[i].rContent+'">');
-								$data7 =  $('<input type="hidden" id = "rReturn" value="'+data[i].rReturn+'">');
-								$data8 =  $('<input type="hidden" id = "rNo" value="'+data[i].rNo+'">');
-								$rmember = $("<td>").text(data[i].rMemberName);
-								$rcTitle = $("<td>").text(data[i].rcTitle);
-								$rsTitle = $("<td>").text(data[i].rsTitle);
+								$data1 =  $('<input type="hidden" id = "rsTitle" value="'+data.rlist[i].rsTitle+'">');
+								$data2 =  $('<input type="hidden" id = "rMember" value="'+data.rlist[i].rMemberName+'">');
+								$data3 =  $('<input type="hidden" id = "rDate" value="'+data.rlist[i].rDate+'">');
+								$data4 =  $('<input type="hidden" id = "start_time" value="'+data.rlist[i].start_time+'">');
+								$data5 =  $('<input type="hidden" id = "end_time" value="'+data.rlist[i].end_time+'">');
+								$data6 =  $('<input type="hidden" id = "rContent" value="'+data.rlist[i].rContent+'">');
+								$data7 =  $('<input type="hidden" id = "rReturn" value="'+data.rlist[i].rReturn+'">');
+								$data8 =  $('<input type="hidden" id = "rNo" value="'+data.rlist[i].rNo+'">');
+								$rmember = $("<td>").text(data.rlist[i].rMemberName);
+								$rcTitle = $("<td>").text(data.rlist[i].rcTitle);
+								$rsTitle = $("<td>").text(data.rlist[i].rsTitle);
 								$rDate = $("<td>").text(
-										data[i].rDate + "일  "
-												+ data[i].start_time + "~"
-												+ data[i].end_time);
+										data.rlist[i].rDate + "일  "
+												+ data.rlist[i].start_time + "~"
+												+ data.rlist[i].end_time);
 			
 								if(rReturn2 =="N"){
 									$rReturn =$("<td>").text("미반납");
@@ -345,8 +369,50 @@ tr>td {
 								$tr.append($btn);
 								$tableBody.append($tr);
 							}
-
+							
+		            	$tr = $('<tr align="center" height="20" id="rListPaging">'); 
+						$td = $('<td colspan="6" style="text-align:center;" >');
+						if(data.pi.currentPage == 1){
+							
+							$td0 = "이전";
+							$td.append($td0);
 						}
+			        	
+						if(data.pi.currentPage != 1){
+							$td0 = $('<a onclick="reservationList('+(data.pi.currentPage-1)+')">').text("이전 ");
+				        	
+				        	$td.append($td0);
+						}    	
+			        	
+				       	
+				       	
+				       	for(var p = data.pi.startPage; p <=  data.pi.endPage; p++){
+				       		if(p == data.pi.currentPage){
+				       			$td0 = $("<b style='color:#477A8F; font-size:4'>").text("  "+p+"  ");
+				       			$td.append($td0);
+				       		}
+				       		if(p != data.pi.currentPage ){
+				     
+				       			$td0 = $('<a onclick="reservationList('+p+')">').text("  "+p+"  ");
+				       			$td.append($td0);
+				       		}
+				       	
+				       	}
+			        	
+				       	if(data.pi.currentPage == data.pi.maxPage ){
+				       		$td0 = "다음";
+				       		$td.append($td0);
+				       	}
+			        	
+			        	if(data.pi.currentPage != data.pi.maxPage){
+			        		$td0 = $('<a onclick="reservationList('+(data.pi.currentPage+1)+')">').text(" 다음");
+			        		$td.append($td0);
+			        	}
+			        	
+		            	$tr.append($td);
+						
+		            	$tableBody.append($tr);
+					}
 					});
 		}
 		

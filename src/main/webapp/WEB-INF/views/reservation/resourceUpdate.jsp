@@ -42,7 +42,14 @@ form p {
 						style="resize: none;">${r.rsContent }</textarea>
 				</li>
 				<li>
-					<p>사진</p> <input type="file" name="reloadFile" id="rsImg" value = "${ r.renameFileName }">
+					<p>사진</p> <input type="file" name="reloadFile" id="rsImg" >
+				</li>
+				<li>					
+					<c:if test="${ !empty r.originalFileName }">
+						현재 업고드한 파일: 
+						<a href = "${ contextPath }/resources/reservationFile/${ r.renameFileName }"
+						download="${ r.originalFileName }">${ r.originalFileName }</a>
+					</c:if>
 				</li>
 				<li>
 				<c:choose>
