@@ -185,7 +185,7 @@ public class ApprovalDao {
 		return sqlSession.insert("approvalMapper.insertLeaveInfo", l);
 	}
 
-	public int recodingLeave(int drafterNo, int typeNo, String startDate, int totalDate,String reason, String docTempNo) {
+	public int recordingLeave(int drafterNo, int typeNo, String startDate, int totalDate,String reason, String docTempNo) {
 		
 		Map map = new HashMap();
 		map.put("drafterNo", drafterNo);
@@ -195,7 +195,29 @@ public class ApprovalDao {
 		map.put("reason", reason);
 		map.put("docTempNo", docTempNo);
 		
-		return sqlSession.insert("approvalMapper.recodingLeave", map);
+		return sqlSession.insert("approvalMapper.recordingLeave", map);
+	}
+
+	public int completeRecordingLeave(String docTempNo) {
+		return sqlSession.update("approvalMapper.completeRecordingLeave", docTempNo);
+	}
+
+	public int rejectRecodingLeave(String docTempNo) {
+		return sqlSession.update("approvalMapper.rejectRecodingLeave", docTempNo);
+	}
+
+	public int insertAbsenceInfo(Absence a) {
+		return sqlSession.insert("approvalMapper.insertAbsenceInfo",a);
+	}
+
+	public int recordingAbsence(int drafterNo, String startDate, String reason) {
+		
+		Map map = new HashMap();
+		map.put("drafterNo", drafterNo);
+		map.put("startDate", startDate);
+		map.put("reason", reason);
+		
+		return sqlSession.insert("approvalMapper.recordingAbsence",map);
 	}
 
 }

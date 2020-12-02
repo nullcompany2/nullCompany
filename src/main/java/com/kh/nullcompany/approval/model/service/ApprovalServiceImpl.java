@@ -162,7 +162,27 @@ public class ApprovalServiceImpl implements ApprovalService {
 	}
 
 	@Override
-	public int recodingLeave(int drafterNo, int typeNo, String startDate, int totalDate, String reason, String docTempNo) {
-		return aDao.recodingLeave(drafterNo, typeNo, startDate, totalDate, reason, docTempNo);
+	public int recordingLeave(int drafterNo, int typeNo, String startDate, int totalDate, String reason, String docTempNo) {
+		return aDao.recordingLeave(drafterNo, typeNo, startDate, totalDate, reason, docTempNo);
+	}
+
+	@Override
+	public int completeRecordingLeave(String docTempNo) {
+		return aDao.completeRecordingLeave(docTempNo);
+	}
+
+	@Override
+	public int rejectRecodingLeave(String docTempNo) {
+		return aDao.rejectRecodingLeave(docTempNo);
+	}
+
+	@Override
+	public int insertAbsenceInfo(Absence a) {
+		return aDao.insertAbsenceInfo(a);
+	}
+
+	@Override
+	public int recordingAbsence(int drafterNo, String startDate, String reason) {
+		return aDao.recordingAbsence(drafterNo, startDate, reason);
 	}
 }
