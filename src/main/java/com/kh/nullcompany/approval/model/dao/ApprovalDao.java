@@ -232,4 +232,27 @@ public class ApprovalDao {
 		return sqlSession.insert("approvalMapper.insertResignInfo", r);
 	}
 
+	public int getAdminAllListCount(int deptNo) {
+		return sqlSession.selectOne("approvalMapper.getAdminAllListCount", deptNo);
+	}
+
+	public ArrayList<Document> selectAdminAllList(int deptNo, PageInfo pi) {
+		
+		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("approvalMapper.selectAdminAllList", deptNo, rowBounds);
+	}
+
+	public int getAdminDeleteListCount(int deptNo) {
+		return sqlSession.selectOne("approvalMapper.getAdminDeleteListCount", deptNo);
+	}
+
+	public ArrayList<Document> selectAdminDeleteList(int deptNo, PageInfo pi) {
+		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("approvalMapper.selectAdminDeleteList", deptNo, rowBounds);
+	}
+
 }

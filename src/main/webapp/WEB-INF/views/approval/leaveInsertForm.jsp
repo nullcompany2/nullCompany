@@ -708,14 +708,21 @@
     $('#cb1').on('click',function(){
     	// 기안 시 보이는 모달
     	var apprExist = $("#tr2").children();
-   		var chkExist = $("#tr6").children();
-   		var recExist = $("#tr9").children();
    		
-   		// 결재선이 존재할 때
-   		if(apprExist.eq(1).find('.tdStaff').length || chkExist.eq(1).find('.tdStaff').length || recExist.eq(1).find('.tdStaff').length){
-	    	modal('drafterCheck');
+   		// 결재자가 존재할 때만 기안 가능하도록
+   		if(apprExist.eq(1).find('.tdStaff').length){
+   			
+   			var totalDate = $('#period').text();
+   			
+   			// 휴가 일수를 계산했는지 체크
+   			if(totalDate == 0){
+   				alert('휴가 일수를 확인하세요');
+   			}else{
+	    		modal('drafterCheck');
+   			}
+   			
    		}else{
-   			alert("결재선을 지정하세요");
+   			alert("결재자를 지정하세요");
    		}
     });
     

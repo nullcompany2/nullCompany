@@ -536,4 +536,142 @@
 	<insert id="insertResignInfo" parameterType="Resign">
 		INSERT INTO APPROVAL_RESIGN VALUES( #{docTempNo}, #{enrollDate})
 	</insert>
+	
+	<!-- 부서별 전체 문서 리스트 갯수 -->
+	<select id="getAdminAllListCount" resultType="_int">
+		SELECT
+		    COUNT(*)
+		FROM
+		    (SELECT 
+		       AD.DOC_TEMP_NO,
+		       AD.DOC_NO,
+		       AF.FORM_CODE,
+		       AD.DTITLE,
+		       AD.DCONTENT,
+		       AD.DRAFTER_NO,
+		       M.NAME AS DRAFTER_NAME,
+		       AD.DRAFTER_DEPT_NO,
+		       D.DEPT_NAME AS DRAFTER_DEPT_NAME,
+		       AD.DRAFTER_RANK_NO,
+		       R.RANK_NAME AS DRAFTER_RANK_NAME,
+		       AD.DRAFT_DATE,
+		       AD.COMPLETE_DATE,
+		       AD.FORM_NO,
+		       AF.FORM_NAME,
+		       AD.TURN_NO,
+		       AD.R_STATUS,
+		       AD.D_STATUS
+		    FROM APPROVAL_DOCUMENT AD
+		    JOIN MEMBER M ON(AD.DRAFTER_NO = M.MEM_NO)
+		    JOIN APPROVAL_FORM AF ON(AD.FORM_NO = AF.FORM_NO)
+		    JOIN DEPARTMENT D ON(AD.DRAFTER_DEPT_NO = D.DEPT_NO)
+		    JOIN RANK R ON(AD.DRAFTER_RANK_NO = R.RANK_NO)
+		    WHERE
+		         AD.D_STATUS = 'N'
+		    AND  AD.COMPLETE_DATE IS NOT NULL
+		    AND  DRAFTER_DEPT_NO = #{deptNo}
+		    ORDER BY AD.DRAFT_DATE DESC)
+	</select>
+	
+	<!-- 부서별 전체 문서 리스트 -->
+	<select id="selectAdminAllList" resultMap="documentResultSet">
+		SELECT 
+	       AD.DOC_TEMP_NO,
+	       AD.DOC_NO,
+	       AF.FORM_CODE,
+	       AD.DTITLE,
+	       AD.DCONTENT,
+	       AD.DRAFTER_NO,
+	       M.NAME AS DRAFTER_NAME,
+	       AD.DRAFTER_DEPT_NO,
+	       D.DEPT_NAME AS DRAFTER_DEPT_NAME,
+	       AD.DRAFTER_RANK_NO,
+	       R.RANK_NAME AS DRAFTER_RANK_NAME,
+	       AD.DRAFT_DATE,
+	       AD.COMPLETE_DATE,
+	       AD.FORM_NO,
+	       AF.FORM_NAME,
+	       AD.TURN_NO,
+	       AD.R_STATUS,
+	       AD.D_STATUS
+	    FROM APPROVAL_DOCUMENT AD
+	    JOIN MEMBER M ON(AD.DRAFTER_NO = M.MEM_NO)
+	    JOIN APPROVAL_FORM AF ON(AD.FORM_NO = AF.FORM_NO)
+	    JOIN DEPARTMENT D ON(AD.DRAFTER_DEPT_NO = D.DEPT_NO)
+	    JOIN RANK R ON(AD.DRAFTER_RANK_NO = R.RANK_NO)
+	    WHERE
+	         AD.D_STATUS = 'N'
+	    AND  AD.COMPLETE_DATE IS NOT NULL
+	    AND  DRAFTER_DEPT_NO = #{deptNo}
+	    ORDER BY AD.DRAFT_DATE DESC
+	</select>
+	
+	<!-- 부서별 삭제 문서 리스트 갯수 -->
+	<select id="getAdminDeleteListCount" resultType="_int">
+		SELECT
+		    COUNT(*)
+		FROM
+		    (SELECT 
+		       AD.DOC_TEMP_NO,
+		       AD.DOC_NO,
+		       AF.FORM_CODE,
+		       AD.DTITLE,
+		       AD.DCONTENT,
+		       AD.DRAFTER_NO,
+		       M.NAME AS DRAFTER_NAME,
+		       AD.DRAFTER_DEPT_NO,
+		       D.DEPT_NAME AS DRAFTER_DEPT_NAME,
+		       AD.DRAFTER_RANK_NO,
+		       R.RANK_NAME AS DRAFTER_RANK_NAME,
+		       AD.DRAFT_DATE,
+		       AD.COMPLETE_DATE,
+		       AD.FORM_NO,
+		       AF.FORM_NAME,
+		       AD.TURN_NO,
+		       AD.R_STATUS,
+		       AD.D_STATUS
+		    FROM APPROVAL_DOCUMENT AD
+		    JOIN MEMBER M ON(AD.DRAFTER_NO = M.MEM_NO)
+		    JOIN APPROVAL_FORM AF ON(AD.FORM_NO = AF.FORM_NO)
+		    JOIN DEPARTMENT D ON(AD.DRAFTER_DEPT_NO = D.DEPT_NO)
+		    JOIN RANK R ON(AD.DRAFTER_RANK_NO = R.RANK_NO)
+		    WHERE
+		         AD.D_STATUS = 'Y'
+		    AND  AD.COMPLETE_DATE IS NOT NULL
+		    AND  DRAFTER_DEPT_NO = #{deptNo}
+		    ORDER BY AD.DRAFT_DATE DESC)
+	</select>
+	
+	<!-- 부서별 삭제 문서 리스트 -->
+	<select id="selectAdminDeleteList" resultMap="documentResultSet">
+		SELECT 
+	       AD.DOC_TEMP_NO,
+	       AD.DOC_NO,
+	       AF.FORM_CODE,
+	       AD.DTITLE,
+	       AD.DCONTENT,
+	       AD.DRAFTER_NO,
+	       M.NAME AS DRAFTER_NAME,
+	       AD.DRAFTER_DEPT_NO,
+	       D.DEPT_NAME AS DRAFTER_DEPT_NAME,
+	       AD.DRAFTER_RANK_NO,
+	       R.RANK_NAME AS DRAFTER_RANK_NAME,
+	       AD.DRAFT_DATE,
+	       AD.COMPLETE_DATE,
+	       AD.FORM_NO,
+	       AF.FORM_NAME,
+	       AD.TURN_NO,
+	       AD.R_STATUS,
+	       AD.D_STATUS
+	    FROM APPROVAL_DOCUMENT AD
+	    JOIN MEMBER M ON(AD.DRAFTER_NO = M.MEM_NO)
+	    JOIN APPROVAL_FORM AF ON(AD.FORM_NO = AF.FORM_NO)
+	    JOIN DEPARTMENT D ON(AD.DRAFTER_DEPT_NO = D.DEPT_NO)
+	    JOIN RANK R ON(AD.DRAFTER_RANK_NO = R.RANK_NO)
+	    WHERE
+	         AD.D_STATUS = 'Y'
+	    AND  AD.COMPLETE_DATE IS NOT NULL
+	    AND  DRAFTER_DEPT_NO = #{deptNo}
+	    ORDER BY AD.DRAFT_DATE DESC
+	</select>
 </mapper>

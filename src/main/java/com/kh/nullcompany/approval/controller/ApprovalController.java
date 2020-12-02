@@ -383,6 +383,64 @@ public class ApprovalController {
 		return mv;
 	}
 	
+	// 부서별 전체 문서 리스트
+	@RequestMapping("adminAllList.do")
+	public ModelAndView adminAllList(ModelAndView mv, HttpServletResponse response, HttpSession session,
+			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
+		
+		// 로그인 세션 부서번호 가져오기
+		int deptNo = ((Member) session.getAttribute("loginUser")).getDeptNo();
+		
+		int listCount = aService.getAdminAllListCount(deptNo);
+		
+		// 페이징
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+		
+		ArrayList<Document> dList = aService.selectAdminAllList(deptNo, pi);
+		
+		for(Document d : dList) {
+			if(d.getrStatus().equals("Y")) {
+				d.setsStatus("반려");
+			}else {
+				d.setsStatus("결재완료");
+			}
+		}
+		
+		mv.addObject("dList",dList);
+		mv.addObject("listCount",listCount);
+		mv.addObject("pi",pi);
+		mv.setViewName("approval/adminAllList");
+		
+		return mv;
+	}
+	
+	// 부서별 삭제 문서 리스트
+	@RequestMapping("adminDeleteList.do")
+	public ModelAndView approvalDeleteDList(ModelAndView mv, HttpServletResponse response, HttpSession session,
+			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
+		
+		// 로그인 세션 부서번호 가져오기
+		int deptNo = ((Member) session.getAttribute("loginUser")).getDeptNo();
+		
+		int listCount = aService.getAdminDeleteListCount(deptNo);
+		
+		// 페이징
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+		
+		ArrayList<Document> dList = aService.selectAdminDeleteList(deptNo, pi);
+		
+		for(Document d : dList) {
+			d.setsStatus("관리자에 의한 삭제");
+		}
+		
+		mv.addObject("dList",dList);
+		mv.addObject("listCount",listCount);
+		mv.addObject("pi",pi);
+		mv.setViewName("approval/adminDeleteList");
+		
+		return mv;
+	}
+	
 	// 문서함 목록(기안) 불러오기
 	@RequestMapping("draftListView.do")
 	public ModelAndView draftListView(ModelAndView mv, HttpServletResponse response, HttpSession session,
@@ -646,6 +704,7 @@ public class ApprovalController {
 			}
 		}
 		
+		d.setAdmin(false);
 		mv.addObject("d",d);
 		
 		// 업무연락 문서일 때 
@@ -1194,15 +1253,7 @@ public class ApprovalController {
 									  
 	
 	
-	@RequestMapping("adminAllList.do")
-	public String approvalAllDList(HttpServletResponse response) {
-		return "approval/approvalAllDList";
-	}
-
-	@RequestMapping("adminDeleteList.do")
-	public String approvalDeleteDList(HttpServletResponse response) {
-		return "approval/approvalDeleteDList";
-	}
+	
 
 
 }

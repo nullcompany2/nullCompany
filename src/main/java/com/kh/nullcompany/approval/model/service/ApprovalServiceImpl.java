@@ -201,4 +201,24 @@ public class ApprovalServiceImpl implements ApprovalService {
 		return aDao.insertResignInfo(r);
 	}
 
+	@Override
+	public int getAdminAllListCount(int deptNo) {
+		return aDao.getAdminAllListCount(deptNo);
+	}
+
+	@Override
+	public ArrayList<Document> selectAdminAllList(int deptNo, PageInfo pi) {
+		return aDao.selectAdminAllList(deptNo, pi);
+	}
+
+	@Override
+	public int getAdminDeleteListCount(int deptNo) {
+		return aDao.getAdminDeleteListCount(deptNo);
+	}
+
+	@Override
+	public ArrayList<Document> selectAdminDeleteList(int deptNo, PageInfo pi) {
+		return aDao.selectAdminDeleteList(deptNo, pi);
+	}
+
 }

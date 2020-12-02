@@ -102,6 +102,8 @@
 						</span>
 				</div>
 				<div class="c-ic">
+				<c:choose>
+					<c:when test="${ !empty dList }">
 					<table class="appr_list" >
 						<thead>
 							<tr>
@@ -111,59 +113,79 @@
 								<th style="color: #999;">|</th>
 								<th>기안자</th>
 								<th style="color: #999;">|</th>
-								<th>기안일&nbsp;&nbsp;<label class="appr_date_desc" id="insert_date">▼</label></th>
+								<th>기안일&nbsp;&nbsp;</th>
 								<th style="color: #999;">|</th>
 								<th>삭제 사유</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>00001</td>
+						<c:forEach var="d" items="${ dList }">
+							<c:url var="approvalAdminDetail" value="approvalAdminDetail.do">
+								<c:param name="docNo" value="${d.docNo}"/>
+							</c:url>
+							<tr onclick="location.href='${approvalAdminDetail}'">
+								<td>${ d.formCode }_${ d.docNo }</td>
 								<td></td>
-								<td>문서제목</td>
+								<td>${ d.dTitle}</td>
 								<td></td>
-								<td>현승구</td>
+								<td>${ d.drafterName }</td>
 								<td></td>
-								<td>2020-10-20</td>
+								<td>${ d.draftDate }</td>
 								<td></td>
-								<td>관리자에 의한 삭제</td>
+								<td>${ d.sStatus }</td>
 							</tr>
-							<tr>
-								<td>00002</td>
-								<td></td>
-								<td>문서제목</td>
-								<td></td>
-								<td>현승구</td>
-								<td></td>
-								<td>2020-10-20</td>
-								<td></td>
-								<td>관리자에 의한 삭제</td>
-							</tr>
-							<tr>
-								<td>00003</td>
-								<td></td>
-								<td>문서제목</td>
-								<td></td>
-								<td>현승구</td>
-								<td></td>
-								<td>2020-10-20</td>
-								<td></td>
-								<td>관리자에 의한 삭제</td>
-							</tr>
+						</c:forEach>
 						</tbody>
 					</table>
+					</c:when>
+					<c:otherwise>
+						<br>
+						<br>
+						<span style=" margin-left: 430px; font-size:26pt; font-weight: bolder;">문서가 없습니다.</span>
+						<br>
+						<br>
+						<br>
+					</c:otherwise>
+				</c:choose>
 					<label id="doc_count">문서 수&nbsp;&nbsp;:&nbsp;&nbsp;
-						<span id="doc_count_value">3</span>
+						<span id="doc_count_value">${ listCount }</span>
 					</label>
 					<br>
 					<br>
-					<div id="numberList" style="text-align: center;">
-						<button><strong>1</strong></button>
-						<button><strong>2</strong></button>
-						<button><strong>3</strong></button>
-						<button><strong>4</strong></button>
-						<button><strong>5</strong></button>
-					</div>
+					<table style=" margin: 10px 0px 0px 80px; width: 80%; border-collapse: collapse">
+							<!-- 페이징처리 -->
+							<tr align="center" height="20">
+								<td colspan="6" align="center">
+									<!-- [이전] --> <c:if test="${ pi.currentPage eq 1 }">
+										이전 &nbsp;
+									</c:if> <c:if test="${ pi.currentPage ne 1 }">
+										<c:url var="before" value="adminDeleteList.do">
+											<c:param name="currentPage" value="${ pi.currentPage - 1 }" />
+										</c:url>
+										<a href="${ before }">이전</a> &nbsp;
+									</c:if> <!-- 페이지 --> <c:forEach var="p" begin="${ pi.startPage }"
+										end="${ pi.endPage }">
+										<c:if test="${ p eq pi.currentPage }">
+											<font color="#477A8F" size="3"><b>${ p }</b> </font>
+										</c:if>
+				
+										<c:if test="${ p ne pi.currentPage }">
+											<c:url var="pagination" value="adminDeleteList.do">
+												<c:param name="currentPage" value="${ p }" />
+											</c:url>
+											<a href="${ pagination }">${ p }</a> &nbsp;
+										</c:if>
+									</c:forEach> <!-- [다음] --> <c:if test="${ pi.currentPage eq pi.maxPage }">
+										다음
+									</c:if> <c:if test="${ pi.currentPage ne pi.maxPage }">
+										<c:url var="after" value="adminDeleteList.do">
+											<c:param name="currentPage" value="${ pi.currentPage + 1 }" />
+										</c:url>
+										<a href="${ after }">다음</a>
+									</c:if>
+								</td>
+							</tr>
+						</table>
 					<br>
 					<div id="search_bar">
 						<select class="search_tool" id="search_tool">

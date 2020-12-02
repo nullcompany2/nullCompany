@@ -284,11 +284,34 @@ public interface ApprovalService {
 	 */
 	int insertResignInfo(Resign r);
 
-	
+	/**
+	 * 8_1 부서별 전체 문서 리스트 갯수
+	 * @param deptNo
+	 * @return
+	 */
+	int getAdminAllListCount(int deptNo);
 
-	
+	/**
+	 * 8_2 부서별 전체 문서 리스트
+	 * @param deptNo
+	 * @param pi
+	 * @return
+	 */
+	ArrayList<Document> selectAdminAllList(int deptNo, PageInfo pi);
 
+	/**
+	 * 8_3 부서별 삭제 문서 리스트 갯수
+	 * @param deptNo
+	 * @return
+	 */
+	int getAdminDeleteListCount(int deptNo);
 
-
+	/**
+	 * 8_4 부서별 삭제 문서 리스트
+	 * @param deptNo
+	 * @param pi
+	 * @return
+	 */
+	ArrayList<Document> selectAdminDeleteList(int deptNo, PageInfo pi);
 
 }

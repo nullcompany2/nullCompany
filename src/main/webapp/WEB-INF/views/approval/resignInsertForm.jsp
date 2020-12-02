@@ -594,12 +594,17 @@
     $('#cb1').on('click',function(){
     	// 기안 시 보이는 모달
     	var apprExist = $("#tr2").children();
-   		var chkExist = $("#tr6").children();
-   		var recExist = $("#tr9").children();
    		
-   		// 결재선이 존재할 때
-   		if(apprExist.eq(1).find('.tdStaff').length || chkExist.eq(1).find('.tdStaff').length || recExist.eq(1).find('.tdStaff').length){
-	    	modal('drafterCheck');
+    	// 결재자가 존재할 때만 기안 가능하도록
+   		if(apprExist.eq(1).find('.tdStaff').length){
+   			
+   			var enrollDate = $("#enrollDate").val();
+   			// 사직일을 지정했는지 체크
+   			if(enrollDate == ""){
+   				alert('사직일을 지정하세요');
+   			}else{
+	    		modal('drafterCheck');
+   			}
    		}else{
    			alert("결재선을 지정하세요");
    		}
