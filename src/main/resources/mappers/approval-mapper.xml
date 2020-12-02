@@ -51,7 +51,6 @@
 	<!-- 휴직 문서 정보 가져오기 -->
 	<resultMap id="absenceResultSet" type="Absence">
 		<result property="docTempNo" column="DOC_NO"/>
-		<result property="type" column="TYPE"/>
 		<result property="reason" column="REASON"/>
 		<result property="startDate" column="START_DATE"/>
 		<result property="endDate" column="END_DATE"/>
@@ -501,4 +500,35 @@
 	<delete id="deleteTempDocument" parameterType="String">
 		DELETE FROM APPROVAL_DOCUMENT WHERE DOC_TEMP_NO = #{docTempNo}
 	</delete>
+	
+	<!-- 휴가 정보 기록하기(디테일용) -->
+	<insert id="insertLeaveInfo" parameterType="Leave">
+		INSERT INTO APPROVAL_LEAVE VALUES( #{docTempNo}, #{type}, #{reason}, #{startDate}, #{endDate}, #{totalDate})
+	</insert>
+	
+	<!-- 휴가 관리용 데이터 입력하기 -->
+	<insert id="recordingLeave" parameterType="map">
+		INSERT INTO RECORD_LEAVE VALUES
+			(LEAVE_RECORD_SEQ.NEXTVAL,#{drafterNo},#{typeNo},#{startDate},#{totalDate},NULL,'결재중',SYSDATE,#{reason},#{docTempNo})
+	</insert>
+	
+	<!-- 휴가 관리용 데이터 업데이트(결재완료) -->
+	<update id="completeRecordingLeave" parameterType="String">
+		UPDATE RECORD_LEAVE SET L_STATUS = '결재완료' WHERE DOC_TEMP_NO = #{docTempNo}
+	</update>
+	
+	<!-- 휴가 관리용 데이터 업데이트(반려) -->
+	<update	id="rejectRecodingLeave">
+		UPDATE RECORD_LEAVE SET L_STATUS = '반려' WHERE DOC_TEMP_NO = #{docTempNo}
+	</update>
+	
+	<!-- 휴직 정보 기록하기(디테일용) -->
+	<insert id="insertAbsenceInfo" parameterType="Absence">
+		INSERT INTO APPROVAL_ABSENCE VALUES( #{docTempNo}, #{reason}, #{startDate}, #{endDate}, #{totalDate})
+	</insert>
+	
+	<!-- 휴직 관리용 데이터 입력하기 -->
+	<insert id="recordingAbsence" parameterType="map">
+		INSERT INTO ABSENCE VALUES (ABSENCE_SEQ.NEXTVAL,#{drafterNo},#{startDate},#{reason},'Y',NULL)
+	</insert>
 </mapper>

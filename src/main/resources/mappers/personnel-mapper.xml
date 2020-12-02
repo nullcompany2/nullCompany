@@ -443,11 +443,11 @@
 	</insert>
 	
 	<insert id="reduceAnnualLeave">
-		INSERT INTO RECORD_LEAVE VALUES(LEAVE_RECORD_SEQ.nextval,#{memNo},1,SYSDATE,#{reductionDaysAnnual},'','결재완료',SYSDATE,#{reasonAnnual})
+		INSERT INTO RECORD_LEAVE VALUES(LEAVE_RECORD_SEQ.nextval,#{memNo},1,SYSDATE,#{reductionDaysAnnual},'','결재완료',SYSDATE,#{reasonAnnual},'')
 	</insert>
 	
 	<insert id="reduceRewardLeave">
-		INSERT INTO RECORD_LEAVE VALUES(LEAVE_RECORD_SEQ.nextval,#{memNo},2,SYSDATE,#{reductionDaysReward},'','결재완료',SYSDATE,#{reasonReward})
+		INSERT INTO RECORD_LEAVE VALUES(LEAVE_RECORD_SEQ.nextval,#{memNo},2,SYSDATE,#{reductionDaysReward},'','결재완료',SYSDATE,#{reasonReward},'')
 	</insert>
 	
 	<select id="recordDiligence" resultMap="RecordDiligenceResultSet">

@@ -317,10 +317,10 @@
     		 url : "reservation3.do",
     		 data : {rsNo : rsNo},
     		 success: function(data) { 
-    		  var rsImg = data.rsImg;
+    		  var rsImg ="${ contextPath }/resources/reservationFile/"+data.renameFileName;
     		  rsTitle = data.rsTitle;
     		  console.log(rsImg);
-    		  $("#Img").val(rsImg);
+    		  $("#Img").attr("src", rsImg);
     		  $("#rsTitle").val(rsTitle);
     		 }
     	 });

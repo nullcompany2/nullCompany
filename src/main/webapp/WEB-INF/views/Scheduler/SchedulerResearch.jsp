@@ -15,6 +15,66 @@
 	
 </head>
 <body>
+
+<style>
+.ta{
+cursor: pointer;
+}
+</style>
+
+<script>
+
+	
+  $(document).on("click", ".ta", function(){
+
+		modal('detail_modal');
+	    var Sche_no = $(this).attr("id");
+	    console.log(Sche_no);
+	    var Sche_color = document.getElementById("cal_color");
+	    
+	    $.ajax({
+			url : "detailSchedule_num.do",
+			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+			data : { Sche_no : Sche_no },
+			dataType: "json",
+			async: false,
+			success : function(data){
+
+				if(data.cal_type == 1){
+					$("#de_cal_name").text(data.Cal_name);
+	        		$("#de_sche_name").text(data.Sche_name);
+	        		$("#de_sche_day").text(data.startdate + " " + data.starttime + " ~ " + data.enddate + " " + data.endtime);
+	        		$("#de_sche_content").text(data.Sche_content);
+	        		Sche_color.style.backgroundColor = data.color;
+	        		console.log(data.color);
+	        		$("#DeMemCount").text(data.memcount); 
+	        		$("#de_sche_no").val(data.Sche_no);
+	        		$("#de_Cal_no").val(data.cal_no);
+				}else if(data.cal_type == 2){
+					$("#de_cal_name").text(data.Cal_name);
+	        		$("#de_sche_name").text(data.Sche_name);
+	        		$("#de_sche_day").text(data.startdate + " " + data.starttime + " ~ " + data.enddate + " " + data.endtime);
+	        		$("#de_sche_content").text(data.Sche_content);
+	        		Sche_color.style.backgroundColor = data.color;
+	        		console.log(data.color);
+	        		$("#DeMemCount").text(1); 
+	        		$("#de_sche_no").val(data.Sche_no);
+	        		$("#de_Cal_no").val(data.cal_no);
+				}
+	    	
+	    		
+	    	
+	    
+	    		
+			},
+			error: function(request,status,error){
+				console.log(request);
+				console.log(status);
+				console.log(error);
+			}
+		})
+	});
+</script>
 	<div id='wrap'>
 		<c:import url="../common/header.jsp" />
 
@@ -126,7 +186,7 @@
 				    color:#676767;
 				    top: -5px;
 				    font-size:12px">검색 취소</span>
-               	 <img style="width: 20px; height: 20px;"src="resources/images/return.png" />
+               	 <img style=" cursor:pointer ;width: 20px; height: 20px;"src="resources/images/return.png" />
                 </div>
 				
                 <form action="" style="position: absolute;
@@ -159,7 +219,7 @@
                  
                       <tbody>
                       <c:forEach var="Sche_name_Search" items="${ Sche_name_Search }">
-                        <tr style="height: 30px;" id="${ Sche_name_Search.sche_no }">
+                        <tr class="ta" style="height: 30px;" id="${ Sche_name_Search.sche_no }">
                           <td class="ta" style="text-align: center;"><p style="font-size: 14px;">${ Sche_name_Search.startdate }</p></td>
                           <td class="ta" style="    border-collapse: collapse;
 							    overflow: hidden;
@@ -187,7 +247,7 @@
                        </c:forEach>
                        
                        <c:forEach var="Cal_name_Search" items="${ Cal_name_Search }">
-                        <tr style="height: 30px;">
+                        <tr  class="ta"  style="height: 30px;"  id="${ Cal_name_Search.sche_no }">
                           <td class="ta" style="text-align: center;"><p style="font-size: 14px;">${ Cal_name_Search.startdate }</p></td>
                           <td class="ta" style="    border-collapse: collapse;
 							    overflow: hidden;
@@ -220,6 +280,7 @@
                 </div>
 			</div>
 
+			
 			
 			
 			<!-- 일정 추가 모달 -->
@@ -712,7 +773,7 @@
 										for="" style="font-size: 14px;">캘린더</label></th>
 									<th class="tbcontent"><p class="tbinput" id="de_cal_name"></p><div id="cal_color" style="width:20px; height:20px"></div></th>
 									<th class="tbcontent" style="width: 120px;">
-										<div id="perimg">
+										<div id="perimg" style="cursor: pointer">
 											<img src="resources/images/detail_count.png"
 												style="width: 50px; height: 25px;position: absolute; top: 65px;">
 												<span id="DeMemCount"></span>
@@ -743,11 +804,11 @@
 
 						<div style="text-align: center;">
 							<button id="editSche"
-								style="background: #fff; color: #2c86dc;
+								style="background: #fff; color: #2c86dc; cursor: pointer;
 								 padding: 5px 27px 6px; border: 1px solid #c8c8c8">수정</button>
 							
 							<button id="scheDelete" onclick="func_confirm()"
-								style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; 
+								style="padding: 5px 27px 6px; color: #444; letter-spacing: -1px; cursor: pointer;
 								border: 1px solid #dadada; background: #dadada;">삭제</button>
 						</div>
 					</div>
@@ -818,6 +879,7 @@
 								    padding: 5px 27px 6px;
 								    border: 1px solid #c8c8c8;
 								    width: 100px;
+								    cursor: pointer;
 								    position: relative;
     								right: 63px;">확인</button>
 							</div>
@@ -996,7 +1058,7 @@
 									    padding: 5px 27px 6px;
 									    border: 1px solid #c8c8c8;
 									    position: absolute;
-									    
+									    cursor: pointer;
 									    left: 150px;">수정</button>
 								<button class="modal-close-btn cursor"
 								style="absolute;
@@ -1008,6 +1070,7 @@
 							    border: 1px solid #dadada;
 							    background: #dadada;
 							    margin-left: 100px;
+							    cursor: pointer;
 								 letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">취소</button>
 						</div>
 					
@@ -1047,61 +1110,7 @@
 		 
 			 })
 			 
-		     // 일정 디테일
-         $(document).on("click", ".fc-content", function(){
-        	modal('detail_modal');
-            console.log($(this).find('span:eq(1)').text());
-            
-            
-            var Sche_name = $(this).find('span:eq(1)').text();
-            var Sche_color = document.getElementById("cal_color");
-            $.ajax({
-				url : "detailSchedule.do",
-				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-				data : { Sche_name : Sche_name },
-				dataType: "json",
-				async: false,
-				success : function(data){
-					
-				
-					
-					if(data.cal_type == 1){
-						$("#de_cal_name").text(data.Cal_name);
-	            		$("#de_sche_name").text(data.Sche_name);
-	            		$("#de_sche_day").text(data.startdate + " " + data.starttime + " ~ " + data.enddate + " " + data.endtime);
-	            		$("#de_sche_content").text(data.Sche_content);
-	            		Sche_color.style.backgroundColor = data.color;
-	            		console.log(data.color);
-	            		$("#DeMemCount").text(data.memcount); 
-	            		$("#de_sche_no").val(data.Sche_no);
-	            		$("#de_Cal_no").val(data.cal_no);
-					}else if(data.cal_type == 2){
-						$("#de_cal_name").text(data.Cal_name);
-	            		$("#de_sche_name").text(data.Sche_name);
-	            		$("#de_sche_day").text(data.startdate + " " + data.starttime + " ~ " + data.enddate + " " + data.endtime);
-	            		$("#de_sche_content").text(data.Sche_content);
-	            		Sche_color.style.backgroundColor = data.color;
-	            		console.log(data.color);
-	            		$("#DeMemCount").text(1); 
-	            		$("#de_sche_no").val(data.Sche_no);
-	            		$("#de_Cal_no").val(data.cal_no);
-					}
-            	
-            		
-            	
-            
-            		
-				},
-				error: function(request,status,error){
-					console.log(request);
-					console.log(status);
-					console.log(error);
-				}
-			})
-			
-
-		});
-      
+	
 			// 일정 수정 db
 			 $("#ajaxsche_edit").on('click',function () {
 				 var Cal_name = $("#editCalName").text();
@@ -1430,6 +1439,8 @@
  				 		str += "<li>" +entry['name'] + "(" ;
  				 		str += entry['memNo'] +")" + "</li>" ;
  				 		
+ 				 		
+ 				 		
  				 	});
  				 	
  				 		str += "</ul>"
@@ -1449,11 +1460,20 @@
  		});
     $(document).on("click", "#ulAuto li", function(){
     	var a = $(this).text();
+    	var tmp = '';
     	$('input:checkbox[id="name"]').each(function(){
     	     if(this.value ==  a){
     	        this.checked = true;
+
     	     }
+
     	});
+    	
+    	  tmp +='<label for="'+a+'2"><input type="checkbox"" name="checkname" id="' + a + '2" class="checklist" value="'+ a + '">' + a +'</input><label><br>';
+	/*      	document.getElementById("result").innerHTML= tmp
+	     	console.log("dd" + tmp); */
+	     	$("#result").append(tmp);
+    	
     	
     	$("#autoAddress").mouseenter(function() {
     	       $("#ulAuto").show();

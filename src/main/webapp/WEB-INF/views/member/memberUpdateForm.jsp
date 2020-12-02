@@ -58,7 +58,7 @@
                           <tr>
                           	 <th>부서</th>
                              <td>
-                             <input type="text" name="deptName" id="deptName" value="${ loginUser.deptName }부" readonly>
+                             <input type="text" name="deptName" id="deptName" value="${ loginUser.deptName }" readonly>
                              </td>
                           </tr>
                           <tr>

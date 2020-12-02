@@ -257,14 +257,22 @@ li {
              				dataType:"json",
              				success:function(data){
              					
-             					for(var i=0 in data){
-             						console.log(data[i]);
-             					   var date = data[i].startdate+" "+data[i].starttime;
-                                   var date2 = (moment(date).format('LT'));
-                                   console.log(date);
-                                   $("#add_li").append('<li style = "background:' + data[i].color + '";>&nbsp;' + date2 + '&nbsp;&nbsp;&nbsp;&nbsp;' + data[i].Sche_name +'</li>');   
+             				console.log(data);
+             					  if(data.length != 0 ){
+             						 for(var i=0 in data){
+                  						console.log(data[i]);
+                  					   var date = data[i].startdate+" "+data[i].starttime;
+                                        var date2 = (moment(date).format('LT'));
+                                        console.log(date);
+                                        $("#add_li").append('<li style = "background:' + data[i].color + '";>&nbsp;' + date2 + '&nbsp;&nbsp;&nbsp;&nbsp;' + data[i].Sche_name +'</li>');   
+                  					  }
+             					  }else{
+             						  
+             						 $("#add_li").append("<li style='font-size: 15px;'>등록된 일정이 없습니다.</li>");   
              					  }
-             			
+
+
+
              					},
              					error : function() {
              	        			console.log("전송실패");

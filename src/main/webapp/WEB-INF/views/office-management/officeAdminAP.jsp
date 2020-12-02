@@ -60,7 +60,7 @@
 			<div class="contents">
 				<!-- 컨텐츠 타이틀명 -->
                 <div class="contents-title underline">
-					<h4>관리자 설정</h4>
+					<h3>관리자 설정</h3>
 				</div>
 				<!-- ---- -->
 				<div class="contents-wrap drag-scrollbar" style="top: 65px; padding: 15px;">
@@ -200,7 +200,7 @@
 						list.push(manager);
 						console.log(list);
 					}
-					
+					alert("관리자 변경완료.");
 					location.href = "updateOfficeManager.do?list="+list;
 					
 				}else{

@@ -76,7 +76,9 @@
 	margin-bottom : 10px;
 	padding-bottom : 10px;
 	border-bottom:  1px solid #ECECEC;
+	table-layout : fixed;
 	}
+	
 	
 	#tb:last-child {
 	margin-bottom : 30px;
@@ -100,6 +102,11 @@
 	#idWrite {
 	color : black;
 	}
+	
+	#tb #firstTd{
+	width : 35px;
+	}
+	
 	
 	
 	

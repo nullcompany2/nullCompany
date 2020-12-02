@@ -115,34 +115,34 @@ private ScheduleService sService;
 				ma.setSender(senderArr4[1]);
 				
 			} else {
-			String [] recipientArr = ma.getRecipient().split("<");
-			String [] recipientArr2 = recipientArr[1].split(">");
-			String [] recipientArr3 = recipientArr2[0].split("@");
-			String [] recipientArr4 = recipientArr3[0].split(" ");
-			
-			String [] senderArr = ma.getSender().split("<");
-			String [] senderArr2 = senderArr[1].split(">");
-			String [] senderArr3 = senderArr2[0].split("@");
-			String [] senderArr4 = senderArr3[0].split(" ");
-			
-			ma.setRecipient(recipientArr4[1]);
-			ma.setSender(senderArr4[1]);
+				// 보내는 사람 파싱 
+				String [] senderArr = ma.getSender().split("<");
+				String [] senderArr2 = senderArr[1].split(">");
+				String [] senderArr3 = senderArr2[0].split("@");
+				String [] senderArr4 = senderArr3[0].split(" ");
+				// 보내는 사람 넣고 
+				ma.setSender(senderArr4[1]);
+				
+				ArrayList<Member> arrMem = new ArrayList<>();
+				
+				// 여러명일 경우 받는 사람 파싱 
+				String [] reArr = ma.getRecipient().split(",");
+				for (int i = 0; i < reArr.length; i++) {
+					
+					String [] recipientArr = reArr[i].split("<");
+					String [] recipientArr2 = recipientArr[1].split(">");
+					String [] recipientArr3 = recipientArr2[0].split("@");
+					String [] recipientArr4 = recipientArr3[0].split(" ");
+					
+					// 받는 사람 한명 씩 담고 
+					ma.setRecipient(recipientArr4[1]);
+				
+					// 메일 임시저장 인서트 반복 
+					int result = maService.saveMail(ma);
+				}
 			}
-			if(!file.getOriginalFilename().equals("")) {
-	         String mailFile = saveMailFile(file,request);
-	         
-	         if(mailFile != null) { 
-	            ma.setmFileName(mailFile);
-	          }
-			}
-			
-			int result = maService.saveMail(ma);
-			
-			if(result > 0 ) {
 				mv.setViewName("mail/gosaveMail");	
-			}else {
-				mv.setViewName("common/errorPage");	
-			}
+			
 			 return mv;
 		}
 		
@@ -174,7 +174,7 @@ private ScheduleService sService;
 		      }catch(Exception e) {
 		    	  System.out.println("파일 전송 에러 : " + e.getMessage());
 		      }
-		      return mailFile;
+		      return "resources/mailUploadFiles/" + mailFile;
 
 		   }	
 		
@@ -182,6 +182,7 @@ private ScheduleService sService;
 	@RequestMapping("sendMail.do")
 	public ModelAndView sendMail(ModelAndView mv, Mail ma,HttpServletRequest request,
 			@RequestParam(value="uploadPhoto",required=false)MultipartFile file) {
+		
 		if (ma.getRecipient().equals("없음 < 없음@nullcompany.com >")) {
 			
 			mv.setViewName("mail/failMail");	
@@ -205,6 +206,8 @@ private ScheduleService sService;
 			// 보내는 사람 넣고 
 			ma.setSender(senderArr4[1]);
 			
+			ArrayList<Member> arrMem = new ArrayList<>();
+			
 			// 여러명일 경우 받는 사람 파싱 
 			String [] reArr = ma.getRecipient().split(",");
 			for (int i = 0; i < reArr.length; i++) {
@@ -216,26 +219,21 @@ private ScheduleService sService;
 				
 				// 받는 사람 한명 씩 담고 
 				ma.setRecipient(recipientArr4[1]);
-				String recipient = recipientArr4[1];
-//				// 받는 사람을 담아서 맵을 만들고 
-//				Map reci = new HashMap();
-//				reci.put("recipient",recipientArr4[1]);
-//				
+				String recipient = recipientArr4[1];		
 			
 				// 메일 보내기 인서트 반복 
 				int result = maService.sendMail(ma);
 				Member m = maService.findIdName(recipient);
-				mv.addObject("m",m);
+				arrMem.add(m);
 			}
-				mv.setViewName("mail/sendMail");	
-		
-//		mv.addObject("m", m);
-		
-		
-//		}else {
-//			mv.addObject("msg", "인서트 실패~ ");
-//			mv.setViewName("common/errorPage");	
+			for(Member m1 : arrMem) {
+				System.out.println(m1);
+				
+			}
 			
+			
+			mv.addObject("m",arrMem);
+			mv.setViewName("mail/sendMail");	
 		
 		 return mv;
 		}
@@ -321,12 +319,21 @@ private ScheduleService sService;
 		
 		// 리스트 - 아이디 누르고 메일 쓰기 
 		@RequestMapping("mailWriteId.do")
-		public ModelAndView mailWriteId(ModelAndView mv,
-				int memNo){
+		public ModelAndView mailWriteId(ModelAndView mv,int memNo){
 			
 			Member m = maService.mailWriteId(memNo);
 			System.out.println(m);
 			System.out.println(memNo);
+			
+			// 조직도 모달을 위한 정보가져오기 
+			// 총 부서 리스트
+			ArrayList<Department> deptList = sService.deptList();
+			// 총 사원 리스트
+			ArrayList<Member> memList = sService.memList();
+									
+			mv.addObject("deptList", deptList);
+			mv.addObject("memList", memList);
+									
 			
 			mv.addObject("m",m);
 			mv.setViewName("mail/mailWriteId");
@@ -341,6 +348,15 @@ private ScheduleService sService;
 			
 			Mail ma = maService.saveDetailView(mailNo);
 
+			// 조직도 모달을 위한 정보가져오기 
+			// 총 부서 리스트
+			ArrayList<Department> deptList = sService.deptList();
+			// 총 사원 리스트
+			ArrayList<Member> memList = sService.memList();
+						
+			mv.addObject("deptList", deptList);
+			mv.addObject("memList", memList);
+						
 			mv.addObject("ma",ma);
 			mv.setViewName("mail/saveDetailView");
 
@@ -411,7 +427,6 @@ private ScheduleService sService;
 			System.out.println(page);
 			String [] mailNon = mailNoArr.split(",");
 			int result = maService.delmail(mailNon);
-			
 			
 			if(result > 0 ) {
 				if(page.equals("보낸메일")) {
@@ -562,6 +577,15 @@ private ScheduleService sService;
 
 			Mail ma = maService.mailReply(mailNo);
 			
+			// 조직도 모달을 위한 정보가져오기 
+			// 총 부서 리스트
+			ArrayList<Department> deptList = sService.deptList();
+			// 총 사원 리스트
+			ArrayList<Member> memList = sService.memList();
+						
+			mv.addObject("deptList", deptList);
+			mv.addObject("memList", memList);
+						
 			mv.addObject("ma",ma);
 			mv.setViewName("mail/forwardMail");
 			

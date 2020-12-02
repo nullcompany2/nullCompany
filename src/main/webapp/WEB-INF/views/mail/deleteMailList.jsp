@@ -15,7 +15,7 @@
 	<style>
 	body {
 		padding: 0px; margin: 0px;
-	}
+	} 
 
 	/* contents */
 	.contents{
@@ -131,7 +131,7 @@
 
 							<td id="firstTd">&nbsp;&nbsp;<input type="checkbox" onClick="event.cancelBubble=true" name="mail" value="${ma.mailNo}"></td>						
 							<td align="left">${ma.name} < ${ma.sender} ></td>
-							<td align="center">${ ma.mTitle }</td>
+							<td>${ ma.mTitle }</td>
 							<td align="right"> ${ma.sendDate }</td>
 						</tr>
 						</table>

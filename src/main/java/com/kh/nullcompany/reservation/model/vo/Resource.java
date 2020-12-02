@@ -6,21 +6,23 @@ public class Resource {
 	private String rsTitle;
 	private String rsContent;
 	private String rsReturn;
-	private String rsImg;
+	private String originalFileName;
+	private String renameFileName;
 	private String rsStatus;
 	public Resource() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Resource(int rsNo, int rcNo, String rsTitle, String rsContent, String rsReturn, String rsImg,
-			String rsStatus) {
+	public Resource(int rsNo, int rcNo, String rsTitle, String rsContent, String rsReturn, String originalFileName,
+			String renameFileName, String rsStatus) {
 		super();
 		this.rsNo = rsNo;
 		this.rcNo = rcNo;
 		this.rsTitle = rsTitle;
 		this.rsContent = rsContent;
 		this.rsReturn = rsReturn;
-		this.rsImg = rsImg;
+		this.originalFileName = originalFileName;
+		this.renameFileName = renameFileName;
 		this.rsStatus = rsStatus;
 	}
 	public int getRsNo() {
@@ -53,11 +55,17 @@ public class Resource {
 	public void setRsReturn(String rsReturn) {
 		this.rsReturn = rsReturn;
 	}
-	public String getRsImg() {
-		return rsImg;
+	public String getOriginalFileName() {
+		return originalFileName;
 	}
-	public void setRsImg(String rsImg) {
-		this.rsImg = rsImg;
+	public void setOriginalFileName(String originalFileName) {
+		this.originalFileName = originalFileName;
+	}
+	public String getRenameFileName() {
+		return renameFileName;
+	}
+	public void setRenameFileName(String renameFileName) {
+		this.renameFileName = renameFileName;
 	}
 	public String getRsStatus() {
 		return rsStatus;
@@ -68,8 +76,8 @@ public class Resource {
 	@Override
 	public String toString() {
 		return "Resource [rsNo=" + rsNo + ", rcNo=" + rcNo + ", rsTitle=" + rsTitle + ", rsContent=" + rsContent
-				+ ", rsReturn=" + rsReturn + ", rsImg=" + rsImg + ", rsStatus=" + rsStatus + "]";
+				+ ", rsReturn=" + rsReturn + ", originalFileName=" + originalFileName + ", renameFileName="
+				+ renameFileName + ", rsStatus=" + rsStatus + "]";
 	}
-	
 	
 }

@@ -729,16 +729,10 @@ public class ApprovalController {
 		ArrayList<Step> sList = aService.selectStepList(docTempNo);
 		
 		ArrayList<Step> apprList = new ArrayList<Step>();
-		ArrayList<Step> checkList = new ArrayList<Step>();
-		ArrayList<Step> receiveList = new ArrayList<Step>();
 		
 		for(Step s : sList) {
 			if(s.getLineNo() == 1) {
 				apprList.add(s);
-			}else if(s.getLineNo() == 2) {
-				checkList.add(s);
-			}else {
-				receiveList.add(s);
 			}
 		}
 		
@@ -747,6 +741,7 @@ public class ApprovalController {
 		
 		int result1 = 0;
 		int result2 = 0;
+		int result3 = 0;
 		
 		for(Step s : apprList) {
 			if(memNo == s.getStaffNo()) {
@@ -765,11 +760,19 @@ public class ApprovalController {
 					// 결재하기
 					result1 = aService.stepSigning(docTempNo, memNo);
 					result2 = aService.decisionSigning(docTempNo, s.getStepPriority());
+					if(d.getFormNo() == 3) {
+						// 휴가 관리용 데이터 업데이트(결재완료)
+						result3 = aService.completeRecordingLeave(docTempNo);
+					}else if(d.getFormNo() == 4) {
+						// 휴직 관리용 데이터 입력하기
+						Absence a = aService.selectAbsenceInfo(docTempNo);
+						result3 = aService.recordingAbsence(d.getDrafterNo(), a.getStartDate(), a.getReason());
+					}
 				}
 			}
 		}
 		
-		if(result1 > 0 && result2 > 0) {
+		if(result1 > 0 && result2 > 0 || result3 > 0) {
 			return "redirect:approvalDetail.do?docNo="+docNo;
 		}else if(result1 > 0) {
 			return "redirect:approvalDetail.do?docNo="+docNo;
@@ -783,21 +786,18 @@ public class ApprovalController {
 	@RequestMapping("approvalRejecting.do")
 	public String approvalRejecting(Model model, HttpServletResponse response, HttpSession session, String docTempNo, String docNo) {
 		
-		int memNo = ((Member) session.getAttribute("loginUser")).getMemNo();		
+		int memNo = ((Member) session.getAttribute("loginUser")).getMemNo();	
+		
+		Document d = aService.approvalDetail(docNo);
 		
 		ArrayList<Step> sList = aService.selectStepList(docTempNo);
 		
 		ArrayList<Step> apprList = new ArrayList<Step>();
-		ArrayList<Step> checkList = new ArrayList<Step>();
-		ArrayList<Step> receiveList = new ArrayList<Step>();
+
 		
 		for(Step s : sList) {
 			if(s.getLineNo() == 1) {
 				apprList.add(s);
-			}else if(s.getLineNo() == 2) {
-				checkList.add(s);
-			}else {
-				receiveList.add(s);
 			}
 		}
 		
@@ -806,16 +806,21 @@ public class ApprovalController {
 		
 		int result1 = 0;
 		int result2 = 0;
+		int result3 = 0;
 
 		for(Step s : apprList) {
 			// 반려는 결재자 순번과 관계없이 문서 완료 처리를 한다.(상위 미 결재자는 반려처리) (최종 결재자 순번 == 결재자 수)의 식이 성립-->문서 순번을 최상위 순위로 올려서 처리함
 			if(memNo == s.getStaffNo()) {
 				result1 = aService.stepRejecting(docTempNo, memNo);
 				result2 = aService.decisionRejecting(docTempNo, stepListCount);
+				if(d.getFormNo() == 3) {
+					// 휴가 관리용 데이터 업데이트(반려) 
+					result3 = aService.rejectRecodingLeave(docTempNo);
+				}
 			}
 		}
 		
-		if(result1 > 0 && result2 > 0) {
+		if(result1 > 0 && result2 > 0 || result3 > 0) {
 			return "redirect:approvalDetail.do?docNo="+docNo;
 		}else {
 			model.addAttribute("msg", "반려 오류!");
@@ -834,17 +839,11 @@ public class ApprovalController {
 		
 		ArrayList<Step> sList = aService.selectStepList(docTempNo);
 		
-		ArrayList<Step> apprList = new ArrayList<Step>();
 		ArrayList<Step> checkList = new ArrayList<Step>();
-		ArrayList<Step> receiveList = new ArrayList<Step>();
 		
 		for(Step s : sList) {
-			if(s.getLineNo() == 1) {
-				apprList.add(s);
-			}else if(s.getLineNo() == 2) {
+			if(s.getLineNo() == 2) {
 				checkList.add(s);
-			}else {
-				receiveList.add(s);
 			}
 		}
 		
@@ -1059,7 +1058,7 @@ public class ApprovalController {
 	
 	// 업무 연락 문서 기안하기(임시 문서 업데이트)
 	@RequestMapping("insertBusinessDocumet.do")
-	public String insertDocument(Model model, HttpServletResponse response, HttpSession session,
+	public String insertDocument(Model model, HttpServletResponse response,
 								 @RequestParam(value="docTempNo", required=false) String docTempNo,
 								 @RequestParam(value="dTitle", required=false) String dTitle,
 								 @RequestParam(value="dContent", required=false) String dContent) {
@@ -1078,6 +1077,95 @@ public class ApprovalController {
 		}
 	}
 	
+	
+	// 회람 문서 기안하기
+	
+	
+	// 휴가 문서 기안하기
+	@RequestMapping("insertLeaveDocumet.do")
+	public String insertLeaveDocument(Model model, HttpServletResponse response, HttpSession session,
+									 @RequestParam(value="docTempNo", required=false) String docTempNo,
+									 @RequestParam(value="startDate", required=false) String startDate,
+									 @RequestParam(value="endDate", required=false) String endDate,
+									 @RequestParam(value="typeNo", required=false) int typeNo,
+									 @RequestParam(value="type", required=false) String type,
+									 @RequestParam(value="totalDate", required=false) int totalDate,
+									 @RequestParam(value="reason", required=false) String reason) {
+		
+		Document d = new Document();
+		
+		int drafterNo = ((Member)session.getAttribute("loginUser")).getMemNo();
+		String drafterDeptName = ((Member)session.getAttribute("loginUser")).getDeptName();
+		String drafterRankName = ((Member)session.getAttribute("loginUser")).getRankName();
+		String drafterName = ((Member)session.getAttribute("loginUser")).getName();
+		
+		d.setDocTempNo(docTempNo);
+		d.setdTitle("[" + type + "]"+startDate+"("+totalDate+"일)_"+drafterDeptName+"부 / "+drafterRankName+" / "+drafterName);
+		d.setdContent(reason);
+		
+		Leave l = new Leave();
+		
+		l.setDocTempNo(docTempNo);
+		l.setType(type);
+		l.setStartDate(startDate);
+		l.setEndDate(endDate);
+		l.setTotalDate(totalDate);
+		l.setReason(reason);
+		
+		// 문서 기안하기
+		int result1 = aService.insertDocument(d);
+		// 휴가 정보 입력하기
+		int result2 = aService.insertLeaveInfo(l);
+		// 휴가 관리용 데이터 입력하기
+		int result3 = aService.recordingLeave(drafterNo, typeNo, startDate, totalDate, reason, docTempNo);
+		
+		if(result1 > 0 && result2 > 0 && result3 > 0 ) {
+			return "redirect:approvalProgressAllListView.do";
+		}else {
+			model.addAttribute("msg", "문서 기안 실패!");
+			return "common/errorPage";
+		}
+	}
+	
+	// 휴직 문서 기안하기
+	@RequestMapping("insertAbsenceDocumet.do")
+	public String insertAbsenceDocument(Model model, HttpServletResponse response, HttpSession session,
+									   @RequestParam(value="docTempNo", required=false) String docTempNo,
+									   @RequestParam(value="startDate", required=false) String startDate,
+									   @RequestParam(value="endDate", required=false) String endDate,
+									   @RequestParam(value="totalDate", required=false) int totalDate,
+									   @RequestParam(value="reason", required=false) String reason) {
+		
+		Document d = new Document();
+		
+		String drafterDeptName = ((Member)session.getAttribute("loginUser")).getDeptName();
+		String drafterRankName = ((Member)session.getAttribute("loginUser")).getRankName();
+		String drafterName = ((Member)session.getAttribute("loginUser")).getName();
+		
+		d.setDocTempNo(docTempNo);
+		d.setdTitle("[휴직신청]"+startDate+"("+totalDate+"일)_"+drafterDeptName+"부 / "+drafterRankName+" / "+drafterName);
+		d.setdContent(reason);
+		
+		Absence a = new Absence();
+		
+		a.setDocTempNo(docTempNo);
+		a.setReason(reason);
+		a.setStartDate(startDate);
+		a.setEndDate(endDate);
+		a.setTotalDate(totalDate);
+		
+		// 문서 기안하기
+		int result1 = aService.insertDocument(d);
+		// 휴직 정보 입력하기
+		int result2 = aService.insertAbsenceInfo(a);
+		
+		if(result1 > 0 && result2 > 0) {
+			return "redirect:approvalProgressAllListView.do";
+		}else {
+			model.addAttribute("msg", "문서 기안 실패!");
+			return "common/errorPage";
+		}
+	}
 
 	@RequestMapping("approvalAllDList.do")
 	public String approvalAllDList(HttpServletResponse response) {

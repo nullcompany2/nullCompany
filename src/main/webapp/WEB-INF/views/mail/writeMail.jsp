@@ -138,7 +138,7 @@ a:active {
 #communitymodal {
 	display: none;
 	width: 880px;
-	height: 420px;
+	height: 450px;
 	padding: 10px 40px;
 	background-color: #fefefe;
 	border: 1px solid #888;
@@ -347,9 +347,7 @@ a:active {
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
-	background-color: red;
 }
-
 
 #enrollname input[type="checkbox"] ~ #lb:before {
 	content: ' ';
@@ -400,6 +398,25 @@ a:active {
 	border-color: #adb8c0;
 }
 
+span#fileUp{
+	font-size : 13px;
+	color:grey;
+	background:#F3F3F3;
+	padding:5px;
+	border-radius:3px;
+	cursor:pointer;
+}
+
+span#fileUp:hover{
+	color:#5C6369;
+	cursor:pointer;
+}
+
+span#fileName{
+	font-size:15px;
+	color:grey;
+}
+
 
 </style>
 
@@ -425,6 +442,7 @@ a:active {
 						 &nbsp;보내는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 						<input type="text" name="sender" style="width: 60%;" value= "${loginUser.name} < ${loginUser.id}@nullcompany.com >" readonly/> <br>
 							
+							<!--  가져가기  -->
 							<div id="auto"> 
 						&nbsp;받는사람&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<input type="text" name="recipient" id="address" style="width: 60%;"
@@ -442,16 +460,16 @@ a:active {
 							 	</div>
 							</div>
 							
-						
 						&nbsp;&nbsp;제목
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						&nbsp;
 						<input type="text" name="mTitle" style="width: 60%;" placeholder="제목을 입력해주세요." /> <br>
 						&nbsp;파일첨부
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="file" name="uploadPhoto" id="ex_file"/>
-						<br> <br> 
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="file" name="uploadPhoto" id="ex_file" style="display:none;" onchange="changeFile(event)"/>
+						<span id="fileUp">파일 선택하기</span> <span id="fileName"></span>
+						<br> <br>
 						
 						<!--  썸머노트  -->
 						<textarea id="summernote" name="mContent"></textarea>
@@ -490,7 +508,6 @@ a:active {
 						<h3 style="color: #477A8F; margin-bottom: 15px; margin-top: 12px;">
 							 메일 주소록 </h3>
 
-
 						<div style="text-align: center;">
 							<div>
 								<div id="dept_list">
@@ -524,7 +541,6 @@ a:active {
 								<img src="resources/images/left.png" id="enrollsub">
 							</div>
 
-
 							<p
 							style="font-size:13px;
 							position: absolute;
@@ -540,9 +556,10 @@ a:active {
 
 							</div>
 
-							<div style="position: absolute; bottom: 20px; left: 350px;">
+							<div style="position: absolute; bottom: 30px; left: 350px;">
 								<button id="email_sub"
-									style="background:#477A8F; color:white; padding: 5px 27px 6px; border: 1px solid #477A8F;">저장</button>
+									style="background:#477A8F; color:white; padding: 5px 27px 6px; 
+									border: 1px solid #477A8F;">저장</button>
 								<button class="modal-close-btn cursor"
 								style="position: absolute; left: 90px; top: 0px; padding: 5px 27px 6px; color: #444;
 								 letter-spacing: -1px; border: 1px solid #dadada; background: #dadada;">취소</button>
@@ -726,13 +743,12 @@ a:active {
               }
               
  		});
-          searchPop
+ 	 
           $('#searchPop')
           .mouseover(function(){
           $('#searchAddress').css('display','block');
           })
           
-           searchPop
           $('#searchPop')
           .mouseout(function(){
           $('#searchAddress').css('display','none');
@@ -796,7 +812,7 @@ a:active {
      });
        
   
-       // 버튼 누르기 
+       // 모달에서 저장 버튼 누르기 
      $("#email_sub").click(function(){
     	 
     	        var inputArray = $('input[name="finalname"]:checked');
@@ -805,7 +821,43 @@ a:active {
                  $("input[name=recipient]").val(enroll.slice(0,-1));
                  $("#communitymodal").hide();
              })
-   
+      
+       
+      $('#fileUp').click(()=>{
+      	$('#ex_file').click();
+      	
+      });
+      
+       // 파일 첨부시 파일명을 구해서 span에 더해주기 
+     function changeFile(event) { 
+     	/* var reader = new FileReader(); 
+    
+     	reader.onload = function(event) { 
+     	// 해당 td 의 이미지 지우고 
+     	$('#imgTd').empty();
+
+     	// Img 를 만들어주고 
+     	var img = document.createElement("img"); 
+     	// 아이디를 부여해준다. css 먹어야하니까 
+     	img.id  = 'logoImg';
+     	
+     	// 만든 태그에 src 를 변경 
+     	img.setAttribute("src", event.target.result); 
+     	document.querySelector("#imgTd").appendChild(img); 
+     	};
+     	// 로고를 새로 선택하면, 미리보기 썸네일 및 해당 td 의 텍스트 변경 
+     	reader.readAsDataURL(event.target.files[0]); 
+     	$("#fileStatus").text("업로드할 로고"); */
+     	
+     	var fileValue = $("#ex_file").val().split("\\");
+     	var fileNa = fileValue[fileValue.length-1]; // 파일명
+     	
+     	$("#fileName").text(fileNa);
+     	
+     	};
+     	
+     	
+
  </script>
  
 </body>
