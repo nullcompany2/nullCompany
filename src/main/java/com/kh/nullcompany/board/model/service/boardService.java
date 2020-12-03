@@ -36,6 +36,9 @@ public interface boardService {
 	ArrayList<board> searchbtitleContent(Map map);
 
 
+	int deletebComment(bcomment c);
+
+
 
 
 

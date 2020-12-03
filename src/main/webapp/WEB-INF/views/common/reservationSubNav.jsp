@@ -104,7 +104,9 @@ a:active {
 		<div class="drag-scrollbar">
 			<div class="H-personnel-subNavi underline">
 				<div class="H-personnel-subNavi Depth01-1">
-					<li class="subTitle" id="sub"><a href="myReservation.do?rMember=${loginUser.id}">나의 예약 목록</a></li>
+					<li class="subTitle" ><a href="myReservation.do?rMember=${loginUser.id}">나의 예약 목록</a></li>
+					<li id="sub">
+					</li>
 				</div>
 			</div>
 			<c:if test="${loginUser.deptNo == 5}">
@@ -130,7 +132,7 @@ a:active {
 				$div =$("#sub");
  				var add;
 				for(var i in data){
-				$add = $('<li class="subTitle"><a href="reservation.do?rcNo='+data[i].rcNo+'">'+data[i].rcTitle+'</a></li>');
+				$add = $('<li class="subTitle" id="sub"><a href="reservation.do?rcNo='+data[i].rcNo+'">'+data[i].rcTitle+'</a></li>');
 				$div.append($add);
 				}
 				

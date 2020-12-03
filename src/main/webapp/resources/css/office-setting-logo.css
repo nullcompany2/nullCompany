@@ -32,13 +32,13 @@ html{
     margin-top: 10px;
 }
 #up-file,#upBtn{
-    visibility: hidden;
+   display:none;
 }
 #up-file {
 	border-bottom:none;
 }
 
-#upBtn {
+#upBtn,.basicLogo {
 	border-bottom : 1px solid black;
 }
 
@@ -63,7 +63,7 @@ html{
 	
 }
 
-#imgTd #logoImg{
+#imgTd #logoImg,#basicLogoImg{
 	width: 170px;
    	height: 75px;
    	background : #3E4247;
@@ -97,6 +97,20 @@ span#fileName{
 div#warning{
 	font-size:15px;
 
+}
+
+#basicLogoBtn{
+	margin-left :642px;
+	border : none;
+	background: #477A8F;
+	color :white;
+	cursor : pointer;
+	padding : 5px 10px;
+	font-size : 17px;
+	margin-top : 10px;
+	margin-bottom:10px;
+	border-radius : 5px;
+	
 }
 
 input[type="radio"] { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip:rect(0,0,0,0); border: 0; }

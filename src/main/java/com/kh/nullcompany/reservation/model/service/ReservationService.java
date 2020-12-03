@@ -3,6 +3,7 @@ package com.kh.nullcompany.reservation.model.service;
 import java.util.ArrayList;
 import java.util.Map;
 
+import com.kh.nullcompany.board.model.vo.PageInfo;
 import com.kh.nullcompany.reservation.model.vo.Category;
 import com.kh.nullcompany.reservation.model.vo.Reservation;
 import com.kh.nullcompany.reservation.model.vo.Resource;
@@ -39,8 +40,12 @@ public interface ReservationService {
 
 	public int reservationReturn(int rNo);
 
-	public ArrayList<Reservation> selectReservationList();
-
 	public int deleteReservation(int rNo);
+
+	public int getListCount();
+
+	public ArrayList<Reservation> selectReservationList2(PageInfo pi,int rcNo);
+
+	public int getListCount(int rcNo);
 
 }

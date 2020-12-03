@@ -240,7 +240,7 @@ tr>td {
 						<tr>
 							<td align="left">${b.bType }</td>
 							<td align="left"><c:if test="${!empty loginUser }">
-									<c:url var="boardDetail" value="boardDetail.do">
+									<c:url var="idetail" value="idetail.do">
 										<c:param name="bNo" value="${b.bNo }" />
 										<c:param name="currentPage" value="${pi.currentPage }" />
 									</c:url>

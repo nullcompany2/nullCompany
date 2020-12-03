@@ -271,40 +271,44 @@
 				</div>
 				<div id="sub-navi-deinfo" class="drag-scrollbar">
 					<div class="H-personnel-subNavi underline" style="border: none;">
-						<div class="H-personnel-subNavi Depth01-1">
-							<li class="subTitle" style="margin-top: 15px;">
-								<a href="#">진행 중인 문서</a>
+						<div class="H-personnel-subNavi Depth01-1"> 
+							<li class="subTitle" style="margin-top: 15px; cursor:pointer;">
+								<span>진행 중인 문서</span>
 							</li>
 						</div>
 						<ul id="Tab1" class="H-personnel-subNavi Depth02">
-							<li><a href="approvalProgressAllListView.do" id="">전체</a></li>
-							<li><a href="standByDocListView.do" id="">대기</a></li>
-							<li><a href="checkDocListView.do" id="">확인</a></li>
-							<li><a href="scheduledDocListView.do" id="">예정</a></li>
-							<li><a href="progressListView.do" id="">진행</a></li>
+							<li><a href="approvalProgressAllListView.do">전체</a></li>
+							<li><a href="standByDocListView.do">대기</a></li>
+							<li><a href="checkDocListView.do">확인</a></li>
+							<li><a href="scheduledDocListView.do">예정</a></li>
+							<li><a href="progressListView.do">진행</a></li>
 						</ul>
 		
 						<div class="H-personnel-subNavi Depth01-2">
-							<li class="subTitle">
-								<a href="#">문서함</a>
+							<li class="subTitle" style="cursor:pointer;">
+								<span>문서함</span>
 							</li>
 						</div>
 						<ul id="Tab2" class="H-personnel-subNavi Depth02">
-							<li><a href="approvalCompleteAllListView.do" id="">전체</a></li>
-							<li><a href="draftListView.do" id="">기안</a></li>
-							<li><a href="approvalListView.do" id="">결재</a></li>
-							<li><a href="receiveListView.do" id="">수신</a></li>
-							<li><a href="referenceListView.do" id="">회람</a></li>
-							<li><a href="rejectListView.do" id="">반려</a></li>
-							<li><a href="#" id="">임시 저장</a></li>
+							<li><a href="approvalCompleteAllListView.do">전체</a></li>
+							<li><a href="draftListView.do">기안</a></li>
+							<li><a href="approvalListView.do">결재</a></li>
+							<li><a href="receiveListView.do">수신</a></li>
+							<li><a href="referenceListView.do">회람</a></li>
+							<li><a href="rejectListView.do">반려</a></li>
 						</ul>
-						<div class="H-personnel-subNavi Depth01-3">
-							<li class="subTitle"><a href="#">전자결재 관리자</a></li>
-						</div>
-						<ul id="Tab3" class="H-personnel-subNavi Depth02">
-							<li><a href="approvalAllDList.do" id="">전체 문서 관리</a></li>
-							<li><a href="approvalDeleteDList.do" id="">삭제 문서 관리</a></li>
-						</ul>
+
+						<c:if test="${ loginUser.lankNo < 4 }">
+							<div class="H-personnel-subNavi Depth01-3">
+								<li class="subTitle" style="cursor:pointer;">
+								    <span>${ loginUser.deptName }부 문서 관리</span>
+								</li>
+							</div>
+								<ul id="Tab3" class="H-personnel-subNavi Depth02">
+									<li><a href="adminAllList.do">전체 문서 관리</a></li>
+									<li><a href="adminDeleteList.do">삭제 문서 관리</a></li>
+								</ul>
+						</c:if>
 					</div>
 				</div>
 				<script>
@@ -587,11 +591,9 @@
     $('#cb1').on('click',function(){
     	// 기안 시 보이는 모달
     	var apprExist = $("#tr2").children();
-   		var chkExist = $("#tr6").children();
-   		var recExist = $("#tr9").children();
    		
-   		// 결재선이 존재할 때
-   		if(apprExist.eq(1).find('.tdStaff').length || chkExist.eq(1).find('.tdStaff').length || recExist.eq(1).find('.tdStaff').length){
+    	// 결재자가 존재할 때만 기안 가능하도록
+   		if(apprExist.eq(1).find('.tdStaff').length){
 	    	modal('drafterCheck');
    		}else{
    			alert("결재선을 지정하세요");

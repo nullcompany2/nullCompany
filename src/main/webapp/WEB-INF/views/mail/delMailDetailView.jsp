@@ -100,10 +100,15 @@
 				
 				<div id="viewmailContent"> 
 
-				 <c:if test="${ !empty ma.mFileName }">
-				첨부파일 : <a href="${contextPath }/resources/mailuploadFiles/${ma.mFileName}"
-							download="${ ma.mFileName }">${ ma.mFileName }</a> <br> <br>
-				</c:if> 
+				<c:choose>
+				 <c:when test="${ !empty ma.mFileName }">
+				첨부파일 : <a href="${ contextPath }/resources/mailUploadFiles/${ma.mFileName}"
+							download="${ contextPath }/resources/mailUploadFiles/${ ma.mFileName }">${ ma.mFileName }</a> <br> <br>
+				</c:when>
+				<c:otherwise>
+				첨부파일 : 없음 <br> <br>
+				</c:otherwise>
+				</c:choose>
 				${ma.mContent}
 				
 				</div>

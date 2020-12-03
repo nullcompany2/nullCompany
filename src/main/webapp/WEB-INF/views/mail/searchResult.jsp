@@ -45,19 +45,22 @@
 		padding : 3px;
 		font-size : 15px;
 		margin-bottom : 5px;
-		margin-left:35%;
+		left:750px;
 		
 	}
 	
 	#search {
+		
 		border: 1px solid #3E4247;
 		border-radius : 3px;
 		padding : 3px;
 		font-size : 15px;
-		margin-bottom : 5px;
-		margin-left:5px;
-		
+		left:860px;				
 	
+	}
+	
+	#category,#search,#searchBtn{
+	position : absolute;
 	}
 	
 	#searchBtn {
@@ -67,8 +70,8 @@
 	border-radius:3px;
 	border:none;
 	color:white;
-	margin-bottom :5px;
 	cursor :pointer;
+	left:1040px;		
 		
 	}
 	
@@ -118,6 +121,15 @@
         <div class="contents">
             <div class="contents-title">
                 <span class="ct1">받은 편지함</span>
+                <select id="category"> 
+				<option>-----</option>
+				<option value="받는사람">받는사람</option>
+				<option value="제목">제목</option>
+				<option value="내용">내용</option>
+				<option value="제목내용">제목 + 내용</option>
+			</select>
+			<input  id="search" type="text" placeholder="메일 검색"> 
+			<button id="searchBtn" onclick="goSearch();" > 검색 </button> <br>
 			</div>
 			
 			<div style="margin-left:40px;">
@@ -128,24 +140,23 @@
 						<span id="countAll"> </span> <br><br>
 						
 						<div id="tableDiv"> 
-						<h3 style="margin-left : 20px;">  " ${search} "  검색 결과입니다. </h3>
+						<h3 style="margin-left : 10px;">  " ${search} "  검색 결과입니다. </h3>
 						<br>
 					<c:choose>
 				    <c:when test="${!empty list }">
 				        <c:forEach var="ma" items="${list}">
 				        
 						 <table align="left" cellspacing="0" width="90%" id="tb">
-						 
+						
+						<c:url var="mailWriteId" value="mailWriteId.do">
+							<c:param name="memNo" value="${ma.memNo}" />
+						</c:url>
+						
 						 <c:url var="maildetailView" value="maildetailView.do">
 							<c:param name="mailNo" value="${ma.mailNo}" />
 						</c:url>
 						
 						<tr class="trMail" onClick="location.href='${maildetailView}'"> 
-						
-						<c:url var="mailWriteId" value="mailWriteId.do">
-							<c:param name="memNo" value="${ma.memNo}" />
-						</c:url>
-							<td> &nbsp;&nbsp;&nbsp; </td>
 							<td align="left"><a id="idWrite" onClick="event.stopPropagation(); location.href='${mailWriteId}'">${ma.name} < ${ma.sender} > </a></td>
 							<td>${ ma.mTitle }</td>
 							<td align="right"> ${ma.sendDate }</td>
@@ -162,15 +173,7 @@
 			</div>
 			
 		<br>
-			<select id="category"> 
-				<option>-----</option>
-				<option value="받는사람">받는사람</option>
-				<option value="제목">제목</option>
-				<option value="내용">내용</option>
-				<option value="제목내용">제목 + 내용</option>
-			</select>
-			<input  id="search" type="text" placeholder="메일 검색"> 
-			<button id="searchBtn" onclick="goSearch();" > 검색 </button> <br>
+			
         </div>
         
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.js"></script>
@@ -239,8 +242,6 @@
     	
    		function goSearch(){
    	
-    	/* alert($("#category").children("option:selected").text()); */
-    	
    		var category=  $("#category").children("option:selected").val();
     	var search = $("#search").val();
     	

@@ -108,12 +108,11 @@
                 <span class="text"></span> <input type="text" name="id" placeholder="ID" required> <br>
                 <span class="text"></span> <input type="password" name="pwd" placeholder="PASSWORD" required> <br> <br> 
     			
-                <button>  SIGN IN</button> <br>
+                <button>SIGN IN</button> <br>
                 <a href="enrollView.do">아이디 등록 신청  </a> 
                
       			</form>
           </div>
-         <p style="text-align:center; font-size:15px; color:black;">Powered by Us  </p>  
         </div>
         </div>
        <div style="background:black; color:#BABDC0; text-align:center;"> <span class="logo">  </span>    &nbsp; </div> 

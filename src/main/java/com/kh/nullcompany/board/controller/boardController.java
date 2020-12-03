@@ -118,6 +118,20 @@ public class boardController {
 		}
 	}
 	
+	@RequestMapping("bcDelete.do")
+	public String bcDelete(bcomment c) {
+		
+		
+		int result = bService.deletebComment(c);
+		
+		if(result > 0) {
+			return "success";
+		}else {
+			 return "common/errorPage";
+		}
+	}
+	
+	
 	@RequestMapping("bwrite.do")
 	public String insertNotice(board b,HttpServletRequest request,
 			@RequestParam(name="uploadFile",required=false)MultipartFile file) {

@@ -174,7 +174,10 @@ tr>td {
 		<h4 style="color: #477A8F; margin-bottom: 25px;">예약 취소</h4>
 		<div class="n-emp-i">예약 삭제 하시겠습니까?</div>
 		<div style="text-align: center; margin-top: 30px;">
-			<input type="hidden" id="rNo2" >
+			<input type="hidden" id="rNo3" >
+			<input type="hidden" id="rDate3" >
+			<input type="hidden" id="startTime3" >
+			<input type="hidden" id="rReturn3" >
 			<button class="close_btn" id="modal_delete_btn"
 				style="background: #fff; color: #2c86dc; padding: 5px 27px 6px; border: 1px solid #c8c8c8">확인</button>
 			<button class="close_btn"
@@ -271,8 +274,11 @@ tr>td {
 					});
 		}
 
-		$('#delete_btn').on('click', function() {
-			$("#rNo2").val($(event.target).parent().siblings()[6].value);
+		$(document).on('click', '#delete_btn', function(){
+			$("#rNo3").val($(event.target).parent().siblings()[6].value);
+			$("#rDate3").val($(event.target).parent().siblings()[2].value);
+			$("#startTime3").val($(event.target).parent().siblings()[3].value);
+			$("#rReturn3").val($(event.target).parent().siblings()[7].value);
 			modal('delete_modal');
 		});
 		
@@ -298,8 +304,19 @@ tr>td {
 		});
 		
 		$("#modal_delete_btn").on("click",function(){
-			var rNo = $("#rNo2").val();
+			var rNo = $("#rNo3").val();
+			var rReturn = $("#rReturn3").val();
+	        var sd = $("#rDate3").val();
+	        var sd2 = sd.split("-");
+	        var sdt = $("#startTime3").val();
+	        var sdt2 = sdt.split(':'); 
+	        var sd3 = new Date(sd2[0],sd2[1]-1,sd2[2],sdt2[0],sdt2[1]);
+	        var date = new Date();
+			if(sd3 <= date ){
+				alert("대여하기 전에만 삭제가 가능합니다.");
+			}else {				
 			location.href="reservationDelete.do?rNo="+rNo+"&rMember=${loginUser.id}";
+			}
 		});
 	</script>
 </body>

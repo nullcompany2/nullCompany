@@ -122,19 +122,6 @@ a:active {
 	cursor : pointer;
 }
 
-#auto #searchAddress {
-	position : absolute;
-	background: #477A8F; 
-	color : white;
-	right : 312px;
-	top : 143px;
-	font-size : 12px;
-	padding : 3.7px 6px 3.7px 3.5px;
-	display : none;
-	border-radius : 0px 6px 6px 0px;
-
-}
-
 #communitymodal {
 	display: none;
 	width: 880px;
@@ -459,7 +446,6 @@ span#fileName{
 							 color: white; 
 							 padding: 0px 8px 0px 8px;">+</span>
 							 	
-							 <span id="searchAddress"> 주소 검색 </span>
 							 	<div id="autoAddress"> 
 							 	 <!--  자동 완성 검색 결과  -->
 							 	</div>
@@ -474,8 +460,10 @@ span#fileName{
 						
 						&nbsp;파일첨부
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						
 						<input type="file" name="uploadPhoto" id="ex_file" style="display:none;" onchange="changeFile(event)"/>
 						<span id="fileUp">파일 선택하기</span> <span id="fileName"></span>
+						
 						<br> <br>
 						
 						<!--  썸머노트  -->

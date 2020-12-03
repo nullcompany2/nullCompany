@@ -35,6 +35,10 @@ public class ApprovalDao {
 		
 		return (ArrayList)sqlSession.selectList("approvalMapper.selectProgressAllList", memNo, rowBounds);
 	}
+	
+	public ArrayList<Document> selectProgressAllList(int memNo) {
+		return (ArrayList)sqlSession.selectList("approvalMapper.selectProgressAllList", memNo);
+	}
 
 	public ArrayList<Step> selectStepList(String docTempNo) {
 		return (ArrayList)sqlSession.selectList("approvalMapper.selectStepList", docTempNo);
@@ -48,6 +52,10 @@ public class ApprovalDao {
 		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
 		return (ArrayList)sqlSession.selectList("approvalMapper.selectCompleteAllList", memNo, rowBounds);
+	}
+	
+	public ArrayList<Document> selectCompleteAllList(int memNo) {
+		return (ArrayList)sqlSession.selectList("approvalMapper.selectCompleteAllList", memNo);
 	}
 
 	public Document approvalDetail(String docNo) {
@@ -207,7 +215,7 @@ public class ApprovalDao {
 	}
 
 	public int insertAbsenceInfo(Absence a) {
-		return sqlSession.insert("approvalMapper.insertAbsenceInfo",a);
+		return sqlSession.insert("approvalMapper.insertAbsenceInfo", a);
 	}
 
 	public int recordingAbsence(int drafterNo, String startDate, String reason) {
@@ -217,7 +225,34 @@ public class ApprovalDao {
 		map.put("startDate", startDate);
 		map.put("reason", reason);
 		
-		return sqlSession.insert("approvalMapper.recordingAbsence",map);
+		return sqlSession.insert("approvalMapper.recordingAbsence", map);
+	}
+
+	public int insertResignInfo(Resign r) {
+		return sqlSession.insert("approvalMapper.insertResignInfo", r);
+	}
+
+	public int getAdminAllListCount(int deptNo) {
+		return sqlSession.selectOne("approvalMapper.getAdminAllListCount", deptNo);
+	}
+
+	public ArrayList<Document> selectAdminAllList(int deptNo, PageInfo pi) {
+		
+		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("approvalMapper.selectAdminAllList", deptNo, rowBounds);
+	}
+
+	public int getAdminDeleteListCount(int deptNo) {
+		return sqlSession.selectOne("approvalMapper.getAdminDeleteListCount", deptNo);
+	}
+
+	public ArrayList<Document> selectAdminDeleteList(int deptNo, PageInfo pi) {
+		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("approvalMapper.selectAdminDeleteList", deptNo, rowBounds);
 	}
 
 }

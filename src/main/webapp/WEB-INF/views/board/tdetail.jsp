@@ -117,7 +117,7 @@ a {
 }
 
 .ct1 {
-	margin-left: 50px;
+	margin-left: 16px;
 	font-size: 20px;
 	font-weight: bolder;
 }
@@ -318,6 +318,8 @@ tr>td {
       <c:import url="../common/boardSubNav.jsp" />
       <!-- 게시판 -->
       <div class="tdeatil">
+      <span class="ct1" style="margin-right: 10%;"> ${loginUser.deptName}팀 게시판</span>
+      <br> <br>
          <div class="board_head">
             <div style="width: 90%; margin: auto;">
                <form method="post" action="">
@@ -337,7 +339,7 @@ tr>td {
                   <button
                      style="font-size: 18px; margin: 7px 5px 7px 5px; background: none; border: none; color: #477A8F; cursor: pointer;"
                      OnClick="javascript:CopyUrlToClipboard()">주소 복사</button>
-                  <a href="javascript:history.go(-1);"> <input id=""
+                  <a href="tnotice.do"> <input id=""
                      type="button" value="이전으로" /></a>
                  
                      
@@ -348,8 +350,6 @@ tr>td {
 
          </div>
          <div class="board_body">
-            <br>&nbsp;&nbsp;&nbsp;<a href="#" class="icon impt "
-               ng-click='setImportant()'><span class="blind">별</span></a>
 
             <table class="tdeatil" align="center" width="800px">
                <tr>
@@ -360,7 +360,7 @@ tr>td {
                </tr>
                <tr>
 
-                  <td><span style="color: #7f7f7f;">${t.tWriter }</span></td>
+                  <td><span style="color: #7f7f7f;">작성자 &nbsp;&nbsp;${t.tWriter }</span></td>
                   <td style="color: #7f7f7f;">읽은 사람&nbsp;&nbsp;&nbsp;
                      &nbsp;${t.tCount }</td>
 
@@ -374,7 +374,7 @@ tr>td {
 							<c:when test="${ !empty t.originalFileName }">
 									<a href="${contextPath }/resources/buploadFiles/${t.renameFileName}"
 										download="${ t.originalFileName }">${ t.originalFileName }</a>
-                           <
+                           
                     		 </c:when>
 								<c:when test="${ empty t.originalFileName }">
                      			   없음
@@ -408,7 +408,7 @@ tr>td {
          </td>
       </tr>
    </table>
-   <table class="table-bordered" align="center" width="800"  cellspacing="0" id="rtb">
+   <table align="center" width="800"  cellspacing="0" id="rtb">
       <thead>
          <tr>
             <td colspan="5"><b id="tcCount"></b></td>
@@ -492,15 +492,24 @@ tr>td {
                   for(var i in data){
                      $tr = $("<tr text-align:'center'>");
                      $tncWriter = $("<td width='100'>").text(data[i].tncWriter);
-                     $tncContent=$("<td>").text(data[i].tncContent);
+                     $tncContent=$("<td width='500'>").text(data[i].tncContent);
                      $tncCreateDate=$("<td width='200'>").text(data[i].tncCreateDate);
-                     $tncUpdate=$("<td><button class='btn btn-default btn-xs' id='cUpdate'>수정</button></td>")
-                     $tncDelete=$("<td><button class='btn btn-default btn-xs' id='btnDelete'>삭제</button></td>")
+                     $tncDelete=$("<td><button class='btn btn-default btn-xs' id='tcDelete'>삭제</button></td>")
                      
+                     
+                      $("#tcDelete").click(function(){
+     					 if (confirm("정말로 삭제하시겠습니까? ") == true){ 
+
+     						document.location.href='bcDelete.do?bcNo='+ test1;
+
+ 	      				  }else{   //취소
+
+ 	       			     return;
+ 	       			 }
+ 						});
                      $tr.append($tncWriter);
                      $tr.append($tncContent);
                      $tr.append($tncCreateDate);
-                     $tr.append($tncUpdate)
                      $tr.append($tncDelete)
                      $tableBody.append($tr);
                      

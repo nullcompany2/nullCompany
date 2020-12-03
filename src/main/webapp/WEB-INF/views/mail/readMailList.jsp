@@ -42,24 +42,26 @@
 	}
 
 	#category {
-		position:relatived;
-		margin-left:35%;
 		border : none;
 		padding : 3px;
 		font-size : 15px;
 		margin-bottom : 5px;
+		left:750px;
 		
 	}
 	
 	#search {
-		position:relatived;
+		
 		border: 1px solid #3E4247;
 		border-radius : 3px;
 		padding : 3px;
 		font-size : 15px;
-		margin-bottom : 5px;
-		margin-left:5px;
+		left:860px;				
 	
+	}
+	
+	#category,#search,#searchBtn{
+	position : absolute;
 	}
 	
 	#searchBtn {
@@ -69,8 +71,8 @@
 	border-radius:3px;
 	border:none;
 	color:white;
-	margin-bottom :5px;
 	cursor :pointer;
+	left:1040px;		
 		
 	}
 	
@@ -78,6 +80,7 @@
 	margin-bottom : 10px;
 	padding-bottom : 10px;
 	border-bottom:  1px solid #ECECEC;
+	table-layout : fixed;
 	}
 	
 	#tb:last-child {
@@ -103,6 +106,10 @@
 	color : black;
 	}
 	
+	#tb #firstTd{
+	width : 35px;
+	}
+	
 </style>
 
 <body>
@@ -111,6 +118,15 @@
         <div class="contents">
             <div class="contents-title">
                 <span class="ct1">받은 편지함</span>
+                <select id="category"> 
+				<option>-----</option>
+				<option value="보낸사람">보낸 사람</option>
+				<option value="제목">제목</option>
+				<option value="내용">내용</option>
+				<option value="제목내용">제목 + 내용</option>
+			</select>
+			<input  id="search" type="text" placeholder="메일 검색"> 
+			<button id="searchBtn" onclick="goSearch();" > 검색 </button>
 			</div>
 			
 			<div style="margin-left:40px;">
@@ -147,7 +163,7 @@
 							<c:param name="memNo" value="${ma.memNo}" />
 						</c:url>
 						
-							<td>&nbsp;&nbsp;<input type="checkbox" onClick="event.cancelBubble=true" name="mail"></td>
+							<td id="firstTd">&nbsp;&nbsp;<input type="checkbox" onClick="event.cancelBubble=true" name="mail"></td>
 							<td align="left"><a id="idWrite" onClick="event.stopPropagation(); location.href='${mailWriteId}'">${ma.name} < ${ma.sender} > </a></td>
 							<td>${ ma.mTitle }</td>
 							<td align="right"> ${ma.sendDate }</td>
@@ -199,14 +215,7 @@
 		</table>
 		<br>
 			
-			<select id="category"> 
-				<option> ----- </option>
-				<option> 보낸사람 </option>
-				<option> 제목 </option>
-				<option> 내용 </option>
-			</select>
-			<input  id="search" type="text" placeholder="메일 검색"> 
-			<button id="searchBtn" > 검색 </button> <br>
+			
 			
         </div>
         
@@ -219,31 +228,54 @@
         	 //선택된 갯수
         	
         	
-            //최상단 체크박스 클릭
+ //최상단 체크박스 클릭
             
             $("#checkall").click(function(){
                 //클릭되었으면
                 if($("#checkall").prop("checked")){
                     //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
                     $("input[name=mail]").prop("checked",true);
-                    $(".trMail").css("background","#ECECEC");
-                    $("#hide").show();
-                    $("#select").hide(); 
-                    
-                    var count = $("input:checkbox[name=mail]:checked").length;
-                   	$("#count").text(count);
+                    $("#select").hide();
+                    $("#hide").show(); 
                    	
                     //클릭이 안되있으면
-                }else{
+                }else {
                     //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
                     $("input[name=mail]").prop("checked",false);
-                    $(".trMail").css("background","white");
-                    $("#hide").hide();
-                    $("#select").show(); 
+                    $("#hide").hide(); 
+                    $("#select").show();  
+                  
+                }
+            })
+            
+              $("input[name=mail]").click(function(e){
+                //클릭되었으면
+                if($(e.target).prop("checked")){
+                    //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
+                    $(e.target).prop("checked",true);
+                    $("#select").hide();
+                    $("#hide").show(); 
+                   	
+                    //클릭이 안되있으면
+                }else {
+                    //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
+                    $(e.target).prop("checked",false);
+                    var j =0;
+                    for( var i =0; i<$("input[name=mail]").length;i++){
+	                    console.log($("input[name=mail]")[i].checked);
+                    	if($("input[name=mail]")[i].checked){
+                    		j++;
+                    	};
+                    }
+                    if(j == 0){
+	                    $("#hide").hide(); 
+	                    $("#select").show();  
+                    	$("#checkall").prop("checked",false);
+                    }
+                  
                 }
             })
         })
-	
 	
         $(document).ready(function(){
 		   $('table tr').mouseover(function(){
@@ -279,6 +311,65 @@
     			document.location.href='recieveMail.do';
     		}
     		});
+        
+        // 검색 카테고리 분류 
+  		
+    	
+   		function goSearch(){
+   	
+    	/* alert($("#category").children("option:selected").text()); */
+    	
+   		var category=  $("#category").children("option:selected").val();
+    	var search = $("#search").val();
+    	
+    	if(category =="-----"){
+      	  alert("분류를 선택하지 않았습니다.");
+    	}else if(search != ""){
+    			document.location.href='searchRecieve.do?category='+category+'&search='+search;	
+    	}
+    	  }
+    
+    
+   	 // 체크 박스 삭제 하기 
+     	 var mailNoArr = new Array();
+     
+     	 $("#delMail").click(function(){
+      	
+     		 if (confirm("정말로 삭제하시겠습니까? 휴지통으로 이동합니다.") == true){ 
+     		 mailNoArr = new Array();
+		
+          var page = "받은메일";
+          var size = $('input:checkbox[name="mail"]').length;
+          for( var i =0;i<size;i++ ){
+             if($('input:checkbox[name="mail"]')[i].checked){
+          	   mailNoArr.push($('input:checkbox[name="mail"]')[i].value);
+          	   	console.log(mailNoArr);
+          	   document.location.href='delMail.do?mailNoArr=' + mailNoArr + '&page=' + page;
+             	}
+            }
+            
+          }
+             
+      	});
+   	
+   	 // 체크 박스 완전 삭제하기 
+     $("#realdelMail").click(function(){
+    	 if (confirm("완전 삭제하시면 복구 할 수 없습니다. 정말로 삭제하시겠습니까?") == true){ 
+    		 mailNoArr = new Array();
+    		
+    		 var page = "받은메일";
+             var size = $('input:checkbox[name="mail"]').length;
+             for( var i =0;i<size;i++ ){
+                if($('input:checkbox[name="mail"]')[i].checked){
+             	   mailNoArr.push($('input:checkbox[name="mail"]')[i].value);
+             	   	console.log(mailNoArr);
+             	   document.location.href='realDelMail.do?mailNoArr=' + mailNoArr + '&page=' + page;
+                	}
+               }
+               
+             }
+                
+         	});
         
         </script>
 		

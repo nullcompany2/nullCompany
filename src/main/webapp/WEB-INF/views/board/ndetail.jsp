@@ -120,7 +120,7 @@ a {
 }
 
 .ct1 {
-	margin-left: 50px;
+	margin-left: 16px;
 	font-size: 20px;
 	font-weight: bolder;
 }
@@ -321,6 +321,8 @@ tr>td {
 		<c:import url="../common/boardSubNav.jsp" />
 		<!-- 게시판 -->
 		<div class="ndetail">
+		<span class="ct1" style="margin-right: 10%;">사내공지 게시판</span>
+		 <br> <br>
 			<div class="board_head">
 				<div style="width: 90%; margin: auto;">
 					<form method="post" action="">
@@ -339,7 +341,7 @@ tr>td {
 							style="position: absolute; top: 0; left: 0; width: 1px; height: 1px; margin: 0; padding: 0; border: 0;">
 						<button style="font-size: 18px; margin: 7px 5px 7px 5px; background: none; border: none; color: #477A8F; cursor: pointer;"
 							OnClick="javascript:CopyUrlToClipboard()">주소 복사</button>
-						<a href="javascript:history.go(-1);"> <input id=""
+						<a href="notice.do"> <input id=""
 							type="button" value="이전으로" /></a>
 			
 					</form>
@@ -347,11 +349,12 @@ tr>td {
 
 			</div>
 			<div class="board_body" style="margin:10px;">
+				
 				<br>&nbsp;&nbsp;&nbsp;<a href="#" class="icon impt "
 					ng-click='setImportant()'><span class="blind">별</span></a>
-
-				<table class="deatil" align="center" width="800px">
+				<table class="deatil" align="center" width="900px">
 					<tr>
+					
 						<td width=140px;><img class="myphoto"
 							src="resources/images/person.png"></td>
 						<td colspan="5"
@@ -359,11 +362,11 @@ tr>td {
 					</tr>
 					<tr>
 
-						<td><span style="color: #7f7f7f;">${n.nWriter }</span></td>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<td style="color: #7f7f7f;">읽은 사람&nbsp;&nbsp;&nbsp; &nbsp;${n.nCount }</td>
+						<td><span style="color: #7f7f7f;">${n.nWriter }&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+						
+						<td style="color: #7f7f7f;">읽은 사람 &nbsp;:&nbsp;&nbsp;${n.nCount }</td>
 
-						<td><span style="color: #7f7f7f;">${n.nCreateDate }</span></td>
+						<td><span style="color: #7f7f7f;">작성일 : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${n.nCreateDate }</span></td>
 
 					</tr>
 					<tr>
@@ -373,7 +376,7 @@ tr>td {
 							<c:when test="${ !empty n.originalFileName }">
 									<a href="${contextPath }/resources/buploadFiles/${n.renameFileName}"
 										download="${ n.originalFileName }">${ n.originalFileName }</a>
-                           <
+                           
                     		 </c:when>
 								<c:when test="${ empty n.originalFileName }">
                      			   없음
@@ -407,7 +410,7 @@ tr>td {
 					</td>
 				</tr>
 			</table>
-			<table class="table-bordered" align="center" width="800"
+			<table  align="center" width="800"
 				cellspacing="0" id="rtb">
 				<thead>
 					<tr>
@@ -492,15 +495,23 @@ tr>td {
                   for(var i in data){
                      $tr = $("<tr text-align:'center'>");
                      $ncWriter = $("<td width='100'>").text(data[i].ncWriter);
-                     $ncContent=$("<td>").text(data[i].ncContent);
+                     $ncContent=$("<td width='500'>").text(data[i].ncContent);
                      $ncCreateDate=$("<td width='200'>").text(data[i].ncCreateDate);
-                     $ncUpdate=$("<td><button class='btn btn-default btn-xs' id='cUpdate'>수정</button></td>")
-                     $ncDelete=$("<td><button class='btn btn-default btn-xs' id='btnDelete'>삭제</button></td>")
+ 					$ncDelete=$("<td><input type='button' id='ncDelete' value='삭제'/></td>")
                      
+                     $("#ncDelete").click(function(){
+     					 if (confirm("정말로 삭제하시겠습니까? ") == true){ 
+
+     						document.location.href='ncDelete.do?ncNo='+ test1;
+
+ 	      				  }else{   //취소
+
+ 	       			     return;
+ 	       			 }
+ 						});
                      $tr.append($ncWriter);
                      $tr.append($ncContent);
                      $tr.append($ncCreateDate);
-                     $tr.append($ncUpdate)
                      $tr.append($ncDelete)
                      $tableBody.append($tr);
                      

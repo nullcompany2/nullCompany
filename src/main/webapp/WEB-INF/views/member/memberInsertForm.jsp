@@ -221,7 +221,6 @@
                     </form>
             </div>
             <br> <br>
-  			 <p style="text-align:center; font-size:13px; color:#8E98A4;">Powered by Us  </p>  
         </div>
     
         <script> 
