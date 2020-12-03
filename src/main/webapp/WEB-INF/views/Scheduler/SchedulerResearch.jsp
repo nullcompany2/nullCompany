@@ -785,7 +785,7 @@ cursor: pointer;
 								<tr>
 									<td class="tbcontent" style="width: 100px; padding-top: 5px;"><label
 										for="" style="font-size: 14px;">일정제목</label></td>
-									<td class="tbcontent" colspan="2"><p class="tbinput" id="de_sche_name" style="width: 130px;"></p>
+									<td class="tbcontent" colspan="2"><p class="tbinput" id="de_sche_name" style="width: 170px;"></p>
 										<input type="hidden" id="de_sche_no" /><input type="hidden" id="de_Cal_no" /></td>
 									
 								</tr>
@@ -1861,6 +1861,7 @@ cursor: pointer;
 			     			
 			                 var calName = $('#edit_publiccal_name').val();
 			                 var color = document.querySelector('#colorselect3').style.background;
+			                 console.log(color);
 			                 var enroll = $('#enrollname2').text();
 			                 var enrollArray = enroll.split(',');
 			                 var look = $('#lookname2').text();
@@ -1897,7 +1898,7 @@ cursor: pointer;
 			                         data: {
 			                             "calName": calName,
 			                             "calNo": $('#edit_public_calno').val(),
-			                             "color": document.querySelector('#colorselect3').style.background,
+			                             "color":color,
 			                             "enrollMember": enrollArray,
 			                             "lookMember": lookArray
 			                         },
