@@ -118,7 +118,7 @@ function detailMemberInfo(){
 			<!-- 세부 네비끝 -->
 
 				<!-- 내부 컨텐츠 -->
-			<div class="contents">
+			<div class="contents" style="width: 2000px; overflow: scroll">
 				<div class="contents-title">
 					<span class="ct1">직위 관리</span>
 					
@@ -139,7 +139,10 @@ function detailMemberInfo(){
 					</div>
 					<a style="    color: #676767;
     font-size: 14px;
-    cursor: auto;">※ 직위 삭제는 해당 직위인 사용자가 0명 일 때에만 가능합니다.</a>
+    cursor: auto;">※ 직위 삭제는 해당 직위인 사용자가 0명 일 때 가능합니다.<br>
+    직위 등급은 [직위 추가]버튼으로 총 15개까지 생성할 수 있습니다. <br><br>
+    설정한 직위 등급은 전자결재 설정에 적용됩니다.
+    </a>
 					<table class="tg" style="margin-top: 15px;">
 						<thead>
 						  <tr>

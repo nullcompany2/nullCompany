@@ -372,6 +372,8 @@ public class ScheduleController {
 
 		sService.updateCommunity(Calendar);
 		
+		System.out.println(Calendar);
+		
 		int result2 = (sService.editIndiCal_Sche(Calendar.getCalNo()));
 		
 		// 등록권한 리스트
