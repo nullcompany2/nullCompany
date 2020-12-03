@@ -23,15 +23,23 @@ public interface ApprovalService {
 	int getProgressAllListCount(int memNo);
 
 	/**
-	 * 1_2. 진행 중인 문서 --------> 게시판 리스트 조회
+	 * 1_2. 진행 중인 문서 --------> 게시판 리스트 조회(페이징처리)
 	 * @param memNo 
 	 * @param pi
 	 * @return
 	 */
 	ArrayList<Document> selectProgressAllList(int memNo, PageInfo pi);
 
+	
 	/**
-	 * 1_3. 게시판 스텝 조회(리스트 상태값 뽑기)
+	 * 1_3. 진행 중인 문서 --------> 게시판 리스트 조회(페이징 처리 안함)
+	 * @param memNo
+	 * @return
+	 */
+	ArrayList<Document> selectProgressAllList(int memNo);
+	
+	/**
+	 * 1_4. 게시판 스텝 조회(리스트 상태값 뽑기)
 	 * @param memNo
 	 * @param docTempNo
 	 * @return
@@ -46,12 +54,19 @@ public interface ApprovalService {
 	int getCompleteAllListCount(int memNo);
 
 	/**
-	 * 2_2. 문서함 ------> 게시판 리스트 조회 
+	 * 2_2. 문서함 ------> 게시판 리스트 조회(페이징처리) 
 	 * @param memNo
 	 * @param pi
 	 * @return
 	 */
 	ArrayList<Document> selectCompleteAllList(int memNo, PageInfo pi);
+	
+	/**
+	 * 2_3. 문서함 ------> 게시판 리스트 조회(페이징처리 안함) 
+	 * @param memNo
+	 * @return
+	 */
+	ArrayList<Document> selectCompleteAllList(int memNo);
 
 	/**
 	 * 3_1. 문서 한 개 정보 가져오기
@@ -262,7 +277,41 @@ public interface ApprovalService {
 	 */
 	int recordingAbsence(int drafterNo, String startDate, String reason);
 
+	/**
+	 * 7_10 사직 정보 기록하기(디테일에서 보여줄 내용)
+	 * @param r
+	 * @return
+	 */
+	int insertResignInfo(Resign r);
 
+	/**
+	 * 8_1 부서별 전체 문서 리스트 갯수
+	 * @param deptNo
+	 * @return
+	 */
+	int getAdminAllListCount(int deptNo);
 
+	/**
+	 * 8_2 부서별 전체 문서 리스트
+	 * @param deptNo
+	 * @param pi
+	 * @return
+	 */
+	ArrayList<Document> selectAdminAllList(int deptNo, PageInfo pi);
+
+	/**
+	 * 8_3 부서별 삭제 문서 리스트 갯수
+	 * @param deptNo
+	 * @return
+	 */
+	int getAdminDeleteListCount(int deptNo);
+
+	/**
+	 * 8_4 부서별 삭제 문서 리스트
+	 * @param deptNo
+	 * @param pi
+	 * @return
+	 */
+	ArrayList<Document> selectAdminDeleteList(int deptNo, PageInfo pi);
 
 }

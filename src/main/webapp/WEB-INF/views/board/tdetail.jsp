@@ -319,6 +319,7 @@ tr>td {
       <!-- 게시판 -->
       <div class="tdeatil">
       <span class="ct1" style="margin-right: 10%;"> ${loginUser.deptName}팀 게시판</span>
+      <br> <br>
          <div class="board_head">
             <div style="width: 90%; margin: auto;">
                <form method="post" action="">
@@ -349,8 +350,6 @@ tr>td {
 
          </div>
          <div class="board_body">
-            <br>&nbsp;&nbsp;&nbsp;<a href="#" class="icon impt "
-               ng-click='setImportant()'><span class="blind">별</span></a>
 
             <table class="tdeatil" align="center" width="800px">
                <tr>

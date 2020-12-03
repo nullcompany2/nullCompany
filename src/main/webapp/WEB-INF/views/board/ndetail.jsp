@@ -322,6 +322,7 @@ tr>td {
 		<!-- 게시판 -->
 		<div class="ndetail">
 		<span class="ct1" style="margin-right: 10%;">사내공지 게시판</span>
+		 <br> <br>
 			<div class="board_head">
 				<div style="width: 90%; margin: auto;">
 					<form method="post" action="">
@@ -363,7 +364,7 @@ tr>td {
 
 						<td><span style="color: #7f7f7f;">${n.nWriter }&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
 						
-						<td style="color: #7f7f7f;">&nbsp;&nbsp;&nbsp;&nbsp;읽은 사람 &nbsp;:&nbsp;&nbsp;${n.nCount }</td>
+						<td style="color: #7f7f7f;">읽은 사람 &nbsp;:&nbsp;&nbsp;${n.nCount }</td>
 
 						<td><span style="color: #7f7f7f;">작성일 : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${n.nCreateDate }</span></td>
 

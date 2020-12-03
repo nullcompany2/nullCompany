@@ -562,7 +562,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 						<div id="edit_communitymodal" class="modal-dragscroll">
 						<h4 style="color: #477A8F; margin-bottom: 15px; margin-top: 12px;">공유
 							캘린더 수정</h4>
-					    <button class="modal-close-btn cursor" >x</button>
+					    <a class="modal-close-btn cursor" >x</a>
 						<label for="" style="font-size: 14px;">캘린더 이름 </label>
 						&nbsp;&nbsp; <input type="text" id="edit_publiccal_name"> &nbsp;
 							<input type="hidden" id="edit_public_calno"/>
@@ -1293,12 +1293,20 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 	
 	// 검색
 	 $("#searchbtn").on('click',function () {
-		var text = $("#search_text").val();
-		var select_option = $("#search_option option:selected").val();
-		document.location.href='SchedulerSearch.do?text='+text+'&select_option='+select_option;	
+			var text = $("#search_text").val();
+			
+			 if(text == ''){
+				 alert("일정 내용을 입력해주세요.")
+				 return false;}
+			 
+			var select_option = $("#search_option option:selected").val();
+			document.location.href='SchedulerSearch.do?text='+text+'&select_option='+select_option;	
+			
+		 
+			 })
 		
 		 
-	 })
+	
 	 
 	</script>
 	<script>

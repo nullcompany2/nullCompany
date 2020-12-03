@@ -26,6 +26,7 @@ public class Document {
 	private String dStatus;           // 문서 삭제여부
 	private String sStatus;           // 사용자가 보는 상태값
 	private int stepCount;            // 문서 결재자 수
+	private boolean admin;            // 문서 관리자인지 여부확인
 	
 	public Document() {
 		super();
@@ -35,7 +36,7 @@ public class Document {
 	public Document(String docTempNo, String docNo, int formNo, String formName, String formCode, int drafterNo,
 			String drafterName, int drafterDeptNo, String drafterDeptName, int drafterRankNo, String drafterRankName,
 			String dTitle, String dContent, String fileName, Date draftDate, Date completeDate, int turnNo,
-			String rStatus, String dStatus, String sStatus, int stepCount) {
+			String rStatus, String dStatus, String sStatus, int stepCount, boolean admin) {
 		super();
 		this.docTempNo = docTempNo;
 		this.docNo = docNo;
@@ -58,6 +59,7 @@ public class Document {
 		this.dStatus = dStatus;
 		this.sStatus = sStatus;
 		this.stepCount = stepCount;
+		this.admin = admin;
 	}
 
 	public String getDocTempNo() {
@@ -228,6 +230,14 @@ public class Document {
 		this.stepCount = stepCount;
 	}
 
+	public boolean isAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
+	}
+
 	@Override
 	public String toString() {
 		return "Document [docTempNo=" + docTempNo + ", docNo=" + docNo + ", formNo=" + formNo + ", formName=" + formName
@@ -236,8 +246,7 @@ public class Document {
 				+ drafterRankNo + ", drafterRankName=" + drafterRankName + ", dTitle=" + dTitle + ", dContent="
 				+ dContent + ", fileName=" + fileName + ", draftDate=" + draftDate + ", completeDate=" + completeDate
 				+ ", turnNo=" + turnNo + ", rStatus=" + rStatus + ", dStatus=" + dStatus + ", sStatus=" + sStatus
-				+ ", stepCount=" + stepCount + "]";
+				+ ", stepCount=" + stepCount + ", admin=" + admin + "]";
 	}
 
-	
 }
