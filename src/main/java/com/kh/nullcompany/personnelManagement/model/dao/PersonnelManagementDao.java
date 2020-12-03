@@ -310,8 +310,8 @@ public class PersonnelManagementDao {
 	}
 
 
-	public int returnToWork(int memNo) {
-		return sqlSession.update("personnelMapper.returnToWork",memNo);
+	public int returnToWork(int noAbsence) {
+		return sqlSession.update("personnelMapper.returnToWork",noAbsence);
 	}
 
 
@@ -360,6 +360,30 @@ public class PersonnelManagementDao {
 
 	public SelectedMemberDiligenceCount SelectedMemberDiligenceCount(int memNo) {
 		return sqlSession.selectOne("personnelMapper.SelectedMemberDiligenceCount",memNo);
+	}
+
+
+	public int previousAbsenceCount() {
+		return sqlSession.selectOne("personnelMapper.previousAbsenceCount");
+	}
+
+
+	public ArrayList<Absence> previousAbsence(PageInfo pi) {
+		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();	
+		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
+		return ((ArrayList)sqlSession.selectList("personnelMapper.previousAbsence",null,rowBounds));
+	}
+
+
+	public int previousModificationDiligenceCount() {
+		return sqlSession.selectOne("personnelMapper.previousModificationDiligenceCount");
+	}
+
+
+	public ArrayList<ModificationDiligence> previousModificationDiligence(PageInfo pi) {
+		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();	
+		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
+		return ((ArrayList)sqlSession.selectList("personnelMapper.previousModificationDiligence",null,rowBounds));
 	}
 
 

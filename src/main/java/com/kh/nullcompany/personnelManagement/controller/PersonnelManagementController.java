@@ -854,11 +854,30 @@ public class PersonnelManagementController {
 		mv.setViewName("personnel_management/emAbsenceManagement");
 		return mv;
 	}
+	//근태관리 - 이전휴직자(모달)페이징
+	@RequestMapping("previousAbsence.do")
+	public void previousAbsence(HttpSession session, HttpServletResponse response,
+			@RequestParam(value="currentPage", required=false,defaultValue="1") int currentPage) throws JsonIOException, IOException {
+		response.setContentType("application/json; charset=utf-8");
+		
+		
+		
+		int previousAbsenceCount = pService.previousAbsenceCount();
+		PageInfo pi = Pagination.getPageInfoForModal(currentPage, previousAbsenceCount);
+		ArrayList<Absence> previousAbsence = pService.previousAbsence(pi);
+		
+		System.out.println(previousAbsence);
+		Map list = new HashMap();
+		list.put("previousAbsence",previousAbsence);
+		list.put("pi",pi);
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		gson.toJson(list,response.getWriter());
+	}
 	// 근태관리 -휴직자 복직
 	@RequestMapping("returnToWork.do")
-	public String returnToWork(HttpServletResponse response, int memNo) {
+	public String returnToWork(HttpServletResponse response, int noAbsence) {
 		
-		int result = pService.returnToWork(memNo);
+		int result = pService.returnToWork(noAbsence);
 		return "redirect:emAbsenceManagement.do";
 	}
 	
@@ -1203,6 +1222,26 @@ public class PersonnelManagementController {
 			mv.setViewName("personnel_management/emLeaveManagement");
 			
 			return mv;
+		}
+		
+		//근태관리 - 근태수정 (모달)페이징
+		@RequestMapping("previousModificationDiligence.do")
+		public void previousModificationDiligence(HttpSession session, HttpServletResponse response,
+				@RequestParam(value="currentPage", required=false,defaultValue="1") int currentPage) throws JsonIOException, IOException {
+			response.setContentType("application/json; charset=utf-8");
+			
+			
+			
+			int previousModificationDiligenceCount = pService.previousModificationDiligenceCount();
+			PageInfo pi = Pagination.getPageInfoForModal(currentPage, previousModificationDiligenceCount);
+			ArrayList<ModificationDiligence> previousModificationDiligence = pService.previousModificationDiligence(pi);
+			
+			System.out.println(previousModificationDiligence);
+			Map list = new HashMap();
+			list.put("previousModificationDiligence",previousModificationDiligence);
+			list.put("pi",pi);
+			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+			gson.toJson(list,response.getWriter());
 		}
 	
 }

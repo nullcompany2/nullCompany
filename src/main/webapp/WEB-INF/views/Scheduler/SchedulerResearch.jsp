@@ -584,7 +584,7 @@ cursor: pointer;
 						<div id="edit_communitymodal" class="modal-dragscroll">
 						<h4 style="color: #477A8F; margin-bottom: 15px; margin-top: 12px;">공유
 							캘린더 수정</h4>
-					    <button class="modal-close-btn cursor" >x</button>
+					     <a class="modal-close-btn cursor" >x</a>
 						<label for="" style="font-size: 14px;">캘린더 이름 </label>
 						&nbsp;&nbsp; <input type="text" id="edit_publiccal_name"> &nbsp;
 							<input type="hidden" id="edit_public_calno"/>
