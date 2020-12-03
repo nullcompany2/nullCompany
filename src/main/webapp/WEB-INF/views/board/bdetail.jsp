@@ -321,6 +321,7 @@ tr>td {
       <!-- 게시판 -->
       <div class="bdeatil">
       <span class="ct1" style="margin-right: 10%;"> 자유게시판</span>
+      <br><br>
          <div class="board_head">
             <div style="width: 90%; margin: auto;">
                <form method="post" action="">
@@ -348,8 +349,7 @@ tr>td {
 
          </div>
          <div class="board_body">
-            <br>&nbsp;&nbsp;&nbsp;<a href="#" class="icon impt "
-               ng-click='setImportant()'><span class="blind">별</span></a>
+           
 
             <table class="deatil" align="center" width="800px">
                <tr>
@@ -503,7 +503,7 @@ tr>td {
                      $bcWriter = $("<td width='150'>").text(data[i].bcWriter);
                      $bcContent=$("<td width='500'>").text(data[i].bcContent);
                      $bcCreateDate=$("<td width='100'>").text(data[i].bcCreateDate);
-                     $bcDelete=$("<td><input type='button' id='bcDelete' value='삭제'/></td>")
+                     $bcDelete=$("<td><input class='btn btn-default btn-xs' type='button' id='bcDelete' value='삭제'/></td>")
                      
                      $("#bcDelete").click(function(){
      					 if (confirm("정말로 삭제하시겠습니까? ") == true){ 

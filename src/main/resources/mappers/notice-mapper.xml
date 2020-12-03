@@ -154,14 +154,14 @@
 		INSERT INTO TBL_NOTICE
 		VALUES(
 			SEQ_NNO.NEXTVAL,#{nTitle},#{nContent},#{nWriter},
-			#{originalFileName},#{renameFileName},DEFAULT,SYSDATE,SYSDATE,DEFAULT,DEFAULT,DEFAULT,1)	
+			#{originalFileName},#{renameFileName},DEFAULT,SYSDATE,SYSDATE,DEFAULT,DEFAULT,DEFAULT,DEFAULT)	
 	</insert>
 
 	<insert id="inserttNotice" parameterType="tnotice">
 		INSERT INTO TBL_TNOTICE
 		VALUES(
 			SEQ_TNO.NEXTVAL,#{tTitle},#{tContent},#{tWriter},
-			#{originalFileName},#{renameFileName},DEFAULT,SYSDATE,SYSDATE,DEFAULT,DEFAULT,DEFAULT,0)
+			#{originalFileName},#{renameFileName},DEFAULT,SYSDATE,SYSDATE,DEFAULT,DEFAULT,DEFAULT,DEFAULT)
 	</insert>
 	
 	<update id="updateNotice" parameterType="notice">
