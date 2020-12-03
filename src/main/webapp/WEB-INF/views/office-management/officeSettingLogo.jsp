@@ -19,7 +19,6 @@ display:none;}
 </head>
 
 <body>
-	
     <div id='wrap'>
 		<c:import url="../common/header.jsp"/>
 		
