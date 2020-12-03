@@ -36,6 +36,10 @@ dd {
 .dept_memList{
 	cursor:pointer;
 }
+
+#rank_mem li{
+ cursor: pointer;
+ }
 </style>
 
 
