@@ -412,6 +412,9 @@ li {
       // 5분에 한번씩 계속 업데이트 하기 
        setInterval(function(){
             mailBox();
+            tnoticeList();
+            noticeList();
+            approvalBox();
          },50000); 
       });
       
@@ -525,12 +528,6 @@ li {
 		$(function(){
 	         approvalBox();
 	      
-	      // 5분에 한번씩 계속 업데이트 하기 
-	       setInterval(function(){
-	    	   approvalBox();
-	         },50000); 
-	      });
-		
 		function  approvalBox(){
 	         $.ajax({
 	            url:"approvalBox.do",
