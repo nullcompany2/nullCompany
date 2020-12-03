@@ -53,7 +53,8 @@
 						<div style="margin-top: 50px; margin-right: 50px; width: 100%;">
 							<h4 style="float: left; width: 80%;">근태 현황</h4>
 							<form action="searchEmDiligence.do" style="width: 30%; float: right; text-align: right;">
-								<a href="emDiligenceManagement.do"id="" class="cursor" style="height:25px; color: #477A8F; font-size: 14px;">검색취소»
+								<a href="emDiligenceManagement.do"id="" class="cursor" style="height:25px; color: #477A8F; font-size: 14px;">
+									검색취소 <img alt="" src="resources/images/return.png" style="height:12px; color:#477A8F;">
 								</a>  &nbsp;&nbsp;&nbsp;
 								<input type="text" name="searchKey" class="search-emp" 
 										placeholder="이름 또는 부서 입력" style="border-radius: 10px; border: solid 0.5px #477A8F;">
@@ -510,6 +511,7 @@
 					data : {year : year , month : month , currentPage:currentPage, memNo : memNo},
 					datatype : "json",
 					success:function(data){
+						console.log(data);
 						$("#totalListCount").text(data.dListCount);
 						$("#dListPaging").remove();
 						$('.mdDListPot').remove();

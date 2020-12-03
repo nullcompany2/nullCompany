@@ -48,7 +48,8 @@
     					※ 휴가 잔여일은 해당직원이 로그인하여 휴가현황을 조회하여야 업데이트 됩니다.
     				</div>
                         <form action="searchEmLeave.do" style="float: right;">
-                        	<a href="emLeaveManagement.do"id="" class="cursor" style="height:25px; color: #477A8F; font-size: 14px;">검색취소»
+                        	<a href="emLeaveManagement.do"id="" class="cursor" style="height:25px; color: #477A8F; font-size: 14px;">
+                        	검색취소  <img alt="" src="resources/images/return.png" style="height:12px; color:#477A8F;">
 								</a>  &nbsp;&nbsp;&nbsp;
                             <input type="text" name="searchKey"  class="search-emp">
                             <button class="search-btn cursor">검색</button>
