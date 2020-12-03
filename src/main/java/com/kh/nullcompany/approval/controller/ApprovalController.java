@@ -1254,6 +1254,7 @@ public class ApprovalController {
 		return mv;
 	}
 	
+	// 문서 상세보기(문서 관리자일 때)
 	@RequestMapping("approvalAdminDetail.do")
 	public ModelAndView approvalAdminDetail(ModelAndView mv, HttpServletResponse response, HttpSession session, String docNo) {
 		
