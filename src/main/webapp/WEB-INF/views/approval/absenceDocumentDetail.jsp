@@ -19,7 +19,7 @@
             }
 
             
-       #my_modal {
+       .modal-dragscroll {
           display: none;
           width: 350px;
           height: 200px;
@@ -31,28 +31,12 @@
           color:rgb(65, 65, 66);
        }
        
-       #my_modal1 {
-          display: none;
-          width: 350px;
-          height: 200px;
-          padding: 20px 60px;
-          background-color: #fefefe;
-          border: 1px solid #888;
-          border-radius: 3px;
-          text-align: center;
-          color:rgb(65, 65, 66);
-       }
- 
-       #my_modal .modal-close-btn {
+       .modal-dragscroll .modal-close-btn {
           position: absolute;
           top: 10px;
           right: 10px;
        }
-       #my_modal1 .modal-close-btn {
-          position: absolute;
-          top: 10px;
-          right: 10px;
-       }
+       
        .n-emp-i{
           width: 100%;
           height: 30%;
@@ -99,8 +83,8 @@
 						<ul id="Tab1" class="H-personnel-subNavi Depth02">
 							<li><a href="approvalProgressAllListView.do">전체</a></li>
 							<li><a href="standByDocListView.do">대기</a></li>
-							<li><a href="checkDocListView.do">확인</a></li>
-							<li><a href="scheduledDocListView.do">예정</a></li>
+							<li><a href="checkDocListView.do">참조</a></li>
+							<li><a href="scheduledDocListView.do">예결</a></li>
 							<li><a href="progressListView.do">진행</a></li>
 						</ul>
 		
@@ -118,7 +102,7 @@
 							<li><a href="rejectListView.do">반려</a></li>
 						</ul>
 
-						<c:if test="${ loginUser.lankNo < 4 }">
+						<c:if test="${ loginUser.deptNo != 0 && loginUser.lankNo < 4 }">
 							<div class="H-personnel-subNavi Depth01-3">
 								<li class="subTitle" style="cursor:pointer;">
 								    <span>${ loginUser.deptName }부 문서 관리</span>
@@ -163,11 +147,16 @@
         <div class="contents" style="top:110px">
 			<div class="contents-wrap drag-scrollbar">
 				<div class="top-btns">
-					<c:if test="${ d.completeDate == null }">
-						<c:if test="${ loginUser.memNo eq d.drafterNo }">
-								<span class="cb" id="cb1">내용 수정</span>
-		                        <span class="cb" id="cb2">기안 취소</span>
-						</c:if>
+					<c:if test="${ d.admin }">
+						<c:choose>
+							<c:when test="${ d.dStatus eq 'N'}">
+								<span class="cb" id="cb1">삭제하기</span>
+							</c:when>
+							<c:otherwise>
+								<span class="cb" id="cb2">복원</span>
+								<span class="cb" id="cb3">완전 삭제</span>
+							</c:otherwise>
+						</c:choose>
 					</c:if>
 				</div>
 				<div class="c-ic">
@@ -727,6 +716,55 @@
            </div>
     	   <a class="modal-close-btn cursor">X</a>
         </div>
+        
+    <!-- 삭제하기 버튼 모달 -->
+        <div id="deleteDoc" class="modal-dragscroll">
+	       <br>
+	       <span style="font-size:20px; color: black; font-weight: bold;"> ${ loginUser.name } </span>님
+           <div class="n-emp-i">
+            	<h4 style="color: #477A8F; margin-bottom: 5px; font-weight: bolder;">문서를 삭제 하시겠습니까? </h4> <br>
+                <div>
+                    <c:url var="deleteDocument" value="deleteDocument.do">
+						<c:param name="docTempNo" value="${d.docTempNo}"/> 
+					</c:url>
+                    <button onclick="location.href='${deleteDocument}'">삭제</button>
+                </div>
+           </div>
+    	   <a class="modal-close-btn cursor">X</a>
+        </div>
+        
+     <!-- 복원 버튼 모달 -->
+        <div id="restoreDoc" class="modal-dragscroll">
+	       <br>
+	       <span style="font-size:20px; color: black; font-weight: bold;"> ${ loginUser.name } </span>님
+           <div class="n-emp-i">
+            	<h4 style="color: #477A8F; margin-bottom: 5px; font-weight: bolder;">문서를 복원 하시겠습니까? </h4> <br>
+                <div>
+                    <c:url var="restoreDocument" value="restoreDocument.do">
+						<c:param name="docTempNo" value="${d.docTempNo}"/>
+					</c:url>
+                    <button onclick="location.href='${restoreDocument}'">복원</button>
+                </div>
+           </div>
+    	   <a class="modal-close-btn cursor">X</a>
+        </div>
+        
+     <!-- 완전 삭제 버튼 모달 -->
+        <div id="omitDocInfo" class="modal-dragscroll">
+	       <br>
+	       <span style="font-size:20px; color: black; font-weight: bold;"> ${ loginUser.name } </span>님
+           <div class="n-emp-i">
+            	<h4 style="color: #477A8F; margin-bottom: 5px; font-weight: bolder;">문서를 완전 삭제 하시겠습니까? </h4> <br>
+                <div>
+                    <c:url var="omitDocumentInfo" value="omitDocumentInfo.do">
+						<c:param name="docTempNo" value="${d.docTempNo}"/>
+						<c:param name="formNo" value="${ d.formNo }"/>
+					</c:url>
+                    <button onclick="location.href='${omitDocumentInfo}'">완전 삭제</button>
+                </div>
+           </div>
+    	   <a class="modal-close-btn cursor">X</a>
+        </div>
 
  <script>
     function modal(id) {
@@ -781,6 +819,22 @@
        // 확인버튼 모달창 띄우기
        modal('my_modal1');
     });
+    
+    $('#cb1').on('click', function(){
+        // 삭제하기 모달창 띄우기
+        modal('deleteDoc');
+    });
+    
+    $('#cb2').on('click', function(){
+        // 복원하기 모달창 띄우기
+        modal('restoreDoc');
+    });
+    
+    $('#cb3').on('click', function(){
+        // 완전 삭제 모달창 띄우기
+        modal('omitDocInfo');
+    });
+    
  </script>
 </body>
 </html>

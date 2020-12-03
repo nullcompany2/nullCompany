@@ -19,7 +19,7 @@
             }
 
             
-       #my_modal {
+       .modal-dragscroll {
           display: none;
           width: 350px;
           height: 200px;
@@ -31,28 +31,12 @@
           color:rgb(65, 65, 66);
        }
        
-       #my_modal1 {
-          display: none;
-          width: 350px;
-          height: 200px;
-          padding: 20px 60px;
-          background-color: #fefefe;
-          border: 1px solid #888;
-          border-radius: 3px;
-          text-align: center;
-          color:rgb(65, 65, 66);
-       }
- 
-       #my_modal .modal-close-btn {
+       .modal-dragscroll .modal-close-btn {
           position: absolute;
           top: 10px;
           right: 10px;
        }
-       #my_modal1 .modal-close-btn {
-          position: absolute;
-          top: 10px;
-          right: 10px;
-       }
+       
        .n-emp-i{
           width: 100%;
           height: 30%;
@@ -91,40 +75,44 @@
 				</div>
 				<div id="sub-navi-deinfo" class="drag-scrollbar">
 					<div class="H-personnel-subNavi underline" style="border: none;">
-						<div class="H-personnel-subNavi Depth01-1">
-							<li class="subTitle" style="margin-top: 15px;">
-								<a href="#">진행 중인 문서</a>
+						<div class="H-personnel-subNavi Depth01-1"> 
+							<li class="subTitle" style="margin-top: 15px; cursor:pointer;">
+								<span>진행 중인 문서</span>
 							</li>
 						</div>
 						<ul id="Tab1" class="H-personnel-subNavi Depth02">
-							<li><a href="approvalProgressAllListView.do" id="">전체</a></li>
-							<li><a href="standByDocListView.do" id="">대기</a></li>
-							<li><a href="checkDocListView.do" id="">확인</a></li>
-							<li><a href="scheduledDocListView.do" id="">예정</a></li>
-							<li><a href="progressListView.do" id="">진행</a></li>
+							<li><a href="approvalProgressAllListView.do">전체</a></li>
+							<li><a href="standByDocListView.do">대기</a></li>
+							<li><a href="checkDocListView.do">참조</a></li>
+							<li><a href="scheduledDocListView.do">예결</a></li>
+							<li><a href="progressListView.do">진행</a></li>
 						</ul>
 		
 						<div class="H-personnel-subNavi Depth01-2">
-							<li class="subTitle">
-								<a href="#">문서함</a>
+							<li class="subTitle" style="cursor:pointer;">
+								<span>문서함</span>
 							</li>
 						</div>
 						<ul id="Tab2" class="H-personnel-subNavi Depth02">
-							<li><a href="approvalCompleteAllListView.do" id="">전체</a></li>
-							<li><a href="draftListView.do" id="">기안</a></li>
-							<li><a href="approvalListView.do" id="">결재</a></li>
-							<li><a href="receiveListView.do" id="">수신</a></li>
-							<li><a href="referenceListView.do" id="">회람</a></li>
-							<li><a href="rejectListView.do" id="">반려</a></li>
-							<li><a href="#" id="">임시 저장</a></li>
+							<li><a href="approvalCompleteAllListView.do">전체</a></li>
+							<li><a href="draftListView.do">기안</a></li>
+							<li><a href="approvalListView.do">결재</a></li>
+							<li><a href="receiveListView.do">수신</a></li>
+							<li><a href="referenceListView.do">회람</a></li>
+							<li><a href="rejectListView.do">반려</a></li>
 						</ul>
-						<div class="H-personnel-subNavi Depth01-3">
-							<li class="subTitle"><a href="#">전자결재 관리자</a></li>
-						</div>
-						<ul id="Tab3" class="H-personnel-subNavi Depth02">
-							<li><a href="approvalAllDList.do" id="">전체 문서 관리</a></li>
-							<li><a href="approvalDeleteDList.do" id="">삭제 문서 관리</a></li>
-						</ul>
+
+						<c:if test="${ loginUser.deptNo != 0 && loginUser.lankNo < 4 }">
+							<div class="H-personnel-subNavi Depth01-3">
+								<li class="subTitle" style="cursor:pointer;">
+								    <span>${ loginUser.deptName }부 문서 관리</span>
+								</li>
+							</div>
+								<ul id="Tab3" class="H-personnel-subNavi Depth02">
+									<li><a href="adminAllList.do">전체 문서 관리</a></li>
+									<li><a href="adminDeleteList.do">삭제 문서 관리</a></li>
+								</ul>
+						</c:if>
 					</div>
 				</div>
 				<script>
@@ -159,12 +147,17 @@
         <div class="contents" style="top:110px">
 			<div class="contents-wrap drag-scrollbar">
 				<div class="top-btns">
-				<c:if test="${ d.completeDate == null }">
-					<c:if test="${ loginUser.memNo eq d.drafterNo }">
-							<span class="cb" id="cb1">내용 수정</span>
-	                        <span class="cb" id="cb2">기안 취소</span>
+					<c:if test="${ d.admin }">
+						<c:choose>
+							<c:when test="${ d.dStatus eq 'N'}">
+								<span class="cb" id="cb1">삭제하기</span>
+							</c:when>
+							<c:otherwise>
+								<span class="cb" id="cb2">복원</span>
+								<span class="cb" id="cb3">완전 삭제</span>
+							</c:otherwise>
+						</c:choose>
 					</c:if>
-				</c:if>
 				</div>
 				<div class="c-ic">
 					<div class="doc_type">
@@ -702,6 +695,55 @@
            </div>
     	   <a class="modal-close-btn cursor">X</a>
         </div>
+        
+    <!-- 삭제하기 버튼 모달 -->
+        <div id="deleteDoc" class="modal-dragscroll">
+	       <br>
+	       <span style="font-size:20px; color: black; font-weight: bold;"> ${ loginUser.name } </span>님
+           <div class="n-emp-i">
+            	<h4 style="color: #477A8F; margin-bottom: 5px; font-weight: bolder;">문서를 삭제 하시겠습니까? </h4> <br>
+                <div>
+                    <c:url var="deleteDocument" value="deleteDocument.do">
+						<c:param name="docTempNo" value="${d.docTempNo}"/> 
+					</c:url>
+                    <button onclick="location.href='${deleteDocument}'">삭제</button>
+                </div>
+           </div>
+    	   <a class="modal-close-btn cursor">X</a>
+        </div>
+        
+     <!-- 복원 버튼 모달 -->
+        <div id="restoreDoc" class="modal-dragscroll">
+	       <br>
+	       <span style="font-size:20px; color: black; font-weight: bold;"> ${ loginUser.name } </span>님
+           <div class="n-emp-i">
+            	<h4 style="color: #477A8F; margin-bottom: 5px; font-weight: bolder;">문서를 복원 하시겠습니까? </h4> <br>
+                <div>
+                    <c:url var="restoreDocument" value="restoreDocument.do">
+						<c:param name="docTempNo" value="${d.docTempNo}"/>
+					</c:url>
+                    <button onclick="location.href='${restoreDocument}'">복원</button>
+                </div>
+           </div>
+    	   <a class="modal-close-btn cursor">X</a>
+        </div>
+        
+     <!-- 완전 삭제 버튼 모달 -->
+        <div id="omitDocInfo" class="modal-dragscroll">
+	       <br>
+	       <span style="font-size:20px; color: black; font-weight: bold;"> ${ loginUser.name } </span>님
+           <div class="n-emp-i">
+            	<h4 style="color: #477A8F; margin-bottom: 5px; font-weight: bolder;">문서를 완전 삭제 하시겠습니까? </h4> <br>
+                <div>
+                    <c:url var="omitDocumentInfo" value="omitDocumentInfo.do">
+						<c:param name="docTempNo" value="${d.docTempNo}"/>
+						<c:param name="formNo" value="${ d.formNo }"/>
+					</c:url>
+                    <button onclick="location.href='${omitDocumentInfo}'">완전 삭제</button>
+                </div>
+           </div>
+    	   <a class="modal-close-btn cursor">X</a>
+        </div>
 
  <script>
     function modal(id) {
@@ -756,6 +798,22 @@
        // 확인버튼 모달창 띄우기
        modal('my_modal1');
     });
+    
+    $('#cb1').on('click', function(){
+        // 삭제하기 모달창 띄우기
+        modal('deleteDoc');
+    });
+    
+    $('#cb2').on('click', function(){
+        // 복원하기 모달창 띄우기
+        modal('restoreDoc');
+    });
+    
+    $('#cb3').on('click', function(){
+        // 완전 삭제 모달창 띄우기
+        modal('omitDocInfo');
+    });
+    
  </script>
 </body>
 </html>

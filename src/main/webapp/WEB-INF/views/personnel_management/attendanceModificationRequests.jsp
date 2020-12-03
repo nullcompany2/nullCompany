@@ -168,11 +168,239 @@
 		$('#detail-r-l').on('click', function() {
 			// 모달창 띄우기
 			modal('my_modal');
+			$.ajax({
+				url : "previousModificationDiligence.do",
+				dataType : "json",
+				success:function(data){
+					console.log(data);
+					
+					$("#dListPaging").remove();
+					$('#md_listTbl tr').remove();
+					var $mdTbl = $("#md_listTbl");
+	            	var $tr;
+	            	var $td;
+	            	var $td_noMod;
+	            	var $td_name;
+	            	var $td_id;
+	            	var $td_memNo;
+	            	var $td_dateApply;
+	            	var $td_dateMod;
+	            	var $td_reasonMod;
+	            	var $td_renameAttachmentMod;
+	            	var $td_statusMod;
+					
+	            	var $pageTbl = $('#md_page_tbl');
+	            	var td0;
+	            	var td1;
+	            	var td2;
+	            	var td3;
+	            	var td1_1;
+	            	var td1_1_1;
+	            	var td2_1;
+	            	var td2_1_1;
+	            	var td2_2;
+	            	
+					for(var i in data.previousModificationDiligence){					
+						$tr = $('<tr style="text-align:center">');
+						$td_noMod = $('<td class="md-ta">').text(data.previousModificationDiligence[i].noMod);
+						$td_name = $('<td class="md-ta">').text(data.previousModificationDiligence[i].name);
+						$td_id = $(' <td class="md-ta">').text(data.previousModificationDiligence[i].id);
+						$td_memNo = $('<td class="md-ta">').text(data.previousModificationDiligence[i].memNo);
+						$td_dateApply = $('<td class="md-ta">').text(data.previousModificationDiligence[i].dateApply);
+						$td_dateMod = $('<td class="md-ta">').text(data.previousModificationDiligence[i].dateMod);
+						$td_reasonMod = $('<td class="md-ta">').text(data.previousModificationDiligence[i].reasonMod);
+						if(data.previousModificationDiligence[i].renameAttachmentMod != null){
+							$td_renameAttachmentMod = $('<td class="md-ta">').text(data.previousModificationDiligence[i].renameAttachmentMod);							
+						}else{
+							$td_renameAttachmentMod = $('<td class="md-ta">');
+						}
+						
+						$td_statusMod = $('<td class="md-ta">').text(data.previousModificationDiligence[i].statusMod);
+						
+						$tr.append($td_noMod);
+						$tr.append($td_name);
+						$tr.append($td_id);
+						$tr.append($td_memNo);
+						$tr.append($td_dateApply);
+						$tr.append($td_dateMod);
+						$tr.append($td_reasonMod);
+						$tr.append($td_renameAttachmentMod);
+						$tr.append($td_statusMod);
+						$mdTbl.append($tr);
+					}
+					
+					$tr = $('<tr align="center" height="20" id="dListPaging">'); 
+					$td = $('<td colspan="6">');
+					if(data.pi.currentPage == 1){
+						
+						$td0 = "[이전]";
+						$td.append($td0);
+					}
+		        	
+					if(data.pi.currentPage != 1){
+						$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage -1)+')">').text("[이전]");
+			        	
+			        	$td.append($td0);
+					}    	
+		        	
+			       	
+			       	
+			       	for(var p = data.pi.startPage; p <=  data.pi.endPage; p++){
+			       		if(p == data.pi.currentPage){
+			       			$td0 = $("<b style='color:red; font-size:4'>").text("  "+p+"  ");
+			       			$td.append($td0);
+			       		}
+			       		if(p != data.pi.currentPage ){
+			       			$td0 = $('<a onclick="mdListPaged('+ (p)+')">').text("  "+p+"  ");
+			       			$td.append($td0);
+			       		}
+			       	
+			       	}
+		        	
+			       	if(data.pi.currentPage == data.pi.maxPage ){
+			       		$td0 = "[다음]";
+			       		$td.append($td0);
+			       	}
+		        	
+		        	if(data.pi.currentPage != data.pi.maxPage){
+		        		$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage + 1)+')">').text("[다음]");
+		        		$td.append($td0);
+		        	}
+		        	
+	            	$tr.append($td);
+					
+	            	$pageTbl.append($tr);
+ 
+				},
+				error: function(request,status,error){
+					console.log(request);
+					console.log(status);
+					console.log(error);
+				}
+			});
 		});
+		
+		function mdListPaged(currentPage){
+			$.ajax({
+				url : "previousModificationDiligence.do",
+				data : {currentPage : currentPage},
+				dataType : "json",
+				success:function(data){
+					console.log(data);
+					
+					$("#dListPaging").remove();
+					$('#md_listTbl tr').remove();
+					var $mdTbl = $("#md_listTbl");
+	            	var $tr;
+	            	var $td;
+	            	var $td_noMod;
+	            	var $td_name;
+	            	var $td_id;
+	            	var $td_memNo;
+	            	var $td_dateApply;
+	            	var $td_dateMod;
+	            	var $td_reasonMod;
+	            	var $td_renameAttachmentMod;
+	            	var $td_statusMod;
+					
+	            	var $pageTbl = $('#md_page_tbl');
+	            	var td0;
+	            	var td1;
+	            	var td2;
+	            	var td3;
+	            	var td1_1;
+	            	var td1_1_1;
+	            	var td2_1;
+	            	var td2_1_1;
+	            	var td2_2;
+	            	
+					for(var i in data.previousModificationDiligence){					
+						$tr = $('<tr style="text-align:center">');
+						$td_noMod = $('<td class="md-ta">').text(data.previousModificationDiligence[i].noMod);
+						$td_name = $('<td class="md-ta">').text(data.previousModificationDiligence[i].name);
+						$td_id = $(' <td class="md-ta">').text(data.previousModificationDiligence[i].id);
+						$td_memNo = $('<td class="md-ta">').text(data.previousModificationDiligence[i].memNo);
+						$td_dateApply = $('<td class="md-ta">').text(data.previousModificationDiligence[i].dateApply);
+						$td_dateMod = $('<td class="md-ta">').text(data.previousModificationDiligence[i].dateMod);
+						$td_reasonMod = $('<td class="md-ta">').text(data.previousModificationDiligence[i].reasonMod);
+						if(data.previousModificationDiligence[i].renameAttachmentMod != null){
+							$td_renameAttachmentMod = $('<td class="md-ta">').text(data.previousModificationDiligence[i].renameAttachmentMod);							
+						}else{
+							$td_renameAttachmentMod = $('<td class="md-ta">');
+						}
+						
+						$td_statusMod = $('<td class="md-ta">').text(data.previousModificationDiligence[i].statusMod);
+						
+						$tr.append($td_noMod);
+						$tr.append($td_name);
+						$tr.append($td_id);
+						$tr.append($td_memNo);
+						$tr.append($td_dateApply);
+						$tr.append($td_dateMod);
+						$tr.append($td_reasonMod);
+						$tr.append($td_renameAttachmentMod);
+						$tr.append($td_statusMod);
+						$mdTbl.append($tr);
+					}
+					
+					$tr = $('<tr align="center" height="20" id="dListPaging">'); 
+					$td = $('<td colspan="6">');
+					if(data.pi.currentPage == 1){
+						
+						$td0 = "[이전]";
+						$td.append($td0);
+					}
+		        	
+					if(data.pi.currentPage != 1){
+						$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage -1)+')">').text("[이전]");
+			        	
+			        	$td.append($td0);
+					}    	
+		        	
+			       	
+			       	
+			       	for(var p = data.pi.startPage; p <=  data.pi.endPage; p++){
+			       		if(p == data.pi.currentPage){
+			       			$td0 = $("<b style='color:red; font-size:4'>").text("  "+p+"  ");
+			       			$td.append($td0);
+			       		}
+			       		if(p != data.pi.currentPage ){
+			       			$td0 = $('<a onclick="mdListPaged('+ (p)+')">').text("  "+p+"  ");
+			       			$td.append($td0);
+			       		}
+			       	
+			       	}
+		        	
+			       	if(data.pi.currentPage == data.pi.maxPage ){
+			       		$td0 = "[다음]";
+			       		$td.append($td0);
+			       	}
+		        	
+		        	if(data.pi.currentPage != data.pi.maxPage){
+		        		$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage + 1)+')">').text("[다음]");
+		        		$td.append($td0);
+		        	}
+		        	
+	            	$tr.append($td);
+					
+	            	$pageTbl.append($tr);
+ 
+				},
+				error: function(request,status,error){
+					console.log(request);
+					console.log(status);
+					console.log(error);
+				}
+			});
+		}
+		
 		$(document).ready(function(){
 			$(".md-btn-cancel").click(function(){
 			})
 		})
+		
+		
+		
 	</script>
 		<style>
 			#my_modal {
@@ -247,30 +475,17 @@
                 </tr>
             </thead>
             <!-- 휴직자 추가시 리스트 -->
-            <tbody>
-            <c:forEach var="list" items="${ modRequestList }">
-            <c:if test="${list.statusMod ne '결재중' }">
-                <tr style="text-align:center">
-                    <td class="md-ta">${list.noMod }</td>
-					<td class="md-ta">${list.name }</td>
-					<td class="md-ta">${list.id } </td>
-					<td class="md-ta">${list.memNo }</td>
-					<fmt:formatDate var="applyDate" value="${list.dateApply }" pattern="yyyy-MM-dd"/>
-					<td class="md-ta">${applyDate }</td>
-					<fmt:formatDate var="modDate" value="${list.dateMod }" pattern="yyyy-MM-dd"/>
-					<td class="md-ta">${modDate }</td>
-					<td class="md-ta">${list.reasonMod}</td>
-					<td class="md-ta">
-						<c:if test="${list.renameAttachmentMod ne null}">
-							<a href="${contextPath }/resources/modificationDiligenceUploadFiles/${list.renameAttachmentMod}"
-												download="${list.renameAttachmentMod}">${list.renameAttachmentMod}</a>											
-						</c:if>
-					</td>
-					<td class=md-ta> ${list.statusMod }</td>
-                </tr>
-            </c:if>
-            </c:forEach>
+            <tbody id="md_listTbl">
+            
+               
+           
+            
             </tbody>
+            <div style="text-align: center; margin-top: 50px;">
+			<table  style=" width: 100%; border-collapse: collapse;" id="md_page_tbl">
+	            
+			</table>
+			</div>
         </table>
 		<div style="text-align: center; margin-top: 50px;">
 			<span class="md-btn cursor md-btn-close" >닫기</span>

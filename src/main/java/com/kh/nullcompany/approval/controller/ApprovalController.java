@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
@@ -24,6 +23,7 @@ import com.kh.nullcompany.approval.model.vo.Absence;
 import com.kh.nullcompany.approval.model.vo.DeptList;
 import com.kh.nullcompany.approval.model.vo.DivDeptStaff;
 import com.kh.nullcompany.approval.model.vo.Document;
+import com.kh.nullcompany.approval.model.vo.DocumentListCount;
 import com.kh.nullcompany.approval.model.vo.Leave;
 import com.kh.nullcompany.approval.model.vo.Resign;
 import com.kh.nullcompany.approval.model.vo.Step;
@@ -36,7 +36,7 @@ public class ApprovalController {
 
 	@Autowired
 	private ApprovalService aService;
-
+	
 	// 진행중인 문서 목록(전체) 불러오기
 	@RequestMapping("approvalProgressAllListView.do")
 	public ModelAndView approvalProgressAllListView(ModelAndView mv, HttpServletResponse response, HttpSession session,
@@ -70,13 +70,13 @@ public class ApprovalController {
 						} else {
 							// 현재 문서 결재순번과 결재사원의 순서가 같을때(지금 결재순번이 사용자 차례일 때)
 							if (d.getTurnNo() == s.getStepPriority()) {
-								d.setsStatus("대기");
+								d.setsStatus("미결");
 								// 결재사원의 결재선 타입이 참조이거나, 문서 서식종류가 회람문서일경우
 							} else if (s.getLineNo() == 2 || d.getFormNo() == 2) {
-								d.setsStatus("확인");
+								d.setsStatus("참조 대기");
 								// 아직 결재 순번이 내 차례가 되기 전일때(예정상황)
 							} else if (d.getTurnNo() < s.getStepPriority()) {
-								d.setsStatus("예정");
+								d.setsStatus("예결");
 								// 나보다 뒷 순번 결재자가 먼저 결재를 하였을때(후결상황)
 							} else if (d.getTurnNo() > s.getStepPriority()) {
 								d.setsStatus("후결 대기");
@@ -127,13 +127,13 @@ public class ApprovalController {
 							// 현재 문서 결재순번과 결재사원의 순서가 같을때(지금 결재순번이 사용자 차례일 때)
 							if (d.getTurnNo() == s.getStepPriority()) {
 								
-								d.setsStatus("대기");
+								d.setsStatus("미결");
 								// 결재사원의 결재선 타입이 참조이거나, 문서 서식종류가 회람문서일경우
 							} else if (s.getLineNo() == 2 || d.getFormNo() == 2) {
-								d.setsStatus("확인");
+								d.setsStatus("참조 대기");
 								// 아직 결재 순번이 내 차례가 되기 전일때(예정상황)
 							} else if (d.getTurnNo() < s.getStepPriority()) {
-								d.setsStatus("예정");
+								d.setsStatus("예결");
 								// 나보다 뒷 순번 결재자가 먼저 결재를 하였을때(후결상황)
 							} else if (d.getTurnNo() > s.getStepPriority()) {
 								d.setsStatus("후결 대기");
@@ -142,7 +142,7 @@ public class ApprovalController {
 					} 
 				}
 			}
-			if(d.getsStatus().equals("대기") || d.getsStatus().equals("후결 대기")) {
+			if(d.getsStatus().equals("미결") || d.getsStatus().equals("후결 대기")) {
 				 dList2.add(d);
 			}
 		}
@@ -158,7 +158,7 @@ public class ApprovalController {
 		return mv;
 	}
 	
-	// 진행중인 문서 목록(확인) 불러오기
+	// 진행중인 문서 목록(참조) 불러오기
 	@RequestMapping("checkDocListView.do")
 	public ModelAndView chechDocListView(ModelAndView mv, HttpServletResponse response, HttpSession session,
 			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
@@ -186,13 +186,13 @@ public class ApprovalController {
 						} else {
 							// 현재 문서 결재순번과 결재사원의 순서가 같을때(지금 결재순번이 사용자 차례일 때)
 							if (d.getTurnNo() == s.getStepPriority()) {
-								d.setsStatus("대기");
+								d.setsStatus("미결");
 								// 결재사원의 결재선 타입이 참조이거나, 문서 서식종류가 회람문서일경우
 							} else if (s.getLineNo() == 2 || d.getFormNo() == 2) {
-								d.setsStatus("확인");
+								d.setsStatus("참조 대기");
 								// 아직 결재 순번이 내 차례가 되기 전일때(예정상황)
 							} else if (d.getTurnNo() < s.getStepPriority()) {
-								d.setsStatus("예정");
+								d.setsStatus("예결");
 								// 나보다 뒷 순번 결재자가 먼저 결재를 하였을때(후결상황)
 							} else if (d.getTurnNo() > s.getStepPriority()) {
 								d.setsStatus("후결 대기");
@@ -201,12 +201,12 @@ public class ApprovalController {
 					}
 				}
 			}
-			if(d.getsStatus().equals("확인")) {
+			if(d.getsStatus().equals("참조 대기")) {
 				 dList2.add(d);
 			}
 		}
 			
-		String catagory = "확인";
+		String catagory = "참조";
 		int listCount = dList2.size();
 		
 		mv.addObject("dList", dList2);
@@ -217,7 +217,7 @@ public class ApprovalController {
 		return mv;
 	}
 	
-	// 진행중인 문서 목록(예정) 불러오기
+	// 진행중인 문서 목록(예결) 불러오기
 	@RequestMapping("scheduledDocListView.do")
 	public ModelAndView scheduledDocListView(ModelAndView mv, HttpServletResponse response, HttpSession session,
 			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
@@ -245,13 +245,13 @@ public class ApprovalController {
 						} else {
 							// 현재 문서 결재순번과 결재사원의 순서가 같을때(지금 결재순번이 사용자 차례일 때)
 							if (d.getTurnNo() == s.getStepPriority()) {
-								d.setsStatus("대기");
+								d.setsStatus("미결");
 								// 결재사원의 결재선 타입이 참조이거나, 문서 서식종류가 회람문서일경우
 							} else if (s.getLineNo() == 2 || d.getFormNo() == 2) {
-								d.setsStatus("확인");
+								d.setsStatus("참조 대기");
 								// 아직 결재 순번이 내 차례가 되기 전일때(예정상황)
 							} else if (d.getTurnNo() < s.getStepPriority()) {
-								d.setsStatus("예정");
+								d.setsStatus("예결");
 								// 나보다 뒷 순번 결재자가 먼저 결재를 하였을때(후결상황)
 							} else if (d.getTurnNo() > s.getStepPriority()) {
 								d.setsStatus("후결 대기");
@@ -260,12 +260,12 @@ public class ApprovalController {
 					}
 				}
 			}
-			if(d.getsStatus().equals("예정")) {
+			if(d.getsStatus().equals("예결")) {
 				 dList2.add(d);
 			}
 		}
 			
-		String catagory = "예정";
+		String catagory = "예결";
 		int listCount = dList2.size();
 		
 		mv.addObject("dList", dList2);
@@ -303,13 +303,13 @@ public class ApprovalController {
 						} else {
 							// 현재 문서 결재순번과 결재사원의 순서가 같을때(지금 결재순번이 사용자 차례일 때)
 							if (d.getTurnNo() == s.getStepPriority()) {
-								d.setsStatus("대기");
+								d.setsStatus("미결");
 								// 결재사원의 결재선 타입이 참조이거나, 문서 서식종류가 회람문서일경우
 							} else if (s.getLineNo() == 2 || d.getFormNo() == 2) {
-								d.setsStatus("확인");
+								d.setsStatus("참조 대기");
 								// 아직 결재 순번이 내 차례가 되기 전일때(예정상황)
 							} else if (d.getTurnNo() < s.getStepPriority()) {
-								d.setsStatus("예정");
+								d.setsStatus("예결");
 								// 나보다 뒷 순번 결재자가 먼저 결재를 하였을때(후결상황)
 							} else if (d.getTurnNo() > s.getStepPriority()) {
 								d.setsStatus("후결 대기");
@@ -383,63 +383,7 @@ public class ApprovalController {
 		return mv;
 	}
 	
-	// 부서별 전체 문서 리스트
-	@RequestMapping("adminAllList.do")
-	public ModelAndView adminAllList(ModelAndView mv, HttpServletResponse response, HttpSession session,
-			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
-		
-		// 로그인 세션 부서번호 가져오기
-		int deptNo = ((Member) session.getAttribute("loginUser")).getDeptNo();
-		
-		int listCount = aService.getAdminAllListCount(deptNo);
-		
-		// 페이징
-		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
-		
-		ArrayList<Document> dList = aService.selectAdminAllList(deptNo, pi);
-		
-		for(Document d : dList) {
-			if(d.getrStatus().equals("Y")) {
-				d.setsStatus("반려");
-			}else {
-				d.setsStatus("결재완료");
-			}
-		}
-		
-		mv.addObject("dList",dList);
-		mv.addObject("listCount",listCount);
-		mv.addObject("pi",pi);
-		mv.setViewName("approval/adminAllList");
-		
-		return mv;
-	}
 	
-	// 부서별 삭제 문서 리스트
-	@RequestMapping("adminDeleteList.do")
-	public ModelAndView approvalDeleteDList(ModelAndView mv, HttpServletResponse response, HttpSession session,
-			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
-		
-		// 로그인 세션 부서번호 가져오기
-		int deptNo = ((Member) session.getAttribute("loginUser")).getDeptNo();
-		
-		int listCount = aService.getAdminDeleteListCount(deptNo);
-		
-		// 페이징
-		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
-		
-		ArrayList<Document> dList = aService.selectAdminDeleteList(deptNo, pi);
-		
-		for(Document d : dList) {
-			d.setsStatus("관리자에 의한 삭제");
-		}
-		
-		mv.addObject("dList",dList);
-		mv.addObject("listCount",listCount);
-		mv.addObject("pi",pi);
-		mv.setViewName("approval/adminDeleteList");
-		
-		return mv;
-	}
 	
 	// 문서함 목록(기안) 불러오기
 	@RequestMapping("draftListView.do")
@@ -704,6 +648,7 @@ public class ApprovalController {
 			}
 		}
 		
+		// 관리자 페이지에서 들어온 건지 여부 --> 현재 메소드는 진행중인 문서, 문서함에서 접근 
 		d.setAdmin(false);
 		mv.addObject("d",d);
 		
@@ -1073,13 +1018,13 @@ public class ApprovalController {
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		
 		// 스텝 삭제
-		aService.deleteTempStep(docTempNo);
+		aService.omitStep(docTempNo);
 		// 문서 삭제
-		int result2 = aService.deleteTempDocument(docTempNo);
+		int result = aService.omitDocument(docTempNo);
 		
 		String word = "";
 		
-		if(result2 > 0) {
+		if(result > 0) {
 			word = "문서 삭제 성공!";
 			gson.toJson(word,response.getWriter());
 		}
@@ -1251,9 +1196,256 @@ public class ApprovalController {
 		}
 	}
 									  
+	// 부서별 전체 문서 리스트
+	@RequestMapping("adminAllList.do")
+	public ModelAndView adminAllList(ModelAndView mv, HttpServletResponse response, HttpSession session,
+			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
+		
+		// 로그인 세션 부서번호 가져오기
+		int deptNo = ((Member) session.getAttribute("loginUser")).getDeptNo();
+		
+		int listCount = aService.getAdminAllListCount(deptNo);
+		
+		// 페이징
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+		
+		ArrayList<Document> dList = aService.selectAdminAllList(deptNo, pi);
+		
+		for(Document d : dList) {
+			if(d.getrStatus().equals("Y")) {
+				d.setsStatus("반려");
+			}else {
+				d.setsStatus("결재완료");
+			}
+		}
+		
+		mv.addObject("dList",dList);
+		mv.addObject("listCount",listCount);
+		mv.addObject("pi",pi);
+		mv.setViewName("approval/adminAllList");
+		
+		return mv;
+	}
 	
+	// 부서별 삭제 문서 리스트
+	@RequestMapping("adminDeleteList.do")
+	public ModelAndView approvalDeleteDList(ModelAndView mv, HttpServletResponse response, HttpSession session,
+			@RequestParam(value = "currentPage", required = false, defaultValue = "1") int currentPage) {
+		
+		// 로그인 세션 부서번호 가져오기
+		int deptNo = ((Member) session.getAttribute("loginUser")).getDeptNo();
+		
+		int listCount = aService.getAdminDeleteListCount(deptNo);
+		
+		// 페이징
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+		
+		ArrayList<Document> dList = aService.selectAdminDeleteList(deptNo, pi);
+		
+		for(Document d : dList) {
+			d.setsStatus("관리자에 의한 삭제");
+		}
+		
+		mv.addObject("dList",dList);
+		mv.addObject("listCount",listCount);
+		mv.addObject("pi",pi);
+		mv.setViewName("approval/adminDeleteList");
+		
+		return mv;
+	}
 	
+	@RequestMapping("approvalAdminDetail.do")
+	public ModelAndView approvalAdminDetail(ModelAndView mv, HttpServletResponse response, HttpSession session, String docNo) {
+		
+		Document d = aService.approvalDetail(docNo);
+		
+		ArrayList<Step> sList = aService.selectStepList(d.getDocTempNo());
+		
+		ArrayList<Step> apprList = new ArrayList<Step>();
+		ArrayList<Step> checkList = new ArrayList<Step>();
+		ArrayList<Step> receiveList = new ArrayList<Step>();
+		
+		for(Step s : sList) {
+			if(s.getLineNo() == 1) {
+				apprList.add(s);
+			}else if(s.getLineNo() == 2) {
+				checkList.add(s);
+			}else {
+				receiveList.add(s);
+			}
+		}
+		
+		// 관리자 페이지에서 들어온 건지 여부 --> 현재 메소드는 관리자 페이지에서 접근 
+		d.setAdmin(true);
+		mv.addObject("d",d);
+		
+		// 업무연락 문서일 때 
+		if(d.getFormNo() == 1) {
+			mv.addObject("apprList",apprList);
+			mv.addObject("checkList",checkList);
+			mv.addObject("receiveList",receiveList);
+			mv.setViewName("approval/businessDocumentDetail");
+		// 회람 문서일 때
+		}else if(d.getFormNo() == 2) {
+			mv.addObject("checkList",checkList);
+			mv.setViewName("approval/referDocumentDetail");
+	    // 휴가 신청서일 때
+		}else if(d.getFormNo() == 3) {
+			Leave leaveInfo = aService.selectLeaveInfo(d.getDocTempNo());
+			mv.addObject("apprList",apprList);
+			mv.addObject("checkList",checkList);
+			mv.addObject("receiveList",receiveList);
+			mv.addObject("leaveInfo",leaveInfo);
+			mv.setViewName("approval/leaveDocumentDetail");
+		// 휴직 신청서일 때
+		}else if(d.getFormNo() == 4) {
+			Absence absenceInfo = aService.selectAbsenceInfo(d.getDocTempNo());
+			mv.addObject("apprList",apprList);
+			mv.addObject("checkList",checkList);
+			mv.addObject("receiveList",receiveList);
+			mv.addObject("absenceInfo",absenceInfo);
+			mv.setViewName("approval/absenceDocumentDetail");
+		// 사직서일 때
+		}else {
+			Resign resignInfo = aService.selectResignInfo(d.getDocTempNo());
+			mv.addObject("apprList",apprList);
+			mv.addObject("checkList",checkList);
+			mv.addObject("receiveList",receiveList);
+			mv.addObject("resignInfo",resignInfo);
+			mv.setViewName("approval/resignDocumentDetail");
+		}
+		
+		
+		return mv;
+	}
 	
+	// 관리자 --> 삭제하기
+	@RequestMapping("deleteDocument.do")
+	public String deleteDocument(Model model, HttpServletResponse response, String docTempNo) {
+		
+		int result = aService.deleteDocument(docTempNo);
+		
+		if(result > 0) {
+			return "redirect:adminAllList.do";
+		}else {
+			model.addAttribute("msg", "문서 삭제 오류!");
+			return "common/errorPage";
+		}
+	}
+	
+	// 관리자 --> 복원하기
+	@RequestMapping("restoreDocument.do")
+	public String restoreDocument(Model model, HttpServletResponse response, String docTempNo) {
+		
+		int result = aService.restoreDocument(docTempNo);
+		
+		if(result > 0) {
+			return "redirect:adminDeleteList.do";
+		}else {
+			model.addAttribute("msg", "문서 복원 오류!");
+			return "common/errorPage";
+		}
+	}	
+	
+	// 관리자 --> 완전 삭제하기
+	@RequestMapping("omitDocumentInfo.do")
+	public String omitDocumentInfo(Model model, HttpServletResponse response, String docTempNo, int formNo) {
+		
+		int result = 0;
+		
+		// 업무연락 또는 회람 문서일 경우
+		if(formNo == 1 || formNo == 2) {
+			aService.omitStep(docTempNo);
+			result = aService.omitDocument(docTempNo);
+		// 휴가 문서일 경우	
+		}else if(formNo == 3) {
+			aService.omitStep(docTempNo);
+			aService.omitLeaveInfo(docTempNo);
+			aService.omitLeaveRecord(docTempNo);
+			result = aService.omitDocument(docTempNo);
+		// 휴직 문서일 경우
+		}else if(formNo == 4) {
+			aService.omitStep(docTempNo);
+			aService.omitAbsenceInfo(docTempNo);
+			result = aService.omitDocument(docTempNo);
+		// 사직 문서일 경우
+		}else {
+			aService.omitStep(docTempNo);
+			aService.omitResignInfo(docTempNo);
+			result = aService.omitDocument(docTempNo);
+		}
+		
+		if(result > 0) {
+			return "redirect:adminDeleteList.do";
+		}else {
+			model.addAttribute("msg", "문서 완전 삭제 오류!");
+			return "common/errorPage";
+		}
+	}
+	
+	// 메인 화면 문서 리스트 카운트
+	@RequestMapping("approvalBox.do")
+	public void approvalBox(HttpServletResponse response, HttpSession session) throws JsonIOException, IOException {
+		
+		response.setContentType("application/json; charset=utf-8");
+		
+		// 로그인 세션 사용자 사번 가져오기
+		int memNo = ((Member) session.getAttribute("loginUser")).getMemNo();
 
+		// 로그인 사용자가 기안자이거나 결재라인에 있는 문서리스트 조회(전체 문서)
+		ArrayList<Document> dList = aService.selectProgressAllList(memNo);
+
+		ArrayList<Document> standByList = new ArrayList<Document>();
+		ArrayList<Document> checkList = new ArrayList<Document>();
+		ArrayList<Document> progressList = new ArrayList<Document>();
+		DocumentListCount dCount = new DocumentListCount();
+		
+		for (Document d : dList) {
+			ArrayList<Step> sList = aService.selectStepList(d.getDocTempNo());
+			// 로그인 사용자가 기안자일 경우
+			if (memNo == d.getDrafterNo()) {
+				d.setsStatus("진행");
+				// 로그인 사용자가 결재스텝일 경우 
+			} else {
+				for (Step s : sList) {
+					if (memNo == s.getStaffNo()) {
+						// 사용자가 결재를 했거나, 수신자일 때
+						if (s.getApprStatus().equals("Y") || s.getLineNo() == 3) {
+							d.setsStatus("진행");
+						} else {
+							// 현재 문서 결재순번과 결재사원의 순서가 같을때(지금 결재순번이 사용자 차례일 때)
+							if (d.getTurnNo() == s.getStepPriority()) {
+								
+								d.setsStatus("미결");
+								// 결재사원의 결재선 타입이 참조이거나, 문서 서식종류가 회람문서일경우
+							} else if (s.getLineNo() == 2 || d.getFormNo() == 2) {
+								d.setsStatus("참조 대기");
+								// 아직 결재 순번이 내 차례가 되기 전일때(예정상황)
+							} else if (d.getTurnNo() < s.getStepPriority()) {
+								d.setsStatus("예결");
+								// 나보다 뒷 순번 결재자가 먼저 결재를 하였을때(후결상황)
+							} else if (d.getTurnNo() > s.getStepPriority()) {
+								d.setsStatus("후결 대기");
+							}
+						}
+					} 
+				}
+			}
+			if(d.getsStatus().equals("미결") || d.getsStatus().equals("후결 대기")) {
+				standByList.add(d);
+			}else if(d.getsStatus().equals("참조 대기")) {
+				checkList.add(d);
+			}else if(d.getsStatus().equals("진행")) {
+				progressList.add(d);
+			}
+		}
+		
+		dCount.setStandByDocCount(standByList.size());
+		dCount.setCheckDocCount(checkList.size());
+		dCount.setProgressDocCount(progressList.size());
+		
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		gson.toJson(dCount,response.getWriter());
+	}
 
 }

@@ -519,10 +519,11 @@
 		JOIN DEPARTMENT USING(DEPT_NO)
 		JOIN RANK USING(RANK_NO)
         RIGHT JOIN ABSENCE USING(MEM_NO)
+        WHERE STATUS = 'Y'
 	</select>
 	<!-- 복직 -->
 	<update id="returnToWork" parameterType="_int">
-		UPDATE ABSENCE SET STATUS = 'N' , RETURN_DATE = SYSDATE WHERE MEM_NO =#{memNo}
+		UPDATE ABSENCE SET STATUS = 'N' , RETURN_DATE = SYSDATE WHERE NO_ABSENCE =#{noAbsence}
 	</update>
 	
 	<select id="DiligenceCountAllMember" resultMap="DiligenceCountAllMemberResultSet">
@@ -589,6 +590,7 @@
 	<select id="modRequestList" resultMap="modificationDiligenceResultSet">
 		SELECT *
 		FROM MOD_DILIGENCE
+		WHERE STATUS_MOD_D = '결재중'
 	</select>
 	
 	<update id="modificationAcknowledgment">
@@ -650,5 +652,32 @@
             and mem_no = #{memNo})as absenceCount
 		from member
 		where mem_no = #{memNo}
+	</select>
+	
+	<select id="previousAbsenceCount" resultType="_int">
+		SELECT NVL(COUNT(*),0)
+		FROM ABSENCE
+		WHERE STATUS= 'N'
+	</select>
+	
+	<select id="previousAbsence" resultMap="AbsenceResultSet">
+		SELECT *
+		FROM MEMBER
+		JOIN DEPARTMENT USING(DEPT_NO)
+		JOIN RANK USING(RANK_NO)
+        RIGHT JOIN ABSENCE USING(MEM_NO)
+        WHERE STATUS= 'N'
+	</select>
+	
+	<select id="previousModificationDiligenceCount" resultType="_int">
+		SELECT NVL(COUNT(*),0)
+		FROM MOD_DILIGENCE
+		WHERE STATUS_MOD_D != '결재중'
+	</select>
+	
+	<select id="previousModificationDiligence" resultMap="modificationDiligenceResultSet">
+		SELECT *
+		FROM MOD_DILIGENCE
+		WHERE STATUS_MOD_D != '결재중'
 	</select>
 </mapper>

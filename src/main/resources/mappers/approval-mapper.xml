@@ -491,15 +491,7 @@
 			DOC_TEMP_NO = #{docTempNo}
 	</update>
 	
-	<!-- 페이지 나갈 때 스텝 삭제 -->
-	<delete id="deleteTempStep" parameterType="String">
-		DELETE FROM APPROVAL_STEP WHERE DOC_NO = #{docTempNo}
-	</delete>
 	
-	<!-- 페이지 나갈 때 문서 삭제 -->
-	<delete id="deleteTempDocument" parameterType="String">
-		DELETE FROM APPROVAL_DOCUMENT WHERE DOC_TEMP_NO = #{docTempNo}
-	</delete>
 	
 	<!-- 휴가 정보 기록하기(디테일용) -->
 	<insert id="insertLeaveInfo" parameterType="Leave">
@@ -518,7 +510,7 @@
 	</update>
 	
 	<!-- 휴가 관리용 데이터 업데이트(반려) -->
-	<update	id="rejectRecodingLeave">
+	<update	id="rejectRecodingLeave" parameterType="String">
 		UPDATE RECORD_LEAVE SET L_STATUS = '반려' WHERE DOC_TEMP_NO = #{docTempNo}
 	</update>
 	
@@ -674,4 +666,44 @@
 	    AND  DRAFTER_DEPT_NO = #{deptNo}
 	    ORDER BY AD.DRAFT_DATE DESC
 	</select>
+	
+	<!-- 문서 삭제여부 업데이트 -->
+	<update id="deleteDocument" parameterType="String">
+		UPDATE APPROVAL_DOCUMENT SET D_STATUS = 'Y' WHERE DOC_TEMP_NO = #{docTempNo}
+	</update>
+	
+	<!-- 문서 복원하기 -->
+	<update id="restoreDocument" parameterType="String">
+		UPDATE APPROVAL_DOCUMENT SET D_STATUS = 'N' WHERE DOC_TEMP_NO = #{docTempNo}
+	</update>
+	
+	<!-- 스텝 삭제 -->
+	<delete id="omitStep" parameterType="String">
+		DELETE FROM APPROVAL_STEP WHERE DOC_NO = #{docTempNo}
+	</delete>
+	
+	<!-- 문서 삭제 -->
+	<delete id="omitDocument" parameterType="String">
+		DELETE FROM APPROVAL_DOCUMENT WHERE DOC_TEMP_NO = #{docTempNo}
+	</delete>
+	
+	<!-- 휴가 정보 삭제하기 -->
+	<delete id="omitLeaveInfo" parameterType="String">
+		DELETE FROM APPROVAL_LEAVE WHERE DOC_TEMP_NO = #{docTempNo}
+	</delete>
+	
+	<!-- 휴가 관리용 데이터 삭제하기 -->
+	<delete id="omitLeaveRecord" parameterType="String">
+		DELETE FROM RECORD_LEAVE WHERE DOC_TEMP_NO = #{docTempNo}
+	</delete>
+	
+	<!-- 휴직 정보 삭제하기 -->
+	<delete id="omitAbsenceInfo" parameterType="String">
+		DELETE FROM APPROVAL_ABSENCE WHERE DOC_TEMP_NO = #{docTempNo}
+	</delete>
+	
+	<!-- 사직 정보 삭제하기 -->
+	<delete id="omitResignInfo" parameterType="String">
+		DELETE FROM APPROVAL_RESIGN WHERE DOC_TEMP_NO = #{docTempNo}
+	</delete>
 </mapper>

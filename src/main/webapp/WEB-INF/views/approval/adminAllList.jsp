@@ -33,8 +33,8 @@
 						<ul id="Tab1" class="H-personnel-subNavi Depth02">
 							<li><a href="approvalProgressAllListView.do">전체</a></li>
 							<li><a href="standByDocListView.do">대기</a></li>
-							<li><a href="checkDocListView.do">확인</a></li>
-							<li><a href="scheduledDocListView.do">예정</a></li>
+							<li><a href="checkDocListView.do">참조</a></li>
+							<li><a href="scheduledDocListView.do">예결</a></li>
 							<li><a href="progressListView.do">진행</a></li>
 						</ul>
 		
@@ -52,7 +52,7 @@
 							<li><a href="rejectListView.do">반려</a></li>
 						</ul>
 
-						<c:if test="${ loginUser.lankNo < 4 }">
+						<c:if test="${ loginUser.deptNo != 0 && loginUser.lankNo < 4 }">
 							<div class="H-personnel-subNavi Depth01-3">
 								<li class="subTitle" style="cursor:pointer;">
 								    <span>${ loginUser.deptName }부 문서 관리</span>
@@ -191,14 +191,14 @@
 							</tr>
 						</table>
 					<br>
-					<div id="search_bar">
+					<!-- <div id="search_bar">
 						<select class="search_tool" id="search_tool">
 							<option value="dWriter">기안자</option>
 							<option value="dTitle">문서 제목</option>
 						</select>
 						<input type="text" id="appr_search" maxlength="24" placeholder="문서검색"/>
 						<input type="button" id="search_btn" value="   "/>
-					</div>
+					</div> -->
 				</div>
 			</div>
 			<script>
