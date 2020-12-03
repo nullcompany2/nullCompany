@@ -204,7 +204,7 @@ public interface PersonnelManagementService {
 	// 휴직자 리스트
 	ArrayList<Absence> absenceList();
 	// 복직
-	int returnToWork(int memNo);
+	int returnToWork(int noAbsence);
 	// 전제 사원 근태관리 -모든사원 리스트
 	ArrayList<Member> selectAllMember();
 	// 전체직원 근태 카운트
@@ -223,6 +223,14 @@ public interface PersonnelManagementService {
 	ArrayList<Member> searchMemberND(String searchKey);
 	// 직원 휴가관리 사원검색 이름/부서
 	ArrayList<ForEmLeave> searchMemberForEmLeaveND(String searchKey);
+	// 휴직자 페이지 카운트
+	int previousAbsenceCount();
+	// 휴직자 모달 페이지
+	ArrayList<Absence> previousAbsence(PageInfo pi);
+	// 이전 근태수정 카운트
+	int previousModificationDiligenceCount();
+	// 이전 근태수정 리스트
+	ArrayList<ModificationDiligence> previousModificationDiligence(PageInfo pi);
 	
 	
 	

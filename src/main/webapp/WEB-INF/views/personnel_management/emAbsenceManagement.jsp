@@ -66,7 +66,7 @@
 									<td class="ta">${list.reasonAbsence }</td>
 									<td class="ta">${list.absenceDate }</td>
 									<td class="ta">
-										<a href="#"id="${list.memNo }" class="cursor" onclick="retrunToWork(${list.memNo})" style="color: #477A8F;">복직</a>
+										<a href="#"id="${list.memNo }" class="cursor" onclick="retrunToWork(${list.noAbsence})" style="color: #477A8F;">복직</a>
 									</td>
 								</tr>
 								</c:if>
@@ -85,10 +85,10 @@
 		
 	</div>
 	<script>
-		function retrunToWork(memNo){
-			var result = confirm("사번 : "+memNo+" 사원을 복직시키시겠습니까.?");
+		function retrunToWork(noAbsence){
+			var result = confirm("휴직번호 : "+noAbsence+" 사원을 복직시키시겠습니까.?");
 			if(result){
-				location.href="returnToWork.do?memNo="+memNo;
+				location.href="returnToWork.do?noAbsence="+noAbsence;
 			}
 			
 		};
@@ -143,8 +143,201 @@
 
 		$('#detail-r-l').on('click', function() {
 			// 모달창 띄우기
-			modal('my_modal');
+			modal('my_modal')
+			$.ajax({
+				url : "previousAbsence.do",
+				dataType : "json",
+				success:function(data){
+					console.log(data);
+					
+					$("#dListPaging").remove();
+					$('#md_listTbl tr').remove();
+					var $mdTbl = $("#md_listTbl");
+	            	var $tr;
+	            	var $td;
+	            	var $td_name;
+	            	var $td_memNo;
+	            	var $td_reasonAbsence;
+	            	var $td_absenceDate;
+	            	var $td_returnDate;
+					
+	            	var $pageTbl = $('#md_page_tbl');
+	            	var td0;
+	            	var td1;
+	            	var td2;
+	            	var td3;
+	            	var td1_1;
+	            	var td1_1_1;
+	            	var td2_1;
+	            	var td2_1_1;
+	            	var td2_2;
+	            	
+	            	
+					for(var i in data.previousAbsence){					
+						$tr = $('<tr style="text-align:center">');
+						$td_name = $('<td class="md-ta">').text(data.previousAbsence[i].name);
+						$td_memNo = $('<td class="md-ta">').text(data.previousAbsence[i].memNo);
+						$td_reasonAbsence = $(' <td class="md-ta">').text(data.previousAbsence[i].reasonAbsence);
+						$td_absenceDate = $('<td class="md-ta">').text(data.previousAbsence[i].absenceDate);
+						$td_returnDate = $('<td class="md-ta">').text(data.previousAbsence[i].returnDate);
+						
+						$tr.append($td_name);
+						$tr.append($td_memNo);
+						$tr.append($td_reasonAbsence);
+						$tr.append($td_absenceDate);
+						$tr.append($td_returnDate);
+						$mdTbl.append($tr);
+					}
+					
+					$tr = $('<tr align="center" height="20" id="dListPaging">'); 
+					$td = $('<td colspan="6">');
+					if(data.pi.currentPage == 1){
+						
+						$td0 = "[이전]";
+						$td.append($td0);
+					}
+		        	
+					if(data.pi.currentPage != 1){
+						$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage -1)+')">').text("[이전]");
+			        	
+			        	$td.append($td0);
+					}    	
+		        	
+			       	
+			       	
+			       	for(var p = data.pi.startPage; p <=  data.pi.endPage; p++){
+			       		if(p == data.pi.currentPage){
+			       			$td0 = $("<b style='color:red; font-size:4'>").text("  "+p+"  ");
+			       			$td.append($td0);
+			       		}
+			       		if(p != data.pi.currentPage ){
+			       			$td0 = $('<a onclick="mdListPaged('+ (p)+')">').text("  "+p+"  ");
+			       			$td.append($td0);
+			       		}
+			       	
+			       	}
+		        	
+			       	if(data.pi.currentPage == data.pi.maxPage ){
+			       		$td0 = "[다음]";
+			       		$td.append($td0);
+			       	}
+		        	
+		        	if(data.pi.currentPage != data.pi.maxPage){
+		        		$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage + 1)+')">').text("[다음]");
+		        		$td.append($td0);
+		        	}
+		        	
+	            	$tr.append($td);
+					
+	            	$pageTbl.append($tr);
+ 
+				},
+				error: function(request,status,error){
+					console.log(request);
+					console.log(status);
+					console.log(error);
+				}
+			});
 		});
+		
+		function mdListPaged(currentPage){
+			$.ajax({
+				url : "previousAbsence.do",
+				data : {currentPage : currentPage},
+				dataType : "json",
+				success:function(data){
+					console.log(data);
+					
+					$("#dListPaging").remove();
+					$('#md_listTbl tr').remove();
+					var $mdTbl = $("#md_listTbl");
+	            	var $tr;
+	            	var $td;
+	            	var $td_name;
+	            	var $td_memNo;
+	            	var $td_reasonAbsence;
+	            	var $td_absenceDate;
+	            	var $td_returnDate;
+					
+	            	var $pageTbl = $('#md_page_tbl');
+	            	var td0;
+	            	var td1;
+	            	var td2;
+	            	var td3;
+	            	var td1_1;
+	            	var td1_1_1;
+	            	var td2_1;
+	            	var td2_1_1;
+	            	var td2_2;
+	            	
+	            	
+					for(var i in data.previousAbsence){					
+						$tr = $('<tr style="text-align:center">');
+						$td_name = $('<td class="md-ta">').text(data.previousAbsence[i].name);
+						$td_memNo = $('<td class="md-ta">').text(data.previousAbsence[i].memNo);
+						$td_reasonAbsence = $(' <td class="md-ta">').text(data.previousAbsence[i].reasonAbsence);
+						$td_absenceDate = $('<td class="md-ta">').text(data.previousAbsence[i].absenceDate);
+						$td_returnDate = $('<td class="md-ta">').text(data.previousAbsence[i].returnDate);
+						
+						$tr.append($td_name);
+						$tr.append($td_memNo);
+						$tr.append($td_reasonAbsence);
+						$tr.append($td_absenceDate);
+						$tr.append($td_returnDate);
+						$mdTbl.append($tr);
+					}
+					
+					$tr = $('<tr align="center" height="20" id="dListPaging">'); 
+					$td = $('<td colspan="6">');
+					if(data.pi.currentPage == 1){
+						
+						$td0 = "[이전]";
+						$td.append($td0);
+					}
+		        	
+					if(data.pi.currentPage != 1){
+						$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage -1)+')">').text("[이전]");
+			        	
+			        	$td.append($td0);
+					}    	
+		        	
+			       	
+			       	
+			       	for(var p = data.pi.startPage; p <=  data.pi.endPage; p++){
+			       		if(p == data.pi.currentPage){
+			       			$td0 = $("<b style='color:red; font-size:4'>").text("  "+p+"  ");
+			       			$td.append($td0);
+			       		}
+			       		if(p != data.pi.currentPage ){
+			       			$td0 = $('<a onclick="mdListPaged('+ (p)+')">').text("  "+p+"  ");
+			       			$td.append($td0);
+			       		}
+			       	
+			       	}
+		        	
+			       	if(data.pi.currentPage == data.pi.maxPage ){
+			       		$td0 = "[다음]";
+			       		$td.append($td0);
+			       	}
+		        	
+		        	if(data.pi.currentPage != data.pi.maxPage){
+		        		$td0 = $('<a onclick="mdListPaged('+ (data.pi.currentPage + 1)+')">').text("[다음]");
+		        		$td.append($td0);
+		        	}
+		        	
+	            	$tr.append($td);
+					
+	            	$pageTbl.append($tr);
+ 
+				},
+				error: function(request,status,error){
+					console.log(request);
+					console.log(status);
+					console.log(error);
+				}
+			});
+		}
+		
 		$(document).ready(function(){
 			$(".md-btn-cancel").click(function(){
 				var result = confirm("휴가신청을 취소하시겠습니까?");
@@ -220,9 +413,8 @@
                 </tr>
             </thead>
             <!-- 휴직자 추가시 리스트 -->
-            <tbody>
-            <c:forEach var="list" items="${absenceList }">
-            <c:if test="${list.status ne 'Y' }">
+            <tbody id="md_listTbl">
+            
                 <tr style="text-align:center">
                     <td class="md-ta">${list.name }</td>
                     <td class="md-ta">${list.memNo }</td>
@@ -230,9 +422,13 @@
                     <td class="md-ta">${list.absenceDate }</td>
                     <td class="md-ta">${list.returnDate }</td>
                 </tr>
-            </c:if>
-            </c:forEach>
+            
             </tbody>
+            <div style="text-align: center; margin-top: 50px;">
+			<table  style=" width: 100%; border-collapse: collapse;" id="md_page_tbl">
+	            
+			</table>
+			</div>
         </table>
 		<div style="text-align: center; margin-top: 50px;">
 			<span class="md-btn cursor md-btn-close" >닫기</span>

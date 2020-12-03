@@ -26,6 +26,12 @@ dd {
     font-size: 14px;
     margin-left: 130px;
     color: #676767;
+    
+ }
+ 
+ #rank_mem li{
+ cursor: pointer;
+ }
 </style>
 <body>
 <script>
@@ -112,9 +118,11 @@ function detailMemberInfo(){
 			<!-- 세부 네비끝 -->
 
 				<!-- 내부 컨텐츠 -->
-			<div class="contents">
+			<div class="contents" style="width: 2000px; overflow: scroll">
 				<div class="contents-title">
 					<span class="ct1">직위 관리</span>
+					
+					<button id="rank_add"> 직위 추가</button>
 				</div>
 		
 				
@@ -124,13 +132,18 @@ function detailMemberInfo(){
 					<div>
 						<div style="top: -20px;
 						position: relative;">
-						<button id="rank_add"> 직위 추가</button>
+						
 						
 						</div>
-
+						
 					</div>
-				
-					<table class="tg">
+					<a style="    color: #676767;
+    font-size: 14px;
+    cursor: auto;">※ 직위 삭제는 해당 직위인 사용자가 0명 일 때 가능합니다.<br>
+    직위 등급은 [직위 추가]버튼으로 총 15개까지 생성할 수 있습니다. <br><br>
+    설정한 직위 등급은 전자결재 설정에 적용됩니다.
+    </a>
+					<table class="tg" style="margin-top: 15px;">
 						<thead>
 						  <tr>
 							<th id="firstth" class="tg-0pky rank">1</th>
@@ -192,7 +205,7 @@ function detailMemberInfo(){
     margin-top: -7px;
     margin-bottom: 11px;">직위 추가</h4>
 		
-
+		
 		<input style="margin-top: 5px;" id="addranknameInput" type="text" placeholder="직위명을 입력해주세요" />
 		
 		<p style="color: #707070;
@@ -257,13 +270,13 @@ function detailMemberInfo(){
 	border-radius: 3px;
 	z-index: 10201;
 	width: 425px;
-    height: 485px;" class="modal-dragscroll">
+    height: 435px;" class="modal-dragscroll">
 	<h4 style="color: #477A8F;
     margin-left: -25px;
     margin-bottom: 11px;
     margin-top: 11px;">직위 삭제</h4>
 		<div style="margin-bottom: 20px;">
-			<span style="color: #707070; margin-bottom: 5px; font-size: 14px;">직위 삭제는 해당 직위인 사용자가 0명 일 때에만 가능합니다.</span><br>
+			
 			<span style="color: #707070; margin-bottom: 5px; font-size: 14px;">현재 </span>
 			<span id="rank_name_delete" style="    margin-bottom: 5px;
 				    font-size: 15px;

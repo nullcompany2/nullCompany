@@ -157,13 +157,13 @@ public class ApprovalServiceImpl implements ApprovalService {
 	}
 
 	@Override
-	public int deleteTempStep(String docTempNo) {
-		return aDao.deleteTempStep(docTempNo);
+	public int omitStep(String docTempNo) {
+		return aDao.omitStep(docTempNo);
 	}
 
 	@Override
-	public int deleteTempDocument(String docTempNo) {
-		return aDao.deleteTempDocument(docTempNo);
+	public int omitDocument(String docTempNo) {
+		return aDao.omitDocument(docTempNo);
 	}
 
 	@Override
@@ -219,6 +219,36 @@ public class ApprovalServiceImpl implements ApprovalService {
 	@Override
 	public ArrayList<Document> selectAdminDeleteList(int deptNo, PageInfo pi) {
 		return aDao.selectAdminDeleteList(deptNo, pi);
+	}
+
+	@Override
+	public int deleteDocument(String docTempNo) {
+		return aDao.deleteDocument(docTempNo);
+	}
+
+	@Override
+	public int restoreDocument(String docTempNo) {
+		return aDao.restoreDocument(docTempNo);
+	}
+
+	@Override
+	public int omitLeaveInfo(String docTempNo) {
+		return aDao.omitLeaveInfo(docTempNo);
+	}
+
+	@Override
+	public int omitLeaveRecord(String docTempNo) {
+		return aDao.omitLeaveRecord(docTempNo);
+	}
+
+	@Override
+	public int omitAbsenceInfo(String docTempNo) {
+		return aDao.omitAbsenceInfo(docTempNo);
+	}
+
+	@Override
+	public int omitResignInfo(String docTempNo) {
+		return aDao.omitResignInfo(docTempNo);
 	}
 
 }
