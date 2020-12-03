@@ -36,8 +36,8 @@ display:none;}
 					<li>❏ NullCompany</li>
 					<li>❏ 오피스주소</li>
 					<li >❏ kh-final-h15.com</li>
-				</div>	
-				<div>
+				</div>	 
+				<div> 
 					<li class="topline"><a href="officeLogo.do" style="margin-left: 15px;">⏣ 로고 변경</a></li>
 					<li class="topline"><a href="officeAdminAP.do" style="margin-left: 15px;">⏣ 관리자 지정</a></li>
 				</div>
