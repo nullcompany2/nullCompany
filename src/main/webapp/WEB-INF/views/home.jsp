@@ -353,16 +353,9 @@ li {
                     <span> Approval Document</span>
                     <a style="margin-left:100px;" href="approvalProgressAllListView.do">more</a>
                     <hr>
-                    <div id="approval1" style="background:#C8CACC;"> 
-                   결재 문서 : 2 건 <br>
-                   </div>
-                   <div id="approval2"> 
-                    확인 문서 : 2 건 <br>
-                   </div>
-                    
-                    <div id="approval3" style="background:#C8CACC;"> 
-                    수신 문서 : 0 건
-                   </div>
+                    <div id="approval1"></div>
+                    <div id="approval2"></div>
+                    <div id="approval3"></div>
             
         </div>
         </div>
@@ -528,6 +521,48 @@ li {
 			});
 		}
 	
+		// 전자 결재
+		$(function(){
+	         approvalBox();
+	      
+	      // 5분에 한번씩 계속 업데이트 하기 
+	       setInterval(function(){
+	    	   approvalBox();
+	         },50000); 
+	      });
+		
+		function  approvalBox(){
+	         $.ajax({
+	            url:"approvalBox.do",
+	            dataType:"json",
+	            success:function(data){
+	               
+	                // 각 div 선언 
+	                var approval1 = $("#approval1");
+	                var approval2 = $("#approval2");
+	                var approval3 = $("#approval3");
+	              
+	                // 각 div 비워주고 
+	                approval1.empty();
+	                approval2.empty();
+	                approval3.empty();
+	               
+	                // 넣어주고 
+	                var standByDocCount = "<span> 결재 대기 문서 : " + data.standByDocCount + " 건 </span> <br>";
+	                var checkDocCount = "<span> 참조 대기 문서 : " + data.checkDocCount + " 건 </span> <br>";
+	                var progressDocCount = "<span> 결재 진행 문서 : " + data.progressDocCount + " 건 </span> <br>";
+	               
+	                 // 더해주고 
+	                approval1.append(standByDocCount);
+	                approval2.append(checkDocCount);
+	                approval3.append(progressDocCount);
+	              
+	            },
+	            error:function(request,status,error){
+					console.log("main approvalBox 오류");
+	            }
+	         });
+	      }
 </script>
     </body>
     

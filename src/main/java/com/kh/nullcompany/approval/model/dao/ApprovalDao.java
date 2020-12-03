@@ -181,12 +181,12 @@ public class ApprovalDao {
 		return sqlSession.update("approvalMapper.insertDocument", d);
 	}
 
-	public int deleteTempStep(String docTempNo) {
-		return sqlSession.delete("approvalMapper.deleteTempStep", docTempNo);
+	public int omitStep(String docTempNo) {
+		return sqlSession.delete("approvalMapper.omitStep", docTempNo);
 	}
 
-	public int deleteTempDocument(String docTempNo) {
-		return sqlSession.delete("approvalMapper.deleteTempDocument", docTempNo);
+	public int omitDocument(String docTempNo) {
+		return sqlSession.delete("approvalMapper.omitDocument", docTempNo);
 	}
 
 	public int insertLeaveInfo(Leave l) {
@@ -253,6 +253,30 @@ public class ApprovalDao {
 		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
 		
 		return (ArrayList)sqlSession.selectList("approvalMapper.selectAdminDeleteList", deptNo, rowBounds);
+	}
+
+	public int deleteDocument(String docTempNo) {
+		return sqlSession.update("approvalMapper.deleteDocument", docTempNo);
+	}
+
+	public int restoreDocument(String docTempNo) {
+		return sqlSession.update("approvalMapper.restoreDocument", docTempNo);
+	}
+
+	public int omitLeaveInfo(String docTempNo) {
+		return sqlSession.delete("approvalMapper.omitLeaveInfo", docTempNo);
+	}
+
+	public int omitLeaveRecord(String docTempNo) {
+		return sqlSession.delete("approvalMapper.omitLeaveRecord", docTempNo);
+	}
+
+	public int omitAbsenceInfo(String docTempNo) {
+		return sqlSession.delete("approvalMapper.omitAbsenceInfo", docTempNo);
+	}
+
+	public int omitResignInfo(String docTempNo) {
+		return sqlSession.delete("approvalMapper.omitResignInfo", docTempNo);
 	}
 
 }
