@@ -261,7 +261,7 @@ tr>td {
                      <tr>
                         <td align="left">${n.nNo }</td>
                         <td align="left"><c:if test="${!empty loginUser }">
-                              <c:url var="ndetail" value="ndetail.do">
+                                 <c:url var="ndetail" value="ndetail.do">
                                  <c:param name="nNo" value="${n.nNo }" />
                                  <c:param name="currentPage" value="${pi.currentPage }" />
                               </c:url>
