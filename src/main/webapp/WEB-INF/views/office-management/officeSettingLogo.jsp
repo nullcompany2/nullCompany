@@ -19,7 +19,6 @@ display:none;}
 </head>
 
 <body>
-	
     <div id='wrap'>
 		<c:import url="../common/header.jsp"/>
 		
@@ -36,8 +35,8 @@ display:none;}
 					<li>❏ NullCompany</li>
 					<li>❏ 오피스주소</li>
 					<li >❏ kh-final-h15.com</li>
-				</div>	
-				<div>
+				</div>	 
+				<div> 
 					<li class="topline"><a href="officeLogo.do" style="margin-left: 15px;">⏣ 로고 변경</a></li>
 					<li class="topline"><a href="officeAdminAP.do" style="margin-left: 15px;">⏣ 관리자 지정</a></li>
 				</div>
@@ -123,11 +122,8 @@ display:none;}
 						</table>
 					</div>
 				</div>
-				
 			</div>
 		</div>
-
-		
     </div>
    
 							<script>
@@ -144,14 +140,12 @@ display:none;}
 											$("#upBtn").show();
 											$(".basicLogo").hide();
 											$("#nowLogo").show();
-											
 										}else{
 											$("#up-file").hide();
 											$("#upBtn").hide();
 											$(".basicLogo").show();
 											$("#nowLogo").hide();
 										}
-					
 									})
 								})
 								
@@ -194,8 +188,6 @@ display:none;}
              	$("#fileName").text(fileNa);
              	
             	};
-            	
-            	
             	
         </script>
 		

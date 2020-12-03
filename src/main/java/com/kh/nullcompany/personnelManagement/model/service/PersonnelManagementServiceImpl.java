@@ -331,8 +331,8 @@ public class PersonnelManagementServiceImpl implements PersonnelManagementServic
 	}
 
 	@Override
-	public int returnToWork(int memNo) {
-		return pDao.returnToWork(memNo);
+	public int returnToWork(int noAbsence) {
+		return pDao.returnToWork(noAbsence);
 	}
 
 	@Override
@@ -379,6 +379,26 @@ public class PersonnelManagementServiceImpl implements PersonnelManagementServic
 	@Override
 	public SelectedMemberDiligenceCount SelectedMemberDiligenceCount(int memNo) {
 		return pDao.SelectedMemberDiligenceCount(memNo);
+	}
+
+	@Override
+	public int previousAbsenceCount() {
+		return pDao.previousAbsenceCount();
+	}
+
+	@Override
+	public ArrayList<Absence> previousAbsence(PageInfo pi) {
+		return pDao.previousAbsence(pi);
+	}
+
+	@Override
+	public int previousModificationDiligenceCount() {
+		return pDao.previousModificationDiligenceCount();
+	}
+
+	@Override
+	public ArrayList<ModificationDiligence> previousModificationDiligence(PageInfo pi) {
+		return pDao.previousModificationDiligence(pi);
 	}
 
 	

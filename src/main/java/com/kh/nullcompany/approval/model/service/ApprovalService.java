@@ -216,18 +216,18 @@ public interface ApprovalService {
 	int insertDocument(Document d);
 
 	/**
-	 * 7_2 페이지 나갈 때 스텝 삭제
+	 * 7_2 스텝 삭제
 	 * @param docTempNo
 	 * @return
 	 */
-	int deleteTempStep(String docTempNo);
+	int omitStep(String docTempNo);
 
 	/**
-	 * 7_3 페이지 나갈 때 문서 삭제
+	 * 7_3 문서 삭제
 	 * @param docTempNo
 	 * @return
 	 */
-	int deleteTempDocument(String docTempNo);
+	int omitDocument(String docTempNo);
 
 	/**
 	 * 7_4 휴가 정보 기록하기(디테일에서 보여줄 내용)
@@ -313,5 +313,47 @@ public interface ApprovalService {
 	 * @return
 	 */
 	ArrayList<Document> selectAdminDeleteList(int deptNo, PageInfo pi);
+
+	/**
+	 * 9_1 문서 삭제하기(update)
+	 * @param docTempNo
+	 * @return
+	 */
+	int deleteDocument(String docTempNo);
+
+	/**
+	 * 9_2 문서 복원하기(update)
+	 * @param docTempNo
+	 * @return
+	 */
+	int restoreDocument(String docTempNo);
+
+	/**
+	 * 9_3 휴가 정보 삭제하기
+	 * @param docTempNo
+	 * @return
+	 */
+	int omitLeaveInfo(String docTempNo);
+
+	/**
+	 * 9_4 휴가 기록 삭제하기
+	 * @param docTempNo
+	 * @return
+	 */
+	int omitLeaveRecord(String docTempNo);
+
+	/**
+	 * 9_5 휴직 정보 삭제하기
+	 * @param docTempNo
+	 * @return
+	 */
+	int omitAbsenceInfo(String docTempNo);
+
+	/**
+	 * 9_6 사직 정보 삭제하기
+	 * @param docTempNo
+	 * @return
+	 */
+	int omitResignInfo(String docTempNo);
 
 }
