@@ -19,7 +19,6 @@ display:none;}
 </head>
 
 <body>
-	
     <div id='wrap'>
 		<c:import url="../common/header.jsp"/>
 		
@@ -123,11 +122,8 @@ display:none;}
 						</table>
 					</div>
 				</div>
-				
 			</div>
 		</div>
-
-		
     </div>
    
 							<script>
@@ -144,14 +140,12 @@ display:none;}
 											$("#upBtn").show();
 											$(".basicLogo").hide();
 											$("#nowLogo").show();
-											
 										}else{
 											$("#up-file").hide();
 											$("#upBtn").hide();
 											$(".basicLogo").show();
 											$("#nowLogo").hide();
 										}
-					
 									})
 								})
 								
@@ -194,8 +188,6 @@ display:none;}
              	$("#fileName").text(fileNa);
              	
             	};
-            	
-            	
             	
         </script>
 		
