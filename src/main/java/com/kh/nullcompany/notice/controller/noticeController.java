@@ -111,11 +111,9 @@ public class noticeController {
 		System.out.println(n);
 		
 		if(!file.getOriginalFilename().equals("")) {
-			// 서버에 업로드 진행
-			// saveFile메소드 : 저장하고자하는 file과 request를 전달해서 서버에 업로드시키고 저장된 파일명을 반환해주는 메소드
 			String renameFileName = saveFile(file,request); 
 
-			if(renameFileName != null) { // 파일이 잘 저장된 경우
+			if(renameFileName != null) { 
 				n.setOriginalFileName(file.getOriginalFilename());
 				n.setRenameFileName(renameFileName);
 			}
@@ -132,34 +130,24 @@ public class noticeController {
 	}
 	
 	public String saveFile(MultipartFile file, HttpServletRequest request) {
-		// 파일이 저장될 경로를 설정하자
-		// 웹 서버 contextPath를 불러와서 폴더의 경로를 가져온다.(webapp하위의 resources)
-		// D:\H_PM\springWorkspace\springProject\src\main\webapp\resources
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		
-		// root 하위의 buploadFiles 폴더를 연결
-		// \를 문자로 인식하기 위해서는 \\를 사용한다.
-		// D:\H_PM\springWorkspace\springProject\src\main\webapp\resources\buploadFiles
 		String savePath = root + "\\buploadFiles";
 		
-		File folder = new File(savePath); // savePath의 폴더를 불러온다.
+		File folder = new File(savePath); 
 		
 		if(!folder.exists()) {
-			// 폴더가 없으면 만들어라.
 			folder.mkdirs();
 		}
 		
-		// 원본 파일명을 년월일시분초.파일확장자명으로 변경
-		String originalFileName = file.getOriginalFilename(); // test.png
+		String originalFileName = file.getOriginalFilename(); 
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-		//                      [       20200929191422.                                       ] 
 		String renameFileName = sdf.format(new java.sql.Date(System.currentTimeMillis())) + "."
-				//				 [       20200929191422.png      
 								+ originalFileName.substring(originalFileName.lastIndexOf(".")+1);
-		String renamePath = folder + "\\" + renameFileName; // 실제 저장될 파일 경로 + 파일명
+		String renamePath = folder + "\\" + renameFileName; 
 		try {
-			file.transferTo(new File(renamePath)); // 전달받은 file이 rename명으로 이떄 서버에 저장이된다.
+			file.transferTo(new File(renamePath)); 
 		}catch(Exception e) {
 			System.out.println("파일 전송 에러: " + e.getMessage());
 		}
@@ -186,6 +174,7 @@ public class noticeController {
 		
 		return jsonStr;
 	}
+	
 	
 	@RequestMapping("nupView.do")
 	public ModelAndView noticeDeatil(ModelAndView mv, int nNo) {
@@ -223,7 +212,6 @@ public class noticeController {
 	public void deleteFile(String fileName, HttpServletRequest request) {
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		String savePath = root + "\\buploadFiles";
-		// D:\H_PM\springWorkspace\springProject\src\main\webapp\resources\buploadFiles\20201005160703.jpg
 		File f = new File(savePath + "\\" + fileName);
 		
 		if(f.exists()) {

@@ -316,13 +316,9 @@
     		});
         
         
-        // 검색 카테고리 분류 
-      		
-        	
+        	// 검색 카테고리 분류 
        		function goSearch(){
        	
-        	/* alert($("#category").children("option:selected").text()); */
-        	
        		var category=  $("#category").children("option:selected").val();
         	var search = $("#search").val();
         	
@@ -338,22 +334,17 @@
          	 var mailNoArr = new Array();
          
          	 $("#delMail").click(function(){
-          	
          		 if (confirm("정말로 삭제하시겠습니까? 휴지통으로 이동합니다.") == true){ 
          		 mailNoArr = new Array();
-   		
               var page = "받은메일";
               var size = $('input:checkbox[name="mail"]').length;
               for( var i =0;i<size;i++ ){
                  if($('input:checkbox[name="mail"]')[i].checked){
               	   mailNoArr.push($('input:checkbox[name="mail"]')[i].value);
-              	   	console.log(mailNoArr);
               	   document.location.href='delMail.do?mailNoArr=' + mailNoArr + '&page=' + page;
                  	}
+                  }
                 }
-                
-              }
-                 
           	});
        	
        	 // 체크 박스 완전 삭제하기 
@@ -366,13 +357,10 @@
                  for( var i =0;i<size;i++ ){
                     if($('input:checkbox[name="mail"]')[i].checked){
                  	   mailNoArr.push($('input:checkbox[name="mail"]')[i].value);
-                 	   	console.log(mailNoArr);
-                 	   document.location.href='realDelMail.do?mailNoArr=' + mailNoArr + '&page=' + page;
-                    	}
-                   }
-                   
-                 }
-                    
+                 	   document.location.href='realDelMail.do?mailNoArr=' + mailNoArr + '&page=' + page;  
+                      }
+                    }
+                  }
              	});
        	 
      

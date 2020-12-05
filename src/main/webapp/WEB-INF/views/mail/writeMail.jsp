@@ -700,12 +700,9 @@ span#fileName{
  	}); 
  	 
  	 // 자동 완성 에이작스 
- 	
           $("#address").on("keyup",function(){
               var text = $(this).val();
-             
               if(text.length > 1){
-                  
  			$.ajax({
  				url:"autoComplete.do",
  				type:"post",
@@ -725,35 +722,18 @@ span#fileName{
  				 	
  				 		str += "<li>" + entry['name'] + " < " 
  				 		str += entry['emailAddress'] +" > </li>" 
- 				 		
  				 	});
- 				 	
  				 		str += "</ul>"
  				 		auto.append(str);
  				 		$("#autoAddress").show();
  				 	
- 	                  
  				},error : function() {
  					console.log("전송실패");
  				} 
  			});
- 			
-              }else {
-            	  $("#autoAddress").hide();
-              }
-              
+              }else {$("#autoAddress").hide();}
  		});
  	 
-          $('#searchPop')
-          .mouseover(function(){
-          $('#searchAddress').css('display','block');
-          })
-          
-          $('#searchPop')
-          .mouseout(function(){
-          $('#searchAddress').css('display','none');
-          })
-          
            // 리스트 토글
            $('.tree').each(function(){
            var $this = $(this);
@@ -796,21 +776,17 @@ span#fileName{
         // 받는 사람 추가 
         $('#enrolladd').click(function(){
         	 var arraybox = "";
-        
-        	$("#enrollname:last-child").empty();
+          $("#enrollname:last-child").empty();
           $('[name="checkname"]:checked').each(function(i){ //i는 체크수 가져오기 
            arraybox = $(this).val();
-          
        	  $('#enrollname').append('<p><input type="checkbox" name="finalname" id="' + arraybox + '" class="finallist" value="'+ arraybox + '"/><label id="lb" for="'+ arraybox+'">' + arraybox +'</label><span style="color:white">,</span><br></p>');
       });
        }); 
 
-       // 보내는 사람 빼기 
+       // 받는 사람 빼기 
      $('#enrollsub').on('click', function() {
- 
        $('[name="finalname"]:checked').parent('p').remove(); 
      });
-       
   
        // 모달에서 저장 버튼 누르기 
      $("#email_sub").click(function(){
@@ -820,7 +796,7 @@ span#fileName{
 
                  $("input[name=recipient]").val(enroll.slice(0,-1));
                  $("#communitymodal").hide();
-             })
+             });
       
        
       $('#fileUp').click(()=>{

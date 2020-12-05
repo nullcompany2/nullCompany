@@ -754,7 +754,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 								<tr>
 									<td class="tbcontent" style="width: 100px; padding-top: 5px;"><label
 										for="" style="font-size: 14px;">일정제목</label></td>
-									<td class="tbcontent" colspan="2"><p class="tbinput" id="de_sche_name" style="width: 130px;"></p>
+									<td class="tbcontent" colspan="2"><p class="tbinput" id="de_sche_name" style="width: 170px;"></p>
 										<input type="hidden" id="de_sche_no" /><input type="hidden" id="de_Cal_no" /></td>
 									
 								</tr>
@@ -1465,18 +1465,30 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
     $(document).on("click", "#ulAuto li", function(){
     	var a = $(this).text();
     	var tmp = '';
-    	$('input:checkbox[id="name"]').each(function(){
-    	     if(this.value ==  a){
-    	        this.checked = true;
+    	if($('input[name=checkname]').val() != $(this).text()){
+    		$('input:checkbox[id="name"]').each(function(){
+          	     if(this.value ==  a){
+          	        this.checked = true;
 
-    	     }
+          	     }
+             	  tmp +='<label for="'+a+'2"><input type="checkbox"" name="checkname" id="' + a + '2" class="checklist" value="'+ a + '">' + a +'</input><label><br>';
+             	  	/*      	document.getElementById("result").innerHTML= tmp
+             	  	     	console.log("dd" + tmp); */
+             	  	     	$("#result").append(tmp);
+             	  	     return false;
+          	})
+          	
+        	
 
-    	});
+    	}else{
+    		
+    		
+    		return;
+    		
+    	}
     	
-    	  tmp +='<label for="'+a+'2"><input type="checkbox"" name="checkname" id="' + a + '2" class="checklist" value="'+ a + '">' + a +'</input><label><br>';
-	/*      	document.getElementById("result").innerHTML= tmp
-	     	console.log("dd" + tmp); */
-	     	$("#result").append(tmp);
+    
+
     	
     	
     	$("#autoAddress").mouseenter(function() {

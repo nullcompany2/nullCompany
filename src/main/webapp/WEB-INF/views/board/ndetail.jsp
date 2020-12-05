@@ -350,8 +350,6 @@ tr>td {
 			</div>
 			<div class="board_body" style="margin:10px;">
 				
-				<br>&nbsp;&nbsp;&nbsp;<a href="#" class="icon impt "
-					ng-click='setImportant()'><span class="blind">별</span></a>
 				<table class="deatil" align="center" width="900px">
 					<tr>
 					

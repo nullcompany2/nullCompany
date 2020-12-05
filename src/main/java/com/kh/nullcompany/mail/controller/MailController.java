@@ -147,7 +147,6 @@ private ScheduleService sService;
 		}
 		
 		// 파일 저장 메소드 
-		// 손봐야함 ...
 		public String saveMailFile(MultipartFile file, HttpServletRequest request) {
 		     
 		      String root = request.getSession().getServletContext().getRealPath("resources");
@@ -592,12 +591,12 @@ private ScheduleService sService;
 		
 		// 받은 메일함  - 검색하기 
 		@RequestMapping("searchRecieve.do")
-		public ModelAndView searchRecieve(ModelAndView mv, String category, String search,HttpSession session) {
+		public ModelAndView searchRecieve(ModelAndView mv, String category, 
+										String search,HttpSession session) {
 		
-			String memId = ((Member)session.getAttribute("loginUser")).getId();
+		String memId = ((Member)session.getAttribute("loginUser")).getId();
 		
 		Map map = new HashMap();
-		
 		map.put("search",search);
 		map.put("memId",memId);
 		

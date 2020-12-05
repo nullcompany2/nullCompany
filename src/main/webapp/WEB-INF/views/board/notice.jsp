@@ -20,7 +20,7 @@
 
 <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 <script
-   src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+   src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.s"></script>
 <title>사내공지</title>
 
 </head>
@@ -261,7 +261,7 @@ tr>td {
                      <tr>
                         <td align="left">${n.nNo }</td>
                         <td align="left"><c:if test="${!empty loginUser }">
-                              <c:url var="ndetail" value="ndetail.do">
+                                 <c:url var="ndetail" value="ndetail.do">
                                  <c:param name="nNo" value="${n.nNo }" />
                                  <c:param name="currentPage" value="${pi.currentPage }" />
                               </c:url>
