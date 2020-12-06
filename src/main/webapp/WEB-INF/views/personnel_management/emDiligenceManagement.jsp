@@ -494,12 +494,7 @@
 			});
 			
 		}
-		$(document).ready(function(){
-			$(".md-btn-cancel").click(function(){
-				var result = confirm("휴가신청을 취소하시겠습니까?");
-			})
-		})
-		
+				
 		function mdListPaged(currentPage,memNo){
 			var year = $("#md_searchYear").val();
 			var month = $("#md_searchMonth").val();

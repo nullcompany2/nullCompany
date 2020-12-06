@@ -358,9 +358,11 @@
         <button class="menu_icon hover1" onclick="location.href='approvalProgressAllListView.do'">
           <img src="resources/images/elec.png" /> <img src="resources/images/elec_h.png" />
         </button>
+        <c:if test="${loginUser.sAccess eq 1 }">
         <button class="menu_icon hover1" onclick="location.href='officeMain.do'">
           <img src="resources/images/office.png" /> <img src="resources/images/office_h.png" />
         </button>
+        </c:if>
 
       </div>
 

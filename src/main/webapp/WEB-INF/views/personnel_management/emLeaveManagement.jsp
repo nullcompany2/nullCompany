@@ -96,8 +96,8 @@
 	                                    <!-- 여기까지 -->
 	                                    <td class="ta">${ m.remainAnnual + m.remainReward }</td>
 	                                    <td class="ta sepa-line">
-	                                        <a href="#" class="cursor" style="color: #477A8F;" onclick="modfiy(${m.memNo})">수정</a> |
-	                                        <a href="#" class="cursor" style="color: #477A8F;" onclick="detail(${m.memNo})">상세</a>
+	                                        <a href="javascript:void(0);" class="cursor" style="color: #477A8F;" onclick="modfiy(${m.memNo})">수정</a> |
+	                                        <a href="javascript:void(0);" class="cursor" style="color: #477A8F;" onclick="detail(${m.memNo})">상세</a>
 	                                    </td>
 	                                </tr>
                                 </c:forEach>
@@ -119,7 +119,7 @@
                                         <th scope="row" style="background: #e8ecee;padding: 10px;">대상자 선택</th>
                                         <td style="padding: 10px; float: left;">
                                             <span>대상자를 선택하세요</span>
-                                            <a href="#"id="pick-em-1" class="cursor" style="color: #477A8F; margin-left: 20px;">선택하기</a>
+                                            <a href="javascript:void(0);"id="pick-em-1" class="cursor" style="color: #477A8F; margin-left: 20px;">선택하기</a>
                                         </td>
                                     </tr>
                                     <tr>
@@ -619,6 +619,7 @@
         		
         	}
         	if(able == 1){
+        		alert("생성완료.");
         		location.href="grantReward1.do?cMemNoArr="+cMemNoArr+"&cDaysArr="+cDaysArr;
         	}else{
         		alert("대상선택후 생성하기를 눌러주세요");
@@ -902,7 +903,6 @@
     <!-- 3번째 modal-pick-em -->
     <div id="my_modal-3" class="modal-dragscroll">
         <h4 style="color: #477A8F; margin-bottom: 30px;">포상휴가 대상자 설정</h4>
-        <form action="">
             <div class="md-search-reward-pick">
                 <dl>
                     <dt style="width: 100px; float: left;">입사일</dt>
@@ -922,9 +922,8 @@
                 </dl>
             </div>
             <div class="md-search-btn">
-                <input type="button" id="md3_searchBtn" onclick="md3_search()" value="검색" class="md-btn cursor ">
+                <input type="button" id="md3_searchBtn" onclick="md3_search();" value="검색" class="md-btn cursor ">
             </div>
-        </form>
         <table class="re-l-list">
             <tr class="re-l-list-il">
                 <th class="re-l-list-ck-th" ><input type="checkbox" id="md-All-chk"></th>

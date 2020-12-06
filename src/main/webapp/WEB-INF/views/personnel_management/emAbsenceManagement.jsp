@@ -401,7 +401,7 @@
 		</style>
 	<!-- Modal div -->
 	<div id="my_modal" class="modal-dragscroll">
-		<h4 style="color: #477A8F; margin-bottom: 30px;">휴가 신청 상세</h4>
+		<h4 style="color: #477A8F; margin-bottom: 30px;">이전 휴직자 </h4>
 		<table class="md-tbl" id="application-record">
             <thead style="background: #e8ecee;">
                 <tr style="text-align:center">
@@ -424,12 +424,13 @@
                 </tr>
             
             </tbody>
-            <div style="text-align: center; margin-top: 50px;">
+            
+        </table>
+        <div style="text-align: center; margin-top: 50px;">
 			<table  style=" width: 100%; border-collapse: collapse;" id="md_page_tbl">
 	            
 			</table>
-			</div>
-        </table>
+		</div>
 		<div style="text-align: center; margin-top: 50px;">
 			<span class="md-btn cursor md-btn-close" >닫기</span>
 		</div>

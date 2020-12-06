@@ -383,7 +383,6 @@ public class PersonnelManagementController {
 		int setCTime = Integer.parseInt(currentTime.replaceAll(":", ""));
 		Map	forR = new HashMap(); // 기록 상태값용
 		forR.put("memNo",memNo);
-		
 		// 출퇴근 해당날자인지 체크
 		ArrayList<SetAttendance> ADay = pService.AttendanceDays();
 		Calendar todayCalen = Calendar.getInstance();
@@ -434,8 +433,6 @@ public class PersonnelManagementController {
 				}else {
 					str="퇴근시간이 되지 않았습니다.";
 				}
-				
-				
 			}
 			
 		}else {
