@@ -494,6 +494,29 @@
 			DOC_TEMP_NO = #{docTempNo}
 	</update>
 	
+	<!-- 등록된 스텝 가져오기(낮은 직급 순) -->
+	<select id="orderByStepRank" resultMap="stepResultSet">
+		SELECT 
+		    *
+		FROM
+		    APPROVAL_STEP
+		WHERE DOC_NO = #{docTempNo}
+		AND LINE_NO = 1
+		ORDER BY STAFF_RANK_NO DESC
+	</select>
+	
+	<!-- 등록된 스텝 직급순으로 정렬하기 -->
+	<update id="sortingStep" parameterType="map">
+		UPDATE 
+			APPROVAL_STEP 
+		SET
+			STAFF_PRIORITY = #{stepPriority}
+		WHERE
+			STAFF_NO = #{staffNo}
+		AND
+			DOC_NO = #{docTempNo}
+	</update>
+	
 	<!-- 휴가 정보 기록하기(디테일용) -->
 	<insert id="insertLeaveInfo" parameterType="Leave">
 		INSERT INTO APPROVAL_LEAVE VALUES( #{docTempNo}, #{type}, #{reason}, #{startDate}, #{endDate}, #{totalDate})

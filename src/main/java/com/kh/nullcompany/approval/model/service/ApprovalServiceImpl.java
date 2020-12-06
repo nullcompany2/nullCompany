@@ -251,4 +251,14 @@ public class ApprovalServiceImpl implements ApprovalService {
 		return aDao.omitResignInfo(docTempNo);
 	}
 
+	@Override
+	public ArrayList<Step> orderByStepRank(String docTempNo) {
+		return aDao.orderByStepRank(docTempNo);
+	}
+
+	@Override
+	public int sortingStep(int staffNo, int stepPriority, String docTempNo) {
+		return aDao.sortingStep(staffNo, stepPriority, docTempNo);
+	}
+
 }
