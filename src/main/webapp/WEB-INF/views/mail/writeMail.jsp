@@ -606,7 +606,7 @@ span#fileName{
        var modal = $('#' + id);
 
        // 모달 div 뒤에 희끄무레한 레이어
-     /*   var bg = $('<div>')
+     /*  var bg = $('<div>')
           .css({
              position: 'fixed',
              zIndex: zIndex,
@@ -618,7 +618,7 @@ span#fileName{
              // 레이어 색갈은 여기서 바꾸면 됨
              backgroundColor: 'rgba(0,0,0,0.4)'
           })
-          .appendTo('body'); */
+          .appendTo('body');  */
        
 
        modal
@@ -640,7 +640,7 @@ span#fileName{
           // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
           .find('.modal-close-btn')
           .on('click', function() {
-            /*  bg.remove(); */
+           /*  bg.remove(); */
              modal.hide();
           });
        	

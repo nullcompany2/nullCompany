@@ -52,7 +52,6 @@ private ScheduleService sService;
 			String memId = ((Member)session.getAttribute("loginUser")).getId();		
 			MailListCount listCount = maService.getMailBoxCount(memId);
 			
-			System.out.println("가져온 리스트 : "+ listCount);
 			
 			
 			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
