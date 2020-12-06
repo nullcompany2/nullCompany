@@ -429,6 +429,9 @@
    			M_STATUS = 'Y'
 		AND
 		    DEPT_NO = #{deptNo}
+		AND
+			M.RANK_NO != 0
+			
 		ORDER BY RANK_NO
 	</select>
 	
