@@ -339,13 +339,13 @@ li {
                     <hr>
                     
                    <div id="mail1"> 
-                    <span> 받은 편지함 : </span> <br>
+                    <span> 받은 편지함 : 0개 </span> <br>
                    </div>
                     <div id="mail2" style="background:#C8CACC;"> 
-                    <span> 안 읽은 메일 : </span> <br>
+                    <span> 안 읽은 메일 : 0개 </span> <br>
                    </div>
                     <div id="mail3"> 
-                     <span> 임시 보관함 :  </span>
+                     <span> 임시 보관함 : 0개 </span>
                    </div>
                     
                 </div>
@@ -408,11 +408,15 @@ li {
 	
 	  $(function(){
          mailBox();
+         
       
-      // 5분에 한번씩 계속 업데이트 하기 
+      // 3초에 한번씩 계속 업데이트 하기 
        setInterval(function(){
             mailBox();
-         },50000); 
+            approvalBox();
+            noticeList();
+            tnoticeList();
+         },3000); 
       });
       
       function  mailBox(){
@@ -524,13 +528,7 @@ li {
 		// 전자 결재
 		$(function(){
 	         approvalBox();
-	      
-	      // 5분에 한번씩 계속 업데이트 하기 
-	       setInterval(function(){
-	    	   approvalBox();
-	         },50000); 
-	      });
-		
+		});
 		function  approvalBox(){
 	         $.ajax({
 	            url:"approvalBox.do",

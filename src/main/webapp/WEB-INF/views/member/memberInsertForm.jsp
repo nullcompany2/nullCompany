@@ -344,6 +344,7 @@
             	
             });
             
+            // 아이디 중복 검사 
             $(function(){
                 $("#userId").on("keyup",function(){
                     var userId = $(this).val();
@@ -353,7 +354,6 @@
                         $("#idDuplicateCheck").val(0);
                         return; 
                     }
-                    
                     $.ajax({
                         url:"idCheck.do",
                         data : {id:userId},
@@ -363,13 +363,11 @@
                                 $(".error").hide();
                                 $(".ok").show();
                                 $("#idDuplicateCheck").val(1);
-                                
                             }else {
                                 $(".ok").hide();
                                 $(".error").show();
                                 $("#idDuplicateCheck").val(0);
                             }
-                            
                         },
                         error:function(request,status,errorData){
                         	 console.log("아이디 중복 체크 오류");

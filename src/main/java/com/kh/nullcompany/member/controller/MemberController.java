@@ -135,10 +135,9 @@ public class MemberController {
 				  
 				 	if(!file.getOriginalFilename().equals("")) {
 
-				 		// saveFile메소드 : 저장하고자하는 file과 request를 전달해서 서버에 업로드시키고 저장된 파일명을 반환해주는 메소드
 			         String userPhoto = saveFile(file,request);
 			         
-			         if(userPhoto != null) { // 파일이 잘 저장된 경우
+			         if(userPhoto != null) { 
 			            m.setPhoto(userPhoto);
 			           
 			         }
@@ -176,14 +175,14 @@ public class MemberController {
 			      
 			      //String savePath = root + "/muploadFiles"; 와 같음 
 			      String savePath = root + File.separator +"/muploadFiles";
-			      File folder = new File(savePath); // savePath의 폴더를 불러온다.
+			      File folder = new File(savePath); 
 			      
 			      if(!folder.exists()) {
 			         // 폴더를 만들고 
 			         folder.mkdirs();
 			      }
 			      
-			      String photo = file.getOriginalFilename(); // test.png
+			      String photo = file.getOriginalFilename(); 
 
 			      String fileSavePath = folder + File.separator + photo;
 			      

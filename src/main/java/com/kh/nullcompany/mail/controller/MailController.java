@@ -52,7 +52,6 @@ private ScheduleService sService;
 			String memId = ((Member)session.getAttribute("loginUser")).getId();		
 			MailListCount listCount = maService.getMailBoxCount(memId);
 			
-			System.out.println("가져온 리스트 : "+ listCount);
 			
 			
 			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
@@ -147,7 +146,6 @@ private ScheduleService sService;
 		}
 		
 		// 파일 저장 메소드 
-		// 손봐야함 ...
 		public String saveMailFile(MultipartFile file, HttpServletRequest request) {
 		     
 		      String root = request.getSession().getServletContext().getRealPath("resources");
@@ -592,12 +590,12 @@ private ScheduleService sService;
 		
 		// 받은 메일함  - 검색하기 
 		@RequestMapping("searchRecieve.do")
-		public ModelAndView searchRecieve(ModelAndView mv, String category, String search,HttpSession session) {
+		public ModelAndView searchRecieve(ModelAndView mv, String category, 
+										String search,HttpSession session) {
 		
-			String memId = ((Member)session.getAttribute("loginUser")).getId();
+		String memId = ((Member)session.getAttribute("loginUser")).getId();
 		
 		Map map = new HashMap();
-		
 		map.put("search",search);
 		map.put("memId",memId);
 		

@@ -131,8 +131,6 @@ display:none;}
 									$('input[type=radio][name=s-btn]').click(function(){
 										var chkLogo = $('input[type=radio][name=s-btn]:checked').val();
 										if(chkLogo=='1'){
-											/* $("#up-file").css('visibility','hidden');
-											$("#upBtn").css('visibility','hidden'); */
 											// 페이지를 리로드해서 이전에 등록했던 로고로 
 											document.location.href='officeLogo.do';
 										}else if(chkLogo =='2'){
@@ -157,7 +155,7 @@ display:none;}
 					 document.location.href='logoUpload.do?basic='+ "basic";
 				}); 
 				
-				 // 메일 임시 저장 버튼 
+				 
 			 	 $("#logoBtn").click(function () {
 			        $("form").attr("action","logoUpload.do?basic="+ "안녕");
 			 	}); 

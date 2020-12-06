@@ -279,4 +279,18 @@ public class ApprovalDao {
 		return sqlSession.delete("approvalMapper.omitResignInfo", docTempNo);
 	}
 
+	public ArrayList<Step> orderByStepRank(String docTempNo) {
+		return (ArrayList)sqlSession.selectList("approvalMapper.orderByStepRank", docTempNo);
+	}
+
+	public int sortingStep(int staffNo, int stepPriority, String docTempNo) {
+		Map map = new HashMap();
+		
+		map.put("staffNo", staffNo);
+		map.put("stepPriority", stepPriority);
+		map.put("docTempNo", docTempNo);
+		
+		return sqlSession.update("approvalMapper.sortingStep", map);
+	}
+
 }

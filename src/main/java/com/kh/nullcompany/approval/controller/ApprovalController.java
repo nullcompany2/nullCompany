@@ -1038,6 +1038,16 @@ public class ApprovalController {
 								 @RequestParam(value="dTitle", required=false) String dTitle,
 								 @RequestParam(value="dContent", required=false) String dContent) {
 		
+		// 스텝 가져오기(직급 순서로)
+		ArrayList<Step> sList = aService.orderByStepRank(docTempNo);
+		int stepCount = sList.size();
+		
+		// 스텝 순번 정렬하기(직급 순서대로)
+		for(int i = 0; i < stepCount; i++ ) {
+			sList.get(i).setStepPriority(stepCount - (stepCount - (i+1)));
+			aService.sortingStep(sList.get(i).getStaffNo(), sList.get(i).getStepPriority(), docTempNo);
+		}
+		
 		Document d = new Document();
 		d.setDocTempNo(docTempNo);
 		d.setdTitle(dTitle);
@@ -1086,6 +1096,17 @@ public class ApprovalController {
 									 @RequestParam(value="totalDate", required=false) int totalDate,
 									 @RequestParam(value="reason", required=false) String reason) {
 		
+		// 스텝 가져오기(직급 순서로)
+		ArrayList<Step> sList = aService.orderByStepRank(docTempNo);
+		int stepCount = sList.size();
+		
+		// 스텝 순번 정렬하기(직급 순서대로)
+		for(int i = 0; i < stepCount; i++ ) {
+			sList.get(i).setStepPriority(stepCount - (stepCount - (i+1)));
+			aService.sortingStep(sList.get(i).getStaffNo(), sList.get(i).getStepPriority(), docTempNo);
+		}
+		
+		
 		Document d = new Document();
 		
 		int drafterNo = ((Member)session.getAttribute("loginUser")).getMemNo();
@@ -1130,6 +1151,16 @@ public class ApprovalController {
 									   @RequestParam(value="totalDate", required=false) int totalDate,
 									   @RequestParam(value="reason", required=false) String reason) {
 		
+		// 스텝 가져오기(직급 순서로)
+		ArrayList<Step> sList = aService.orderByStepRank(docTempNo);
+		int stepCount = sList.size();
+		
+		// 스텝 순번 정렬하기(직급 순서대로)
+		for(int i = 0; i < stepCount; i++ ) {
+			sList.get(i).setStepPriority(stepCount - (stepCount - (i+1)));
+			aService.sortingStep(sList.get(i).getStaffNo(), sList.get(i).getStepPriority(), docTempNo);
+		}
+
 		Document d = new Document();
 		
 		String drafterDeptName = ((Member)session.getAttribute("loginUser")).getDeptName();
@@ -1166,6 +1197,16 @@ public class ApprovalController {
 	public String insertResignDocumet(Model model, HttpServletResponse response, HttpSession session,
 									  @RequestParam(value="docTempNo", required=false) String docTempNo,
 									  @RequestParam(value="enrollDate", required=false) String enrollDate) {
+		
+		// 스텝 가져오기(직급 순서로)
+		ArrayList<Step> sList = aService.orderByStepRank(docTempNo);
+		int stepCount = sList.size();
+		
+		// 스텝 순번 정렬하기(직급 순서대로)
+		for(int i = 0; i < stepCount; i++ ) {
+			sList.get(i).setStepPriority(stepCount - (stepCount - (i+1)));
+			aService.sortingStep(sList.get(i).getStaffNo(), sList.get(i).getStepPriority(), docTempNo);
+		}
 		
 		Document d = new Document();
 		
@@ -1254,6 +1295,7 @@ public class ApprovalController {
 		return mv;
 	}
 	
+	// 문서 상세보기(문서 관리자일 때)
 	@RequestMapping("approvalAdminDetail.do")
 	public ModelAndView approvalAdminDetail(ModelAndView mv, HttpServletResponse response, HttpSession session, String docNo) {
 		

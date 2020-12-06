@@ -356,4 +356,20 @@ public interface ApprovalService {
 	 */
 	int omitResignInfo(String docTempNo);
 
+	/**
+	 * 10_1 문서에 등록된 스텝들 낮은 직급부터 조회 
+	 * @param docTempNo
+	 * @return
+	 */
+	ArrayList<Step> orderByStepRank(String docTempNo);
+
+	/**
+	 * 10_2 문서 기안 전 직급 순으로 스텝 정렬
+	 * @param staffNo
+	 * @param stepPriority
+	 * @param docTempNo
+	 * @return
+	 */
+	int sortingStep(int staffNo, int stepPriority, String docTempNo);
+
 }

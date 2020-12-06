@@ -272,7 +272,7 @@ $(document).ready(function() {
 						<input type="text" id="writer" style="width: 5%;" value= " ${loginUser.name}" readonly/>  <br>
 						
 						&nbsp;제목&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
-						<input type="text" id="title" style="width: 40%;" placeholder=" 제목을 입력해주세요." /> <br>
+						<input type="text" id="title" name="title" style="width: 40%;" placeholder=" 제목을 입력해주세요." /> <br>
 						
 						<br>&nbsp;<label id="uploadFile">파일첨부&nbsp;&nbsp;&nbsp;</label> 
 							<input type="file" name="uploadFile" id="bfile"><br>
@@ -301,8 +301,6 @@ $(document).ready(function() {
 				제목 : <span id="modalTitle"> 제목없음 </span>
 			</p>
 			<p>작성자 : ${ loginUser.name }</p>
-			<p>작성일 : <span id="modalDate"></span> </p>
-			<p>파일첨부 :</p>
 			<hr>
 			<div id="modalContent">내용</div>
 		</div>
@@ -375,9 +373,9 @@ $("#write").click(function () {
     $('.go2').on('click', function() {
     	
     	// 게시판 타입 val
-    	$("#modalType").text($("#writerBoard option:selected").text());
+    	$("#modalType").text($("#category option:selected").text());
     	// 게시판 제목 input val 옮기기 
-       $("#modalTitle").text($("input:text[name='nTitle']").val());
+       $("#modalTitle").text($("input:text[name='title']").val());
     	// 게시판 작성일
     	$("modalDate").text($("input:text[date='nCreateDate']").val());
     	
