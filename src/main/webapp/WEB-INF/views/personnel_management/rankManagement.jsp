@@ -62,7 +62,9 @@ function detailMemberInfo(){
 			$("#md_address").html(data.address);
 			$("#md_deptName").html(data.deptName);
 			$("#selectRank").val(data.lankNo).attr("selected","selected");
-			console.log(data.deptNo);
+			console.log(data.lankNo);
+			console.log(data.rankName);
+		
 			$("#md_myInfo").html(data.myInfo);
 			$("#md_indiemail").html(data.email);
 			 $("#dept_no").val(data.deptNo);
@@ -679,7 +681,7 @@ function detailMemberInfo(){
 					class="emp-info" style="position: absolute; left: 265px;">-</span></li>
 					
 			   <li style="margin-bottom: 6px;">직급
-				<select name="rank" id="selectrank"
+				<select name="rank" id="selectRank"
 					style="border: none;
 						    float: right;
 						    width: 110px;

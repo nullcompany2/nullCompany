@@ -35,15 +35,68 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src='<c:url value="/resources/js/jquery-1.10.2.js"/>'type="text/javascript"></script>
 <script src='<c:url value="/resources/js/jquery-ui.custom.min.js"/>'type="text/javascript"></script>
-<script src='<c:url value="/resources/js/moment.min.js"/>'type="text/javascript"></script>
 <link href='<c:url value="/resources/css/fullcalendar.css"/>'rel='stylesheet' />
 <link href='<c:url value="/resources/css/fullcalendar.print.css"/>'rel='stylesheet' media='print' />
 <script src='<c:url value="/resources/js/fullcalendar.js"/>'type="text/javascript"></script>
 
 
 
+<style>
+#check_all:hover{
+font-weight: bold;
+}
+
+#check_all_no:hover{
+font-weight: bold;
+}
+#check_all2:hover{
+font-weight: bold;
+}
+
+#check_all_no2:hover{
+font-weight: bold;
+}
+</style>
 <script>
- 
+// select all
+$(document).ready(function() {
+              
+              //전체 선택/해제
+              $("#check_all").click(function(){
+   
+            	  $('input[name*="checkname"]').attr('checked', 'checked');
+                 	
+                 
+                  
+              });
+              
+              $("#check_all_no").click(function(){
+            	   
+            	  $('input[name*="checkname"]').attr('checked', false);
+                
+                 
+                  
+              });
+              
+              //전체 선택/해제
+              $("#check_all2").click(function(){
+   
+            	  $('input[name*="checkname2"]').attr('checked', 'checked');
+                 	
+                 
+                  
+              });
+              
+              $("#check_all_no2").click(function(){
+            	   
+            	  $('input[name*="checkname2"]').attr('checked', false);
+                
+                 
+                  
+              });
+       
+                               
+          });
 
 
   document.addEventListener('DOMContentLoaded', function() {
@@ -504,7 +557,20 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 								<div id="name_list">
 									<div id='result'
 										style="height:140px; margin-left: 10px; margin-top: 10px; text-align: left; font-size: 12px;"></div>
-							
+									<div style="height: 10px">
+										
+									<label style="    font-size: 12px;
+									    color: #477A8F;
+									    top: 65px;
+									    position: relative;
+									    left: -5px;" for="" id="check_all" >전체</label>
+									<label style="    font-size: 12px;
+								    color: #477A8F;
+								    top: 65px;
+								    position: relative;
+								    left: 10px;
+								" for="" id="check_all_no" >선택안함</label>
+									</div>
 								</div>
 							</div>
 
@@ -611,9 +677,23 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 										</c:forEach>
 									</ul>
 								</div>
-								<div id="name_list">
+									<div id="name_list">
 									<div id='result2'
-										style="margin-left: 10px; margin-top: 10px; text-align: left; font-size: 12px;"></div>
+										style="height:140px; margin-left: 10px; margin-top: 10px; text-align: left; font-size: 12px;"></div>
+									<div style="height: 10px">
+										
+									<label style="    font-size: 12px;
+									    color: #477A8F;
+									    top: 65px;
+									    position: relative;
+									    left: -5px;" for="" id="check_all2" >전체</label>
+									<label style="    font-size: 12px;
+								    color: #477A8F;
+								    top: 65px;
+								    position: relative;
+								    left: 10px;
+								" for="" id="check_all_no2" >선택안함</label>
+									</div>
 								</div>
 							</div>
 
@@ -1878,12 +1958,13 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
      	
      			
                  var calName = $('#edit_publiccal_name').val();
-                 var color = document.querySelector('#colorselect3').style.background;
+                 var color = $("#colorselect3").css("background-color");
                  var enroll = $('#enrollname2').text();
                  var enrollArray = enroll.split(',');
                  var look = $('#lookname2').text();
                  var lookArray = look.split(',');
                  
+                 console.log(color);
                 
                  if(calName.length < 1){
         			 alert("캘린더 제목을 입력해주세요.")
@@ -1915,13 +1996,14 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
                          data: {
                              "calName": calName,
                              "calNo": $('#edit_public_calno').val(),
-                             "color": document.querySelector('#colorselect3').style.background,
+                             "color": color,
                              "enrollMember": enrollArray,
                              "lookMember": lookArray
                          },
                          success: function (data) {
                              console.log("수정 성공"+ data);
                              location.reload();
+                            
                          },
                          error: function (request,
                              status, error) {
@@ -2004,21 +2086,6 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
       });
 		
  
-     // select all
-  $(document).ready(function(){
-    //최상단 체크박스 클릭
-    $("#selectAll").click(function(){
-        //클릭되었으면
-        if($("#selectAll").prop("checked")){
-            //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
-            $("input[name=checkname]").prop("checked",true);
-            //클릭이 안되있으면
-        }else{
-            //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
-            $("input[name=checkname]").prop("checked",false);
-        }
-    })
-})
 
 
      // 리스트 토글

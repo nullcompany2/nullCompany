@@ -20,10 +20,56 @@
 .ta{
 cursor: pointer;
 }
+
+#check_all:hover{
+font-weight: bold;
+}
+
+#check_all_no:hover{
+font-weight: bold;
+}
 </style>
 
 <script>
 
+//select all
+$(document).ready(function() {
+           
+           //전체 선택/해제
+           $("#check_all").click(function(){
+
+         	  $('input[name*="checkname"]').attr('checked', 'checked');
+              	
+              
+               
+           });
+           
+           $("#check_all_no").click(function(){
+         	   
+         	  $('input[name*="checkname"]').attr('checked', false);
+             
+              
+               
+           });
+    		
+           //전체 선택/해제
+           $("#check_all2").click(function(){
+
+         	  $('input[name*="checkname2"]').attr('checked', 'checked');
+              	
+              
+               
+           });
+           
+           $("#check_all_no2").click(function(){
+         	   
+         	  $('input[name*="checkname2"]').attr('checked', false);
+             
+              
+               
+           });
+                            
+       });
 	
   $(document).on("click", ".ta", function(){
 
@@ -521,9 +567,23 @@ cursor: pointer;
 										</c:forEach>
 									</ul>
 								</div>
-								<div id="name_list">
+									<div id="name_list">
 									<div id='result'
-										style="margin-left: 10px; margin-top: 10px; text-align: left; font-size: 12px;"></div>
+										style="height:140px; margin-left: 10px; margin-top: 10px; text-align: left; font-size: 12px;"></div>
+									<div style="height: 10px">
+										
+									<label style="    font-size: 12px;
+									    color: #477A8F;
+									    top: 65px;
+									    position: relative;
+									    left: -5px;" for="" id="check_all" >전체</label>
+									<label style="    font-size: 12px;
+								    color: #477A8F;
+								    top: 65px;
+								    position: relative;
+								    left: 10px;
+								" for="" id="check_all_no" >선택안함</label>
+									</div>
 								</div>
 							</div>
 
@@ -632,9 +692,23 @@ cursor: pointer;
 										</c:forEach>
 									</ul>
 								</div>
-								<div id="name_list">
+										<div id="name_list">
 									<div id='result2'
-										style="margin-left: 10px; margin-top: 10px; text-align: left; font-size: 12px;"></div>
+										style="height:140px; margin-left: 10px; margin-top: 10px; text-align: left; font-size: 12px;"></div>
+									<div style="height: 10px">
+										
+									<label style="    font-size: 12px;
+									    color: #477A8F;
+									    top: 65px;
+									    position: relative;
+									    left: -5px;" for="" id="check_all2" >전체</label>
+									<label style="    font-size: 12px;
+								    color: #477A8F;
+								    top: 65px;
+								    position: relative;
+								    left: 10px;
+								" for="" id="check_all_no2" >선택안함</label>
+									</div>
 								</div>
 							</div>
 

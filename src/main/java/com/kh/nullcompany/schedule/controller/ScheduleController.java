@@ -372,7 +372,7 @@ public class ScheduleController {
 
 		sService.updateCommunity(Calendar);
 		
-		System.out.println(Calendar);
+		System.out.println("인써트" + Calendar);
 		
 		int result2 = (sService.editIndiCal_Sche(Calendar.getCalNo()));
 		
