@@ -667,6 +667,7 @@
 		JOIN RANK USING(RANK_NO)
         RIGHT JOIN ABSENCE USING(MEM_NO)
         WHERE STATUS= 'N'
+        ORDER BY RETURN_DATE DESC
 	</select>
 	
 	<select id="previousModificationDiligenceCount" resultType="_int">
@@ -679,5 +680,6 @@
 		SELECT *
 		FROM MOD_DILIGENCE
 		WHERE STATUS_MOD_D != '결재중'
+		ORDER BY DATE_MOD_D DESC
 	</select>
 </mapper>
