@@ -249,7 +249,7 @@
 	<select id="SearchMem_public" resultMap="memberResultSet">
 	 	select m.name, m.mem_no
         from member m
-        where (m.name LIKE  '%' || #{text} || '%')
+        where (m.name LIKE  '%' || #{text} || '%') and join_status = 'Y'
 	</select>
 	 
 	    <!-- 공유 캘린더 수정 전 정보 -->
@@ -302,4 +302,12 @@
         GROUP BY S.SCHE_NO, S.SCHE_NAME, C.CAL_NAME, S.STARTDATE, S.STARTTIME, S.MEMCOUNT,
         S.ENDDATE, S.ENDTIME, S.SCHE_CONTENT, C.CAL_NO, C.COLOR, C.CAL_TYPE
    </select>
+   
+   	<!-- 부서 셀렉트 리스트 -->
+	<select id="memList_S" resultMap="memberResultSet"
+		parameterType="Member">
+		SELECT *
+    	FROM MEMBER 
+    	where join_status = 'Y'
+	</select>
 </mapper>

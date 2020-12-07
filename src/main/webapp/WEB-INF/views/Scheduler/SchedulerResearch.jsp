@@ -492,7 +492,7 @@ cursor: pointer;
 							사원 이름 &nbsp; <input type="text" id="search_mem"
 								style="margin-left: 19px;"/> &nbsp;
 								
-								<span id="searchAddress" style="font-size: 14px; color: #477A8F;">검색 </span>
+
 							 	<div id="autoAddress"> 
 							 	 <!--  자동 완성 검색 결과  -->
 							 	</div>

@@ -84,6 +84,8 @@ public interface ScheduleService {
 
 	ArrayList<Schedule> ScheduleListForMain(int memNo);
 
+	ArrayList<Member> memList_S();
+
 
 
 
