@@ -157,7 +157,6 @@
 							<c:otherwise>
 							<td align="left"> ${ma.name} < ${ma.recipient} > </td>
 							</c:otherwise>
-							
 							</c:choose>
 							
 							<td>${ ma.mTitle }</td>
