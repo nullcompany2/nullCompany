@@ -472,7 +472,7 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 							사원 이름 &nbsp; <input type="text" id="search_mem"
 								style="margin-left: 19px;"/> &nbsp;
 								
-								<span id="searchAddress" style="font-size: 14px; color: #477A8F;">검색 </span>
+								
 							 	<div id="autoAddress"> 
 							 	 <!--  자동 완성 검색 결과  -->
 							 	</div>
@@ -503,7 +503,8 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
 								</div>
 								<div id="name_list">
 									<div id='result'
-										style="margin-left: 10px; margin-top: 10px; text-align: left; font-size: 12px;"></div>
+										style="height:140px; margin-left: 10px; margin-top: 10px; text-align: left; font-size: 12px;"></div>
+							
 								</div>
 							</div>
 
@@ -2003,7 +2004,23 @@ SimpleDateFormat sf = new SimpleDateFormat("yyyy년 MM월 dd일");
       });
 		
  
-     
+     // select all
+  $(document).ready(function(){
+    //최상단 체크박스 클릭
+    $("#selectAll").click(function(){
+        //클릭되었으면
+        if($("#selectAll").prop("checked")){
+            //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
+            $("input[name=checkname]").prop("checked",true);
+            //클릭이 안되있으면
+        }else{
+            //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
+            $("input[name=checkname]").prop("checked",false);
+        }
+    })
+})
+
+
      // 리스트 토글
      $('.tree').each(function(){
      var $this = $(this);

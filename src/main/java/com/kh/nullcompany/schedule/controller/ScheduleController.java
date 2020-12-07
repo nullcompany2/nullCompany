@@ -50,7 +50,7 @@ public class ScheduleController {
 		// 총 부서 리스트
 		ArrayList<Department> deptList = sService.deptList();
 		// 총 사원 리스트
-		ArrayList<Member> memList = sService.memList();
+		ArrayList<Member> memList = sService.memList_S();
 		// 공유 캘린더 리스트
 		ArrayList<Calendar> publicCalList = sService.publicCalList(memNo);
 		// 내 캘린더 리스트
@@ -84,7 +84,7 @@ public class ScheduleController {
 			// 총 부서 리스트
 			ArrayList<Department> deptList = sService.deptList();
 			// 총 사원 리스트
-			ArrayList<Member> memList = sService.memList();
+			ArrayList<Member> memList = sService.memList_S();
 			// 공유 캘린더 리스트
 			ArrayList<Calendar> publicCalList = sService.publicCalList(memNo);
 			// 내 캘린더 리스트

@@ -238,6 +238,11 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return sDao.ScheduleListForMain(memNo);
 	}
 
+	@Override
+	public ArrayList<Member> memList_S() {
+		return sDao.memList_S();
+	}
+
 
 
 }

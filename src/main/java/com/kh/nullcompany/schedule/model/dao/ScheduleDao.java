@@ -168,6 +168,11 @@ public class ScheduleDao {
 	}
 
 
+	public ArrayList<Member> memList_S() {
+		return(ArrayList) sqlSession.selectList("scheduleMapper.memList_S");
+	}
+
+
 
 
 
