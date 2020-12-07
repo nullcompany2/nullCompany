@@ -203,7 +203,7 @@
 					$("#md_rankName").html(data.rankName);
 					$("#md_deptName").html(data.deptName);
 					$("#md_myInfo").html(data.myInfo);
-					
+					$("#md_email").html(data.id+"@nullcompany.com");
 					$("#md_photo").attr('src',data.photo);
 				},
 				error: function(request,status,error){
