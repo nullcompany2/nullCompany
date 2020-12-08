@@ -5,7 +5,7 @@
 	<resultMap id="mailResultSet" type="Mail">
 	
 		<id property="memNo" column="MEM_NO"/>
-		
+		 
 		<result property="mailNo" column="MAIL_NO"/>
 		<result property="sender" column="SENDER"/>
 		<result property="recipient" column="RECIPIENT"/>
