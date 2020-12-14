@@ -54,6 +54,7 @@
 		eDate = $("#timeO").val();
 		
 		console.log(setDate + "/" + sDate + "/" + eDate);
+		alert("저장 완료");
 		location.href="setDiligenceStandard.do?setDate="+setDate+"&sDate="+sDate+"&eDate="+eDate;
 	}
 

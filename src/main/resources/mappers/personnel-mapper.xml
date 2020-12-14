@@ -165,12 +165,12 @@
 		<result property="lateMemberCountY" column="lateMemberCount_Y"/>
 		<result property="absenceCountY" column="absenceCount_Y"/>
 		<result property="absenceMemberCountY" column="absenceMemberCount_Y"/>
-		<result property="modificationCountY" column="modificationCount_Y"/>
+		<result property="modificationCountY" column="MODIFICTIONCOUNT_Y"/>
 		<result property="lateCountM" column="lateCount_M"/>
 		<result property="lateMemberCountM" column="lateMemberCount_M"/>
 		<result property="absenceCountM" column="absenceCount_M"/>
 		<result property="absenceMemberCountM" column="absenceMemberCount_M"/>
-		<result property="modificationCountM" column="modificationCount_M"/>
+		<result property="modificationCountM" column="MODIFICTIONCOUNT_M"/>
    	</resultMap>
    	
    	<resultMap type="SelectedMemberDiligenceCount" id="SelectedMemberDiligenceCountResultSet">
